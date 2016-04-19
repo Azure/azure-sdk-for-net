@@ -53,6 +53,66 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
+        public static BaseRecoveryServicesJobResponse BeginCancelJob(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).BeginCancelJobAsync(resourceGroupName, resourceName, jobName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Cancel the job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IJobOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static Task<BaseRecoveryServicesJobResponse> BeginCancelJobAsync(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginCancelJobAsync(resourceGroupName, resourceName, jobName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Cancel the job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IJobOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
         public static BaseRecoveryServicesJobResponse CancelJob(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
@@ -206,6 +266,48 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public static Task<JobResponse> GetAsync(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetAsync(resourceGroupName, resourceName, jobName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the status of cancel job operation by URL
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IJobOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static BaseRecoveryServicesJobResponse GetCancelOperationResultByURL(this IJobOperations operations, string operationResultLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).GetCancelOperationResultByURLAsync(operationResultLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the status of cancel job operation by URL
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IJobOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static Task<BaseRecoveryServicesJobResponse> GetCancelOperationResultByURLAsync(this IJobOperations operations, string operationResultLink)
+        {
+            return operations.GetCancelOperationResultByURLAsync(operationResultLink, CancellationToken.None);
         }
         
         /// <summary>

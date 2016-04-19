@@ -75,7 +75,7 @@ namespace RecoveryServices.Tests
                 triggerRestoreRequest.Item.Properties = new RestoreRequest();
                 triggerRestoreRequest.Item.Properties = restoreRequest;
 
-                var response = client.Restore.TriggerRestore(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
+                var response = client.Restores.TriggerRestore(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, recoveryPointId, triggerRestoreRequest);
 
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);

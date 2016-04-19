@@ -66,6 +66,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._retryAfter = value; }
         }
         
+        private OperationStatus _status;
+        
+        /// <summary>
+        /// Optional. Status of the operation.
+        /// </summary>
+        public OperationStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the BaseRecoveryServicesJobResponse
         /// class.

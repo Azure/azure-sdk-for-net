@@ -51,6 +51,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
+        Task<BaseRecoveryServicesJobResponse> BeginCancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Cancel the job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
         Task<BaseRecoveryServicesJobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
@@ -99,6 +120,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a ProtectedItemResponse.
         /// </returns>
         Task<JobResponse> GetAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the status of cancel job operation by URL
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Location value returned by operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        Task<BaseRecoveryServicesJobResponse> GetCancelOperationResultByURLAsync(string operationResultLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the operation result of specific job.

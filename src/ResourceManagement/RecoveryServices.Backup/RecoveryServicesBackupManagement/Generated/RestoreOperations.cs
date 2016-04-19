@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Newtonsoft.Json.Linq;
@@ -345,6 +346,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
                             }
                         }
                         
