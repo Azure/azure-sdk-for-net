@@ -3292,9 +3292,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
-            if (queryFilter != null && queryFilter.ProviderType != null)
+            if (queryFilter != null && queryFilter.BackupManagementType != null)
             {
-                odataFilter.Add("providerType eq '" + Uri.EscapeDataString(queryFilter.ProviderType) + "'");
+                odataFilter.Add("backupManagementType eq '" + Uri.EscapeDataString(queryFilter.BackupManagementType) + "'");
             }
             if (queryFilter != null && queryFilter.DatasourceType != null)
             {

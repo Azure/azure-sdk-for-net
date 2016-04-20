@@ -94,6 +94,7 @@
     <Compile Include="Generated\Models\BackupEngineRepsonse.cs" />
     <Compile Include="Generated\Models\BackupEngineResource.cs" />
     <Compile Include="Generated\Models\BackupEngineResourceList.cs" />
+    <Compile Include="Generated\Models\BackupManagementType.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
@@ -171,7 +172,6 @@
     <Compile Include="Generated\Models\ProtectionPolicyResource.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyResponse.cs" />
-    <Compile Include="Generated\Models\ProviderType.cs" />
     <Compile Include="Generated\Models\RecoveryPoint.cs" />
     <Compile Include="Generated\Models\RecoveryPointBase.cs" />
     <Compile Include="Generated\Models\RecoveryPointListResponse.cs" />

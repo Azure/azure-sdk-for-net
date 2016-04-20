@@ -108,7 +108,7 @@ namespace RecoveryServices.Tests
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
                 ProtectedItemListQueryParam queryParams = new ProtectedItemListQueryParam();
-                queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+                queryParams.BackupManagementType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
                 queryParams.DatasourceType = CommonTestHelper.GetSetting(TestConstants.WorkloadTypeVM);
 
                 ProtectedItemTestHelper itemTestHelper = new ProtectedItemTestHelper(client);

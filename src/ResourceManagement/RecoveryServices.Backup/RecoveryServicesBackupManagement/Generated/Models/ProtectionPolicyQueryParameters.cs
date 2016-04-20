@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. provider type query parameter
+        /// Optional. BackupManagement type query parameter
         /// </summary>
         public string BackupManagementType
         {
