@@ -22,8 +22,8 @@ namespace RecoveryServices.Tests.Helpers
 
         public ProtectionContainerListResponse ListContainers(ProtectionContainerListQueryParams queryParams)
         {
-            string rsVaultRgName = "pstestrg";
-            string rsVaultName = "pstestrsvault";
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
             ProtectionContainerListResponse response = Client.Containers.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
 

@@ -55,7 +55,7 @@ namespace RecoveryServices.Tests
             }
         }
 
-        
+        [Fact]
         public void UnregisterContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
