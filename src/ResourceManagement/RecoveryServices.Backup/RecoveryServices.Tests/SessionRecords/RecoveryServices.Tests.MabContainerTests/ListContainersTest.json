@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupProtectionContainers?api-version=2016-05-01&$filter=backupManagementType%20eq%20'MAB'",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBQcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDE2LTA1LTAxJiRmaWx0ZXI9YmFja3VwTWFuYWdlbWVudFR5cGUlMjBlcSUyMCdNQUIn",
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupProtectionContainers?api-version=2016-05-01&$filter=providerType%20eq%20'MAB'",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBQcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDE2LTA1LTAxJiRmaWx0ZXI9cHJvdmlkZXJUeXBlJTIwZXElMjAnTUFCJw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fc41eb28-33ce-45cf-ad50-68ccf8622754"
+          "f030b7ab-373c-4b33-be09-57782b62f107"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupFabrics/Azure/protectionContainers/Windows;adit-dev2.fareast.corp.microsoft.com\",\r\n      \"name\": \"Windows;adit-dev2.fareast.corp.microsoft.com\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers\",\r\n      \"properties\": {\r\n        \"canReRegister\": true,\r\n        \"containerId\": 236338,\r\n        \"friendlyName\": \"ADIT-DEV2.FAREAST.CORP.MICROSOFT.COM\",\r\n        \"backupManagementType\": \"MAB\",\r\n        \"registrationStatus\": \"Registered\",\r\n        \"healthStatus\": \"\",\r\n        \"containerType\": \"Windows\",\r\n        \"protectableObjectType\": \"MABWindowsContainer\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupFabrics/Azure/protectionContainers/Windows;swatim-win8.fareast.corp.microsoft.com\",\r\n      \"name\": \"Windows;swatim-win8.fareast.corp.microsoft.com\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers\",\r\n      \"properties\": {\r\n        \"canReRegister\": true,\r\n        \"containerId\": 236473,\r\n        \"friendlyName\": \"SWATIM-WIN8.FAREAST.CORP.MICROSOFT.COM\",\r\n        \"backupManagementType\": \"MAB\",\r\n        \"registrationStatus\": \"Registered\",\r\n        \"healthStatus\": \"\",\r\n        \"containerType\": \"Windows\",\r\n        \"protectableObjectType\": \"MABWindowsContainer\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "633"
+          "639"
         ],
         "Content-Type": [
           "application/json"
@@ -28,29 +28,29 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "355819af-9566-4c89-91e9-463a8a9ba3ac"
+          "98af49ab-2792-4266-979b-cf35e739855e"
         ],
         "x-ms-client-request-id": [
-          "fc41eb28-33ce-45cf-ad50-68ccf8622754",
-          "fc41eb28-33ce-45cf-ad50-68ccf8622754"
+          "f030b7ab-373c-4b33-be09-57782b62f107",
+          "f030b7ab-373c-4b33-be09-57782b62f107"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12834"
+          "13720"
         ],
         "x-ms-correlation-request-id": [
-          "355819af-9566-4c89-91e9-463a8a9ba3ac"
+          "98af49ab-2792-4266-979b-cf35e739855e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160418T090831Z:355819af-9566-4c89-91e9-463a8a9ba3ac"
+          "CENTRALUS:20160420T125039Z:98af49ab-2792-4266-979b-cf35e739855e"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 18 Apr 2016 09:08:31 GMT"
+          "Wed, 20 Apr 2016 12:50:39 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"

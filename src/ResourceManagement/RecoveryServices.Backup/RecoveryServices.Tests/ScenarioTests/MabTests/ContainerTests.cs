@@ -49,7 +49,7 @@ namespace RecoveryServices.Tests
                 ProtectionContainerListResponse response = containerTestHelper.ListMABContainers(queryParams);
 
                 string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultMabContainerUniqueName);
-                MabProtectionContainer container = response.ItemList.ProtectionContainers[1].Properties as MabProtectionContainer;
+                MabProtectionContainer container = response.ItemList.ProtectionContainers[0].Properties as MabProtectionContainer;
                 Assert.NotNull(container);
                 Assert.Equal(containerUniqueName, container.FriendlyName);
             }

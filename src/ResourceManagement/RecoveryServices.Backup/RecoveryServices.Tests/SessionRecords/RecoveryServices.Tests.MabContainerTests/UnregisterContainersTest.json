@@ -1,18 +1,13 @@
 {
   "Entries": [
     {
-<<<<<<< HEAD
-      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/registeredIdentities/NAGAASTHRAM.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM?api-version=2016-05-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9yZWdpc3RlcmVkSWRlbnRpdGllcy9OQUdBQVNUSFJBTS5EUE1ET00wMi5TRUxGSE9TVC5DT1JQLk1JQ1JPU09GVC5DT00/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
-=======
-      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/registeredIdentities/ADIT-DEV2.FAREAST.CORP.MICROSOFT.COM?api-version=2016-05-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9yZWdpc3RlcmVkSWRlbnRpdGllcy9BRElULURFVjIuRkFSRUFTVC5DT1JQLk1JQ1JPU09GVC5DT00/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
->>>>>>> c2498962615c72f7524c11245c20f06832844607
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupContainers/SWATIM-WIN8.FAREAST.CORP.MICROSOFT.COM/unregisterContainer?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBDb250YWluZXJzL1NXQVRJTS1XSU44LkZBUkVBU1QuQ09SUC5NSUNST1NPRlQuQ09NL3VucmVnaXN0ZXJDb250YWluZXI/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "79ee554e-93bf-44da-a06a-d10a422c6828"
+          "91f33c6a-1d42-4f18-bef9-4b5435f5bee4"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
@@ -30,29 +25,29 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e96fce64-62e9-4674-90bd-8c0aa0253e5c"
+          "d0364411-d123-44c9-a1b6-7f4d62e75fa7"
         ],
         "x-ms-client-request-id": [
-          "79ee554e-93bf-44da-a06a-d10a422c6828",
-          "79ee554e-93bf-44da-a06a-d10a422c6828"
+          "91f33c6a-1d42-4f18-bef9-4b5435f5bee4",
+          "91f33c6a-1d42-4f18-bef9-4b5435f5bee4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1189"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "e96fce64-62e9-4674-90bd-8c0aa0253e5c"
+          "d0364411-d123-44c9-a1b6-7f4d62e75fa7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160418T091003Z:e96fce64-62e9-4674-90bd-8c0aa0253e5c"
+          "CENTRALUS:20160420T125115Z:d0364411-d123-44c9-a1b6-7f4d62e75fa7"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 18 Apr 2016 09:10:03 GMT"
+          "Wed, 20 Apr 2016 12:51:15 GMT"
         ]
       },
       "StatusCode": 204
