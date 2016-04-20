@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a RetentionScheduleBase object.
+    /// Base class for retention schedule.
     /// </summary>
     public partial class RetentionScheduleBase
     {

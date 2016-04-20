@@ -28,14 +28,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemResourceList.
+    /// List of protected item resources.
     /// </summary>
     public partial class ProtectedItemResourceList
     {
         private string _nextLink;
         
         /// <summary>
-        /// Optional. Next Link
+        /// Optional. Tracking url if there are still pending items in the
+        /// service.
         /// </summary>
         public string NextLink
         {
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<ProtectedItemResource> _value;
         
         /// <summary>
-        /// Optional. List of ProtectedItem responses.
+        /// Optional. List of protected item resources.
         /// </summary>
         public IList<ProtectedItemResource> Value
         {

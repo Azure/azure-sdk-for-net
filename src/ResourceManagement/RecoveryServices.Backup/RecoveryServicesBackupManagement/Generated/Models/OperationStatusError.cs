@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a OperationStatusExtendedInfo object.
+    /// Error information in the context of an operation status call.
     /// </summary>
     public partial class OperationStatusError
     {
         private string _code;
         
         /// <summary>
-        /// Optional. Code for OperationStatusError
+        /// Optional. Error code of the operation failure.
         /// </summary>
         public string Code
         {
@@ -43,7 +43,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _message;
         
         /// <summary>
-        /// Optional. Message for OperationStatusError
+        /// Optional. Error message that maybe displayed to the end user
+        /// regarding the operation failure.
         /// </summary>
         public string Message
         {

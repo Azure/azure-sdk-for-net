@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a Azure SQL ProtectedItem object.
+    /// Azure SQL workload-specific protected item.
     /// </summary>
     public partial class AzureSqlProtectedItem : ProtectedItem
     {
         private AzureSqlProtectedItemExtendedInfo _extendedInfo;
         
         /// <summary>
-        /// Optional. ExtendedInfo for the azure sql protected item
+        /// Optional. Extended info for this protected item.
         /// </summary>
         public AzureSqlProtectedItemExtendedInfo ExtendedInfo
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _protectedItemDataId;
         
         /// <summary>
-        /// Optional. Azure sql Protected Item Data Id
+        /// Optional. Data ID of this protected item.
         /// </summary>
         public string ProtectedItemDataId
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _protectionState;
         
         /// <summary>
-        /// Optional. ProtectionState for the azure sql protected item
+        /// Optional. State of protection of this protected item.
         /// </summary>
         public string ProtectionState
         {

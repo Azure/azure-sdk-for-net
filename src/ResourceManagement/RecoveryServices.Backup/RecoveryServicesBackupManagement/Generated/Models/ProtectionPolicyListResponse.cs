@@ -27,14 +27,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// List of protection policies as returned by the service with the list
+    /// policies call.
     /// </summary>
     public partial class ProtectionPolicyListResponse : AzureOperationResponse
     {
         private ProtectionPolicyResourceList _itemList;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. List of protection policies resources.
         /// </summary>
         public ProtectionPolicyResourceList ItemList
         {

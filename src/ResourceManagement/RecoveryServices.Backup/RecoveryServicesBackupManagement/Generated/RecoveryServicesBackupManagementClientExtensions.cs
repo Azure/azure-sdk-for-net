@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The GetOperationStatusByURL method returns the status of the
         /// specified operation. After calling an asynchronous operation, you
         /// can call GetOperationStatusByURL to determine whether the
-        /// operation has succeeded, failed, or is still in progress
+        /// operation has succeeded, failed, or is still in progress.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a OperationStatusResponse.
+        /// Response of the get operation status API calls.
         /// </returns>
         public static BackUpOperationStatusResponse GetOperationStatusByURL(this IRecoveryServicesBackupManagementClient operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The GetOperationStatusByURL method returns the status of the
         /// specified operation. After calling an asynchronous operation, you
         /// can call GetOperationStatusByURL to determine whether the
-        /// operation has succeeded, failed, or is still in progress
+        /// operation has succeeded, failed, or is still in progress.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a OperationStatusResponse.
+        /// Response of the get operation status API calls.
         /// </returns>
         public static Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(this IRecoveryServicesBackupManagementClient operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {

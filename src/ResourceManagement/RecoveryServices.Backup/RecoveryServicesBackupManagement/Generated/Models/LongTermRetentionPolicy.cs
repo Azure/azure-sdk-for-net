@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of LongTermRetentionPolicy object.
+    /// Long term retention policy.
     /// </summary>
     public partial class LongTermRetentionPolicy : RetentionPolicy
     {
         private DailyRetentionSchedule _dailySchedule;
         
         /// <summary>
-        /// Optional. DailyRetention Schedule of ProtectionPolicy.
+        /// Optional. Daily retention schedule of this protection policy.
         /// </summary>
         public DailyRetentionSchedule DailySchedule
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private MonthlyRetentionSchedule _monthlySchedule;
         
         /// <summary>
-        /// Optional. MonthlyRetention Schedule of ProtectionPolicy.
+        /// Optional. Monthly retention schedule of protection policy.
         /// </summary>
         public MonthlyRetentionSchedule MonthlySchedule
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private WeeklyRetentionSchedule _weeklySchedule;
         
         /// <summary>
-        /// Optional. WeeklyRetention Schedule of ProtectionPolicy.
+        /// Optional. Weekly retention schedule of protection policy.
         /// </summary>
         public WeeklyRetentionSchedule WeeklySchedule
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private YearlyRetentionSchedule _yearlySchedule;
         
         /// <summary>
-        /// Optional. YearlyRetention Schedule of ProtectionPolicy.
+        /// Optional. Yearly retention schedule of protection policy.
         /// </summary>
         public YearlyRetentionSchedule YearlySchedule
         {

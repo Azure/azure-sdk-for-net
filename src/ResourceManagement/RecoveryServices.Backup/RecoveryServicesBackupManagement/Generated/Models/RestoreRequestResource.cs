@@ -26,14 +26,16 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a RestoreRequestResource object.
+    /// Restore request resource.
     /// </summary>
     public partial class RestoreRequestResource
     {
         private RestoreRequest _properties;
         
         /// <summary>
-        /// Required. properties for RestoreRequest.
+        /// Required. Overloaded property representing the restore request.
+        /// Based on the type of workload, this property will be overloaded by
+        /// the corresponding derived objects.
         /// </summary>
         public RestoreRequest Properties
         {

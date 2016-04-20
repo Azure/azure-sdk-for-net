@@ -72,10 +72,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Result by URL API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='jobName'>
         /// Required.
@@ -87,8 +87,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public async Task<BaseRecoveryServicesJobResponse> BeginCancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -291,10 +290,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// specified by the name passed in the arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='jobName'>
         /// Required.
@@ -355,16 +354,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Export job.
+        /// Exports all jobs which satisfy the provided filters as a serialized
+        /// string to a blob for which you are given a SAS URL. The SAS URL
+        /// will expire within 15 minutes of its creation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryFilter'>
-        /// Optional. QueryFilter for ExportJob.
+        /// Optional. Query parameters for listing jobs to be exported.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
@@ -373,8 +374,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public async Task<BaseRecoveryServicesJobResponse> ExportJobAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -600,13 +600,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='jobName'>
-        /// Required. Job name  for GetOperationResult.
+        /// Required. Name of the job whose details are to be fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -1595,13 +1595,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// given the ID of the operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='operationId'>
-        /// Required. OperationId for GetOperationResult.
+        /// Required. ID of the operation whose jobs are to be exported.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -1610,7 +1610,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// Response object returned by the get operation result APIs.
         /// </returns>
         public async Task<GetOperationResultResponse> GetExportJobOperationResultAsync(string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -1835,16 +1835,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='jobName'>
-        /// Required. Job name  for GetOperationResult.
+        /// Required. Name of the job whose operation result has to be fetched.
         /// </param>
         /// <param name='operationId'>
-        /// Required. OperationId for GetOperationResult.
+        /// Required. ID of the operation whose operation result has to be
+        /// fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -2356,16 +2357,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// query filters and the pagination parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryFilter'>
-        /// Optional. QueryFilter for List job.
+        /// Optional. Query parameters for listing jobs.
         /// </param>
         /// <param name='paginationParams'>
-        /// Optional. Pagination parameter for skip token and top.
+        /// Optional. Pagination parameters for controlling the response.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.

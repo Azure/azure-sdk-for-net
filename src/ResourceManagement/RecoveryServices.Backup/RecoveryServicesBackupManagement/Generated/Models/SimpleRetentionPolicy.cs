@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of SimpleRetentionPolicy object.
+    /// Simple policy retention.
     /// </summary>
     public partial class SimpleRetentionPolicy : RetentionPolicy
     {

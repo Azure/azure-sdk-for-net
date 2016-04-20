@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyQueryParameters object.
+    /// The query filters that can be used with the list recovery points API.
     /// </summary>
     public partial class RecoveryPointQueryParameters
     {
         private string _endDate;
         
         /// <summary>
-        /// Optional. End Date query parametee.
+        /// Optional. Recovery points should have been created before this date.
         /// </summary>
         public string EndDate
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _startDate;
         
         /// <summary>
-        /// Optional. Start Date query parameter
+        /// Optional. Recovery points should have been created after this date.
         /// </summary>
         public string StartDate
         {

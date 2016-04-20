@@ -26,14 +26,17 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateResponse.
+    /// Response returned by the service for the create or update protected
+    /// item API call.
     /// </summary>
     public partial class ProtectedItemCreateOrUpdateResponse : BaseRecoveryServicesJobResponse
     {
         private ProtectedItemBase _item;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Overloaded property representing the protected item.
+        /// Based on the type of workload, this property will be overloaded by
+        /// the corresponding derived objects.
         /// </summary>
         public ProtectedItemBase Item
         {

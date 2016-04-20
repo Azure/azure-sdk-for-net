@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private BackupEngineResourceList _itemList;
         
         /// <summary>
-        /// Optional. List of backup engine resources
+        /// Optional. List of backup engine resources.
         /// </summary>
         public BackupEngineResourceList ItemList
         {

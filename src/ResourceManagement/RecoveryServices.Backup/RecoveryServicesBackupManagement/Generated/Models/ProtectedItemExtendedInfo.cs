@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemExtendedInfo object.
+    /// Base class for extended info to be used with protected item.
     /// </summary>
     public partial class ProtectedItemExtendedInfo
     {

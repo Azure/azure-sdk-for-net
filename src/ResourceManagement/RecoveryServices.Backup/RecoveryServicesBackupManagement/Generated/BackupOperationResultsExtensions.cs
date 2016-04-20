@@ -31,17 +31,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class BackupOperationResultsExtensions
     {
         /// <summary>
-        /// Get the Delete Item Operation Result by OperationId
+        /// Fetches the result of the operation triggered by the Backup API
+        /// given the ID of the operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IBackupOperationResults.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='operationId'>
         /// Required.
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// Response object returned by the get operation result APIs.
         /// </returns>
         public static GetOperationResultResponse GetBackupOperationResult(this IBackupOperationResults operations, string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -62,17 +63,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the Delete Item Operation Result by OperationId
+        /// Fetches the result of the operation triggered by the Backup API
+        /// given the ID of the operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IBackupOperationResults.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='operationId'>
         /// Required.
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// Response object returned by the get operation result APIs.
         /// </returns>
         public static Task<GetOperationResultResponse> GetBackupOperationResultAsync(this IBackupOperationResults operations, string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -102,7 +104,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// Response object returned by the get operation result APIs.
         /// </returns>
         public static GetOperationResultResponse GetBackupOperationResultByURL(this IBackupOperationResults operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
@@ -127,7 +129,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// Response object returned by the get operation result APIs.
         /// </returns>
         public static Task<GetOperationResultResponse> GetBackupOperationResultByURLAsync(this IBackupOperationResults operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {

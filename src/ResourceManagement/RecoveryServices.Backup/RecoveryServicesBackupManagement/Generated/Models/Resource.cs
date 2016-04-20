@@ -27,14 +27,15 @@ using Hyak.Common;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a Resource.
+    /// Base class for all resources used with the recovery services backup
+    /// vault.
     /// </summary>
     public partial class Resource
     {
         private string _eTag;
         
         /// <summary>
-        /// Optional. Optional ETag
+        /// Optional. Optional ETag.
         /// </summary>
         public string ETag
         {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Resource Id
+        /// Optional. Unique identifier of the resource.
         /// </summary>
         public string Id
         {
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Resource location
+        /// Optional. Azure region where this resource is located.
         /// </summary>
         public string Location
         {
@@ -67,7 +68,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Resource Name
+        /// Optional. Name of the resource.
         /// </summary>
         public string Name
         {
@@ -78,7 +79,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Resource tags
+        /// Optional. Resource tags.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -89,7 +90,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _type;
         
         /// <summary>
-        /// Optional. Resource type
+        /// Optional. Type of the resource.
         /// </summary>
         public string Type
         {

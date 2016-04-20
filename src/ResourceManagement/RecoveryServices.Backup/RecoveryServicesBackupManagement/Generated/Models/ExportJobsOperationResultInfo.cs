@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition for ExportJobsOperationResultInfo class.
+    /// Response object for the export jobs operation.
     /// </summary>
     public partial class ExportJobsOperationResultInfo : OperationResultInfoBase
     {
         private string _blobSasKey;
         
         /// <summary>
-        /// Optional. Blob SAS key for export job
+        /// Optional. SAS key to access the blob. It expires in 15 mins.
         /// </summary>
         public string BlobSasKey
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _blobUrl;
         
         /// <summary>
-        /// Optional. BlobUrl for export job
+        /// Optional. URL of the blob into which the serialized string of list
+        /// of jobs is exported.
         /// </summary>
         public string BlobUrl
         {

@@ -25,22 +25,22 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// Retention Schedule Format.
+    /// Retention schedule format.
     /// </summary>
     public static partial class RetentionScheduleFormat
     {
         /// <summary>
-        /// Invalid Retention Schedule Format.
+        /// Invalid retention schedule format.
         /// </summary>
         public const string Invalid = "Invalid";
         
         /// <summary>
-        /// Daily Retention Schedule Format.
+        /// Daily retention schedule format.
         /// </summary>
         public const string Daily = "Daily";
         
         /// <summary>
-        /// Weekly Retention Schedule Format.
+        /// Weekly retention schedule format.
         /// </summary>
         public const string Weekly = "Weekly";
     }

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     public static partial class ContainerType
     {
         /// <summary>
-        /// The Azure IaasVM container type.
+        /// The Azure IaaS VM container type.
         /// </summary>
         public const string IaasVMContainer = "IaasVMContainer";
         

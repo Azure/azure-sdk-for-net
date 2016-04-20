@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of RecoveryPointBase object.
+    /// Base class for recovery points.
     /// </summary>
     public partial class RecoveryPointBase
     {

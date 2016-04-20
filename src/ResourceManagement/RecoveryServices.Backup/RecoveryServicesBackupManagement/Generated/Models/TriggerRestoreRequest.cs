@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a TriggerRestoreRequest Object.
+    /// Request parameters to be used with the trigger restore API.
     /// </summary>
     public partial class TriggerRestoreRequest
     {
         private RestoreRequestResource _item;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Restore request resource.
         /// </summary>
         public RestoreRequestResource Item
         {

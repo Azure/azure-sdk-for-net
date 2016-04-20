@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of RetentionPolicy object.
+    /// Base class for policy retention.
     /// </summary>
     public partial class RetentionPolicy
     {

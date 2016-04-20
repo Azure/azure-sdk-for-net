@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a MabProtectionContainer object.
+    /// MAB workload-specific protected item.
     /// </summary>
     public partial class MabProtectionContainer : ProtectionContainer
     {
         private bool _canReRegister;
         
         /// <summary>
-        /// Optional. Specifies whether the container is re-registrable
+        /// Optional. Specifies whether the container is re-registrable.
         /// </summary>
         public bool CanReRegister
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private long _containerId;
         
         /// <summary>
-        /// Optional. ID of container
+        /// Optional. ID of container.
         /// </summary>
         public long ContainerId
         {

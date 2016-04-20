@@ -29,69 +29,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public static partial class Month
     {
-        /// <summary>
-        /// Invalid Month of the year.
-        /// </summary>
         public const string Invalid = "Invalid";
         
-        /// <summary>
-        /// January Month of the year.
-        /// </summary>
         public const string January = "January";
         
-        /// <summary>
-        /// February Month of the year.
-        /// </summary>
         public const string February = "February";
         
-        /// <summary>
-        /// March Month of the year.
-        /// </summary>
         public const string March = "March";
         
-        /// <summary>
-        /// April Month of the year.
-        /// </summary>
         public const string April = "April";
         
-        /// <summary>
-        /// May Month of the year.
-        /// </summary>
         public const string May = "May";
         
-        /// <summary>
-        /// June Month of the year.
-        /// </summary>
         public const string June = "June";
         
-        /// <summary>
-        /// July Month of the year.
-        /// </summary>
         public const string July = "July";
         
-        /// <summary>
-        /// August Month of the year.
-        /// </summary>
         public const string August = "August";
         
-        /// <summary>
-        /// September Month of the year.
-        /// </summary>
         public const string September = "September";
         
-        /// <summary>
-        /// October Month of the year.
-        /// </summary>
         public const string October = "October";
         
-        /// <summary>
-        /// November Month of the year.
-        /// </summary>
         public const string November = "November";
         
-        /// <summary>
-        /// December Month of the year.
-        /// </summary>
         public const string December = "December";
     }
 }

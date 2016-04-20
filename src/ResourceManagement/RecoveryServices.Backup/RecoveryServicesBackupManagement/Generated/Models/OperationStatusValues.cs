@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The enum for all supported type of OperationStatus
+    /// The enum for all supported type of operation status.
     /// </summary>
     public static partial class OperationStatusValues
     {

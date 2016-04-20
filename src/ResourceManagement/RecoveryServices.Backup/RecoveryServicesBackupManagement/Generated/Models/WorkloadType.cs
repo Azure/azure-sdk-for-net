@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The WorkloadType type.
+    /// Type of workload.
     /// </summary>
     public static partial class WorkloadType
     {

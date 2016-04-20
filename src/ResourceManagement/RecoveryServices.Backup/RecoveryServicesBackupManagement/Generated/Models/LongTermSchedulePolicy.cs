@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of LongTermSchedulePolicy object.
+    /// Long term policy schedule.
     /// </summary>
     public partial class LongTermSchedulePolicy : SchedulePolicy
     {

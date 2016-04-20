@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a AzureIaaSVmProtectedItemExtendedInfo object.
+    /// Azure IaaS VM workload-specific extended protected item info class.
     /// </summary>
     public partial class AzureIaaSVMProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
         private System.DateTime? _oldestRecoveryPoint;
         
         /// <summary>
-        /// Optional. OldestRecoveryPoint for the protected item
+        /// Optional. The oldest recovery point persisted for this protected
+        /// item in the service.
         /// </summary>
         public System.DateTime? OldestRecoveryPoint
         {
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private bool _policyInconsistent;
         
         /// <summary>
-        /// Optional. If DataSourcePolicy is inconsistent with global policy
+        /// Optional. Specifies if this protected item's policy is inconsistent
+        /// with the global policy.
         /// </summary>
         public bool PolicyInconsistent
         {
@@ -55,7 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private int _recoveryPointCount;
         
         /// <summary>
-        /// Optional. RecoveryPointCount for the protected item
+        /// Optional. Number of recovery points persisted for this protected
+        /// item in the service.
         /// </summary>
         public int RecoveryPointCount
         {

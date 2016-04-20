@@ -25,32 +25,32 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The RetentionDuration type.
+    /// Retention duration type.
     /// </summary>
     public static partial class RetentionDurationType
     {
         /// <summary>
-        /// Invalid RetentionDurationType of ProtectionPolicy.
+        /// Invalid retention duration type of protection policy.
         /// </summary>
         public const string Invalid = "Invalid";
         
         /// <summary>
-        /// Days RetentionDurationType of ProtectionPolicy.
+        /// Days retention duration type of protection policy.
         /// </summary>
         public const string Days = "Days";
         
         /// <summary>
-        /// Weeks RetentionDurationType of ProtectionPolicy.
+        /// Weeks retention duration type of protection policy.
         /// </summary>
         public const string Weeks = "Weeks";
         
         /// <summary>
-        /// Months RetentionDurationType of ProtectionPolicy.
+        /// Months retention duration type of protection policy.
         /// </summary>
         public const string Months = "Months";
         
         /// <summary>
-        /// Years RetentionDurationType of ProtectionPolicy.
+        /// Years retention duration type of protection policy.
         /// </summary>
         public const string Years = "Years";
     }

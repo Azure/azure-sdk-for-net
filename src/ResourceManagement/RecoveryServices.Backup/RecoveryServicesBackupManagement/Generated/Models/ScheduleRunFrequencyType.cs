@@ -25,17 +25,17 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The ScheduleRunFrequency type.
+    /// Schedule run frequency type.
     /// </summary>
     public static partial class ScheduleRunFrequencyType
     {
         /// <summary>
-        /// Daily Schedule Run Frequency.
+        /// Daily schedule run frequency.
         /// </summary>
         public const string Daily = "Daily";
         
         /// <summary>
-        /// Daily Schedule Run Frequency.
+        /// Daily schedule run frequency.
         /// </summary>
         public const string Weekly = "Weekly";
     }

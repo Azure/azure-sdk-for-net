@@ -71,23 +71,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Operation Result APIs.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Nme of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name for the protection containers.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public async Task<BaseRecoveryServicesJobResponse> BeginRefreshAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, CancellationToken cancellationToken)
         {
@@ -289,19 +288,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// of operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Required. Container Name for container operation.
+        /// Required. Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='operationId'>
-        /// Required. Operation ID of container operation.
+        /// Required. ID of the container operation whose result has to be
+        /// fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerResponse.
+        /// Protection container response.
         /// </returns>
         public async Task<ProtectionContainerResponse> GetContainerOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -507,13 +507,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSVMProtectionContainer azureIaaSVMProtectionContainerInstance = new AzureIaaSVMProtectionContainer();
                                     
-                                    JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
-                                    if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
-                                    {
-                                        string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
-                                        azureIaaSVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
-                                    }
-                                    
                                     JToken resourceGroupValue = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
                                     {
@@ -575,13 +568,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSClassicComputeVMProtectionContainer azureIaaSClassicComputeVMProtectionContainerInstance = new AzureIaaSClassicComputeVMProtectionContainer();
                                     
-                                    JToken virtualMachineVersionValue2 = propertiesValue["virtualMachineVersion"];
-                                    if (virtualMachineVersionValue2 != null && virtualMachineVersionValue2.Type != JTokenType.Null)
-                                    {
-                                        string virtualMachineVersionInstance2 = ((string)virtualMachineVersionValue2);
-                                        azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
-                                    }
-                                    
                                     JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
                                     {
@@ -642,13 +628,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "Microsoft.Compute/virtualMachines")
                                 {
                                     AzureIaaSComputeVMProtectionContainer azureIaaSComputeVMProtectionContainerInstance = new AzureIaaSComputeVMProtectionContainer();
-                                    
-                                    JToken virtualMachineVersionValue3 = propertiesValue["virtualMachineVersion"];
-                                    if (virtualMachineVersionValue3 != null && virtualMachineVersionValue3.Type != JTokenType.Null)
-                                    {
-                                        string virtualMachineVersionInstance3 = ((string)virtualMachineVersionValue3);
-                                        azureIaaSComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
-                                    }
                                     
                                     JToken resourceGroupValue3 = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue3 != null && resourceGroupValue3.Type != JTokenType.Null)
@@ -898,7 +877,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerResponse.
+        /// Protection container response.
         /// </returns>
         public async Task<ProtectionContainerResponse> GetContainerOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -1041,13 +1020,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSVMProtectionContainer azureIaaSVMProtectionContainerInstance = new AzureIaaSVMProtectionContainer();
                                     
-                                    JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
-                                    if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
-                                    {
-                                        string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
-                                        azureIaaSVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
-                                    }
-                                    
                                     JToken resourceGroupValue = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
                                     {
@@ -1109,13 +1081,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSClassicComputeVMProtectionContainer azureIaaSClassicComputeVMProtectionContainerInstance = new AzureIaaSClassicComputeVMProtectionContainer();
                                     
-                                    JToken virtualMachineVersionValue2 = propertiesValue["virtualMachineVersion"];
-                                    if (virtualMachineVersionValue2 != null && virtualMachineVersionValue2.Type != JTokenType.Null)
-                                    {
-                                        string virtualMachineVersionInstance2 = ((string)virtualMachineVersionValue2);
-                                        azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
-                                    }
-                                    
                                     JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
                                     {
@@ -1176,13 +1141,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "Microsoft.Compute/virtualMachines")
                                 {
                                     AzureIaaSComputeVMProtectionContainer azureIaaSComputeVMProtectionContainerInstance = new AzureIaaSComputeVMProtectionContainer();
-                                    
-                                    JToken virtualMachineVersionValue3 = propertiesValue["virtualMachineVersion"];
-                                    if (virtualMachineVersionValue3 != null && virtualMachineVersionValue3.Type != JTokenType.Null)
-                                    {
-                                        string virtualMachineVersionInstance3 = ((string)virtualMachineVersionValue3);
-                                        azureIaaSComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
-                                    }
                                     
                                     JToken resourceGroupValue3 = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue3 != null && resourceGroupValue3.Type != JTokenType.Null)
@@ -1422,16 +1380,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Refresh API given the ID of the operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='operationId'>
-        /// Required. Operation ID of refresh container operation.
+        /// Required. ID of the container operation whose result has to be
+        /// fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -1440,8 +1399,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public async Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -1610,8 +1568,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public async Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultByURLAsync(string operationResultLink, CancellationToken cancellationToken)
         {
@@ -1778,13 +1735,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// according to the query parameters supplied in the arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryParams'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Query parameters for listing protection containers.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
@@ -1793,7 +1750,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerListResponse.
+        /// List of protection containers returned as a response by the list
+        /// protection containers API.
         /// </returns>
         public async Task<ProtectionContainerListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -2005,13 +1963,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         {
                                             AzureIaaSVMProtectionContainer azureIaaSVMProtectionContainerInstance = new AzureIaaSVMProtectionContainer();
                                             
-                                            JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
-                                            if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
-                                            {
-                                                string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
-                                                azureIaaSVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
-                                            }
-                                            
                                             JToken resourceGroupValue = propertiesValue["resourceGroup"];
                                             if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
                                             {
@@ -2073,13 +2024,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         {
                                             AzureIaaSClassicComputeVMProtectionContainer azureIaaSClassicComputeVMProtectionContainerInstance = new AzureIaaSClassicComputeVMProtectionContainer();
                                             
-                                            JToken virtualMachineVersionValue2 = propertiesValue["virtualMachineVersion"];
-                                            if (virtualMachineVersionValue2 != null && virtualMachineVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string virtualMachineVersionInstance2 = ((string)virtualMachineVersionValue2);
-                                                azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
-                                            }
-                                            
                                             JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
                                             if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
                                             {
@@ -2140,13 +2084,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         if (typeName == "Microsoft.Compute/virtualMachines")
                                         {
                                             AzureIaaSComputeVMProtectionContainer azureIaaSComputeVMProtectionContainerInstance = new AzureIaaSComputeVMProtectionContainer();
-                                            
-                                            JToken virtualMachineVersionValue3 = propertiesValue["virtualMachineVersion"];
-                                            if (virtualMachineVersionValue3 != null && virtualMachineVersionValue3.Type != JTokenType.Null)
-                                            {
-                                                string virtualMachineVersionInstance3 = ((string)virtualMachineVersionValue3);
-                                                azureIaaSComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
-                                            }
                                             
                                             JToken resourceGroupValue3 = propertiesValue["resourceGroup"];
                                             if (resourceGroupValue3 != null && resourceGroupValue3.Type != JTokenType.Null)
@@ -2356,23 +2293,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// ready to be protected by your Recovery Services Vault.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name for the protection containers.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public async Task<BaseRecoveryServicesJobResponse> RefreshAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, CancellationToken cancellationToken)
         {
@@ -2431,13 +2367,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// the request, call Get Container Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='identityName'>
-        /// Required. Container Name of protectionContainers
+        /// Required. Name of the protection container to unregister.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
