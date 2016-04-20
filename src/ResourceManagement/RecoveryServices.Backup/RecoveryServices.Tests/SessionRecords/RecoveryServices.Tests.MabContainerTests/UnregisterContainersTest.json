@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/registeredIdentities/ADIT-DEV2.FAREAST.CORP.MICROSOFT.COM?api-version=2016-05-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9yZWdpc3RlcmVkSWRlbnRpdGllcy9BRElULURFVjIuRkFSRUFTVC5DT1JQLk1JQ1JPU09GVC5DT00/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/registeredIdentities/SWATIM-WIN8.FAREAST.CORP.MICROSOFT.COM?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9yZWdpc3RlcmVkSWRlbnRpdGllcy9TV0FUSU0tV0lOOC5GQVJFQVNULkNPUlAuTUlDUk9TT0ZULkNPTT9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "79ee554e-93bf-44da-a06a-d10a422c6828"
+          "29aad87c-0933-4af9-aa05-1228522815bd"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
@@ -25,29 +25,29 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e96fce64-62e9-4674-90bd-8c0aa0253e5c"
+          "32372ad1-1c50-4d75-9c6d-95961026518a"
         ],
         "x-ms-client-request-id": [
-          "79ee554e-93bf-44da-a06a-d10a422c6828",
-          "79ee554e-93bf-44da-a06a-d10a422c6828"
+          "29aad87c-0933-4af9-aa05-1228522815bd",
+          "29aad87c-0933-4af9-aa05-1228522815bd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1189"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "e96fce64-62e9-4674-90bd-8c0aa0253e5c"
+          "32372ad1-1c50-4d75-9c6d-95961026518a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160418T091003Z:e96fce64-62e9-4674-90bd-8c0aa0253e5c"
+          "CENTRALUS:20160420T132332Z:32372ad1-1c50-4d75-9c6d-95961026518a"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 18 Apr 2016 09:10:03 GMT"
+          "Wed, 20 Apr 2016 13:23:32 GMT"
         ]
       },
       "StatusCode": 204
