@@ -29,16 +29,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class BackupEngineListQueryParams
     {
-        private string _providerType;
+        private string _backupManagementType;
         
         /// <summary>
-        /// Optional. Type of provider for the backup engine. Possible values:
-        /// AzureIaasVM, MAB, DPM.
+        /// Optional. Backup management type for the backup engine. Possible
+        /// values: AzureIaasVM, MAB, DPM.
         /// </summary>
-        public string ProviderType
+        public string BackupManagementType
         {
-            get { return this._providerType; }
-            set { this._providerType = value; }
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
         }
         
         /// <summary>
