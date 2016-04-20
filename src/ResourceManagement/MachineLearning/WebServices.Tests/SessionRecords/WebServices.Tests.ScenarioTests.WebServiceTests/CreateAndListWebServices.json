@@ -1,0 +1,2362 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourcegroups/amlrg6415?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlZ3JvdXBzL2FtbHJnNjQxNT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "x-ms-client-request-id": [
+          "7775e141-765c-4ac5-a261-c1c2a34e5ece"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415\",\r\n  \"name\": \"amlrg6415\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "179"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "5422042b-067b-461a-98a8-b320616ff340"
+        ],
+        "x-ms-correlation-request-id": [
+          "5422042b-067b-461a-98a8-b320616ff340"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180230Z:5422042b-067b-461a-98a8-b320616ff340"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:02:29 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws2169?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czIxNjk/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"keys\": {\r\n      \"primary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==\",\r\n      \"secondary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo==\"\r\n    },\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\",\r\n      \"key\": \"WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA==\"\r\n    },\r\n    \"commitmentPlan\": {\r\n      \"id\": \"subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    }\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "5718"
+        ],
+        "x-ms-client-request-id": [
+          "deac94cb-8413-4eef-813d-d2dbb76461fd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws2169\",\r\n  \"name\": \"amlws2169\",\r\n  \"type\": \"Microsoft.MachineLearning/webServices\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"keys\": {\r\n      \"primary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==\",\r\n      \"secondary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo==\"\r\n    },\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\",\r\n      \"key\": \"WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA==\"\r\n    },\r\n    \"commitmentPlan\": {\r\n      \"id\": \"subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1\"\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5983"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4?api-version=2016-04-01-privatepreview"
+        ],
+        "Azure-AsyncOperationPercentComplete": [
+          "0"
+        ],
+        "x-ms-correlation-request-id": [
+          "955f656f-c9f8-4fe6-9f7f-3f336f1d8fc4"
+        ],
+        "x-ms-request-id": [
+          "97058a69-2075-4735-97b8-c29f6c0331e4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180235Z:955f656f-c9f8-4fe6-9f7f-3f336f1d8fc4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:02:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2JlZWNiNjQ1LWJhODctNDA2OC1iYTYyLTQxZmUxYThmOTNlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"name\": \"beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:02:40.7313895Z\",\r\n  \"percentComplete\": 0.11111111111111111\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "352"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "bbd91d88-95ee-4655-97d2-fed4c9d6863f"
+        ],
+        "x-ms-request-id": [
+          "fbfe9e75-3947-4c8e-ac39-25d1665bd7d3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14903"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180240Z:bbd91d88-95ee-4655-97d2-fed4c9d6863f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:02:40 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2JlZWNiNjQ1LWJhODctNDA2OC1iYTYyLTQxZmUxYThmOTNlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"name\": \"beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:02:40.7313895Z\",\r\n  \"percentComplete\": 0.33333333333333331\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "1ce0738b-b7a6-486f-91c4-a2efec4b5588"
+        ],
+        "x-ms-request-id": [
+          "9e0d1f6f-c97f-48dc-9741-fab485103c96"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14902"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180246Z:1ce0738b-b7a6-486f-91c4-a2efec4b5588"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:02:45 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2JlZWNiNjQ1LWJhODctNDA2OC1iYTYyLTQxZmUxYThmOTNlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"name\": \"beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:02:40.7313895Z\",\r\n  \"percentComplete\": 0.44444444444444442\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "48879c63-81b3-4396-8e03-9260f58051ea"
+        ],
+        "x-ms-request-id": [
+          "20d69544-99cd-4392-9105-2bbe9fc1a23c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14901"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180251Z:48879c63-81b3-4396-8e03-9260f58051ea"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:02:50 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2JlZWNiNjQ1LWJhODctNDA2OC1iYTYyLTQxZmUxYThmOTNlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"name\": \"beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:02:40.7313895Z\",\r\n  \"percentComplete\": 0.44444444444444442\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "691c9bcb-926c-479c-880b-0492e0a11a89"
+        ],
+        "x-ms-request-id": [
+          "1c98e7cc-fe58-495d-8c47-08f9455568d1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14900"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180256Z:691c9bcb-926c-479c-880b-0492e0a11a89"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:02:55 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2JlZWNiNjQ1LWJhODctNDA2OC1iYTYyLTQxZmUxYThmOTNlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"name\": \"beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:02:40.7313895Z\",\r\n  \"percentComplete\": 0.66666666666666663\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "67b4d255-6bf4-43f8-9f17-485e463f8130"
+        ],
+        "x-ms-request-id": [
+          "cfd5ef92-16c3-404e-8dfc-4df17671d251"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14899"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180301Z:67b4d255-6bf4-43f8-9f17-485e463f8130"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:00 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2JlZWNiNjQ1LWJhODctNDA2OC1iYTYyLTQxZmUxYThmOTNlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"name\": \"beecb645-ba87-4068-ba62-41fe1a8f93e4\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-04-20T18:02:40.7313895Z\",\r\n  \"endTime\": \"2016-04-20T18:03:00.9456779Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"error\": {\r\n    \"code\": \"InternalServerError\",\r\n    \"message\": \"An internal server error occurred. Please try again. If the problem persists, report it on the forums.\",\r\n    \"details\": [\r\n      {\r\n        \"code\": \"BackgroundJobFailed\",\r\n        \"message\": \"The background job handling this request failed.\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "712"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "02142489-e35e-4304-b17d-00fe687133e4"
+        ],
+        "x-ms-request-id": [
+          "587de7ed-aad9-430a-a2e1-e808e800d853"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14898"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180306Z:02142489-e35e-4304-b17d-00fe687133e4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:06 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws2169?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czIxNjk/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws2169\",\r\n  \"name\": \"amlws2169\",\r\n  \"type\": \"Microsoft.MachineLearning/webServices\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdOn\": \"2016-04-20T18:02:33.3139456Z\",\r\n    \"modifiedOn\": \"2016-04-20T18:03:00.9963818Z\",\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/64c11ae1c48b45ff8adf5e6fc6bf14a9/swagger\",\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\"\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        },\r\n        \"Location\": {\r\n          \"Uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5859"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "9af69f28-3a48-4b39-b714-9b3c80badb2b"
+        ],
+        "x-ms-request-id": [
+          "9de20d9a-7ba9-44ea-be96-3160c66ace5f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14897"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180307Z:9af69f28-3a48-4b39-b714-9b3c80badb2b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:07 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws8588?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czg1ODg/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"keys\": {\r\n      \"primary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==\",\r\n      \"secondary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo==\"\r\n    },\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\",\r\n      \"key\": \"WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA==\"\r\n    },\r\n    \"commitmentPlan\": {\r\n      \"id\": \"subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    }\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "5718"
+        ],
+        "x-ms-client-request-id": [
+          "57a8eb63-e762-46e3-8129-0e99ccf50083"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws8588\",\r\n  \"name\": \"amlws8588\",\r\n  \"type\": \"Microsoft.MachineLearning/webServices\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"keys\": {\r\n      \"primary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==\",\r\n      \"secondary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo==\"\r\n    },\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\",\r\n      \"key\": \"WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA==\"\r\n    },\r\n    \"commitmentPlan\": {\r\n      \"id\": \"subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1\"\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5983"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890?api-version=2016-04-01-privatepreview"
+        ],
+        "Azure-AsyncOperationPercentComplete": [
+          "0"
+        ],
+        "x-ms-correlation-request-id": [
+          "220f469e-3cee-4763-8e00-d08cfe350eae"
+        ],
+        "x-ms-request-id": [
+          "7223d79e-628b-437e-a150-6d34544f42ee"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180312Z:220f469e-3cee-4763-8e00-d08cfe350eae"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:11 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RkYTY4M2Q2LTgxMzgtNGU1Zi1hMThhLTY3NjdmZDExZDg5MD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"name\": \"dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"status\": \"Provisioning\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "289"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "9060d75e-1473-4f4a-b125-801c7ae20681"
+        ],
+        "x-ms-request-id": [
+          "d9676896-bbd9-4829-b798-06de1d3cdf15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14896"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180317Z:9060d75e-1473-4f4a-b125-801c7ae20681"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:16 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RkYTY4M2Q2LTgxMzgtNGU1Zi1hMThhLTY3NjdmZDExZDg5MD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"name\": \"dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:17.6983828Z\",\r\n  \"percentComplete\": 0.33333333333333331\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "a4da7c6c-42b3-47d8-b135-86ac66eb099f"
+        ],
+        "x-ms-request-id": [
+          "fc1f6ebe-929f-4178-8493-14c8ea93c87b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14893"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180322Z:a4da7c6c-42b3-47d8-b135-86ac66eb099f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:21 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RkYTY4M2Q2LTgxMzgtNGU1Zi1hMThhLTY3NjdmZDExZDg5MD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"name\": \"dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:17.6983828Z\",\r\n  \"percentComplete\": 0.44444444444444442\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "644845ea-928d-41dc-8250-0f4a0c287012"
+        ],
+        "x-ms-request-id": [
+          "e247650a-beda-454a-ad5b-af64910cdb94"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14892"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180327Z:644845ea-928d-41dc-8250-0f4a0c287012"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:27 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RkYTY4M2Q2LTgxMzgtNGU1Zi1hMThhLTY3NjdmZDExZDg5MD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"name\": \"dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:17.6983828Z\",\r\n  \"percentComplete\": 0.66666666666666663\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "2345ef41-37fa-4144-ba50-410f569adb49"
+        ],
+        "x-ms-request-id": [
+          "3f0cbd66-d408-4b2b-84a1-3498cde32fb5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14891"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180332Z:2345ef41-37fa-4144-ba50-410f569adb49"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:31 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RkYTY4M2Q2LTgxMzgtNGU1Zi1hMThhLTY3NjdmZDExZDg5MD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"name\": \"dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:17.6983828Z\",\r\n  \"percentComplete\": 0.66666666666666663\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "c9b9b35e-5442-42c4-970e-a50e3ecb6d6a"
+        ],
+        "x-ms-request-id": [
+          "76905ae6-abb2-4449-8abb-730aa04bdce3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14890"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180338Z:c9b9b35e-5442-42c4-970e-a50e3ecb6d6a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:37 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RkYTY4M2Q2LTgxMzgtNGU1Zi1hMThhLTY3NjdmZDExZDg5MD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"name\": \"dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:17.6983828Z\",\r\n  \"percentComplete\": 0.88888888888888884\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "10db6c10-5767-401c-8e12-3595b2b1f663"
+        ],
+        "x-ms-request-id": [
+          "e33a54a6-a8fd-42a4-8395-80bbe1432f8d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14889"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180343Z:10db6c10-5767-401c-8e12-3595b2b1f663"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:42 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RkYTY4M2Q2LTgxMzgtNGU1Zi1hMThhLTY3NjdmZDExZDg5MD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"name\": \"dda683d6-8138-4e5f-a18a-6767fd11d890\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-04-20T18:03:17.6983828Z\",\r\n  \"endTime\": \"2016-04-20T18:03:42.0715271Z\",\r\n  \"percentComplete\": 1.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "380"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "07ab81ea-6d31-4cf3-9be5-2a5714b2f255"
+        ],
+        "x-ms-request-id": [
+          "7b3323d6-1578-4eed-8636-e35b50361664"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14888"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180348Z:07ab81ea-6d31-4cf3-9be5-2a5714b2f255"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:48 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws8588?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czg1ODg/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws8588\",\r\n  \"name\": \"amlws8588\",\r\n  \"type\": \"Microsoft.MachineLearning/webServices\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdOn\": \"2016-04-20T18:03:10.0764667Z\",\r\n    \"modifiedOn\": \"2016-04-20T18:03:42.1361865Z\",\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/bf0ba72a67e046e397461b94a14a0d6f/swagger\",\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\"\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        },\r\n        \"Location\": {\r\n          \"Uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5859"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "c62e22b0-ccaf-4c9c-b0f8-acc81acfb848"
+        ],
+        "x-ms-request-id": [
+          "9d8f71d5-5822-4877-9759-6d62e4dade23"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14887"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180348Z:c62e22b0-ccaf-4c9c-b0f8-acc81acfb848"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:48 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws5149?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czUxNDk/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"keys\": {\r\n      \"primary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==\",\r\n      \"secondary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo==\"\r\n    },\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\",\r\n      \"key\": \"WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA==\"\r\n    },\r\n    \"commitmentPlan\": {\r\n      \"id\": \"subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    }\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "5718"
+        ],
+        "x-ms-client-request-id": [
+          "f2d12f46-a90c-490d-9198-a0acb8ae97db"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws5149\",\r\n  \"name\": \"amlws5149\",\r\n  \"type\": \"Microsoft.MachineLearning/webServices\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"keys\": {\r\n      \"primary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==\",\r\n      \"secondary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo==\"\r\n    },\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\",\r\n      \"key\": \"WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA==\"\r\n    },\r\n    \"commitmentPlan\": {\r\n      \"id\": \"subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1\"\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5983"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857?api-version=2016-04-01-privatepreview"
+        ],
+        "Azure-AsyncOperationPercentComplete": [
+          "0"
+        ],
+        "x-ms-correlation-request-id": [
+          "ea0a68d6-75e3-46d7-844e-c307e903acad"
+        ],
+        "x-ms-request-id": [
+          "790847c9-c087-4f7d-af2a-dc879e241cd9"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180350Z:ea0a68d6-75e3-46d7-844e-c307e903acad"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:50 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzLzlhOWVjNjYwLThhZTYtNGIwYy04ZjU1LTk5MTlkNjBiZDg1Nz9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"name\": \"9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:51.2608935Z\",\r\n  \"percentComplete\": 0.44444444444444442\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "0743deec-baff-403f-a28e-b7a1a529282c"
+        ],
+        "x-ms-request-id": [
+          "6a5dcacd-6e9d-49c3-834b-96d84700d8ad"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14886"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180355Z:0743deec-baff-403f-a28e-b7a1a529282c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:03:55 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzLzlhOWVjNjYwLThhZTYtNGIwYy04ZjU1LTk5MTlkNjBiZDg1Nz9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"name\": \"9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:51.2608935Z\",\r\n  \"percentComplete\": 0.55555555555555558\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a2b08ed-dfb1-435a-9ab1-206b9d534e32"
+        ],
+        "x-ms-request-id": [
+          "9b40cb8e-fdca-4e39-9e67-6e8a44ad4387"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14885"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180400Z:8a2b08ed-dfb1-435a-9ab1-206b9d534e32"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:00 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzLzlhOWVjNjYwLThhZTYtNGIwYy04ZjU1LTk5MTlkNjBiZDg1Nz9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"name\": \"9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:51.2608935Z\",\r\n  \"percentComplete\": 0.66666666666666663\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "b5d0acc8-fb8d-4f28-8e2a-1ca9f40429c5"
+        ],
+        "x-ms-request-id": [
+          "a4244675-98fd-40eb-9f32-cd399188faa6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14884"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180405Z:b5d0acc8-fb8d-4f28-8e2a-1ca9f40429c5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:05 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzLzlhOWVjNjYwLThhZTYtNGIwYy04ZjU1LTk5MTlkNjBiZDg1Nz9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"name\": \"9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:03:51.2608935Z\",\r\n  \"percentComplete\": 0.66666666666666663\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "353"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "b2547d9b-0faf-47d3-bb83-b318d41e84ac"
+        ],
+        "x-ms-request-id": [
+          "4be67504-9730-48ca-87ae-10dcdccde7f3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14883"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180411Z:b2547d9b-0faf-47d3-bb83-b318d41e84ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzLzlhOWVjNjYwLThhZTYtNGIwYy04ZjU1LTk5MTlkNjBiZDg1Nz9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"name\": \"9a9ec660-8ae6-4b0c-8f55-9919d60bd857\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-04-20T18:03:51.2608935Z\",\r\n  \"endTime\": \"2016-04-20T18:04:12.6611252Z\",\r\n  \"percentComplete\": 1.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "380"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "15c13771-8f28-4038-ac7b-439b1d843b44"
+        ],
+        "x-ms-request-id": [
+          "9c456cc7-5299-49e2-addf-8eef4c5ad0d9"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14882"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180416Z:15c13771-8f28-4038-ac7b-439b1d843b44"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:16 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws5149?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czUxNDk/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws5149\",\r\n  \"name\": \"amlws5149\",\r\n  \"type\": \"Microsoft.MachineLearning/webServices\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdOn\": \"2016-04-20T18:03:48.06391Z\",\r\n    \"modifiedOn\": \"2016-04-20T18:04:12.7261998Z\",\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/560c998779e44241bda31e9a7a70a1f2/swagger\",\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\"\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        },\r\n        \"Location\": {\r\n          \"Uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5857"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "00580a37-27b8-46d5-8f3b-de64c95f24a4"
+        ],
+        "x-ms-request-id": [
+          "3ddfe2b2-847a-44b6-ad14-eb2fdaeb6ab4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14881"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180416Z:00580a37-27b8-46d5-8f3b-de64c95f24a4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:16 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourcegroups/amlrg3653?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlZ3JvdXBzL2FtbHJnMzY1Mz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "x-ms-client-request-id": [
+          "9b0d2ed5-b988-4cff-819d-a87dac87034b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg3653\",\r\n  \"name\": \"amlrg3653\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "179"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "4352d014-e9ba-4a49-bdb9-2f200b67969d"
+        ],
+        "x-ms-correlation-request-id": [
+          "4352d014-e9ba-4a49-bdb9-2f200b67969d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180417Z:4352d014-e9ba-4a49-bdb9-2f200b67969d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:16 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg3653/providers/Microsoft.MachineLearning/webServices/amlws8607?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnMzY1My9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czg2MDc/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"keys\": {\r\n      \"primary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==\",\r\n      \"secondary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo==\"\r\n    },\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\",\r\n      \"key\": \"WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA==\"\r\n    },\r\n    \"commitmentPlan\": {\r\n      \"id\": \"subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    }\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "5718"
+        ],
+        "x-ms-client-request-id": [
+          "9aeac5f6-6ee3-4e90-9413-80f2fc421d38"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg3653/providers/Microsoft.MachineLearning/webServices/amlws8607\",\r\n  \"name\": \"amlws8607\",\r\n  \"type\": \"Microsoft.MachineLearning/webServices\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"keys\": {\r\n      \"primary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==\",\r\n      \"secondary\": \"S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo==\"\r\n    },\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\",\r\n      \"key\": \"WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA==\"\r\n    },\r\n    \"commitmentPlan\": {\r\n      \"id\": \"subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1\"\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5983"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4?api-version=2016-04-01-privatepreview"
+        ],
+        "Azure-AsyncOperationPercentComplete": [
+          "0"
+        ],
+        "x-ms-correlation-request-id": [
+          "ed4f15f7-fec5-4b19-8948-3b63548ecdd1"
+        ],
+        "x-ms-request-id": [
+          "69dfc195-b267-4dea-a520-0ab812c4a0cd"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180421Z:ed4f15f7-fec5-4b19-8948-3b63548ecdd1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:20 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RiN2EwZWJmLTAxOGMtNDYxNi1hNjcwLWY0Y2U2ZTdmODhlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"name\": \"db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:04:23.301719Z\",\r\n  \"percentComplete\": 0.22222222222222221\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "352"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "fcbde6bd-94d6-444b-946a-fc7faf4e6302"
+        ],
+        "x-ms-request-id": [
+          "a3ddcec6-8bf4-4b73-84c9-5a4584635faa"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14878"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180426Z:fcbde6bd-94d6-444b-946a-fc7faf4e6302"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RiN2EwZWJmLTAxOGMtNDYxNi1hNjcwLWY0Y2U2ZTdmODhlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"name\": \"db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:04:23.301719Z\",\r\n  \"percentComplete\": 0.44444444444444442\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "352"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "707d7b58-74ee-4033-97f1-a650e03e0659"
+        ],
+        "x-ms-request-id": [
+          "9ea4dec3-a0f5-4113-a457-0cfe99b9b934"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14877"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180431Z:707d7b58-74ee-4033-97f1-a650e03e0659"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:30 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RiN2EwZWJmLTAxOGMtNDYxNi1hNjcwLWY0Y2U2ZTdmODhlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"name\": \"db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:04:23.301719Z\",\r\n  \"percentComplete\": 0.44444444444444442\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "352"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "585628f5-a87e-4e70-83fe-06b827dfb107"
+        ],
+        "x-ms-request-id": [
+          "9adc56a9-1342-4a53-85e1-2b94dfbed4ee"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14876"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180436Z:585628f5-a87e-4e70-83fe-06b827dfb107"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RiN2EwZWJmLTAxOGMtNDYxNi1hNjcwLWY0Y2U2ZTdmODhlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"name\": \"db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2016-04-20T18:04:23.301719Z\",\r\n  \"percentComplete\": 0.55555555555555558\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "352"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "9b216e21-4a0a-4342-8fb5-45e9379be981"
+        ],
+        "x-ms-request-id": [
+          "726e24c6-47be-416d-a7a3-4cbec6c29f88"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14875"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180442Z:9b216e21-4a0a-4342-8fb5-45e9379be981"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:41 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2RiN2EwZWJmLTAxOGMtNDYxNi1hNjcwLWY0Y2U2ZTdmODhlND9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"name\": \"db7a0ebf-018c-4616-a670-f4ce6e7f88e4\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-04-20T18:04:23.301719Z\",\r\n  \"endTime\": \"2016-04-20T18:04:43.7299683Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"error\": {\r\n    \"code\": \"InternalServerError\",\r\n    \"message\": \"An internal server error occurred. Please try again. If the problem persists, report it on the forums.\",\r\n    \"details\": [\r\n      {\r\n        \"code\": \"BackgroundJobFailed\",\r\n        \"message\": \"The background job handling this request failed.\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "711"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "78a99d72-5814-422c-8f50-597c135e6ac7"
+        ],
+        "x-ms-request-id": [
+          "6f5abcc5-67f6-4d63-8175-22f1e747ae6f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14874"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180447Z:78a99d72-5814-422c-8f50-597c135e6ac7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:46 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg3653/providers/Microsoft.MachineLearning/webServices/amlws8607?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnMzY1My9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czg2MDc/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg3653/providers/Microsoft.MachineLearning/webServices/amlws8607\",\r\n  \"name\": \"amlws8607\",\r\n  \"type\": \"Microsoft.MachineLearning/webServices\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdOn\": \"2016-04-20T18:04:19.179994Z\",\r\n    \"modifiedOn\": \"2016-04-20T18:04:43.7837661Z\",\r\n    \"title\": \"TestMlService\",\r\n    \"description\": \"This is some service description\",\r\n    \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/2e01903675f84a659018bf460845a19e/swagger\",\r\n    \"readOnly\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"rpbestest1\"\r\n    },\r\n    \"assets\": {\r\n      \"asset1\": {\r\n        \"name\": \"Apply Math Operation\",\r\n        \"type\": \"Module\",\r\n        \"location\": {\r\n          \"uri\": \"aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675\"\r\n        }\r\n      },\r\n      \"asset2\": {\r\n        \"name\": \"Dataset\",\r\n        \"type\": \"Resource\",\r\n        \"location\": {\r\n          \"uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        },\r\n        \"outputPorts\": {\r\n          \"Results dataset\": {\r\n            \"type\": \"Dataset\"\r\n          }\r\n        },\r\n        \"Location\": {\r\n          \"Uri\": \"https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff\"\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"category\": \"Trigonometric\",\r\n      \"trigonometric Function\": \"Sin\",\r\n      \"column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n      \"output mode\": \"ResultOnly\"\r\n    },\r\n    \"input\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"input1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"output\": {\r\n      \"title\": \"\",\r\n      \"description\": \"\",\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"output1\": {\r\n          \"title\": \"\",\r\n          \"description\": \"\",\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"Class\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"sepal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-length\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            },\r\n            \"petal-width\": {\r\n              \"type\": \"Number\",\r\n              \"format\": \"Double\",\r\n              \"x-ms-isnullable\": false\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"packageType\": \"Graph\",\r\n    \"package\": {\r\n      \"nodes\": {\r\n        \"node1\": {\r\n          \"assetId\": \"asset2\"\r\n        },\r\n        \"node2\": {\r\n          \"inputId\": \"input1\"\r\n        },\r\n        \"node3\": {\r\n          \"assetId\": \"asset1\",\r\n          \"parameters\": {\r\n            \"Category\": \"Trigonometric\",\r\n            \"Trigonometric Function\": \"Sin\",\r\n            \"Column Set\": \"{\\\"isFilter\\\":true,\\\"rules\\\":[{\\\"ruleType\\\":\\\"ColumnTypes\\\",\\\"exclude\\\":false,\\\"columnTypes\\\":[\\\"Numeric\\\"],\\\"columnKinds\\\":[\\\"All\\\"]}]}\",\r\n            \"Output mode\": \"ResultOnly\"\r\n          }\r\n        },\r\n        \"node4\": {\r\n          \"outputId\": \"output1\"\r\n        }\r\n      },\r\n      \"edges\": [\r\n        {\r\n          \"sourceNodeId\": \"node1\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node2\",\r\n          \"targetNodeId\": \"node3\",\r\n          \"targetPortId\": \"Dataset\"\r\n        },\r\n        {\r\n          \"sourceNodeId\": \"node3\",\r\n          \"sourcePortId\": \"Results dataset\",\r\n          \"targetNodeId\": \"node4\"\r\n        }\r\n      ],\r\n      \"graphParameters\": {\r\n        \"Category\": {\r\n          \"description\": \"\",\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Category\"\r\n            }\r\n          ]\r\n        },\r\n        \"Trigonometric Function\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Trigonometric Function\"\r\n            }\r\n          ]\r\n        },\r\n        \"Column Set\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Column Set\"\r\n            }\r\n          ]\r\n        },\r\n        \"Output mode\": {\r\n          \"links\": [\r\n            {\r\n              \"nodeId\": \"node3\",\r\n              \"parameterKey\": \"Output mode\"\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5858"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "cf041908-ad37-412e-8612-ecb90befe4b2"
+        ],
+        "x-ms-request-id": [
+          "7831fd4e-87ea-4405-81e2-3453d722495e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14873"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180447Z:cf041908-ad37-412e-8612-ecb90befe4b2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:47 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcz9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "98379dba-41fc-4f59-a173-9217571aee0b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws2169\",\r\n      \"name\": \"amlws2169\",\r\n      \"type\": \"Microsoft.MachineLearning/webServices\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdOn\": \"2016-04-20T18:02:33.3139456Z\",\r\n        \"modifiedOn\": \"2016-04-20T18:03:00.9963818Z\",\r\n        \"title\": \"TestMlService\",\r\n        \"description\": \"This is some service description\",\r\n        \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/64c11ae1c48b45ff8adf5e6fc6bf14a9/swagger\",\r\n        \"readOnly\": false,\r\n        \"storageAccount\": {\r\n          \"name\": \"rpbestest1\"\r\n        },\r\n        \"packageType\": \"Graph\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws5149\",\r\n      \"name\": \"amlws5149\",\r\n      \"type\": \"Microsoft.MachineLearning/webServices\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdOn\": \"2016-04-20T18:03:48.06391Z\",\r\n        \"modifiedOn\": \"2016-04-20T18:04:12.7261998Z\",\r\n        \"title\": \"TestMlService\",\r\n        \"description\": \"This is some service description\",\r\n        \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/560c998779e44241bda31e9a7a70a1f2/swagger\",\r\n        \"readOnly\": false,\r\n        \"storageAccount\": {\r\n          \"name\": \"rpbestest1\"\r\n        },\r\n        \"packageType\": \"Graph\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws8588\",\r\n      \"name\": \"amlws8588\",\r\n      \"type\": \"Microsoft.MachineLearning/webServices\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdOn\": \"2016-04-20T18:03:10.0764667Z\",\r\n        \"modifiedOn\": \"2016-04-20T18:03:42.1361865Z\",\r\n        \"title\": \"TestMlService\",\r\n        \"description\": \"This is some service description\",\r\n        \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/bf0ba72a67e046e397461b94a14a0d6f/swagger\",\r\n        \"readOnly\": false,\r\n        \"storageAccount\": {\r\n          \"name\": \"rpbestest1\"\r\n        },\r\n        \"packageType\": \"Graph\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2669"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "e3067881-a626-4eb7-8743-6f28cb926f0e"
+        ],
+        "x-ms-request-id": [
+          "e8215704-7769-40d2-a3b7-00b3c2282dbd"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14872"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180447Z:e3067881-a626-4eb7-8743-6f28cb926f0e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:47 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/webServices?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL3dlYlNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDEtcHJpdmF0ZXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d73a3ef1-0c0c-4c70-99fe-a9b4ec95ef06"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws2169\",\r\n      \"name\": \"amlws2169\",\r\n      \"type\": \"Microsoft.MachineLearning/webServices\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdOn\": \"2016-04-20T18:02:33.3139456Z\",\r\n        \"modifiedOn\": \"2016-04-20T18:03:00.9963818Z\",\r\n        \"title\": \"TestMlService\",\r\n        \"description\": \"This is some service description\",\r\n        \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/64c11ae1c48b45ff8adf5e6fc6bf14a9/swagger\",\r\n        \"readOnly\": false,\r\n        \"storageAccount\": {\r\n          \"name\": \"rpbestest1\"\r\n        },\r\n        \"packageType\": \"Graph\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws5149\",\r\n      \"name\": \"amlws5149\",\r\n      \"type\": \"Microsoft.MachineLearning/webServices\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdOn\": \"2016-04-20T18:03:48.06391Z\",\r\n        \"modifiedOn\": \"2016-04-20T18:04:12.7261998Z\",\r\n        \"title\": \"TestMlService\",\r\n        \"description\": \"This is some service description\",\r\n        \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/560c998779e44241bda31e9a7a70a1f2/swagger\",\r\n        \"readOnly\": false,\r\n        \"storageAccount\": {\r\n          \"name\": \"rpbestest1\"\r\n        },\r\n        \"packageType\": \"Graph\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws8588\",\r\n      \"name\": \"amlws8588\",\r\n      \"type\": \"Microsoft.MachineLearning/webServices\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdOn\": \"2016-04-20T18:03:10.0764667Z\",\r\n        \"modifiedOn\": \"2016-04-20T18:03:42.1361865Z\",\r\n        \"title\": \"TestMlService\",\r\n        \"description\": \"This is some service description\",\r\n        \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/bf0ba72a67e046e397461b94a14a0d6f/swagger\",\r\n        \"readOnly\": false,\r\n        \"storageAccount\": {\r\n          \"name\": \"rpbestest1\"\r\n        },\r\n        \"packageType\": \"Graph\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg3653/providers/Microsoft.MachineLearning/webServices/amlws8607\",\r\n      \"name\": \"amlws8607\",\r\n      \"type\": \"Microsoft.MachineLearning/webServices\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"createdOn\": \"2016-04-20T18:04:19.179994Z\",\r\n        \"modifiedOn\": \"2016-04-20T18:04:43.7837661Z\",\r\n        \"title\": \"TestMlService\",\r\n        \"description\": \"This is some service description\",\r\n        \"swaggerLocation\": \"https://prepr-rrs.azureml-test.net/subscriptions/7b373400c82e453ba97bc53e14325b8b/services/2e01903675f84a659018bf460845a19e/swagger\",\r\n        \"readOnly\": false,\r\n        \"storageAccount\": {\r\n          \"name\": \"rpbestest1\"\r\n        },\r\n        \"packageType\": \"Graph\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3551"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "7427928a-542f-40b4-9436-eba9253b0a0a"
+        ],
+        "x-ms-request-id": [
+          "b0e689a3-f2d0-4b06-9f5d-193e3d837d1b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14871"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180448Z:7427928a-542f-40b4-9436-eba9253b0a0a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:48 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws2169?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czIxNjk/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ea626e76-0b5c-47ca-851d-e11d16227261"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9914a436-0d7a-480a-b6e8-ad442918595f?api-version=2016-04-01-privatepreview"
+        ],
+        "Azure-AsyncOperationPercentComplete": [
+          "0"
+        ],
+        "x-ms-correlation-request-id": [
+          "010db20d-c796-4fbf-a98b-3aad4de8795e"
+        ],
+        "x-ms-request-id": [
+          "f4fcf5be-8bab-4121-92ea-f8b8e7327f6b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180450Z:010db20d-c796-4fbf-a98b-3aad4de8795e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:49 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationresults/9914a436-0d7a-480a-b6e8-ad442918595f?api-version=2016-04-01-privatepreview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9914a436-0d7a-480a-b6e8-ad442918595f?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzLzk5MTRhNDM2LTBkN2EtNDgwYS1iNmU4LWFkNDQyOTE4NTk1Zj9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/9914a436-0d7a-480a-b6e8-ad442918595f\",\r\n  \"name\": \"9914a436-0d7a-480a-b6e8-ad442918595f\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-04-20T18:04:49.3275924Z\",\r\n  \"endTime\": \"2016-04-20T18:04:49.8657232Z\",\r\n  \"percentComplete\": 1.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "380"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "a00f969c-07c0-43d2-be94-bcbd918636ba"
+        ],
+        "x-ms-request-id": [
+          "c5653d6e-05ca-48b1-aaa6-6f317f88f04b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14870"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180455Z:a00f969c-07c0-43d2-be94-bcbd918636ba"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:55 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws8588?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czg1ODg/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9503d933-41dc-4810-ac22-4498fff19d57"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/12de56fc-ebb7-4b9b-a24b-0bce072a424d?api-version=2016-04-01-privatepreview"
+        ],
+        "Azure-AsyncOperationPercentComplete": [
+          "0"
+        ],
+        "x-ms-correlation-request-id": [
+          "a587b375-67fd-44cf-a692-9409d4173c3c"
+        ],
+        "x-ms-request-id": [
+          "b0673ae8-cb10-4f2a-baa8-e9aba87394f2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180455Z:a587b375-67fd-44cf-a692-9409d4173c3c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:04:55 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationresults/12de56fc-ebb7-4b9b-a24b-0bce072a424d?api-version=2016-04-01-privatepreview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/12de56fc-ebb7-4b9b-a24b-0bce072a424d?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzLzEyZGU1NmZjLWViYjctNGI5Yi1hMjRiLTBiY2UwNzJhNDI0ZD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/12de56fc-ebb7-4b9b-a24b-0bce072a424d\",\r\n  \"name\": \"12de56fc-ebb7-4b9b-a24b-0bce072a424d\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-04-20T18:04:56.6379533Z\",\r\n  \"endTime\": \"2016-04-20T18:04:57.5995512Z\",\r\n  \"percentComplete\": 1.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "380"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "ca16a096-fa12-41a0-a0ce-071569bf789f"
+        ],
+        "x-ms-request-id": [
+          "3fe59f6b-8641-4ce6-b873-cb9eb607b610"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14878"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180501Z:ca16a096-fa12-41a0-a0ce-071569bf789f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:05:00 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg6415/providers/Microsoft.MachineLearning/webServices/amlws5149?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnNjQxNS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czUxNDk/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a8605fd0-2dd3-4f8f-acd5-e48fac3762f0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/13a1967a-1b01-4d19-b511-e45bf092378f?api-version=2016-04-01-privatepreview"
+        ],
+        "Azure-AsyncOperationPercentComplete": [
+          "0"
+        ],
+        "x-ms-correlation-request-id": [
+          "347e0049-34b9-4d04-830c-0f02d07c265b"
+        ],
+        "x-ms-request-id": [
+          "693c05ee-a438-42ed-97bb-f1028e331a0d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180503Z:347e0049-34b9-4d04-830c-0f02d07c265b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:05:03 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationresults/13a1967a-1b01-4d19-b511-e45bf092378f?api-version=2016-04-01-privatepreview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/13a1967a-1b01-4d19-b511-e45bf092378f?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzLzEzYTE5NjdhLTFiMDEtNGQxOS1iNTExLWU0NWJmMDkyMzc4Zj9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/13a1967a-1b01-4d19-b511-e45bf092378f\",\r\n  \"name\": \"13a1967a-1b01-4d19-b511-e45bf092378f\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-04-20T18:05:03.8274518Z\",\r\n  \"endTime\": \"2016-04-20T18:05:04.3286894Z\",\r\n  \"percentComplete\": 1.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "380"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "a0b27f57-41a6-4957-9803-9110c57d814e"
+        ],
+        "x-ms-request-id": [
+          "10136232-c2f1-48e5-b33c-a18342a72320"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180514Z:a0b27f57-41a6-4957-9803-9110c57d814e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:05:13 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/amlrg3653/providers/Microsoft.MachineLearning/webServices/amlws8607?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Jlc291cmNlR3JvdXBzL2FtbHJnMzY1My9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czg2MDc/YXBpLXZlcnNpb249MjAxNi0wNC0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8269e9d2-5b83-4463-adef-1ec7bf5867dd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/fe820383-bfc4-4a90-ac50-db766f4c41a0?api-version=2016-04-01-privatepreview"
+        ],
+        "Azure-AsyncOperationPercentComplete": [
+          "0"
+        ],
+        "x-ms-correlation-request-id": [
+          "a0b80381-5564-4c2c-8aff-160144e57b6e"
+        ],
+        "x-ms-request-id": [
+          "ff6195e4-0ba8-4dc2-9779-90e339ea2445"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180515Z:a0b80381-5564-4c2c-8aff-160144e57b6e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:05:14 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationresults/fe820383-bfc4-4a90-ac50-db766f4c41a0?api-version=2016-04-01-privatepreview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/fe820383-bfc4-4a90-ac50-db766f4c41a0?api-version=2016-04-01-privatepreview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2IzNzM0MDAtYzgyZS00NTNiLWE5N2ItYzUzZTE0MzI1YjhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25zU3RhdHVzL2ZlODIwMzgzLWJmYzQtNGE5MC1hYzUwLWRiNzY2ZjRjNDFhMD9hcGktdmVyc2lvbj0yMDE2LTA0LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/providers/Microsoft.MachineLearning/locations/southcentralus/operationsStatus/fe820383-bfc4-4a90-ac50-db766f4c41a0\",\r\n  \"name\": \"fe820383-bfc4-4a90-ac50-db766f4c41a0\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-04-20T18:05:16.5078883Z\",\r\n  \"endTime\": \"2016-04-20T18:05:17.1330755Z\",\r\n  \"percentComplete\": 1.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "380"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "05caef24-cd2a-4389-90dc-723608764c45"
+        ],
+        "x-ms-request-id": [
+          "95a8648e-8c54-4ea3-bc95-5685d229e6a2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160420T180520Z:05caef24-cd2a-4389-90dc-723608764c45"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:05:19 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "RunAMLWebServiceTestScenario": [
+      "amlws2169",
+      "amlrg6415"
+    ],
+    "CreateAndListWebServices": [
+      "amlws8588",
+      "amlws5149",
+      "amlrg3653",
+      "amlws8607"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "7b373400-c82e-453b-a97b-c53e14325b8b"
+  }
+}

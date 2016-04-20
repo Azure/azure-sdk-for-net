@@ -29,23 +29,25 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the AssetItem class.
         /// </summary>
-        public AssetItem(string name = default(string), string type = default(string), AssetLocation location = default(AssetLocation), IDictionary<string, InputPort> inputPorts = default(IDictionary<string, InputPort>), IDictionary<string, OutputPort> outputPorts = default(IDictionary<string, OutputPort>))
+        public AssetItem(string name = default(string), string type = default(string), AssetLocation location = default(AssetLocation), IDictionary<string, InputPort> inputPorts = default(IDictionary<string, InputPort>), IDictionary<string, OutputPort> outputPorts = default(IDictionary<string, OutputPort>), IDictionary<string, string> metadata = default(IDictionary<string, string>), IList<ModuleAssetParameter> parameters = default(IList<ModuleAssetParameter>))
         {
             Name = name;
             Type = type;
             Location = location;
             InputPorts = inputPorts;
             OutputPorts = outputPorts;
+            Metadata = metadata;
+            Parameters = parameters;
         }
 
         /// <summary>
-        /// Module friendly name
+        /// Asset's friendly name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Module type
+        /// Asset's type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
@@ -64,6 +66,18 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "outputPorts")]
         public IDictionary<string, OutputPort> OutputPorts { get; set; }
+
+        /// <summary>
+        /// [TODO] Asset's metadata
+        /// </summary>
+        [JsonProperty(PropertyName = "metadata")]
+        public IDictionary<string, string> Metadata { get; set; }
+
+        /// <summary>
+        /// [TODO] Asset's parameters
+        /// </summary>
+        [JsonProperty(PropertyName = "parameters")]
+        public IList<ModuleAssetParameter> Parameters { get; set; }
 
     }
 }
