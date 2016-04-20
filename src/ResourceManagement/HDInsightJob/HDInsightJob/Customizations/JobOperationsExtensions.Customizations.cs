@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     public partial class JobOperationsExtensions
     {
         /// <summary>
-        /// Submits an Hive job to an HDInsight cluster.
+        /// Submits a Hive job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
 
         /// <summary>
-        /// Submits an Hive job to an HDInsight cluster.
+        /// Submits a Hive job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// </returns>
         public static Task<JobSubmissionResponse> SubmitHiveJobAsync(this IJobOperations operations, HiveJobSubmissionParameters parameters)
         {
-            return operations.SubmitHiveJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+            return operations.SubmitHiveJobAsync(parameters);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// </returns>
         public static Task<JobSubmissionResponse> SubmitMapReduceJobAsync(this IJobOperations operations, MapReduceJobSubmissionParameters parameters)
         {
-            return operations.SubmitMapReduceJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+            return operations.SubmitMapReduceJobAsync(parameters);
         }
 
         /// <summary>
@@ -131,11 +131,11 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// </returns>
         public static Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(this IJobOperations operations, MapReduceStreamingJobSubmissionParameters parameters)
         {
-            return operations.SubmitMapReduceStreamingJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+            return operations.SubmitMapReduceStreamingJobAsync(parameters);
         }
 
         /// <summary>
-        /// Submits an Pig job to an HDInsight cluster.
+        /// Submits a Pig job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
 
         /// <summary>
-        /// Submits an Pig job to an HDInsight cluster.
+        /// Submits a Pig job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -167,11 +167,11 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// </returns>
         public static Task<JobSubmissionResponse> SubmitPigJobAsync(this IJobOperations operations, PigJobSubmissionParameters parameters)
         {
-            return operations.SubmitPigJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+            return operations.SubmitPigJobAsync(parameters);
         }
 
         /// <summary>
-        /// Submits an Sqoop job to an HDInsight cluster.
+        /// Submits a Sqoop job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
 
         /// <summary>
-        /// Submits an Sqoop job to an HDInsight cluster.
+        /// Submits a Sqoop job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// </returns>
         public static Task<JobSubmissionResponse> SubmitSqoopJobAsync(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
         {
-            return operations.SubmitSqoopJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+            return operations.SubmitSqoopJobAsync(parameters);
         }
 
         /// <summary>
