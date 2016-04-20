@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupProtectionContainers?api-version=2016-05-01&$filter=providerType%20eq%20'MAB'",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBQcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDE2LTA1LTAxJiRmaWx0ZXI9cHJvdmlkZXJUeXBlJTIwZXElMjAnTUFCJw==",
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupProtectionContainers?api-version=2016-05-01&$filter=backupManagementType%20eq%20'MAB'",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBQcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDE2LTA1LTAxJiRmaWx0ZXI9YmFja3VwTWFuYWdlbWVudFR5cGUlMjBlcSUyMCdNQUIn",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

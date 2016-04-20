@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupEngines?api-version=2016-05-01&$filter=providerType%20eq%20'DPM'&$top=200",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBFbmdpbmVzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDEmJGZpbHRlcj1wcm92aWRlclR5cGUlMjBlcSUyMCdEUE0nJiR0b3A9MjAw",
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupEngines?api-version=2016-05-01&$filter=backupManagementType%20eq%20'DPM'&$top=200",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBFbmdpbmVzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDEmJGZpbHRlcj1iYWNrdXBNYW5hZ2VtZW50VHlwZSUyMGVxJTIwJ0RQTScmJHRvcD0yMDA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
