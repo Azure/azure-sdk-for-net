@@ -136,7 +136,8 @@ namespace Microsoft.Azure.Management.Redis
         Task<AzureOperationResponse<RedisListKeysResult>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string name, RedisRegenerateKeyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Reboot specified redis node(s). This operation requires write
-        /// permission to the cache resource.
+        /// permission to the cache resource. There can be potential data
+        /// loss.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

@@ -1324,7 +1324,7 @@ namespace Microsoft.Azure.Management.Redis
 
         /// <summary>
         /// Reboot specified redis node(s). This operation requires write permission
-        /// to the cache resource.
+        /// to the cache resource. There can be potential data loss.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
