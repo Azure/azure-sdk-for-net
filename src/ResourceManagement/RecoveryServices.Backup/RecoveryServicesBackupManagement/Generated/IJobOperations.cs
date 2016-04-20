@@ -28,12 +28,18 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Job operations for the Azure Backup extension.
+    /// The Resource Manager API includes operations for managing the jobs
+    /// created by various operations on a given item protected by your
+    /// Recovery Services Vault.
     /// </summary>
     public partial interface IJobOperations
     {
         /// <summary>
-        /// Cancel the job.
+        /// The Begin Cancel Job Operation sends a request to cancel the job
+        /// specified by the name passed in the arguments. This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call Get Cancel Operation
+        /// Result by URL API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -51,7 +57,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> BeginCancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Cancel Job Operation sends a request to cancel the job
+        /// specified by the name passed in the arguments.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Job response as returned by the operation result APIs.
+        /// </returns>
+        Task<JobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Export job.
@@ -78,7 +105,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<BaseRecoveryServicesJobResponse> ExportJobAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the details of specific job Objects.
+        /// Gets Exteded Info for the job specified by the name passed in the
+        /// arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -96,12 +124,29 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
         Task<JobResponse> GetAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the operation result of specific job.
+        /// Fetches the result of the refresh operation triggered by the Begin
+        /// Cancel Job operation given the URL for tracking the operation as
+        /// returned by the Begin Cancel Job operation.
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Location value returned by operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Job response as returned by the operation result APIs.
+        /// </returns>
+        Task<JobResponse> GetCancelOperationResultByURLAsync(string operationResultLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Fetches the result of the operation triggered by the Export Job API
+        /// given the ID of the operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -124,7 +169,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<GetOperationResultResponse> GetExportJobOperationResultAsync(string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the operation result of specific job.
+        /// Fetches the result of any operation on the job given the ID of the
+        /// operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -145,12 +191,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
         Task<JobResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string jobName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the list  of jobs.
+        /// Lists all the jobs in your Recovery Services Vault according to the
+        /// query filters and the pagination parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -171,7 +218,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a JobListResponse.
+        /// List of job responses as returned by the list jobs API.
         /// </returns>
         Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }

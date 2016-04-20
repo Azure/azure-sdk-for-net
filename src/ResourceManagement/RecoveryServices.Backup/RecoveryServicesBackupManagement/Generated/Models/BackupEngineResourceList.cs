@@ -28,14 +28,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a BackupEngineResourceList.
+    /// List of backup engine resources as returned by the backend service in
+    /// the list backup engines operation.
     /// </summary>
     public partial class BackupEngineResourceList
     {
         private IList<BackupEngineResource> _backupEngines;
         
         /// <summary>
-        /// Optional. List of BackupEngine.
+        /// Optional. List of backup engines.
         /// </summary>
         public IList<BackupEngineResource> BackupEngines
         {
@@ -46,7 +47,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _nextLink;
         
         /// <summary>
-        /// Optional. Next Link
+        /// Optional. Tracking url if there are still pending items in the
+        /// service.
         /// </summary>
         public string NextLink
         {

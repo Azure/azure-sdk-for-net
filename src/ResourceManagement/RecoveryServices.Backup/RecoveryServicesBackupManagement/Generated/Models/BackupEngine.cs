@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of BackupEngine object.
+    /// The backup engine class.
     /// </summary>
     public partial class BackupEngine
     {

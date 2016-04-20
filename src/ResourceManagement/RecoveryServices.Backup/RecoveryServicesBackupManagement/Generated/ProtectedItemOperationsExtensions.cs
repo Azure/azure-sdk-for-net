@@ -31,7 +31,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class ProtectedItemOperationsExtensions
     {
         /// <summary>
-        /// Create Or Update ProtectedItem.
+        /// The Create Or Update Protected Item Operation is used to enable
+        /// protection of an item within a container or to modify the
+        /// protection of an already protected item. In the case of enable
+        /// protection, this operation creates a new protected item entity in
+        /// the backend service. In the case of modify protection, this
+        /// operation updates the already created entity in the backend
+        /// service. This is an asynchronous operation. To determine whether
+        /// the backend service has finished processing the request, call the
+        /// Get Item Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -72,7 +80,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Create Or Update ProtectedItem.
+        /// The Create Or Update Protected Item Operation is used to enable
+        /// protection of an item within a container or to modify the
+        /// protection of an already protected item. In the case of enable
+        /// protection, this operation creates a new protected item entity in
+        /// the backend service. In the case of modify protection, this
+        /// operation updates the already created entity in the backend
+        /// service. This is an asynchronous operation. To determine whether
+        /// the backend service has finished processing the request, call the
+        /// Get Item Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -109,7 +125,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Delete the specified protected item.
+        /// The Delete Protected Item Operation is used to disable protection
+        /// of an item within a container. This operation marks the already
+        /// existing protected item entity as not protected in the backend
+        /// service. This is an asynchronous operation. To determine whether
+        /// the backend service has finished processing the request, call the
+        /// Get Item Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -147,7 +168,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Delete the specified protected item.
+        /// The Delete Protected Item Operation is used to disable protection
+        /// of an item within a container. This operation marks the already
+        /// existing protected item entity as not protected in the backend
+        /// service. This is an asynchronous operation. To determine whether
+        /// the backend service has finished processing the request, call the
+        /// Get Item Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -181,7 +207,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the details of specific protected Objects.
+        /// Gets Info for the given item present in the given container
+        /// specified by the names passed in the arguments. When the query
+        /// parameter is used to pass the expand flag, this operation would
+        /// return the extended info as well for the given item.This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call the Get Item Operation
+        /// Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -221,7 +253,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the details of specific protected Objects.
+        /// Gets Info for the given item present in the given container
+        /// specified by the names passed in the arguments. When the query
+        /// parameter is used to pass the expand flag, this operation would
+        /// return the extended info as well for the given item.This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call the Get Item Operation
+        /// Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -257,7 +295,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get ProtectedObject Operation result by OperationId.
+        /// Fetches the result of any operation on the protected item given the
+        /// ID of operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -297,7 +336,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get ProtectedObject Operation result by OperationId.
+        /// Fetches the result of any operation on the protected item given the
+        /// ID of operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -333,129 +373,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the operation stauts of specific operationId.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectedItemOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Required.
-        /// </param>
-        /// <param name='containerName'>
-        /// Required.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Required.
-        /// </param>
-        /// <param name='operationId'>
-        /// Required.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        public static BackUpOperationStatusResponse GetOperationStatus(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IProtectedItemOperations)s).GetOperationStatusAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, operationId, customRequestHeaders);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Get the operation stauts of specific operationId.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectedItemOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Required.
-        /// </param>
-        /// <param name='containerName'>
-        /// Required.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Required.
-        /// </param>
-        /// <param name='operationId'>
-        /// Required.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        public static Task<BackUpOperationStatusResponse> GetOperationStatusAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
-        {
-            return operations.GetOperationStatusAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, operationId, customRequestHeaders, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Get the operation stauts of specific URL
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectedItemOperations.
-        /// </param>
-        /// <param name='operationResultLink'>
-        /// Required. Location value returned by operation.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        public static BackUpOperationStatusResponse GetOperationStatusByURL(this IProtectedItemOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IProtectedItemOperations)s).GetOperationStatusByURLAsync(operationResultLink, customRequestHeaders);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Get the operation stauts of specific URL
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectedItemOperations.
-        /// </param>
-        /// <param name='operationResultLink'>
-        /// Required. Location value returned by operation.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        public static Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(this IProtectedItemOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
-        {
-            return operations.GetOperationStatusByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Get ProtectedObject Operation result by URL.
+        /// Fetches the result of any operation on the protected item given the
+        /// URL for tracking the operation as returned by APIs such as Create
+        /// Or Update, Delete etc.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -480,7 +400,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get ProtectedObject Operation result by URL.
+        /// Fetches the result of any operation on the protected item given the
+        /// URL for tracking the operation as returned by APIs such as Create
+        /// Or Update, Delete etc.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -501,7 +423,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all protected Objects.
+        /// Lists all the items protected by your Recovery Services Vault
+        /// according to the query and pagination parameters supplied in the
+        /// arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -535,7 +459,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all protected Objects.
+        /// Lists all the items protected by your Recovery Services Vault
+        /// according to the query and pagination parameters supplied in the
+        /// arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

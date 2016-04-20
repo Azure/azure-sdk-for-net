@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a DpmBackupEngine object.
+    /// The Data Protection Manager (DPM) workload specific backup engine.
     /// </summary>
     public partial class DpmBackupEngine : BackupEngineBase
     {

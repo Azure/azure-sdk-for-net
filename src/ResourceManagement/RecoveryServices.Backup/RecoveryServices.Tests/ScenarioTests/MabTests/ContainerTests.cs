@@ -32,6 +32,7 @@ namespace RecoveryServices.Tests
 {
     public class MabContainerTests : RecoveryServicesTestsBase
     {        
+        [Fact]
         public void ListContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -42,7 +43,7 @@ namespace RecoveryServices.Tests
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
                 ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                queryParams.ProviderType = ProviderType.MAB.ToString();
+                queryParams.BackupManagementType = BackupManagementType.MAB.ToString();
 
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
                 ProtectionContainerListResponse response = containerTestHelper.ListMABContainers(queryParams);

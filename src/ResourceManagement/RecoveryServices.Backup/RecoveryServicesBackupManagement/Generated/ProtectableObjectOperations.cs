@@ -34,8 +34,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Protectable Object operations for the Azure Backup
-    /// extension.
+    /// The Resource Manager API includes operations for managing the
+    /// protectable objects registered to your Recovery Services Vault.
     /// </summary>
     internal partial class ProtectableObjectOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IProtectableObjectOperations
     {
@@ -62,7 +62,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Lists all the protectable objects within your subscription
+        /// according to the query filter and the pagination parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -83,7 +84,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectableObjectListResponse.
+        /// List of protectable object resonses as returned by the list
+        /// protectable objects API.
         /// </returns>
         public async Task<ProtectableObjectListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -131,17 +133,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
-            if (queryFilter != null && queryFilter.ProviderType != null)
+            if (queryFilter != null && queryFilter.BackupManagementType != null)
             {
-                odataFilter.Add("ProviderType eq '" + Uri.EscapeDataString(queryFilter.ProviderType) + "'");
+                odataFilter.Add("backupManagementType eq '" + Uri.EscapeDataString(queryFilter.BackupManagementType) + "'");
             }
             if (queryFilter != null && queryFilter.Status != null)
             {
-                odataFilter.Add("Status eq '" + Uri.EscapeDataString(queryFilter.Status) + "'");
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(queryFilter.Status) + "'");
             }
             if (queryFilter != null && queryFilter.FriendlyName != null)
             {
-                odataFilter.Add("FriendlyName eq '" + Uri.EscapeDataString(queryFilter.FriendlyName) + "'");
+                odataFilter.Add("friendlyName eq '" + Uri.EscapeDataString(queryFilter.FriendlyName) + "'");
             }
             if (odataFilter.Count > 0)
             {

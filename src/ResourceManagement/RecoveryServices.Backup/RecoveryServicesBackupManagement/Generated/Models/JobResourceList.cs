@@ -28,14 +28,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobResourceList.
+    /// List of job resources.
     /// </summary>
     public partial class JobResourceList
     {
         private string _nextLink;
         
         /// <summary>
-        /// Optional. Next Link
+        /// Optional. Tracking url if there are still pending items in the
+        /// service.
         /// </summary>
         public string NextLink
         {
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<JobResource> _value;
         
         /// <summary>
-        /// Optional. List of Job responses.
+        /// Optional. List of job resources.
         /// </summary>
         public IList<JobResource> Value
         {

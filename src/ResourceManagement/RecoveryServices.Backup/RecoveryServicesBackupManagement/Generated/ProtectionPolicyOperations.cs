@@ -37,8 +37,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Protection Policy operations for the Azure Backup
-    /// extension.
+    /// The Resource Manager API includes operations for managing protection
+    /// policies defined for your Recovery Services Vault
     /// </summary>
     internal partial class ProtectionPolicyOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IProtectionPolicyOperations
     {
@@ -65,7 +65,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Create new Protection Policy.
+        /// The Create Or Update Protection Policy Operation is used to create
+        /// or modify a protection policy which is used in the context of a
+        /// protected item.This is an asynchronous operation. To determine
+        /// whether the backend service has finished processing the request,
+        /// call the Get Policy Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -1005,6 +1009,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
                         }
                         
                     }
@@ -1046,7 +1057,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Delete a Protection Policy.
+        /// The Delete Protected Policy Operation is used to delete the
+        /// specified policy from your Recovery Services Vault. This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call the Get Policy Operation
+        /// Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -1205,7 +1220,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Gets Info for the given policy present in your Recovery Services
+        /// Vault as specified by the name passed in the arguments.This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call the Get Policy Operation
+        /// Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -1778,6 +1797,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
                         }
                         
                     }
@@ -1807,7 +1833,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the result of Protection policy operation by OperationId.
+        /// Fetches the result of any operation on the protection policy given
+        /// the ID of operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -2390,6 +2417,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
                         }
                         
                     }
@@ -2431,518 +2465,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of Protection policy operation by OperationId.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='policyName'>
-        /// Required. The protection policy Name to be updated.
-        /// </param>
-        /// <param name='operationId'>
-        /// Required. OperationId to get operation result.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        public async Task<BackUpOperationStatusResponse> GetOperationStatusAsync(string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (policyName == null)
-            {
-                throw new ArgumentNullException("policyName");
-            }
-            if (operationId == null)
-            {
-                throw new ArgumentNullException("operationId");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("policyName", policyName);
-                tracingParameters.Add("operationId", operationId);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/Subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
-            url = url + "/";
-            url = url + "vaults";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/backupPolicies/";
-            url = url + Uri.EscapeDataString(policyName);
-            url = url + "/operations/";
-            url = url + Uri.EscapeDataString(operationId);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-05-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
-                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    BackUpOperationStatusResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new BackUpOperationStatusResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            BackUpOperationStatus operationStatusInstance = new BackUpOperationStatus();
-                            result.OperationStatus = operationStatusInstance;
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                operationStatusInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                operationStatusInstance.Name = nameInstance;
-                            }
-                            
-                            JToken statusValue = responseDoc["status"];
-                            if (statusValue != null && statusValue.Type != JTokenType.Null)
-                            {
-                                string statusInstance = ((string)statusValue);
-                                operationStatusInstance.Status = statusInstance;
-                            }
-                            
-                            JToken startTimeValue = responseDoc["startTime"];
-                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                            {
-                                string startTimeInstance = ((string)startTimeValue);
-                                operationStatusInstance.StartTime = startTimeInstance;
-                            }
-                            
-                            JToken endTimeValue = responseDoc["endTime"];
-                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                            {
-                                string endTimeInstance = ((string)endTimeValue);
-                                operationStatusInstance.EndTime = endTimeInstance;
-                            }
-                            
-                            JToken errorValue = responseDoc["error"];
-                            if (errorValue != null && errorValue.Type != JTokenType.Null)
-                            {
-                                OperationStatusError errorInstance = new OperationStatusError();
-                                operationStatusInstance.OperationStatusError = errorInstance;
-                                
-                                JToken codeValue = errorValue["code"];
-                                if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                {
-                                    string codeInstance = ((string)codeValue);
-                                    errorInstance.Code = codeInstance;
-                                }
-                                
-                                JToken messageValue = errorValue["message"];
-                                if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                {
-                                    string messageInstance = ((string)messageValue);
-                                    errorInstance.Message = messageInstance;
-                                }
-                            }
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                string typeName = ((string)propertiesValue["objectType"]);
-                                if (typeName == "OperationStatusJobExtendedInfo")
-                                {
-                                    OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
-                                    
-                                    JToken jobIdValue = propertiesValue["jobId"];
-                                    if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
-                                    {
-                                        string jobIdInstance = ((string)jobIdValue);
-                                        operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
-                                    }
-                                    operationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
-                                }
-                                if (typeName == "OperationStatusJobsExtendedInfo")
-                                {
-                                    OperationStatusJobsExtendedInfo operationStatusJobsExtendedInfoInstance = new OperationStatusJobsExtendedInfo();
-                                    
-                                    JToken jobIdsArray = propertiesValue["jobIds"];
-                                    if (jobIdsArray != null && jobIdsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken jobIdsValue in ((JArray)jobIdsArray))
-                                        {
-                                            operationStatusJobsExtendedInfoInstance.JobIds.Add(((string)jobIdsValue));
-                                        }
-                                    }
-                                    
-                                    JToken failedJobsErrorSequenceElement = ((JToken)propertiesValue["failedJobsError"]);
-                                    if (failedJobsErrorSequenceElement != null && failedJobsErrorSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in failedJobsErrorSequenceElement)
-                                        {
-                                            string failedJobsErrorKey = ((string)property.Name);
-                                            string failedJobsErrorValue = ((string)property.Value);
-                                            operationStatusJobsExtendedInfoInstance.FailedJobsError.Add(failedJobsErrorKey, failedJobsErrorValue);
-                                        }
-                                    }
-                                    operationStatusInstance.Properties = operationStatusJobsExtendedInfoInstance;
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Get the status of Protection policy operation by URL.
-        /// </summary>
-        /// <param name='operationResultLink'>
-        /// Required. Location value returned by operation.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        public async Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (operationResultLink == null)
-            {
-                throw new ArgumentNullException("operationResultLink");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("operationResultLink", operationResultLink);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "GetOperationStatusByURLAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + operationResultLink;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
-                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    BackUpOperationStatusResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new BackUpOperationStatusResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            BackUpOperationStatus operationStatusInstance = new BackUpOperationStatus();
-                            result.OperationStatus = operationStatusInstance;
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                operationStatusInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                operationStatusInstance.Name = nameInstance;
-                            }
-                            
-                            JToken statusValue = responseDoc["status"];
-                            if (statusValue != null && statusValue.Type != JTokenType.Null)
-                            {
-                                string statusInstance = ((string)statusValue);
-                                operationStatusInstance.Status = statusInstance;
-                            }
-                            
-                            JToken startTimeValue = responseDoc["startTime"];
-                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                            {
-                                string startTimeInstance = ((string)startTimeValue);
-                                operationStatusInstance.StartTime = startTimeInstance;
-                            }
-                            
-                            JToken endTimeValue = responseDoc["endTime"];
-                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                            {
-                                string endTimeInstance = ((string)endTimeValue);
-                                operationStatusInstance.EndTime = endTimeInstance;
-                            }
-                            
-                            JToken errorValue = responseDoc["error"];
-                            if (errorValue != null && errorValue.Type != JTokenType.Null)
-                            {
-                                OperationStatusError errorInstance = new OperationStatusError();
-                                operationStatusInstance.OperationStatusError = errorInstance;
-                                
-                                JToken codeValue = errorValue["code"];
-                                if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                {
-                                    string codeInstance = ((string)codeValue);
-                                    errorInstance.Code = codeInstance;
-                                }
-                                
-                                JToken messageValue = errorValue["message"];
-                                if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                {
-                                    string messageInstance = ((string)messageValue);
-                                    errorInstance.Message = messageInstance;
-                                }
-                            }
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                string typeName = ((string)propertiesValue["objectType"]);
-                                if (typeName == "OperationStatusJobExtendedInfo")
-                                {
-                                    OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
-                                    
-                                    JToken jobIdValue = propertiesValue["jobId"];
-                                    if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
-                                    {
-                                        string jobIdInstance = ((string)jobIdValue);
-                                        operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
-                                    }
-                                    operationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
-                                }
-                                if (typeName == "OperationStatusJobsExtendedInfo")
-                                {
-                                    OperationStatusJobsExtendedInfo operationStatusJobsExtendedInfoInstance = new OperationStatusJobsExtendedInfo();
-                                    
-                                    JToken jobIdsArray = propertiesValue["jobIds"];
-                                    if (jobIdsArray != null && jobIdsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken jobIdsValue in ((JArray)jobIdsArray))
-                                        {
-                                            operationStatusJobsExtendedInfoInstance.JobIds.Add(((string)jobIdsValue));
-                                        }
-                                    }
-                                    
-                                    JToken failedJobsErrorSequenceElement = ((JToken)propertiesValue["failedJobsError"]);
-                                    if (failedJobsErrorSequenceElement != null && failedJobsErrorSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in failedJobsErrorSequenceElement)
-                                        {
-                                            string failedJobsErrorKey = ((string)property.Name);
-                                            string failedJobsErrorValue = ((string)property.Value);
-                                            operationStatusJobsExtendedInfoInstance.FailedJobsError.Add(failedJobsErrorKey, failedJobsErrorValue);
-                                        }
-                                    }
-                                    operationStatusInstance.Properties = operationStatusJobsExtendedInfoInstance;
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Get the result of Protection policy operation by URL.
+        /// Fetches the result of any operation on the protection policy given
+        /// the URL for tracking the operation as returned by APIs such as
+        /// Create Or Update, Delete, Get etc.
         /// </summary>
         /// <param name='operationResultLink'>
         /// Required. Location value returned by operation.
@@ -3468,6 +2993,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
                         }
                         
                     }
@@ -3509,7 +3041,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Lists all the protection policies in your Recovery Services Vault
+        /// according to the query and pagination parameters supplied in the
+        /// arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.

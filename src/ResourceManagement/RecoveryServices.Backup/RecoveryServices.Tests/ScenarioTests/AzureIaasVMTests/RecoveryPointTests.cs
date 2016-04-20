@@ -30,7 +30,7 @@ using Microsoft.Azure;
 
 namespace RecoveryServices.Tests
 {
-    class RecoveryPointTests : RecoveryServicesTestsBase
+    public class RecoveryPointTests : RecoveryServicesTestsBase
     {
         [Fact]
         public void ListRecoveryPointTest()
@@ -61,7 +61,7 @@ namespace RecoveryServices.Tests
                 queryFilter.StartDate = startTime.ToString("yyyy-MM-dd hh:mm:ss tt");
                 queryFilter.EndDate = endTime.ToString("yyyy-MM-dd hh:mm:ss tt");
 
-                var response = client.RecoveryPoint.List(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
+                var response = client.RecoveryPoints.List(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, queryFilter);
                 
                 Assert.NotNull(response.RecoveryPointList);
@@ -70,7 +70,6 @@ namespace RecoveryServices.Tests
                 foreach (var rpo in response.RecoveryPointList.RecoveryPoints)
                 {
                     Assert.True(!string.IsNullOrEmpty(rpo.Name), "RP Id cant be null");
-                    Assert.True(!string.IsNullOrEmpty(rpo.Location), "RP location cant be null");
                     RecoveryPoint rp = rpo.Properties as RecoveryPoint;
                     Assert.True(!string.IsNullOrEmpty(rp.RecoveryPointTime), "RecoveryPointTime can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(rp.SourceVMStorageType), "SourceVMStorageType can't be null or empty");
@@ -88,26 +87,24 @@ namespace RecoveryServices.Tests
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-                string resourceName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
-                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"]; string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
-                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRestore"];
                 string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
                 string containerUri = containeType + ";" + containerUniqueName;
 
-                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRestore"];
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string itemUri = itemType + ";" + itemUniqueName;
                 string rpId = ConfigurationManager.AppSettings["RecoveryPointName"];
                 
-                var response = client.RecoveryPoint.Get(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
+                var response = client.RecoveryPoints.Get(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, rpId);
 
                 var rpo = response.RecPoint;
                 Assert.NotNull(rpo);
                 Assert.True(!string.IsNullOrEmpty(rpo.Name), "RP Id cant be null");
-                Assert.True(!string.IsNullOrEmpty(rpo.Location), "RP location cant be null");
                 RecoveryPoint rp = rpo.Properties as RecoveryPoint;
                 Assert.True(!string.IsNullOrEmpty(rp.RecoveryPointTime), "RecoveryPointTime can't be null or empty");
                 Assert.True(!string.IsNullOrEmpty(rp.SourceVMStorageType), "SourceVMStorageType can't be null or empty");

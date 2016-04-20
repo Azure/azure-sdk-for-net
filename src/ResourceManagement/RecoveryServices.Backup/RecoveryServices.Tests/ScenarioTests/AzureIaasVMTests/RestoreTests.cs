@@ -30,7 +30,7 @@ using Microsoft.Azure;
 
 namespace RecoveryServices.Tests
 {
-    class RestoreDiskTests : RecoveryServicesTestsBase
+    public class RestoreDiskTests : RecoveryServicesTestsBase
     {
         [Fact]
         public void RestoreDiskTest()
@@ -51,8 +51,8 @@ namespace RecoveryServices.Tests
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-                string resourceName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
                 string containerUri = containeType + ";" + containerUniqueName;
                 string itemUri = itemType + ";" + itemUniqueName;
 
@@ -75,7 +75,7 @@ namespace RecoveryServices.Tests
                 triggerRestoreRequest.Item.Properties = new RestoreRequest();
                 triggerRestoreRequest.Item.Properties = restoreRequest;
 
-                var response = client.Restore.TriggerRestore(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
+                var response = client.Restores.TriggerRestore(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, recoveryPointId, triggerRestoreRequest);
 
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);

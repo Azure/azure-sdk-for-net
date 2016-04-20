@@ -26,10 +26,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     public partial class ProtectableObjectListQueryParameters
     {
+        private string _backupManagementType;
+        
+        /// <summary>
+        /// Optional. BackupManagementType query parameter.
+        /// </summary>
+        public string BackupManagementType
+        {
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. friendly name query parameter
+        /// Optional. Friendly name query parameter.
         /// </summary>
         public string FriendlyName
         {
@@ -37,21 +48,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._friendlyName = value; }
         }
         
-        private string _providerType;
-        
-        /// <summary>
-        /// Optional. provider type query parameter
-        /// </summary>
-        public string ProviderType
-        {
-            get { return this._providerType; }
-            set { this._providerType = value; }
-        }
-        
         private string _status;
         
         /// <summary>
-        /// Optional. status query parameter
+        /// Optional. Protection status query parameter.
         /// </summary>
         public string Status
         {

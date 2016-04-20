@@ -28,14 +28,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a AzureIaaSVMJob object.
+    /// Azure IaaS VM workload-specifc job object.
     /// </summary>
     public partial class AzureIaaSVMJob : Job
     {
         private IList<JobSupportedAction> _actionsInfo;
         
         /// <summary>
-        /// Optional. Job ActionsInfo
+        /// Optional. List of supported actions on this job.
         /// </summary>
         public IList<JobSupportedAction> ActionsInfo
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private TimeSpan _duration;
         
         /// <summary>
-        /// Optional. Job Duration
+        /// Optional. Time elapsed during the execution of this job.
         /// </summary>
         public TimeSpan Duration
         {
@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<AzureIaaSVMErrorInfo> _errorDetails;
         
         /// <summary>
-        /// Optional. Job ErrorDetails
+        /// Optional. Details about errors that occured during the execution of
+        /// this job.
         /// </summary>
         public IList<AzureIaaSVMErrorInfo> ErrorDetails
         {
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private AzureIaaSVMJobExtendedInfo _extendedInfo;
         
         /// <summary>
-        /// Optional. Field to hold extended info of job
+        /// Optional. Extended info for this job.
         /// </summary>
         public AzureIaaSVMJobExtendedInfo ExtendedInfo
         {
@@ -79,7 +80,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional. Job VirtualMachineVersion
+        /// Optional. Specifies whether the item in the job's context is a
+        /// Classic or a Compute VM.
         /// </summary>
         public string VirtualMachineVersion
         {

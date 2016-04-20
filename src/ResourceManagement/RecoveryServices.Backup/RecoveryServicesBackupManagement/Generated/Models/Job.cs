@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The common class for Job.
+    /// Defines some workload agnostic properties for a job.
     /// </summary>
     public partial class Job : JobBase
     {
         private string _activityId;
         
         /// <summary>
-        /// Optional. Job ActivityId
+        /// Optional. Activity ID of the job.
         /// </summary>
         public string ActivityId
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. Job Type
+        /// Optional. Type of backup management for the item in whose context
+        /// the job is executing.
         /// </summary>
         public string BackupManagementType
         {
@@ -55,7 +56,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private System.DateTime? _endTime;
         
         /// <summary>
-        /// Optional. Job EndTimestamp
+        /// Optional. Timestamp when this job ended its execution (if this job
+        /// already completed its execution).
         /// </summary>
         public System.DateTime? EndTime
         {
@@ -66,7 +68,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _entityFriendlyName;
         
         /// <summary>
-        /// Optional. Job EntityFriendlyName
+        /// Optional. Friendly name of the entity on which the current job is
+        /// being executed.
         /// </summary>
         public string EntityFriendlyName
         {
@@ -77,7 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _operation;
         
         /// <summary>
-        /// Optional. Job Operation
+        /// Optional. Name of the operation created by this job.
         /// </summary>
         public string Operation
         {
@@ -88,7 +91,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Optional. Job StartTimestamp
+        /// Optional. Timestamp when this job started its execution.
         /// </summary>
         public DateTime StartTime
         {
@@ -99,7 +102,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _status;
         
         /// <summary>
-        /// Optional. Job Status
+        /// Optional. Status of this job.
         /// </summary>
         public string Status
         {

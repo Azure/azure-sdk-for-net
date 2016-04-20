@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobResource.
+    /// Represents a single instance of a job resource.
     /// </summary>
     public partial class JobRequestObject : JobResource
     {

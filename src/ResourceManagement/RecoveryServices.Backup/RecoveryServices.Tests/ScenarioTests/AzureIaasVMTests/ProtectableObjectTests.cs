@@ -31,29 +31,33 @@ namespace RecoveryServices.Tests
 {
     public class ProtectableObjectTests : RecoveryServicesTestsBase
     {
+        [Fact]
         public void ListProtectableObjectTest()
         {
-            ExecuteTest(
-                client =>
-                {
-                    ProtectableObjectListQueryParameters queryParams = new ProtectableObjectListQueryParameters();
-                    queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
 
-                    PaginationRequest paginationParam = new PaginationRequest();
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                    ProtectableObjectTestHelper poTestHelper = new ProtectableObjectTestHelper(client);
-                    ProtectableObjectListResponse response = poTestHelper.ListProtectableObjects(queryParams, paginationParam);
+                ProtectableObjectListQueryParameters queryParams = new ProtectableObjectListQueryParameters();
 
-                    string protectableObjectFriendlyName = CommonTestHelper.GetSetting(TestConstants.RsVaultIaasV1POFriendlyName);
-                    Assert.True(
-                        response.ItemList.ProtectableObjects.Any(
-                            protectableObject =>
-                            {
-                                return protectableObject.Properties.GetType() == typeof(AzureIaaSClassicComputeVMProtectableItem) &&
-                                       protectableObject.Name == protectableObjectFriendlyName;
-                            }),
-                            "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectable Item");
-                });
+                PaginationRequest paginationParam = new PaginationRequest();
+
+                ProtectableObjectTestHelper poTestHelper = new ProtectableObjectTestHelper(client);
+                ProtectableObjectListResponse response = poTestHelper.ListProtectableObjects(queryParams, paginationParam);
+
+                string protectableObjectName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                Assert.True(
+                    response.ItemList.ProtectableObjects.Any(
+                        protectableObject =>
+                        {
+                            return protectableObject.Properties.GetType() == typeof(AzureIaaSClassicComputeVMProtectableItem) &&
+                                    protectableObject.Name == protectableObjectName;
+                        }),
+                        "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectable Item");
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobTaskDetails object.
+    /// Base class for job's task details.
     /// </summary>
     public partial class JobTaskDetails
     {

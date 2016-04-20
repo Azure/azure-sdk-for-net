@@ -24,12 +24,14 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public enum ProviderType
+    public enum BackupManagementType
     {
         AzureIaasVM = 0,
         
         MAB = 1,
         
         DPM = 2,
+        
+        AzureBackupServer = 3,
     }
 }

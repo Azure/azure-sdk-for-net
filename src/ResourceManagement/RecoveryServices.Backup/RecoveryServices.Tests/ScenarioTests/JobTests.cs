@@ -49,7 +49,7 @@ namespace RecoveryServices.Tests
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
                 CommonJobQueryFilters commonFilters = new CommonJobQueryFilters();
-                commonFilters.BackupManagementType = ProviderType.AzureIaasVM.ToString();
+                commonFilters.BackupManagementType = BackupManagementType.AzureIaasVM.ToString();
                 commonFilters.StartTime = (new DateTime(2016, 4, 12, 20, 0, 0)).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss tt");
                 commonFilters.EndTime = (new DateTime(2016, 4, 13, 20, 0, 0)).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss tt");
 

@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobQueryFilters object.
+    /// The query filters that can be used with the list jobs API.
     /// </summary>
     public partial class JobQueryFilters
     {

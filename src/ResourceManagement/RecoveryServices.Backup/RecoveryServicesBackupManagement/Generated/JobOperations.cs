@@ -28,6 +28,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Newtonsoft.Json.Linq;
@@ -35,7 +36,9 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Job operations for the Azure Backup extension.
+    /// The Resource Manager API includes operations for managing the jobs
+    /// created by various operations on a given item protected by your
+    /// Recovery Services Vault.
     /// </summary>
     internal partial class JobOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IJobOperations
     {
@@ -62,7 +65,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Cancel the job.
+        /// The Begin Cancel Job Operation sends a request to cancel the job
+        /// specified by the name passed in the arguments. This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call Get Cancel Operation
+        /// Result by URL API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -83,7 +90,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public async Task<BaseRecoveryServicesJobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<BaseRecoveryServicesJobResponse> BeginCancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -114,7 +121,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "CancelJobAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCancelJobAsync", tracingParameters);
             }
             
             // Construct URL
@@ -232,6 +239,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
                         }
                         
                     }
@@ -270,6 +284,74 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     httpRequest.Dispose();
                 }
             }
+        }
+        
+        /// <summary>
+        /// The Begin Cancel Job Operation sends a request to cancel the job
+        /// specified by the name passed in the arguments.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Job response as returned by the operation result APIs.
+        /// </returns>
+        public async Task<JobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            RecoveryServicesBackupManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "CancelJobAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            BaseRecoveryServicesJobResponse response = await client.Jobs.BeginCancelJobAsync(resourceGroupName, resourceName, jobName, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            JobResponse result = await client.Jobs.GetCancelOperationResultByURLAsync(response.Location, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == OperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Jobs.GetCancelOperationResultByURLAsync(response.Location, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -466,6 +548,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
                         }
                         
                     }
@@ -507,7 +596,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the details of specific job Objects.
+        /// Gets Exteded Info for the job specified by the name passed in the
+        /// arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -525,7 +615,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
         public async Task<JobResponse> GetAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -981,6 +1071,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue4 = responseDoc["Status"];
+                            if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance4 = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue4), true));
+                                result.Status = statusInstance4;
+                            }
                         }
                         
                     }
@@ -1010,7 +1107,492 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the operation result of specific job.
+        /// Fetches the result of the refresh operation triggered by the Begin
+        /// Cancel Job operation given the URL for tracking the operation as
+        /// returned by the Begin Cancel Job operation.
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Job response as returned by the operation result APIs.
+        /// </returns>
+        public async Task<JobResponse> GetCancelOperationResultByURLAsync(string operationResultLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationResultLink == null)
+            {
+                throw new ArgumentNullException("operationResultLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationResultLink", operationResultLink);
+                TracingAdapter.Enter(invocationId, this, "GetCancelOperationResultByURLAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationResultLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    JobResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JobResource itemInstance = new JobResource();
+                            result.Item = itemInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)propertiesValue["jobType"]);
+                                if (typeName == "Job")
+                                {
+                                    Job jobInstance = new Job();
+                                    
+                                    JToken activityIdValue = propertiesValue["activityId"];
+                                    if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
+                                    {
+                                        string activityIdInstance = ((string)activityIdValue);
+                                        jobInstance.ActivityId = activityIdInstance;
+                                    }
+                                    
+                                    JToken entityFriendlyNameValue = propertiesValue["entityFriendlyName"];
+                                    if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
+                                        jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                        jobInstance.BackupManagementType = backupManagementTypeInstance;
+                                    }
+                                    
+                                    JToken operationValue = propertiesValue["operation"];
+                                    if (operationValue != null && operationValue.Type != JTokenType.Null)
+                                    {
+                                        string operationInstance = ((string)operationValue);
+                                        jobInstance.Operation = operationInstance;
+                                    }
+                                    
+                                    JToken statusValue = propertiesValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        jobInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = propertiesValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        jobInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = propertiesValue["endTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        jobInstance.EndTime = endTimeInstance;
+                                    }
+                                    itemInstance.Properties = jobInstance;
+                                }
+                                if (typeName == "AzureIaaSVMJob")
+                                {
+                                    AzureIaaSVMJob azureIaaSVMJobInstance = new AzureIaaSVMJob();
+                                    
+                                    JToken durationValue = propertiesValue["duration"];
+                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                        azureIaaSVMJobInstance.Duration = durationInstance;
+                                    }
+                                    
+                                    JToken actionsInfoArray = propertiesValue["actionsInfo"];
+                                    if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
+                                        {
+                                            azureIaaSVMJobInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
+                                        }
+                                    }
+                                    
+                                    JToken errorDetailsArray = propertiesValue["errorDetails"];
+                                    if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
+                                        {
+                                            AzureIaaSVMErrorInfo azureIaaSVMErrorInfoInstance = new AzureIaaSVMErrorInfo();
+                                            azureIaaSVMJobInstance.ErrorDetails.Add(azureIaaSVMErrorInfoInstance);
+                                            
+                                            JToken errorCodeValue = errorDetailsValue["errorCode"];
+                                            if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                            {
+                                                int errorCodeInstance = ((int)errorCodeValue);
+                                                azureIaaSVMErrorInfoInstance.ErrorCode = errorCodeInstance;
+                                            }
+                                            
+                                            JToken errorTitleValue = errorDetailsValue["errorTitle"];
+                                            if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
+                                            {
+                                                string errorTitleInstance = ((string)errorTitleValue);
+                                                azureIaaSVMErrorInfoInstance.ErrorTitle = errorTitleInstance;
+                                            }
+                                            
+                                            JToken errorStringValue = errorDetailsValue["errorString"];
+                                            if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
+                                            {
+                                                string errorStringInstance = ((string)errorStringValue);
+                                                azureIaaSVMErrorInfoInstance.ErrorString = errorStringInstance;
+                                            }
+                                            
+                                            JToken recommendationsArray = errorDetailsValue["recommendations"];
+                                            if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                                {
+                                                    azureIaaSVMErrorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
+                                    if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
+                                        azureIaaSVMJobInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                    }
+                                    
+                                    JToken extendedInfoValue = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
+                                    {
+                                        AzureIaaSVMJobExtendedInfo extendedInfoInstance = new AzureIaaSVMJobExtendedInfo();
+                                        azureIaaSVMJobInstance.ExtendedInfo = extendedInfoInstance;
+                                        
+                                        JToken tasksListArray = extendedInfoValue["tasksList"];
+                                        if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken tasksListValue in ((JArray)tasksListArray))
+                                            {
+                                                AzureIaaSVMJobTaskDetails azureIaaSVMJobTaskDetailsInstance = new AzureIaaSVMJobTaskDetails();
+                                                extendedInfoInstance.TasksList.Add(azureIaaSVMJobTaskDetailsInstance);
+                                                
+                                                JToken taskIdValue = tasksListValue["taskId"];
+                                                if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string taskIdInstance = ((string)taskIdValue);
+                                                    azureIaaSVMJobTaskDetailsInstance.TaskId = taskIdInstance;
+                                                }
+                                                
+                                                JToken startTimeValue2 = tasksListValue["startTime"];
+                                                if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                                    azureIaaSVMJobTaskDetailsInstance.StartTime = startTimeInstance2;
+                                                }
+                                                
+                                                JToken endTimeValue2 = tasksListValue["endTime"];
+                                                if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                                    azureIaaSVMJobTaskDetailsInstance.EndTime = endTimeInstance2;
+                                                }
+                                                
+                                                JToken durationValue2 = tasksListValue["duration"];
+                                                if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
+                                                    azureIaaSVMJobTaskDetailsInstance.Duration = durationInstance2;
+                                                }
+                                                
+                                                JToken statusValue2 = tasksListValue["status"];
+                                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                                {
+                                                    string statusInstance2 = ((string)statusValue2);
+                                                    azureIaaSVMJobTaskDetailsInstance.Status = statusInstance2;
+                                                }
+                                                
+                                                JToken progressPercentageValue = tasksListValue["progressPercentage"];
+                                                if (progressPercentageValue != null && progressPercentageValue.Type != JTokenType.Null)
+                                                {
+                                                    double progressPercentageInstance = ((double)progressPercentageValue);
+                                                    azureIaaSVMJobTaskDetailsInstance.ProgressPercentage = progressPercentageInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken propertyBagSequenceElement = ((JToken)extendedInfoValue["propertyBag"]);
+                                        if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in propertyBagSequenceElement)
+                                            {
+                                                string propertyBagKey = ((string)property.Name);
+                                                string propertyBagValue = ((string)property.Value);
+                                                extendedInfoInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                            }
+                                        }
+                                        
+                                        JToken progressPercentageValue2 = extendedInfoValue["progressPercentage"];
+                                        if (progressPercentageValue2 != null && progressPercentageValue2.Type != JTokenType.Null)
+                                        {
+                                            double progressPercentageInstance2 = ((double)progressPercentageValue2);
+                                            extendedInfoInstance.ProgressPercentage = progressPercentageInstance2;
+                                        }
+                                        
+                                        JToken dynamicErrorMessageValue = extendedInfoValue["dynamicErrorMessage"];
+                                        if (dynamicErrorMessageValue != null && dynamicErrorMessageValue.Type != JTokenType.Null)
+                                        {
+                                            string dynamicErrorMessageInstance = ((string)dynamicErrorMessageValue);
+                                            extendedInfoInstance.DynamicErrorMessage = dynamicErrorMessageInstance;
+                                        }
+                                    }
+                                    
+                                    JToken activityIdValue2 = propertiesValue["activityId"];
+                                    if (activityIdValue2 != null && activityIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string activityIdInstance2 = ((string)activityIdValue2);
+                                        azureIaaSVMJobInstance.ActivityId = activityIdInstance2;
+                                    }
+                                    
+                                    JToken entityFriendlyNameValue2 = propertiesValue["entityFriendlyName"];
+                                    if (entityFriendlyNameValue2 != null && entityFriendlyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string entityFriendlyNameInstance2 = ((string)entityFriendlyNameValue2);
+                                        azureIaaSVMJobInstance.EntityFriendlyName = entityFriendlyNameInstance2;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                        azureIaaSVMJobInstance.BackupManagementType = backupManagementTypeInstance2;
+                                    }
+                                    
+                                    JToken operationValue2 = propertiesValue["operation"];
+                                    if (operationValue2 != null && operationValue2.Type != JTokenType.Null)
+                                    {
+                                        string operationInstance2 = ((string)operationValue2);
+                                        azureIaaSVMJobInstance.Operation = operationInstance2;
+                                    }
+                                    
+                                    JToken statusValue3 = propertiesValue["status"];
+                                    if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance3 = ((string)statusValue3);
+                                        azureIaaSVMJobInstance.Status = statusInstance3;
+                                    }
+                                    
+                                    JToken startTimeValue3 = propertiesValue["startTime"];
+                                    if (startTimeValue3 != null && startTimeValue3.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance3 = ((DateTime)startTimeValue3);
+                                        azureIaaSVMJobInstance.StartTime = startTimeInstance3;
+                                    }
+                                    
+                                    JToken endTimeValue3 = propertiesValue["endTime"];
+                                    if (endTimeValue3 != null && endTimeValue3.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance3 = ((DateTime)endTimeValue3);
+                                        azureIaaSVMJobInstance.EndTime = endTimeInstance3;
+                                    }
+                                    itemInstance.Properties = azureIaaSVMJobInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                itemInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                itemInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                itemInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                itemInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property2 in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property2.Name);
+                                    string tagsValue = ((string)property2.Value);
+                                    itemInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken eTagValue = responseDoc["eTag"];
+                            if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                            {
+                                string eTagInstance = ((string)eTagValue);
+                                itemInstance.ETag = eTagInstance;
+                            }
+                            
+                            JToken locationValue2 = responseDoc["location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
+                            }
+                            
+                            JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
+                            if (azureAsyncOperationValue != null && azureAsyncOperationValue.Type != JTokenType.Null)
+                            {
+                                string azureAsyncOperationInstance = ((string)azureAsyncOperationValue);
+                                result.AzureAsyncOperation = azureAsyncOperationInstance;
+                            }
+                            
+                            JToken retryAfterValue = responseDoc["retryAfter"];
+                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                            {
+                                string retryAfterInstance = ((string)retryAfterValue);
+                                result.RetryAfter = retryAfterInstance;
+                            }
+                            
+                            JToken statusValue4 = responseDoc["Status"];
+                            if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance4 = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue4), true));
+                                result.Status = statusInstance4;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = httpResponse.Headers.GetValues("Retry-After").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.InternalServerError)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        result.Status = OperationStatus.InProgress;
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Fetches the result of the operation triggered by the Export Job API
+        /// given the ID of the operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -1213,6 +1795,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
+                            }
                         }
                         
                     }
@@ -1242,7 +1831,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the operation result of specific job.
+        /// Fetches the result of any operation on the job given the ID of the
+        /// operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -1263,7 +1853,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
         public async Task<JobResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string jobName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -1726,6 +2316,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
                             }
+                            
+                            JToken statusValue4 = responseDoc["Status"];
+                            if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance4 = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue4), true));
+                                result.Status = statusInstance4;
+                            }
                         }
                         
                     }
@@ -1755,7 +2352,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list  of jobs.
+        /// Lists all the jobs in your Recovery Services Vault according to the
+        /// query filters and the pagination parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -1776,7 +2374,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a JobListResponse.
+        /// List of job responses as returned by the list jobs API.
         /// </returns>
         public async Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
