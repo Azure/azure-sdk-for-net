@@ -43,7 +43,7 @@ namespace RecoveryServices.Tests
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
                 ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                queryParams.ProviderType = ProviderType.MAB.ToString();
+                queryParams.BackupManagementType = BackupManagementType.MAB.ToString();
 
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
                 ProtectionContainerListResponse response = containerTestHelper.ListMABContainers(queryParams);

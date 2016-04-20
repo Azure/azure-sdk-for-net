@@ -31,7 +31,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class RecoveryServicesBackupManagementClientExtensions
     {
         /// <summary>
-        /// Get the status of Protection policy operation by URL.
+        /// The GetOperationStatusByURL method returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call GetOperationStatusByURL to determine whether the
+        /// operation has succeeded, failed, or is still in progress
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -56,7 +59,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of Protection policy operation by URL.
+        /// The GetOperationStatusByURL method returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call GetOperationStatusByURL to determine whether the
+        /// operation has succeeded, failed, or is still in progress
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

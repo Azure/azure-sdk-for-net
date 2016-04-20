@@ -1848,9 +1848,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
-            if (queryParams.ProviderType != null)
+            if (queryParams.BackupManagementType != null)
             {
-                odataFilter.Add("providerType eq '" + Uri.EscapeDataString(queryParams.ProviderType) + "'");
+                odataFilter.Add("backupManagementType eq '" + Uri.EscapeDataString(queryParams.BackupManagementType) + "'");
             }
             if (queryParams.RegistrationStatus != null)
             {

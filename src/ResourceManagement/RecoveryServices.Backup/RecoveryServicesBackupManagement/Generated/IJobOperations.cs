@@ -76,10 +76,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Export job.
@@ -141,10 +140,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> GetCancelOperationResultByURLAsync(string operationResultLink, CancellationToken cancellationToken);
+        Task<JobResponse> GetCancelOperationResultByURLAsync(string operationResultLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Fetches the result of the operation triggered by the Export Job API
