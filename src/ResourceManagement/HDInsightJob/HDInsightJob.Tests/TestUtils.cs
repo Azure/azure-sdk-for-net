@@ -25,20 +25,20 @@ namespace HDInsightJob.Tests
     {
         public static string ClusterName = "pattipakalinux330.azurehdinsight.net";
         public static string UserName = "admin";
-        public static string Password = "Microsoft~1";
+        public static string Password = "";
         public static string StorageAccountName = "pattipakalinux";
-        public static string StorageAccountKey = "PqAbixKOwoeUlUugTtvF73ny/xWojIEzGssTGnV/ng2cExNZ/LHCsBz/fWyzcuGb78j2o0xNZVjGGZRopxiGtg==";
+        public static string StorageAccountKey = "";
         public static string DefaultContainer = "pattipakalinux330";
 
         public static string WinClusterName = "pattipakawin33.azurehdinsight.net";
         public static string WinStorageAccountName = "pattipakastorageaccount";
-        public static string WinStorageAccountKey = "dFFtQ1ynNUYyo7kkyB7nkVqmegrHbtPQJXesInPnThzYqA7t1MSSfdDUQgQrm5C2BZLGpzV3hiIBHuEEZk6IHQ==";
+        public static string WinStorageAccountKey = "";
         public static string WinDefaultContainer = "pattipakawin33";
         public static string WinUserName = "admin";
-        public static string WinPassword = "H@d00pcluster";
+        public static string WinPassword = "";
 
-        public static string SQLServerUserName = "jobtest@hdinsightjobtest";
-        public static string SQLServerPassword = "Password@1";
+        public static string SQLServerUserName = "";
+        public static string SQLServerPassword = "";
         public static string SQLServerConnectionString = "jdbc:sqlserver://hdinsightjobtest.database.windows.net:1433;database=HdInsightJobTest;user=" + SQLServerUserName + ";password=" + SQLServerPassword + ";";
         public static string SQLServerTableName = "dept";
 
