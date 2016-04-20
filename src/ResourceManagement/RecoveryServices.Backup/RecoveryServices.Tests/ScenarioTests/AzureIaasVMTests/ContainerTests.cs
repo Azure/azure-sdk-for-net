@@ -42,7 +42,7 @@ namespace RecoveryServices.Tests
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
                 ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+                queryParams.BackupManagementType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
 
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
                 ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
