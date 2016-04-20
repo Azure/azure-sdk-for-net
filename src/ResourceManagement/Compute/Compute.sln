@@ -15,8 +15,6 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Network", "..\Network\Microsoft.Azure.Management.Network\Microsoft.Azure.Management.Network.xproj", "{4F22B186-DEB4-4B95-BA58-0187F0E32993}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.ResourceManager", "..\Resource\Microsoft.Azure.ResourceManager\Microsoft.Azure.ResourceManager.xproj", "{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{4F22B186-DEB4-4B95-BA58-0187F0E32993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F22B186-DEB4-4B95-BA58-0187F0E32993}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F22B186-DEB4-4B95-BA58-0187F0E32993}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

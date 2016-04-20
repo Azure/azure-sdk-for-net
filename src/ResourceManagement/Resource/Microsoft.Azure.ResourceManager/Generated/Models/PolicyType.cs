@@ -6,27 +6,19 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.WebSites.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Category.
+    /// Defines values for PolicyType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Category
+    public static class PolicyType
     {
-        [EnumMember(Value = "Uncategorized")]
-        Uncategorized,
-        [EnumMember(Value = "Test")]
-        Test,
-        [EnumMember(Value = "UpSell")]
-        UpSell,
-        [EnumMember(Value = "CrossSell")]
-        CrossSell,
-        [EnumMember(Value = "LiveSite")]
-        LiveSite
+        public const string NotSpecified = "NotSpecified";
+        public const string BuiltIn = "BuiltIn";
+        public const string Custom = "Custom";
     }
 }

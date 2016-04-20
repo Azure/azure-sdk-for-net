@@ -14,70 +14,133 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class PolicyAssignmentsOperationsExtensions
     {
             /// <summary>
-            /// Gets policy assignments of the resource.
+            /// Delete policy assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='scope'>
+            /// Scope of the policy assignment.
             /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// The name of the resource provider.
+            /// <param name='policyAssignmentName'>
+            /// Policy assignment name.
             /// </param>
-            /// <param name='parentResourcePath'>
-            /// The parent resource path.
-            /// </param>
-            /// <param name='resourceType'>
-            /// The resource type.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The resource name.
-            /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
-            /// </param>
-            public static IPage<PolicyAssignment> ListForResource(this IPolicyAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string))
+            public static PolicyAssignment Delete(this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName)
             {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForResourceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).DeleteAsync(scope, policyAssignmentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets policy assignments of the resource.
+            /// Delete policy assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='scope'>
+            /// Scope of the policy assignment.
             /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// The name of the resource provider.
-            /// </param>
-            /// <param name='parentResourcePath'>
-            /// The parent resource path.
-            /// </param>
-            /// <param name='resourceType'>
-            /// The resource type.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The resource name.
-            /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='policyAssignmentName'>
+            /// Policy assignment name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListForResourceAsync( this IPolicyAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PolicyAssignment> DeleteAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, policyAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create policy assignment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the policy assignment.
+            /// </param>
+            /// <param name='policyAssignmentName'>
+            /// Policy assignment name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Policy assignment.
+            /// </param>
+            public static PolicyAssignment Create(this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, PolicyAssignment parameters)
+            {
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).CreateAsync(scope, policyAssignmentName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create policy assignment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the policy assignment.
+            /// </param>
+            /// <param name='policyAssignmentName'>
+            /// Policy assignment name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Policy assignment.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyAssignment> CreateAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, PolicyAssignment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateWithHttpMessagesAsync(scope, policyAssignmentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get single policy assignment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the policy assignment.
+            /// </param>
+            /// <param name='policyAssignmentName'>
+            /// Policy assignment name.
+            /// </param>
+            public static PolicyAssignment Get(this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName)
+            {
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).GetAsync(scope, policyAssignmentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get single policy assignment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the policy assignment.
+            /// </param>
+            /// <param name='policyAssignmentName'>
+            /// Policy assignment name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyAssignment> GetAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, policyAssignmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -124,126 +187,98 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Delete policy assignment.
+            /// Gets policy assignments of the resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
-            /// Scope.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='policyAssignmentName'>
-            /// Policy assignment name.
+            /// <param name='resourceProviderNamespace'>
+            /// The resource provider namespace.
             /// </param>
-            public static PolicyAssignment Delete(this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName)
+            /// <param name='parentResourcePath'>
+            /// The parent resource path.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The resource type.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The resource name.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<PolicyAssignment> ListForResource(this IPolicyAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<PolicyAssignment> odataQuery = default(ODataQuery<PolicyAssignment>))
             {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).DeleteAsync(scope, policyAssignmentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForResourceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete policy assignment.
+            /// Gets policy assignments of the resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
-            /// Scope.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='policyAssignmentName'>
-            /// Policy assignment name.
+            /// <param name='resourceProviderNamespace'>
+            /// The resource provider namespace.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// The parent resource path.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The resource type.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The resource name.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyAssignment> DeleteAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyAssignment>> ListForResourceAsync( this IPolicyAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<PolicyAssignment> odataQuery = default(ODataQuery<PolicyAssignment>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, policyAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create policy assignment.
+            /// Gets all the policy assignments of a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
-            /// Scope.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
-            /// <param name='policyAssignmentName'>
-            /// Policy assignment name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Policy assignment.
-            /// </param>
-            public static PolicyAssignment Create(this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, PolicyAssignment parameters)
+            public static IPage<PolicyAssignment> List(this IPolicyAssignmentsOperations operations, ODataQuery<PolicyAssignment> odataQuery = default(ODataQuery<PolicyAssignment>))
             {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).CreateAsync(scope, policyAssignmentName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListAsync(odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create policy assignment.
+            /// Gets all the policy assignments of a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
-            /// Scope.
-            /// </param>
-            /// <param name='policyAssignmentName'>
-            /// Policy assignment name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Policy assignment.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyAssignment> CreateAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, PolicyAssignment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyAssignment>> ListAsync( this IPolicyAssignmentsOperations operations, ODataQuery<PolicyAssignment> odataQuery = default(ODataQuery<PolicyAssignment>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(scope, policyAssignmentName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get single policy assignment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// Scope.
-            /// </param>
-            /// <param name='policyAssignmentName'>
-            /// Policy assignment name.
-            /// </param>
-            public static PolicyAssignment Get(this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName)
-            {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).GetAsync(scope, policyAssignmentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get single policy assignment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// Scope.
-            /// </param>
-            /// <param name='policyAssignmentName'>
-            /// Policy assignment name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<PolicyAssignment> GetAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(scope, policyAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -358,74 +393,34 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Gets policy assignments of the subscription.
+            /// Gets policy assignments of the resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PolicyAssignment> List(this IPolicyAssignmentsOperations operations, string filter = default(string))
+            public static IPage<PolicyAssignment> ListForResourceGroupNext(this IPolicyAssignmentsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListAsync(filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets policy assignments of the subscription.
+            /// Gets policy assignments of the resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListAsync( this IPolicyAssignmentsOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyAssignment>> ListForResourceGroupNextAsync( this IPolicyAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets policy assignments of the scope.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// Scope.
-            /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
-            /// </param>
-            public static IPage<PolicyAssignment> ListForScope(this IPolicyAssignmentsOperations operations, string scope, string filter = default(string))
-            {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForScopeAsync(scope, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets policy assignments of the scope.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// Scope.
-            /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListForScopeAsync( this IPolicyAssignmentsOperations operations, string scope, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListForScopeWithHttpMessagesAsync(scope, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -466,41 +461,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Gets policy assignments of the resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyAssignment> ListForResourceGroupNext(this IPolicyAssignmentsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets policy assignments of the resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListForResourceGroupNextAsync( this IPolicyAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets policy assignments of the subscription.
+            /// Gets all the policy assignments of a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -514,7 +475,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Gets policy assignments of the subscription.
+            /// Gets all the policy assignments of a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -528,40 +489,6 @@ namespace Microsoft.Azure.Management.Resources
             public static async Task<IPage<PolicyAssignment>> ListNextAsync( this IPolicyAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets policy assignments of the scope.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyAssignment> ListForScopeNext(this IPolicyAssignmentsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForScopeNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets policy assignments of the scope.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListForScopeNextAsync( this IPolicyAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListForScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

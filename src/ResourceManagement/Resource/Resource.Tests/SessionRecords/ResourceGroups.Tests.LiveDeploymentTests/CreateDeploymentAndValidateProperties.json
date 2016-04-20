@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077?api-version=2016-02-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West Europe\"\r\n}",
       "RequestHeaders": {
@@ -60,7 +60,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270?api-version=2016-02-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json\"\r\n    },\r\n    \"parameters\": {\r\n      \"repoURL\": {\r\n        \"value\": \"https://github.com/devigned/az-roadshow-oss.git\"\r\n      },\r\n      \"siteName\": {\r\n        \"value\": \"csmr7793\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"value\": \"someplan\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"value\": \"westus\"\r\n      },\r\n      \"sku\": {\r\n        \"value\": \"Standard\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -101,7 +101,7 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270/operationStatuses/08587524175689845715?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270/operationStatuses/08587524175689845715?api-version=2016-02-01"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1191"
@@ -122,7 +122,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270/operationStatuses/08587524175689845715?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270/operationStatuses/08587524175689845715?api-version=2016-02-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -169,7 +169,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270/operationStatuses/08587524175689845715?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270/operationStatuses/08587524175689845715?api-version=2016-02-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -216,7 +216,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270/operationStatuses/08587524175689845715?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270/operationStatuses/08587524175689845715?api-version=2016-02-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -263,7 +263,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270?api-version=2016-02-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -310,7 +310,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/csmd6270?api-version=2016-02-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -363,7 +363,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg1077/providers/Microsoft.Resources/deployments/?api-version=2016-02-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

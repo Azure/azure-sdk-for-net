@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.WebSites
+namespace Microsoft.Azure.Management.Resources
 {
     using System;
     using System.Linq;
@@ -26,16 +26,8 @@ namespace Microsoft.Azure.Management.WebSites
     using Models;
 
     /// <summary>
-    /// Use these APIs to manage Azure Websites resources through the Azure
-    /// Resource Manager. All task operations conform to the HTTP/1.1
-    /// protocol specification and each operation returns an x-ms-request-id
-    /// header that can be used to obtain information about the request. You
-    /// must make sure that requests made to these resources are secure. For
-    /// more information, see &lt;a
-    /// href="https://msdn.microsoft.com/en-us/library/azure/dn790557.aspx"&gt;Authenticating
-    /// Azure Resource Manager requests.&lt;/a&gt;
     /// </summary>
-    public partial class WebSiteManagementClient : ServiceClient<WebSiteManagementClient>, IWebSiteManagementClient, IAzureClient
+    public partial class PolicyClient : ServiceClient<PolicyClient>, IPolicyClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -58,12 +50,14 @@ namespace Microsoft.Azure.Management.WebSites
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Subscription Id
+        /// Gets subscription credentials which uniquely identify Microsoft Azure
+        /// subscription. The subscription ID forms part of the URI for every service
+        /// call.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// API Version
+        /// Client Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -84,47 +78,23 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
-        public virtual ICertificatesOperations Certificates { get; private set; }
+        public virtual IPolicyAssignmentsOperations PolicyAssignments { get; private set; }
 
-        public virtual IClassicMobileServicesOperations ClassicMobileServices { get; private set; }
-
-        public virtual IDomainsOperations Domains { get; private set; }
-
-        public virtual IGlobalModelOperations GlobalModel { get; private set; }
-
-        public virtual IGlobalDomainRegistrationOperations GlobalDomainRegistration { get; private set; }
-
-        public virtual IGlobalResourceGroupsOperations GlobalResourceGroups { get; private set; }
-
-        public virtual IHostingEnvironmentsOperations HostingEnvironments { get; private set; }
-
-        public virtual IManagedHostingEnvironmentsOperations ManagedHostingEnvironments { get; private set; }
-
-        public virtual IProviderOperations Provider { get; private set; }
-
-        public virtual IRecommendationsOperations Recommendations { get; private set; }
-
-        public virtual IServerFarmsOperations ServerFarms { get; private set; }
-
-        public virtual ISitesOperations Sites { get; private set; }
-
-        public virtual ITopLevelDomainsOperations TopLevelDomains { get; private set; }
-
-        public virtual IUsageOperations Usage { get; private set; }
+        public virtual IPolicyDefinitionsOperations PolicyDefinitions { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected WebSiteManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected PolicyClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -132,13 +102,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected WebSiteManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected PolicyClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -146,7 +116,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected WebSiteManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected PolicyClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -156,7 +126,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -167,7 +137,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected WebSiteManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected PolicyClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -177,7 +147,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
@@ -185,7 +155,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public WebSiteManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public PolicyClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -199,7 +169,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
@@ -210,7 +180,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public WebSiteManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public PolicyClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -224,7 +194,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -235,7 +205,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public WebSiteManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public PolicyClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -254,7 +224,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -268,7 +238,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public WebSiteManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public PolicyClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -291,23 +261,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         private void Initialize()
         {
-			this.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            this.Certificates = new CertificatesOperations(this);
-            this.ClassicMobileServices = new ClassicMobileServicesOperations(this);
-            this.Domains = new DomainsOperations(this);
-            this.GlobalModel = new GlobalModelOperations(this);
-            this.GlobalDomainRegistration = new GlobalDomainRegistrationOperations(this);
-            this.GlobalResourceGroups = new GlobalResourceGroupsOperations(this);
-            this.HostingEnvironments = new HostingEnvironmentsOperations(this);
-            this.ManagedHostingEnvironments = new ManagedHostingEnvironmentsOperations(this);
-            this.Provider = new ProviderOperations(this);
-            this.Recommendations = new RecommendationsOperations(this);
-            this.ServerFarms = new ServerFarmsOperations(this);
-            this.Sites = new SitesOperations(this);
-            this.TopLevelDomains = new TopLevelDomainsOperations(this);
-            this.Usage = new UsageOperations(this);
+            this.PolicyAssignments = new PolicyAssignmentsOperations(this);
+            this.PolicyDefinitions = new PolicyDefinitionsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-08-01";
+            this.ApiVersion = "2015-10-01-preview";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

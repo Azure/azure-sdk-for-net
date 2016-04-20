@@ -29,13 +29,14 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentProperties class.
         /// </summary>
-        public DeploymentProperties(object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?))
+        public DeploymentProperties(object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting))
         {
             Template = template;
             TemplateLink = templateLink;
             Parameters = parameters;
             ParametersLink = parametersLink;
             Mode = mode;
+            DebugSetting = debugSetting;
         }
 
         /// <summary>
@@ -72,6 +73,12 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public DeploymentMode? Mode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the debug setting of the deployment.
+        /// </summary>
+        [JsonProperty(PropertyName = "debugSetting")]
+        public DebugSetting DebugSetting { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

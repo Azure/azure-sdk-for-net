@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights/register?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights/register?api-version=2016-02-01",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -54,7 +54,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights?api-version=2016-02-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -107,7 +107,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights?api-version=2016-02-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -160,7 +160,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights/unregister?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/microsoft.insights/unregister?api-version=2016-02-01",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
