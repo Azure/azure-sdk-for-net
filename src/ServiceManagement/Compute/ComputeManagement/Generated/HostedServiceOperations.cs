@@ -3397,6 +3397,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     debugSettingsInstance.SerialOutputBlobUri = serialOutputBlobUriInstance;
                                                 }
                                             }
+                                            
+                                            XElement licenseTypeElement = roleListElement.Element(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                                            if (licenseTypeElement != null)
+                                            {
+                                                string licenseTypeInstance = licenseTypeElement.Value;
+                                                roleInstance.LicenseType = licenseTypeInstance;
+                                            }
+                                            
+                                            XElement migrationStateElement = roleListElement.Element(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
+                                            if (migrationStateElement != null)
+                                            {
+                                                string migrationStateInstance = migrationStateElement.Value;
+                                                roleInstance.MigrationState = migrationStateInstance;
+                                            }
                                         }
                                     }
                                     
