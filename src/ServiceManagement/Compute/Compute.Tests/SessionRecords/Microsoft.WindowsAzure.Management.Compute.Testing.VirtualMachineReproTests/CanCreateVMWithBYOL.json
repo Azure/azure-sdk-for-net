@@ -1,0 +1,1392 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcw==",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>pstestsvc2064</ServiceName>\r\n  <Label>cHN0ZXN0c3ZjMjA2NDI=</Label>\r\n  <Description>pstestsvc20641</Description>\r\n  <Location>Central US</Location>\r\n</CreateHostedService>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "258"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6ef868a01dadaeaeae43e678764ce49d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:46:27 GMT"
+        ],
+        "Location": [
+          "https://management.core.windows.net/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/compute/pstestsvc2064"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<HostedService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064</Url>\r\n  <ServiceName>pstestsvc2064</ServiceName>\r\n  <HostedServiceProperties>\r\n    <Description>pstestsvc20641</Description>\r\n    <Location>Central US</Location>\r\n    <Label>cHN0ZXN0c3ZjMjA2NDI=</Label>\r\n    <Status>Created</Status>\r\n    <DateCreated>2016-04-20T18:46:27Z</DateCreated>\r\n    <DateLastModified>2016-04-20T18:46:27Z</DateLastModified>\r\n    <ExtendedProperties />\r\n  </HostedServiceProperties>\r\n</HostedService>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "601"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "38fb9a293917a0c1838c7a6cbe20a337"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:46:28 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/images",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9pbWFnZXM=",
+      "RequestMethod": "POST",
+      "RequestBody": "<OSImage xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Label>BYOLOSImage</Label>\r\n  <MediaLink>https://mybyolosimagerdfe.blob.core.windows.net/vhdsrc2/win2012-tag0.vhd</MediaLink>\r\n  <Name>byolosimage8921</Name>\r\n  <OS>Windows</OS>\r\n  <Description>BYOLOSImage</Description>\r\n  <IsPremium>false</IsPremium>\r\n  <ShowInGui>false</ShowInGui>\r\n</OSImage>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "358"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<OSImage xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Category>User</Category>\r\n  <Label>BYOLOSImage</Label>\r\n  <Location>Central US</Location>\r\n  <LogicalSizeInGB>128</LogicalSizeInGB>\r\n  <MediaLink>https://mybyolosimagerdfe.blob.core.windows.net/vhdsrc2/win2012-tag0.vhd</MediaLink>\r\n  <Name>byolosimage8921</Name>\r\n  <OS>Windows</OS>\r\n  <Description>BYOLOSImage</Description>\r\n  <IsPremium>false</IsPremium>\r\n  <OSState>Generalized</OSState>\r\n  <IOType>Standard</IOType>\r\n</OSImage>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "501"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "79bd3c5268d092f4b94971fa111f211c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:46:30 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRz",
+      "RequestMethod": "POST",
+      "RequestBody": "<Deployment xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>pstestsvc2064Prod</Name>\r\n  <DeploymentSlot>Production</DeploymentSlot>\r\n  <Label>pstestsvc2064Prod</Label>\r\n  <RoleList>\r\n    <Role>\r\n      <RoleName>pstestsvc2064</RoleName>\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet>\r\n          <ConfigurationSetType>WindowsProvisioningConfiguration</ConfigurationSetType>\r\n          <ComputerName>pstestsvc2064</ComputerName>\r\n          <AdminPassword>foobarB@z21!</AdminPassword>\r\n          <EnableAutomaticUpdates>false</EnableAutomaticUpdates>\r\n          <TimeZone>Pacific Standard Time</TimeZone>\r\n          <StoredCertificateSettings />\r\n          <AdminUsername>FooBar12</AdminUsername>\r\n        </ConfigurationSet>\r\n        <ConfigurationSet>\r\n          <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n          <InputEndpoints>\r\n            <InputEndpoint>\r\n              <LocalPort>3389</LocalPort>\r\n              <Name>RemoteDesktop</Name>\r\n              <Protocol>tcp</Protocol>\r\n            </InputEndpoint>\r\n          </InputEndpoints>\r\n          <StoredCertificateSettings />\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <DataVirtualHardDisks>\r\n        <DataVirtualHardDisk>\r\n          <HostCaching>ReadOnly</HostCaching>\r\n          <DiskLabel>testDataDiskLabel5</DiskLabel>\r\n          <Lun>0</Lun>\r\n          <LogicalDiskSizeInGB>1</LogicalDiskSizeInGB>\r\n          <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20645.vhd</MediaLink>\r\n        </DataVirtualHardDisk>\r\n      </DataVirtualHardDisks>\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc2064.vhd</MediaLink>\r\n        <SourceImageName>byolosimage8921</SourceImageName>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>false</ProvisionGuestAgent>\r\n      <LicenseType>Windows_Server</LicenseType>\r\n    </Role>\r\n  </RoleList>\r\n</Deployment>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "2088"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3eaa1b791eb597c9945f457cd38399f7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:46:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/3eaa1b791eb597c9945f457cd38399f7",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzNlYWExYjc5MWViNTk3Yzk5NDVmNDU3Y2QzODM5OWY3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>3eaa1b79-1eb5-97c9-945f-457cd38399f7</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c540371364849a9c85a40be41132fd10"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:46:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/3eaa1b791eb597c9945f457cd38399f7",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzNlYWExYjc5MWViNTk3Yzk5NDVmNDU3Y2QzODM5OWY3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>3eaa1b79-1eb5-97c9-945f-457cd38399f7</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "62e45496d2009669ac61a6ebf9e1cce4"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:47:01 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/3eaa1b791eb597c9945f457cd38399f7",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzNlYWExYjc5MWViNTk3Yzk5NDVmNDU3Y2QzODM5OWY3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>3eaa1b79-1eb5-97c9-945f-457cd38399f7</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3903aaf939a09b38848c4b53c863c60d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:47:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9k",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Deployment xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Name>pstestsvc2064Prod</Name>\r\n  <DeploymentSlot>Production</DeploymentSlot>\r\n  <PrivateID>32ced54a92d1419285dd8e64ad0281be</PrivateID>\r\n  <Status>Running</Status>\r\n  <Label>cHN0ZXN0c3ZjMjA2NFByb2Q=</Label>\r\n  <Url>http://pstestsvc2064.cloudapp.net/</Url>\r\n  <Configuration>PFNlcnZpY2VDb25maWd1cmF0aW9uIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL1NlcnZpY2VIb3N0aW5nLzIwMDgvMTAvU2VydmljZUNvbmZpZ3VyYXRpb24iPg0KICA8Um9sZSBuYW1lPSJwc3Rlc3RzdmMyMDY0Ij4NCiAgICA8SW5zdGFuY2VzIGNvdW50PSIxIiAvPg0KICA8L1JvbGU+DQo8L1NlcnZpY2VDb25maWd1cmF0aW9uPg==</Configuration>\r\n  <RoleInstanceList>\r\n    <RoleInstance>\r\n      <RoleName>pstestsvc2064</RoleName>\r\n      <InstanceName>pstestsvc2064</InstanceName>\r\n      <InstanceStatus>RoleStateUnknown</InstanceStatus>\r\n      <InstanceUpgradeDomain>0</InstanceUpgradeDomain>\r\n      <InstanceFaultDomain>0</InstanceFaultDomain>\r\n      <InstanceSize>Large</InstanceSize>\r\n      <InstanceStateDetails />\r\n      <IpAddress>100.106.50.33</IpAddress>\r\n      <InstanceEndpoints>\r\n        <InstanceEndpoint>\r\n          <Name>RemoteDesktop</Name>\r\n          <Vip>40.86.92.78</Vip>\r\n          <PublicPort>62828</PublicPort>\r\n          <LocalPort>3389</LocalPort>\r\n          <Protocol>tcp</Protocol>\r\n        </InstanceEndpoint>\r\n      </InstanceEndpoints>\r\n      <PowerState>Starting</PowerState>\r\n    </RoleInstance>\r\n  </RoleInstanceList>\r\n  <UpgradeDomainCount>1</UpgradeDomainCount>\r\n  <RoleList>\r\n    <Role i:type=\"PersistentVMRole\">\r\n      <RoleName>pstestsvc2064</RoleName>\r\n      <OsVersion />\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n          <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n          <InputEndpoints>\r\n            <InputEndpoint>\r\n              <LocalPort>3389</LocalPort>\r\n              <Name>RemoteDesktop</Name>\r\n              <Port>62828</Port>\r\n              <Protocol>tcp</Protocol>\r\n              <Vip>40.86.92.78</Vip>\r\n              <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n            </InputEndpoint>\r\n          </InputEndpoints>\r\n          <SubnetNames />\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <DataVirtualHardDisks>\r\n        <DataVirtualHardDisk>\r\n          <HostCaching>ReadOnly</HostCaching>\r\n          <DiskLabel>testDataDiskLabel5</DiskLabel>\r\n          <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846330518</DiskName>\r\n          <LogicalDiskSizeInGB>1</LogicalDiskSizeInGB>\r\n          <MediaLink>https://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20645.vhd</MediaLink>\r\n          <IOType>Standard</IOType>\r\n        </DataVirtualHardDisk>\r\n      </DataVirtualHardDisks>\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846320502</DiskName>\r\n        <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc2064.vhd</MediaLink>\r\n        <SourceImageName>byolosimage8921</SourceImageName>\r\n        <OS>Windows</OS>\r\n        <IOType>Standard</IOType>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>false</ProvisionGuestAgent>\r\n      <LicenseType>Windows_Server</LicenseType>\r\n    </Role>\r\n  </RoleList>\r\n  <SdkVersion />\r\n  <Locked>false</Locked>\r\n  <RollbackAllowed>false</RollbackAllowed>\r\n  <CreatedTime>2016-04-20T18:46:31Z</CreatedTime>\r\n  <LastModifiedTime>2016-04-20T18:47:06Z</LastModifiedTime>\r\n  <ExtendedProperties />\r\n  <PersistentVMDowntime>\r\n    <StartTime>2016-04-16T03:53:30Z</StartTime>\r\n    <EndTime>2017-04-16T03:53:30Z</EndTime>\r\n    <Status>PersistentVMUpdateScheduled</Status>\r\n  </PersistentVMDowntime>\r\n  <VirtualIPs>\r\n    <VirtualIP>\r\n      <Address>40.86.92.78</Address>\r\n      <IsDnsProgrammed>true</IsDnsProgrammed>\r\n      <Name>pstestsvc2064ProdContractContract</Name>\r\n    </VirtualIP>\r\n  </VirtualIPs>\r\n  <InternalDnsSuffix>pstestsvc2064.g7.internal.cloudapp.net</InternalDnsSuffix>\r\n  <LoadBalancers />\r\n</Deployment>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3497"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "fa1db7cfab5597b187505d0c20a35d08"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:47:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9k",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Deployment xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Name>pstestsvc2064Prod</Name>\r\n  <DeploymentSlot>Production</DeploymentSlot>\r\n  <PrivateID>32ced54a92d1419285dd8e64ad0281be</PrivateID>\r\n  <Status>Running</Status>\r\n  <Label>cHN0ZXN0c3ZjMjA2NFByb2Q=</Label>\r\n  <Url>http://pstestsvc2064.cloudapp.net/</Url>\r\n  <Configuration>PFNlcnZpY2VDb25maWd1cmF0aW9uIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL1NlcnZpY2VIb3N0aW5nLzIwMDgvMTAvU2VydmljZUNvbmZpZ3VyYXRpb24iPg0KICA8Um9sZSBuYW1lPSJwc3Rlc3RzdmMyMDY0Ij4NCiAgICA8SW5zdGFuY2VzIGNvdW50PSIxIiAvPg0KICA8L1JvbGU+DQogIDxSb2xlIG5hbWU9InBzdGVzdHN2YzIwNjQzIj4NCiAgICA8SW5zdGFuY2VzIGNvdW50PSIxIiAvPg0KICA8L1JvbGU+DQo8L1NlcnZpY2VDb25maWd1cmF0aW9uPg==</Configuration>\r\n  <RoleInstanceList>\r\n    <RoleInstance>\r\n      <RoleName>pstestsvc2064</RoleName>\r\n      <InstanceName>pstestsvc2064</InstanceName>\r\n      <InstanceStatus>CreatingVM</InstanceStatus>\r\n      <InstanceUpgradeDomain>0</InstanceUpgradeDomain>\r\n      <InstanceFaultDomain>0</InstanceFaultDomain>\r\n      <InstanceSize>Large</InstanceSize>\r\n      <InstanceStateDetails />\r\n      <IpAddress>100.106.50.33</IpAddress>\r\n      <InstanceEndpoints>\r\n        <InstanceEndpoint>\r\n          <Name>RemoteDesktop</Name>\r\n          <Vip>40.86.92.78</Vip>\r\n          <PublicPort>62828</PublicPort>\r\n          <LocalPort>3389</LocalPort>\r\n          <Protocol>tcp</Protocol>\r\n        </InstanceEndpoint>\r\n      </InstanceEndpoints>\r\n      <PowerState>Starting</PowerState>\r\n    </RoleInstance>\r\n    <RoleInstance>\r\n      <RoleName>pstestsvc20643</RoleName>\r\n      <InstanceName>pstestsvc20643</InstanceName>\r\n      <InstanceStatus>RoleStateUnknown</InstanceStatus>\r\n      <InstanceUpgradeDomain>0</InstanceUpgradeDomain>\r\n      <InstanceFaultDomain>0</InstanceFaultDomain>\r\n      <InstanceSize>Large</InstanceSize>\r\n      <InstanceStateDetails />\r\n      <IpAddress>100.106.98.61</IpAddress>\r\n      <InstanceEndpoints>\r\n        <InstanceEndpoint>\r\n          <Name>RemoteDesktop</Name>\r\n          <Vip>40.86.92.78</Vip>\r\n          <PublicPort>52778</PublicPort>\r\n          <LocalPort>3389</LocalPort>\r\n          <Protocol>tcp</Protocol>\r\n        </InstanceEndpoint>\r\n      </InstanceEndpoints>\r\n      <PowerState>Starting</PowerState>\r\n      <GuestAgentStatus>\r\n        <ProtocolVersion>1.0</ProtocolVersion>\r\n        <Timestamp>2016-04-20T18:47:58Z</Timestamp>\r\n        <GuestAgentVersion>Unknown</GuestAgentVersion>\r\n        <Status>NotReady</Status>\r\n        <FormattedMessage>\r\n          <Language>en-US</Language>\r\n          <Message>Status not available for role pstestsvc20643.</Message>\r\n        </FormattedMessage>\r\n      </GuestAgentStatus>\r\n    </RoleInstance>\r\n  </RoleInstanceList>\r\n  <UpgradeDomainCount>1</UpgradeDomainCount>\r\n  <RoleList>\r\n    <Role i:type=\"PersistentVMRole\">\r\n      <RoleName>pstestsvc2064</RoleName>\r\n      <OsVersion />\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n          <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n          <InputEndpoints>\r\n            <InputEndpoint>\r\n              <LocalPort>3389</LocalPort>\r\n              <Name>RemoteDesktop</Name>\r\n              <Port>62828</Port>\r\n              <Protocol>tcp</Protocol>\r\n              <Vip>40.86.92.78</Vip>\r\n              <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n            </InputEndpoint>\r\n          </InputEndpoints>\r\n          <SubnetNames />\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <DataVirtualHardDisks>\r\n        <DataVirtualHardDisk>\r\n          <HostCaching>ReadOnly</HostCaching>\r\n          <DiskLabel>testDataDiskLabel5</DiskLabel>\r\n          <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846330518</DiskName>\r\n          <LogicalDiskSizeInGB>1</LogicalDiskSizeInGB>\r\n          <MediaLink>https://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20645.vhd</MediaLink>\r\n          <IOType>Standard</IOType>\r\n        </DataVirtualHardDisk>\r\n      </DataVirtualHardDisks>\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846320502</DiskName>\r\n        <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc2064.vhd</MediaLink>\r\n        <SourceImageName>byolosimage8921</SourceImageName>\r\n        <OS>Windows</OS>\r\n        <IOType>Standard</IOType>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>false</ProvisionGuestAgent>\r\n      <LicenseType>Windows_Server</LicenseType>\r\n    </Role>\r\n    <Role i:type=\"PersistentVMRole\">\r\n      <RoleName>pstestsvc20643</RoleName>\r\n      <OsVersion />\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n          <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n          <InputEndpoints>\r\n            <InputEndpoint>\r\n              <LocalPort>3389</LocalPort>\r\n              <Name>RemoteDesktop</Name>\r\n              <Port>52778</Port>\r\n              <Protocol>tcp</Protocol>\r\n              <Vip>40.86.92.78</Vip>\r\n              <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n            </InputEndpoint>\r\n          </InputEndpoints>\r\n          <SubnetNames />\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <AvailabilitySetName>test</AvailabilitySetName>\r\n      <DataVirtualHardDisks />\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <DiskName>pstestsvc2064Prod-pstestsvc20643-0-201604201847340433</DiskName>\r\n        <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20641.vhd</MediaLink>\r\n        <SourceImageName>byolosimage8921</SourceImageName>\r\n        <OS>Windows</OS>\r\n        <IOType>Standard</IOType>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>true</ProvisionGuestAgent>\r\n      <LicenseType>Windows_Server</LicenseType>\r\n    </Role>\r\n  </RoleList>\r\n  <SdkVersion />\r\n  <Locked>false</Locked>\r\n  <RollbackAllowed>false</RollbackAllowed>\r\n  <CreatedTime>2016-04-20T18:46:31Z</CreatedTime>\r\n  <LastModifiedTime>2016-04-20T18:47:58Z</LastModifiedTime>\r\n  <ExtendedProperties />\r\n  <PersistentVMDowntime>\r\n    <StartTime>2016-04-16T03:53:30Z</StartTime>\r\n    <EndTime>2017-04-16T03:53:30Z</EndTime>\r\n    <Status>PersistentVMUpdateScheduled</Status>\r\n  </PersistentVMDowntime>\r\n  <VirtualIPs>\r\n    <VirtualIP>\r\n      <Address>40.86.92.78</Address>\r\n      <IsDnsProgrammed>true</IsDnsProgrammed>\r\n      <Name>pstestsvc2064ProdContractContract</Name>\r\n    </VirtualIP>\r\n  </VirtualIPs>\r\n  <InternalDnsSuffix>pstestsvc2064.g7.internal.cloudapp.net</InternalDnsSuffix>\r\n  <LoadBalancers />\r\n</Deployment>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5551"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2d65eac4583496da889a87c340af8b57"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9k",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Deployment xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Name>pstestsvc2064Prod</Name>\r\n  <DeploymentSlot>Production</DeploymentSlot>\r\n  <PrivateID>32ced54a92d1419285dd8e64ad0281be</PrivateID>\r\n  <Status>Running</Status>\r\n  <Label>cHN0ZXN0c3ZjMjA2NFByb2Q=</Label>\r\n  <Url>http://pstestsvc2064.cloudapp.net/</Url>\r\n  <Configuration>PFNlcnZpY2VDb25maWd1cmF0aW9uIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL1NlcnZpY2VIb3N0aW5nLzIwMDgvMTAvU2VydmljZUNvbmZpZ3VyYXRpb24iPg0KICA8Um9sZSBuYW1lPSJwc3Rlc3RzdmMyMDY0Ij4NCiAgICA8SW5zdGFuY2VzIGNvdW50PSIxIiAvPg0KICA8L1JvbGU+DQogIDxSb2xlIG5hbWU9InBzdGVzdHN2YzIwNjQzIj4NCiAgICA8SW5zdGFuY2VzIGNvdW50PSIxIiAvPg0KICA8L1JvbGU+DQo8L1NlcnZpY2VDb25maWd1cmF0aW9uPg==</Configuration>\r\n  <RoleInstanceList>\r\n    <RoleInstance>\r\n      <RoleName>pstestsvc2064</RoleName>\r\n      <InstanceName>pstestsvc2064</InstanceName>\r\n      <InstanceStatus>CreatingVM</InstanceStatus>\r\n      <InstanceUpgradeDomain>0</InstanceUpgradeDomain>\r\n      <InstanceFaultDomain>0</InstanceFaultDomain>\r\n      <InstanceSize>Large</InstanceSize>\r\n      <InstanceStateDetails />\r\n      <IpAddress>100.106.50.33</IpAddress>\r\n      <InstanceEndpoints>\r\n        <InstanceEndpoint>\r\n          <Name>RemoteDesktop</Name>\r\n          <Vip>40.86.92.78</Vip>\r\n          <PublicPort>62828</PublicPort>\r\n          <LocalPort>3389</LocalPort>\r\n          <Protocol>tcp</Protocol>\r\n        </InstanceEndpoint>\r\n      </InstanceEndpoints>\r\n      <PowerState>Starting</PowerState>\r\n    </RoleInstance>\r\n    <RoleInstance>\r\n      <RoleName>pstestsvc20643</RoleName>\r\n      <InstanceName>pstestsvc20643</InstanceName>\r\n      <InstanceStatus>RoleStateUnknown</InstanceStatus>\r\n      <InstanceUpgradeDomain>0</InstanceUpgradeDomain>\r\n      <InstanceFaultDomain>0</InstanceFaultDomain>\r\n      <InstanceSize>Large</InstanceSize>\r\n      <InstanceStateDetails />\r\n      <IpAddress>100.106.98.61</IpAddress>\r\n      <InstanceEndpoints>\r\n        <InstanceEndpoint>\r\n          <Name>RemoteDesktop</Name>\r\n          <Vip>40.86.92.78</Vip>\r\n          <PublicPort>52778</PublicPort>\r\n          <LocalPort>3389</LocalPort>\r\n          <Protocol>tcp</Protocol>\r\n        </InstanceEndpoint>\r\n      </InstanceEndpoints>\r\n      <PowerState>Starting</PowerState>\r\n      <GuestAgentStatus>\r\n        <ProtocolVersion>1.0</ProtocolVersion>\r\n        <Timestamp>2016-04-20T18:47:58Z</Timestamp>\r\n        <GuestAgentVersion>Unknown</GuestAgentVersion>\r\n        <Status>NotReady</Status>\r\n        <FormattedMessage>\r\n          <Language>en-US</Language>\r\n          <Message>Status not available for role pstestsvc20643.</Message>\r\n        </FormattedMessage>\r\n      </GuestAgentStatus>\r\n    </RoleInstance>\r\n  </RoleInstanceList>\r\n  <UpgradeDomainCount>1</UpgradeDomainCount>\r\n  <RoleList>\r\n    <Role i:type=\"PersistentVMRole\">\r\n      <RoleName>pstestsvc2064</RoleName>\r\n      <OsVersion />\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n          <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n          <InputEndpoints>\r\n            <InputEndpoint>\r\n              <LocalPort>3389</LocalPort>\r\n              <Name>RemoteDesktop</Name>\r\n              <Port>62828</Port>\r\n              <Protocol>tcp</Protocol>\r\n              <Vip>40.86.92.78</Vip>\r\n              <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n            </InputEndpoint>\r\n          </InputEndpoints>\r\n          <SubnetNames />\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <DataVirtualHardDisks>\r\n        <DataVirtualHardDisk>\r\n          <HostCaching>ReadOnly</HostCaching>\r\n          <DiskLabel>testDataDiskLabel5</DiskLabel>\r\n          <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846330518</DiskName>\r\n          <LogicalDiskSizeInGB>1</LogicalDiskSizeInGB>\r\n          <MediaLink>https://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20645.vhd</MediaLink>\r\n          <IOType>Standard</IOType>\r\n        </DataVirtualHardDisk>\r\n      </DataVirtualHardDisks>\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846320502</DiskName>\r\n        <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc2064.vhd</MediaLink>\r\n        <SourceImageName>byolosimage8921</SourceImageName>\r\n        <OS>Windows</OS>\r\n        <IOType>Standard</IOType>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>false</ProvisionGuestAgent>\r\n      <LicenseType>Windows_Server</LicenseType>\r\n    </Role>\r\n    <Role i:type=\"PersistentVMRole\">\r\n      <RoleName>pstestsvc20643</RoleName>\r\n      <OsVersion />\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n          <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n          <InputEndpoints>\r\n            <InputEndpoint>\r\n              <LocalPort>3389</LocalPort>\r\n              <Name>RemoteDesktop</Name>\r\n              <Port>52778</Port>\r\n              <Protocol>tcp</Protocol>\r\n              <Vip>40.86.92.78</Vip>\r\n              <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n            </InputEndpoint>\r\n          </InputEndpoints>\r\n          <SubnetNames />\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <AvailabilitySetName>test</AvailabilitySetName>\r\n      <DataVirtualHardDisks />\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <DiskName>pstestsvc2064Prod-pstestsvc20643-0-201604201847340433</DiskName>\r\n        <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20641.vhd</MediaLink>\r\n        <SourceImageName>byolosimage8921</SourceImageName>\r\n        <OS>Windows</OS>\r\n        <IOType>Standard</IOType>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>true</ProvisionGuestAgent>\r\n      <LicenseType>Windows_Server</LicenseType>\r\n    </Role>\r\n  </RoleList>\r\n  <SdkVersion />\r\n  <Locked>false</Locked>\r\n  <RollbackAllowed>false</RollbackAllowed>\r\n  <CreatedTime>2016-04-20T18:46:31Z</CreatedTime>\r\n  <LastModifiedTime>2016-04-20T18:47:58Z</LastModifiedTime>\r\n  <ExtendedProperties />\r\n  <PersistentVMDowntime>\r\n    <StartTime>2016-04-16T03:53:30Z</StartTime>\r\n    <EndTime>2017-04-16T03:53:30Z</EndTime>\r\n    <Status>PersistentVMUpdateScheduled</Status>\r\n  </PersistentVMDowntime>\r\n  <VirtualIPs>\r\n    <VirtualIP>\r\n      <Address>40.86.92.78</Address>\r\n      <IsDnsProgrammed>true</IsDnsProgrammed>\r\n      <Name>pstestsvc2064ProdContractContract</Name>\r\n    </VirtualIP>\r\n  </VirtualIPs>\r\n  <InternalDnsSuffix>pstestsvc2064.g7.internal.cloudapp.net</InternalDnsSuffix>\r\n  <LoadBalancers />\r\n</Deployment>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5551"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "665a9205527b9bc687b37d9d3c9e58fa"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:05 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod/roles/pstestsvc2064",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9kL3JvbGVzL3BzdGVzdHN2YzIwNjQ=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<PersistentVMRole xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <RoleName>pstestsvc2064</RoleName>\r\n  <OsVersion />\r\n  <RoleType>PersistentVMRole</RoleType>\r\n  <ConfigurationSets>\r\n    <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n      <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n      <InputEndpoints>\r\n        <InputEndpoint>\r\n          <LocalPort>3389</LocalPort>\r\n          <Name>RemoteDesktop</Name>\r\n          <Port>62828</Port>\r\n          <Protocol>tcp</Protocol>\r\n          <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n        </InputEndpoint>\r\n      </InputEndpoints>\r\n    </ConfigurationSet>\r\n  </ConfigurationSets>\r\n  <DataVirtualHardDisks>\r\n    <DataVirtualHardDisk>\r\n      <HostCaching>ReadOnly</HostCaching>\r\n      <DiskLabel>testDataDiskLabel5</DiskLabel>\r\n      <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846330518</DiskName>\r\n      <LogicalDiskSizeInGB>1</LogicalDiskSizeInGB>\r\n      <MediaLink>https://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20645.vhd</MediaLink>\r\n      <IOType>Standard</IOType>\r\n    </DataVirtualHardDisk>\r\n  </DataVirtualHardDisks>\r\n  <OSVirtualHardDisk>\r\n    <HostCaching>ReadWrite</HostCaching>\r\n    <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846320502</DiskName>\r\n    <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc2064.vhd</MediaLink>\r\n    <SourceImageName>byolosimage8921</SourceImageName>\r\n    <OS>Windows</OS>\r\n    <IOType>Standard</IOType>\r\n  </OSVirtualHardDisk>\r\n  <RoleSize>Large</RoleSize>\r\n  <ProvisionGuestAgent>false</ProvisionGuestAgent>\r\n  <LicenseType>Windows_Server</LicenseType>\r\n</PersistentVMRole>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1463"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "1506852ee528a204b24da6ec161c20bd"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:47:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod/roles/pstestsvc2064",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9kL3JvbGVzL3BzdGVzdHN2YzIwNjQ=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<PersistentVMRole xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <RoleName>pstestsvc2064</RoleName>\r\n  <OsVersion />\r\n  <RoleType>PersistentVMRole</RoleType>\r\n  <ConfigurationSets>\r\n    <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n      <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n      <InputEndpoints>\r\n        <InputEndpoint>\r\n          <LocalPort>3389</LocalPort>\r\n          <Name>RemoteDesktop</Name>\r\n          <Port>62828</Port>\r\n          <Protocol>tcp</Protocol>\r\n          <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n        </InputEndpoint>\r\n      </InputEndpoints>\r\n    </ConfigurationSet>\r\n  </ConfigurationSets>\r\n  <DataVirtualHardDisks>\r\n    <DataVirtualHardDisk>\r\n      <HostCaching>ReadOnly</HostCaching>\r\n      <DiskLabel>testDataDiskLabel5</DiskLabel>\r\n      <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846330518</DiskName>\r\n      <LogicalDiskSizeInGB>1</LogicalDiskSizeInGB>\r\n      <MediaLink>https://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20645.vhd</MediaLink>\r\n      <IOType>Standard</IOType>\r\n    </DataVirtualHardDisk>\r\n  </DataVirtualHardDisks>\r\n  <OSVirtualHardDisk>\r\n    <HostCaching>ReadWrite</HostCaching>\r\n    <DiskName>pstestsvc2064Prod-pstestsvc2064-0-201604201846320502</DiskName>\r\n    <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc2064.vhd</MediaLink>\r\n    <SourceImageName>byolosimage8921</SourceImageName>\r\n    <OS>Windows</OS>\r\n    <IOType>Standard</IOType>\r\n  </OSVirtualHardDisk>\r\n  <RoleSize>Large</RoleSize>\r\n  <ProvisionGuestAgent>false</ProvisionGuestAgent>\r\n  <LicenseType>Windows_Server</LicenseType>\r\n</PersistentVMRole>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1463"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "eeca31ae98cc9b41a23c00ab842a2bac"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod/roles",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9kL3JvbGVz",
+      "RequestMethod": "POST",
+      "RequestBody": "<PersistentVMRole xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <RoleName>pstestsvc20643</RoleName>\r\n  <RoleType>PersistentVMRole</RoleType>\r\n  <ConfigurationSets>\r\n    <ConfigurationSet>\r\n      <ConfigurationSetType>WindowsProvisioningConfiguration</ConfigurationSetType>\r\n      <ComputerName>pstestsvc2064</ComputerName>\r\n      <AdminPassword>foobarB@z21!</AdminPassword>\r\n      <EnableAutomaticUpdates>false</EnableAutomaticUpdates>\r\n      <TimeZone>Pacific Standard Time</TimeZone>\r\n      <StoredCertificateSettings />\r\n      <AdminUsername>FooBar12</AdminUsername>\r\n      <HostName>pstestsvc2064.cloudapp.net</HostName>\r\n    </ConfigurationSet>\r\n    <ConfigurationSet>\r\n      <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n      <InputEndpoints>\r\n        <InputEndpoint>\r\n          <LocalPort>3389</LocalPort>\r\n          <Name>RemoteDesktop</Name>\r\n          <Port>52778</Port>\r\n          <Protocol>tcp</Protocol>\r\n          <Vip>157.56.161.177</Vip>\r\n          <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n        </InputEndpoint>\r\n      </InputEndpoints>\r\n      <StoredCertificateSettings />\r\n    </ConfigurationSet>\r\n  </ConfigurationSets>\r\n  <AvailabilitySetName>test</AvailabilitySetName>\r\n  <OSVirtualHardDisk>\r\n    <HostCaching>ReadWrite</HostCaching>\r\n    <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20641.vhd</MediaLink>\r\n    <SourceImageName>byolosimage8921</SourceImageName>\r\n  </OSVirtualHardDisk>\r\n  <RoleSize>Large</RoleSize>\r\n  <ProvisionGuestAgent>true</ProvisionGuestAgent>\r\n  <LicenseType>Windows_Server</LicenseType>\r\n</PersistentVMRole>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "1634"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6aab9f010b9f9efcbfd7b74e5d9aef85"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:47:33 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/6aab9f010b9f9efcbfd7b74e5d9aef85",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzZhYWI5ZjAxMGI5ZjllZmNiZmQ3Yjc0ZTVkOWFlZjg1",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>6aab9f01-0b9f-9efc-bfd7-b74e5d9aef85</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f76ec786c46694cc9356700f69669fb0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:47:33 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/6aab9f010b9f9efcbfd7b74e5d9aef85",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzZhYWI5ZjAxMGI5ZjllZmNiZmQ3Yjc0ZTVkOWFlZjg1",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>6aab9f01-0b9f-9efc-bfd7-b74e5d9aef85</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3339c55cb4bf910da959c2d1239ceeb7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod/roles/pstestsvc20643",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9kL3JvbGVzL3BzdGVzdHN2YzIwNjQz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<PersistentVMRole xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <RoleName>pstestsvc20643</RoleName>\r\n  <OsVersion />\r\n  <RoleType>PersistentVMRole</RoleType>\r\n  <ConfigurationSets>\r\n    <ConfigurationSet i:type=\"NetworkConfigurationSet\">\r\n      <ConfigurationSetType>NetworkConfiguration</ConfigurationSetType>\r\n      <InputEndpoints>\r\n        <InputEndpoint>\r\n          <LocalPort>3389</LocalPort>\r\n          <Name>RemoteDesktop</Name>\r\n          <Port>52778</Port>\r\n          <Protocol>tcp</Protocol>\r\n          <EnableDirectServerReturn>false</EnableDirectServerReturn>\r\n        </InputEndpoint>\r\n      </InputEndpoints>\r\n    </ConfigurationSet>\r\n  </ConfigurationSets>\r\n  <AvailabilitySetName>test</AvailabilitySetName>\r\n  <DataVirtualHardDisks />\r\n  <OSVirtualHardDisk>\r\n    <HostCaching>ReadWrite</HostCaching>\r\n    <DiskName>pstestsvc2064Prod-pstestsvc20643-0-201604201847340433</DiskName>\r\n    <MediaLink>http://mybyolosimagerdfe.blob.core.windows.net/myvhds/pstestsvc20641.vhd</MediaLink>\r\n    <SourceImageName>byolosimage8921</SourceImageName>\r\n    <OS>Windows</OS>\r\n    <IOType>Standard</IOType>\r\n  </OSVirtualHardDisk>\r\n  <RoleSize>Large</RoleSize>\r\n  <ProvisionGuestAgent>true</ProvisionGuestAgent>\r\n  <LicenseType>Windows_Server</LicenseType>\r\n</PersistentVMRole>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1133"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "0ef70dbbb8d69e0eaf3d39f256367c6f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod/roleinstances/pstestsvc2064/Operations",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9kL3JvbGVpbnN0YW5jZXMvcHN0ZXN0c3ZjMjA2NC9PcGVyYXRpb25z",
+      "RequestMethod": "POST",
+      "RequestBody": "<ShutdownRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <OperationType>ShutdownRoleOperation</OperationType>\r\n  <PostShutdownAction>StoppedDeallocated</PostShutdownAction>\r\n</ShutdownRoleOperation>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "218"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ef0b8593d6c29932b5f0c79ec0b0996e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:05 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/ef0b8593d6c29932b5f0c79ec0b0996e",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zL2VmMGI4NTkzZDZjMjk5MzJiNWYwYzc5ZWMwYjA5OTZl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>ef0b8593-d6c2-9932-b5f0-c79ec0b0996e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f24e9cd01fe99f09b80f7adc1bf0255a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:05 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/ef0b8593d6c29932b5f0c79ec0b0996e",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zL2VmMGI4NTkzZDZjMjk5MzJiNWYwYzc5ZWMwYjA5OTZl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>ef0b8593-d6c2-9932-b5f0-c79ec0b0996e</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b9613bce5415a589bc4d832920ab3fe8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:35 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod/roles/pstestsvc2064?comp=media",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9kL3JvbGVzL3BzdGVzdHN2YzIwNjQ/Y29tcD1tZWRpYQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "14562d5ee642ab5ea299ebec675eb382"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:35 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/14562d5ee642ab5ea299ebec675eb382",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzE0NTYyZDVlZTY0MmFiNWVhMjk5ZWJlYzY3NWViMzgy",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>14562d5e-e642-ab5e-a299-ebec675eb382</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "81385184488099dfb3a67634de37189e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:48:36 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/14562d5ee642ab5ea299ebec675eb382",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzE0NTYyZDVlZTY0MmFiNWVhMjk5ZWJlYzY3NWViMzgy",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>14562d5e-e642-ab5e-a299-ebec675eb382</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "eb93c8661ee7af0eb757f15d06e18ba3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:49:06 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod/roleinstances/pstestsvc20643/Operations",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9kL3JvbGVpbnN0YW5jZXMvcHN0ZXN0c3ZjMjA2NDMvT3BlcmF0aW9ucw==",
+      "RequestMethod": "POST",
+      "RequestBody": "<ShutdownRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <OperationType>ShutdownRoleOperation</OperationType>\r\n  <PostShutdownAction>Stopped</PostShutdownAction>\r\n</ShutdownRoleOperation>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "207"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "fede0dd8c272a474858d1c2fb13265fe"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:49:07 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/fede0dd8c272a474858d1c2fb13265fe",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zL2ZlZGUwZGQ4YzI3MmE0NzQ4NThkMWMyZmIxMzI2NWZl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>fede0dd8-c272-a474-858d-1c2fb13265fe</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "84e7124c6fb19c69b6bf212ca4f0f62d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:49:08 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/fede0dd8c272a474858d1c2fb13265fe",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zL2ZlZGUwZGQ4YzI3MmE0NzQ4NThkMWMyZmIxMzI2NWZl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>fede0dd8-c272-a474-858d-1c2fb13265fe</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b69107f23a1394f091c30be951b6599d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:49:38 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064/deployments/pstestsvc2064Prod?comp=media",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0L2RlcGxveW1lbnRzL3BzdGVzdHN2YzIwNjRQcm9kP2NvbXA9bWVkaWE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "1eeaea92d82498c9a92b15b4f3de7213"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:49:38 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/1eeaea92d82498c9a92b15b4f3de7213",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzFlZWFlYTkyZDgyNDk4YzlhOTJiMTViNGYzZGU3MjEz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1eeaea92-d824-98c9-a92b-15b4f3de7213</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "99f4d912aaf0aaf3aad62c17053538ca"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:49:38 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/1eeaea92d82498c9a92b15b4f3de7213",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzFlZWFlYTkyZDgyNDk4YzlhOTJiMTViNGYzZGU3MjEz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1eeaea92-d824-98c9-a92b-15b4f3de7213</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "1613a87f88099717b64b1cc25425dbbf"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:50:09 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/hostedservices/pstestsvc2064?comp=media",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9wc3Rlc3RzdmMyMDY0P2NvbXA9bWVkaWE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2af0ef9a925f9801813dd63746b2da1d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:50:10 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/2af0ef9a925f9801813dd63746b2da1d",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzJhZjBlZjlhOTI1Zjk4MDE4MTNkZDYzNzQ2YjJkYTFk",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>2af0ef9a-925f-9801-813d-d63746b2da1d</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "41e47476c59d9f349f2d357349c91768"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:50:11 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operations/2af0ef9a925f9801813dd63746b2da1d",
+      "EncodedRequestUri": "LzI0ZmIyM2UzLTZiYTMtNDFmMC05YjZlLWU0MTEzMWQ1ZDYxZS9vcGVyYXRpb25zLzJhZjBlZjlhOTI1Zjk4MDE4MTNkZDYzNzQ2YjJkYTFk",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>2af0ef9a-925f-9801-813d-d63746b2da1d</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "14319f3015a8a655a3fcdedf1c123f57"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 20 Apr 2016 18:50:40 GMT"
+        ],
+        "Server": [
+          "1.0.6198.357",
+          "(rd_rdfe_stable.160413-1538)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCreateVMWithBYOL": [
+      "pstestsvc2064",
+      "byolosimage8921"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "24fb23e3-6ba3-41f0-9b6e-e41131d5d61e"
+  }
+}
