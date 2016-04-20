@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Shared or dedicated web app hosting. Possible values for this
-        /// property include: 'Shared', 'Dedicated'.
+        /// property include: 'Shared', 'Dedicated', 'Dynamic'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.computeMode")]
         public ComputeModeOptions? ComputeMode { get; set; }

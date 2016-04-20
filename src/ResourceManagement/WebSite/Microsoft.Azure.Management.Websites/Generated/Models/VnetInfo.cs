@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the VnetInfo class.
         /// </summary>
-        public VnetInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vnetResourceId = default(string), string certThumbprint = default(string), string certBlob = default(string), IList<VnetRoute> routes = default(IList<VnetRoute>), bool? resyncRequired = default(bool?))
+        public VnetInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vnetResourceId = default(string), string certThumbprint = default(string), string certBlob = default(string), IList<VnetRoute> routes = default(IList<VnetRoute>), bool? resyncRequired = default(bool?), string dnsServers = default(string))
             : base(location, id, name, type, tags)
         {
             VnetResourceId = vnetResourceId;
@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             CertBlob = certBlob;
             Routes = routes;
             ResyncRequired = resyncRequired;
+            DnsServers = dnsServers;
         }
 
         /// <summary>
@@ -71,6 +72,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resyncRequired")]
         public bool? ResyncRequired { get; set; }
+
+        /// <summary>
+        /// Dns servers to be used by this VNET. This should be a
+        /// comma-separated list of IP addresses.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsServers")]
+        public string DnsServers { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

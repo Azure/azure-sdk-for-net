@@ -1,9 +1,10 @@
 {
-  "version": "2.0.0-preview",
+  "version": "2.0.1-preview",
   "description": "Provides redis cache management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure Redis Cache management", "redis management", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "releaseNotes": "https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/src/ResourceManagement/RedisCache/ReleaseNotes.md",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
   "compilationOptions": {

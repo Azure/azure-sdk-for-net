@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         private void Initialize()
         {
-            this.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			this.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             this.Certificates = new CertificatesOperations(this);
             this.ClassicMobileServices = new ClassicMobileServicesOperations(this);
             this.Domains = new DomainsOperations(this);
