@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupProtectionContainers?api-version=2016-05-01&$filter=providerType%20eq%20'MAB'",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBQcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDE2LTA1LTAxJiRmaWx0ZXI9cHJvdmlkZXJUeXBlJTIwZXElMjAnTUFCJw==",
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupProtectionContainers?api-version=2016-05-01&$filter=backupManagementType%20eq%20'MAB'",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBQcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDE2LTA1LTAxJiRmaWx0ZXI9YmFja3VwTWFuYWdlbWVudFR5cGUlMjBlcSUyMCdNQUIn",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f030b7ab-373c-4b33-be09-57782b62f107"
+          "7f6a3aea-326d-46d4-9985-dc671df1ccb1"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
@@ -28,29 +28,29 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "98af49ab-2792-4266-979b-cf35e739855e"
+          "7876d2d4-3404-4490-8330-4c8292f38f12"
         ],
         "x-ms-client-request-id": [
-          "f030b7ab-373c-4b33-be09-57782b62f107",
-          "f030b7ab-373c-4b33-be09-57782b62f107"
+          "7f6a3aea-326d-46d4-9985-dc671df1ccb1",
+          "7f6a3aea-326d-46d4-9985-dc671df1ccb1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "13720"
+          "12494"
         ],
         "x-ms-correlation-request-id": [
-          "98af49ab-2792-4266-979b-cf35e739855e"
+          "7876d2d4-3404-4490-8330-4c8292f38f12"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160420T125039Z:98af49ab-2792-4266-979b-cf35e739855e"
+          "CENTRALUS:20160420T132214Z:7876d2d4-3404-4490-8330-4c8292f38f12"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Apr 2016 12:50:39 GMT"
+          "Wed, 20 Apr 2016 13:22:14 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
