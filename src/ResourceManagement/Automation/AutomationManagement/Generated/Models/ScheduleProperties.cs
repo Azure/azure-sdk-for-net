@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class ScheduleProperties : ResourceCommonPropertiesBase
     {
+        private AdvancedSchedule _advancedSchedule;
+        
+        /// <summary>
+        /// Optional. Gets or sets the advanced schedule.
+        /// </summary>
+        public AdvancedSchedule AdvancedSchedule
+        {
+            get { return this._advancedSchedule; }
+            set { this._advancedSchedule = value; }
+        }
+        
         private DateTimeOffset _expiryTime;
         
         /// <summary>
