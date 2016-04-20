@@ -29,17 +29,26 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the RedisRebootParameters class.
         /// </summary>
-        public RedisRebootParameters(RebootType rebootType)
+        public RedisRebootParameters(RebootType rebootType, int? shardId = default(int?))
         {
             RebootType = rebootType;
+            ShardId = shardId;
         }
 
         /// <summary>
-        /// Which redis node(s) to reboot. Possible values include:
-        /// 'PrimaryNode', 'SecondaryNode', 'AllNodes'
+        /// Which redis node(s) to reboot. Depending on this value data loss
+        /// is possible. Possible values include: 'PrimaryNode',
+        /// 'SecondaryNode', 'AllNodes'
         /// </summary>
-        [JsonProperty(PropertyName = "RebootType")]
+        [JsonProperty(PropertyName = "rebootType")]
         public RebootType RebootType { get; set; }
+
+        /// <summary>
+        /// In case of cluster cache, this specifies shard id which should be
+        /// rebooted.
+        /// </summary>
+        [JsonProperty(PropertyName = "shardId")]
+        public int? ShardId { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
