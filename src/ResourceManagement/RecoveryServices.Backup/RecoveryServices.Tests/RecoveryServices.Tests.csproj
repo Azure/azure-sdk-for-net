@@ -83,10 +83,10 @@
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\ListContainersTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\UnregisterContainersTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json" />
+	<None Include="SessionRecords\RecoveryServices.Tests.MabContainerTests\ListContainersTest.json" />
+	<None Include="SessionRecords\RecoveryServices.Tests.MabContainerTests\UnregisterContainersTest.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">

@@ -1,13 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupEngines?api-version=2016-05-01&$filter=providerType%20eq%20'DPM'&$top=200",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBFbmdpbmVzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDEmJGZpbHRlcj1wcm92aWRlclR5cGUlMjBlcSUyMCdEUE0nJiR0b3A9MjAw",
+<<<<<<< HEAD
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupEngines?api-version=2016-05-01&$top=200",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBFbmdpbmVzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDEmJHRvcD0yMDA=",
+=======
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupEngines?api-version=2016-05-01&$filter=backupManagementType%20eq%20'DPM'&$top=200",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBFbmdpbmVzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDEmJGZpbHRlcj1iYWNrdXBNYW5hZ2VtZW50VHlwZSUyMGVxJTIwJ0RQTScmJHRvcD0yMDA=",
+>>>>>>> c2498962615c72f7524c11245c20f06832844607
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6b26c335-b731-4979-857e-e0c92b9eca90"
+          "794c8ee5-8ff3-4f66-8984-84666bf7bb72"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
@@ -28,29 +33,29 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d9ad61cd-5adb-4ce6-8bb7-5649a06483ad"
+          "d72536cc-1af0-4d5d-a2ca-2431f4161615"
         ],
         "x-ms-client-request-id": [
-          "6b26c335-b731-4979-857e-e0c92b9eca90",
-          "6b26c335-b731-4979-857e-e0c92b9eca90"
+          "794c8ee5-8ff3-4f66-8984-84666bf7bb72",
+          "794c8ee5-8ff3-4f66-8984-84666bf7bb72"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "8339"
+          "14806"
         ],
         "x-ms-correlation-request-id": [
-          "d9ad61cd-5adb-4ce6-8bb7-5649a06483ad"
+          "d72536cc-1af0-4d5d-a2ca-2431f4161615"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160414T112333Z:d9ad61cd-5adb-4ce6-8bb7-5649a06483ad"
+          "CENTRALUS:20160420T121412Z:d72536cc-1af0-4d5d-a2ca-2431f4161615"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Apr 2016 11:23:32 GMT"
+          "Wed, 20 Apr 2016 12:14:12 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
