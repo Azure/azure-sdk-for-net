@@ -2003,6 +2003,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     string deploymentLabel = deploymentName;
 
                     string location = "Central US";
+                    string imageName = TestUtilities.GenerateName("byolosimage").ToLower(); ;
+                    Uri userImageUrl = new Uri("https://mybyolosimagerdfe.blob.core.windows.net/vhdsrc2/win2012-tag0.vhd");
+                    string wsLicenseType = "Windows_Server";
+                    string userName = TestUtilities.GenerateName("user");
+                    string userPassword = TestUtilities.GenerateName("user@");
 
                     compute.HostedServices.Create(
                         new HostedServiceCreateParameters
@@ -2013,13 +2018,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                             ServiceName = serviceName
                         });
 
-                     var hostedService = compute.HostedServices.Get(serviceName);
+                    var hostedService = compute.HostedServices.Get(serviceName);
                     Assert.True(hostedService.Properties.Label == serviceDescription);
                     Assert.True(hostedService.Properties.Description == serviceLabel);
-
-                    string imageName = TestUtilities.GenerateName("byolosimage").ToLower(); ;
-                    Uri userImageUrl = new Uri("https://mybyolosimagerdfe.blob.core.windows.net/vhdsrc2/win2012-tag0.vhd");
-                    string wsLicenseType = "Windows_Server";
 
                     var createOSImageResult = compute.VirtualMachineOSImages.Create(
                         new VirtualMachineOSImageCreateParameters
@@ -2076,8 +2077,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                         {
                                             new ConfigurationSet
                                             {
-                                                AdminUserName = "FooBar12",
-                                                AdminPassword = "foobarB@z21!",
+                                                AdminUserName = userName,
+                                                AdminPassword = userPassword,
                                                 ConfigurationSetType = ConfigurationSetTypes
                                                                       .WindowsProvisioningConfiguration,
                                                 ComputerName = serviceName,
@@ -2123,8 +2124,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                             {
                                 new ConfigurationSet
                                 {
-                                    AdminUserName = "FooBar12",
-                                    AdminPassword = "foobarB@z21!",
+                                    AdminUserName = userName,
+                                    AdminPassword = userPassword,
                                     ConfigurationSetType = ConfigurationSetTypes
                                                             .WindowsProvisioningConfiguration,
                                     ComputerName = serviceName,
@@ -2200,6 +2201,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
 
                     // Delete the service
                     compute.HostedServices.DeleteAll(serviceName);
+
+                    // Delete OS Image
+                    compute.VirtualMachineOSImages.Delete(imageName, false);
                 }
                 finally
                 {
