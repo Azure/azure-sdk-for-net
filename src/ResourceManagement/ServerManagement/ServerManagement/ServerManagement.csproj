@@ -20,10 +20,8 @@
     <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.Server.nuspec" />
-    <None Include="Microsoft.Azure.Management.Server.nuget.proj">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Microsoft.Azure.Management.ServerManagement.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.ServerManagement.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

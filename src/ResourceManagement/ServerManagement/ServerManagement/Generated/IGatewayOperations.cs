@@ -228,6 +228,40 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// </param>
         Task<AzureOperationResponse> BeginUpgradeWithHttpMessagesAsync(string resourceGroupName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Regenerate a gateway's profile
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name uniquely identifies the resource group
+        /// within the user subscriptionId.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The gateway name (256 characters maximum).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> RegenerateProfileWithHttpMessagesAsync(string resourceGroupName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Regenerate a gateway's profile
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name uniquely identifies the resource group
+        /// within the user subscriptionId.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The gateway name (256 characters maximum).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginRegenerateProfileWithHttpMessagesAsync(string resourceGroupName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a gateway profile
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -244,6 +278,23 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<GatewayProfile>> GetProfileWithHttpMessagesAsync(string resourceGroupName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a gateway profile
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name uniquely identifies the resource group
+        /// within the user subscriptionId.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The gateway name (256 characters maximum).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<GatewayProfile>> BeginGetProfileWithHttpMessagesAsync(string resourceGroupName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns gateways in a subscription
         /// </summary>

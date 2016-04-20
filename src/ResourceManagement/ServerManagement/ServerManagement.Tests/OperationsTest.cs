@@ -119,7 +119,7 @@ namespace ServerManagement.Tests
                 try
                 {
                     gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayName);
-
+                    
                     // make sure the gateway service is running.
                     StartGateway();
                 }

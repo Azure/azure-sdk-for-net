@@ -508,6 +508,84 @@ namespace Microsoft.Azure.Management.ServerManagement
             }
 
             /// <summary>
+            /// Regenerate a gateway's profile
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name uniquely identifies the resource group within the
+            /// user subscriptionId.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The gateway name (256 characters maximum).
+            /// </param>
+            public static void RegenerateProfile(this IGatewayOperations operations, string resourceGroupName, string gatewayName)
+            {
+                Task.Factory.StartNew(s => ((IGatewayOperations)s).RegenerateProfileAsync(resourceGroupName, gatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Regenerate a gateway's profile
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name uniquely identifies the resource group within the
+            /// user subscriptionId.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The gateway name (256 characters maximum).
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RegenerateProfileAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.RegenerateProfileWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Regenerate a gateway's profile
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name uniquely identifies the resource group within the
+            /// user subscriptionId.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The gateway name (256 characters maximum).
+            /// </param>
+            public static void BeginRegenerateProfile(this IGatewayOperations operations, string resourceGroupName, string gatewayName)
+            {
+                Task.Factory.StartNew(s => ((IGatewayOperations)s).BeginRegenerateProfileAsync(resourceGroupName, gatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Regenerate a gateway's profile
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name uniquely identifies the resource group within the
+            /// user subscriptionId.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The gateway name (256 characters maximum).
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRegenerateProfileAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginRegenerateProfileWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// Gets a gateway profile
             /// </summary>
             /// <param name='operations'>
@@ -544,6 +622,48 @@ namespace Microsoft.Azure.Management.ServerManagement
             public static async Task<GatewayProfile> GetProfileAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetProfileWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a gateway profile
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name uniquely identifies the resource group within the
+            /// user subscriptionId.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The gateway name (256 characters maximum).
+            /// </param>
+            public static GatewayProfile BeginGetProfile(this IGatewayOperations operations, string resourceGroupName, string gatewayName)
+            {
+                return Task.Factory.StartNew(s => ((IGatewayOperations)s).BeginGetProfileAsync(resourceGroupName, gatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a gateway profile
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name uniquely identifies the resource group within the
+            /// user subscriptionId.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The gateway name (256 characters maximum).
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GatewayProfile> BeginGetProfileAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetProfileWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
