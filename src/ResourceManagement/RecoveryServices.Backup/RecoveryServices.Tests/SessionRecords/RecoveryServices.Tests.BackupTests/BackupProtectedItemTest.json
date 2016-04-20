@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/pstestrg/providers/Microsoft.RecoveryServices/vaults/pstestrsvault/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer%3Biaasvmcontainerv2%3Bpstestrg%3Bpstestv2vm1/protectedItems/VM%3Biaasvmcontainerv2%3Bpstestrg%3Bpstestv2vm1/backup?api-version=2015-03-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL3BzdGVzdHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvcHN0ZXN0cnN2YXVsdC9iYWNrdXBGYWJyaWNzL0F6dXJlSWFhc1ZNL3Byb3RlY3Rpb25Db250YWluZXJzL0lhYXNWTUNvbnRhaW5lciUzQmlhYXN2bWNvbnRhaW5lcnYyJTNCcHN0ZXN0cmclM0Jwc3Rlc3R2MnZtMS9wcm90ZWN0ZWRJdGVtcy9WTSUzQmlhYXN2bWNvbnRhaW5lcnYyJTNCcHN0ZXN0cmclM0Jwc3Rlc3R2MnZtMS9iYWNrdXA/YXBpLXZlcnNpb249MjAxNS0wMy0xNQ==",
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/pstestrg/providers/Microsoft.RecoveryServices/vaults/pstestrsvault/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer%3Biaasvmcontainerv2%3Bpstestrg%3Bpstestv2vm1/protectedItems/VM%3Biaasvmcontainerv2%3Bpstestrg%3Bpstestv2vm1/backup?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL3BzdGVzdHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvcHN0ZXN0cnN2YXVsdC9iYWNrdXBGYWJyaWNzL0F6dXJlSWFhc1ZNL3Byb3RlY3Rpb25Db250YWluZXJzL0lhYXNWTUNvbnRhaW5lciUzQmlhYXN2bWNvbnRhaW5lcnYyJTNCcHN0ZXN0cmclM0Jwc3Rlc3R2MnZtMS9wcm90ZWN0ZWRJdGVtcy9WTSUzQmlhYXN2bWNvbnRhaW5lcnYyJTNCcHN0ZXN0cmclM0Jwc3Rlc3R2MnZtMS9iYWNrdXA/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {

@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of SimpleSchedulePolicy object.
+    /// Simple policy schedule.
     /// </summary>
     public partial class SimpleSchedulePolicy : SchedulePolicy
     {
         private IList<string> _scheduleRunDays;
         
         /// <summary>
-        /// Optional. ScheduleRunDays of ProtectionPolicy.
+        /// Optional. List of days of week this schedule has to be run.
         /// </summary>
         public IList<string> ScheduleRunDays
         {
@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _scheduleRunFrequency;
         
         /// <summary>
-        /// Optional. scheduleRunType Schedule of ProtectionPolicy.
+        /// Optional. Frequency of the schedule operation of this policy.
+        /// Possible values: Daily, Weekly.
         /// </summary>
         public string ScheduleRunFrequency
         {
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<DateTime> _scheduleRunTimes;
         
         /// <summary>
-        /// Optional. scheduleRunTimes of ProtectionPolicy.
+        /// Optional. List of times of day this schedule has to be run.
         /// </summary>
         public IList<DateTime> ScheduleRunTimes
         {

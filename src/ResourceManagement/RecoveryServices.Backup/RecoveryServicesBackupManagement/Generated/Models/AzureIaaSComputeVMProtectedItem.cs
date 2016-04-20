@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVM ProtectedItem object.
+    /// IaaS VM workload-specific protected item representing the Compute VM.
     /// </summary>
     public partial class AzureIaaSComputeVMProtectedItem : AzureIaaSVMProtectedItem
     {

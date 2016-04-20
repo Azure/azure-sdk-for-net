@@ -42,31 +42,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// request, call the Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
+        /// Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Container Name for the backup item
+        /// Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Protected item name for the backup item
+        /// Name of the protected item whose recovery points are to be fetched.
         /// </param>
         /// <param name='recoveryPointId'>
-        /// Recovery point id for the backup item
+        /// ID of the recovery point whose details are to be fetched.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a RecoveryPointResponse object.
+        /// A single instance of a recovery point response as returned by the
+        /// service in the list recovery points call.
         /// </returns>
         Task<RecoveryPointResponse> GetAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken);
         
@@ -76,31 +77,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// the arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
+        /// Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Container Name for the backup item
+        /// Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Protected item name for the backup item
+        /// Name of the protected item whose recovery points are to be fetched.
         /// </param>
         /// <param name='queryFilter'>
-        /// Recovery point id for the backup item
+        /// Query parameters for listing recovery points.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a RecoveryPointListResponse object.
+        /// List of recovery points as returned by the service with the list
+        /// recovery points call.
         /// </returns>
         Task<RecoveryPointListResponse> ListAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, RecoveryPointQueryParameters queryFilter, CancellationToken cancellationToken);
     }

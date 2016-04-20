@@ -26,14 +26,16 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionContainerResource.
+    /// Protection container resource.
     /// </summary>
     public partial class ProtectionContainerResource : Resource
     {
         private ProtectionContainerBase _properties;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Overloaded property representing the protection
+        /// container. Based on the type of workload, this property will be
+        /// overloaded by the corresponding derived objects.
         /// </summary>
         public ProtectionContainerBase Properties
         {

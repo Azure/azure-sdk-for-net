@@ -67,16 +67,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// passed in the arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryParams'>
-        /// Required. Query params for backup engine.
+        /// Required. Query parameters for listing backup engines.
         /// </param>
         /// <param name='paginationParams'>
-        /// Optional. Pagination parameter for skip token and top.
+        /// Optional. Pagination parameters for controlling the response.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
-            if (queryParams.ProviderType != null)
+            if (queryParams.BackupManagementType != null)
             {
-                odataFilter.Add("providerType eq '" + Uri.EscapeDataString(queryParams.ProviderType) + "'");
+                odataFilter.Add("backupManagementType eq '" + Uri.EscapeDataString(queryParams.BackupManagementType) + "'");
             }
             if (odataFilter.Count > 0)
             {

@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition for IaasVMRestoreRequest class.
+    /// IaaS VM workload-specific restore request.
     /// </summary>
     public partial class IaasVMRestoreRequest : RestoreRequest
     {
         private string _affinityGroup;
         
         /// <summary>
-        /// Optional. AffinityGroup of IaasVMRestoreRequest
+        /// Optional. Affinity group to which the VM should be restored to.
         /// </summary>
         public string AffinityGroup
         {
@@ -44,7 +44,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _cloudServiceOrResourceGroup;
         
         /// <summary>
-        /// Optional. CloudServiceOrResourceGroup of IaasVMRestoreRequest
+        /// Optional. Specifies either the cloud service name or the resource
+        /// group name to which the VM has to be restored to.If the VM is of
+        /// type Classic, this will be the cloud service name and resource
+        /// group name if it is a Compute VM.
         /// </summary>
         public string CloudServiceOrResourceGroup
         {
@@ -55,9 +58,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _cloudServiceOrResourceGroupId;
         
         /// <summary>
-        /// Optional. If CreateNewCloudService is false, only then populate
-        /// CloudServiceOrResourceGroupId with DomainNameId for ClassicVM's
-        /// and ResourceGroupId for ComputeVM's
+        /// Optional. Please use this only when the CreateNewCloudService is
+        /// set to false. The value should be the ID of the domain name  for
+        /// Classic VMs and ID of the resource group for Compute VMs.
         /// </summary>
         public string CloudServiceOrResourceGroupId
         {
@@ -68,7 +71,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private bool _createNewCloudService;
         
         /// <summary>
-        /// Optional. CreateNewCloudService of IaasVMRestoreRequest
+        /// Optional. Specifies whether a new cloud service has to be created
+        /// while the VM is being restored. If this is false, VM will be
+        /// restored to the same cloud service as that of the source VM.
         /// </summary>
         public bool CreateNewCloudService
         {
@@ -79,7 +84,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _recoveryPointId;
         
         /// <summary>
-        /// Optional. RecoveryPointId for IaasVMRestoreRequest
+        /// Optional. ID of the recovery point to where the VM has to be
+        /// restored back to.
         /// </summary>
         public string RecoveryPointId
         {
@@ -90,7 +96,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _recoveryType;
         
         /// <summary>
-        /// Optional. RecoveryType for IaasVMRestoreRequest
+        /// Optional. Type of this recovery. Possible values: OriginalLocation,
+        /// AlternateLocation, RestoreDisks.
         /// </summary>
         public string RecoveryType
         {
@@ -101,7 +108,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _region;
         
         /// <summary>
-        /// Optional. Region of IaasVMRestoreRequest
+        /// Optional. Azure region where the VM should be restored to.
         /// </summary>
         public string Region
         {
@@ -112,7 +119,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _storageAccountId;
         
         /// <summary>
-        /// Optional. StorageAccountId for IaasVMRestoreRequest
+        /// Optional. Fully qualified ARM ID of the storage account to which
+        /// the VM has to be restored to.
         /// </summary>
         public string StorageAccountId
         {
@@ -123,7 +131,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _subnetId;
         
         /// <summary>
-        /// Optional. SubnetId of IaasVMRestoreRequest
+        /// Optional. Fully qualified ARM ID of the subnet to which the
+        /// restored VM should belong to.
         /// </summary>
         public string SubnetId
         {
@@ -134,7 +143,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _virtualMachineName;
         
         /// <summary>
-        /// Optional. VirtualMachineName of IaasVMRestoreRequest
+        /// Optional. Name that the VM has to be restored to.
         /// </summary>
         public string VirtualMachineName
         {
@@ -145,7 +154,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _virtualNetworkId;
         
         /// <summary>
-        /// Optional. VirtualNetworkId of IaasVMRestoreRequest
+        /// Optional. Fully qualified ARM ID of the virtual network to which
+        /// the restored VM should belong to.
         /// </summary>
         public string VirtualNetworkId
         {

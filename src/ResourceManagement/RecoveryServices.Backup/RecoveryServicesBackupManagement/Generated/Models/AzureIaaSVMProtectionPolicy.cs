@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicy object.
+    /// IaaS VM workload-specific protection policy.
     /// </summary>
     public partial class AzureIaaSVMProtectionPolicy : ProtectionPolicyBase
     {
         private RetentionPolicy _retentionPolicy;
         
         /// <summary>
-        /// Optional. Retention Policy
+        /// Optional. Retention policy.
         /// </summary>
         public RetentionPolicy RetentionPolicy
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private SchedulePolicy _schedulePolicy;
         
         /// <summary>
-        /// Optional. Backup Schedule of ProtectionPolicy.
+        /// Optional. Backup schedule of protection policy.
         /// </summary>
         public SchedulePolicy SchedulePolicy
         {

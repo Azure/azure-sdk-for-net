@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVM ProtectedItem object.
+    /// IaaS VM workload-specific protected item.
     /// </summary>
     public partial class AzureIaaSVMProtectedItem : ProtectedItem
     {
         private AzureIaaSVMProtectedItemExtendedInfo _extendedInfo;
         
         /// <summary>
-        /// Optional. ExtendedInfo for the azure iaas vm protected item
+        /// Optional. Extended info for this protected item.
         /// </summary>
         public AzureIaaSVMProtectedItemExtendedInfo ExtendedInfo
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. Azure IaaSVM Protected Item FriendlyName
+        /// Optional. Friendly name of the VM represented by this protected
+        /// item.
         /// </summary>
         public string FriendlyName
         {
@@ -55,7 +56,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _lastBackupStatus;
         
         /// <summary>
-        /// Optional. Healthy or Unhealthy
+        /// Optional. Health status of the last backup operation on this
+        /// protected item. Possible values: Healthy, Unhealthy.
         /// </summary>
         public string LastBackupStatus
         {
@@ -66,7 +68,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private System.DateTime? _lastBackupTime;
         
         /// <summary>
-        /// Optional. Last backup time
+        /// Optional. Timestamp of the last backup operation on this protected
+        /// item.
         /// </summary>
         public System.DateTime? LastBackupTime
         {
@@ -77,7 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _protectionState;
         
         /// <summary>
-        /// Optional. Protection State of Protected Item
+        /// Optional. State of protection of this protected item.
         /// </summary>
         public string ProtectionState
         {
@@ -88,7 +91,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _protectionStatus;
         
         /// <summary>
-        /// Optional. Protection Status of Protected Item
+        /// Optional. Status of protection of this protected item.
         /// </summary>
         public string ProtectionStatus
         {
@@ -99,7 +102,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _virtualMachineId;
         
         /// <summary>
-        /// Optional. Azure Virtual Machine Id
+        /// Optional. Fully qualified ARM ID of the virtual machine represented
+        /// by this item.
         /// </summary>
         public string VirtualMachineId
         {

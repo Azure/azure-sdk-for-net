@@ -44,20 +44,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Nme of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name for the protection containers.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static BaseRecoveryServicesJobResponse BeginRefresh(this IContainerOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
         {
@@ -81,20 +80,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Nme of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name for the protection containers.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static Task<BaseRecoveryServicesJobResponse> BeginRefreshAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
         {
@@ -110,25 +108,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Required. Container Name for container operation.
+        /// Required. Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='operationId'>
-        /// Required. Operation ID of container operation.
+        /// Required. ID of the container operation whose result has to be
+        /// fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerResponse.
+        /// Protection container response.
         /// </returns>
         public static ProtectionContainerResponse GetContainerOperationResult(this IContainerOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -148,25 +147,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Required. Container Name for container operation.
+        /// Required. Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='operationId'>
-        /// Required. Operation ID of container operation.
+        /// Required. ID of the container operation whose result has to be
+        /// fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerResponse.
+        /// Protection container response.
         /// </returns>
         public static Task<ProtectionContainerResponse> GetContainerOperationResultAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerResponse.
+        /// Protection container response.
         /// </returns>
         public static ProtectionContainerResponse GetContainerOperationResultByURL(this IContainerOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerResponse.
+        /// Protection container response.
         /// </returns>
         public static Task<ProtectionContainerResponse> GetContainerOperationResultByURLAsync(this IContainerOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
@@ -232,23 +232,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='operationId'>
-        /// Required. Operation ID of refresh container operation.
+        /// Required. ID of the container operation whose result has to be
+        /// fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static BaseRecoveryServicesJobResponse GetRefreshOperationResult(this IContainerOperations operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -268,23 +268,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='operationId'>
-        /// Required. Operation ID of refresh container operation.
+        /// Required. ID of the container operation whose result has to be
+        /// fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -304,8 +304,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Required. Location value returned by operation.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static BaseRecoveryServicesJobResponse GetRefreshOperationResultByURL(this IContainerOperations operations, string operationResultLink)
         {
@@ -329,8 +328,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Required. Location value returned by operation.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultByURLAsync(this IContainerOperations operations, string operationResultLink)
         {
@@ -346,19 +344,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryParams'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Query parameters for listing protection containers.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerListResponse.
+        /// List of protection containers returned as a response by the list
+        /// protection containers API.
         /// </returns>
         public static ProtectionContainerListResponse List(this IContainerOperations operations, string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
         {
@@ -378,19 +377,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryParams'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Query parameters for listing protection containers.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionContainerListResponse.
+        /// List of protection containers returned as a response by the list
+        /// protection containers API.
         /// </returns>
         public static Task<ProtectionContainerListResponse> ListAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
         {
@@ -407,20 +407,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name for the protection containers.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static BaseRecoveryServicesJobResponse Refresh(this IContainerOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
         {
@@ -441,20 +440,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name for the protection containers.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static Task<BaseRecoveryServicesJobResponse> RefreshAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
         {
@@ -472,13 +470,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='identityName'>
-        /// Required. Container Name of protectionContainers
+        /// Required. Name of the protection container to unregister.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -507,13 +505,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='identityName'>
-        /// Required. Container Name of protectionContainers
+        /// Required. Name of the protection container to unregister.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.

@@ -25,16 +25,17 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// HTTP Request headers for Azure RecoveryServices.
+    /// HTTP request headers for azure recovery services operations.
     /// </summary>
     public partial class CustomRequestHeaders
     {
         private string _clientRequestId;
         
         /// <summary>
-        /// Optional. ClientRequestId is a unique ID for every request to Azure
-        /// RecoveryServices. It is useful when diagnosing failures in API
-        /// calls.
+        /// Optional. Unique identifier for identifying every request sent to
+        /// Azure recovery services. In case of service internal errors,
+        /// please communicate this ID to the engineering teams for further
+        /// debugging.
         /// </summary>
         public string ClientRequestId
         {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _culture;
         
         /// <summary>
-        /// Optional. Culture in which service has to return the output
+        /// Optional. Culture in which service has to return the output content.
         /// </summary>
         public string Culture
         {

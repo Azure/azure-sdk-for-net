@@ -25,14 +25,27 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemListQueryParam object.
+    /// The query filters that can be used with the list protected items API.
     /// </summary>
     public partial class ProtectedItemListQueryParam
     {
+        private string _backupManagementType;
+        
+        /// <summary>
+        /// Optional. Backup management type of this protected item. Possible
+        /// values: AzureIaasVM, MAB, DPM.
+        /// </summary>
+        public string BackupManagementType
+        {
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
+        }
+        
         private string _datasourceType;
         
         /// <summary>
-        /// Optional. Datasource Type query parameter
+        /// Optional. Type of workload this item represents. Possible values:
+        /// VM, FileFolder.
         /// </summary>
         public string DatasourceType
         {
@@ -43,23 +56,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _policyName;
         
         /// <summary>
-        /// Optional. PolicyName query parameter
+        /// Optional. Name of the protection policy which is associated with
+        /// the protection of this item.
         /// </summary>
         public string PolicyName
         {
             get { return this._policyName; }
             set { this._policyName = value; }
-        }
-        
-        private string _providerType;
-        
-        /// <summary>
-        /// Optional. provider type query parameter
-        /// </summary>
-        public string ProviderType
-        {
-            get { return this._providerType; }
-            set { this._providerType = value; }
         }
         
         /// <summary>

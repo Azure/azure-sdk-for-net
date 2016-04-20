@@ -66,16 +66,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// according to the query filter and the pagination parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryFilter'>
         /// Optional.
         /// </param>
         /// <param name='paginationParams'>
-        /// Optional. Pagination parameter for skip token and top.
+        /// Optional. Pagination parameters for controlling the response.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -133,17 +133,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
-            if (queryFilter != null && queryFilter.ProviderType != null)
+            if (queryFilter != null && queryFilter.BackupManagementType != null)
             {
-                odataFilter.Add("ProviderType eq '" + Uri.EscapeDataString(queryFilter.ProviderType) + "'");
+                odataFilter.Add("backupManagementType eq '" + Uri.EscapeDataString(queryFilter.BackupManagementType) + "'");
             }
             if (queryFilter != null && queryFilter.Status != null)
             {
-                odataFilter.Add("Status eq '" + Uri.EscapeDataString(queryFilter.Status) + "'");
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(queryFilter.Status) + "'");
             }
             if (queryFilter != null && queryFilter.FriendlyName != null)
             {
-                odataFilter.Add("FriendlyName eq '" + Uri.EscapeDataString(queryFilter.FriendlyName) + "'");
+                odataFilter.Add("friendlyName eq '" + Uri.EscapeDataString(queryFilter.FriendlyName) + "'");
             }
             if (odataFilter.Count > 0)
             {

@@ -25,14 +25,18 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a GetOperationResultResponse.
+    /// Parameters that define the pagination behavior of the list API
+    /// responses.
     /// </summary>
     public partial class PaginationRequest
     {
         private string _skipToken;
         
         /// <summary>
-        /// Optional. It will work as continuation token
+        /// Optional. If the page limit is reached while returning the objects,
+        /// this property will act as the continuation token.Please make the
+        /// next call on this URL to get the next set of objects. Once all
+        /// objects are returned, this will be null.
         /// </summary>
         public string SkipToken
         {
@@ -43,7 +47,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _top;
         
         /// <summary>
-        /// Optional. It will decide result count
+        /// Optional. Specifies the number of results to return. Will return
+        /// top n elements if n is set in this property.
         /// </summary>
         public string Top
         {

@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a MonthlyRetentionSchedule object.
+    /// Monthly retention schedule.
     /// </summary>
     public partial class MonthlyRetentionSchedule : RetentionScheduleBase
     {
         private DailyRetentionFormat _retentionScheduleDaily;
         
         /// <summary>
-        /// Optional. Daily Retention Format for monthly retention policy.
+        /// Optional. Daily retention format for monthly retention policy.
         /// </summary>
         public DailyRetentionFormat RetentionScheduleDaily
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _retentionScheduleFormatType;
         
         /// <summary>
-        /// Optional. Retention ScheduleType for monthly retention policy.
+        /// Optional. Retention schedule format type for monthly retention
+        /// policy. Possible values: Daily, Weekly.
         /// </summary>
         public string RetentionScheduleFormatType
         {
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private WeeklyRetentionFormat _retentionScheduleWeekly;
         
         /// <summary>
-        /// Optional. Weekly Retention format for monthly retention policy.
+        /// Optional. Weekly retention format for monthly retention policy.
         /// </summary>
         public WeeklyRetentionFormat RetentionScheduleWeekly
         {

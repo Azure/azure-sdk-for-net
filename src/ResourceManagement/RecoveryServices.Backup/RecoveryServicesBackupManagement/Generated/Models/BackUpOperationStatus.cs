@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition for OperationStatus class.
+    /// Operation status.
     /// </summary>
     public partial class BackUpOperationStatus
     {
         private string _endTime;
         
         /// <summary>
-        /// Optional. EndTime for OperationStatus
+        /// Optional. Tiem at which this operation ended.
         /// </summary>
         public string EndTime
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _id;
         
         /// <summary>
-        /// Optional. OperationStatus Id
+        /// Optional. ID of the operation.
         /// </summary>
         public string Id
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Name for OperationStatus
+        /// Optional. Name of the operation.
         /// </summary>
         public string Name
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private OperationStatusError _operationStatusError;
         
         /// <summary>
-        /// Optional. OperationStatusError for OperationStatus
+        /// Optional. Error information related to this operation.
         /// </summary>
         public OperationStatusError OperationStatusError
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private OperationStatusExtendedInfo _properties;
         
         /// <summary>
-        /// Optional. Properties for the OperationStatus
+        /// Optional. Extended info regarding this operation.
         /// </summary>
         public OperationStatusExtendedInfo Properties
         {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _startTime;
         
         /// <summary>
-        /// Optional. StartTime for OperationStatus
+        /// Optional. Time at which this operation started.
         /// </summary>
         public string StartTime
         {
@@ -99,7 +99,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _status;
         
         /// <summary>
-        /// Optional. Status for OperationStatus
+        /// Optional. Status of the operation. Possible values: InProgress,
+        /// Succeeded, Failed, Canceled.
         /// </summary>
         public string Status
         {

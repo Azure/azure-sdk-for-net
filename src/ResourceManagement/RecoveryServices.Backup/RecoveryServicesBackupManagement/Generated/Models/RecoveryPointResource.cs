@@ -26,14 +26,16 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a RecoveryPointResource object.
+    /// Recovery point resource.
     /// </summary>
     public partial class RecoveryPointResource : Resource
     {
         private RecoveryPointBase _properties;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Overloaded property representing the recovery point.
+        /// Based on the type of workload, this property will be overloaded by
+        /// the corresponding derived objects.
         /// </summary>
         public RecoveryPointBase Properties
         {

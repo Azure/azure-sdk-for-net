@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         
         /// <summary>
         /// The Resource Manager API includes operations for managing
-        /// protection policies defined for your Recovery Services Vault
+        /// protection policies defined for your Recovery Services Vault.
         /// </summary>
         IProtectionPolicyOperations ProtectionPolicies
         {
@@ -173,7 +173,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of Protection policy operation by URL.
+        /// The GetOperationStatusByURL method returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call GetOperationStatusByURL to determine whether the
+        /// operation has succeeded, failed, or is still in progress.
         /// </summary>
         /// <param name='operationResultLink'>
         /// Location value returned by operation.
@@ -185,7 +188,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a OperationStatusResponse.
+        /// Response of the get operation status API calls.
         /// </returns>
         Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }

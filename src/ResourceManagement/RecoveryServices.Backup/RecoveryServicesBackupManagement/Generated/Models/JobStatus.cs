@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         CompletedWithWarnings = 4,
         
         /// <summary>
-        /// Status of a job which has been cancelled
+        /// Status of a job which has been cancelled.
         /// </summary>
         Cancelled = 5,
         

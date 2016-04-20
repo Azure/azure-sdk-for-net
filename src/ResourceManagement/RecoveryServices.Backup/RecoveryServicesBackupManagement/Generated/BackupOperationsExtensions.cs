@@ -43,26 +43,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IBackupOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Optional. Container Name for the backup item
+        /// Optional. Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Optional. Protected item name for the backup item
+        /// Optional. Name of the protected item which has to be backed up.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static BaseRecoveryServicesJobResponse TriggerBackup(this IBackupOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName)
         {
@@ -86,26 +85,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IBackupOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Optional. Container Name for the backup item
+        /// Optional. Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Optional. Protected item name for the backup item
+        /// Optional. Name of the protected item which has to be backed up.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public static Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(this IBackupOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName)
         {

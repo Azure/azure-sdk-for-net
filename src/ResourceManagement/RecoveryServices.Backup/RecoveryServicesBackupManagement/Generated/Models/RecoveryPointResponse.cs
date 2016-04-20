@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a RecoveryPointResponse object.
+    /// A single instance of a recovery point response as returned by the
+    /// service in the list recovery points call.
     /// </summary>
     public partial class RecoveryPointResponse : BaseRecoveryServicesJobResponse
     {
         private RecoveryPointResource _recPoint;
         
         /// <summary>
-        /// Optional. Recovery Point
+        /// Optional. Recovery point resource.
         /// </summary>
         public RecoveryPointResource RecPoint
         {

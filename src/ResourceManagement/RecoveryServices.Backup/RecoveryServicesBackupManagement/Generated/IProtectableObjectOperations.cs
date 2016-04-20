@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// according to the query filter and the pagination parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='paginationParams'>
-        /// Pagination parameter for skip token and top.
+        /// Pagination parameters for controlling the response.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.

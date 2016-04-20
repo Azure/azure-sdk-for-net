@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a MabFileFolder ProtectedItem object.
+    /// MAB workload-specific protected item.
     /// </summary>
     public partial class MabFileFolderProtectedItem : ProtectedItem
     {
         private string _computerName;
         
         /// <summary>
-        /// Optional. computerName
+        /// Optional. Name of the computer represented by this protected item.
         /// </summary>
         public string ComputerName
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private MabFileFolderProtectedItemExtendedInfo _extendedInfo;
         
         /// <summary>
-        /// Optional. ExtendedInfo for the Mab File folder protected item
+        /// Optional. Extended info for this protected item.
         /// </summary>
         public MabFileFolderProtectedItemExtendedInfo ExtendedInfo
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. Mab File Folder Protected Item FriendlyName
+        /// Optional. Friendly name of this protected item.
         /// </summary>
         public string FriendlyName
         {

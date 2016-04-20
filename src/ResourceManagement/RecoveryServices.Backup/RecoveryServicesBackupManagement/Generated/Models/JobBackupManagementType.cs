@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     public enum JobBackupManagementType
     {
         /// <summary>
-        /// Invalid backup management type
+        /// Invalid backup management type.
         /// </summary>
         Invalid = 0,
         

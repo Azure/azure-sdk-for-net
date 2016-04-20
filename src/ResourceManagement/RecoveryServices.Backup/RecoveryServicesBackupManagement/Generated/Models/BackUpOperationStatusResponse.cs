@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a OperationStatusResponse.
+    /// Response of the get operation status API calls.
     /// </summary>
     public partial class BackUpOperationStatusResponse : AzureOperationResponse
     {
         private BackUpOperationStatus _operationStatus;
         
         /// <summary>
-        /// Optional. operationStatus
+        /// Optional. Operation status.
         /// </summary>
         public BackUpOperationStatus OperationStatus
         {

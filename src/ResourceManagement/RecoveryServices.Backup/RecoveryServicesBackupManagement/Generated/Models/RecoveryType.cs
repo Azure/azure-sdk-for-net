@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The enum for all supported versions type pf Recovery
+    /// The enum for all supported types of recovery.
     /// </summary>
     public static partial class RecoveryType
     {
@@ -35,17 +35,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string Invalid = "Invalid";
         
         /// <summary>
-        /// OriginalLocation RecoveryType of RestoreRequest.
+        /// VM will be restored to the same resource name, resource group (or
+        /// cloud service).
         /// </summary>
         public const string OriginalLocation = "OriginalLocation";
         
         /// <summary>
-        /// AlternateLocation RecoveryType of RestoreRequest.
+        /// VM will be restored to a user specified resource name, resource
+        /// group (or cloud service).
         /// </summary>
         public const string AlternateLocation = "AlternateLocation";
         
         /// <summary>
-        /// RestoreDisks RecoveryType of RestoreRequest.
+        /// Only the disks of the VM will be restored.
         /// </summary>
         public const string RestoreDisks = "RestoreDisks";
     }

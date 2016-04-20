@@ -63,13 +63,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the Delete Item Operation Result by OperationId
+        /// Fetches the result of the operation triggered by the Backup API
+        /// given the ID of the operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='operationId'>
         /// Required.
@@ -81,7 +82,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// Response object returned by the get operation result APIs.
         /// </returns>
         public async Task<GetOperationResultResponse> GetBackupOperationResultAsync(string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -326,7 +327,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// Response object returned by the get operation result APIs.
         /// </returns>
         public async Task<GetOperationResultResponse> GetBackupOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {

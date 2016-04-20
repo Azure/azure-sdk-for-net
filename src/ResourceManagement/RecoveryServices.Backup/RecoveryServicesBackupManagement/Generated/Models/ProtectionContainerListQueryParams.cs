@@ -25,14 +25,27 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionContainerListQueryParams object.
+    /// The query filters that can be used with the list protection containers
+    /// API.
     /// </summary>
     public partial class ProtectionContainerListQueryParams
     {
+        private string _backupManagementType;
+        
+        /// <summary>
+        /// Optional. Backup management type for this protection container.
+        /// Possible values: AzureIaasVM, MAB, DPM.
+        /// </summary>
+        public string BackupManagementType
+        {
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. Container friendly name
+        /// Optional. Friendly name of this protection container.
         /// </summary>
         public string FriendlyName
         {
@@ -40,21 +53,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._friendlyName = value; }
         }
         
-        private string _providerType;
-        
-        /// <summary>
-        /// Optional. provider type query parameter
-        /// </summary>
-        public string ProviderType
-        {
-            get { return this._providerType; }
-            set { this._providerType = value; }
-        }
-        
         private string _registrationStatus;
         
         /// <summary>
-        /// Optional. Container registration status
+        /// Optional. Status of registration of this protection container with
+        /// the Recovery Services Vault.
         /// </summary>
         public string RegistrationStatus
         {

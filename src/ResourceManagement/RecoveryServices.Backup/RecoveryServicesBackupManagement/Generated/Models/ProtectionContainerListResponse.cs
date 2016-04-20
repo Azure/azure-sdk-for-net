@@ -27,14 +27,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionContainerListResponse.
+    /// List of protection containers returned as a response by the list
+    /// protection containers API.
     /// </summary>
     public partial class ProtectionContainerListResponse : AzureOperationResponse
     {
         private ProtectionContainerResourceList _itemList;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. List of protection container resources.
         /// </summary>
         public ProtectionContainerResourceList ItemList
         {

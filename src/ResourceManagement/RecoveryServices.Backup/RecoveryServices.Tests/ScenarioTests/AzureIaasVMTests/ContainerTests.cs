@@ -31,6 +31,7 @@ namespace RecoveryServices.Tests
 {
     public class ContainerTests : RecoveryServicesTestsBase
     {        
+        [Fact]
         public void ListContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -42,12 +43,12 @@ namespace RecoveryServices.Tests
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
                 ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+                queryParams.BackupManagementType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
 
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
                 ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
 
-                string containerName = "pstestv2vm1";
+                string containerName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"]; ;
                 Assert.True(
                     response.ItemList.ProtectionContainers.Any(
                         protectionContainer =>

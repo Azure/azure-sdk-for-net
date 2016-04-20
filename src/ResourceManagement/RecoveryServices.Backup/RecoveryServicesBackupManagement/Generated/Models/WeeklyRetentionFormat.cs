@@ -26,14 +26,15 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a WeeklyRetentionFormat object.
+    /// Weekly retention format.
     /// </summary>
     public partial class WeeklyRetentionFormat
     {
         private IList<string> _daysOfTheWeek;
         
         /// <summary>
-        /// Optional. List of days of week.
+        /// Optional. List of days of the week. Possible values: Sunday,
+        /// Monday, ..., Saturday.
         /// </summary>
         public IList<string> DaysOfTheWeek
         {
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<string> _weeksOfTheMonth;
         
         /// <summary>
-        /// Optional. List of weeks of month.
+        /// Optional. List of weeks of month. Possible values: First, Second,
+        /// Third, Fourth, Last.
         /// </summary>
         public IList<string> WeeksOfTheMonth
         {

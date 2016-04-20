@@ -26,14 +26,16 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a RecoveryPoint object.
+    /// Base class for recovery points. Workload-specific recovery points are
+    /// derived from this class.
     /// </summary>
     public partial class RecoveryPoint : RecoveryPointBase
     {
         private string _recoveryPointAdditionalInfo;
         
         /// <summary>
-        /// Optional. Recovery Point Additional Information
+        /// Optional. Additional information associated with this recovery
+        /// point.
         /// </summary>
         public string RecoveryPointAdditionalInfo
         {
@@ -44,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _recoveryPointTime;
         
         /// <summary>
-        /// Optional. Recovery Point Time
+        /// Optional. Time at which this recovery point was created.
         /// </summary>
         public string RecoveryPointTime
         {
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _recoveryPointType;
         
         /// <summary>
-        /// Optional. Recovery Point Type
+        /// Optional. Type of the recovery point.
         /// </summary>
         public string RecoveryPointType
         {
@@ -66,7 +68,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _sourceVMStorageType;
         
         /// <summary>
-        /// Optional. Recovery Point Source VM Storage Type
+        /// Optional. Storage type of the source VM associated with this
+        /// recovery point.
         /// </summary>
         public string SourceVMStorageType
         {

@@ -25,33 +25,18 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// Week Number Of the Month.
+    /// Week number of the month.
     /// </summary>
     public static partial class WeekNumber
     {
-        /// <summary>
-        /// First Week Number of the Month.
-        /// </summary>
         public const string First = "First";
         
-        /// <summary>
-        /// Second Week Number of the Month.
-        /// </summary>
         public const string Second = "Second";
         
-        /// <summary>
-        /// Third Week Number of the Month.
-        /// </summary>
         public const string Third = "Third";
         
-        /// <summary>
-        /// Fourth Week Number of the Month.
-        /// </summary>
         public const string Fourth = "Fourth";
         
-        /// <summary>
-        /// Last Week Number of the Month.
-        /// </summary>
         public const string Last = "Last";
     }
 }

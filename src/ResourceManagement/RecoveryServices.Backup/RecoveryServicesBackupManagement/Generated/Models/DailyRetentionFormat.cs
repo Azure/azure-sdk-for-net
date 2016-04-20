@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a DailyRetentionFormat object.
+    /// Daily retention format.
     /// </summary>
     public partial class DailyRetentionFormat
     {
         private IList<Day> _daysOfTheMonth;
         
         /// <summary>
-        /// Optional. List of Days of month.
+        /// Optional. List of days of the month.
         /// </summary>
         public IList<Day> DaysOfTheMonth
         {

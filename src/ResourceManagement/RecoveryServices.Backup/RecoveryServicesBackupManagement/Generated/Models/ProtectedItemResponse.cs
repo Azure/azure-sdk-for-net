@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemResponse.
+    /// A single instance of a protected item response.
     /// </summary>
     public partial class ProtectedItemResponse : BaseRecoveryServicesJobResponse
     {
         private ProtectedItemResource _item;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Protected item resource.
         /// </summary>
         public ProtectedItemResource Item
         {

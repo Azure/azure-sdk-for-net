@@ -44,7 +44,7 @@ namespace RecoveryServices.Tests
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
                 BackupEngineHelpers backupEngineTestHelper = new BackupEngineHelpers(client);
                 BackupEngineListQueryParams queryParam = new BackupEngineListQueryParams();
-                queryParam.ProviderType = "DPM";
+                //queryParam.ProviderType = "DPM";
                 PaginationRequest paginationParam = new PaginationRequest();
                 paginationParam.Top = "200";
                 AzureOperationResponse response = backupEngineTestHelper.ListBackupEngine(queryParam, paginationParam);
@@ -55,6 +55,7 @@ namespace RecoveryServices.Tests
             }
         }
 
+        [Fact]
         public void UnregisterDPMBackupEngineTest()
         {
             using (UndoContext context = UndoContext.Current)

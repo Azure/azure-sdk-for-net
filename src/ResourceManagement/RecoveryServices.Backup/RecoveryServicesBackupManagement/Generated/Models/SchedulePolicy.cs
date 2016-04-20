@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of SchedulePolicy object.
+    /// Base class for policy schedule.
     /// </summary>
     public partial class SchedulePolicy
     {

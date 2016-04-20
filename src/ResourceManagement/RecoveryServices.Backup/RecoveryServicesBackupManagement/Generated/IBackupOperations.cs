@@ -43,29 +43,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
+        /// Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Container Name for the backup item
+        /// Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Protected item name for the backup item
+        /// Name of the protected item which has to be backed up.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, CancellationToken cancellationToken);
     }

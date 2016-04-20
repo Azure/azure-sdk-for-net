@@ -43,13 +43,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='policyName'>
-        /// Required. The protection policy Name to be added/updated.
+        /// Required. Name of the protection policy to be added/updated.
         /// </param>
         /// <param name='request'>
         /// Required. The protection policy creation request.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
+        /// Protection policy response.
         /// </returns>
         public static ProtectionPolicyResponse CreateOrUpdate(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, ProtectionPolicyRequest request, CustomRequestHeaders customRequestHeaders)
         {
@@ -81,13 +81,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='policyName'>
-        /// Required. The protection policy Name to be added/updated.
+        /// Required. Name of the protection policy to be added/updated.
         /// </param>
         /// <param name='request'>
         /// Required. The protection policy creation request.
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
+        /// Protection policy response.
         /// </returns>
         public static Task<ProtectionPolicyResponse> CreateOrUpdateAsync(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, ProtectionPolicyRequest request, CustomRequestHeaders customRequestHeaders)
         {
@@ -115,13 +115,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='policyName'>
-        /// Required. The protection policy Name to be deleted.
+        /// Required. Name of the protection policy to be added/updated.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -151,13 +151,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='policyName'>
-        /// Required. The protection policy Name to be deleted.
+        /// Required. Name of the protection policy to be added/updated.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -183,19 +183,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='policyName'>
-        /// Required. The protection policy Name to be fetched.
+        /// Required. Name of the protection policy to be added/updated.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
+        /// Protection policy response.
         /// </returns>
         public static ProtectionPolicyResponse Get(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders)
         {
@@ -218,19 +218,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='policyName'>
-        /// Required. The protection policy Name to be fetched.
+        /// Required. Name of the protection policy to be added/updated.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
+        /// Protection policy response.
         /// </returns>
         public static Task<ProtectionPolicyResponse> GetAsync(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders)
         {
@@ -246,22 +246,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='policyName'>
-        /// Required. The protection policy Name to be updated.
+        /// Required. Name of the protection policy to be added/updated.
         /// </param>
         /// <param name='operationId'>
-        /// Required. OperationId to get operation result.
+        /// Required. ID of the operation whose result has to be fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
+        /// Protection policy response.
         /// </returns>
         public static ProtectionPolicyResponse GetOperationResult(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -281,22 +281,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='policyName'>
-        /// Required. The protection policy Name to be updated.
+        /// Required. Name of the protection policy to be added/updated.
         /// </param>
         /// <param name='operationId'>
-        /// Required. OperationId to get operation result.
+        /// Required. ID of the operation whose result has to be fetched.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
+        /// Protection policy response.
         /// </returns>
         public static Task<ProtectionPolicyResponse> GetOperationResultAsync(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
+        /// Protection policy response.
         /// </returns>
         public static ProtectionPolicyResponse GetProtectionPolicyResultByURL(this IProtectionPolicyOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyResponse.
+        /// Protection policy response.
         /// </returns>
         public static Task<ProtectionPolicyResponse> GetProtectionPolicyResultByURLAsync(this IProtectionPolicyOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
@@ -363,10 +363,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryFilter'>
         /// Optional.
@@ -375,7 +375,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyListResponse.
+        /// List of protection policies as returned by the service with the
+        /// list policies call.
         /// </returns>
         public static ProtectionPolicyListResponse List(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, ProtectionPolicyQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders)
         {
@@ -396,10 +397,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryFilter'>
         /// Optional.
@@ -408,7 +409,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectionPolicyListResponse.
+        /// List of protection policies as returned by the service with the
+        /// list policies call.
         /// </returns>
         public static Task<ProtectionPolicyListResponse> ListAsync(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, ProtectionPolicyQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders)
         {
