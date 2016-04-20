@@ -30,6 +30,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
@@ -217,6 +218,62 @@ namespace Microsoft.Azure.Management.Automation
                     propertiesValue["timeZone"] = parameters.Properties.TimeZone;
                 }
                 
+                if (parameters.Properties.AdvancedSchedule != null)
+                {
+                    JObject advancedScheduleValue = new JObject();
+                    propertiesValue["advancedSchedule"] = advancedScheduleValue;
+                    
+                    if (parameters.Properties.AdvancedSchedule.WeekDays != null)
+                    {
+                        if (parameters.Properties.AdvancedSchedule.WeekDays is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AdvancedSchedule.WeekDays).IsInitialized)
+                        {
+                            JArray weekDaysArray = new JArray();
+                            foreach (string weekDaysItem in parameters.Properties.AdvancedSchedule.WeekDays)
+                            {
+                                weekDaysArray.Add(weekDaysItem);
+                            }
+                            advancedScheduleValue["weekDays"] = weekDaysArray;
+                        }
+                    }
+                    
+                    if (parameters.Properties.AdvancedSchedule.MonthDays != null)
+                    {
+                        if (parameters.Properties.AdvancedSchedule.MonthDays is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AdvancedSchedule.MonthDays).IsInitialized)
+                        {
+                            JArray monthDaysArray = new JArray();
+                            foreach (int monthDaysItem in parameters.Properties.AdvancedSchedule.MonthDays)
+                            {
+                                monthDaysArray.Add(monthDaysItem);
+                            }
+                            advancedScheduleValue["monthDays"] = monthDaysArray;
+                        }
+                    }
+                    
+                    if (parameters.Properties.AdvancedSchedule.MonthlyOccurrences != null)
+                    {
+                        if (parameters.Properties.AdvancedSchedule.MonthlyOccurrences is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AdvancedSchedule.MonthlyOccurrences).IsInitialized)
+                        {
+                            JArray monthlyOccurrencesArray = new JArray();
+                            foreach (AdvancedScheduleMonthlyOccurrence monthlyOccurrencesItem in parameters.Properties.AdvancedSchedule.MonthlyOccurrences)
+                            {
+                                JObject advancedScheduleMonthlyOccurrenceValue = new JObject();
+                                monthlyOccurrencesArray.Add(advancedScheduleMonthlyOccurrenceValue);
+                                
+                                if (monthlyOccurrencesItem.Occurrence != null)
+                                {
+                                    advancedScheduleMonthlyOccurrenceValue["occurrence"] = monthlyOccurrencesItem.Occurrence.Value;
+                                }
+                                
+                                if (monthlyOccurrencesItem.Day != null)
+                                {
+                                    advancedScheduleMonthlyOccurrenceValue["day"] = monthlyOccurrencesItem.Day;
+                                }
+                            }
+                            advancedScheduleValue["monthlyOccurrences"] = monthlyOccurrencesArray;
+                        }
+                    }
+                }
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -333,6 +390,55 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     string timeZoneInstance = ((string)timeZoneValue);
                                     propertiesInstance.TimeZone = timeZoneInstance;
+                                }
+                                
+                                JToken advancedScheduleValue2 = propertiesValue2["advancedSchedule"];
+                                if (advancedScheduleValue2 != null && advancedScheduleValue2.Type != JTokenType.Null)
+                                {
+                                    AdvancedSchedule advancedScheduleInstance = new AdvancedSchedule();
+                                    propertiesInstance.AdvancedSchedule = advancedScheduleInstance;
+                                    
+                                    JToken weekDaysArray2 = advancedScheduleValue2["weekDays"];
+                                    if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken weekDaysValue in ((JArray)weekDaysArray2))
+                                        {
+                                            advancedScheduleInstance.WeekDays.Add(((string)weekDaysValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthDaysArray2 = advancedScheduleValue2["monthDays"];
+                                    if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken monthDaysValue in ((JArray)monthDaysArray2))
+                                        {
+                                            advancedScheduleInstance.MonthDays.Add(((int)monthDaysValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthlyOccurrencesArray2 = advancedScheduleValue2["monthlyOccurrences"];
+                                    if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray2))
+                                        {
+                                            AdvancedScheduleMonthlyOccurrence advancedScheduleMonthlyOccurrenceInstance = new AdvancedScheduleMonthlyOccurrence();
+                                            advancedScheduleInstance.MonthlyOccurrences.Add(advancedScheduleMonthlyOccurrenceInstance);
+                                            
+                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                            if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                            {
+                                                int occurrenceInstance = ((int)occurrenceValue);
+                                                advancedScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                            }
+                                            
+                                            JToken dayValue = monthlyOccurrencesValue["day"];
+                                            if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                            {
+                                                string dayInstance = ((string)dayValue);
+                                                advancedScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                            }
+                                        }
+                                    }
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
@@ -766,6 +872,55 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.TimeZone = timeZoneInstance;
                                 }
                                 
+                                JToken advancedScheduleValue = propertiesValue["advancedSchedule"];
+                                if (advancedScheduleValue != null && advancedScheduleValue.Type != JTokenType.Null)
+                                {
+                                    AdvancedSchedule advancedScheduleInstance = new AdvancedSchedule();
+                                    propertiesInstance.AdvancedSchedule = advancedScheduleInstance;
+                                    
+                                    JToken weekDaysArray = advancedScheduleValue["weekDays"];
+                                    if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
+                                        {
+                                            advancedScheduleInstance.WeekDays.Add(((string)weekDaysValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthDaysArray = advancedScheduleValue["monthDays"];
+                                    if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
+                                        {
+                                            advancedScheduleInstance.MonthDays.Add(((int)monthDaysValue));
+                                        }
+                                    }
+                                    
+                                    JToken monthlyOccurrencesArray = advancedScheduleValue["monthlyOccurrences"];
+                                    if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
+                                        {
+                                            AdvancedScheduleMonthlyOccurrence advancedScheduleMonthlyOccurrenceInstance = new AdvancedScheduleMonthlyOccurrence();
+                                            advancedScheduleInstance.MonthlyOccurrences.Add(advancedScheduleMonthlyOccurrenceInstance);
+                                            
+                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                            if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                            {
+                                                int occurrenceInstance = ((int)occurrenceValue);
+                                                advancedScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                            }
+                                            
+                                            JToken dayValue = monthlyOccurrencesValue["day"];
+                                            if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                            {
+                                                string dayInstance = ((string)dayValue);
+                                                advancedScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -1032,6 +1187,55 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.TimeZone = timeZoneInstance;
                                         }
                                         
+                                        JToken advancedScheduleValue = propertiesValue["advancedSchedule"];
+                                        if (advancedScheduleValue != null && advancedScheduleValue.Type != JTokenType.Null)
+                                        {
+                                            AdvancedSchedule advancedScheduleInstance = new AdvancedSchedule();
+                                            propertiesInstance.AdvancedSchedule = advancedScheduleInstance;
+                                            
+                                            JToken weekDaysArray = advancedScheduleValue["weekDays"];
+                                            if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
+                                                {
+                                                    advancedScheduleInstance.WeekDays.Add(((string)weekDaysValue));
+                                                }
+                                            }
+                                            
+                                            JToken monthDaysArray = advancedScheduleValue["monthDays"];
+                                            if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
+                                                {
+                                                    advancedScheduleInstance.MonthDays.Add(((int)monthDaysValue));
+                                                }
+                                            }
+                                            
+                                            JToken monthlyOccurrencesArray = advancedScheduleValue["monthlyOccurrences"];
+                                            if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
+                                                {
+                                                    AdvancedScheduleMonthlyOccurrence advancedScheduleMonthlyOccurrenceInstance = new AdvancedScheduleMonthlyOccurrence();
+                                                    advancedScheduleInstance.MonthlyOccurrences.Add(advancedScheduleMonthlyOccurrenceInstance);
+                                                    
+                                                    JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                                    if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        int occurrenceInstance = ((int)occurrenceValue);
+                                                        advancedScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                    }
+                                                    
+                                                    JToken dayValue = monthlyOccurrencesValue["day"];
+                                                    if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                                    {
+                                                        string dayInstance = ((string)dayValue);
+                                                        advancedScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1273,6 +1477,55 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             string timeZoneInstance = ((string)timeZoneValue);
                                             propertiesInstance.TimeZone = timeZoneInstance;
+                                        }
+                                        
+                                        JToken advancedScheduleValue = propertiesValue["advancedSchedule"];
+                                        if (advancedScheduleValue != null && advancedScheduleValue.Type != JTokenType.Null)
+                                        {
+                                            AdvancedSchedule advancedScheduleInstance = new AdvancedSchedule();
+                                            propertiesInstance.AdvancedSchedule = advancedScheduleInstance;
+                                            
+                                            JToken weekDaysArray = advancedScheduleValue["weekDays"];
+                                            if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken weekDaysValue in ((JArray)weekDaysArray))
+                                                {
+                                                    advancedScheduleInstance.WeekDays.Add(((string)weekDaysValue));
+                                                }
+                                            }
+                                            
+                                            JToken monthDaysArray = advancedScheduleValue["monthDays"];
+                                            if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken monthDaysValue in ((JArray)monthDaysArray))
+                                                {
+                                                    advancedScheduleInstance.MonthDays.Add(((int)monthDaysValue));
+                                                }
+                                            }
+                                            
+                                            JToken monthlyOccurrencesArray = advancedScheduleValue["monthlyOccurrences"];
+                                            if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray))
+                                                {
+                                                    AdvancedScheduleMonthlyOccurrence advancedScheduleMonthlyOccurrenceInstance = new AdvancedScheduleMonthlyOccurrence();
+                                                    advancedScheduleInstance.MonthlyOccurrences.Add(advancedScheduleMonthlyOccurrenceInstance);
+                                                    
+                                                    JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                                    if (occurrenceValue != null && occurrenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        int occurrenceInstance = ((int)occurrenceValue);
+                                                        advancedScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                    }
+                                                    
+                                                    JToken dayValue = monthlyOccurrencesValue["day"];
+                                                    if (dayValue != null && dayValue.Type != JTokenType.Null)
+                                                    {
+                                                        string dayInstance = ((string)dayValue);
+                                                        advancedScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                    }
+                                                }
+                                            }
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
