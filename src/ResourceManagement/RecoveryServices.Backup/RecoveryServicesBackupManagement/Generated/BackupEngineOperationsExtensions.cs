@@ -31,7 +31,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class BackupEngineOperationsExtensions
     {
         /// <summary>
-        /// List all backup engine.
+        /// Lists all the backup engines registered to your Recovery Services
+        /// Vault based on the query parameters and the pagination parameters
+        /// passed in the arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -53,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Required. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a BackupEngineListResponse.
+        /// Response returned by the list backup engines operation.
         /// </returns>
         public static BackupEngineListResponse List(this IBackupEngineOperations operations, string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {
@@ -65,7 +67,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// List all backup engine.
+        /// Lists all the backup engines registered to your Recovery Services
+        /// Vault based on the query parameters and the pagination parameters
+        /// passed in the arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -87,7 +91,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Required. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a BackupEngineListResponse.
+        /// Response returned by the list backup engines operation.
         /// </returns>
         public static Task<BackupEngineListResponse> ListAsync(this IBackupEngineOperations operations, string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {

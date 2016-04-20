@@ -26,14 +26,16 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobResource.
+    /// Represents a single instance of a job resource.
     /// </summary>
     public partial class JobResource : Resource
     {
         private JobBase _properties;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Overloaded property representing the job. Based on the
+        /// type of workload, this property will be overloaded by the
+        /// corresponding derived objects.
         /// </summary>
         public JobBase Properties
         {

@@ -22,10 +22,10 @@ namespace RecoveryServices.Tests.Helpers
 
         public ProtectionContainerListResponse ListContainers(ProtectionContainerListQueryParams queryParams)
         {
-            string rsVaultRgName = "pstestrg";
-            string rsVaultName = "pstestrsvault";
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            ProtectionContainerListResponse response = Client.Container.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
+            ProtectionContainerListResponse response = Client.Containers.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -35,17 +35,17 @@ namespace RecoveryServices.Tests.Helpers
 
         public BaseRecoveryServicesJobResponse RefreshContainer(string fabricName)
         {
-            string rsVaultRgName = "pstestrg";
-            string rsVaultName = "pstestrsvault";
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            BaseRecoveryServicesJobResponse response = Client.Container.Refresh(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(), fabricName);
+            BaseRecoveryServicesJobResponse response = Client.Containers.BeginRefresh(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(), fabricName);
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
 
             while (response.StatusCode == HttpStatusCode.Accepted)
             {
-                response = Client.Container.GetRefreshOperationResultByURL(response.Location, CommonTestHelper.GetCustomRequestHeaders());
+                response = Client.Containers.GetRefreshOperationResultByURL(response.Location);
                 System.Threading.Thread.Sleep(5 * 1000);
             }
 
@@ -58,7 +58,7 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            AzureOperationResponse response = Client.Container.Unregister(rsVaultRgName, rsVaultName, containerName, CommonTestHelper.GetCustomRequestHeaders());
+            AzureOperationResponse response = Client.Containers.Unregister(rsVaultRgName, rsVaultName, containerName, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
@@ -71,7 +71,7 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            ProtectionContainerListResponse response = Client.Container.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
+            ProtectionContainerListResponse response = Client.Containers.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -84,7 +84,7 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            AzureOperationResponse response = Client.Container.Unregister(rsVaultRgName, rsVaultName, containerName, CommonTestHelper.GetCustomRequestHeaders());
+            AzureOperationResponse response = Client.Containers.Unregister(rsVaultRgName, rsVaultName, containerName, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);

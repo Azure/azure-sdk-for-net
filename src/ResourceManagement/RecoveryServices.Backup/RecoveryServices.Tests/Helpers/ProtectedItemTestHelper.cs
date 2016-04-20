@@ -24,9 +24,10 @@ namespace RecoveryServices.Tests.Helpers
         {
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+            var customHeader = CommonTestHelper.GetCustomRequestHeaders();
 
-            BaseRecoveryServicesJobResponse response = Client.ProtectedItem.CreateOrUpdateProtectedItem(rsVaultRgName, rsVaultName,
-                fabricName, containerName, protectedItemName, request, CommonTestHelper.GetCustomRequestHeaders());
+            BaseRecoveryServicesJobResponse response = Client.ProtectedItems.CreateOrUpdateProtectedItem(rsVaultRgName, rsVaultName,
+                fabricName, containerName, protectedItemName, request, customHeader);
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
@@ -34,17 +35,24 @@ namespace RecoveryServices.Tests.Helpers
             Assert.NotNull(response.AzureAsyncOperation);
             Assert.NotNull(response.RetryAfter);
 
-            var operationResponse = Client.ProtectedItem.GetProtectedItemOperationResultByURLAsync(response.Location, CommonTestHelper.GetCustomRequestHeaders());
+            var operationResponse = Client.ProtectedItems.GetProtectedItemOperationResultByURLAsync(response.Location, customHeader);
             while(operationResponse.Result.StatusCode == HttpStatusCode.Accepted)
             {
                 System.Threading.Thread.Sleep(5 * 1000);
-                operationResponse = Client.ProtectedItem.GetProtectedItemOperationResultByURLAsync(response.Location, CommonTestHelper.GetCustomRequestHeaders());
+                operationResponse = Client.ProtectedItems.GetProtectedItemOperationResultByURLAsync(response.Location, customHeader);
             }
 
-            var operationStatusResponse = Client.ProtectedItem.GetOperationStatusByURLAsync(response.AzureAsyncOperation, CommonTestHelper.GetCustomRequestHeaders());
-            var operationJobResponse = (OperationStatusJobExtendedInfo)operationStatusResponse.Result.OperationStatus.Properties;
-            Assert.NotNull(operationJobResponse.JobId);
+            Assert.Equal(HttpStatusCode.OK, operationResponse.Result.StatusCode);
+            Assert.NotNull(operationResponse.Result.Item);
 
+            var operationStatusResponse = Client.GetOperationStatusByURLAsync(response.AzureAsyncOperation, CommonTestHelper.GetCustomRequestHeaders());
+            var operationJobResponse = (OperationStatusJobExtendedInfo)operationStatusResponse.Result.OperationStatus.Properties;
+
+            Assert.Equal(HttpStatusCode.OK, operationStatusResponse.Result.StatusCode);
+
+            Assert.NotNull(operationJobResponse.JobId);
+            Assert.Equal(OperationStatusValues.Succeeded, operationStatusResponse.Result.OperationStatus.Status);
+            
             return response;
         }
 
@@ -53,9 +61,10 @@ namespace RecoveryServices.Tests.Helpers
         {
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+            var customHeader = CommonTestHelper.GetCustomRequestHeaders();
 
-            BaseRecoveryServicesJobResponse response = Client.ProtectedItem.DeleteProtectedItem(rsVaultRgName, rsVaultName,
-                fabricName, containerName, protectedItemName, CommonTestHelper.GetCustomRequestHeaders());
+            BaseRecoveryServicesJobResponse response = Client.ProtectedItems.DeleteProtectedItem(rsVaultRgName, rsVaultName,
+                fabricName, containerName, protectedItemName, customHeader);
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
@@ -63,24 +72,26 @@ namespace RecoveryServices.Tests.Helpers
             Assert.NotNull(response.AzureAsyncOperation);
             Assert.NotNull(response.RetryAfter);
 
-            var operationStatusResponse = Client.ProtectedItem.GetOperationStatusByURLAsync(response.AzureAsyncOperation, CommonTestHelper.GetCustomRequestHeaders());
+            var operationStatusResponse = Client.GetOperationStatusByURLAsync(response.AzureAsyncOperation, customHeader);
             while (operationStatusResponse.Result.OperationStatus.Status == OperationStatusValues.InProgress)
             {
                 System.Threading.Thread.Sleep(5 * 1000);
-                operationStatusResponse = Client.ProtectedItem.GetOperationStatusByURLAsync(response.AzureAsyncOperation, CommonTestHelper.GetCustomRequestHeaders());
+                operationStatusResponse = Client.GetOperationStatusByURLAsync(response.AzureAsyncOperation, customHeader);
             }
 
+            operationStatusResponse = Client.GetOperationStatusByURLAsync(response.AzureAsyncOperation, CommonTestHelper.GetCustomRequestHeaders());
             var operationJobResponse = (OperationStatusJobExtendedInfo)operationStatusResponse.Result.OperationStatus.Properties;
             Assert.NotNull(operationJobResponse.JobId);
+            Assert.Equal(OperationStatusValues.Succeeded, operationStatusResponse.Result.OperationStatus.Status);
             return response;
         }
 
         public ProtectedItemListResponse ListProtectedItems(ProtectedItemListQueryParam queryParams, PaginationRequest paginationRequest = null)
         {
-            string rsVaultRgName = "pstestrg";
-            string rsVaultName = "pstestrsvault";
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            var response = Client.ProtectedItem.List(rsVaultRgName, rsVaultName, queryParams, paginationRequest, CommonTestHelper.GetCustomRequestHeaders());
+            var response = Client.ProtectedItems.List(rsVaultRgName, rsVaultName, queryParams, paginationRequest, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

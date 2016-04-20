@@ -42,8 +42,8 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            ProtectionPolicyResponse response = Client.ProtectionPolicy.CreateOrUpdate(rsVaultRgName, rsVaultName,
-                                                policyName, request, CommonTestHelper.GetCustomRequestHeaders());
+            ProtectionPolicyResponse response = Client.ProtectionPolicies.CreateOrUpdateAsync(rsVaultRgName, rsVaultName,
+                                                policyName, request, CommonTestHelper.GetCustomRequestHeaders()).Result;
 
             Assert.NotNull(response);
             if(response.StatusCode == HttpStatusCode.OK)
@@ -72,8 +72,8 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            AzureOperationResponse response = Client.ProtectionPolicy.Delete(rsVaultRgName, rsVaultName,
-                                                       policyName, CommonTestHelper.GetCustomRequestHeaders());
+            AzureOperationResponse response = Client.ProtectionPolicies.DeleteAsync(rsVaultRgName, rsVaultName,
+                                                       policyName, CommonTestHelper.GetCustomRequestHeaders()).Result;
             Assert.NotNull(response);            
             return response;
         }
@@ -83,8 +83,8 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            ProtectionPolicyResponse response =  Client.ProtectionPolicy.Get(rsVaultRgName, rsVaultName,
-                                                 policyName, CommonTestHelper.GetCustomRequestHeaders());
+            ProtectionPolicyResponse response = Client.ProtectionPolicies.GetAsync(rsVaultRgName, rsVaultName,
+                                                 policyName, CommonTestHelper.GetCustomRequestHeaders()).Result;
 
             Assert.NotNull(response);
             Assert.Null(response.Location);
@@ -101,8 +101,8 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            ProtectionPolicyListResponse response = Client.ProtectionPolicy.List(rsVaultRgName, rsVaultName,
-                                                 queryParams, CommonTestHelper.GetCustomRequestHeaders());
+            ProtectionPolicyListResponse response = Client.ProtectionPolicies.ListAsync(rsVaultRgName, rsVaultName,
+                                                 queryParams, CommonTestHelper.GetCustomRequestHeaders()).Result;
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

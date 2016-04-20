@@ -27,6 +27,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Newtonsoft.Json.Linq;
@@ -34,7 +35,9 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Backup operations for the Azure Backup extension.
+    /// The Resource Manager API includes operations for triggering and
+    /// managing the backups of items protected by your Recovery Services
+    /// Vault.
     /// </summary>
     internal partial class BackupOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IBackupOperations
     {
@@ -61,7 +64,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Trigger Backup for the AzureBackupItem
+        /// The Trigger Backup Operation starts an operation in the service
+        /// which triggers the backup of the specified item in the specified
+        /// container in your Recovery Services Vault. This is an asynchronous
+        /// operation. To determine whether the backend service has finished
+        /// processing the request, call Get Protected Item Operation Result
+        /// API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -247,6 +255,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
                             }
                         }
                         

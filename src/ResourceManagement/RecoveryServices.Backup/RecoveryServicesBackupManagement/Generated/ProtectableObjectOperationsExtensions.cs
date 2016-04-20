@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class ProtectableObjectOperationsExtensions
     {
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Lists all the protectable objects within your subscription
+        /// according to the query filter and the pagination parameters.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -53,7 +54,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectableObjectListResponse.
+        /// List of protectable object resonses as returned by the list
+        /// protectable objects API.
         /// </returns>
         public static ProtectableObjectListResponse List(this IProtectableObjectOperations operations, string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {
@@ -65,7 +67,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Lists all the protectable objects within your subscription
+        /// according to the query filter and the pagination parameters.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -87,7 +90,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectableObjectListResponse.
+        /// List of protectable object resonses as returned by the list
+        /// protectable objects API.
         /// </returns>
         public static Task<ProtectableObjectListResponse> ListAsync(this IProtectableObjectOperations operations, string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {

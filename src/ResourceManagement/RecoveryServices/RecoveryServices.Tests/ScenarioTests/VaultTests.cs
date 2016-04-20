@@ -25,7 +25,7 @@ namespace RecoveryServices.Tests
 {
     public class VaultTests : RecoveryServicesTestsBase
     {
-        string resourceGroupName = "S91-1";
+        string resourceGroupName = "RsvTestRG";
         string resourceName = "rsv6";
 
         [Fact]

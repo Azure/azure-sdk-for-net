@@ -29,13 +29,17 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Protection Policy operations for the Azure Backup
-    /// extension.
+    /// The Resource Manager API includes operations for managing protection
+    /// policies defined for your Recovery Services Vault
     /// </summary>
     public partial interface IProtectionPolicyOperations
     {
         /// <summary>
-        /// Create new Protection Policy.
+        /// The Create Or Update Protection Policy Operation is used to create
+        /// or modify a protection policy which is used in the context of a
+        /// protected item.This is an asynchronous operation. To determine
+        /// whether the backend service has finished processing the request,
+        /// call the Get Policy Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -61,7 +65,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<ProtectionPolicyResponse> CreateOrUpdateAsync(string resourceGroupName, string resourceName, string policyName, ProtectionPolicyRequest request, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Delete a Protection Policy.
+        /// The Delete Protected Policy Operation is used to delete the
+        /// specified policy from your Recovery Services Vault. This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call the Get Policy Operation
+        /// Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -85,7 +93,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Gets Info for the given policy present in your Recovery Services
+        /// Vault as specified by the name passed in the arguments.This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call the Get Policy Operation
+        /// Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -108,7 +120,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<ProtectionPolicyResponse> GetAsync(string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the result of Protection policy operation by OperationId.
+        /// Fetches the result of any operation on the protection policy given
+        /// the ID of operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -134,50 +147,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<ProtectionPolicyResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the status of Protection policy operation by OperationId.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='policyName'>
-        /// The protection policy Name to be updated.
-        /// </param>
-        /// <param name='operationId'>
-        /// OperationId to get operation result.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        Task<BackUpOperationStatusResponse> GetOperationStatusAsync(string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get the status of Protection policy operation by URL.
-        /// </summary>
-        /// <param name='operationResultLink'>
-        /// Location value returned by operation.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get the result of Protection policy operation by URL.
+        /// Fetches the result of any operation on the protection policy given
+        /// the URL for tracking the operation as returned by APIs such as
+        /// Create Or Update, Delete, Get etc.
         /// </summary>
         /// <param name='operationResultLink'>
         /// Location value returned by operation.
@@ -194,7 +166,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<ProtectionPolicyResponse> GetProtectionPolicyResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Lists all the protection policies in your Recovery Services Vault
+        /// according to the query and pagination parameters supplied in the
+        /// arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.

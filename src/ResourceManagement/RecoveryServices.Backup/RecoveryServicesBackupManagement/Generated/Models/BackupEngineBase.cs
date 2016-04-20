@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition for BackupEngineBase class.
+    /// The base backup engine class. All workload specific backup engines
+    /// derive from this class.
     /// </summary>
     public partial class BackupEngineBase : BackupEngine
     {
         private string _backupEngineId;
         
         /// <summary>
-        /// Optional. BackupEngineId of the managed item.
+        /// Optional. ID of the backup engine.
         /// </summary>
         public string BackupEngineId
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _backupEngineType;
         
         /// <summary>
-        /// Optional. BackupEngineType of the managed item.
+        /// Optional. Type of the backup engine.
         /// </summary>
         public string BackupEngineType
         {
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. BackupManagement Type of the managed item.
+        /// Optional. Type of backup management for the backup engine.
         /// </summary>
         public string BackupManagementType
         {
@@ -66,7 +67,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private bool _canReRegister;
         
         /// <summary>
-        /// Optional. CanReRegister the managed item.
+        /// Optional. Flag indicating if the backup engine be registered if
+        /// already registered once.
         /// </summary>
         public bool CanReRegister
         {
@@ -77,7 +79,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. Friendly name of the managed item.
+        /// Optional. Friendly name of the backup engine.
         /// </summary>
         public string FriendlyName
         {
@@ -88,7 +90,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _healthStatus;
         
         /// <summary>
-        /// Optional. Health Status of the managed item.
+        /// Optional. Status of protection health of the backup engine.
         /// </summary>
         public string HealthStatus
         {
@@ -99,7 +101,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _registrationStatus;
         
         /// <summary>
-        /// Optional. Registration Status of the managed item.
+        /// Optional. Status of registration of the backup engine with the
+        /// Recovery Services Vault.
         /// </summary>
         public string RegistrationStatus
         {

@@ -28,13 +28,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of BackupEningOperations for the Azure Backup extension with
-    /// RecoveryService Vault.
+    /// The Resource Manager API includes operations for managing the backup
+    /// engines registered to your Recovery Services Vault.
     /// </summary>
     public partial interface IBackupEngineOperations
     {
         /// <summary>
-        /// List all backup engine.
+        /// Lists all the backup engines registered to your Recovery Services
+        /// Vault based on the query parameters and the pagination parameters
+        /// passed in the arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BackupEngineListResponse.
+        /// Response returned by the list backup engines operation.
         /// </returns>
         Task<BackupEngineListResponse> ListAsync(string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }

@@ -21,8 +21,11 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
@@ -76,10 +79,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of BackupEningOperations for the Azure Backup extension
-        /// with RecoveryService Vault.
+        /// The Resource Manager API includes operations for managing the
+        /// backup engines registered to your Recovery Services Vault.
         /// </summary>
-        IBackupEngineOperations BackupEngine
+        IBackupEngineOperations BackupEngines
         {
             get; 
         }
@@ -94,71 +97,99 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Backup operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for triggering and
+        /// managing the backups of items protected by your Recovery Services
+        /// Vault.
         /// </summary>
-        IBackupOperations Backup
+        IBackupOperations Backups
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of Container operations for the Azure Backup extension
-        /// with RecoveryService Vault.
+        /// The Resource Manager API includes operations for managing the
+        /// containers registered to your Recovery Services Vault.
         /// </summary>
-        IContainerOperation Container
+        IContainerOperations Containers
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of Job operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for managing the jobs
+        /// created by various operations on a given item protected by your
+        /// Recovery Services Vault.
         /// </summary>
-        IJobOperations Job
+        IJobOperations Jobs
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of Protectable Object operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing the
+        /// protectable objects registered to your Recovery Services Vault.
         /// </summary>
-        IProtectableObjectOperations ProtectableObject
+        IProtectableObjectOperations ProtectableObjects
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of ProtectedItem operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing the items
+        /// protected by your Recovery Services Vault.
         /// </summary>
-        IProtectedItemOperations ProtectedItem
+        IProtectedItemOperations ProtectedItems
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of Protection Policy operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing
+        /// protection policies defined for your Recovery Services Vault
         /// </summary>
-        IProtectionPolicyOperations ProtectionPolicy
+        IProtectionPolicyOperations ProtectionPolicies
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of Backup operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for managing recovery
+        /// points created by backup operations on the items protected by your
+        /// Recovery Services Vault.
         /// </summary>
-        IRecoveryPointOperations RecoveryPoint
+        IRecoveryPointOperations RecoveryPoints
         {
             get; 
         }
         
         /// <summary>
-        /// Definition of Restore operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for triggering and
+        /// managing restore actions of the items protected by your Recovery
+        /// Services Vault.
         /// </summary>
-        IRestoreOperations Restore
+        IRestoreOperations Restores
         {
             get; 
         }
+        
+        /// <summary>
+        /// The GetOperationStatusByURL method returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call GetOperationStatusByURL to determine whether the
+        /// operation has succeeded, failed, or is still in progress
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

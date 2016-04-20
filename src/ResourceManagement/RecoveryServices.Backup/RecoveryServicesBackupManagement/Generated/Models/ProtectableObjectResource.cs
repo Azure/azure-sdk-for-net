@@ -26,14 +26,16 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectableObjectResource.
+    /// A single instance of a protectable object resource.
     /// </summary>
     public partial class ProtectableObjectResource : Resource
     {
         private ProtectableObjectBase _properties;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Overloaded property representing the protectable object.
+        /// Based on the type of workload, this property will be overloaded by
+        /// the corresponding derived objects.
         /// </summary>
         public ProtectableObjectBase Properties
         {

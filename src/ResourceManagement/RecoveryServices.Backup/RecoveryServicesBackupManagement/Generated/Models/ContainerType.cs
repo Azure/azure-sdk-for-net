@@ -35,18 +35,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string IaasVMContainer = "IaasVMContainer";
         
         /// <summary>
-        /// The Microsoft AzureBackup container type.
+        /// The Windows container type.
         /// </summary>
-        public const string MABContainer = "MABContainer";
-        
-        /// <summary>
-        /// The Data Protection Manager Container type.
-        /// </summary>
-        public const string DPMContainer = "DPMContainer";
-        
-        /// <summary>
-        /// The  DPM Venus Container type.
-        /// </summary>
-        public const string DPMVenusContainer = "DPMVenusContainer";
+        public const string Windows = "Windows";
     }
 }

@@ -25,7 +25,7 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            BackupEngineListResponse response = Client.BackupEngine.List(rsVaultRgName, rsVaultName, queryParams, paginationParam, CommonTestHelper.GetCustomRequestHeaders());
+            BackupEngineListResponse response = Client.BackupEngines.List(rsVaultRgName, rsVaultName, queryParams, paginationParam, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -38,7 +38,7 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            AzureOperationResponse response = Client.Container.Unregister(rsVaultRgName, rsVaultName, name, CommonTestHelper.GetCustomRequestHeaders());
+            AzureOperationResponse response = Client.Containers.Unregister(rsVaultRgName, rsVaultName, name, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);

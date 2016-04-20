@@ -34,8 +34,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of BackupEningOperations for the Azure Backup extension with
-    /// RecoveryService Vault.
+    /// The Resource Manager API includes operations for managing the backup
+    /// engines registered to your Recovery Services Vault.
     /// </summary>
     internal partial class BackupEngineOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IBackupEngineOperations
     {
@@ -62,7 +62,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// List all backup engine.
+        /// Lists all the backup engines registered to your Recovery Services
+        /// Vault based on the query parameters and the pagination parameters
+        /// passed in the arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -83,7 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BackupEngineListResponse.
+        /// Response returned by the list backup engines operation.
         /// </returns>
         public async Task<BackupEngineListResponse> ListAsync(string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
@@ -139,9 +141,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
-            if (queryParams.ProviderType != null)
+            if (queryParams.BackupManagementType != null)
             {
-                odataFilter.Add("providerType eq '" + Uri.EscapeDataString(queryParams.ProviderType) + "'");
+                odataFilter.Add("backupManagementType eq '" + Uri.EscapeDataString(queryParams.BackupManagementType) + "'");
             }
             if (odataFilter.Count > 0)
             {

@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a BackupEngineListResponse.
+    /// Response returned by the list backup engines operation.
     /// </summary>
     public partial class BackupEngineListResponse : AzureOperationResponse
     {
         private BackupEngineResourceList _itemList;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. List of backup engine resources
         /// </summary>
         public BackupEngineResourceList ItemList
         {
