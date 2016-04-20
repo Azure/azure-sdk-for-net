@@ -2430,13 +2430,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 roleInstance.RoleType = roleTypeInstance;
                                             }
                                             
-                                            XElement licenseTypeElement = roleListElement.Element(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
-                                            if (licenseTypeElement != null)
-                                            {
-                                                string licenseTypeInstance = licenseTypeElement.Value;
-                                                roleInstance.LicenseType = licenseTypeInstance;
-                                            }
-                                            
                                             XElement configurationSetsSequenceElement = roleListElement.Element(XName.Get("ConfigurationSets", "http://schemas.microsoft.com/windowsazure"));
                                             if (configurationSetsSequenceElement != null)
                                             {
@@ -3403,6 +3396,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     Uri serialOutputBlobUriInstance = TypeConversion.TryParseUri(serialOutputBlobUriElement.Value);
                                                     debugSettingsInstance.SerialOutputBlobUri = serialOutputBlobUriInstance;
                                                 }
+                                            }
+                                            
+                                            XElement licenseTypeElement = roleListElement.Element(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                                            if (licenseTypeElement != null)
+                                            {
+                                                string licenseTypeInstance = licenseTypeElement.Value;
+                                                roleInstance.LicenseType = licenseTypeInstance;
                                             }
                                             
                                             XElement migrationStateElement = roleListElement.Element(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
