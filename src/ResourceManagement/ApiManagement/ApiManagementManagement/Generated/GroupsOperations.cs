@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Deletes specific product of the Api Management service instance.
+        /// Deletes specific group of the Api Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.

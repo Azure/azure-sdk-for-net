@@ -15,20 +15,99 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.IO;
-using System.Threading;
 using Hyak.Common;
 using Microsoft.Azure.Management.HDInsight.Job;
 using Microsoft.Azure.Management.HDInsight.Job.Models;
 using Microsoft.Azure.Test;
-using Xunit;
 using Microsoft.Azure.Test.HttpRecorder;
+using Xunit;
+using System.Threading;
+using System.Net.Http;
 
 namespace HDInsightJob.Tests
 {
     public class SubmitJobTests
     {
+        [Fact]
+        public void CheckEmptySdkVersion()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = TestUtils.GetHDInsightJobManagementClient();
+                Assert.NotEmpty(client.SdkUserAgent);
+            }
+        }
+
+        [Fact]
+        public void CheckValidJobUserName()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var credentials = new BasicAuthenticationCloudCredentials
+                {
+                    Username = "Admin",
+                    Password = ""
+                };
+
+                var client = new HDInsightJobManagementClient("TestCluster", credentials);
+                Assert.Equal(credentials.Username.ToLower(CultureInfo.CurrentCulture), client.UserName);
+
+                client = new HDInsightJobManagementClient("TestCluster", credentials, new HttpClient());
+                Assert.Equal(credentials.Username.ToLower(CultureInfo.CurrentCulture), client.UserName);
+            }
+        }
+
+        [Fact]
+        public void KillEmptyNameJob()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = TestUtils.GetHDInsightJobManagementClient();
+                var exceptionMessage = string.Empty;
+
+                try
+                {
+                    var job = client.JobManagement.KillJob(string.Empty);
+                }
+                catch (ArgumentException ex)
+                {
+                    exceptionMessage = ex.Message;
+                }
+
+                Assert.Equal(exceptionMessage, "jobId cannot be empty.");
+            }
+        }
+
+        private MapReduceJobSubmissionParameters GetMapReduceJobParameters()
+        {
+            var defines = new Dictionary<string, string>
+                {
+                    {"mapreduce.map.maxattempts", "10"},
+                    {"mapreduce.reduce.maxattempts", "10"},
+                    {"mapreduce.task.timeout", "60000"}
+                };
+            var args = new List<string> { "10", "1000" };
+
+            var parameters = new MapReduceJobSubmissionParameters
+            {
+                JarFile = "/example/jars/hadoop-mapreduce-examples.jar",
+                JarClass = "pi",
+                Defines = defines,
+                Arguments = args
+            };
+
+            return parameters;
+        }
+
         [Fact]
         public void KillMapReduceStreamingJob()
         {
@@ -36,43 +115,110 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
+                var parameters = GetMapReduceJobParameters();
 
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var jobId = client.JobManagement.SubmitMapReduceJob(parameters).JobSubmissionJsonResponse.Id;
 
-                var defines = new Dictionary<string, string>
-                {
-                    {"mapreduce.map.maxattempts", "10"},
-                    {"mapreduce.reduce.maxattempts", "10"},
-                    {"mapreduce.task.timeout", "60000"}
-                };
-                var args = new List<string> { "10", "1000" };
-
-                var parameters = new MapReduceJobSubmissionParameters
-                {
-                    JarFile = "/example/jars/hadoop-mapreduce-examples.jar",
-                    JarClass = "pi",
-                    Defines = defines,
-                    Arguments = args
-                };
-
-                var jobid = client.JobManagement.SubmitMapReduceJob(parameters).JobSubmissionJsonResponse.Id;
-
-                var response = client.JobManagement.GetJob(jobid);
+                var response = client.JobManagement.GetJob(jobId);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
-                var job = client.JobManagement.KillJob(jobid);
+                var job = client.JobManagement.KillJob(jobId);
                 Assert.NotNull(job);
                 Assert.Equal(job.JobDetail.Status.State, "KILLED");
+            }
+        }
+
+        [Fact(Skip = "<Needed to fix Thread.Sleep issues before enabling>")]
+        public void KillMapReduceJobTimeOut()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = TestUtils.GetHDInsightJobManagementClient();
+
+                var parameters = GetMapReduceJobParameters();
+
+                var jobId = client.JobManagement.SubmitMapReduceJob(parameters).JobSubmissionJsonResponse.Id;
+
+                string exceptionMessage = string.Empty;
+                var startTime = DateTime.UtcNow;
+
+                try
+                {
+                    // Generate Cloud Exception due to timeout and check if Job is killed.
+                    WaitForJobCompletion(client, jobId, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), true);
+                }
+                catch (CloudException ex)
+                {
+                    exceptionMessage = ex.Message;
+                }
+
+                var duration = (DateTime.UtcNow - startTime).Seconds;
+
+                Assert.True(duration >= 10);
+                Assert.True(exceptionMessage.Contains("The requested task failed to complete in the allotted time"));
+                Assert.True(exceptionMessage.Contains(string.Format(CultureInfo.InvariantCulture, "Killed the Job {0}", jobId)));
+
+                var response = client.JobManagement.GetJob(jobId);
+                Assert.NotNull(response);
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(response.JobDetail.Status.State, "KILLED");
+            }
+        }
+
+        [Fact(Skip ="<Needed to fix Thread.Sleep issues before enabling>")]
+        public void MapReduceJobTimeOut()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = TestUtils.GetHDInsightJobManagementClient();
+
+                var parameters = GetMapReduceJobParameters();
+
+                var jobId = client.JobManagement.SubmitMapReduceJob(parameters).JobSubmissionJsonResponse.Id;
+
+                string exceptionMessage = string.Empty;
+                var startTime = DateTime.UtcNow;
+
+                try
+                {
+                    // Generate Cloud Exception due to timeout and check if Job is killed.
+                    WaitForJobCompletion(client, jobId, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10));
+                }
+                catch (CloudException ex)
+                {
+                    exceptionMessage = ex.Message;
+                }
+
+                var duration = (DateTime.UtcNow - startTime).Seconds;
+
+                Assert.True(duration >= 10);
+                Assert.True(exceptionMessage.Contains("The requested task failed to complete in the allotted time"));
+                Assert.False(exceptionMessage.Contains("Killed the Job "));
+
+                var response = client.JobManagement.GetJob(jobId);
+                Assert.NotNull(response);
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+                Assert.NotEqual(response.JobDetail.Status.State, "KILLED");
+            }
+        }
+
+        [Fact]
+        public void ValidateJobClientHttpTimeOut()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = TestUtils.GetHDInsightJobManagementClient();
+
+                Assert.True(TimeSpan.Compare(client.HttpClient.Timeout, TimeSpan.FromMinutes(8)) == 0);
             }
         }
 
@@ -107,34 +253,62 @@ namespace HDInsightJob.Tests
             SubmitHiveJobAndValidateOutput(parameters, "15.92");
         }
 
-        public void SubmitHiveJobAndValidateOutput(HiveJobSubmissionParameters parameters, string expectedOutputPart)
+        [Fact]
+        public void SubmitHiveJobAsync()
+        {
+            var parameters = new HiveJobSubmissionParameters
+            {
+                Query = @"select querydwelltime+2 from hivesampletable where clientid = 8"
+            };
+
+            SubmitHiveJobAndValidateOutput(parameters, "15.92", runAyncAPI : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitHiveJob_Windows()
+        {
+            var parameters = new HiveJobSubmissionParameters
+            {
+                Query = @"select querydwelltime+2 from hivesampletable where clientid = 8"
+            };
+
+            SubmitHiveJobAndValidateOutput(parameters, "15.92", runAyncAPI: false, isWindowsCluster : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitHiveJobAsync_Windows()
+        {
+            var parameters = new HiveJobSubmissionParameters
+            {
+                Query = @"select querydwelltime+2 from hivesampletable where clientid = 8"
+            };
+
+            SubmitHiveJobAndValidateOutput(parameters, "15.92", runAyncAPI: true, isWindowsCluster : true);
+        }
+
+        public void SubmitHiveJobAndValidateOutput(HiveJobSubmissionParameters parameters, string expectedOutputPart, bool runAyncAPI = false, bool isWindowsCluster = false)
         {
             using (var context = UndoContext.Current)
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
+                var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
-
-                var response = client.JobManagement.SubmitHiveJob(parameters);
+                var response = runAyncAPI ? client.JobManagement.SubmitHiveJobAsync(parameters).Result
+                                    : client.JobManagement.SubmitHiveJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                var jobStatus = GetJobFinalStatus(client, jobId);
+                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
 
-                var storageAccess = GetStorageAccessObject();
+                var jobStatus = client.JobManagement.GetJob(jobId);
+
+                var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
@@ -163,48 +337,53 @@ namespace HDInsightJob.Tests
         [Fact]
         public void SubmitMapReduceJob()
         {
+            SubmitMapReduceJobAndValidateOutput();
+        }
+
+        [Fact]
+        public void SubmitMapReduceJobAsync()
+        {
+            SubmitMapReduceJobAndValidateOutput(runAyncAPI : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitMapReduceJob_Windows()
+        {
+            SubmitMapReduceJobAndValidateOutput(runAyncAPI: false, isWindowsCluster : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitMapReduceJobAsync_Windows()
+        {
+            SubmitMapReduceJobAndValidateOutput(runAyncAPI: true, isWindowsCluster : true);
+        }
+
+        public void SubmitMapReduceJobAndValidateOutput(bool runAyncAPI = false, bool isWindowsCluster = false)
+        {
             using (var context = UndoContext.Current)
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
+                var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
+                var parameters = GetMapReduceJobParameters();
 
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var response = runAyncAPI ? client.JobManagement.SubmitMapReduceJobAsync(parameters).Result
+                                : client.JobManagement.SubmitMapReduceJob(parameters);
 
-                var defines = new Dictionary<string, string>
-                {
-                    {"mapreduce.map.maxattempts", "10"},
-                    {"mapreduce.reduce.maxattempts", "10"},
-                    {"mapreduce.task.timeout", "60000"}
-                };
-                var args = new List<string> { "10", "1000" };
-
-                var parameters = new MapReduceJobSubmissionParameters
-                {
-                    JarFile = "/example/jars/hadoop-mapreduce-examples.jar",
-                    JarClass = "pi",
-                    Defines = defines,
-                    Arguments = args
-                };
-
-                var response = client.JobManagement.SubmitMapReduceJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                var jobStatus = GetJobFinalStatus(client, jobId);
+                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
 
-                var storageAccess = GetStorageAccessObject();
+                var jobStatus = client.JobManagement.GetJob(jobId);
+
+                var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
@@ -233,104 +412,77 @@ namespace HDInsightJob.Tests
         [Fact]
         public void SubmitMapReduceStreamingJob()
         {
-            using (var context = UndoContext.Current)
-            {
-                context.Start();
+            var parameters = GetMRStreamingJobSubmissionParameters();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
-
-                var parameters = new MapReduceStreamingJobSubmissionParameters
-                {
-                    Mapper = "cat",
-                    Reducer = "wc",
-                    Input = "/example/data/gutenberg/davinci.txt",
-                    Output = "/example/data/gutenberg/wcount"
-                };
-
-                var response = client.JobManagement.SubmitMapReduceStreamingJob(parameters);
-                Assert.NotNull(response);
-                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
-
-                var jobId = response.JobSubmissionJsonResponse.Id;
-                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
-
-                var jobStatus = GetJobFinalStatus(client, jobId);
-
-                var storageAccess = GetStorageAccessObject();
-
-                if (jobStatus.JobDetail.ExitValue == 0)
-                {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
-                    {
-                        // Retrieve Job Output
-                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
-                        string textOutput = Convert(output);
-                        Assert.True(textOutput.Length > 0);
-                    }
-                }
-                else
-                {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
-                    {
-                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
-                        string errorTextOutput = Convert(output);
-                        Assert.NotNull(errorTextOutput);
-                    }
-
-                    Assert.True(false);
-                }
-            }
+            SubmitMapReduceStreamingJobAndValidateOutput(parameters);
         }
 
         [Fact]
-        [Trait("Category","Windows")]
+        public void SubmitMapReduceStreamingJobAsync()
+        {
+            var parameters = GetMRStreamingJobSubmissionParameters();
+
+            SubmitMapReduceStreamingJobAndValidateOutput(parameters, runAyncAPI : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
         public void SubmitMapReduceStreamingJobWithFilesParam()
+        {
+            var parameters = GetMRStreamingJobSubmissionParameters(true);
+
+            SubmitMapReduceStreamingJobAndValidateOutput(parameters, runAyncAPI: false, isWindowsCluster : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitMapReduceStreamingJobWithFilesParamAsync()
+        {
+            var parameters = GetMRStreamingJobSubmissionParameters(true);
+
+            SubmitMapReduceStreamingJobAndValidateOutput(parameters, runAyncAPI: true, isWindowsCluster : true);
+        }
+
+        public MapReduceStreamingJobSubmissionParameters GetMRStreamingJobSubmissionParameters(bool isWindowsCluster = false)
+        {
+            var parameters = new MapReduceStreamingJobSubmissionParameters
+            {
+                Mapper = isWindowsCluster ? "cat.exe" : "cat",
+                Reducer = isWindowsCluster ? "wc.exe" : "wc",
+                Input = "/example/data/gutenberg/davinci.txt",
+                Output = "/example/data/gutenberg/wcount/" + Guid.NewGuid()
+            };
+
+            if (isWindowsCluster)
+            {
+                parameters.Files = new List<string> { "/example/apps/wc.exe", "/example/apps/cat.exe" };
+            }
+
+            return parameters;
+        }
+
+        public void SubmitMapReduceStreamingJobAndValidateOutput(MapReduceStreamingJobSubmissionParameters parameters, bool runAyncAPI = false, bool isWindowsCluster = false)
         {
             using (var context = UndoContext.Current)
             {
                 context.Start();
 
-                var username = TestUtils.WinUserName;
-                var password = TestUtils.WinPassword;
-                var clustername = TestUtils.WinClusterName;
+                var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
+                var response = runAyncAPI ? client.JobManagement.SubmitMapReduceStreamingJobAsync(parameters).Result
+                    : client.JobManagement.SubmitMapReduceStreamingJob(parameters);
 
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
-
-                var parameters = new MapReduceStreamingJobSubmissionParameters
-                {
-                    Mapper = "cat.exe",
-                    Reducer = "wc.exe",
-                    Input = "/example/data/gutenberg/davinci.txt",
-                    Output = "/example/data/gutenberg/wcount",
-                    Files = new List<string> { "/example/apps/wc.exe", "/example/apps/cat.exe" }
-                };
-
-                var response = client.JobManagement.SubmitMapReduceStreamingJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                var jobStatus = GetJobFinalStatus(client, jobId);
+                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
 
-                var storageAccess = new AzureStorageAccess(TestUtils.WinStorageAccountName, TestUtils.WinStorageAccountKey, TestUtils.WinDefaultContainer);
+                var jobStatus = client.JobManagement.GetJob(jobId);
+
+                var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
@@ -359,43 +511,69 @@ namespace HDInsightJob.Tests
         [Fact]
         public void SubmitPigJob()
         {
+            var parameters = GetPigJobSubmissionParameters();
+            SubmitPigJobAndValidateOutput(parameters);
+        }
+
+        [Fact]
+        public void SubmitPigJobAsync()
+        {
+            var parameters = GetPigJobSubmissionParameters();
+            SubmitPigJobAndValidateOutput(parameters, runAyncAPI : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitPigJob_Windows()
+        {
+            var parameters = GetPigJobSubmissionParameters();
+            SubmitPigJobAndValidateOutput(parameters, runAyncAPI: false, isWindowsCluster : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitPigJobAsync_Windows()
+        {
+            var parameters = GetPigJobSubmissionParameters();
+            SubmitPigJobAndValidateOutput(parameters, runAyncAPI: true, isWindowsCluster: true);
+        }
+
+        public PigJobSubmissionParameters GetPigJobSubmissionParameters()
+        {
+            return new PigJobSubmissionParameters()
+            {
+                Query = "LOGS = LOAD 'wasb:///example/data/sample.log';" +
+                                "LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;" +
+                                "FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;" +
+                                "GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;" +
+                                "FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;" +
+                                "RESULT = order FREQUENCIES by COUNT desc;" +
+                                "DUMP RESULT;"
+            };
+        }
+
+        public void SubmitPigJobAndValidateOutput(PigJobSubmissionParameters parameters, bool runAyncAPI = false, bool isWindowsCluster = false)
+        {
             using (var context = UndoContext.Current)
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
+                var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var credentials = new BasicAuthenticationCloudCredentials()
-                {
-                    Username = username,
-                    Password = password
-                };
+                var response = runAyncAPI ? client.JobManagement.SubmitPigJobAsync(parameters).Result
+                    : client.JobManagement.SubmitPigJob(parameters);
 
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
-
-                var parameters = new PigJobSubmissionParameters()
-                {
-                    Query = "LOGS = LOAD 'wasb:///example/data/sample.log';" +
-                                    "LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;" +
-                                    "FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;" +
-                                    "GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;" +
-                                    "FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;" +
-                                    "RESULT = order FREQUENCIES by COUNT desc;" +
-                                    "DUMP RESULT;"
-                };
-
-                var response = client.JobManagement.SubmitPigJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                var jobStatus = GetJobFinalStatus(client, jobId);
+                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
 
-                var storageAccess = GetStorageAccessObject();
+                var jobStatus = client.JobManagement.GetJob(jobId);
+
+                var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
@@ -424,52 +602,74 @@ namespace HDInsightJob.Tests
         [Fact]
         public void SubmitSqoopJob()
         {
+            var parameters = GetSqoopJobSubmissionParameters();
+            SubmitSqoopJobAndValidateOutput(parameters);
+        }
+
+        [Fact]
+        public void SubmitSqoopJobAsync()
+        {
+            var parameters = GetSqoopJobSubmissionParameters();
+            SubmitSqoopJobAndValidateOutput(parameters, runAyncAPI : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitSqoopJob_Windows()
+        {
+            var parameters = GetSqoopJobSubmissionParameters(true);
+            SubmitSqoopJobAndValidateOutput(parameters, runAyncAPI: false, isWindowsCluster : true);
+        }
+
+        [Fact]
+        [Trait("Category", "Windows")]
+        public void SubmitSqoopJobAsync_Windows()
+        {
+            var parameters = GetSqoopJobSubmissionParameters(true);
+            SubmitSqoopJobAndValidateOutput(parameters, runAyncAPI: true, isWindowsCluster : true);
+        }
+
+        public SqoopJobSubmissionParameters GetSqoopJobSubmissionParameters(bool isWindowsCluster = false)
+        {
+            var parameters = new SqoopJobSubmissionParameters
+            {
+                Command = "import --connect " + TestUtils.SQLServerConnectionString + " --table " + TestUtils.SQLServerTableName
+                    + " --warehouse-dir /user/admin/sqoop/" + Guid.NewGuid().ToString()
+                    + " --hive-import -m 1 --hive-table " + TestUtils.SQLServerTableName + Guid.NewGuid().ToString().Replace("-",""),
+                StatusDir = "SqoopStatus",
+            };
+            
+            if (!isWindowsCluster)
+            {
+                // This line is required for Linux-based cluster.
+                parameters.Files = new List<string> { "/user/oozie/share/lib/sqoop/sqljdbc41.jar" };
+            }
+
+            return parameters;
+        }
+
+        public void SubmitSqoopJobAndValidateOutput(SqoopJobSubmissionParameters parameters, bool runAyncAPI = false, bool isWindowsCluster = false)
+        {
             using (var context = UndoContext.Current)
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
+                var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
+                var response = runAyncAPI ? client.JobManagement.SubmitSqoopJobAsync(parameters).Result
+                                : client.JobManagement.SubmitSqoopJob(parameters);
 
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
-
-                // Before we run this test in Record mode, we should run following commands on cluster
-                // hdfs dfs -mkdir /user/hcat/lib
-                // hadoop fs -copyFromLocal -f /usr/share/java/sqljdbc_4.1/enu/sqljdbc41.jar /user/hcat/lib
-                // Generate sqoopcommand.txt using content
-                // --connect
-                // <Connection string to DB which has table dept.>
-                // --table
-                // dept
-                // Keep these in separate lines otherwise, sqoop command will fail. Copy the sqoopcommand.txt
-                // hdfs dfs -mkdir /example/data/sqoop/
-                // hadoop fs -copyFromLocal -f sqoopcommand.txt /example/data/sqoop/
-
-                var parameters = new SqoopJobSubmissionParameters
-                {
-                    LibDir = "/user/hcat/lib",
-                    Files = new List<string>{"/example/data/sqoop/sqoopcommand.txt"},
-                    Command = "import --options-file sqoopcommand.txt --hive-import -m 1",
-                    StatusDir = "sqoopstatus",
-                };
-
-                var response = client.JobManagement.SubmitSqoopJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                var jobStatus = GetJobFinalStatus(client, jobId);
+                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
 
-                var storageAccess = GetStorageAccessObject();
+                var jobStatus = client.JobManagement.GetJob(jobId);
+
+                var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
@@ -502,17 +702,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
                 var parameters = new HiveJobSubmissionParameters
                 {
@@ -527,7 +717,9 @@ namespace HDInsightJob.Tests
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                var jobStatus = GetJobFinalStatus(client, jobId);
+                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
+
+                var jobStatus = client.JobManagement.GetJob(jobId);
 
                 Assert.True(jobStatus.JobDetail.ExitValue > 0);
 
@@ -544,6 +736,30 @@ namespace HDInsightJob.Tests
             }
         }
 
+        internal void WaitForJobCompletion(HDInsightJobManagementClient client, string jobId, TimeSpan pollingInterval, TimeSpan duration, bool cancelJob = false)
+        {
+            var startTime = DateTime.UtcNow;
+            var endTime = DateTime.UtcNow;
+
+            var jobDetail = client.JobManagement.GetJob(jobId);
+            while (!jobDetail.JobDetail.Status.JobComplete)
+            {
+                if (((endTime = DateTime.UtcNow) - startTime) > duration)
+                {
+                    string exceptionMessage = string.Format(CultureInfo.InvariantCulture, "The requested task failed to complete in the allotted time ({0})", duration); ;
+                    if (cancelJob)
+                    {
+                        client.JobManagement.KillJob(jobId);
+                        exceptionMessage = string.Format(CultureInfo.InvariantCulture, "{0} Killed the Job {1}", exceptionMessage, jobId);
+                    }
+
+                    throw new CloudException(exceptionMessage);
+                }
+
+                jobDetail = client.JobManagement.GetJob(jobId);
+            }
+        }
+
         private static string Convert(Stream stream)
         {
             var reader = new StreamReader(stream);
@@ -551,24 +767,11 @@ namespace HDInsightJob.Tests
             return text;
         }
 
-        private JobGetResponse GetJobFinalStatus(HDInsightJobManagementClient client, string jobId)
+        private IStorageAccess GetStorageAccessObject(bool IsWindowsCluster = false)
         {
-            var jobStatus = client.JobManagement.GetJob(jobId);
-
-            while (!jobStatus.JobDetail.Status.JobComplete)
-            {
-                jobStatus = client.JobManagement.GetJob(jobId);
-
-                // Optional to sleep here. Sleep for 1 sec instead of keep pooling. 
-                Thread.Sleep(1000);
-            }
-
-            return jobStatus;
-        }
-
-        private IStorageAccess GetStorageAccessObject()
-        {
-            return new AzureStorageAccess(TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+            return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
+                                    IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
+                                    IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer);
         }
     }
 }

@@ -20,6 +20,10 @@
 // code is regenerated.
 
 using System;
+using System.Globalization;
+using System.Diagnostics;
+using System.Reflection;
+using System.Threading;
 using Hyak.Common;
 using Hyak.Common.TransientFaultHandling;
 
@@ -34,6 +38,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         private static readonly TimeSpan MaxBackOff = TimeSpan.FromMinutes(8);
         private const int RetryCount = 5;
         private static readonly TimeSpan DeltaBackOff = TimeSpan.FromMinutes(1);
+
+        private static string SdkVersion = ".Net " + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
         /// <summary>
         /// Gets the recommended Retry Policy for the HDInsight Management Client.
@@ -69,6 +75,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             {
                 // If No retry policy is provided then use default retry policy
                 retryPolicy = HDInsightJobManagementClient.HDInsightRetryPolicy;
+                this.HttpClient.Timeout = MaxBackOff;
             }
 
             this.SetRetryPolicy(retryPolicy);

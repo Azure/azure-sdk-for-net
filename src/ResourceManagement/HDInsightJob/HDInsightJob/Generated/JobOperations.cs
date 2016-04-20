@@ -100,9 +100,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + "/templeton/v1/jobs/";
             url = url + Uri.EscapeDataString(jobId);
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             queryParameters.Add("fields=*");
             if (queryParameters.Count > 0)
@@ -121,8 +121,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -651,6 +651,10 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             {
                 throw new ArgumentNullException("jobId");
             }
+            if (jobId.Length <= 0)
+            {
+                throw new ArgumentException("jobId cannot be empty.");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -670,9 +674,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + "/templeton/v1/jobs/";
             url = url + Uri.EscapeDataString(jobId);
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             if (queryParameters.Count > 0)
             {
@@ -690,8 +694,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1229,9 +1233,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/jobs";
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             queryParameters.Add("showall=true");
             queryParameters.Add("fields=*");
@@ -1251,8 +1255,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1819,9 +1823,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/jobs";
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             queryParameters.Add("showall=true");
             queryParameters.Add("fields=*");
@@ -1846,8 +1850,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2378,7 +2382,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// Submits a Hive job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// Required. Hive job parameters.
@@ -2414,9 +2418,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/hive";
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             if (queryParameters.Count > 0)
             {
@@ -2434,8 +2438,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2526,7 +2530,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits a MapReduce job to an HDINSIGHT cluster.
+        /// Submits a MapReduce job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// Required. MapReduce job parameters.
@@ -2562,9 +2566,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/mapreduce/jar";
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             if (queryParameters.Count > 0)
             {
@@ -2582,8 +2586,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2674,7 +2678,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits a MapReduce streaming job to an HDINSIGHT cluster.
+        /// Submits a MapReduce streaming job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// Required. MapReduce job parameters.
@@ -2710,9 +2714,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/mapreduce/streaming";
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             if (queryParameters.Count > 0)
             {
@@ -2730,8 +2734,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2822,7 +2826,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// Submits a Pig job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// Required. Pig job parameters.
@@ -2858,9 +2862,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/pig";
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             if (queryParameters.Count > 0)
             {
@@ -2878,8 +2882,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2970,7 +2974,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// Submits a Sqoop job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// Required. Sqoop job parameters.
@@ -3006,9 +3010,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
             url = url + "/templeton/v1/sqoop";
             List<string> queryParameters = new List<string>();
-            if (this.Client.Credentials.Username != null)
+            if (this.Client.UserName != null)
             {
-                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
+                queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.UserName));
             }
             if (queryParameters.Count > 0)
             {
@@ -3026,8 +3030,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight xplat " + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight xplat " + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
