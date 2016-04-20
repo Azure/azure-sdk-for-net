@@ -586,7 +586,7 @@ namespace Microsoft.Azure.Search.Tests
                         HOTELID = "1",
                         BASERATE = 99.0,
                         DESCRIPTION = null,
-                        CATEGORY = null,    // This property doesn't have NullValueHandling.Ignore, so this should have no effect.
+                        CATEGORY = null,    // This property doesn't have NullValueHandling.Include, so this should have no effect.
                         TAGS = new[] { "pool", "view", "wifi" },
                         PARKINGINCLUDED = true,
                         LASTRENOVATIONDATE = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)),
