@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0-preview",
+  "description": "Microsoft Azure Key Vault Cryptography Class Library",
+  "authors": [ "Microsoft Corporation" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "compilationOptions": {
+    "delaySign": true,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  "frameworks": {
+    "dnxcore50": {
+      "frameworkAssemblies": {
+      },
+      "dependencies": {
+        "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
+        "System.Security.Cryptography.Primitives": "4.0.0-beta-23516",
+        "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516",
+        "System.Security.Cryptography.Csp": "4.0.0-beta-23516"
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+        "System": { "type": "build" },
+        "System.Security": { "type": "default" },
+        "System.Threading.Tasks": { "type": "build" }
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.Azure.KeyVault.Core": "2.0.0-*"
+  },
+  "configurations": {
+  }
+}

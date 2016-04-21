@@ -4,7 +4,7 @@
     <!--
     Microsoft.Azure.KeyVault.Core
     -->
-    <SdkNuGetPackage Include="Microsoft.Azure.KeyVault.Core">
+    <SdkNuGetPackage Include="Microsoft.Azure.KeyVault.Cryptography">
       <PackageVersion>2.0.0-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

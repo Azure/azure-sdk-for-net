@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0-preview",
+  "description": "Microsoft Azure Key Vault Core Class Library",
+  "authors": [ "Microsoft Corporation" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "compilationOptions": {
+    "delaySign": true,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  "frameworks": {
+    "dnxcore50": {
+      "dependencies": {
+        "Microsoft.Dnx.Runtime": "1.0.0-rc1-final"
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+        "System": { "type": "build" },
+        "System.Threading.Tasks": { "type": "build" }
+      }
+    },
+    ".NETPortable,Version=v4.5,Profile=Profile111": {
+      "frameworkAssemblies": {
+        "System": { "type": "build" },
+        "System.Runtime": { "type": "build" },
+        "System.Threading.Tasks": { "type": "build" },
+        "System.Reflection": { }
+      }
+    }
+  },
+  "dependencies": {
+  },
+  "configurations": {
+  }
+}
