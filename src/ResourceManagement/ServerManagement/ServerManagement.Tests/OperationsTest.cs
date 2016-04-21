@@ -87,7 +87,7 @@ namespace ServerManagement.Tests
                     foreach (var g in gateways)
                     {
                         found = true;
-                        WriteLine($"Found Gateway in subscription: {g.Name}");
+                        WriteLine(String.Format("Found Gateway in subscription: {0}", g.Name));
                     }
 
                     Assert.True(found, "No gateways in collection?");
@@ -166,7 +166,7 @@ namespace ServerManagement.Tests
                     WriteLine("Getting Session");
                     session = await client.Session.GetAsync(ResourceGroup, node.Name, session.Name);
                     Assert.NotNull(session);
-                    WriteLine($"Session/Get response:{session.ToJson()}");
+                    WriteLine(String.Format("Session/Get response:{0}", session.ToJson()));
 
 
                     // create a powershell session inside the SMT session
@@ -220,7 +220,7 @@ namespace ServerManagement.Tests
             foreach (var r in result.Results)
             {
                 found = true;
-                WriteLine($" {r.ToJson()}");
+                WriteLine(String.Format(" {0}", r.ToJson()));
             }
             Assert.True(found);
         }
@@ -236,7 +236,7 @@ namespace ServerManagement.Tests
             foreach (var s in sessions.Value)
             {
                 found = true;
-                WriteLine($" {s.ToJson()}");
+                WriteLine(String.Format(" {0}", s.ToJson()));
             }
             Assert.True(found);
         }
@@ -251,7 +251,7 @@ namespace ServerManagement.Tests
             foreach (var n in nodes)
             {
                 found = true;
-                WriteLine($"Found node in subscription: {n.Name}");
+                WriteLine(String.Format("Found node in subscription: {0}", n.Name));
             }
 
             // make sure we got *some* back.
@@ -286,7 +286,7 @@ namespace ServerManagement.Tests
                 );
             Assert.NotNull(gateway);
 
-            WriteLine($"Created Gateway: {gateway.Name}");
+            WriteLine(String.Format("Created Gateway: {0}", gateway.Name));
 
             var profile = await client.Gateway.GetProfileAsync(ResourceGroup, GatewayName);
 
@@ -296,7 +296,7 @@ namespace ServerManagement.Tests
                 StopGateway();
 
                 // install the new profile
-                WriteLine($"Profile:\r\n{profile.ToJson()}");
+                WriteLine(String.Format("Profile:\r\n{0}", profile.ToJson()));
                 var encrypted = ProtectedData.Protect(Encoding.UTF8.GetBytes(profile.ToJsonTight()), null,
                     DataProtectionScope.LocalMachine);
                 var path = Environment.ExpandEnvironmentVariables(@"%PROGRAMDATA%") + @"\ManagementGateway";
@@ -327,7 +327,7 @@ namespace ServerManagement.Tests
             foreach (var s in results.Results)
             {
                 found = true;
-                WriteLine($" {s.ToJson()}");
+                WriteLine(String.Format(" {0}", s.ToJson()));
             }
             Assert.True(found);
         }

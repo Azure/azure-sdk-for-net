@@ -21,20 +21,53 @@ namespace ServerManagement.Tests
 
         private readonly ITestOutputHelper _output;
 
-        protected static bool Recording => HttpMockServer.Mode == HttpRecorderMode.Record;
-        protected static bool ReuseExistingGateway => Recording && "true".Equals(Environment.GetEnvironmentVariable("REUSE_EXISTING_GATEWAY"), StringComparison.OrdinalIgnoreCase);
+        protected static bool Recording
+        {
+            get { return HttpMockServer.Mode == HttpRecorderMode.Record; }
+        }
 
-        protected static string NodeName => Environment.GetEnvironmentVariable("NODE_NAME");
-        protected static string NodeUserName => Environment.GetEnvironmentVariable("NODE_USERNAME");
-        protected static string NodePassword=> Environment.GetEnvironmentVariable("NODE_PASSWORD");
-        
+        protected static bool ReuseExistingGateway
+        {
+            get
+            {
+                return Recording &&
+                       "true".Equals(Environment.GetEnvironmentVariable("REUSE_EXISTING_GATEWAY"),
+                           StringComparison.OrdinalIgnoreCase);
+            }
+        }
 
-        protected static bool IsAdmin => Safe(()=> new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator));
+        protected static string NodeName
+        {
+            get { return Environment.GetEnvironmentVariable("NODE_NAME"); }
+        }
+
+        protected static string NodeUserName
+        {
+            get { return Environment.GetEnvironmentVariable("NODE_USERNAME"); }
+        }
+
+        protected static string NodePassword
+        {
+            get { return Environment.GetEnvironmentVariable("NODE_PASSWORD"); }
+        }
+
+
+        protected static bool IsAdmin
+        {
+            get
+            {
+                return
+                    Safe(
+                        () =>
+                            new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator));
+            }
+        }
 
         public ServerManagementTestBase(ITestOutputHelper output)
         {
             // add environment variables so that we can just run from VS to record.
-            Default("TEST_HTTPMOCK_OUTPUT", $"{ Directory.GetParent(this.GetType().Assembly.Location).FullName}\\SessionRecords");
+            Default("TEST_HTTPMOCK_OUTPUT",
+                String.Format("{0}\\SessionRecords", Directory.GetParent(this.GetType().Assembly.Location).FullName));
             Default("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=3e82a90d-d19e-42f9-bb43-9112945846ef;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/");
 
             Default("AZURE_TEST_MODE", "Playback");
@@ -48,7 +81,7 @@ namespace ServerManagement.Tests
             // only used for some interactive testing. 
             Default("REUSE_EXISTING_GATEWAY", "false");
 
-            Console.WriteLine($"Recording: {Recording}");
+            Console.WriteLine(String.Format("Recording: {0}", Recording));
 
             if (!ReuseExistingGateway)
             {
@@ -75,7 +108,7 @@ namespace ServerManagement.Tests
                         break;
 
                     default:
-                        WriteLine($"Gateway Service is {sc.Status} --stopping");
+                        WriteLine(String.Format("Gateway Service is {0} --stopping", sc.Status));
                         sc.Stop();
                         break;
                 }
@@ -102,7 +135,7 @@ namespace ServerManagement.Tests
                         break;
 
                     default:
-                        WriteLine($"Gateway Service is {sc.Status} -- starting.");
+                        WriteLine(String.Format("Gateway Service is {0} -- starting.", sc.Status));
                         sc.Start();
                         break;
                 }
@@ -149,7 +182,7 @@ namespace ServerManagement.Tests
         {
             try
             {
-                WriteLine($"Removing Node {ResourceGroup}/{nodeName}");
+                WriteLine(String.Format("Removing Node {0}/{1}", ResourceGroup, nodeName));
                 return client.Node.DeleteAsync(ResourceGroup, nodeName);
             }
             catch
@@ -162,7 +195,7 @@ namespace ServerManagement.Tests
         {
             try
             {
-                WriteLine($"Removing Gateway {ResourceGroup}/{gatewayName}");
+                WriteLine(String.Format("Removing Gateway {0}/{1}", ResourceGroup, gatewayName));
 
                 await client.Node.ListForResourceGroup(ResourceGroup)
                         .WhereNotNull()

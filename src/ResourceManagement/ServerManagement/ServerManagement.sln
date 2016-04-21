@@ -9,7 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerManagement.Tests", "S
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-        Net40-Debug|Any CPU = Net40-Debug|Any CPU
 		Net40-Release|Any CPU = Net40-Release|Any CPU
 		Net45-Debug|Any CPU = Net45-Debug|Any CPU
 		Net45-Release|Any CPU = Net45-Release|Any CPU
@@ -17,14 +16,20 @@ Global
 		Portable-Release|Any CPU = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92ADE435-1109-447D-8B5B-1F4A52F8DF39}.Net40-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
 		{92ADE435-1109-447D-8B5B-1F4A52F8DF39}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
 		{92ADE435-1109-447D-8B5B-1F4A52F8DF39}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{92ADE435-1109-447D-8B5B-1F4A52F8DF39}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
 		{92ADE435-1109-447D-8B5B-1F4A52F8DF39}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{92ADE435-1109-447D-8B5B-1F4A52F8DF39}.Portable-Debug|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{92ADE435-1109-447D-8B5B-1F4A52F8DF39}.Portable-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{030623AB-1109-44B3-8CB3-2356152F9C9F}.Net40-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
 		{030623AB-1109-44B3-8CB3-2356152F9C9F}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
 		{030623AB-1109-44B3-8CB3-2356152F9C9F}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{030623AB-1109-44B3-8CB3-2356152F9C9F}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
 		{030623AB-1109-44B3-8CB3-2356152F9C9F}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{030623AB-1109-44B3-8CB3-2356152F9C9F}.Portable-Debug|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{030623AB-1109-44B3-8CB3-2356152F9C9F}.Portable-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
