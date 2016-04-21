@@ -30,24 +30,24 @@ namespace ServerManagement.Tests
             get
             {
                 return Recording &&
-                       "true".Equals(Environment.GetEnvironmentVariable("REUSE_EXISTING_GATEWAY"),
+                       "true".Equals(Environment.GetEnvironmentVariable("SMT_REUSE_EXISTING_GATEWAY"),
                            StringComparison.OrdinalIgnoreCase);
             }
         }
 
         protected static string NodeName
         {
-            get { return Environment.GetEnvironmentVariable("NODE_NAME"); }
+            get { return Environment.GetEnvironmentVariable("SMT_NODE_NAME"); }
         }
 
         protected static string NodeUserName
         {
-            get { return Environment.GetEnvironmentVariable("NODE_USERNAME"); }
+            get { return Environment.GetEnvironmentVariable("SMT_NODE_USERNAME"); }
         }
 
         protected static string NodePassword
         {
-            get { return Environment.GetEnvironmentVariable("NODE_PASSWORD"); }
+            get { return Environment.GetEnvironmentVariable("SMT_NODE_PASSWORD"); }
         }
 
 
@@ -72,12 +72,12 @@ namespace ServerManagement.Tests
             HttpMockServer.Mode = "record".Equals(Environment.GetEnvironmentVariable("AZURE_TEST_MODE"), StringComparison.OrdinalIgnoreCase) ? HttpRecorderMode.Record : HttpRecorderMode.Playback;
 
             // node settings
-            Extensions.Default("NODE_NAME", "saddlebags");
-            Extensions.Default("NODE_USERNAME", "gsAdmin");
-            Extensions.Default("NODE_PASSWORD", "NEED_PASSWORD");
+            Extensions.Default("SMT_NODE_NAME", "saddlebags");
+            Extensions.Default("SMT_NODE_USERNAME", "gsAdmin");
+            Extensions.Default("SMT_NODE_PASSWORD", "NEED_PASSWORD");
 
             // only used for some interactive testing. 
-            Extensions.Default("REUSE_EXISTING_GATEWAY", "false");
+            Extensions.Default("SMT_REUSE_EXISTING_GATEWAY", "false");
 
             Console.WriteLine(String.Format("Recording: {0}", Recording));
 
@@ -209,18 +209,26 @@ namespace ServerManagement.Tests
 
         protected async Task RemoveAllNodes(ServerManagementClient client)
         {
-            var enumerable = client.Node.ListForResourceGroup(ResourceGroup) != null ? client.Node.ListForResourceGroup(ResourceGroup).WhereNotNull()
-                .Select(each => RemoveNode(client, each.Name)) : null;
-            if (enumerable != null)
-                await enumerable;
+            var nodes = client.Node.ListForResourceGroup(ResourceGroup).WhereNotNull();
+            if (nodes != null)
+            {
+                foreach (var each in nodes)
+                {
+                    await RemoveNode(client, each.Name);
+                }
+            }
         }
 
         protected async Task RemoveAllGateways(ServerManagementClient client)
         {
-            var enumerable = client.Gateway.ListForResourceGroup(ResourceGroup) != null ? client.Gateway.ListForResourceGroup(ResourceGroup).WhereNotNull()
-                .Select(each => RemoveGateway(client, each.Name)) : null;
-            if (enumerable != null)
-                await enumerable;
+            var gateways = client.Gateway.ListForResourceGroup(ResourceGroup).WhereNotNull();
+            if (gateways != null)
+            {
+                foreach (var each in gateways)
+                {
+                    await RemoveGateway(client, each.Name);
+                }
+            }
         }
 
 
