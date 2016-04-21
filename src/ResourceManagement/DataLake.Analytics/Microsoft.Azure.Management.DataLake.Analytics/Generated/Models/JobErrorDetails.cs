@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobErrorDetails class.
         /// </summary>
-        public JobErrorDetails(string description = default(string), string details = default(string), int? endOffset = default(int?), string errorId = default(string), string filePath = default(string), string helpLink = default(string), string internalDiagnostics = default(string), int? lineNumber = default(int?), string message = default(string), string resolution = default(string), JobInnerError innerError = default(JobInnerError), string severity = default(string), string source = default(string), int? startOffset = default(int?))
+        public JobErrorDetails(string description = default(string), string details = default(string), int? endOffset = default(int?), string errorId = default(string), string filePath = default(string), string helpLink = default(string), string internalDiagnostics = default(string), int? lineNumber = default(int?), string message = default(string), string resolution = default(string), JobInnerError innerError = default(JobInnerError), SeverityTypes? severity = default(SeverityTypes?), string source = default(string), int? startOffset = default(int?))
         {
             Description = description;
             Details = details;
@@ -118,10 +118,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets the severity level of the failure. Possible values include:
-        /// 'Warning', 'Error'
+        /// 'Warning', 'Error', 'Info'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
-        public string Severity { get; private set; }
+        public SeverityTypes? Severity { get; private set; }
 
         /// <summary>
         /// Gets the ultimate source of the failure (usually either SYSTEM or

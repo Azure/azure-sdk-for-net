@@ -62,7 +62,14 @@ namespace Compute.Tests
                         m_NrpClient = ComputeManagementTestUtilities.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                         m_subId = m_CrpClient.SubscriptionId;
-                        m_location = ComputeManagementTestUtilities.DefaultLocation;
+                        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
+                        {
+                            m_location = ComputeManagementTestUtilities.DefaultLocation;
+                        }
+                        else
+                        {
+                            m_location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "").ToLower();
+                        }
                     }
                 }
             }

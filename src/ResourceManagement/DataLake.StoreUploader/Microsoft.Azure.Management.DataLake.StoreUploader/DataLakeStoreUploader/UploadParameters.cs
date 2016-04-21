@@ -53,6 +53,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.LocalMetadataLocation = localMetadataLocation;
 
             this.UseSegmentBlockBackOffRetryStrategy = true;
+
+            // TODO: in the future we will expose these as optional parameters, allowing customers to specify encoding and delimiters.
+            this.FileEncoding = System.Text.Encoding.UTF8;
+            this.Delimiter = null;
         }
 
         /// <summary>
@@ -152,5 +156,21 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// The local metadata location.
         /// </value>
         public string LocalMetadataLocation { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating the encoding of the file being uploaded.
+        /// </summary>
+        /// <value>
+        /// The file encoding.
+        /// </value>
+        public System.Text.Encoding FileEncoding { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating the record boundary delimiter for the file, if any.
+        /// </summary>
+        /// <value>
+        /// The record boundary delimiter
+        /// </value>
+        public string Delimiter { get; private set; }
     }
 }

@@ -344,12 +344,12 @@ END;", dbName, tableName, tvfName, viewName, procName);
                     Script = scriptToRun
                 }
             };
-            var jobCreateResponse = jobClient.Job.Create(jobIdToUse, createOrBuildParams, dataLakeAnalyticsAccountName);
+            var jobCreateResponse = jobClient.Job.Create(dataLakeAnalyticsAccountName, jobIdToUse, createOrBuildParams);
 
             Assert.NotNull(jobCreateResponse);
 
             // Poll the job until it finishes
-            var getJobResponse = jobClient.Job.Get(jobCreateResponse.JobId.GetValueOrDefault(), dataLakeAnalyticsAccountName);
+            var getJobResponse = jobClient.Job.Get(dataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
             Assert.NotNull(getJobResponse);
 
             int maxWaitInSeconds = 180; // 3 minutes should be long enough
@@ -359,7 +359,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
                 // wait 5 seconds before polling again
                 TestUtilities.Wait(5000);
                 curWaitInSeconds += 5;
-                getJobResponse = jobClient.Job.Get(jobCreateResponse.JobId.GetValueOrDefault(), dataLakeAnalyticsAccountName);
+                getJobResponse = jobClient.Job.Get(dataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
                 Assert.NotNull(getJobResponse);
             }
 

@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Shared/Dedicated workers. Possible values for this property
-        /// include: 'Shared', 'Dedicated'.
+        /// include: 'Shared', 'Dedicated', 'Dynamic'.
         /// </summary>
         [JsonProperty(PropertyName = "computeMode")]
         public ComputeModeOptions? ComputeMode { get; set; }

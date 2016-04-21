@@ -29,9 +29,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the CsmSiteRecoveryEntity class.
         /// </summary>
-        public CsmSiteRecoveryEntity(DateTime? snapshotTime = default(DateTime?), string siteName = default(string), string slotName = default(string))
+        public CsmSiteRecoveryEntity(DateTime? snapshotTime = default(DateTime?), bool? recoverConfig = default(bool?), string siteName = default(string), string slotName = default(string))
         {
             SnapshotTime = snapshotTime;
+            RecoverConfig = recoverConfig;
             SiteName = siteName;
             SlotName = slotName;
         }
@@ -41,6 +42,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "snapshotTime")]
         public DateTime? SnapshotTime { get; set; }
+
+        /// <summary>
+        /// If true, then the website's configuration will be reverted to its
+        /// state at SnapshotTime
+        /// </summary>
+        [JsonProperty(PropertyName = "recoverConfig")]
+        public bool? RecoverConfig { get; set; }
 
         /// <summary>
         /// [Optional] Destination web app name into which web app should be

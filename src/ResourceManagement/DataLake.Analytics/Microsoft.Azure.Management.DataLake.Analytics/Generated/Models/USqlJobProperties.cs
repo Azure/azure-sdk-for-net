@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlJobProperties class.
         /// </summary>
-        public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), string algebraFilePath = default(string), string totalCompilationTime = default(string), string totalPauseTime = default(string), string totalQueuedTime = default(string), string totalRunningTime = default(string), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), string compileMode = default(string))
+        public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), string algebraFilePath = default(string), TimeSpan? totalCompilationTime = default(TimeSpan?), TimeSpan? totalPauseTime = default(TimeSpan?), TimeSpan? totalQueuedTime = default(TimeSpan?), TimeSpan? totalRunningTime = default(TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), CompileMode? compileMode = default(CompileMode?))
             : base(script, runtimeVersion)
         {
             Resources = resources;
@@ -73,28 +73,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// not be set by the user and will be ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "totalCompilationTime")]
-        public string TotalCompilationTime { get; private set; }
+        public TimeSpan? TotalCompilationTime { get; private set; }
 
         /// <summary>
         /// Gets the total time this job spent paused. This value should not
         /// be set by the user and will be ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "totalPauseTime")]
-        public string TotalPauseTime { get; private set; }
+        public TimeSpan? TotalPauseTime { get; private set; }
 
         /// <summary>
         /// Gets the total time this job spent queued. This value should not
         /// be set by the user and will be ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "totalQueuedTime")]
-        public string TotalQueuedTime { get; private set; }
+        public TimeSpan? TotalQueuedTime { get; private set; }
 
         /// <summary>
         /// Gets the total time this job spent executing. This value should
         /// not be set by the user and will be ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "totalRunningTime")]
-        public string TotalRunningTime { get; private set; }
+        public TimeSpan? TotalRunningTime { get; private set; }
 
         /// <summary>
         /// Gets the ID used to identify the job manager coordinating job
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// include: 'Semantic', 'Full', 'SingleBox'
         /// </summary>
         [JsonProperty(PropertyName = "compileMode")]
-        public string CompileMode { get; set; }
+        public CompileMode? CompileMode { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

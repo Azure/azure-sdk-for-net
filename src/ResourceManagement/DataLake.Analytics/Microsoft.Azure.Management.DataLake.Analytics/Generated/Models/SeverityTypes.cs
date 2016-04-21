@@ -15,9 +15,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// Defines values for SeverityTypes.
     /// </summary>
-    public static class SeverityTypes
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SeverityTypes
     {
-        public const string Warning = "Warning";
-        public const string Error = "Error";
+        [EnumMember(Value = "Warning")]
+        Warning,
+        [EnumMember(Value = "Error")]
+        Error,
+        [EnumMember(Value = "Info")]
+        Info
     }
 }

@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Search.Tests
     using System;
     using System.Linq;
     using Microsoft.Spatial;
-
+    using Newtonsoft.Json;
     public class LoudHotel
     {
         [CustomField("hotelId")]
@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Search.Tests
         public double BASERATE { get; set; }
 
         [CustomField("description")]
+        [JsonProperty(NullValueHandling = NullValueHandling.Include)]
         public string DESCRIPTION { get; set; }
 
         [CustomField("descriptionFr")]
@@ -44,6 +45,7 @@ namespace Microsoft.Azure.Search.Tests
         public int RATING { get; set; }
 
         [CustomField("location")]
+        [JsonProperty(NullValueHandling = NullValueHandling.Include)]
         public GeographyPoint LOCATION { get; set; }
 
         public override bool Equals(object obj)

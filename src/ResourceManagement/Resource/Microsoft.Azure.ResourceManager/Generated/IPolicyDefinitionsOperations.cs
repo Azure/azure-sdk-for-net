@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -23,13 +24,13 @@ namespace Microsoft.Azure.Management.Resources
     public partial interface IPolicyDefinitionsOperations
     {
         /// <summary>
-        /// Create or update policy definition.
+        /// Create or update a policy definition.
         /// </summary>
         /// <param name='policyDefinitionName'>
         /// The policy definition name.
         /// </param>
         /// <param name='parameters'>
-        /// The policy definition properties
+        /// The policy definition properties.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -39,7 +40,20 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse<PolicyDefinition>> CreateOrUpdateWithHttpMessagesAsync(string policyDefinitionName, PolicyDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets policy definition.
+        /// Deletes the policy definition.
+        /// </summary>
+        /// <param name='policyDefinitionName'>
+        /// The policy definition name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string policyDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the policy definition.
         /// </summary>
         /// <param name='policyDefinitionName'>
         /// The policy definition name.
@@ -52,10 +66,10 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse<PolicyDefinition>> GetWithHttpMessagesAsync(string policyDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes policy definition.
+        /// Gets all the policy definitions of a subscription.
         /// </summary>
-        /// <param name='policyDefinitionName'>
-        /// The policy definition name.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -63,6 +77,19 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string policyDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListWithHttpMessagesAsync(ODataQuery<PolicyDefinition> odataQuery = default(ODataQuery<PolicyDefinition>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all the policy definitions of a subscription.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

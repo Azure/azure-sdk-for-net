@@ -100,7 +100,7 @@ namespace Compute.Tests
                 },
                 OrchestratorProfile = new ContainerServiceOrchestratorProfile
                 {
-                    OrchestratorType = ContainerServiceOchestratorTypes.Mesos
+                    OrchestratorType = ContainerServiceOchestratorTypes.DCOS
                 }
             };
         }

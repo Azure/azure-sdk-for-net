@@ -285,6 +285,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanMergeStaticallyTypedDocuments.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanSetExplicitNullsInStaticallyTypedDocuments.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanUseIndexWithReservedName.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

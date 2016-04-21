@@ -14,13 +14,14 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class PolicyDefinitionsOperationsExtensions
     {
             /// <summary>
-            /// Create or update policy definition.
+            /// Create or update a policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.Management.Resources
             /// The policy definition name.
             /// </param>
             /// <param name='parameters'>
-            /// The policy definition properties
+            /// The policy definition properties.
             /// </param>
             public static PolicyDefinition CreateOrUpdate(this IPolicyDefinitionsOperations operations, string policyDefinitionName, PolicyDefinition parameters)
             {
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Create or update policy definition.
+            /// Create or update a policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.Resources
             /// The policy definition name.
             /// </param>
             /// <param name='parameters'>
-            /// The policy definition properties
+            /// The policy definition properties.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -60,7 +61,38 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Gets policy definition.
+            /// Deletes the policy definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The policy definition name.
+            /// </param>
+            public static void Delete(this IPolicyDefinitionsOperations operations, string policyDefinitionName)
+            {
+                Task.Factory.StartNew(s => ((IPolicyDefinitionsOperations)s).DeleteAsync(policyDefinitionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the policy definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The policy definition name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync( this IPolicyDefinitionsOperations operations, string policyDefinitionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.DeleteWithHttpMessagesAsync(policyDefinitionName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Gets the policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -74,7 +106,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Gets policy definition.
+            /// Gets the policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,34 +126,71 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Deletes policy definition.
+            /// Gets all the policy definitions of a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='policyDefinitionName'>
-            /// The policy definition name.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
-            public static void Delete(this IPolicyDefinitionsOperations operations, string policyDefinitionName)
+            public static IPage<PolicyDefinition> List(this IPolicyDefinitionsOperations operations, ODataQuery<PolicyDefinition> odataQuery = default(ODataQuery<PolicyDefinition>))
             {
-                Task.Factory.StartNew(s => ((IPolicyDefinitionsOperations)s).DeleteAsync(policyDefinitionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyDefinitionsOperations)s).ListAsync(odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes policy definition.
+            /// Gets all the policy definitions of a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='policyDefinitionName'>
-            /// The policy definition name.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync( this IPolicyDefinitionsOperations operations, string policyDefinitionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyDefinition>> ListAsync( this IPolicyDefinitionsOperations operations, ODataQuery<PolicyDefinition> odataQuery = default(ODataQuery<PolicyDefinition>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(policyDefinitionName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the policy definitions of a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyDefinition> ListNext(this IPolicyDefinitionsOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IPolicyDefinitionsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the policy definitions of a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyDefinition>> ListNextAsync( this IPolicyDefinitionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

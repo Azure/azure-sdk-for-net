@@ -86,9 +86,5 @@ namespace Microsoft.Azure.Management.Resources
 
         IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails { get; }
 
-        IPolicyDefinitionsOperations PolicyDefinitions { get; }
-
-        IPolicyAssignmentsOperations PolicyAssignments { get; }
-
     }
 }

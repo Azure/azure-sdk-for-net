@@ -389,13 +389,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// <summary>
         /// Gets list of available geo regions
         /// </summary>
+        /// <param name='sku'>
+        /// Filter only to regions that support this sku
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<GeoRegionCollection>> GetSubscriptionGeoRegionsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GeoRegionCollection>> GetSubscriptionGeoRegionsWithHttpMessagesAsync(string sku = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -412,6 +415,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("sku", sku);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSubscriptionGeoRegions", tracingParameters);
             }
@@ -420,6 +424,10 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (sku != null)
+            {
+                _queryParameters.Add(string.Format("sku={0}", Uri.EscapeDataString(sku)));
+            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -1696,7 +1704,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> IsHostingEnvironmentNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (name == null)
             {
@@ -1719,14 +1727,17 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "IsHostingEnvironmentWithLegacyNameAvailable", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "IsHostingEnvironmentNameAvailable", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/ishostingenvironmentnameavailable/{name}").ToString();
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/ishostingenvironmentnameavailable").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (name != null)
+            {
+                _queryParameters.Add(string.Format("name={0}", Uri.EscapeDataString(name)));
+            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -1866,7 +1877,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> IsHostingEnvironmentNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (name == null)
             {
@@ -1889,17 +1900,14 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "IsHostingEnvironmentNameAvailable", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "IsHostingEnvironmentWithLegacyNameAvailable", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/ishostingenvironmentnameavailable").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/ishostingenvironmentnameavailable/{name}").ToString();
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (name != null)
-            {
-                _queryParameters.Add(string.Format("name={0}", Uri.EscapeDataString(name)));
-            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));

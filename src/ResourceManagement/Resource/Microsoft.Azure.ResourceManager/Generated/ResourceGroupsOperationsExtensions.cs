@@ -137,8 +137,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin deleting resource group.To determine whether the operation has
-            /// finished processing the request, call GetLongRunningOperationStatus.
+            /// Delete resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -152,8 +151,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin deleting resource group.To determine whether the operation has
-            /// finished processing the request, call GetLongRunningOperationStatus.
+            /// Delete resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -170,8 +168,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin deleting resource group.To determine whether the operation has
-            /// finished processing the request, call GetLongRunningOperationStatus.
+            /// Delete resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -185,8 +182,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin deleting resource group.To determine whether the operation has
-            /// finished processing the request, call GetLongRunningOperationStatus.
+            /// Delete resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -279,6 +275,46 @@ namespace Microsoft.Azure.Management.Resources
             public static async Task<ResourceGroup> PatchAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Captures the specified resource group as a template.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to be created or updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the export template resource group operation.
+            /// </param>
+            public static ResourceGroupExportResult ExportTemplate(this IResourceGroupsOperations operations, string resourceGroupName, ExportTemplateRequest parameters)
+            {
+                return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ExportTemplateAsync(resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Captures the specified resource group as a template.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to be created or updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the export template resource group operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceGroupExportResult> ExportTemplateAsync( this IResourceGroupsOperations operations, string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ExportTemplateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
