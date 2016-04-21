@@ -63,7 +63,10 @@ namespace ServerManagement.Tests
         }
 
 
-        internal static TaskAwaiter GetAwaiter(this IEnumerable<Task> tasks) => Task.WhenAll(tasks).GetAwaiter();
+        internal static TaskAwaiter GetAwaiter(this IEnumerable<Task> tasks)
+        {
+            return Task.WhenAll(tasks).GetAwaiter();
+        }
 
         internal static void Default(string variable, string value)
         {

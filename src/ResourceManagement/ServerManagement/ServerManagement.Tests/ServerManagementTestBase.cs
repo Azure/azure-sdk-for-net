@@ -13,7 +13,6 @@ using Xunit.Abstractions;
 
 namespace ServerManagement.Tests
 {
-    using static Extensions;
     public class ServerManagementTestBase : TestBase
     {
         protected static string ResourceGroup = "sdktest";
@@ -56,8 +55,7 @@ namespace ServerManagement.Tests
         {
             get
             {
-                return
-                    Safe(
+                return Extensions.Safe(
                         () =>
                             new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator));
             }
@@ -66,20 +64,20 @@ namespace ServerManagement.Tests
         public ServerManagementTestBase(ITestOutputHelper output)
         {
             // add environment variables so that we can just run from VS to record.
-            Default("TEST_HTTPMOCK_OUTPUT",
+            Extensions.Default("TEST_HTTPMOCK_OUTPUT",
                 String.Format("{0}\\SessionRecords", Directory.GetParent(this.GetType().Assembly.Location).FullName));
-            Default("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=3e82a90d-d19e-42f9-bb43-9112945846ef;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/");
+            Extensions.Default("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=3e82a90d-d19e-42f9-bb43-9112945846ef;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/");
 
-            Default("AZURE_TEST_MODE", "Playback");
+            Extensions.Default("AZURE_TEST_MODE", "Playback");
             HttpMockServer.Mode = "record".Equals(Environment.GetEnvironmentVariable("AZURE_TEST_MODE"), StringComparison.OrdinalIgnoreCase) ? HttpRecorderMode.Record : HttpRecorderMode.Playback;
 
             // node settings
-            Default("NODE_NAME", "saddlebags");
-            Default("NODE_USERNAME", "gsAdmin");
-            Default("NODE_PASSWORD", "NEED_PASSWORD");
+            Extensions.Default("NODE_NAME", "saddlebags");
+            Extensions.Default("NODE_USERNAME", "gsAdmin");
+            Extensions.Default("NODE_PASSWORD", "NEED_PASSWORD");
 
             // only used for some interactive testing. 
-            Default("REUSE_EXISTING_GATEWAY", "false");
+            Extensions.Default("REUSE_EXISTING_GATEWAY", "false");
 
             Console.WriteLine(String.Format("Recording: {0}", Recording));
 
