@@ -209,18 +209,16 @@ namespace ServerManagement.Tests
 
         protected async Task RemoveAllNodes(ServerManagementClient client)
         {
-            var enumerable = client.Node.ListForResourceGroup(ResourceGroup)?
-                .WhereNotNull()
-                .Select(each => RemoveNode(client, each.Name));
+            var enumerable = client.Node.ListForResourceGroup(ResourceGroup) != null ? client.Node.ListForResourceGroup(ResourceGroup).WhereNotNull()
+                .Select(each => RemoveNode(client, each.Name)) : null;
             if (enumerable != null)
                 await enumerable;
         }
 
         protected async Task RemoveAllGateways(ServerManagementClient client)
         {
-            var enumerable = client.Gateway.ListForResourceGroup(ResourceGroup)?
-                .WhereNotNull()
-                .Select(each => RemoveGateway(client, each.Name));
+            var enumerable = client.Gateway.ListForResourceGroup(ResourceGroup) != null ? client.Gateway.ListForResourceGroup(ResourceGroup).WhereNotNull()
+                .Select(each => RemoveGateway(client, each.Name)) : null;
             if (enumerable != null)
                 await enumerable;
         }
