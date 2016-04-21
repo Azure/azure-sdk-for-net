@@ -95,7 +95,7 @@ namespace ServerManagement.Tests
                 finally
                 {
                     // remove gateway that we've created 
-                    await RemoveGateway(client, GatewayName);
+                    RemoveGateway(client, GatewayName).Wait();
                 }
 
                 // make sure that the gateway is gone.
@@ -195,11 +195,11 @@ namespace ServerManagement.Tests
                     // remove gateway that we've created 
                     if (!ReuseExistingGateway)
                     {
-                        await RemoveGateway(client, GatewayName);
+                        RemoveGateway(client, GatewayName).Wait();
                     }
 
                     // regardless, always clear the nodes out.
-                    await RemoveAllNodes(client);
+                    RemoveAllNodes(client).Wait();
                 }
             }
         }
