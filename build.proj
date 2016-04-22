@@ -130,7 +130,7 @@
     
     <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
     <Exec Command="dotnet restore $(_TemporaryNetCoreFeeds)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
-    <Exec Command="dotnet restore $(_TemporaryNetCoreFeeds)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet restore --infer-runtimes $(_TemporaryNetCoreFeeds)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '$(Configuration)' != 'Release' "/>
 
     <CallTarget Targets="BuildNetCoreLibraries" Condition=" @(NetCore_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
