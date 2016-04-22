@@ -41,6 +41,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="SessionRecords\RecoveryServices.Tests.VaultTests\CreateAndRetrieveVaultExtendedInfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -52,7 +53,7 @@
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.VaultTests\RetrieveVault.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>  
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.VaultUsageTests\RetrieveVaultUsage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
