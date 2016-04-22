@@ -12,33 +12,26 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    public partial class Sku
+    public partial class SubResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public Sku() { }
+        public SubResource() { }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public Sku(string family = default(string), string name = default(string))
+        public SubResource(string id = default(string))
         {
-            Family = family;
-            Name = name;
+            Id = id;
         }
 
         /// <summary>
-        /// SKU family name
+        /// Resource Id
         /// </summary>
-        [JsonProperty(PropertyName = "family")]
-        public string Family { get; set; }
-
-        /// <summary>
-        /// SKU name
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
