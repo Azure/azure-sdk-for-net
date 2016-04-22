@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         {
             this.WebServices = new WebServicesOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2016-04-01-privatepreview";
+            this.ApiVersion = "2016-05-01-preview";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;
