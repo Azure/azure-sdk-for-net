@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Resources
+namespace Microsoft.Azure.Management.ResourceManager
 {
     using System;
     using System.Linq;
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Resources
             this.PolicyAssignments = new PolicyAssignmentsOperations(this);
             this.PolicyDefinitions = new PolicyDefinitionsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-10-01-preview";
+            this.ApiVersion = "2016-04-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

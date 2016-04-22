@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System;
     using System.Linq;

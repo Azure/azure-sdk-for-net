@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System;
     using System.Linq;
@@ -29,14 +29,21 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Initializes a new instance of the PolicyDefinition class.
         /// </summary>
-        public PolicyDefinition(string name = default(string), string policyType = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object))
+        public PolicyDefinition(string id = default(string), string name = default(string), string policyType = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object))
         {
+            Id = id;
             Name = name;
             PolicyType = policyType;
             DisplayName = displayName;
             Description = description;
             PolicyRule = policyRule;
         }
+
+        /// <summary>
+        /// Gets or sets the Id of the policy definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the policy definition.

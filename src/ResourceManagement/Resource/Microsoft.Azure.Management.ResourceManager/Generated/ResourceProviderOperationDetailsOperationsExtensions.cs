@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Resources
+namespace Microsoft.Azure.Management.ResourceManager
 {
     using System;
     using System.Collections;
