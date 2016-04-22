@@ -20,21 +20,19 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     public partial class ResourceManagementErrorWithDetails : ResourceManagementError
     {
-        private IList<ResourceManagementError> _details;
+        private string _details;
         
         /// <summary>
-        /// Optional. Gets or sets validation error.
+        /// Optional. Gets or sets the details of the error.
         /// </summary>
-        public IList<ResourceManagementError> Details
+        public string Details
         {
             get { return this._details; }
             set { this._details = value; }
@@ -46,7 +44,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceManagementErrorWithDetails()
         {
-            this.Details = new LazyList<ResourceManagementError>();
         }
         
         /// <summary>
