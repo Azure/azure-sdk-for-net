@@ -27,6 +27,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using System.Threading;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace RecoveryServices.Tests
 {
@@ -107,7 +108,10 @@ namespace RecoveryServices.Tests
 
                     while (opStatus.StatusCode == HttpStatusCode.Accepted)
                     {
-                        Thread.Sleep(15 * 1000);
+                        if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                        {
+                            Thread.Sleep(15 * 1000);
+                        }
                         opStatus = helper.GetJobOperationStatus(jobId, opId);
                     }
                 }
