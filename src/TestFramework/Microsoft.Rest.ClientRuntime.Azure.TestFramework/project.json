@@ -1,41 +1,43 @@
 ﻿{
-  "version": "1.2.1-preview",
+  "version": "2.0.0-preview",
   "description": "Microsoft.Rest.ClientRuntime.Azure.TestFramework",
   "authors": [ "Microsoft Corporation" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+  
   "compilationOptions": {
     "delaySign": true,
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
+
   "frameworks": {
     "net45": {
       "dependencies": {
         "Microsoft.IdentityModel.Clients.ActiveDirectory": "[2.18.206251556]"
-      },
-      "frameworkAssemblies": {
-        "System.Net.Http": "",
-        "System.Runtime": { "type": "build" },
-        "System.Threading.Tasks": { "type": "build" }
       }
     },
-    "dnxcore50": {
+    "netstandard1.5": {
+      "imports": ["dnxcore50"],
       "dependencies": {
-        "System.Console": "4.0.0-beta-23516",
-        "System.Diagnostics.Debug": "4.0.11-beta-23516",
-        "System.Diagnostics.StackTrace": "4.0.1-beta-23516",
-        "System.Threading.Thread": "4.0.0-beta-23516",
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516",
-        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha"
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha",
+        "Microsoft.NETCore.Platforms": "1.0.1-rc2-23931",
+        "Microsoft.NETCore.Runtime": "1.0.2-rc2-23931",
+        "System.Diagnostics.Debug": "4.0.11-rc2-23931",
+        "System.Diagnostics.Tools": "4.0.1-rc2-23931",
+        "System.Diagnostics.Tracing": "4.1.0-rc2-23931",
+        "Microsoft.CSharp": "4.0.1-rc2-23931",
+        "System.Threading": "4.0.11-rc2-23931",
+        "System.Threading.Thread": "4.0.0-rc2-23931", 
+        "System.Threading.Tasks": "4.0.11-rc2-23931",
+        "System.Threading.Timer": "4.0.1-rc2-23931",
+        "System.Collections": "4.0.11-rc2-23931",
+        "System.Linq": "4.1.0-rc2-23931",
+        "System.Runtime": "4.1.0-rc2-23931",
+        "System.Net.Http": "4.0.1-rc2-23931"
       }
     }
   },
   "dependencies": {
-    "Microsoft.Azure.Test.HttpRecorder": ""
+    "Microsoft.Azure.Test.HttpRecorder": "[2.0.0-preview,3.0.0)"
   }
 }
