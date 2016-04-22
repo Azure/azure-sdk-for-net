@@ -19,8 +19,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Rest.Azure;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
