@@ -25,11 +25,12 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the IndexingResult class.
         /// </summary>
-        public IndexingResult(string key = default(string), string errorMessage = default(string), bool succeeded = default(bool))
+        public IndexingResult(string key = default(string), string errorMessage = default(string), bool succeeded = default(bool), int statusCode = default(int))
         {
             Key = key;
             ErrorMessage = errorMessage;
             Succeeded = succeeded;
+            StatusCode = statusCode;
         }
 
         /// <summary>
