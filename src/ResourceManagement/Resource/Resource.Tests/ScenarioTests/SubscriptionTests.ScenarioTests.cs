@@ -15,7 +15,7 @@
 
 using System.Linq;
 using System.Net;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Test;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.TransientFaultHandling;
