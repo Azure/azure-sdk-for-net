@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Search
         {
             this.Documents = new DocumentsOperations(this);
             this.BaseUri = new Uri("http://localhost");
-            this.ApiVersion = "2015-02-28";
+            this.ApiVersion = "2015-02-28-Preview";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

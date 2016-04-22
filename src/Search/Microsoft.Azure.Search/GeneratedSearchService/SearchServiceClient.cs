@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Search
             this.Indexers = new IndexersOperations(this);
             this.Indexes = new IndexesOperations(this);
             this.BaseUri = new Uri("http://localhost");
-            this.ApiVersion = "2015-02-28";
+            this.ApiVersion = "2015-02-28-Preview";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

@@ -85,9 +85,15 @@ namespace Microsoft.Azure.Search
             where TAction : IndexActionBase<TDoc>
             where TDoc : class
         {
-            var failedKeys = new HashSet<string>(this.IndexingResults.Where(r => !r.Succeeded).Select(r => r.Key));
-            Func<TAction, bool> isFailed = a => a.Document != null && failedKeys.Contains(keySelector(a.Document));
-            return originalBatch.Actions.Where(isFailed);
+            IEnumerable<string> allRetriableKeys = 
+                this.IndexingResults.Where(r => ShouldRetry(r.StatusCode)).Select(r => r.Key);
+
+            var uniqueRetriableKeys = new HashSet<string>(allRetriableKeys);
+
+            Func<TAction, bool> shouldRetry = 
+                a => a.Document != null && uniqueRetriableKeys.Contains(keySelector(a.Document));
+
+            return originalBatch.Actions.Where(shouldRetry);
         }
 
         private static string CreateMessage(DocumentIndexResult documentIndexResult)
@@ -98,6 +104,32 @@ namespace Microsoft.Azure.Search
                 MessageFormat, 
                 documentIndexResult.Results.Count(r => !r.Succeeded),
                 documentIndexResult.Results.Count);
+        }
+
+        private static bool ShouldRetry(int statusCode)
+        {
+            switch (statusCode)
+            {
+                case 200:
+                case 201:
+                    return false;   // Don't retry on success.
+
+                case 404:
+                case 400:
+                    return false;   // Don't retry on user error.
+
+                case 500:
+                    return false;   // Don't retry when something unexpected happened.
+
+                case 422:
+                case 409:
+                case 503:
+                    return true;    // The above cases might succeed on a subsequent retry.
+
+                default:
+                    // If this happens, it's a bug. Safest to assume no retry.
+                    return false;
+            }
         }
     }
 }

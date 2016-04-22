@@ -30,6 +30,7 @@
     <Compile Include="Tests\Models\CustomBookWithConverter.cs" />
     <Compile Include="Tests\Models\CustomFieldAttribute.cs" />
     <Compile Include="Tests\Models\Hotel.cs" />
+    <Compile Include="Tests\Models\IndexBatchExceptionTests.cs" />
     <Compile Include="Tests\Models\LoudHotel.cs" />
     <Compile Include="Tests\Models\ModelWithInt.cs" />
     <Compile Include="Tests\Models\ModelWithNullableInt.cs" />
@@ -283,6 +284,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanMergeStaticallyTypedDocuments.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanSetExplicitNullsInStaticallyTypedDocuments.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanUseIndexWithReservedName.json">
