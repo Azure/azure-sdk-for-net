@@ -543,7 +543,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("InvalidTemplate", result.Error.Code);
             Assert.Equal("Deployment template validation failed: The template parameters hostingPlanName, siteMode, computeMode are not valid; they are not present.", result.Error.Message);
             Assert.Null(result.Error.Target);
-            Assert.Equal(0, result.Error.Details.Count);
+            Assert.Null(result.Error.Details);
         }
 
         [Fact]
@@ -594,9 +594,8 @@ namespace ResourceGroups.Tests
             Assert.Equal("InvalidTemplate", result.Error.Code);
             Assert.Equal("Deployment template validation failed: The template parameters hostingPlanName, siteMode, computeMode are not valid; they are not present.", result.Error.Message);
             Assert.Equal("", result.Error.Target);
-            Assert.Equal(2, result.Error.Details.Count);
-            Assert.Equal("Error1", result.Error.Details[0].Code);
-            Assert.Equal("Error2", result.Error.Details[1].Code);
+            Assert.True(result.Error.Details.Contains("Error1"));
+            Assert.True(result.Error.Details.Contains("Error2"));
         }
 
         [Fact]

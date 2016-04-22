@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class DeploymentValidateResponse : AzureOperationResponse
     {
-        private ResourceManagementErrorWithDetails _error;
+        private ResourceManagementError _error;
         
         /// <summary>
         /// Optional. Gets or sets validation error.
         /// </summary>
-        public ResourceManagementErrorWithDetails Error
+        public ResourceManagementError Error
         {
             get { return this._error; }
             set { this._error = value; }
