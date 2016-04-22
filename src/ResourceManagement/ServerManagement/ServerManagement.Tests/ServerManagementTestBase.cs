@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Management.ServerManagement;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 using Xunit.Abstractions;
-
 
 namespace ServerManagement.Tests
 {
@@ -17,71 +16,32 @@ namespace ServerManagement.Tests
     {
         protected static string ResourceGroup = "sdktest";
         private static bool _once;
-
+        private static string _nodename;
+        private static string _nodeusername;
+        private static string _location;
+        private static string _gatewayone;
+        private static string _gatewaytwo;
+        private static string _sessionId;
         private readonly ITestOutputHelper _output;
-
-        protected static bool Recording
-        {
-            get { return HttpMockServer.Mode == HttpRecorderMode.Record; }
-        }
-
-        protected static bool ReuseExistingGateway
-        {
-            get
-            {
-                return Recording &&
-                       "true".Equals(Environment.GetEnvironmentVariable("SMT_REUSE_EXISTING_GATEWAY"),
-                           StringComparison.OrdinalIgnoreCase);
-            }
-        }
-
-        protected static string NodeName
-        {
-            get { return Environment.GetEnvironmentVariable("SMT_NODE_NAME"); }
-        }
-
-        protected static string NodeUserName
-        {
-            get { return Environment.GetEnvironmentVariable("SMT_NODE_USERNAME"); }
-        }
-
-        protected static string NodePassword
-        {
-            get { return Environment.GetEnvironmentVariable("SMT_NODE_PASSWORD"); }
-        }
-
-
-        protected static bool IsAdmin
-        {
-            get
-            {
-                return Extensions.Safe(
-                        () =>
-                            new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator));
-            }
-        }
 
         public ServerManagementTestBase(ITestOutputHelper output)
         {
-            // add environment variables so that we can just run from VS to record.
-            Extensions.Default("TEST_HTTPMOCK_OUTPUT",
-                String.Format("{0}\\SessionRecords", Directory.GetParent(this.GetType().Assembly.Location).FullName));
-            Extensions.Default("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=3e82a90d-d19e-42f9-bb43-9112945846ef;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/");
+            // add environment variables so that we can just use the visual studio test runner for doing interactive testing.
+            // these get ignored when they are already set.
+            Extensions.SetEnvironmentVariableIfNotAlreadySet("TEST_HTTPMOCK_OUTPUT",
+                string.Format("{0}\\SessionRecords", Directory.GetParent(GetType().Assembly.Location).FullName));
+            Extensions.SetEnvironmentVariableIfNotAlreadySet("TEST_CSM_ORGID_AUTHENTICATION",
+                "SubscriptionId=3e82a90d-d19e-42f9-bb43-9112945846ef;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/");
+            Extensions.SetEnvironmentVariableIfNotAlreadySet("AZURE_TEST_MODE", "Record");
 
-            Extensions.Default("AZURE_TEST_MODE", "Playback");
-            HttpMockServer.Mode = "record".Equals(Environment.GetEnvironmentVariable("AZURE_TEST_MODE"), StringComparison.OrdinalIgnoreCase) ? HttpRecorderMode.Record : HttpRecorderMode.Playback;
+            // since HttpMockServer.Mode doesn't get set until after I'd like to know what state we're in
+            // we'll preemptively set it to what it will get set to later anyway.
+            HttpMockServer.Mode = "record".Equals(Environment.GetEnvironmentVariable("AZURE_TEST_MODE"),
+                StringComparison.OrdinalIgnoreCase)
+                ? HttpRecorderMode.Record
+                : HttpRecorderMode.Playback;
 
-            // node settings
-            Extensions.Default("SMT_NODE_NAME", "saddlebags");
-            Extensions.Default("SMT_NODE_USERNAME", "gsAdmin");
-            Extensions.Default("SMT_NODE_PASSWORD", "NEED_PASSWORD");
-
-            // only used for some interactive testing. 
-            Extensions.Default("SMT_REUSE_EXISTING_GATEWAY", "false");
-
-            Console.WriteLine(String.Format("Recording: {0}", Recording));
-
-            if (!ReuseExistingGateway)
+            if (!TestingInteractively)
             {
                 StopGateway();
             }
@@ -89,11 +49,148 @@ namespace ServerManagement.Tests
             _output = output;
         }
 
+        protected static bool Recording
+        {
+            get { return HttpMockServer.Mode == HttpRecorderMode.Record; }
+        }
+
+        protected static bool TestingInteractively
+        {
+            get
+            {
+                // use this when interactively testing from visual studio
+                // and you want to have the tests not delete the gateway.
+#if DEBUG_INTERACTIVE
+                return Recording && true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        /// <summary>
+        ///  the name of the SMT node to create 
+        /// </summary>
+        protected static string NodeName
+        {
+            get
+            {
+                return _nodename ??
+                       (_nodename =
+                           HttpMockServer.GetVariable("SMT_NODE_NAME",
+                               Environment.GetEnvironmentVariable("SMT_NODE_NAME") ?? "saddlebags"));
+            }
+        }
+
+        /// <summary>
+        /// the username to use when creating the SMT NODE and Session for that node
+        /// </summary>
+        protected static string NodeUserName
+        {
+            get
+            {
+                return _nodeusername ??
+                       (_nodeusername =
+                           HttpMockServer.GetVariable("SMT_NODE_USERNAME",
+                               Environment.GetEnvironmentVariable("SMT_NODE_USERNAME") ?? "gsAdmin"));
+            }
+        }
+
+        /// <summary>
+        ///  The location to use when creating resources.
+        /// </summary>
+        protected static string Location
+        {
+            get
+            {
+                return _location ??
+                       (_location =
+                           HttpMockServer.GetVariable("SMT_TEST_LOCATION",
+                               Environment.GetEnvironmentVariable("SMT_TEST_LOCATION") ?? "centralus"));
+            }
+        }
+
+        /// <summary>
+        ///  the gateway name to use when creating the gateway 
+        /// </summary>
+        protected static string GatewayOne
+        {
+            get
+            {
+                return _gatewayone ??
+                       (_gatewayone =
+                           HttpMockServer.GetVariable("SMT_GATEWAY_1",
+                               Environment.GetEnvironmentVariable("SMT_GATEWAY_1") ??
+                               "test_gateway_" + new Random().Next(0, int.MaxValue)));
+            }
+        }
+
+
+        /// <summary>
+        /// The gateway name to use when testing the node/session/pssession
+        /// </summary>
+        protected static string GatewayTwo
+        {
+            // use this when interactively testing from visual studio
+            // and you want to have the tests use a specific gateway
+#if DEBUG_INTERACTIVE
+            get { return _gatewaytwo ?? (_gatewaytwo = "mygateway"); }
+#else
+            get
+            {
+                return _gatewaytwo ??
+                       (_gatewaytwo =
+                           HttpMockServer.GetVariable("SMT_GATEWAY_2",
+                               Environment.GetEnvironmentVariable("SMT_GATEWAY_2") ??
+                               "test_gateway_" + new Random().Next(0, int.MaxValue)));
+            }
+#endif
+        }
+
+        /// <summary>
+        ///  the session id to use when creating a session
+        /// </summary>
+        protected static string SessionId
+        {
+            get
+            {
+                return _sessionId ??
+                       (_sessionId = HttpMockServer.GetVariable("SMT_SESSION_ID", Guid.NewGuid().ToString()));
+            }
+        }
+
+        /// <summary>
+        ///  the password to use when connecting to the node
+        /// </summary>
+        protected static string NodePassword
+        {
+            // does not store actual password; on playback we don't need the real password anyway, we can just use a dummy password
+            get { return Environment.GetEnvironmentVariable("SMT_NODE_PASSWORD") ?? "S0meP@sswerd!"; }
+        }
+
+        /// <summary>
+        /// checks for admin access
+        /// </summary>
+        protected static bool IsAdmin
+        {
+            get
+            {
+                try
+                {
+                    return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+                }
+                catch
+                {
+                }
+                return false;
+            }
+        }
+
         internal void StopGateway()
         {
             if (Recording)
             {
-                ServiceController sc = new ServiceController("ServerManagementToolsGateway");
+                var sc = new ServiceController("ServerManagementToolsGateway");
                 while (sc.Status == ServiceControllerStatus.StopPending)
                 {
                     Task.Delay(100).Wait();
@@ -106,12 +203,12 @@ namespace ServerManagement.Tests
                         break;
 
                     default:
-                        WriteLine(String.Format("Gateway Service is {0} --stopping", sc.Status));
+                        WriteLine(string.Format("Gateway Service is {0} --stopping", sc.Status));
                         sc.Stop();
                         break;
                 }
                 // wait a few seconds.
-                Task.Delay(10 * 1000).Wait();
+                Task.Delay(10*1000).Wait();
             }
         }
 
@@ -119,46 +216,33 @@ namespace ServerManagement.Tests
         {
             if (Recording)
             {
-                ServiceController sc = new ServiceController("ServerManagementToolsGateway");
-                while (sc.Status == ServiceControllerStatus.StartPending || sc.Status == ServiceControllerStatus.StopPending)
+                var sc = new ServiceController("ServerManagementToolsGateway");
+                while (sc.Status == ServiceControllerStatus.StartPending ||
+                       sc.Status == ServiceControllerStatus.StopPending)
                 {
                     Task.Delay(100).Wait();
                 }
 
-
-                switch (sc.Status)
+                if (sc.Status == ServiceControllerStatus.Running)
                 {
-                    case ServiceControllerStatus.Running:
-                        WriteLine("Gateway Service already Running.");
-                        break;
-
-                    default:
-                        WriteLine(String.Format("Gateway Service is {0} -- starting.", sc.Status));
-                        sc.Start();
-                        break;
+                    WriteLine("Gateway Service already Running.");
+                    return;
                 }
 
-                while (sc.Status == ServiceControllerStatus.StartPending || sc.Status == ServiceControllerStatus.StopPending)
+                WriteLine(string.Format("Gateway Service is {0} -- starting.", sc.Status));
+                sc.Start();
+
+                while (sc.Status == ServiceControllerStatus.StartPending ||
+                       sc.Status == ServiceControllerStatus.StopPending)
                 {
                     Task.Delay(100).Wait();
                 }
 
                 // wait for service to initialize itself.
-                Task.Delay(180 * 1000).Wait();
+                Task.Delay(180*1000).Wait();
             }
         }
 
-        public void WriteLine(string format, params object[] args)
-        {
-            if (_output == null)
-            {
-                Console.WriteLine(format,args);
-            }
-            else
-            {
-                _output.WriteLine(format, args);
-            }
-        }
         public void WriteLine(string format)
         {
             if (_output == null)
@@ -180,7 +264,7 @@ namespace ServerManagement.Tests
         {
             try
             {
-                WriteLine(String.Format("Removing Node {0}/{1}", ResourceGroup, nodeName));
+                WriteLine(string.Format("Removing Node {0}/{1}", ResourceGroup, nodeName));
                 return client.Node.DeleteAsync(ResourceGroup, nodeName);
             }
             catch
@@ -193,12 +277,12 @@ namespace ServerManagement.Tests
         {
             try
             {
-                WriteLine(String.Format("Removing Gateway {0}/{1}", ResourceGroup, gatewayName));
+                WriteLine(string.Format("Removing Gateway {0}/{1}", ResourceGroup, gatewayName));
 
                 await client.Node.ListForResourceGroup(ResourceGroup)
-                        .WhereNotNull()
-                        .Where(node => node.GatewayId.MatchesName(gatewayName))
-                        .Select(node => RemoveNode(client, node.Name));
+                    .WhereNotNull()
+                    .Where(node => node.GatewayId.MatchesName(gatewayName))
+                    .Select(node => RemoveNode(client, node.Name));
 
                 await client.Gateway.DeleteAsync(ResourceGroup, gatewayName);
             }
@@ -231,33 +315,29 @@ namespace ServerManagement.Tests
             }
         }
 
-
-        protected async Task OneTimeInitialization()
+        protected async Task EnsurePrerequisites()
         {
-            if (Recording && !IsAdmin)
-            {
-                // check for admin access, you're going to need it to record.
-                throw new Exception("Recording requires this process to be elevated.");
-            }
-
             if (Recording)
             {
-                // check if the service is installed on this machine.
+                // check for admin access, you're going to need it to record.
+                Assert.True(IsAdmin, "Recording requires this process to be elevated.");
+
                 try
                 {
-                    var sc = new ServiceController("ServerManagementToolsGateway");
-                } catch
+                    // check if the service is installed on this machine.
+                    using (var sc = new ServiceController("ServerManagementToolsGateway"))
+                    {
+                    }
+                }
+                catch
                 {
                     throw new Exception("Recording requires the gateway service to be installed on this computer");
                 }
-            }
 
-            if (!ReuseExistingGateway)
-            {
-                if (!_once && Recording)
+                if (!TestingInteractively && !_once)
                 {
                     _once = true;
-                    using (MockContext context = MockContext.Start("ServerManagement.Tests.Ignore"))
+                    using (var context = MockContext.Start("ServerManagement.Tests.Ignore"))
                     {
                         var client = GetServerManagementClient(context);
                         await RemoveAllNodes(client);
@@ -265,7 +345,6 @@ namespace ServerManagement.Tests
                     }
                 }
             }
-
         }
     }
 }

@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<PowerShellCommandResults>> GetCommandStatusWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string pssession, PowerShellExpandOption? expand = default(PowerShellExpandOption?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PowerShellCommandStatus>> GetCommandStatusWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string pssession, PowerShellExpandOption? expand = default(PowerShellExpandOption?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// updates a running PowerShell command with more data.
         /// </summary>

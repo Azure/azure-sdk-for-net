@@ -68,24 +68,12 @@ namespace ServerManagement.Tests
             return Task.WhenAll(tasks).GetAwaiter();
         }
 
-        internal static void Default(string variable, string value)
+        internal static void SetEnvironmentVariableIfNotAlreadySet(string variable, string value)
         {
             if (Environment.GetEnvironmentVariable(variable) == null)
             {
                 Environment.SetEnvironmentVariable(variable, value);
             }
-        }
-
-        internal static T Safe<T>(Func<T> expression)
-        {
-            try
-            {
-                return expression();
-            }
-            catch
-            {
-            }
-            return default(T);
         }
     }
 }

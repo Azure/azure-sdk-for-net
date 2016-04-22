@@ -20,22 +20,215 @@ namespace ServerManagement.Tests
         {
         }
 
+        private async Task RunPowerShellCommand(ServerManagementClient client, NodeResource node,
+            SessionResource session,
+            PowerShellSessionResource ps)
+        {
+            // run a command
+            var result =
+                await
+                    client.PowerShell.InvokeCommandAsync(ResourceGroup,
+                        node.Name,
+                        session.Name,
+                        ps.SessionId,
+                        "dir c:\\");
+            Assert.NotNull(result);
+
+            // did the command complete successfully?t
+            Assert.True(result.Completed);
+
+            // did we get some results?
+            var found = false;
+            foreach (var r in result.Results)
+            {
+                found = true;
+                WriteLine(string.Format(" {0}", r.ToJson()));
+            }
+            Assert.True(found);
+        }
+
+        private async Task RunLongPowerShellCommand(ServerManagementClient client, NodeResource node,
+            SessionResource session,
+            PowerShellSessionResource ps)
+        {
+            // run a command
+            var result = await client.PowerShell.InvokeCommandAsync(ResourceGroup,
+                node.Name,
+                session.Name,
+                ps.SessionId,
+                "dir c:\\ ; sleep 20 ; dir c:\\windows");
+            Assert.NotNull(result);
+
+            // this should return false because 20 seconds is too long...
+            // did the command complete successfully?
+            Assert.False(result.Completed);
+
+            // did we get some results?
+            var found = false;
+            foreach (var r in result.Results)
+            {
+                found = true;
+                WriteLine(string.Format(" {0}", r.ToJson()));
+            }
+            Assert.True(found);
+
+            PowerShellCommandStatus more;
+            found = false;
+            // go back for some more results.
+            do
+            {
+                more = await client.PowerShell.GetCommandStatusAsync(ResourceGroup,
+                    node.Name,
+                    session.Name,
+                    ps.SessionId,
+                    PowerShellExpandOption.Output);
+
+                foreach (var r in more.Results)
+                {
+                    found = true;
+                    WriteLine(string.Format(" {0}", r.ToJson()));
+                }
+            } while (!(more.Completed ?? false));
+            Assert.True(found);
+            Assert.True(more.Completed);
+        }
+
+        private async Task ListPowerShellSessions(ServerManagementClient client, NodeResource node,
+            SessionResource session)
+        {
+            bool found;
+            // list the powershell sessions open
+            var sessions = await client.PowerShell.ListSessionAsync(ResourceGroup, node.Name, session.Name);
+            Assert.NotNull(sessions);
+            found = false;
+            foreach (var s in sessions.Value)
+            {
+                found = true;
+                WriteLine(string.Format(" {0}", s.ToJson()));
+            }
+            Assert.True(found);
+        }
+
+        private async Task<IPage<NodeResource>> ListNodesInSubscription(ServerManagementClient client)
+        {
+            // look at all the nodes in the subscription
+            var nodes = await client.Node.ListAsync();
+            Assert.NotNull(nodes);
+
+            var found = false;
+            foreach (var n in nodes)
+            {
+                found = true;
+                WriteLine(string.Format("Found node in subscription: {0}", n.Name));
+            }
+
+            // make sure we got *some* back.
+            Assert.True(found, "No nodes in collection");
+            return nodes;
+        }
+
+        private static async Task<NodeResource> CreateNode(ServerManagementClient client, GatewayResource gateway)
+        {
+            var node = await client.Node.CreateAsync(
+                ResourceGroup,
+                NodeName,
+                connectionName: NodeName,
+                gatewayId: gateway.Id,
+                location: Location,
+                userName: NodeUserName,
+                password: NodePassword
+                );
+            Assert.NotNull(node);
+            return node;
+        }
+
+        private async Task<GatewayResource> CreateAndConfigureGateway(ServerManagementClient client, string GatewayName)
+        {
+            GatewayResource gateway;
+            // create a gateway
+            gateway = await client.Gateway.CreateAsync(
+                ResourceGroup,
+                GatewayName,
+                autoUpgrade: AutoUpgrade.Off,
+                location: Location
+                );
+            Assert.NotNull(gateway);
+
+            WriteLine(string.Format("Created Gateway: {0}", gateway.Name));
+
+            var profile = await client.Gateway.GetProfileAsync(ResourceGroup, GatewayName);
+
+            if (Recording)
+            {
+                // stop the service
+                StopGateway();
+
+                // install the new profile
+                WriteLine(string.Format("Profile:\r\n{0}", profile.ToJson()));
+                var encrypted = ProtectedData.Protect(Encoding.UTF8.GetBytes(profile.ToJsonTight()),
+                    null,
+                    DataProtectionScope.LocalMachine);
+                var path = Environment.ExpandEnvironmentVariables(@"%PROGRAMDATA%") + @"\ManagementGateway";
+                Directory.CreateDirectory(path);
+                File.WriteAllBytes(path + @"\GatewayProfile.json", encrypted);
+
+                // start the service.
+                StartGateway();
+            }
+            Assert.NotNull(gateway);
+
+            return gateway;
+        }
+
+        private async Task GetTabCompletionResults(ServerManagementClient client, NodeResource node,
+            SessionResource session,
+            PowerShellSessionResource ps)
+        {
+            bool found;
+            // try to get tab command completion
+            var results = await client.PowerShell.TabCompletionAsync(ResourceGroup,
+                node.Name,
+                session.Name,
+                ps.SessionId,
+                "dir c:\\");
+            Assert.NotNull(results);
+            found = false;
+            foreach (var s in results.Results)
+            {
+                found = true;
+                WriteLine(string.Format(" {0}", s.ToJson()));
+            }
+            Assert.True(found);
+        }
+
         [Fact]
-        public async Task MakeSureTestsWork()
+        public async Task CreateGatewayFailTest()
         {
             // ensure known state before starting.
-            await OneTimeInitialization();
+            await EnsurePrerequisites();
 
-            Assert.True(true, "This should always be true.");
+            using (var context = MockContext.Start("ServerManagement.Tests"))
+            {
+                var client = GetServerManagementClient(context);
+
+                // try an empty string for name
+                await Assert.ThrowsAsync<ValidationException>(() => client.Gateway.CreateAsync(ResourceGroup, ""));
+
+                // try a non existent resource group
+                await Assert.ThrowsAsync<ValidationException>(
+                    () => client.Gateway.CreateAsync("mary had a little lamb", "testgateway"));
+
+                // try a bad location
+                await Assert.ThrowsAsync<ErrorException>(
+                    () => client.Gateway.CreateAsync(ResourceGroup, "testgateway", "neverneverland"));
+            }
         }
 
         [Fact]
         public async Task GatewayTest()
         {
-            string GatewayName = "sdktest_gateway_205";
-
             // ensure known state before starting.
-            await OneTimeInitialization();
+            await EnsurePrerequisites();
 
             using (var context = MockContext.Start("ServerManagement.Tests"))
             {
@@ -46,32 +239,35 @@ namespace ServerManagement.Tests
                     // create a gateway
                     var gateway = await client.Gateway.CreateAsync(
                         ResourceGroup,
-                        GatewayName,
+                        GatewayOne,
                         autoUpgrade: AutoUpgrade.On,
-                        location: "centralus"
+                        location: Location
                         );
                     Assert.NotNull(gateway);
-                    Assert.Equal(GatewayName, gateway.Name);
+                    Assert.Equal(GatewayOne, gateway.Name);
                     Assert.Equal("microsoft.servermanagement/gateways", gateway.Type);
-                    Assert.Equal("centralus", gateway.Location);
+                    Assert.Equal(Location, gateway.Location);
                     Assert.Equal(AutoUpgrade.On, gateway.AutoUpgrade);
                     WriteLine(gateway.ToJson());
 
                     // verify that we can get the gateway again.
-                    gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayName);
+                    gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayOne);
                     Assert.NotNull(gateway);
-                    Assert.Equal(GatewayName, gateway.Name);
+                    Assert.Equal(GatewayOne, gateway.Name);
                     Assert.Equal("microsoft.servermanagement/gateways", gateway.Type);
-                    Assert.Equal("centralus", gateway.Location);
+                    Assert.Equal(Location, gateway.Location);
                     Assert.Equal(AutoUpgrade.On, gateway.AutoUpgrade);
                     WriteLine(gateway.ToJson());
 
                     // update the gateway a bit.
-                    gateway = await client.Gateway.UpdateAsync(ResourceGroup, GatewayName, "centralus", autoUpgrade: AutoUpgrade.Off);
+                    gateway = await client.Gateway.UpdateAsync(ResourceGroup,
+                        GatewayOne,
+                        Location,
+                        autoUpgrade: AutoUpgrade.Off);
                     Assert.Equal(AutoUpgrade.Off, gateway.AutoUpgrade);
 
                     // get the gateway status
-                    gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayName, GatewayExpandOption.Status);
+                    gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayOne, GatewayExpandOption.Status);
                     Assert.NotNull(gateway);
 
                     // check for some extended properties
@@ -87,7 +283,7 @@ namespace ServerManagement.Tests
                     foreach (var g in gateways)
                     {
                         found = true;
-                        WriteLine(String.Format("Found Gateway in subscription: {0}", g.Name));
+                        WriteLine(string.Format("Found Gateway in subscription: {0}", g.Name));
                     }
 
                     Assert.True(found, "No gateways in collection?");
@@ -95,21 +291,19 @@ namespace ServerManagement.Tests
                 finally
                 {
                     // remove gateway that we've created 
-                    RemoveGateway(client, GatewayName).Wait();
+                    RemoveGateway(client, GatewayOne).Wait();
                 }
 
                 // make sure that the gateway is gone.
-                await Assert.ThrowsAsync<ErrorException>(() => client.Gateway.GetAsync(ResourceGroup, GatewayName));
+                await Assert.ThrowsAsync<ErrorException>(() => client.Gateway.GetAsync(ResourceGroup, GatewayOne));
             }
         }
 
         [Fact]
         public async Task NodeTest()
         {
-            string GatewayName = "sdktest_gateway_105";
-
             // ensure known state before starting.
-            await OneTimeInitialization();
+            await EnsurePrerequisites();
 
             using (var context = MockContext.Start("ServerManagement.Tests"))
             {
@@ -118,8 +312,8 @@ namespace ServerManagement.Tests
 
                 try
                 {
-                    gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayName);
-                    
+                    gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo);
+
                     // make sure the gateway service is running.
                     StartGateway();
                 }
@@ -132,7 +326,7 @@ namespace ServerManagement.Tests
                 {
                     if (gateway == null)
                     {
-                        gateway = await CreateAndConfigureGateway(client, GatewayName);
+                        gateway = await CreateAndConfigureGateway(client, GatewayTwo);
                     }
 
                     WriteLine("Creating Node");
@@ -157,21 +351,27 @@ namespace ServerManagement.Tests
 
                     WriteLine("Creating Session");
                     // Create a session for this node.
-                    var session = await client.Session.CreateAsync(ResourceGroup, node.Name, "00000000-1234-1234-1234-000000000000", NodeUserName, NodePassword);
+                    var session = await client.Session.CreateAsync(ResourceGroup,
+                        node.Name,
+                        SessionId,
+                        NodeUserName,
+                        NodePassword);
+
                     Assert.NotNull(session);
                     Assert.Equal(NodeUserName, session.UserName);
-
 
                     // Get the same session again
                     WriteLine("Getting Session");
                     session = await client.Session.GetAsync(ResourceGroup, node.Name, session.Name);
                     Assert.NotNull(session);
-                    WriteLine(String.Format("Session/Get response:{0}", session.ToJson()));
-
+                    WriteLine(string.Format("Session/Get response:{0}", session.ToJson()));
 
                     // create a powershell session inside the SMT session
                     WriteLine("Creating PowerShell Session");
-                    var ps = await client.PowerShell.CreateSessionAsync(ResourceGroup, node.Name, session.Name, "00000000-0000-0000-0000-000000000000");
+                    var ps = await client.PowerShell.CreateSessionAsync(ResourceGroup,
+                        node.Name,
+                        session.Name,
+                        "00000000-0000-0000-0000-000000000000");
                     Assert.NotNull(ps);
 
                     // run a powershell command on that session
@@ -186,6 +386,9 @@ namespace ServerManagement.Tests
                     WriteLine("List PowerShell Sessions");
                     await ListPowerShellSessions(client, node, session);
 
+                    WriteLine("Try a long-running command.");
+                    await RunLongPowerShellCommand(client, node, session, ps);
+
                     // clean up our active SMT session.
                     WriteLine("Delete Session");
                     await client.Session.DeleteAsync(ResourceGroup, node.Name, session.Name);
@@ -193,166 +396,14 @@ namespace ServerManagement.Tests
                 finally
                 {
                     // remove gateway that we've created 
-                    if (!ReuseExistingGateway)
+                    if (!TestingInteractively)
                     {
-                        RemoveGateway(client, GatewayName).Wait();
+                        RemoveGateway(client, GatewayTwo).Wait();
                     }
 
                     // regardless, always clear the nodes out.
                     RemoveAllNodes(client).Wait();
                 }
-            }
-        }
-
-        private async Task RunPowerShellCommand(ServerManagementClient client, NodeResource node,
-            SessionResource session,
-            PowerShellSessionResource ps)
-        {
-            // run a command
-            var result = await client.PowerShell.InvokeCommandAsync(ResourceGroup, node.Name, session.Name, ps.Name, "dir c:\\");
-            Assert.NotNull(result);
-
-            // did the command complete successfully?t
-            Assert.True(result.Completed);
-
-            // did we get some results?
-            var found = false;
-            foreach (var r in result.Results)
-            {
-                found = true;
-                WriteLine(String.Format(" {0}", r.ToJson()));
-            }
-            Assert.True(found);
-        }
-
-        private async Task ListPowerShellSessions(ServerManagementClient client, NodeResource node,
-            SessionResource session)
-        {
-            bool found;
-            // list the powershell sessions open
-            var sessions = await client.PowerShell.ListSessionAsync(ResourceGroup, node.Name, session.Name);
-            Assert.NotNull(sessions);
-            found = false;
-            foreach (var s in sessions.Value)
-            {
-                found = true;
-                WriteLine(String.Format(" {0}", s.ToJson()));
-            }
-            Assert.True(found);
-        }
-
-        private async Task<IPage<NodeResource>> ListNodesInSubscription(ServerManagementClient client)
-        {
-            // look at all the nodes in the subscription
-            var nodes = await client.Node.ListAsync();
-            Assert.NotNull(nodes);
-
-            var found = false;
-            foreach (var n in nodes)
-            {
-                found = true;
-                WriteLine(String.Format("Found node in subscription: {0}", n.Name));
-            }
-
-            // make sure we got *some* back.
-            Assert.True(found, "No nodes in collection");
-            return nodes;
-        }
-
-        private static async Task<NodeResource> CreateNode(ServerManagementClient client, GatewayResource gateway)
-        {
-            var node = await client.Node.CreateAsync(
-                ResourceGroup,
-                NodeName,
-                connectionName: NodeName,
-                gatewayId: gateway.Id,
-                location: "centralus",
-                userName: NodeUserName,
-                password: NodePassword
-                );
-            Assert.NotNull(node);
-            return node;
-        }
-
-        private async Task<GatewayResource> CreateAndConfigureGateway(ServerManagementClient client, string GatewayName)
-        {
-            GatewayResource gateway;
-            // create a gateway
-            gateway = await client.Gateway.CreateAsync(
-                ResourceGroup,
-                GatewayName,
-                autoUpgrade: AutoUpgrade.Off,
-                location: "centralus"
-                );
-            Assert.NotNull(gateway);
-
-            WriteLine(String.Format("Created Gateway: {0}", gateway.Name));
-
-            var profile = await client.Gateway.GetProfileAsync(ResourceGroup, GatewayName);
-
-            if (Recording)
-            {
-                // stop the service
-                StopGateway();
-
-                // install the new profile
-                WriteLine(String.Format("Profile:\r\n{0}", profile.ToJson()));
-                var encrypted = ProtectedData.Protect(Encoding.UTF8.GetBytes(profile.ToJsonTight()), null,
-                    DataProtectionScope.LocalMachine);
-                var path = Environment.ExpandEnvironmentVariables(@"%PROGRAMDATA%") + @"\ManagementGateway";
-                Directory.CreateDirectory(path);
-                File.WriteAllBytes(path + @"\GatewayProfile.json", encrypted);
-
-                // start the service.
-                StartGateway();
-
-            }
-            Assert.NotNull(gateway);
-
-            return gateway;
-        }
-
-        private async Task GetTabCompletionResults(ServerManagementClient client, NodeResource node,
-            SessionResource session,
-            PowerShellSessionResource ps)
-        {
-            bool found;
-            // try to get tab command completion
-            var results =
-                await
-                    client.PowerShell.TabCompletionAsync(ResourceGroup, node.Name, session.Name, ps.SessionId,
-                        "dir c:\\");
-            Assert.NotNull(results);
-            found = false;
-            foreach (var s in results.Results)
-            {
-                found = true;
-                WriteLine(String.Format(" {0}", s.ToJson()));
-            }
-            Assert.True(found);
-        }
-
-        [Fact]
-        public async Task CreateGatewayFailTest()
-        {
-            // ensure known state before starting.
-            await OneTimeInitialization();
-
-            using (var context = MockContext.Start("ServerManagement.Tests"))
-            {
-                var client = GetServerManagementClient(context);
-
-                // try an empty string for name
-                await Assert.ThrowsAsync<ValidationException>(() => client.Gateway.CreateAsync(ResourceGroup, ""));
-
-                // try a non existent resource group
-                await
-                    Assert.ThrowsAsync<ValidationException>(
-                        () => client.Gateway.CreateAsync("mary had a little lamb", "testgateway"));
-
-                // try a bad location
-                await Assert.ThrowsAsync<ErrorException>(
-                        () => client.Gateway.CreateAsync(ResourceGroup, "testgateway", "neverneverland"));
             }
         }
     }

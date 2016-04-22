@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='expand'>
             /// Gets current output from an ongoing call. Possible values include: 'output'
             /// </param>
-            public static PowerShellCommandResults GetCommandStatus(this IPowerShellOperations operations, string resourceGroupName, string nodeName, string session, string pssession, PowerShellExpandOption? expand = default(PowerShellExpandOption?))
+            public static PowerShellCommandStatus GetCommandStatus(this IPowerShellOperations operations, string resourceGroupName, string nodeName, string session, string pssession, PowerShellExpandOption? expand = default(PowerShellExpandOption?))
             {
                 return Task.Factory.StartNew(s => ((IPowerShellOperations)s).GetCommandStatusAsync(resourceGroupName, nodeName, session, pssession, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PowerShellCommandResults> GetCommandStatusAsync(this IPowerShellOperations operations, string resourceGroupName, string nodeName, string session, string pssession, PowerShellExpandOption? expand = default(PowerShellExpandOption?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PowerShellCommandStatus> GetCommandStatusAsync(this IPowerShellOperations operations, string resourceGroupName, string nodeName, string session, string pssession, PowerShellExpandOption? expand = default(PowerShellExpandOption?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCommandStatusWithHttpMessagesAsync(resourceGroupName, nodeName, session, pssession, expand, null, cancellationToken).ConfigureAwait(false))
                 {

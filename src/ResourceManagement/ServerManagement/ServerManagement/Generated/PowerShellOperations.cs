@@ -548,7 +548,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PowerShellCommandResults>> GetCommandStatusWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string pssession, PowerShellExpandOption? expand = default(PowerShellExpandOption?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PowerShellCommandStatus>> GetCommandStatusWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string pssession, PowerShellExpandOption? expand = default(PowerShellExpandOption?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -722,7 +722,7 @@ namespace Microsoft.Azure.Management.ServerManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PowerShellCommandResults>();
+            var _result = new AzureOperationResponse<PowerShellCommandStatus>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -735,7 +735,7 @@ namespace Microsoft.Azure.Management.ServerManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<PowerShellCommandResults>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<PowerShellCommandStatus>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
