@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Search.Tests
     {
         private const string TokenJson =
  @"{
-  ""@odata.nextLink"": ""https://tempuri.org?api-version=2015-02-28"",
+  ""@odata.nextLink"": ""https://tempuri.org?api-version=2015-02-28-Preview"",
   ""@search.nextPageParameters"": {
     ""count"": true,
     ""facets"": [
@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Search.Tests
 
         private const string TokenWithOnlyLinkJson =
  @"{
-  ""@odata.nextLink"": ""https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2015-02-28"",
+  ""@odata.nextLink"": ""https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2015-02-28-Preview"",
   ""@search.nextPageParameters"": null
 }";
 
         private SearchContinuationToken _token =
             new SearchContinuationToken(
-                "https://tempuri.org?api-version=2015-02-28",
+                "https://tempuri.org?api-version=2015-02-28-Preview",
                 new SearchParametersPayload()
                 {
                     Count = true,
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Search.Tests
                 });
 
         private SearchContinuationToken _tokenWithOnlyLink =
-            new SearchContinuationToken("https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2015-02-28", null);
+            new SearchContinuationToken("https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2015-02-28-Preview", null);
 
         private TokenComparer _tokenComparer = new TokenComparer();
 
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void DeserializeTokenWithWrongVersionThrowsException()
         {
-            string tokenJson = TokenJson.Replace("2015-02-28", "1999-12-31");
+            string tokenJson = TokenJson.Replace("2015-02-28-Preview", "1999-12-31");
 
             JsonSerializationException e =
                 Assert.Throws<JsonSerializationException>(
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Search.Tests
 
             const string ExpectedMessage =
                 "Cannot deserialize a continuation token for a different api-version. Token contains version " +
-                "'1999-12-31'; Expected version '2015-02-28'.";
+                "'1999-12-31'; Expected version '2015-02-28-Preview'.";
 
             Assert.Equal(ExpectedMessage, e.Message);
         }
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void DeserializeTokenWithMissingVersionValueThrowsException()
         {
-            string tokenJson = TokenJson.Replace("2015-02-28", string.Empty);
+            string tokenJson = TokenJson.Replace("2015-02-28-Preview", string.Empty);
 
             JsonSerializationException e =
                 Assert.Throws<JsonSerializationException>(

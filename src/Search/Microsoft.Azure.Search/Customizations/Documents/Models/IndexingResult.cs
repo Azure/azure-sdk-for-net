@@ -39,19 +39,21 @@ namespace Microsoft.Azure.Search.Models
         public string Key { get; private set; }
 
         /// <summary>
-        /// Gets the error message explaining why the indexing operation
-        /// failed for the document identified by Key; null if Succeeded is
-        /// true.
+        /// Gets the error message explaining why the indexing operation failed for the document identified by the key; null if indexing succeeded.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
         public string ErrorMessage { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the indexing operation succeeded for the document identified by 
-        /// <c cref="Microsoft.Azure.Search.Models.IndexingResult.Key">Key</c>.
+        /// Gets a value indicating whether the indexing operation succeeded for the document identified by the key.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public bool Succeeded { get; private set; }
 
+        /// <summary>
+        /// Gets the status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy.
+        /// </summary>
+        [JsonProperty(PropertyName = "statusCode")]
+        public int StatusCode { get; private set; }
     }
 }
