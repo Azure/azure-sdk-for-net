@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -449,7 +449,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -476,7 +476,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves the specified table from the Data Lake Analytics catalog.
+        /// Retrieves the specified table statistics from the Data Lake
+        /// Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
@@ -502,7 +503,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         Task<AzureOperationResponse<USqlTableStatistics>> GetTableStatisticWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string statisticsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves the list of tables from the Data Lake Analytics catalog.
+        /// Retrieves the list of table statistics from the Data Lake
+        /// Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
@@ -529,7 +531,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -555,6 +557,88 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the specified table partition from the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the partition.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema containing the partition.
+        /// </param>
+        /// <param name='tableName'>
+        /// The name of the table containing the partition.
+        /// </param>
+        /// <param name='partitionName'>
+        /// The name of the table partition.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<USqlTablePartition>> GetTablePartitionWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string partitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of table partitions from the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the partitions.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema containing the partitions.
+        /// </param>
+        /// <param name='tableName'>
+        /// The name of the table containing the partitions.
+        /// </param>
+        /// <param name='filter'>
+        /// OData filter. Optional.
+        /// </param>
+        /// <param name='top'>
+        /// The number of items to return. Optional.
+        /// </param>
+        /// <param name='skip'>
+        /// The number of items to skip over before returning elements.
+        /// Optional.
+        /// </param>
+        /// <param name='expand'>
+        /// OData expansion. Expand related resources in line with the
+        /// retrieved resources, e.g. Categories?$expand=Products would
+        /// expand Product data in line with each Category entry. Optional.
+        /// </param>
+        /// <param name='select'>
+        /// OData Select statement. Limits the properties on each entry to
+        /// just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='orderby'>
+        /// OrderBy clause. One or more comma-separated expressions with an
+        /// optional "asc" (the default) or "desc" depending on the order
+        /// you'd like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// The Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response,
+        /// e.g. Categories?$count=true. Optional.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<USqlTablePartition>>> ListTablePartitionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of types within the specified database and
         /// schema from the Data Lake Analytics catalog.
@@ -639,7 +723,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -709,7 +793,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -778,7 +862,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -842,7 +926,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the
-        /// retrieved resources, e.g. Categories/$expand=Products would
+        /// retrieved resources, e.g. Categories?$expand=Products would
         /// expand Product data in line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -937,7 +1021,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         Task<AzureOperationResponse<IPage<USqlView>>> ListViewsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves the list of tables from the Data Lake Analytics catalog.
+        /// Retrieves the list of table statistics from the Data Lake
+        /// Analytics catalog.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -949,6 +1034,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of table partitions from the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<USqlTablePartition>>> ListTablePartitionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of types within the specified database and
         /// schema from the Data Lake Analytics catalog.

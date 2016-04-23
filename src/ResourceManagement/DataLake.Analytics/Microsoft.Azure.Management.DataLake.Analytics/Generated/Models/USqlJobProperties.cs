@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public JobDataPath DebugData { get; set; }
 
         /// <summary>
-        /// Gets the U-SQL algebra file path after the job has completed
+        /// Gets the algebra file path after the job has completed
         /// </summary>
         [JsonProperty(PropertyName = "algebraFilePath")]
         public string AlgebraFilePath { get; private set; }
