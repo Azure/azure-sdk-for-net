@@ -3,29 +3,31 @@
   "description": "Authorization.Tests Class Library",
   "authors": [ "Microsoft Corporation" ],
   "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
   "compilationOptions": {
     "delaySign": true,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
+  
+  "testRunner": "xunit",
   "frameworks": {
     "netcoreapp1.0": {
       "imports": ["dnxcore50", "portable-net45+win8"],
-      "dependencies": {
-        "Microsoft.NETCore.App": "1.0.0-rc2-24008",
-        "xunit": "2.1.0",
-        "dotnet-test-xunit": "1.0.0-dev-140469-38"        
+      "dependencies": {      
       }
     }
   },
   "dependencies": {
+    "Microsoft.NETCore.App": "1.0.0-rc2-24008",
     "Microsoft.Azure.Test.HttpRecorder": "[2.0.0-preview,3.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[2.0.0-preview,3.0.0)",
-    "Microsoft.Azure.Management.Authorization": "[3.0.0-preview,4.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure": "[4.0.0,5.0)",
+    "Microsoft.Azure.Management.Authorization": "[3.0.0-preview,4.0.0)",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
+    "xunit": "2.1.0",
+    "dotnet-test-xunit": "1.0.0-dev-140469-38"  
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }
