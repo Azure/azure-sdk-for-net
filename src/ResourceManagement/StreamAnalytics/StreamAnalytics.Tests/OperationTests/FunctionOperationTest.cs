@@ -12,8 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
@@ -183,6 +186,168 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(HttpStatusCode.OK, deleteFunctionOperationResponse.StatusCode);
 
                     deleteFunctionOperationResponse = client.Functions.Delete(resourceGroupName, resourceName, functionName2);
+                    Assert.Equal(HttpStatusCode.OK, deleteFunctionOperationResponse.StatusCode);
+
+                    // Check that there are 0 functions in the job
+                    jobGetParameters = new JobGetParameters("functions");
+                    jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(0, jobGetResponse.Job.Properties.Functions.Count);
+                }
+                finally
+                {
+                    client.StreamingJobs.Delete(resourceGroupName, resourceName);
+                    resourceClient.ResourceGroups.Delete(resourceGroupName);
+                }
+            }
+        }
+
+        [Fact]
+        public void Test_FunctionOperations_Scalar_JavaScript()
+        {
+            BasicDelegatingHandler handler = new BasicDelegatingHandler();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                string resourceGroupName = TestUtilities.GenerateName("StreamAnalytics");
+                string resourceName = TestUtilities.GenerateName("MyStreamingJobSubmittedBySDK");
+
+                string serviceLocation = TestHelper.GetDefaultLocation();
+
+                var resourceClient = TestHelper.GetResourceClient(handler);
+                var client = TestHelper.GetStreamAnalyticsManagementClient(handler);
+
+                try
+                {
+                    ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
+                    resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
+
+                    // Construct the JobCreateProperties
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
+
+                    // Create a streaming job
+                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobCreateOrUpdateResponse.StatusCode);
+
+                    // Get a streaming job to check
+                    JobGetParameters jobGetParameters = new JobGetParameters(string.Empty);
+                    JobGetResponse jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(serviceLocation, jobGetResponse.Job.Location);
+                    Assert.Equal(resourceName, jobGetResponse.Job.Name);
+
+                    // Retrieve default definition of the function
+                    string functionName = TestUtilities.GenerateName("functiontest");
+                    string javaScriptFunctionCode = @"function (x, y) { return x + y; }";
+                    var retrieveDefaultDefinitionParameters = new JavaScriptFunctionRetrieveDefaultDefinitionParameters
+                        ()
+                    {
+                        BindingRetrievalProperties = new JavaScriptFunctionBindingRetrievalProperties()
+                        {
+                            Script = javaScriptFunctionCode,
+                            UdfType = "Scalar"
+                        }
+                    };
+                    
+                    CloudException cloudException = Assert.Throws<CloudException>(() =>client.Functions.RetrieveDefaultDefinition(resourceGroupName, resourceName, functionName, retrieveDefaultDefinitionParameters));
+                    Assert.Equal(HttpStatusCode.InternalServerError, cloudException.Response.StatusCode);
+                    Assert.Contains("not supported", cloudException.Error.Message, StringComparison.InvariantCulture);
+
+                    // Add the function
+                    Function javaScriptFunction = new Function(functionName)
+                    {
+                        Properties = new ScalarFunctionProperties()
+                        {
+                            Properties = new ScalarFunctionConfiguration()
+                            {
+                                Inputs = new List<FunctionInput>(){ new FunctionInput() { DataType = "Any"} },
+                                Output = new FunctionOutput()
+                                {
+                                    DataType = "Any"
+                                },
+                                Binding = new JavaScriptFunctionBinding()
+                                {
+                                    Properties = new JavaScriptFunctionBindingProperties()
+                                    {
+                                        Script = javaScriptFunctionCode
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    FunctionCreateOrUpdateParameters functionCreateOrUpdateParameters =
+                        new FunctionCreateOrUpdateParameters { Function = javaScriptFunction };
+                    FunctionCreateOrUpdateResponse functionCreateOrUpdateResponse = client.Functions.CreateOrUpdate(resourceGroupName, resourceName, functionCreateOrUpdateParameters);
+                    Assert.Equal(HttpStatusCode.OK, functionCreateOrUpdateResponse.StatusCode);
+                    Assert.Equal(functionName, functionCreateOrUpdateResponse.Function.Name);
+                    var scalarFunctionProperties =
+                        (ScalarFunctionProperties)functionCreateOrUpdateResponse.Function.Properties;
+                    var javaScriptFunctionBinding =
+                        (JavaScriptFunctionBinding)scalarFunctionProperties.Properties.Binding;
+                    Assert.Equal(javaScriptFunctionCode, javaScriptFunctionBinding.Properties.Script);
+                    Assert.NotNull(functionCreateOrUpdateResponse.Function.Properties.Etag);
+
+                    // Get the function
+                    FunctionGetResponse functionGetResponse = client.Functions.Get(resourceGroupName, resourceName, functionName);
+                    Assert.Equal(HttpStatusCode.OK, functionGetResponse.StatusCode);
+                    Assert.Equal(functionName, functionGetResponse.Function.Name);
+                    scalarFunctionProperties =
+                        (ScalarFunctionProperties)functionGetResponse.Function.Properties;
+                    javaScriptFunctionBinding =
+                        (JavaScriptFunctionBinding)scalarFunctionProperties.Properties.Binding;
+                    Assert.Equal(javaScriptFunctionCode, javaScriptFunctionBinding.Properties.Script);
+                    Assert.Equal(functionCreateOrUpdateResponse.Function.Properties.Etag, functionGetResponse.Function.Properties.Etag);
+
+                    // List functions
+                    FunctionListResponse functionListResponse = client.Functions.ListFunctionsInJob(resourceGroupName, resourceName);
+                    Assert.Equal(HttpStatusCode.OK, functionListResponse.StatusCode);
+                    Assert.Equal(1, functionListResponse.Value.Count);
+
+                    // Check that there is 1 function in the job
+                    jobGetParameters = new JobGetParameters("functions");
+                    jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(1, jobGetResponse.Job.Properties.Functions.Count);
+
+                    // Test function connectivity
+                    ResourceTestConnectionResponse response = client.Functions.TestConnection(resourceGroupName, resourceName, functionName);
+                    Assert.Equal(OperationStatus.Failed, response.Status);
+                    Assert.Equal(ResourceTestStatus.TestFailed, response.ResourceTestStatus);
+                    Assert.NotNull(response.Error);
+                    Assert.Contains("not supported", response.Error.Message, StringComparison.InvariantCulture);
+
+                    // Update the function
+                    string newJavaScriptFunctionCode = @"function (x, y) { return x * y; }";
+                    ScalarFunctionProperties scalarFunctionPropertiesForPatch = new ScalarFunctionProperties()
+                    {
+                        Properties = new ScalarFunctionConfiguration()
+                        {
+                            Binding = new JavaScriptFunctionBinding()
+                            {
+                                Properties = new JavaScriptFunctionBindingProperties()
+                                {
+                                    Script = newJavaScriptFunctionCode
+                                }
+                            }
+                        }
+                    };
+                    FunctionPatchParameters functionPatchParameters = new FunctionPatchParameters(scalarFunctionPropertiesForPatch);
+                    FunctionPatchResponse functionPatchResponse = client.Functions.Patch(resourceGroupName, resourceName, functionName, functionPatchParameters);
+                    Assert.Equal(HttpStatusCode.OK, functionPatchResponse.StatusCode);
+                    scalarFunctionProperties =
+                        (ScalarFunctionProperties)functionPatchResponse.Properties;
+                    javaScriptFunctionBinding =
+                        (JavaScriptFunctionBinding)scalarFunctionProperties.Properties.Binding;
+                    Assert.Equal(newJavaScriptFunctionCode, javaScriptFunctionBinding.Properties.Script);
+                    Assert.NotEqual(javaScriptFunctionCode, javaScriptFunctionBinding.Properties.Script);
+                    Assert.NotNull(functionPatchResponse.Properties.Etag);
+                    Assert.NotEqual(functionCreateOrUpdateResponse.Function.Properties.Etag, functionPatchResponse.Properties.Etag);
+
+                    // Delete the functions
+                    AzureOperationResponse deleteFunctionOperationResponse = client.Functions.Delete(resourceGroupName, resourceName, functionName);
                     Assert.Equal(HttpStatusCode.OK, deleteFunctionOperationResponse.StatusCode);
 
                     // Check that there are 0 functions in the job
