@@ -1,5 +1,5 @@
 {
-  "version": "13.0.1-prerelease",
+  "version": "14.0.0-prerelease",
   "description": "Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure resource management", "virtual machine", "compute", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
@@ -11,41 +11,27 @@
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.0,5.0)" 
   },
 
   "frameworks": {
     "net45": {
-      "frameworkAssemblies": {
-        "System.Collections": { "type": "build" },
-        "System.Linq.Expressions": {"type": "build"},
-        "System.Runtime": {"type": "build"},
-        "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": {"type": "build"}
-      }
     },
-    "dnxcore50": {
+    "netstandard1.5": {
+      "imports": ["dnxcore50"],
       "dependencies": {
-        "System.Diagnostics.Tools": "4.0.1-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516",
-        "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
-        "System.Threading.Tasks": "4.0.11-beta-23516",
-        "System.Xml.ReaderWriter": "4.0.11-beta-23516"
+        "Microsoft.NETCore.Platforms": "1.0.1-rc2-23931",
+        "Microsoft.NETCore.Runtime": "1.0.2-rc2-23931",
+        "System.Diagnostics.Tools": "4.0.1-rc2-23931",
+        "System.Net.Http": "4.0.1-rc2-23931",
+        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-23931",
+        "System.Threading.Tasks": "4.0.11-rc2-23931"
       }
     },
-    ".NETPortable,Version=v4.5,Profile=Profile111": {
-      "frameworkAssemblies": {
-        "System.Collections": { "type": "build" },
-        "System.Linq": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Net.Http": { "type": "build" },
-        "System.Net.Primitives": { "type": "build" },
-        "System.Resources.ResourceManager":  {"type" : "build"},
-        "System.Runtime": { "type": "build" },
-        "System.Runtime.Serialization.Primitives":  { "type": "build" },
-        "System.Text.Encoding": { "type": "build" },
-        "System.Text.RegularExpressions": { "type": "build" },
-        "System.Threading.Tasks": { "type": "build" }
+    "netstandard1.1": {
+      "imports": ["dnxcore50"],
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-23931"
       }
     }
   }

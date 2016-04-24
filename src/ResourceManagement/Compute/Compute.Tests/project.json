@@ -5,32 +5,33 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-  "commands": { "test": "xunit.runner.dnx" },
+
   "compilationOptions": {
     "delaySign": true,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
+
+  "testRunner": "xunit",
   "frameworks": {
-    "dnxcore50": {
+    "netcoreapp1.0": {
+      "imports": ["dnxcore50", "portable-net45+win8"],
       "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516"
+        "System.Diagnostics.Tracing": "4.1.0-rc2-*"
       }
     }
   },
   "dependencies": {
-    "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build204",
-    "Microsoft.Azure.Test.HttpRecorder": "",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0)",
-    "Microsoft.Azure.Management.Storage": "4.1.0-preview",
+    "Microsoft.NETCore.App": "1.0.0-rc2-24008",
+    "Microsoft.Azure.Test.HttpRecorder": "[2.0.0-preview,3.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[2.0.0-preview,3.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.0,5.0)",
+    "Microsoft.Rest.ClientRuntime": "[3.0.0,4.0)" ,
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
-    "Microsoft.Azure.Management.Compute": "",
-    "Microsoft.Azure.Management.Network": ""
+    "Microsoft.Azure.Management.Storage": "4.1.0-preview",
+    "Microsoft.Azure.Management.Compute": "14.0.0-prerelease",
+    "Microsoft.Azure.Management.Network": "5.0.0-preview",
+    "xunit": "2.1.0",
+    "dotnet-test-xunit": "1.0.0-dev-140469-38"  
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }
