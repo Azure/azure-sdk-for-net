@@ -128,7 +128,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
@@ -358,7 +361,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
@@ -1442,7 +1448,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
@@ -1797,7 +1806,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
@@ -2425,7 +2437,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";

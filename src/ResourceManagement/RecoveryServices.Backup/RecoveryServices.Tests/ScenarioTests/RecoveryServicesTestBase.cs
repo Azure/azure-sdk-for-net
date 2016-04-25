@@ -57,14 +57,12 @@ namespace RecoveryServices.Tests
             if (testEnvironment.UsesCustomUri())
             {
                 client = new RecoveryServicesBackupManagementClient(
-                    resourceNamespace,
                     testEnvironment.Credentials as SubscriptionCloudCredentials,
                     testEnvironment.BaseUri);
             }
             else
             {
                 client = new RecoveryServicesBackupManagementClient(
-                    resourceNamespace,
                     testEnvironment.Credentials as SubscriptionCloudCredentials);
             }
 
