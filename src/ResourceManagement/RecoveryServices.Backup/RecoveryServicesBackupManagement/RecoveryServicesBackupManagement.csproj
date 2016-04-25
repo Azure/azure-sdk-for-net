@@ -50,14 +50,11 @@
   <ItemGroup>
     <Compile Include="Generated\BackupEngineOperations.cs" />
     <Compile Include="Generated\BackupEngineOperationsExtensions.cs" />
-    <Compile Include="Generated\BackupOperationResults.cs" />
-    <Compile Include="Generated\BackupOperationResultsExtensions.cs" />
     <Compile Include="Generated\BackupOperations.cs" />
     <Compile Include="Generated\BackupOperationsExtensions.cs" />
     <Compile Include="Generated\ContainerOperations.cs" />
     <Compile Include="Generated\ContainerOperationsExtensions.cs" />
     <Compile Include="Generated\IBackupEngineOperations.cs" />
-    <Compile Include="Generated\IBackupOperationResults.cs" />
     <Compile Include="Generated\IBackupOperations.cs" />
     <Compile Include="Generated\IContainerOperations.cs" />
     <Compile Include="Generated\IJobOperations.cs" />
