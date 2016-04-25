@@ -56,7 +56,8 @@ namespace StreamAnalytics.Tests.OperationTests
                         new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
-                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
+                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse =
+                        client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
                     Assert.Equal(HttpStatusCode.OK, jobCreateOrUpdateResponse.StatusCode);
 
                     // Get a streaming job to check
@@ -93,7 +94,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     azureMachineLearningWebServiceFunctionBinding.Properties.ApiKey = TestHelper.ApiKey;
                     FunctionCreateOrUpdateParameters functionCreateOrUpdateParameters =
                         new FunctionCreateOrUpdateParameters {Function = retrieveDefaultDefinitionResponse.Function};
-                    FunctionCreateOrUpdateResponse functionCreateOrUpdateResponse = client.Functions.CreateOrUpdate(resourceGroupName, resourceName, functionCreateOrUpdateParameters);
+                    FunctionCreateOrUpdateResponse functionCreateOrUpdateResponse =
+                        client.Functions.CreateOrUpdate(resourceGroupName, resourceName,
+                            functionCreateOrUpdateParameters);
                     Assert.Equal(HttpStatusCode.OK, functionCreateOrUpdateResponse.StatusCode);
                     Assert.Equal(functionName, functionCreateOrUpdateResponse.Function.Name);
                     scalarFunctionProperties =
@@ -149,7 +152,8 @@ namespace StreamAnalytics.Tests.OperationTests
                         }
                     };
                     FunctionPatchParameters functionPatchParameters = new FunctionPatchParameters(scalarFunctionPropertiesForPatch);
-                    FunctionPatchResponse functionPatchResponse = client.Functions.Patch(resourceGroupName, resourceName, functionName, functionPatchParameters);
+                    FunctionPatchResponse functionPatchResponse = client.Functions.Patch(resourceGroupName, resourceName,
+                        functionName, functionPatchParameters);
                     Assert.Equal(HttpStatusCode.OK, functionPatchResponse.StatusCode);
                     scalarFunctionProperties =
                         (ScalarFunctionProperties)functionPatchResponse.Properties;
@@ -168,7 +172,8 @@ namespace StreamAnalytics.Tests.OperationTests
                         Properties = retrieveDefaultDefinitionResponse.Function.Properties
                     };
                     functionCreateOrUpdateParameters.Function = function2;
-                    functionCreateOrUpdateResponse = client.Functions.CreateOrUpdate(resourceGroupName, resourceName, functionCreateOrUpdateParameters);
+                    functionCreateOrUpdateResponse = client.Functions.CreateOrUpdate(resourceGroupName, resourceName,
+                        functionCreateOrUpdateParameters);
 
                     // List functions
                     functionListResponse = client.Functions.ListFunctionsInJob(resourceGroupName, resourceName);
@@ -182,7 +187,8 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(2, jobGetResponse.Job.Properties.Functions.Count);
 
                     // Delete the functions
-                    AzureOperationResponse deleteFunctionOperationResponse = client.Functions.Delete(resourceGroupName, resourceName, functionName);
+                    AzureOperationResponse deleteFunctionOperationResponse = client.Functions.Delete(resourceGroupName,
+                        resourceName, functionName);
                     Assert.Equal(HttpStatusCode.OK, deleteFunctionOperationResponse.StatusCode);
 
                     deleteFunctionOperationResponse = client.Functions.Delete(resourceGroupName, resourceName, functionName2);
@@ -229,7 +235,8 @@ namespace StreamAnalytics.Tests.OperationTests
                         new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
-                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
+                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse =
+                        client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
                     Assert.Equal(HttpStatusCode.OK, jobCreateOrUpdateResponse.StatusCode);
 
                     // Get a streaming job to check
@@ -251,8 +258,12 @@ namespace StreamAnalytics.Tests.OperationTests
                             UdfType = "Scalar"
                         }
                     };
-                    
-                    CloudException cloudException = Assert.Throws<CloudException>(() =>client.Functions.RetrieveDefaultDefinition(resourceGroupName, resourceName, functionName, retrieveDefaultDefinitionParameters));
+
+                    CloudException cloudException =
+                        Assert.Throws<CloudException>(
+                            () =>
+                                client.Functions.RetrieveDefaultDefinition(resourceGroupName, resourceName, functionName,
+                                    retrieveDefaultDefinitionParameters));
                     Assert.Equal(HttpStatusCode.InternalServerError, cloudException.Response.StatusCode);
                     Assert.Contains("not supported", cloudException.Error.Message, StringComparison.InvariantCulture);
 
@@ -280,7 +291,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     };
                     FunctionCreateOrUpdateParameters functionCreateOrUpdateParameters =
                         new FunctionCreateOrUpdateParameters { Function = javaScriptFunction };
-                    FunctionCreateOrUpdateResponse functionCreateOrUpdateResponse = client.Functions.CreateOrUpdate(resourceGroupName, resourceName, functionCreateOrUpdateParameters);
+                    FunctionCreateOrUpdateResponse functionCreateOrUpdateResponse =
+                        client.Functions.CreateOrUpdate(resourceGroupName, resourceName,
+                            functionCreateOrUpdateParameters);
                     Assert.Equal(HttpStatusCode.OK, functionCreateOrUpdateResponse.StatusCode);
                     Assert.Equal(functionName, functionCreateOrUpdateResponse.Function.Name);
                     var scalarFunctionProperties =
@@ -313,7 +326,8 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(1, jobGetResponse.Job.Properties.Functions.Count);
 
                     // Test function connectivity
-                    ResourceTestConnectionResponse response = client.Functions.TestConnection(resourceGroupName, resourceName, functionName);
+                    ResourceTestConnectionResponse response = client.Functions.TestConnection(resourceGroupName,
+                        resourceName, functionName);
                     Assert.Equal(OperationStatus.Failed, response.Status);
                     Assert.Equal(ResourceTestStatus.TestFailed, response.ResourceTestStatus);
                     Assert.NotNull(response.Error);
@@ -335,7 +349,8 @@ namespace StreamAnalytics.Tests.OperationTests
                         }
                     };
                     FunctionPatchParameters functionPatchParameters = new FunctionPatchParameters(scalarFunctionPropertiesForPatch);
-                    FunctionPatchResponse functionPatchResponse = client.Functions.Patch(resourceGroupName, resourceName, functionName, functionPatchParameters);
+                    FunctionPatchResponse functionPatchResponse = client.Functions.Patch(resourceGroupName, resourceName,
+                        functionName, functionPatchParameters);
                     Assert.Equal(HttpStatusCode.OK, functionPatchResponse.StatusCode);
                     scalarFunctionProperties =
                         (ScalarFunctionProperties)functionPatchResponse.Properties;
@@ -347,7 +362,8 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.NotEqual(functionCreateOrUpdateResponse.Function.Properties.Etag, functionPatchResponse.Properties.Etag);
 
                     // Delete the functions
-                    AzureOperationResponse deleteFunctionOperationResponse = client.Functions.Delete(resourceGroupName, resourceName, functionName);
+                    AzureOperationResponse deleteFunctionOperationResponse = client.Functions.Delete(resourceGroupName,
+                        resourceName, functionName);
                     Assert.Equal(HttpStatusCode.OK, deleteFunctionOperationResponse.StatusCode);
 
                     // Check that there are 0 functions in the job
@@ -391,12 +407,14 @@ namespace StreamAnalytics.Tests.OperationTests
                         new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
-                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
+                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse =
+                        client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
                     Assert.Equal(HttpStatusCode.OK, jobCreateOrUpdateResponse.StatusCode);
 
                     // Get a streaming job to check
                     JobGetParameters jobGetParameters = new JobGetParameters(string.Empty);
-                    JobGetResponse jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    JobGetResponse jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName,
+                        jobGetParameters);
                     Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
                     Assert.Equal(serviceLocation, jobGetResponse.Job.Location);
                     Assert.Equal(resourceName, jobGetResponse.Job.Name);
@@ -410,14 +428,16 @@ namespace StreamAnalytics.Tests.OperationTests
                         Content = content
                     };
                     FunctionRetrieveDefaultDefinitionResponse retrieveDefaultDefinitionResponse =
-                        client.Functions.RetrieveDefaultDefinitionWithRawJsonContent(resourceGroupName, resourceName, functionName,
+                        client.Functions.RetrieveDefaultDefinitionWithRawJsonContent(resourceGroupName, resourceName,
+                            functionName,
                             retrieveDefaultDefinitionParameters);
                     Assert.Equal(functionName, retrieveDefaultDefinitionResponse.Function.Name);
                     ScalarFunctionProperties scalarFunctionProperties =
                         (ScalarFunctionProperties)retrieveDefaultDefinitionResponse.Function.Properties;
                     AzureMachineLearningWebServiceFunctionBinding azureMachineLearningWebServiceFunctionBinding =
                         (AzureMachineLearningWebServiceFunctionBinding)scalarFunctionProperties.Properties.Binding;
-                    Assert.Equal(TestHelper.ExecuteEndpoint, azureMachineLearningWebServiceFunctionBinding.Properties.Endpoint);
+                    Assert.Equal(TestHelper.ExecuteEndpoint,
+                        azureMachineLearningWebServiceFunctionBinding.Properties.Endpoint);
                     Assert.Equal(1000, azureMachineLearningWebServiceFunctionBinding.Properties.BatchSize);
                     Assert.Null(azureMachineLearningWebServiceFunctionBinding.Properties.ApiKey);
                     azureMachineLearningWebServiceFunctionBinding.Properties.ApiKey = TestHelper.ApiKey;
