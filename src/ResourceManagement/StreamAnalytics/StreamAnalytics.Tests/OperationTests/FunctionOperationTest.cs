@@ -69,8 +69,8 @@ namespace StreamAnalytics.Tests.OperationTests
 
                     // Retrieve default definition of the function
                     string functionName = TestUtilities.GenerateName("functiontest");
-                    var retrieveDefaultDefinitionParameters = new AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters
-                        ()
+                    var retrieveDefaultDefinitionParameters = new 
+                        AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters ()
                     {
                         BindingRetrievalProperties = new AzureMachineLearningWebServiceFunctionBindingRetrievalProperties()
                         {
@@ -133,7 +133,8 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(1, jobGetResponse.Job.Properties.Functions.Count);
 
                     // Test function connectivity
-                    ResourceTestConnectionResponse response = client.Functions.TestConnection(resourceGroupName, resourceName, functionName);
+                    ResourceTestConnectionResponse response = client.Functions.TestConnection(resourceGroupName,
+                        resourceName, functionName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
                     Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
