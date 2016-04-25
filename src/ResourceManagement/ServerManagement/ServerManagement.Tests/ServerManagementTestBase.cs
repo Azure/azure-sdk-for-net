@@ -43,7 +43,7 @@ namespace ServerManagement.Tests
                 : HttpRecorderMode.Playback;
 #endif 
 
-            if (!TestingInteractively)
+            if (TestingInteractively)
             {
                 StopGateway();
             }
@@ -336,7 +336,7 @@ namespace ServerManagement.Tests
                     throw new Exception("Recording requires the gateway service to be installed on this computer");
                 }
 
-                if (!TestingInteractively && !_once)
+                if (TestingInteractively && !_once)
                 {
                     _once = true;
                     using (var context = MockContext.Start("ServerManagement.Tests.Ignore"))
