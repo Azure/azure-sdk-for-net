@@ -23,9 +23,9 @@
     "Microsoft.NETCore.App": "1.0.0-rc2-24008",
     "Microsoft.Azure.Test.HttpRecorder": "[2.0.0-preview,3.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[2.0.0-preview,3.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.0,5.0.0)",
     "Microsoft.Azure.Management.Storage": "6.0.0-preview",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.0,5.0.0)",
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-dev-140469-38"
   },
