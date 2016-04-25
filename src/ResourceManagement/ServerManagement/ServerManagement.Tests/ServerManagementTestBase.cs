@@ -26,6 +26,7 @@ namespace ServerManagement.Tests
 
         public ServerManagementTestBase(ITestOutputHelper output)
         {
+#if DEBUG_INTERACTIVE
             // add environment variables so that we can just use the visual studio test runner for doing interactive testing.
             // these get ignored when they are already set.
             Extensions.SetEnvironmentVariableIfNotAlreadySet("TEST_HTTPMOCK_OUTPUT",
@@ -40,6 +41,7 @@ namespace ServerManagement.Tests
                 StringComparison.OrdinalIgnoreCase)
                 ? HttpRecorderMode.Record
                 : HttpRecorderMode.Playback;
+#endif 
 
             if (!TestingInteractively)
             {
