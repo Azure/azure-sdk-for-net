@@ -75,6 +75,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\UnregisterDPMBackupEngineTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
