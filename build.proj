@@ -125,12 +125,10 @@
     <MSBuild Projects="@(Non_NetCore_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
-
-    <Exec Command="dnvm use 1.0.0-rc1-final -r coreclr -a x64" WorkingDirectory="$(LibraryRoot)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
     
     <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
-    <Exec Command="dotnet restore $(_TemporaryNetCoreFeeds)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
-    <Exec Command="dotnet restore --infer-runtimes $(_TemporaryNetCoreFeeds)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
+    <Exec Command="dotnet restore --infer-runtimes" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '$(Configuration)' != 'Release' "/>
 
     <CallTarget Targets="BuildNetCoreLibraries" Condition=" @(NetCore_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
