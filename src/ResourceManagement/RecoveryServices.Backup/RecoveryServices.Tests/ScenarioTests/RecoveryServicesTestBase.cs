@@ -59,11 +59,13 @@ namespace RecoveryServices.Tests
                 client = new RecoveryServicesBackupManagementClient(
                     testEnvironment.Credentials as SubscriptionCloudCredentials,
                     testEnvironment.BaseUri);
+                client.ResourceNamespace = resourceNamespace;
             }
             else
             {
                 client = new RecoveryServicesBackupManagementClient(
                     testEnvironment.Credentials as SubscriptionCloudCredentials);
+                client.ResourceNamespace = resourceNamespace;
             }
 
             return GetServiceClient<T>(factory, client);
