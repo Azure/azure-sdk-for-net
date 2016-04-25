@@ -26,29 +26,26 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The parameters needed to retrieve the default Azure Stream Analytics
-    /// function definition for an Azure Machine Learning web service function.
+    /// The JavaScript function binding.
     /// </summary>
-    public partial class AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionParameters
+    public partial class JavaScriptFunctionBinding : FunctionBinding
     {
-        private AzureMachineLearningWebServiceFunctionBindingRetrievalProperties _bindingRetrievalProperties;
+        private JavaScriptFunctionBindingProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Machine Learning web service
-        /// function binding properties.
+        /// Optional. Gets or sets the properties of the JavaScript function
+        /// binding.
         /// </summary>
-        public AzureMachineLearningWebServiceFunctionBindingRetrievalProperties BindingRetrievalProperties
+        public JavaScriptFunctionBindingProperties Properties
         {
-            get { return this._bindingRetrievalProperties; }
-            set { this._bindingRetrievalProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters
-        /// class.
+        /// Initializes a new instance of the JavaScriptFunctionBinding class.
         /// </summary>
-        public AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters()
+        public JavaScriptFunctionBinding()
         {
         }
     }

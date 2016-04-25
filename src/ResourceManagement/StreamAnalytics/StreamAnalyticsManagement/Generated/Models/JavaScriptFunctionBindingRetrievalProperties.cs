@@ -21,34 +21,43 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.StreamAnalytics.Models;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The parameters needed to retrieve the default Azure Stream Analytics
-    /// function definition for an Azure Machine Learning web service function.
+    /// The properties of the JavaScript function binding.
     /// </summary>
-    public partial class AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionParameters
+    public partial class JavaScriptFunctionBindingRetrievalProperties
     {
-        private AzureMachineLearningWebServiceFunctionBindingRetrievalProperties _bindingRetrievalProperties;
+        private string _script;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Machine Learning web service
-        /// function binding properties.
+        /// Optional. Gets or sets the JavaScript code containing a single
+        /// function definition. For example: 'function (x, y) { return x + y;
+        /// }'
         /// </summary>
-        public AzureMachineLearningWebServiceFunctionBindingRetrievalProperties BindingRetrievalProperties
+        public string Script
         {
-            get { return this._bindingRetrievalProperties; }
-            set { this._bindingRetrievalProperties = value; }
+            get { return this._script; }
+            set { this._script = value; }
+        }
+        
+        private string _udfType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Azure Stream Analytics function type.
+        /// </summary>
+        public string UdfType
+        {
+            get { return this._udfType; }
+            set { this._udfType = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters
-        /// class.
+        /// JavaScriptFunctionBindingRetrievalProperties class.
         /// </summary>
-        public AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters()
+        public JavaScriptFunctionBindingRetrievalProperties()
         {
         }
     }
