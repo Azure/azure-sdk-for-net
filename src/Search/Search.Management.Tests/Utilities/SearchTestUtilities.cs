@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
     using System.Linq;
-    using System.Net;
     using System.Net.Http;
     using System.Threading;
     using Microsoft.Azure.Test.HttpRecorder;
@@ -75,8 +74,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 HttpRequestException httpEx = e.InnerExceptions.FirstOrDefault() as HttpRequestException;
                 if (httpEx != null)
                 {
-                    WebException webEx = httpEx.InnerException as WebException;
-                    if (webEx != null && webEx.Message.Contains("The remote name could not be resolved"))
+                    if (httpEx.InnerException != null && 
+                        httpEx.InnerException.Message.Contains("could not be resolved"))
                     {
                         return false;
                     }
