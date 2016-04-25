@@ -22,15 +22,29 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Compute.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Known values for Destination Virtual Network.
+    /// Known values of IaaS Classic to ARM migration state.
     /// </summary>
-    public static partial class DestinationVirtualNetwork
+    public static partial class IaasClassicToArmMigrationState
     {
-        public const string New = "New";
+        public const string None = "None";
         
-        public const string Existing = "Existing";
+        public const string Preparing = "Preparing";
+        
+        public const string Prepared = "Prepared";
+        
+        public const string PrepareFailed = "PrepareFailed";
+        
+        public const string Committing = "Committing";
+        
+        public const string Committed = "Committed";
+        
+        public const string CommitFailed = "CommitFailed";
+        
+        public const string Aborting = "Aborting";
+        
+        public const string AbortFailed = "AbortFailed";
     }
 }

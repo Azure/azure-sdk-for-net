@@ -1981,5 +1981,239 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 }
             }
         }
+
+        [Fact]
+        public void CanCreateVMWithBYOL()
+        {
+            TestLogTracingInterceptor.Current.Start();
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var mgmt = fixture.GetManagementClient();
+                var compute = fixture.GetComputeManagementClient();
+                var storage = fixture.GetStorageManagementClient();
+
+                try
+                {
+                    string storageAccountName = "mybyolosimagerdfe";
+                    string serviceName = TestUtilities.GenerateName("pstestsvc");
+                    string serviceLabel = serviceName + "1";
+                    string serviceDescription = serviceName + "2";
+                    string deploymentName = string.Format("{0}Prod", serviceName);
+                    string deploymentLabel = deploymentName;
+
+                    string location = "Central US";
+                    string imageName = TestUtilities.GenerateName("byolosimage").ToLower(); ;
+                    Uri userImageUrl = new Uri("https://mybyolosimagerdfe.blob.core.windows.net/vhdsrc2/win2012-tag0.vhd");
+                    string wsLicenseType = "Windows_Server";
+                    string userName = TestUtilities.GenerateName("user");
+                    string userPassword = TestUtilities.GenerateName("user@");
+
+                    compute.HostedServices.Create(
+                        new HostedServiceCreateParameters
+                        {
+                            Location = location,
+                            Label = serviceDescription,
+                            Description = serviceLabel,
+                            ServiceName = serviceName
+                        });
+
+                    var hostedService = compute.HostedServices.Get(serviceName);
+                    Assert.True(hostedService.Properties.Label == serviceDescription);
+                    Assert.True(hostedService.Properties.Description == serviceLabel);
+
+                    var createOSImageResult = compute.VirtualMachineOSImages.Create(
+                        new VirtualMachineOSImageCreateParameters
+                        {
+                            Name = imageName,
+                            Label = "BYOLOSImage",
+                            Description = "BYOLOSImage",
+                            MediaLinkUri = userImageUrl,
+                            OperatingSystemType = VirtualMachineVMImageOperatingSystemType.Windows
+                        });
+
+                    compute.VirtualMachines.CreateDeployment(
+                        serviceName,
+                        new VirtualMachineCreateDeploymentParameters
+                        {
+                            Name = deploymentName,
+                            DeploymentSlot = DeploymentSlot.Production,
+                            Label = deploymentLabel,
+                            Roles = new List<Role>()
+                            {
+                                new Role()
+                                {
+                                    LicenseType = wsLicenseType,
+                                    ProvisionGuestAgent = false,
+                                    ResourceExtensionReferences = null,
+                                    RoleName = serviceName,
+                                    RoleType = VirtualMachineRoleType.PersistentVMRole.ToString(),
+                                    RoleSize = VirtualMachineRoleSize.Large.ToString(),
+                                    OSVirtualHardDisk =
+                                        new OSVirtualHardDisk
+                                        {
+                                            HostCaching = VirtualHardDiskHostCaching.ReadWrite,
+                                            SourceImageName = imageName,
+                                            MediaLink = new Uri(string.Format(
+                                                "http://{1}.blob.core.windows.net/myvhds/{0}.vhd",
+                                                serviceName,
+                                                storageAccountName)),
+                                        },
+                                    DataVirtualHardDisks =
+                                    new List<DataVirtualHardDisk>(
+                                        Enumerable.Repeat(new DataVirtualHardDisk
+                                        {
+                                            Label = "testDataDiskLabel5",
+                                            LogicalUnitNumber = 0,
+                                            LogicalDiskSizeInGB = 1,
+                                            HostCaching = "ReadOnly",
+                                            MediaLink = new Uri(string.Format(
+                                                "http://{1}.blob.core.windows.net/myvhds/{0}5.vhd",
+                                                serviceName,
+                                                storageAccountName)),
+                                        }, 1)),
+                                    ConfigurationSets =
+                                        new List<ConfigurationSet>()
+                                        {
+                                            new ConfigurationSet
+                                            {
+                                                AdminUserName = userName,
+                                                AdminPassword = userPassword,
+                                                ConfigurationSetType = ConfigurationSetTypes
+                                                                      .WindowsProvisioningConfiguration,
+                                                ComputerName = serviceName,
+                                                EnableAutomaticUpdates = false,
+                                                TimeZone = "Pacific Standard Time"
+                                            },
+                                            new ConfigurationSet
+                                            {
+                                                ConfigurationSetType = "NetworkConfiguration",
+                                                InputEndpoints = new List<InputEndpoint>
+                                                {
+                                                    new InputEndpoint
+                                                    {
+                                                        LocalPort = 3389,
+                                                        Name = "RemoteDesktop",
+                                                        Protocol = InputEndpointTransportProtocol.Tcp
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                        });
+
+                    var dep = compute.Deployments.GetByName(serviceName, deploymentName);
+                    Assert.Equal(wsLicenseType, dep.Roles[0].LicenseType);
+
+                    var role1 = compute.VirtualMachines.Get(serviceName, deploymentName, serviceName);
+                    Assert.Equal(wsLicenseType, role1.LicenseType);
+
+                    // Test Add Role with LicenseType
+                    var roleName2 = serviceName + "3";
+                    compute.VirtualMachines.Create(
+                        serviceName,
+                        deploymentName,
+                        new VirtualMachineCreateParameters()
+                        {
+                            LicenseType = wsLicenseType,
+                            RoleName = roleName2,
+                            RoleSize = VirtualMachineRoleSize.Large.ToString(),
+                            AvailabilitySetName = "test",
+                            ConfigurationSets = new List<ConfigurationSet>()
+                            {
+                                new ConfigurationSet
+                                {
+                                    AdminUserName = userName,
+                                    AdminPassword = userPassword,
+                                    ConfigurationSetType = ConfigurationSetTypes
+                                                            .WindowsProvisioningConfiguration,
+                                    ComputerName = serviceName,
+                                    HostName = string.Format("{0}.cloudapp.net", serviceName),
+                                    EnableAutomaticUpdates = false,
+                                    TimeZone = "Pacific Standard Time"
+                                },
+                                new ConfigurationSet
+                                {
+                                    ConfigurationSetType = "NetworkConfiguration",
+                                    InputEndpoints =
+                                        new List<InputEndpoint>
+                                        {
+                                            new InputEndpoint()
+                                            {
+                                                LocalPort = 3389,
+                                                Name = "RemoteDesktop",
+                                                Port = 52778,
+                                                Protocol = InputEndpointTransportProtocol.Tcp,
+                                                VirtualIPAddress = "157.56.161.177",
+                                                EnableDirectServerReturn = false
+                                            }
+                                        }
+                                }
+                            },
+                            OSVirtualHardDisk = new OSVirtualHardDisk
+                            {
+                                HostCaching = VirtualHardDiskHostCaching.ReadWrite,
+                                SourceImageName = imageName,
+                                MediaLink = new Uri(string.Format(
+                                    "http://{1}.blob.core.windows.net/myvhds/{0}1.vhd",
+                                    serviceName,
+                                    storageAccountName)),
+                            },
+                            ProvisionGuestAgent = true
+                        });
+
+                    dep = compute.Deployments.GetByName(serviceName, deploymentName);
+                    Assert.Equal(wsLicenseType, dep.Roles[0].LicenseType);
+                    Assert.Equal(wsLicenseType, dep.Roles[1].LicenseType);
+
+                    role1 = compute.VirtualMachines.Get(serviceName, deploymentName, serviceName);
+                    Assert.Equal(wsLicenseType, role1.LicenseType);
+
+                    var role2 = compute.VirtualMachines.Get(serviceName, deploymentName, roleName2);
+                    Assert.Equal(wsLicenseType, role2.LicenseType);
+
+                    // Delete all virtual machines
+                    var vmList = compute.Deployments.GetByName(serviceName, deploymentName).Roles;
+                    for (int i = 0; i < vmList.Count; i++)
+                    {
+                        var vm = vmList[i];
+                        var pa = i < vmList.Count - 1
+                               ? PostShutdownAction.StoppedDeallocated : PostShutdownAction.Stopped;
+                        compute.VirtualMachines.Shutdown(
+                            serviceName,
+                            deploymentName,
+                            vm.RoleName,
+                            new VirtualMachineShutdownParameters
+                            {
+                                PostShutdownAction = pa
+                            });
+
+                        if (i < vmList.Count - 1)
+                        {
+                            compute.VirtualMachines.Delete(serviceName, deploymentName, vm.RoleName, true);
+                        }
+                        else
+                        {
+                            compute.Deployments.DeleteByName(serviceName, deploymentName, true);
+                        }
+                    }
+
+                    // Delete the service
+                    compute.HostedServices.DeleteAll(serviceName);
+
+                    // Delete OS Image
+                    compute.VirtualMachineOSImages.Delete(imageName, false);
+                }
+                finally
+                {
+                    undoContext.Dispose();
+                    mgmt.Dispose();
+                    compute.Dispose();
+                    storage.Dispose();
+                    TestLogTracingInterceptor.Current.Stop();
+                }
+            }
+        }
     }
 }
