@@ -88,15 +88,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of OperationResults operations for the Azure Backup
-        /// extension.
-        /// </summary>
-        IBackupOperationResults BackupOperationResults
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// The Resource Manager API includes operations for triggering and
         /// managing the backups of items protected by your Recovery Services
         /// Vault.
@@ -173,10 +164,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// The GetOperationStatusByURL method returns the status of the
-        /// specified operation. After calling an asynchronous operation, you
-        /// can call GetOperationStatusByURL to determine whether the
-        /// operation has succeeded, failed, or is still in progress.
+        /// Once you trigger a delete operation such as deleting a protected
+        /// item etc., you may use this method to get the operation's result.
+        /// Once the operation has started, the status code in the response
+        /// would be Accepted. It will continue to be in this state till it
+        /// reaches completetion. On successful completion, the status code
+        /// will be OK. This method expects the ID of the operation to be
+        /// passed in the arguments. This usually is part of the Location
+        /// header of the operation response.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Resource group name of your recovery services vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of your recovery services vault.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response object returned by the get operation result APIs.
+        /// </returns>
+        Task<GetOperationResultResponse> GetDeleteOperationResultAsync(string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Once you trigger a delete operation such as deleting a protected
+        /// item etc., you may use this method to get the operation's result.
+        /// Once the operation has started, the status code in the response
+        /// would be Accepted. It will continue to be in this state till it
+        /// reaches completetion. On successful completion, the status code
+        /// will be OK. This method expects the tracking URL of the operation
+        /// to be passed in the arguments. This usually is the Location header
+        /// of the operation response.
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response object returned by the get operation result APIs.
+        /// </returns>
+        Task<GetOperationResultResponse> GetDeleteOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The GetOperationStatusByURL method can be used to fetch the status
+        /// of an operation such as triggering a backup, restore etc. The
+        /// status can be in progress, completed or failed. You can refer to
+        /// the Operation Status enum for all the possible states of the
+        /// operation. Some operations may create jobs within the backend
+        /// service. This method can return the list of jobs when the
+        /// operation is complete.
         /// </summary>
         /// <param name='operationResultLink'>
         /// Location value returned by operation.
