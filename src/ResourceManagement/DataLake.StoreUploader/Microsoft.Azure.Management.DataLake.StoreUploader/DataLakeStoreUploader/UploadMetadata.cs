@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
     /// <summary>
     /// Represents general metadata pertaining to an upload.
     /// </summary>
-    [DebuggerDisplay("Segments = {SegmentCount}, SegmentLength = {SegmentLength}, UploadId = {UploadId}, FileLength = {FileLength}, FilePath = {FilePath}")]
+    [DebuggerDisplay("Segments = {SegmentCount}, SegmentLength = {SegmentLength}, UploadId = {UploadId}, FileLength = {FileLength}, FilePath = {FilePath}, EncodingCodePage = {EncodingCodePage}, Delimiter = {Delimiter}")]
     [DataContract]
     public class UploadMetadata
     {
@@ -81,7 +81,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             var fileInfo = new FileInfo(uploadParameters.InputFilePath);
             this.FileLength = fileInfo.Length;
-            
+
+            this.EncodingCodePage = uploadParameters.FileEncoding.CodePage;
+
             // we are taking the smaller number of segments between segment lengths of 256 and the segment growth logic.
             // this protects us against agressive increase of thread count resulting in far more segments than
             // is reasonable for a given file size. We also ensure that each segment is at least 256mb in size.
@@ -181,6 +183,24 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </value>
         [DataMember(Name = "IsBinary")]
         public bool IsBinary { get; set; }
+
+        /// <summary>
+        /// Gets the CodePage of the current encoding being used.
+        /// </summary>
+        /// <value>
+        ///  The CodePage of the current encoding.
+        /// </value>
+        [DataMember(Name = "EncodingCodePage")]
+        public int EncodingCodePage { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating the record boundary delimiter for the file, if any.
+        /// </summary>
+        /// <value>
+        /// The record boundary delimiter
+        /// </value>
+        [DataMember(Name = "Delimiter")]
+        public string Delimiter { get; set; }
 
         /// <summary>
         /// Gets a value indicating the path where this metadata file is located.

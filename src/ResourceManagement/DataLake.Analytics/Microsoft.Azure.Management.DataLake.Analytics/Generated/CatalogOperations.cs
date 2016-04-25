@@ -54,6 +54,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Creates the specified secret for use with external data sources in the
         /// specified database.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database in which to create the secret.
         /// </param>
@@ -62,9 +65,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='parameters'>
         /// The parameters required to create the secret (name and password)
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -75,8 +75,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlSecret>> CreateSecretWithHttpMessagesAsync(string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlSecret>> CreateSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -97,18 +105,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -116,20 +112,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("secretName", secretName);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateSecret", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/secrets/{secretName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{secretName}", Uri.EscapeDataString(secretName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{secretName}", Uri.EscapeDataString(secretName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -148,14 +144,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -179,9 +167,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -273,6 +264,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Modifies the specified secret for use with external data sources in the
         /// specified database
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
         /// </param>
@@ -281,9 +275,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='parameters'>
         /// The parameters required to modify the secret (name and password)
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -294,8 +285,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlSecret>> UpdateSecretWithHttpMessagesAsync(string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlSecret>> UpdateSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -312,18 +311,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -331,20 +318,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("secretName", secretName);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSecret", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/secrets/{secretName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{secretName}", Uri.EscapeDataString(secretName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{secretName}", Uri.EscapeDataString(secretName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -363,14 +350,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -394,9 +373,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -487,14 +469,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Gets the specified secret in the specified database
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
         /// </param>
         /// <param name='secretName'>
         /// The name of the secret to get
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -505,8 +487,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlSecret>> GetSecretWithHttpMessagesAsync(string databaseName, string secretName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlSecret>> GetSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -519,18 +509,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -538,19 +516,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("secretName", secretName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSecret", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/secrets/{secretName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{secretName}", Uri.EscapeDataString(secretName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{secretName}", Uri.EscapeDataString(secretName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -569,14 +547,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -690,14 +660,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Deletes the specified secret in the specified database
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
         /// </param>
         /// <param name='secretName'>
         /// The name of the secret to delete
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -708,8 +678,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteSecretWithHttpMessagesAsync(string databaseName, string secretName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -722,18 +700,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -741,19 +707,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("secretName", secretName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteSecret", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/secrets/{secretName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{secretName}", Uri.EscapeDataString(secretName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{secretName}", Uri.EscapeDataString(secretName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -772,14 +738,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -863,14 +821,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified external data source from the Data Lake Analytics
         /// catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the external data source.
         /// </param>
         /// <param name='externalDataSourceName'>
         /// The name of the external data source.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -881,8 +839,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlExternalDataSource>> GetExternalDataSourceWithHttpMessagesAsync(string databaseName, string externalDataSourceName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlExternalDataSource>> GetExternalDataSourceWithHttpMessagesAsync(string accountName, string databaseName, string externalDataSourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -895,18 +861,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -914,19 +868,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("externalDataSourceName", externalDataSourceName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetExternalDataSource", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/externaldatasources/{externalDataSourceName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{externalDataSourceName}", Uri.EscapeDataString(externalDataSourceName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{externalDataSourceName}", Uri.EscapeDataString(externalDataSourceName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -945,14 +899,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1067,11 +1013,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of external data sources from the Data Lake Analytics
         /// catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database containing the external data sources.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the external data sources.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -1093,7 +1039,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -1110,20 +1056,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (databaseName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1132,6 +1066,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
             }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1139,6 +1081,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
@@ -1147,16 +1090,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListExternalDataSources", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/externaldatasources";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -1203,14 +1145,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1324,14 +1258,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the specified credential from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
         /// </param>
         /// <param name='credentialName'>
         /// The name of the credential.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1342,8 +1276,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlCredential>> GetCredentialWithHttpMessagesAsync(string databaseName, string credentialName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlCredential>> GetCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -1356,18 +1298,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1375,19 +1305,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("credentialName", credentialName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetCredential", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/credentials/{credentialName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{credentialName}", Uri.EscapeDataString(credentialName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{credentialName}", Uri.EscapeDataString(credentialName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1406,14 +1336,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1527,11 +1449,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the list of credentials from the Data Lake Analytics catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database containing the schema.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the schema.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -1553,7 +1475,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -1570,20 +1492,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (databaseName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1592,6 +1502,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
             }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1599,6 +1517,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
@@ -1607,16 +1526,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListCredentials", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/credentials";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -1663,14 +1581,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1784,6 +1694,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the specified procedure from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedure.
         /// </param>
@@ -1792,9 +1705,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='procedureName'>
         /// The name of the procedure.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1805,8 +1715,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlProcedure>> GetProcedureWithHttpMessagesAsync(string databaseName, string schemaName, string procedureName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlProcedure>> GetProcedureWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string procedureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -1823,18 +1741,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1842,21 +1748,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("procedureName", procedureName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetProcedure", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/procedures/{procedureName}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{procedureName}", Uri.EscapeDataString(procedureName));
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1875,14 +1781,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1996,14 +1894,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the list of procedures from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedures.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the procedures.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -2025,7 +1923,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -2042,8 +1940,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -2056,18 +1962,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2075,6 +1969,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("filter", filter);
@@ -2084,17 +1979,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListProcedures", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/procedures";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -2141,14 +2035,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2262,6 +2148,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the specified table from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table.
         /// </param>
@@ -2270,9 +2159,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='tableName'>
         /// The name of the table.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2283,8 +2169,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlTable>> GetTableWithHttpMessagesAsync(string databaseName, string schemaName, string tableName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlTable>> GetTableWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -2301,18 +2195,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2320,21 +2202,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("tableName", tableName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetTable", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{tableName}", Uri.EscapeDataString(tableName));
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2353,14 +2235,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2474,14 +2348,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the tables.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the tables.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -2503,7 +2377,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -2520,8 +2394,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -2534,18 +2416,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2553,6 +2423,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("filter", filter);
@@ -2562,17 +2433,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListTables", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -2619,14 +2489,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2740,6 +2602,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the specified view from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the view.
         /// </param>
@@ -2748,9 +2613,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='viewName'>
         /// The name of the view.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2761,8 +2623,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlView>> GetViewWithHttpMessagesAsync(string databaseName, string schemaName, string viewName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlView>> GetViewWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string viewName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -2779,18 +2649,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2798,21 +2656,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("viewName", viewName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetView", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/views/{viewName}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{viewName}", Uri.EscapeDataString(viewName));
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -2831,14 +2689,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2952,14 +2802,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the list of views from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the views.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the views.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -2981,7 +2831,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -2998,8 +2848,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -3012,18 +2870,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3031,6 +2877,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("filter", filter);
@@ -3040,17 +2887,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListViews", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/views";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -3097,14 +2943,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3218,6 +3056,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the specified table from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
         /// </param>
@@ -3230,9 +3071,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='statisticsName'>
         /// The name of the table statistics.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -3242,8 +3080,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlTableStatistics>> GetTableStatisticWithHttpMessagesAsync(string databaseName, string schemaName, string tableName, string statisticsName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlTableStatistics>> GetTableStatisticWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string statisticsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -3264,18 +3110,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3283,23 +3117,23 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("tableName", tableName);
                 tracingParameters.Add("statisticsName", statisticsName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetTableStatistic", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/statistics/{statisticsName}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{tableName}", Uri.EscapeDataString(tableName));
             _url = _url.Replace("{statisticsName}", Uri.EscapeDataString(statisticsName));
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -3318,14 +3152,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3439,6 +3265,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
         /// </param>
@@ -3447,9 +3276,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='tableName'>
         /// The name of the table containing the statistics.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -3471,7 +3297,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -3488,8 +3314,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string databaseName, string schemaName, string tableName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -3506,18 +3340,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3525,6 +3347,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("tableName", tableName);
@@ -3535,18 +3358,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListTableStatistics", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/statistics";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{tableName}", Uri.EscapeDataString(tableName));
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -3593,14 +3415,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3715,14 +3529,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of types within the specified database and schema from
         /// the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the types.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the types.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -3745,8 +3559,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -3759,18 +3581,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3779,21 +3589,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListTypes", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/types";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
             if (odataQuery != null)
             {
@@ -3828,14 +3638,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3950,6 +3752,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified table valued function from the Data Lake Analytics
         /// catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued function.
         /// </param>
@@ -3958,9 +3763,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='tableValuedFunctionName'>
         /// The name of the tableValuedFunction.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3971,8 +3773,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlTableValuedFunction>> GetTableValuedFunctionWithHttpMessagesAsync(string databaseName, string schemaName, string tableValuedFunctionName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlTableValuedFunction>> GetTableValuedFunctionWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableValuedFunctionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -3989,18 +3799,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4008,21 +3806,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("tableValuedFunctionName", tableValuedFunctionName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetTableValuedFunction", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tablevaluedfunctions/{tableValuedFunctionName}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{tableValuedFunctionName}", Uri.EscapeDataString(tableValuedFunctionName));
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4041,14 +3839,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4163,14 +3953,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of table valued functions from the Data Lake Analytics
         /// catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued functions.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the table valued functions.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -4192,7 +3982,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -4209,8 +3999,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -4223,18 +4021,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4242,6 +4028,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("filter", filter);
@@ -4251,17 +4038,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListTableValuedFunctions", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}/tablevaluedfunctions";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -4308,14 +4094,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4429,14 +4207,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the specified assembly from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
         /// </param>
         /// <param name='assemblyName'>
         /// The name of the assembly.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4447,8 +4225,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlAssembly>> GetAssemblyWithHttpMessagesAsync(string databaseName, string assemblyName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlAssembly>> GetAssemblyWithHttpMessagesAsync(string accountName, string databaseName, string assemblyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -4461,18 +4247,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4480,19 +4254,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("assemblyName", assemblyName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAssembly", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/assemblies/{assemblyName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{assemblyName}", Uri.EscapeDataString(assemblyName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{assemblyName}", Uri.EscapeDataString(assemblyName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4511,14 +4285,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4632,11 +4398,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the list of assemblies from the Data Lake Analytics catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database containing the assembly.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the assembly.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -4658,7 +4424,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -4675,20 +4441,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (databaseName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -4697,6 +4451,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
             }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4704,6 +4466,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
@@ -4712,16 +4475,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAssemblies", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/assemblies";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -4768,14 +4530,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4889,14 +4643,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the specified schema from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4907,8 +4661,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlSchema>> GetSchemaWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlSchema>> GetSchemaWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
             if (databaseName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
@@ -4921,18 +4683,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlaCatalogDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4940,19 +4690,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSchema", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas/{schemaName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -4971,14 +4721,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5092,11 +4834,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the list of schemas from the Data Lake Analytics catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database containing the schema.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the schema.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -5118,7 +4860,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -5135,20 +4877,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (databaseName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -5157,6 +4887,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
             }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5164,6 +4902,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
@@ -5172,16 +4911,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSchemas", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/schemas";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -5228,14 +4966,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5349,11 +5079,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <summary>
         /// Retrieves the specified database from the Data Lake Analytics catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5364,20 +5094,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlDatabase>> GetDatabaseWithHttpMessagesAsync(string databaseName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<USqlDatabase>> GetDatabaseWithHttpMessagesAsync(string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (databaseName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -5386,6 +5104,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
             }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5393,17 +5119,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetDatabase", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}";
-            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -5422,14 +5148,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5566,7 +5284,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -5585,14 +5303,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </return>
         public async Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -5601,6 +5311,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
             }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5608,6 +5322,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("skip", skip);
@@ -5615,7 +5330,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListDatabases", tracingParameters);
             }
@@ -5670,14 +5384,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5810,10 +5516,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5842,14 +5544,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5981,10 +5675,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6013,14 +5703,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6152,10 +5834,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6184,14 +5862,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6323,10 +5993,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6355,14 +6021,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6494,10 +6152,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6526,14 +6180,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6665,10 +6311,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6697,14 +6339,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6837,10 +6471,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6869,14 +6499,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -7009,10 +6631,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7041,14 +6659,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -7180,10 +6790,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7212,14 +6818,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -7351,10 +6949,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7383,14 +6977,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -7522,10 +7108,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7554,14 +7136,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {

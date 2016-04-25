@@ -51,13 +51,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
         /// Client Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
@@ -169,7 +162,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         {
             this.Job = new JobOperations(this);
             this.BaseUri = "https://{accountName}.{adlaJobDnsSuffix}";
-            this.ApiVersion = "2015-11-01-preview";
+            this.ApiVersion = "2016-03-20-preview";
             this.AdlaJobDnsSuffix = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

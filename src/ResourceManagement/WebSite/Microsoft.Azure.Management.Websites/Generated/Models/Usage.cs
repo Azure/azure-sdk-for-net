@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// ComputeMode used for this usage. Possible values for this property
-        /// include: 'Shared', 'Dedicated'.
+        /// include: 'Shared', 'Dedicated', 'Dynamic'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.computeMode")]
         public ComputeModeOptions? ComputeMode { get; set; }

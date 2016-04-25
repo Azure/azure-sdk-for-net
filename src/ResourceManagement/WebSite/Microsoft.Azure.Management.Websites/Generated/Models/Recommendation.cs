@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Recommendation class.
         /// </summary>
-        public Recommendation(NotificationLevel? level, Channels? channels, Category? category, DateTime? creationTime = default(DateTime?), string recommendationId = default(string), string resourceId = default(string), string resourceScope = default(string), string ruleName = default(string), string displayName = default(string), string message = default(string), string actionName = default(string), int? enabled = default(int?), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), DateTime? nextNotificationTime = default(DateTime?), DateTime? notificationExpirationTime = default(DateTime?), DateTime? notifiedTime = default(DateTime?), double? score = default(double?))
+        public Recommendation(NotificationLevel? level, Channels? channels, DateTime? creationTime = default(DateTime?), string recommendationId = default(string), string resourceId = default(string), string resourceScope = default(string), string ruleName = default(string), string displayName = default(string), string message = default(string), IList<string> tags = default(IList<string>), string actionName = default(string), int? enabled = default(int?), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), DateTime? nextNotificationTime = default(DateTime?), DateTime? notificationExpirationTime = default(DateTime?), DateTime? notifiedTime = default(DateTime?), double? score = default(double?))
         {
             CreationTime = creationTime;
             RecommendationId = recommendationId;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Message = message;
             Level = level;
             Channels = channels;
-            Category = category;
+            Tags = tags;
             ActionName = actionName;
             Enabled = enabled;
             StartTime = startTime;
@@ -113,12 +113,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public Channels? Channels { get; set; }
 
         /// <summary>
-        /// The category that this recommendation belongs to. Possible values
-        /// for this property include: 'Uncategorized', 'Test', 'UpSell',
-        /// 'CrossSell', 'LiveSite'.
+        /// The list of category tags that this recommendation belongs to.
         /// </summary>
-        [JsonProperty(PropertyName = "category")]
-        public Category? Category { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IList<string> Tags { get; set; }
 
         /// <summary>
         /// Name of action recommended by this object.
@@ -182,10 +180,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             if (Channels == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Channels");
-            }
-            if (Category == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Category");
             }
         }
     }

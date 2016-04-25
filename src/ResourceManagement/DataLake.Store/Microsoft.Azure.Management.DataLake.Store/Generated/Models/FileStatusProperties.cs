@@ -98,8 +98,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public string Permission { get; private set; }
 
         /// <summary>
-        /// Gets the type of the path object. Possible values include: 'File',
-        /// 'Directory'
+        /// Gets the type of the path object. Possible values include: 'FILE',
+        /// 'DIRECTORY'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public FileType? Type { get; private set; }

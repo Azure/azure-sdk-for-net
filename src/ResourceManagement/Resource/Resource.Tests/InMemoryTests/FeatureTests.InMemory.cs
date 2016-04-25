@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest;
 using Microsoft.Azure.Test.HttpRecorder;
 using System;

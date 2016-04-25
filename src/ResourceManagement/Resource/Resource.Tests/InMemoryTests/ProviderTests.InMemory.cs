@@ -17,7 +17,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest;
 using Xunit;
 

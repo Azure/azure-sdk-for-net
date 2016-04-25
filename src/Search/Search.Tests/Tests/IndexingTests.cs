@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
@@ -80,15 +81,15 @@ namespace Microsoft.Azure.Search.Tests
                 });
 
                 IndexBatchException e = Assert.Throws<IndexBatchException>(() => client.Documents.Index(batch));
-                AssertIsPartialFailure(e, batch, "3");
+                AssertIsPartialFailure(e, "3");
 
                 Assert.Equal(5, e.IndexingResults.Count);
 
-                AssertIndexActionSucceeded("1", e.IndexingResults[0]);
-                AssertIndexActionSucceeded("2", e.IndexingResults[1]);
-                AssertIndexActionFailed("3", e.IndexingResults[2], "Document not found.");
-                AssertIndexActionSucceeded("4", e.IndexingResults[3]);
-                AssertIndexActionSucceeded("5", e.IndexingResults[4]);
+                AssertIndexActionSucceeded("1", e.IndexingResults[0], 201);
+                AssertIndexActionSucceeded("2", e.IndexingResults[1], 201);
+                AssertIndexActionFailed("3", e.IndexingResults[2], "Document not found.", 404);
+                AssertIndexActionSucceeded("4", e.IndexingResults[3], 200);
+                AssertIndexActionSucceeded("5", e.IndexingResults[4], 201);
 
                 SearchTestUtilities.WaitForIndexing();
 
@@ -158,15 +159,15 @@ namespace Microsoft.Azure.Search.Tests
                 });
 
                 IndexBatchException e = Assert.Throws<IndexBatchException>(() => client.Documents.Index(batch));
-                AssertIsPartialFailure(e, batch, "3");
+                AssertIsPartialFailure(e, "3");
 
                 Assert.Equal(5, e.IndexingResults.Count);
 
-                AssertIndexActionSucceeded("1", e.IndexingResults[0]);
-                AssertIndexActionSucceeded("2", e.IndexingResults[1]);
-                AssertIndexActionFailed("3", e.IndexingResults[2], "Document not found.");
-                AssertIndexActionSucceeded("4", e.IndexingResults[3]);
-                AssertIndexActionSucceeded("5", e.IndexingResults[4]);
+                AssertIndexActionSucceeded("1", e.IndexingResults[0], 201);
+                AssertIndexActionSucceeded("2", e.IndexingResults[1], 201);
+                AssertIndexActionFailed("3", e.IndexingResults[2], "Document not found.", 404);
+                AssertIndexActionSucceeded("4", e.IndexingResults[3], 200);
+                AssertIndexActionSucceeded("5", e.IndexingResults[4], 201);
 
                 SearchTestUtilities.WaitForIndexing();
 
@@ -186,7 +187,7 @@ namespace Microsoft.Azure.Search.Tests
                 DocumentIndexResult documentIndexResult = client.Documents.Index(batch);
 
                 Assert.Equal(1, documentIndexResult.Results.Count);
-                AssertIndexActionSucceeded("1", documentIndexResult.Results[0]);
+                AssertIndexActionSucceeded("1", documentIndexResult.Results[0], 201);
             });
         }
 
@@ -212,7 +213,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchTestUtilities.WaitForIndexing();
 
                 Assert.Equal(1, documentIndexResult.Results.Count);
-                AssertIndexActionSucceeded("1", documentIndexResult.Results[0]);
+                AssertIndexActionSucceeded("1", documentIndexResult.Results[0], 200);
 
                 Assert.Equal(0, client.Documents.Count());
             });
@@ -240,7 +241,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchTestUtilities.WaitForIndexing();
 
                 Assert.Equal(1, documentIndexResult.Results.Count);
-                AssertIndexActionSucceeded("1", documentIndexResult.Results[0]);
+                AssertIndexActionSucceeded("1", documentIndexResult.Results[0], 200);
 
                 Assert.Equal(0, client.Documents.Count());
             });
@@ -272,8 +273,8 @@ namespace Microsoft.Azure.Search.Tests
                 SearchTestUtilities.WaitForIndexing();
 
                 Assert.Equal(2, documentIndexResult.Results.Count);
-                AssertIndexActionSucceeded("1", documentIndexResult.Results[0]);
-                AssertIndexActionSucceeded("2", documentIndexResult.Results[1]);
+                AssertIndexActionSucceeded("1", documentIndexResult.Results[0], 200);
+                AssertIndexActionSucceeded("2", documentIndexResult.Results[1], 200);
 
                 Assert.Equal(0, client.Documents.Count());
             });
@@ -299,7 +300,7 @@ namespace Microsoft.Azure.Search.Tests
                 DocumentIndexResult indexResponse = indexClient.Documents.Index(batch);
 
                 Assert.Equal(1, indexResponse.Results.Count);
-                AssertIndexActionSucceeded("123", indexResponse.Results[0]);
+                AssertIndexActionSucceeded("123", indexResponse.Results[0], 201);
             });
         }
 
@@ -550,6 +551,86 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanSetExplicitNullsInStaticallyTypedDocuments()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                // This is just so we can use the LoudHotel class instead of Hotel since it has per-property
+                // NullValueHandling set.
+                var resolver = new MyCustomContractResolver();
+                client.SerializationSettings.ContractResolver = resolver;
+                client.DeserializationSettings.ContractResolver = resolver;
+
+                var originalDoc =
+                    new LoudHotel()
+                    {
+                        HOTELID = "1",
+                        BASERATE = 199.0,
+                        DESCRIPTION = "Best hotel in town",
+                        DESCRIPTIONFRENCH = "Meilleur hôtel en ville",
+                        HOTELNAME = "Fancy Stay",
+                        CATEGORY = "Luxury",
+                        TAGS = new[] { "pool", "view", "wifi", "concierge" },
+                        PARKINGINCLUDED = false,
+                        SMOKINGALLOWED = false,
+                        LASTRENOVATIONDATE = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)),
+                        RATING = 5,
+                        LOCATION = GeographyPoint.Create(47.678581, -122.131577)
+                    };
+
+                var updatedDoc =
+                    new LoudHotel()
+                    {
+                        HOTELID = "1",
+                        BASERATE = 99.0,
+                        DESCRIPTION = null,
+                        CATEGORY = null,    // This property doesn't have NullValueHandling.Include, so this should have no effect.
+                        TAGS = new[] { "pool", "view", "wifi" },
+                        PARKINGINCLUDED = true,
+                        LASTRENOVATIONDATE = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)),
+                        RATING = 4,
+                        LOCATION = null
+                    };
+
+                var expectedDoc =
+                    new LoudHotel()
+                    {
+                        HOTELID = "1",
+                        BASERATE = 99.0,
+                        DESCRIPTION = null,
+                        DESCRIPTIONFRENCH = "Meilleur hôtel en ville",
+                        HOTELNAME = "Fancy Stay",
+                        CATEGORY = "Luxury",
+                        TAGS = new[] { "pool", "view", "wifi" },
+                        PARKINGINCLUDED = true,
+                        SMOKINGALLOWED = false,
+                        LASTRENOVATIONDATE = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)),
+                        RATING = 4,
+                        LOCATION = null
+                    };
+
+                client.Documents.Index(IndexBatch.Upload(new[] { originalDoc }));
+                SearchTestUtilities.WaitForIndexing();
+
+                client.Documents.Index(IndexBatch.Merge(new[] { updatedDoc }));
+                SearchTestUtilities.WaitForIndexing();
+
+                LoudHotel actualDoc = client.Documents.Get<LoudHotel>("1");
+
+                Assert.Equal(expectedDoc, actualDoc);
+
+                client.Documents.Index(IndexBatch.Upload(new[] { originalDoc }));
+                SearchTestUtilities.WaitForIndexing();
+
+                actualDoc = client.Documents.Get<LoudHotel>("1");
+
+                Assert.Equal(originalDoc, actualDoc);
+            });
+        }
+
+        [Fact]
         public void CanIndexAndRetrieveModelWithExtraProperties()
         {
             Run(() =>
@@ -573,7 +654,7 @@ namespace Microsoft.Azure.Search.Tests
                 DocumentIndexResult result = client.Documents.Index(IndexBatch.Upload(new[] { expectedBook }));
 
                 Assert.Equal(1, result.Results.Count);
-                AssertIndexActionSucceeded("123", result.Results[0]);
+                AssertIndexActionSucceeded("123", result.Results[0], 201);
 
                 SearchTestUtilities.WaitForIndexing();
 
@@ -617,7 +698,7 @@ namespace Microsoft.Azure.Search.Tests
                 DocumentIndexResult result = client.Documents.Index(IndexBatch.Upload(new[] { expectedHotel }));
 
                 Assert.Equal(1, result.Results.Count);
-                AssertIndexActionSucceeded("1", result.Results[0]);
+                AssertIndexActionSucceeded("1", result.Results[0], 201);
 
                 SearchTestUtilities.WaitForIndexing();
 
@@ -646,7 +727,7 @@ namespace Microsoft.Azure.Search.Tests
                 DocumentIndexResult result = client.Documents.Index(IndexBatch.Upload(new[] { expectedBook }));
 
                 Assert.Equal(1, result.Results.Count);
-                AssertIndexActionSucceeded("123", result.Results[0]);
+                AssertIndexActionSucceeded("123", result.Results[0], 201);
 
                 SearchTestUtilities.WaitForIndexing();
 
@@ -729,7 +810,7 @@ namespace Microsoft.Azure.Search.Tests
             DocumentIndexResult result = indexClient.Documents.Index(IndexBatch.Upload(new[] { firstBook }));
 
             Assert.Equal(1, result.Results.Count);
-            AssertIndexActionSucceeded("123", result.Results[0]);
+            AssertIndexActionSucceeded("123", result.Results[0], 201);
 
             SearchTestUtilities.WaitForIndexing();
 
@@ -743,7 +824,7 @@ namespace Microsoft.Azure.Search.Tests
             result = indexClient.Documents.Index(IndexBatch.Merge(new[] { expectedBook }));
 
             Assert.Equal(1, result.Results.Count);
-            AssertIndexActionSucceeded("123", result.Results[0]);
+            AssertIndexActionSucceeded("123", result.Results[0], 200);
 
             SearchTestUtilities.WaitForIndexing();
 
@@ -754,43 +835,32 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedBook, actualBook);
         }
 
-        private static void AssertIsPartialFailure(
-            IndexBatchException e, 
-            IndexBatch batch, 
-            params string[] failedKeys)
+        private static void AssertIsPartialFailure(IndexBatchException e, params string[] expectedFailedKeys)
         {
             Assert.Equal((HttpStatusCode)207, e.Response.StatusCode);
 
-            const string KeyFieldName = "hotelId";
-            IndexBatch retryBatch = e.FindFailedActionsToRetry(batch, KeyFieldName);
-            Assert.Equal(failedKeys.Length, retryBatch.Actions.Count());
-            SearchAssert.SequenceEqual(failedKeys, retryBatch.Actions.Select(a => a.Document[KeyFieldName].ToString()));
+            IEnumerable<string> actualFailedKeys = e.IndexingResults.Where(r => !r.Succeeded).Select(r => r.Key);
+            SearchAssert.SequenceEqual(expectedFailedKeys, actualFailedKeys);
         }
 
-        private static void AssertIsPartialFailure(
-            IndexBatchException e, 
-            IndexBatch<Hotel> batch, 
-            params string[] failedKeys)
-        {
-            Assert.Equal((HttpStatusCode)207, e.Response.StatusCode);
-
-            IndexBatch<Hotel> retryBatch = e.FindFailedActionsToRetry(batch, a => a.HotelId);
-            Assert.Equal(failedKeys.Length, retryBatch.Actions.Count());
-            SearchAssert.SequenceEqual(failedKeys, retryBatch.Actions.Select(a => a.Document.HotelId));
-        }
-
-        private static void AssertIndexActionFailed(string key, IndexingResult result, string expectedMessage)
+        private static void AssertIndexActionFailed(
+            string key, 
+            IndexingResult result, 
+            string expectedMessage, 
+            int expectedStatusCode)
         {
             Assert.Equal(key, result.Key);
             Assert.False(result.Succeeded);
             Assert.Equal(expectedMessage, result.ErrorMessage);
+            Assert.Equal(expectedStatusCode, result.StatusCode);
         }
 
-        private static void AssertIndexActionSucceeded(string key, IndexingResult result)
+        private static void AssertIndexActionSucceeded(string key, IndexingResult result, int expectedStatusCode)
         {
             Assert.Equal(key, result.Key);
             Assert.True(result.Succeeded);
             Assert.Null(result.ErrorMessage);
+            Assert.Equal(expectedStatusCode, result.StatusCode);
         }
     }
 }

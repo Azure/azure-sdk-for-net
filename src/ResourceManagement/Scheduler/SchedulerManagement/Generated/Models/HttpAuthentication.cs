@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class HttpAuthentication
     {
         /// <summary>
@@ -27,9 +25,9 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the http authentication type. Possible values for
-        /// this property include: 'NotSpecified', 'ClientCertificate',
-        /// 'ActiveDirectoryOAuth', 'Basic'.
+        /// Gets or sets the http authentication type. Possible values
+        /// include: 'NotSpecified', 'ClientCertificate',
+        /// 'ActiveDirectoryOAuth', 'Basic'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public HttpAuthenticationType? Type { get; set; }

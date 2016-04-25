@@ -324,7 +324,7 @@ namespace Scheduler.Test.InMemoryTests
 		                'location': 'South Central US',
 		                'properties': {
 			                'sku': {
-				                'name': 'Premium'
+				                'name': 'P10Premium'
 			                },
 			                'state': 'Enabled',
 			                'quota': {
@@ -369,7 +369,7 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal("South Central US", jc2.Location);
             Assert.Equal("Microsoft.Scheduler/jobCollections", jc2.Type);
             Assert.Equal("jc2", jc2.Name);
-            Assert.Equal(SkuDefinition.Premium, jc2.Properties.Sku.Name);
+            Assert.Equal(SkuDefinition.P10Premium, jc2.Properties.Sku.Name);
             Assert.Equal(JobCollectionState.Enabled, jc2.Properties.State);
             Assert.Equal(10, jc2.Properties.Quota.MaxJobCount);
             Assert.Equal(100, jc2.Properties.Quota.MaxJobOccurrence);
@@ -410,7 +410,7 @@ namespace Scheduler.Test.InMemoryTests
 		                'location': 'South Central US',
 		                'properties': {
 			                'sku': {
-				                'name': 'Premium'
+				                'name': 'P20Premium'
 			                },
 			                'state': 'Enabled',
 			                'quota': {
@@ -455,7 +455,7 @@ namespace Scheduler.Test.InMemoryTests
             Assert.Equal("South Central US", jc2.Location);
             Assert.Equal("Microsoft.Scheduler/jobCollections", jc2.Type);
             Assert.Equal("jc2", jc2.Name);
-            Assert.Equal(SkuDefinition.Premium, jc2.Properties.Sku.Name);
+            Assert.Equal(SkuDefinition.P20Premium, jc2.Properties.Sku.Name);
             Assert.Equal(JobCollectionState.Enabled, jc2.Properties.State);
             Assert.Equal(10, jc2.Properties.Quota.MaxJobCount);
             Assert.Equal(100, jc2.Properties.Quota.MaxJobOccurrence);

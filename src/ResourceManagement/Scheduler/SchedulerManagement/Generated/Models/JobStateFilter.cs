@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class JobStateFilter
     {
         /// <summary>
@@ -27,8 +25,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the job state. Possible values for this property
-        /// include: 'Enabled', 'Disabled', 'Faulted', 'Completed'.
+        /// Gets or sets the job state. Possible values include: 'Enabled',
+        /// 'Disabled', 'Faulted', 'Completed'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public JobState? State { get; set; }

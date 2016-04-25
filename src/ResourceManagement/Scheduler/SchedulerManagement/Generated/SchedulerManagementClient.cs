@@ -18,8 +18,6 @@ namespace Microsoft.Azure.Management.Scheduler
     using Microsoft.Rest.Azure;
     using Models;
 
-    /// <summary>
-    /// </summary>
     public partial class SchedulerManagementClient : ServiceClient<SchedulerManagementClient>, ISchedulerManagementClient, IAzureClient
     {
         /// <summary>
@@ -69,8 +67,14 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
+        /// <summary>
+        /// Gets the IJobCollectionsOperations.
+        /// </summary>
         public virtual IJobCollectionsOperations JobCollections { get; private set; }
 
+        /// <summary>
+        /// Gets the IJobsOperations.
+        /// </summary>
         public virtual IJobsOperations Jobs { get; private set; }
 
         /// <summary>
@@ -255,7 +259,7 @@ namespace Microsoft.Azure.Management.Scheduler
             this.JobCollections = new JobCollectionsOperations(this);
             this.Jobs = new JobsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2016-01-01";
+            this.ApiVersion = "2016-03-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;
@@ -274,7 +278,6 @@ namespace Microsoft.Azure.Management.Scheduler
                 ////        new Iso8601TimeSpanConverter()
                 ////    }
             };
-            SerializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
@@ -289,7 +292,6 @@ namespace Microsoft.Azure.Management.Scheduler
                 ////        new Iso8601TimeSpanConverter()
                 ////    }
             };
-            DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }

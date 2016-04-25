@@ -31,12 +31,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the NetworkInterfaceDnsSettings
         /// class.
         /// </summary>
-        public NetworkInterfaceDnsSettings(IList<string> dnsServers = default(IList<string>), IList<string> appliedDnsServers = default(IList<string>), string internalDnsNameLabel = default(string), string internalFqdn = default(string))
+        public NetworkInterfaceDnsSettings(IList<string> dnsServers = default(IList<string>), IList<string> appliedDnsServers = default(IList<string>), string internalDnsNameLabel = default(string), string internalFqdn = default(string), string internalDomainNameSuffix = default(string))
         {
             DnsServers = dnsServers;
             AppliedDnsServers = appliedDnsServers;
             InternalDnsNameLabel = internalDnsNameLabel;
             InternalFqdn = internalFqdn;
+            InternalDomainNameSuffix = internalDomainNameSuffix;
         }
 
         /// <summary>
@@ -58,12 +59,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string InternalDnsNameLabel { get; set; }
 
         /// <summary>
-        /// Gets or sets full IDNS name in the form,
-        /// DnsName.VnetId.ZoneId.TopleveSuffix. This is set when the NIC is
-        /// associated to a VM
+        /// Gets or sets the internal fqdn.
         /// </summary>
         [JsonProperty(PropertyName = "internalFqdn")]
         public string InternalFqdn { get; set; }
+
+        /// <summary>
+        /// Gets or sets internal domain name suffix of the NIC.
+        /// </summary>
+        [JsonProperty(PropertyName = "internalDomainNameSuffix")]
+        public string InternalDomainNameSuffix { get; set; }
 
     }
 }

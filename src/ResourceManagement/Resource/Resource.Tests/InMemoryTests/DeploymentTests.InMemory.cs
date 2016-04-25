@@ -21,8 +21,8 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using Microsoft.Rest;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.Azure.OData;
 
 namespace ResourceGroups.Tests

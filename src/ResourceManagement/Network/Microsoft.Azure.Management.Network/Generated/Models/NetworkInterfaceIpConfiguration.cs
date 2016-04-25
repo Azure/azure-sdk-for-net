@@ -31,15 +31,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the NetworkInterfaceIPConfiguration
         /// class.
         /// </summary>
-        public NetworkInterfaceIPConfiguration(string id = default(string), string name = default(string), string etag = default(string), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), string provisioningState = default(string))
+        public NetworkInterfaceIPConfiguration(string id = default(string), string name = default(string), string etag = default(string), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), string provisioningState = default(string))
             : base(id)
         {
             Name = name;
             Etag = etag;
+            ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerInboundNatRules = loadBalancerInboundNatRules;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
+            PrivateIPAddressVersion = privateIPAddressVersion;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
@@ -58,6 +60,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of ApplicationGatewayBackendAddressPool
+        /// resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
+        public IList<ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of LoadBalancerBackendAddressPool
@@ -83,6 +92,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public string PrivateIPAllocationMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets PrivateIP address version (IPv4/IPv6). Possible
+        /// values for this property include: 'IPv4', 'IPv6'.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
+        public string PrivateIPAddressVersion { get; set; }
 
         /// <summary>
         /// </summary>
