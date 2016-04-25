@@ -73,6 +73,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             get; set; 
         }
         
+        /// <summary>
+        /// Get or sets the resource namespace. By default it points to Azure
+        /// Production. Override this value only if needed
+        /// </summary>
         string ResourceNamespace
         {
             get; set; 
