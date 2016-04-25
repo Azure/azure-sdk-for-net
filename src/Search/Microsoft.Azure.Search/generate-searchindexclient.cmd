@@ -12,6 +12,7 @@ if  "%1" == "" (
 )
 set repoRoot=%~dp0..\..\..
 set generateFolder=%~dp0GeneratedSearchIndex
+set header=MICROSOFT_MIT_NO_VERSION
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Search %autoRestVersion% %generateFolder% 
+call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Search %autoRestVersion% %generateFolder% %header%
