@@ -22,7 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyAttributes class.
         /// </summary>
-        public KeyAttributes(bool? enabled = default(bool?), long? notBefore = default(long?), long? expires = default(long?), long? created = default(long?), long? updated = default(long?))
+        public KeyAttributes(bool? enabled = default(bool?), DateTime? notBefore = default(DateTime?), DateTime? expires = default(DateTime?), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?))
             : base(enabled, notBefore, expires, created, updated)
         {
         }

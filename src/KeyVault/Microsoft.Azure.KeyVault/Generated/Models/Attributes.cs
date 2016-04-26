@@ -22,7 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Attributes class.
         /// </summary>
-        public Attributes(bool? enabled = default(bool?), long? notBefore = default(long?), long? expires = default(long?), long? created = default(long?), long? updated = default(long?))
+        public Attributes(bool? enabled = default(bool?), DateTime? notBefore = default(DateTime?), DateTime? expires = default(DateTime?), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?))
         {
             Enabled = enabled;
             NotBefore = notBefore;
@@ -40,26 +40,30 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Not before date in UTC
         /// </summary>
+        [JsonConverter(typeof(UnixTimeJsonConverter))]
         [JsonProperty(PropertyName = "nbf")]
-        public long? NotBefore { get; set; }
+        public DateTime? NotBefore { get; set; }
 
         /// <summary>
         /// Expiry date in UTC
         /// </summary>
+        [JsonConverter(typeof(UnixTimeJsonConverter))]
         [JsonProperty(PropertyName = "exp")]
-        public long? Expires { get; set; }
+        public DateTime? Expires { get; set; }
 
         /// <summary>
         /// Creation time in UTC
         /// </summary>
+        [JsonConverter(typeof(UnixTimeJsonConverter))]
         [JsonProperty(PropertyName = "created")]
-        public long? Created { get; private set; }
+        public DateTime? Created { get; private set; }
 
         /// <summary>
         /// Last updated time in UTC
         /// </summary>
+        [JsonConverter(typeof(UnixTimeJsonConverter))]
         [JsonProperty(PropertyName = "updated")]
-        public long? Updated { get; private set; }
+        public DateTime? Updated { get; private set; }
 
     }
 }

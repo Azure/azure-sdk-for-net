@@ -20,14 +20,6 @@
         "System": { "type": "build" },
         "System.Threading.Tasks": { "type": "build" }
       }
-    },
-    ".NETPortable,Version=v4.5,Profile=Profile111": {
-      "frameworkAssemblies": {
-        "System": { "type": "build" },
-        "System.Runtime": { "type": "build" },
-        "System.Threading.Tasks": { "type": "build" },
-        "System.Reflection": { }
-      }
     }
   },
   "dependencies": {

@@ -15,25 +15,19 @@
       "frameworkAssemblies": {
       },
       "dependencies": {
-        "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
         "System.Security.Cryptography.Primitives": "4.0.0-beta-23516",
-        "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516",
-        "xunit.runner.dnx": "2.1.0-rc1-build204"
+        "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
       }
     },
-    "net45": {
-      "frameworkAssemblies": {
-        "System": { "type": "build" },
-        "System.Runtime": { "type": "build" },
-        "System.Security": { "type": "default" },
-        "System.Threading.Tasks": { "type": "build" }
-      }
+    "dnx451": {
+      "frameworkAssemblies": { "System.Net.Http.WebRequest": "" }
     }
   },
   "dependencies": {
     "Microsoft.Azure.KeyVault.Core": "2.0.0-*",
     "Microsoft.Azure.KeyVault.Cryptography": "2.0.0-*",
     "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-rc1-build204"
   },
   "configurations": {
   }

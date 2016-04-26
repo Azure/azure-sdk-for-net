@@ -26,6 +26,7 @@ using Microsoft.Azure.KeyVault.WebKey;
 using Xunit;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Rest.Serialization;
 
 namespace KeyVault.Tests
 {
@@ -352,8 +353,8 @@ namespace KeyVault.Tests
 
                     // Update the current version
                     attributes.Enabled = true;
-                    attributes.NotBefore = new DateTime(1980, 1, 1).ToUniversalTime().ToUnixTime();
-                    attributes.Expires = new DateTime(1981, 1, 1).ToUniversalTime().ToUnixTime();
+                    attributes.NotBefore = new DateTime(1980, 1, 1).ToUniversalTime();
+                    attributes.Expires = new DateTime(1981, 1, 1).ToUniversalTime();
 
                     var updatedKey =
                         client.UpdateKeyAsync(_vaultAddress, keyName, operations, attributes)
@@ -370,8 +371,8 @@ namespace KeyVault.Tests
 
                     // Update the original version
                     attributes.Enabled = false;
-                    attributes.NotBefore = new DateTime(1990, 1, 1).ToUniversalTime().ToUnixTime();
-                    attributes.Expires = new DateTime(1991, 1, 1).ToUniversalTime().ToUnixTime();
+                    attributes.NotBefore = new DateTime(1990, 1, 1).ToUniversalTime();
+                    attributes.Expires = new DateTime(1991, 1, 1).ToUniversalTime();
 
                     updatedKey =
                         client.UpdateKeyAsync(createdKey.Key.Kid, operations, attributes).GetAwaiter().GetResult();
@@ -402,8 +403,8 @@ namespace KeyVault.Tests
                     var attributes = new KeyAttributes()
                     {
                         Enabled = enabledState,
-                        Expires = new DateTime(2030, 1, 1).ToUniversalTime().ToUnixTime(),
-                        NotBefore = new DateTime(2010, 1, 1).ToUniversalTime().ToUnixTime()
+                        Expires = new DateTime(2030, 1, 1).ToUniversalTime(),
+                        NotBefore = new DateTime(2010, 1, 1).ToUniversalTime()
                     };
                     var createdKey =
                         client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
@@ -444,8 +445,8 @@ namespace KeyVault.Tests
                 var attribute = new KeyAttributes()
                 {
                     Enabled = false,
-                    Expires = new DateTime(2030, 1, 1).ToUniversalTime().ToUnixTime(),
-                    NotBefore = new DateTime(2010, 1, 1).ToUniversalTime().ToUnixTime()
+                    Expires = new DateTime(2030, 1, 1).ToUniversalTime(),
+                    NotBefore = new DateTime(2010, 1, 1).ToUniversalTime()
                 };
 
                 var createdKey = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
@@ -839,13 +840,13 @@ namespace KeyVault.Tests
             if (active == false)
             {
                 // Set the secret to not be active for 12 hours
-                attributes.NotBefore = (DateTime.UtcNow + new TimeSpan(0, 12, 0, 0)).ToUnixTime();
+                attributes.NotBefore = (DateTime.UtcNow + new TimeSpan(0, 12, 0, 0));
             }
 
             if (expired)
             {
                 // Set the secret to be expired 12 hours ago
-                attributes.Expires = (DateTime.UtcNow - new TimeSpan(0, 12, 0, 0)).ToUnixTime();
+                attributes.Expires = (DateTime.UtcNow - new TimeSpan(0, 12, 0, 0));
             }
             return attributes;
         }
@@ -1050,8 +1051,8 @@ namespace KeyVault.Tests
                 Attributes = new KeyAttributes()
                 {
                     Enabled = enabled,
-                    Expires = UnixEpoch.FromUnixTime(notAfter).ToUnixTime(),
-                    NotBefore = UnixEpoch.FromUnixTime(notBefore).ToUnixTime()
+                    Expires = UnixTimeJsonConverter.EpochDate.AddSeconds(notAfter),
+                    NotBefore = UnixTimeJsonConverter.EpochDate.AddSeconds(notBefore)
                 },
                 Tags = new Dictionary<string, string>()
                 {
