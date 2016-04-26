@@ -1,5 +1,5 @@
 {
-  "version": "4.4.0-preview",
+  "version": "4.5.0-preview",
   "description": "Provides management capabilities for Network services.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure Network management", "Network", "Network management","REST HTTP client",  "windowsazureofficial" ],
