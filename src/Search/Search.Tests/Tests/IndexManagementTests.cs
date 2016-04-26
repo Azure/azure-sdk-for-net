@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Search.Tests
                     };
 
                 AnalyzerName[] allAnalyzers =
-                    (from field in typeof(AnalyzerName).GetTypeInfo().GetFields()
+                    (from field in typeof(AnalyzerName).GetFields()
                     where field.FieldType == typeof(AnalyzerName) && field.IsStatic
                     select field.GetValue(null)).Cast<AnalyzerName>().ToArray();
 
