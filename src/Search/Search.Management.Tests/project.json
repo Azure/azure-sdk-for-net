@@ -26,8 +26,8 @@
     "xunit.runner.dnx": "2.1.0-rc1-build204",
     "Microsoft.Azure.Test.HttpRecorder": "",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
-    "Microsoft.Rest.ClientRuntime.Azure": "[2.5.2,3.0)",
-    "Microsoft.Azure.Management.Resources": "3.3.0-preview"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0)",
+    "Microsoft.Azure.Management.ResourceManager": "1.1.1-preview"
   },
   "compileFiles": "../../../tools/DisableTestRunParallel.cs"
 }
