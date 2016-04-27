@@ -141,8 +141,8 @@
   </Target>
 
   <Target Name="BuildDnxLibraries">
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" '%(Dnx_AutoRestLibraries.Library)'!= '' "/>
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(Dnx_AutoRestLibraries.Test)' != '' "/>
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
