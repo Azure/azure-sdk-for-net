@@ -187,8 +187,18 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyName'>
         /// The name of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters to create key.
+        /// <param name='kty'>
+        /// The type of key to create. For valid key types, see WebKeyTypes.
+        /// </param>
+        /// <param name='keySize'>
+        /// Size of the key
+        /// </param>
+        /// <param name='keyOps'>
+        /// </param>
+        /// <param name='keyAttributes'>
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -199,7 +209,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyBundle>> CreateKeyWithHttpMessagesAsync(string vault, string keyName, KeyCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyBundle>> CreateKeyWithHttpMessagesAsync(string vault, string keyName, string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -209,13 +219,29 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyName");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (kty == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "kty");
+            }
+            if (kty != null)
+            {
+                if (kty.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "kty", 1);
+                }
+            }
+            KeyCreateParameters parameters = new KeyCreateParameters();
+            if (kty != null || keyOps != null || keyAttributes != null || tags != null)
+            {
+                parameters.Kty = kty;
+                parameters.KeySize = keySize;
+                parameters.KeyOps = keyOps;
+                parameters.KeyAttributes = keyAttributes;
+                parameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -373,8 +399,17 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyName'>
         /// The name of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters to update key.
+        /// <param name='hsm'>
+        /// Whether to import as a hardware key (HSM) or software key
+        /// </param>
+        /// <param name='key'>
+        /// The Json web key
+        /// </param>
+        /// <param name='keyAttributes'>
+        /// The key management attributes
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -385,7 +420,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyBundle>> ImportKeyWithHttpMessagesAsync(string vault, string keyName, KeyImportParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyBundle>> ImportKeyWithHttpMessagesAsync(string vault, string keyName, bool? hsm = default(bool?), JsonWebKey key = default(JsonWebKey), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -395,13 +430,17 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyName");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            KeyImportParameters parameters = new KeyImportParameters();
+            if (key != null || keyAttributes != null || tags != null)
+            {
+                parameters.Hsm = hsm;
+                parameters.Key = key;
+                parameters.KeyAttributes = keyAttributes;
+                parameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -734,8 +773,14 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters to update key.
+        /// <param name='keyOps'>
+        /// Json web key operations. For more information on possible key operations,
+        /// see JsonWebKeyOperation.
+        /// </param>
+        /// <param name='keyAttributes'>
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -746,7 +791,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyBundle>> UpdateKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyBundle>> UpdateKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -760,13 +805,16 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyVersion");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            KeyUpdateParameters parameters = new KeyUpdateParameters();
+            if (keyOps != null || keyAttributes != null || tags != null)
+            {
+                parameters.KeyOps = keyOps;
+                parameters.KeyAttributes = keyAttributes;
+                parameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1627,8 +1675,8 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='vault'>
         /// The vault name, e.g. https://myvault.vault.azure.net
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters to restore key
+        /// <param name='keyBundleBackup'>
+        /// the backup blob associated with a key bundle
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1639,19 +1687,24 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyBundle>> RestoreKeyWithHttpMessagesAsync(string vault, KeyRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyBundle>> RestoreKeyWithHttpMessagesAsync(string vault, byte[] keyBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vault");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (keyBundleBackup == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "keyBundleBackup");
+            }
+            KeyRestoreParameters parameters = new KeyRestoreParameters();
+            if (keyBundleBackup != null)
+            {
+                parameters.KeyBundleBackup = keyBundleBackup;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1811,8 +1864,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1823,7 +1878,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyOperationResult>> EncryptWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyOperationResult>> EncryptWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -1837,13 +1892,30 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyVersion");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (algorithm == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "algorithm");
+            }
+            if (algorithm != null)
+            {
+                if (algorithm.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "algorithm", 1);
+                }
+            }
+            if (value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "value");
+            }
+            KeyOperationsParameters parameters = new KeyOperationsParameters();
+            if (algorithm != null || value != null)
+            {
+                parameters.Algorithm = algorithm;
+                parameters.Value = value;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2006,8 +2078,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2018,7 +2092,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyOperationResult>> DecryptWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyOperationResult>> DecryptWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -2032,13 +2106,30 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyVersion");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (algorithm == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "algorithm");
+            }
+            if (algorithm != null)
+            {
+                if (algorithm.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "algorithm", 1);
+                }
+            }
+            if (value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "value");
+            }
+            KeyOperationsParameters parameters = new KeyOperationsParameters();
+            if (algorithm != null || value != null)
+            {
+                parameters.Algorithm = algorithm;
+                parameters.Value = value;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2201,8 +2292,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2213,7 +2306,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyOperationResult>> SignWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyOperationResult>> SignWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -2227,13 +2320,30 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyVersion");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (algorithm == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "algorithm");
+            }
+            if (algorithm != null)
+            {
+                if (algorithm.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "algorithm", 1);
+                }
+            }
+            if (value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "value");
+            }
+            KeyOperationsParameters parameters = new KeyOperationsParameters();
+            if (algorithm != null || value != null)
+            {
+                parameters.Algorithm = algorithm;
+                parameters.Value = value;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2396,8 +2506,15 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// The signing/verification algorithm. For more information on possible
+        /// algorithm types, see JsonWebKeySignatureAlgorithm.
+        /// </param>
+        /// <param name='digest'>
+        /// The digest used for signing
+        /// </param>
+        /// <param name='signature'>
+        /// The signature to be verified
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2408,7 +2525,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyVerifyResult>> VerifyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyVerifyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyVerifyResult>> VerifyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] digest, byte[] signature, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -2422,13 +2539,35 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyVersion");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (algorithm == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "algorithm");
+            }
+            if (algorithm != null)
+            {
+                if (algorithm.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "algorithm", 1);
+                }
+            }
+            if (digest == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "digest");
+            }
+            if (signature == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "signature");
+            }
+            KeyVerifyParameters parameters = new KeyVerifyParameters();
+            if (algorithm != null || digest != null || signature != null)
+            {
+                parameters.Algorithm = algorithm;
+                parameters.Digest = digest;
+                parameters.Signature = signature;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2591,8 +2730,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2603,7 +2744,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyOperationResult>> WrapKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyOperationResult>> WrapKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -2617,13 +2758,30 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyVersion");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (algorithm == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "algorithm");
+            }
+            if (algorithm != null)
+            {
+                if (algorithm.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "algorithm", 1);
+                }
+            }
+            if (value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "value");
+            }
+            KeyOperationsParameters parameters = new KeyOperationsParameters();
+            if (algorithm != null || value != null)
+            {
+                parameters.Algorithm = algorithm;
+                parameters.Value = value;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2787,8 +2945,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2799,7 +2959,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyOperationResult>> UnwrapKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyOperationResult>> UnwrapKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -2813,13 +2973,30 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyVersion");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (algorithm == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "algorithm");
+            }
+            if (algorithm != null)
+            {
+                if (algorithm.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "algorithm", 1);
+                }
+            }
+            if (value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "value");
+            }
+            KeyOperationsParameters parameters = new KeyOperationsParameters();
+            if (algorithm != null || value != null)
+            {
+                parameters.Algorithm = algorithm;
+                parameters.Value = value;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2979,8 +3156,16 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='secretName'>
         /// The name of the secret in the given vault
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for secret set
+        /// <param name='value'>
+        /// The value of the secret
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
+        /// </param>
+        /// <param name='contentType'>
+        /// Type of the secret value such as a password
+        /// </param>
+        /// <param name='secretAttributes'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2991,7 +3176,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SecretBundle>> SetSecretWithHttpMessagesAsync(string vault, string secretName, SecretSetParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecretBundle>> SetSecretWithHttpMessagesAsync(string vault, string secretName, string value, IDictionary<string, string> tags = default(IDictionary<string, string>), string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -3001,13 +3186,21 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "secretName");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "value");
+            }
+            SecretSetParameters parameters = new SecretSetParameters();
+            if (value != null || tags != null || contentType != null || secretAttributes != null)
+            {
+                parameters.Value = value;
+                parameters.Tags = tags;
+                parameters.ContentType = contentType;
+                parameters.SecretAttributes = secretAttributes;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3340,7 +3533,13 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='secretVersion'>
         /// The version of the secret
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='contentType'>
+        /// Type of the secret value such as a password
+        /// </param>
+        /// <param name='secretAttributes'>
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3351,7 +3550,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SecretBundle>> UpdateSecretWithHttpMessagesAsync(string vault, string secretName, string secretVersion, SecretUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecretBundle>> UpdateSecretWithHttpMessagesAsync(string vault, string secretName, string secretVersion, string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vault == null)
             {
@@ -3365,13 +3564,16 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "secretVersion");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            SecretUpdateParameters parameters = new SecretUpdateParameters();
+            if (contentType != null || secretAttributes != null || tags != null)
+            {
+                parameters.ContentType = contentType;
+                parameters.SecretAttributes = secretAttributes;
+                parameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

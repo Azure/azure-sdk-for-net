@@ -103,7 +103,7 @@ namespace KeyVault.Tests
                 // Create a newer version of the current software key
                 var newVersionKey =
                     client.CreateKeyAsync(_vaultAddress, _keyName, JsonWebKeyType.Rsa,
-                        key_ops: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
+                        keyOps: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
 
                 // Use the older version of the software key to do encryption and decryption operation
                 EncryptDecrypt(client, _keyIdentifier, algorithm);
@@ -122,7 +122,7 @@ namespace KeyVault.Tests
                 // Create a newer version of the current software key
                 var newVersionKey =
                     client.CreateKeyAsync(_vaultAddress, _keyName, JsonWebKeyType.Rsa,
-                        key_ops: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
+                        keyOps: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
 
                 var plainText = RandomBytes(10);
                 var encryptResult = client.EncryptAsync(newVersionKey.Key.Kid, algorithm, plainText).GetAwaiter().GetResult();
@@ -176,7 +176,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 var symmetricKeyBytes = GetSymmetricKeyBytes();
@@ -189,7 +189,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 var symmetricKeyBytes = GetSymmetricKeyBytes();
@@ -202,7 +202,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 var attributes = new KeyAttributes();
@@ -237,7 +237,7 @@ namespace KeyVault.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 var attributes = new KeyAttributes();
@@ -274,7 +274,7 @@ namespace KeyVault.Tests
 
         //    using (MockContext context = MockContext.Start(this.GetType().FullName))
         //    {
-                
+
         //        var client = GetKeyVaultClient();
 
         //        var request = GetImportKeyBundle(keyType: JsonWebKeyType.RsaHsm, keyToken: Resource.Key);
@@ -301,7 +301,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
                 // Generates a new RSA key.
                 var rsa = new RSACryptoServiceProvider(2048);
@@ -339,7 +339,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
                 var keyName = "UpdateKeyAttributesTest";
                 try
@@ -393,7 +393,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 var keyName = "UpdateKeyAttributesWithNoChangeTest";
@@ -437,7 +437,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 var keyName = "BackupRestoreTest";
@@ -460,7 +460,7 @@ namespace KeyVault.Tests
                     client.DeleteKeyAsync(_vaultAddress, keyName).Wait();
 
                     var restoredDeletedKey =
-                        client.RestoreKeyAsync(_vaultAddress, backupResponse).GetAwaiter().GetResult();
+                        client.RestoreKeyAsync(_vaultAddress, backupResponse.Value).GetAwaiter().GetResult();
 
                     VerifyKeyAttributesAreEqual(restoredDeletedKey.Attributes, createdKey.Attributes);
                     Assert.Equal(restoredDeletedKey.Key.Kty, createdKey.Key.Kty);
@@ -478,7 +478,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 int numKeys = 3;
@@ -533,7 +533,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 int numKeys = 3;
@@ -585,7 +585,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 string secretName = "crpsecret";
@@ -635,7 +635,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 var secretName = "mysecretname";
@@ -683,7 +683,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 int numSecrets = 3;
@@ -745,7 +745,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 int numSecretVersions = 3;
@@ -795,7 +795,7 @@ namespace KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
+
                 var client = GetKeyVaultClient();
 
                 string secretName = "secretwithextendedattribs";

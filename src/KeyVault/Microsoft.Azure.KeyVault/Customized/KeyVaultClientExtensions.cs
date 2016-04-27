@@ -18,38 +18,7 @@ namespace Microsoft.Azure.KeyVault
     public static partial class KeyVaultClientExtensions
     {
 
-        #region Key Crypto Operations (old API) - we can mark them as depricated.
-
-        /// <summary>
-        /// Encrypts a single block of data. The amount of data that may be encrypted is determined
-        /// by the target key type and the encryption algorithm.
-        /// </summary>
-        /// <param name="vault">The URL of the vault</param>
-        /// <param name="keyName">The name of the key</param>
-        /// <param name="keyVersion">The version of the key (optional)</param>
-        /// <param name="algorithm">The algorithm. For more information on possible algorithm types, see JsonWebKeyEncryptionAlgorithm. </param>
-        /// <param name="plainText">The plain text</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>The encrypted text</returns>
-        public static async Task<KeyOperationResult> EncryptAsync(this IKeyVaultClient operations, string vault, string keyName, string keyVersion, string algorithm, byte[] plainText, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
-
-            if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
-
-            if (plainText == null)
-                throw new ArgumentNullException("plainText");
-
-            using (var _result = await operations.EncryptWithHttpMessagesAsync(vault, keyName, keyVersion, new KeyOperationsParameters(algorithm, plainText), null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
+        #region Key Crypto Operations
 
         /// <summary>
         /// Encrypts a single block of data. The amount of data that may be encrypted is determined
@@ -73,7 +42,7 @@ namespace Microsoft.Azure.KeyVault
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
-            using (var _result = await operations.EncryptWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, new KeyOperationsParameters(algorithm, plainText), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.EncryptWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, algorithm, plainText, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -102,37 +71,7 @@ namespace Microsoft.Azure.KeyVault
 
             // TODO: should we allow or not allow in the Key Identifier the version to be empty?
 
-            using (var _result = await operations.DecryptWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, new KeyOperationsParameters(algorithm, cipherText), null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// Creates a signature from a digest using the specified key in the vault
-        /// </summary>
-        /// <param name="vault">The URL of the vault</param>
-        /// <param name="keyName">The name of the key</param>
-        /// <param name="keyVersion">The version of the key (optional)</param>
-        /// <param name="algorithm">The signing algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm. </param>
-        /// <param name="digest">The digest value to sign</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>The signature value</returns>
-        public static async Task<KeyOperationResult> SignAsync(this IKeyVaultClient operations, string vault, string keyName, string keyVersion, string algorithm, byte[] digest, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
-
-            if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
-
-            if (digest == null)
-                throw new ArgumentNullException("digest");
-            
-            using (var _result = await operations.SignWithHttpMessagesAsync(vault, keyName, keyVersion, new KeyOperationsParameters(algorithm, digest), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.DecryptWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, algorithm, cipherText, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -159,7 +98,7 @@ namespace Microsoft.Azure.KeyVault
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
-            using (var _result = await operations.SignWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, new KeyOperationsParameters(algorithm, digest), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.SignWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, algorithm, digest, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -190,40 +129,10 @@ namespace Microsoft.Azure.KeyVault
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
-            using (var _result = await operations.VerifyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, new KeyVerifyParameters(algorithm, digest, signature), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.VerifyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, algorithm, digest, signature, null, cancellationToken).ConfigureAwait(false))
             {
                 var verifyResult = _result.Body;
                 return (verifyResult.Value == true) ? true : false;
-            }
-        }
-
-        /// <summary>
-        /// Wraps a symmetric key using the specified key
-        /// </summary>
-        /// <param name="vault">The URL of the vault</param>
-        /// <param name="keyName">The name of the key</param>
-        /// <param name="keyVersion">The version of the key (optional)</param>
-        /// <param name="algorithm">The signing algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm. </param>
-        /// <param name="key"> The symmetric key </param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns> The wrapped symmetric key </returns>
-        public static async Task<KeyOperationResult> WrapKeyAsync(this IKeyVaultClient operations, string vault, string keyName, string keyVersion, string algorithm, byte[] key, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
-
-            if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
-
-            if (key == null)
-                throw new ArgumentNullException("key");
-
-            using (var _result = await operations.WrapKeyWithHttpMessagesAsync(vault, keyName, keyVersion, new KeyOperationsParameters(algorithm, key), null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
             }
         }
 
@@ -248,7 +157,7 @@ namespace Microsoft.Azure.KeyVault
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
-            using (var _result = await operations.WrapKeyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, new KeyOperationsParameters(algorithm, key), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.WrapKeyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, algorithm, key, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -276,7 +185,7 @@ namespace Microsoft.Azure.KeyVault
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
-            using (var _result = await operations.UnwrapKeyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, new KeyOperationsParameters(algorithm, wrappedKey), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.UnwrapKeyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, algorithm, wrappedKey, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -287,46 +196,13 @@ namespace Microsoft.Azure.KeyVault
         #region Key Management
 
         /// <summary>
-        /// Creates a new, named, key in the specified vault.
-        /// </summary>
-        /// <param name="vault">The URL for the vault in which the key is to be created.</param>
-        /// <param name="keyName">The name for the key</param>
-        /// <param name="keyType">The type of key to create. For valid key types, see WebKeyTypes.</param>       
-        /// <param name="keySize">Size of the key</param>
-        /// <param name="key_ops">JSON web key operations. For more information, see JsonWebKeyOperation.</param>
-        /// <param name="keyAttributes">The attributes of the key. For more information on possible attributes, see KeyAttributes.</param>      
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>A key bundle containing the result of the create request</returns>
-        public static async Task<KeyBundle> CreateKeyAsync(this IKeyVaultClient operations, string vault, string keyName, string keyType, int? keySize = null, string[] key_ops = null, KeyAttributes keyAttributes = null, Dictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
-
-            if (string.IsNullOrEmpty(keyType))
-                throw new ArgumentNullException("keyType");
-
-            if (!JsonWebKeyType.AllTypes.Contains(keyType))
-                throw new ArgumentOutOfRangeException("keyType");
-
-            using (var _result = await operations.CreateKeyWithHttpMessagesAsync(vault, keyName, new KeyCreateParameters(keyType, keySize, key_ops, keyAttributes, tags), null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
         /// Retrieves the public portion of a key plus its attributes
         /// </summary>
         /// <param name="vault">The vault name, e.g. https://myvault.vault.azure.net</param>
         /// <param name="keyName">The key name</param>
-        /// <param name="keyVersion">The key version</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>A KeyBundle of the key and its attributes</returns>
-        public static async Task<KeyBundle> GetKeyAsync(this IKeyVaultClient operations, string vault, string keyName, string keyVersion = null, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<KeyBundle> GetKeyAsync(this IKeyVaultClient operations, string vault, string keyName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(vault))
                 throw new ArgumentNullException("vault");
@@ -334,7 +210,7 @@ namespace Microsoft.Azure.KeyVault
             if (string.IsNullOrEmpty(keyName))
                 throw new ArgumentNullException("keyName");
 
-            using (var _result = await operations.GetKeyWithHttpMessagesAsync(vault, keyName, keyVersion, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.GetKeyWithHttpMessagesAsync(vault, keyName, string.Empty, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -350,102 +226,10 @@ namespace Microsoft.Azure.KeyVault
         {
             if (string.IsNullOrEmpty(keyIdentifier))
                 throw new ArgumentNullException("keyIdentifier");
-            
+
             var keyId = new KeyIdentifier(keyIdentifier);
 
-            return await GetKeyAsync(operations, keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// List keys in the specified vault
-        /// </summary>
-        /// <param name="vault">The URL for the vault containing the keys, e.g. https://myvault.vault.azure.net</param>
-        /// <param name="maxresults">Maximum number of keys to return</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>A response message containing a list of keys in the vault along with a link to the next page of keys</returns>   
-        public static async Task<IPage<KeyItem>> GetKeysAsync(this IKeyVaultClient operations, string vault, int? maxresults = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-            
-            using (var _result = await operations.GetKeysWithHttpMessagesAsync(vault, maxresults, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// List the next page of keys
-        /// </summary>
-        /// <param name="nextLink">nextLink value from a previous call to GetKeys or GetKeysNext</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns></returns>
-        public static async Task<IPage<KeyItem>> GetKeysNextAsync(this IKeyVaultClient operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(nextLink))
-                throw new ArgumentNullException("nextLink");
-
-            using (var _result = await operations.GetKeysNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// List the versions of the specified key
-        /// </summary>
-        /// <param name="vault">The URL for the vault containing the key, e.g. https://myvault.vault.azure.net</param>
-        /// <param name="keyName">Name of the key</param>
-        /// <param name="maxresults">Maximum number of keys to return</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>A response message containing a list of keys along with a link to the next page of keys</returns>
-        public static async Task<IPage<KeyItem>> GetKeyVersionsAsync(this IKeyVaultClient operations, string vault, string keyName, int? maxresults = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
-            
-            using (var _result = await operations.GetKeyVersionsWithHttpMessagesAsync(vault, keyName, maxresults, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// List the next page of key versions
-        /// </summary>
-        /// <param name="nextLink">nextLink value from a previous call to GetKeyVersions or GetKeyVersionsNext</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>A response message containing a list of keys along with a link to the next page of keys</returns>
-        public static async Task<IPage<KeyItem>> GetKeyVersionsNextAsync(this IKeyVaultClient operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(nextLink))
-                throw new ArgumentNullException("nextLink");
-
-            using (var _result = await operations.GetKeyVersionsNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the specified key
-        /// </summary>
-        /// <param name="vault">The vault name, e.g. https://myvault.vault.azure.net</param>
-        /// <param name="keyName">The key name</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>The public part of the deleted key</returns>
-        public static async Task<KeyBundle> DeleteKeyAsync(this IKeyVaultClient operations, string vault, string keyName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
-
-            using (var _result = await operations.DeleteKeyWithHttpMessagesAsync(vault, keyName, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.GetKeyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -468,7 +252,7 @@ namespace Microsoft.Azure.KeyVault
             if (string.IsNullOrEmpty(keyName))
                 throw new ArgumentNullException("keyName");
 
-            using (var _result = await operations.UpdateKeyWithHttpMessagesAsync(vault, keyName, string.Empty, new KeyUpdateParameters(keyOps, attributes, tags), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.UpdateKeyWithHttpMessagesAsync(vault, keyName, string.Empty, keyOps, attributes, tags, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -490,7 +274,7 @@ namespace Microsoft.Azure.KeyVault
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
-            using (var _result = await operations.UpdateKeyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, new KeyUpdateParameters(keyOps, attributes, tags), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.UpdateKeyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, keyOps, attributes, tags, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -516,69 +300,21 @@ namespace Microsoft.Azure.KeyVault
             if (keyBundle == null)
                 throw new ArgumentNullException("keyBundle");
 
-            using (var _result = await operations.ImportKeyWithHttpMessagesAsync(vault, keyName, new KeyImportParameters(importToHardware, keyBundle.Key, keyBundle.Attributes, keyBundle.Tags), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ImportKeyWithHttpMessagesAsync(vault, keyName, importToHardware, keyBundle.Key, keyBundle.Attributes, keyBundle.Tags, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
 
         }
-
-        /// <summary>
-        /// Requests that a backup of the specified key be downloaded to the client.
-        /// </summary>
-        /// <param name="vault">The vault name, e.g. https://myvault.vault.azure.net</param>
-        /// <param name="keyName">The key name</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>The backup blob containing the backed up key</returns>
-        public static async Task<byte[]> BackupKeyAsync(this IKeyVaultClient operations, string vault, string keyName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
-
-            using (var _result = await operations.BackupKeyWithHttpMessagesAsync(vault, keyName, null, cancellationToken).ConfigureAwait(false))
-            {
-                var backupRespone = _result.Body;
-                return backupRespone.Value;
-            }
-        }
-
-        /// <summary>
-        /// Restores the backup key in to a vault 
-        /// </summary>
-        /// <param name="vault">The vault name, e.g. https://myvault.vault.azure.net</param>
-        /// <param name="keyBundleBackup"> the backup blob associated with a key bundle </param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns> Restored key bundle in the vault </returns>
-        public static async Task<KeyBundle> RestoreKeyAsync(this IKeyVaultClient operations, string vault, byte[] keyBundleBackup, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (keyBundleBackup == null)
-                throw new ArgumentNullException("keyBundleBackup");
-
-            using (var _result = await operations.RestoreKeyWithHttpMessagesAsync(vault, new KeyRestoreParameters(keyBundleBackup), null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        #endregion
-
-        #region Secrets Operations
 
         /// <summary>
         /// Gets a secret.
         /// </summary>
         /// <param name="vault">The URL for the vault containing the secrets.</param>
         /// <param name="secretName">The name the secret in the given vault.</param>
-        /// <param name="secretVersion">The version of the secret (optional)</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>A response message containing the secret</returns>
-        public static async Task<SecretBundle> GetSecretAsync(this IKeyVaultClient operations, string vault, string secretName, string secretVersion = null, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SecretBundle> GetSecretAsync(this IKeyVaultClient operations, string vault, string secretName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(vault))
                 throw new ArgumentNullException("vault");
@@ -586,7 +322,7 @@ namespace Microsoft.Azure.KeyVault
             if (string.IsNullOrEmpty(secretName))
                 throw new ArgumentNullException("secretName");
 
-            using (var _result = await operations.GetSecretWithHttpMessagesAsync(vault, secretName, secretVersion ?? string.Empty, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.GetSecretWithHttpMessagesAsync(vault, secretName, string.Empty, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -604,55 +340,7 @@ namespace Microsoft.Azure.KeyVault
                 throw new ArgumentNullException("secretIdentifier");
 
             var secretId = new SecretIdentifier(secretIdentifier);
-            return await GetSecretAsync(operations, secretId.Vault, secretId.Name, secretId.Version, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Sets a secret in the specified vault.
-        /// </summary>
-        /// <param name="vault">The URL for the vault containing the secrets.</param>
-        /// <param name="secretName">The name the secret in the given vault.</param>
-        /// <param name="value">The value of the secret.</param>        
-        /// <param name="contentType">Type of the secret value such as a password. </param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        /// <param name="secretAttributes">Attributes for the secret. For more information on possible attributes, see SecretAttributes.</param>     
-        /// <param name="cancellationToken">Optional cancellation token</param> 
-        /// <returns>A response message containing the updated secret</returns>
-        public static async Task<SecretBundle> SetSecretAsync(this IKeyVaultClient operations, string vault, string secretName, string value, Dictionary<string, string> tags = null, string contentType = null, SecretAttributes secretAttributes = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(secretName))
-                throw new ArgumentNullException("secretName");
-
-            var secretIdentifier = new SecretIdentifier(vault, secretName);
-
-            using (var _result = await operations.SetSecretWithHttpMessagesAsync(vault, secretName, new SecretSetParameters(value, secretAttributes, contentType, tags), null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// Updates the attributes associated with the specified secret
-        /// </summary>
-        /// <param name="vault">The vault name, e.g. https://myvault.vault.azure.net</param>
-        /// <param name="secretName">The name of the secret</param>
-        /// <param name="contentType">Type of the secret value such as password.</param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        /// <param name="secretAttributes">Attributes for the secret. For more information on possible attributes, see SecretAttributes.</param>      
-        /// <param name="cancellationToken">Optional cancellation token</param>  
-        /// <returns>A response message containing the updated secret</returns>
-        public static async Task<SecretBundle> UpdateSecretAsync(this IKeyVaultClient operations, string vault, string secretName, string contentType = null, SecretAttributes secretAttributes = null, Dictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(secretName))
-                throw new ArgumentNullException("secretName");
-
-            using (var _result = await operations.UpdateSecretWithHttpMessagesAsync(vault, secretName, string.Empty, new SecretUpdateParameters(secretAttributes, contentType, tags), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.GetSecretWithHttpMessagesAsync(secretId.Vault, secretId.Name, secretId.Version ?? string.Empty, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -674,107 +362,11 @@ namespace Microsoft.Azure.KeyVault
 
             var secretId = new SecretIdentifier(secretIdentifier);
 
-            using (var _result = await operations.UpdateSecretWithHttpMessagesAsync(secretId.Vault, secretId.Name, secretId.Version, new SecretUpdateParameters(secretAttributes, contentType, tags), null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.UpdateSecretWithHttpMessagesAsync(secretId.Vault, secretId.Name, secretId.Version, contentType, secretAttributes, tags, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
         }
-
-        /// <summary>
-        /// Deletes a secret from the specified vault.
-        /// </summary>
-        /// <param name="vault">The URL for the vault containing the secrets.</param>
-        /// <param name="secretName">The name of the secret in the given vault.</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>The deleted secret</returns>
-        public static async Task<SecretBundle> DeleteSecretAsync(this IKeyVaultClient operations, string vault, string secretName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(secretName))
-                throw new ArgumentNullException("secretName");
-
-            using (var _result = await operations.DeleteSecretWithHttpMessagesAsync(vault, secretName, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// List secrets in the specified vault
-        /// </summary>
-        /// <param name="vault">The URL for the vault containing the secrets.</param>
-        /// <param name="maxresults">Maximum number of secrets to return</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>A response message containing a list of secrets in the vault along with a link to the next page of secrets</returns>              
-        public static async Task<IPage<SecretItem>> GetSecretsAsync(this IKeyVaultClient operations, string vault, int? maxresults = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            using (var _result = await operations.GetSecretsWithHttpMessagesAsync(vault, maxresults, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// List the next page of secrets
-        /// </summary>
-        /// <param name="nextLink">nextLink value from a previous call to GetSecrets or GetSecretsNext</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>A response message containing a list of secrets in the vault along with a link to the next page of secrets</returns>
-        public static async Task<IPage<SecretItem>> GetSecretsNextAsync(this IKeyVaultClient operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(nextLink))
-                throw new ArgumentNullException("nextLink");
-
-            using (var _result = await operations.GetSecretsNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// List the versions of a secret
-        /// </summary>
-        /// <param name="vault">The URL for the vault containing the secret</param>
-        /// <param name="secretName">The name of the secret</param>
-        /// <param name="maxresults">Maximum number of secrets to return</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>A response message containing a list of secrets along with a link to the next page of secrets</returns>
-        public static async Task<IPage<SecretItem>> GetSecretVersionsAsync(this IKeyVaultClient operations, string vault, string secretName, int? maxresults = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
-
-            if (string.IsNullOrEmpty(secretName))
-                throw new ArgumentNullException("secretName");
-
-            using (var _result = await operations.GetSecretVersionsWithHttpMessagesAsync(vault, secretName, maxresults, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// List the next page of versions of a secret
-        /// </summary>
-        /// <param name="nextLink">nextLink value from a previous call to GetSecretVersions or GetSecretVersionsNext</param>
-        /// <param name="cancellationToken">Optional cancellation token</param>
-        /// <returns>A response message containing a list of secrets in the vault along with a link to the next page of secrets</returns>
-        public static async Task<IPage<SecretItem>> GetSecretVersionsNextAsync(this IKeyVaultClient operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (string.IsNullOrEmpty(nextLink))
-                throw new ArgumentNullException("nextLink");
-
-            using (var _result = await operations.GetSecretVersionsNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
         #endregion
 
     }

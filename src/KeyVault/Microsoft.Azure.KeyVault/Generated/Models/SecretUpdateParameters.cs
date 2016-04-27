@@ -22,23 +22,23 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the SecretUpdateParameters class.
         /// </summary>
-        public SecretUpdateParameters(SecretAttributes attributes = default(SecretAttributes), string contentType = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public SecretUpdateParameters(string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Attributes = attributes;
             ContentType = contentType;
+            SecretAttributes = secretAttributes;
             Tags = tags;
         }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "attributes")]
-        public SecretAttributes Attributes { get; set; }
 
         /// <summary>
         /// Type of the secret value such as a password
         /// </summary>
         [JsonProperty(PropertyName = "contentType")]
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "attributes")]
+        public SecretAttributes SecretAttributes { get; set; }
 
         /// <summary>
         /// Application-specific metadata in the form of key-value pairs

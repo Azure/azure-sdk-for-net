@@ -22,9 +22,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyRestoreParameters class.
         /// </summary>
-        public KeyRestoreParameters(byte[] value = default(byte[]))
+        public KeyRestoreParameters(byte[] keyBundleBackup)
         {
-            Value = value;
+            KeyBundleBackup = keyBundleBackup;
         }
 
         /// <summary>
@@ -32,7 +32,17 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "value")]
-        public byte[] Value { get; set; }
+        public byte[] KeyBundleBackup { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (KeyBundleBackup == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyBundleBackup");
+            }
+        }
     }
 }

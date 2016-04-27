@@ -22,12 +22,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the SecretSetParameters class.
         /// </summary>
-        public SecretSetParameters(string value = default(string), SecretAttributes attributes = default(SecretAttributes), string contentType = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public SecretSetParameters(string value, IDictionary<string, string> tags = default(IDictionary<string, string>), string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes))
         {
             Value = value;
-            Attributes = attributes;
-            ContentType = contentType;
             Tags = tags;
+            ContentType = contentType;
+            SecretAttributes = secretAttributes;
         }
 
         /// <summary>
@@ -37,9 +37,10 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Value { get; set; }
 
         /// <summary>
+        /// Application-specific metadata in the form of key-value pairs
         /// </summary>
-        [JsonProperty(PropertyName = "attributes")]
-        public SecretAttributes Attributes { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Type of the secret value such as a password
@@ -48,10 +49,19 @@ namespace Microsoft.Azure.KeyVault.Models
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Application-specific metadata in the form of key-value pairs
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "attributes")]
+        public SecretAttributes SecretAttributes { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
+        }
     }
 }

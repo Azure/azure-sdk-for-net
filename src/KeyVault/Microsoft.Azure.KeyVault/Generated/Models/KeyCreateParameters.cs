@@ -22,12 +22,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyCreateParameters class.
         /// </summary>
-        public KeyCreateParameters(string kty = default(string), int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public KeyCreateParameters(string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Kty = kty;
             KeySize = keySize;
             KeyOps = keyOps;
-            Attributes = attributes;
+            KeyAttributes = keyAttributes;
             Tags = tags;
         }
 
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "attributes")]
-        public KeyAttributes Attributes { get; set; }
+        public KeyAttributes KeyAttributes { get; set; }
 
         /// <summary>
         /// Application-specific metadata in the form of key-value pairs
@@ -59,5 +59,22 @@ namespace Microsoft.Azure.KeyVault.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Kty == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Kty");
+            }
+            if (this.Kty != null)
+            {
+                if (this.Kty.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Kty", 1);
+                }
+            }
+        }
     }
 }

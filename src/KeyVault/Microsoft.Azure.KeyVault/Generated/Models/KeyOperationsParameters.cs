@@ -22,7 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyOperationsParameters class.
         /// </summary>
-        public KeyOperationsParameters(string algorithm = default(string), byte[] value = default(byte[]))
+        public KeyOperationsParameters(string algorithm, byte[] value)
         {
             Algorithm = algorithm;
             Value = value;
@@ -40,5 +40,26 @@ namespace Microsoft.Azure.KeyVault.Models
         [JsonProperty(PropertyName = "value")]
         public byte[] Value { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Algorithm == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Algorithm");
+            }
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
+            if (this.Algorithm != null)
+            {
+                if (this.Algorithm.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Algorithm", 1);
+                }
+            }
+        }
     }
 }

@@ -71,8 +71,18 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyName'>
         /// The name of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters to create key.
+        /// <param name='kty'>
+        /// The type of key to create. For valid key types, see WebKeyTypes.
+        /// </param>
+        /// <param name='keySize'>
+        /// Size of the key
+        /// </param>
+        /// <param name='keyOps'>
+        /// </param>
+        /// <param name='keyAttributes'>
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,7 +90,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyBundle>> CreateKeyWithHttpMessagesAsync(string vault, string keyName, KeyCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyBundle>> CreateKeyWithHttpMessagesAsync(string vault, string keyName, string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Imports a key into the specified vault
@@ -91,8 +101,17 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyName'>
         /// The name of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters to update key.
+        /// <param name='hsm'>
+        /// Whether to import as a hardware key (HSM) or software key
+        /// </param>
+        /// <param name='key'>
+        /// The Json web key
+        /// </param>
+        /// <param name='keyAttributes'>
+        /// The key management attributes
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -100,7 +119,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyBundle>> ImportKeyWithHttpMessagesAsync(string vault, string keyName, KeyImportParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyBundle>> ImportKeyWithHttpMessagesAsync(string vault, string keyName, bool? hsm = default(bool?), JsonWebKey key = default(JsonWebKey), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Deletes the specified key
@@ -131,8 +150,14 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters to update key.
+        /// <param name='keyOps'>
+        /// Json web key operations. For more information on possible key
+        /// operations, see JsonWebKeyOperation.
+        /// </param>
+        /// <param name='keyAttributes'>
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -140,7 +165,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyBundle>> UpdateKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyBundle>> UpdateKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Retrieves the public portion of a key plus its attributes
@@ -223,8 +248,8 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='vault'>
         /// The vault name, e.g. https://myvault.vault.azure.net
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters to restore key
+        /// <param name='keyBundleBackup'>
+        /// the backup blob associated with a key bundle
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -232,7 +257,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyBundle>> RestoreKeyWithHttpMessagesAsync(string vault, KeyRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyBundle>> RestoreKeyWithHttpMessagesAsync(string vault, byte[] keyBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Encrypts a single block of data. The amount of data that may be
@@ -247,8 +272,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -256,7 +283,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyOperationResult>> EncryptWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyOperationResult>> EncryptWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Decrypts a single block of encrypted data
@@ -270,8 +297,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -279,7 +308,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyOperationResult>> DecryptWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyOperationResult>> DecryptWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Creates a signature from a digest using the specified key in the
@@ -294,8 +323,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -303,7 +334,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyOperationResult>> SignWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyOperationResult>> SignWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Verifies a signature using the specified key
@@ -317,8 +348,15 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// The signing/verification algorithm. For more information on
+        /// possible algorithm types, see JsonWebKeySignatureAlgorithm.
+        /// </param>
+        /// <param name='digest'>
+        /// The digest used for signing
+        /// </param>
+        /// <param name='signature'>
+        /// The signature to be verified
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -326,7 +364,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyVerifyResult>> VerifyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyVerifyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyVerifyResult>> VerifyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] digest, byte[] signature, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Wraps a symmetric key using the specified key
@@ -340,8 +378,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -349,7 +389,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyOperationResult>> WrapKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyOperationResult>> WrapKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Unwraps a symmetric key using the specified key in the vault that
@@ -364,8 +404,10 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='keyVersion'>
         /// The version of the key
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for key operations.
+        /// <param name='algorithm'>
+        /// algorithm identifier
+        /// </param>
+        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -373,7 +415,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyOperationResult>> UnwrapKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, KeyOperationsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyOperationResult>> UnwrapKeyWithHttpMessagesAsync(string vault, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Sets a secret in the specified vault.
@@ -384,8 +426,16 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='secretName'>
         /// The name of the secret in the given vault
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for secret set
+        /// <param name='value'>
+        /// The value of the secret
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
+        /// </param>
+        /// <param name='contentType'>
+        /// Type of the secret value such as a password
+        /// </param>
+        /// <param name='secretAttributes'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -393,7 +443,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SecretBundle>> SetSecretWithHttpMessagesAsync(string vault, string secretName, SecretSetParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecretBundle>> SetSecretWithHttpMessagesAsync(string vault, string secretName, string value, IDictionary<string, string> tags = default(IDictionary<string, string>), string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Deletes a secret from the specified vault.
@@ -424,7 +474,13 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='secretVersion'>
         /// The version of the secret
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='contentType'>
+        /// Type of the secret value such as a password
+        /// </param>
+        /// <param name='secretAttributes'>
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -432,7 +488,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SecretBundle>> UpdateSecretWithHttpMessagesAsync(string vault, string secretName, string secretVersion, SecretUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecretBundle>> UpdateSecretWithHttpMessagesAsync(string vault, string secretName, string secretVersion, string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets a secret.

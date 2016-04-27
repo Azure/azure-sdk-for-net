@@ -22,7 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyVerifyParameters class.
         /// </summary>
-        public KeyVerifyParameters(string algorithm = default(string), byte[] digest = default(byte[]), byte[] signature = default(byte[]))
+        public KeyVerifyParameters(string algorithm, byte[] digest, byte[] signature)
         {
             Algorithm = algorithm;
             Digest = digest;
@@ -50,5 +50,30 @@ namespace Microsoft.Azure.KeyVault.Models
         [JsonProperty(PropertyName = "value")]
         public byte[] Signature { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Algorithm == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Algorithm");
+            }
+            if (Digest == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Digest");
+            }
+            if (Signature == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Signature");
+            }
+            if (this.Algorithm != null)
+            {
+                if (this.Algorithm.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Algorithm", 1);
+                }
+            }
+        }
     }
 }

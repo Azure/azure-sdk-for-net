@@ -20,7 +20,7 @@ namespace Microsoft.Azure.KeyVault
     using System.Threading;
     using System.Threading.Tasks;
     using Models;
-
+    using System.Net.Http;
     /// <summary>
     /// Client class to perform cryptographic key operations and vault
     /// operations against the Key Vault service.
@@ -35,6 +35,25 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="scope"> The scope of the authentication request. </param>
         /// <returns> access token </returns>
         public delegate Task<string> AuthenticationCallback(string authority, string resource, string scope);
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="authenticationCallback">The authentication callback</param>
+        public KeyVaultClient(AuthenticationCallback authenticationCallback)
+            : this(new KeyVaultCredential(authenticationCallback))
+        {
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="authenticationCallback">The authentication callback</param>
+        /// <param name='handlers'>Optional. The delegating handlers to add to the http client pipeline.</param>
+        public KeyVaultClient(AuthenticationCallback authenticationCallback, params DelegatingHandler[] handlers)
+            : this(new KeyVaultCredential(authenticationCallback), handlers)
+        {
+        }
 
     }
 }
