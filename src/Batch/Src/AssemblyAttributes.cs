@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("BatchClientUnitTests")]
+[assembly: InternalsVisibleTo("Azure.Batch.Unit.Tests")]

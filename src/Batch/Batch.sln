@@ -6,13 +6,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch", "Src\Batch.csproj",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{9EC38B72-3B6D-46DF-89B4-1CF689C3CB2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchClientUnitTests", "Tests\ObjectModel\BatchClientUnitTests\BatchClientUnitTests.csproj", "{37F66AC7-C54C-4FE2-B691-5260D3971BAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Batch.Unit.Tests", "Tests\ObjectModel\Azure.Batch.Unit.Tests\Azure.Batch.Unit.Tests.csproj", "{37F66AC7-C54C-4FE2-B691-5260D3971BAB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C62E0485-00BD-4C9E-912D-752B0B50E050}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ObjectModel", "ObjectModel", "{973E84B0-A7DE-46EC-AD73-A5224D8041C8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BatchClientUnitTests", "BatchClientUnitTests", "{1C4CF4F3-AE0A-4194-9C99-087DFC6E3DC2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.Batch.Unit.Tests", "Azure.Batch.Unit.Tests", "{1C4CF4F3-AE0A-4194-9C99-087DFC6E3DC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchTestCommon", "Tests\ObjectModel\Common\BatchTestCommon.csproj", "{B697759F-6EF9-4142-8BD3-D78BF18C678E}"
 EndProject
