@@ -46,5 +46,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         [JsonProperty(PropertyName = "error")]
         public ResourceManagementErrorWithDetails Error { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (this.Error != null)
+            {
+                this.Error.Validate();
+            }
+        }
     }
 }

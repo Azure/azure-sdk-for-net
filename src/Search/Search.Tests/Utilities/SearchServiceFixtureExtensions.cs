@@ -18,8 +18,12 @@ namespace Microsoft.Azure.Search.Tests
             TestEnvironment currentEnvironment = TestEnvironmentFactory.GetTestEnvironment();
             Uri baseUri = currentEnvironment.GetBaseSearchUri(fixture.SearchServiceName);
             currentEnvironment.BaseUri = baseUri;
-            currentEnvironment.Credentials = new SearchCredentials(fixture.PrimaryApiKey);
-            return fixture.MockContext.GetServiceClient<SearchServiceClient>(currentEnvironment, handlers);
+            var credentials = new SearchCredentials(fixture.PrimaryApiKey);
+            return fixture.MockContext.GetServiceClientWithCredentials<SearchServiceClient>(
+                currentEnvironment, 
+                credentials,
+                false,
+                handlers);
         }
     }
 }
