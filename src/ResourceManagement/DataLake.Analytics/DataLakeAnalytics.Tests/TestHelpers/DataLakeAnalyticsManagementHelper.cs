@@ -252,8 +252,11 @@ CREATE TABLE {0}.dbo.{1}
         ClickedUrls     string,
     INDEX idx1 //Name of index
     CLUSTERED (Region ASC) //Column to cluster by
-    PARTITIONED BY HASH (Region) //Column to partition by
+    PARTITIONED BY BUCKETS (UserId) HASH (Region) //Column to partition by
 );
+
+ALTER TABLE {0}.dbo.{1} ADD IF NOT EXISTS PARTITION (1);
+
 DROP FUNCTION IF EXISTS {0}.dbo.{2};
 
 //create table weblogs on space-delimited website log data
