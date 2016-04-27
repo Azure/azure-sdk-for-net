@@ -221,6 +221,43 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Deletes all secrets in the specified database
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the secret.
+            /// </param>
+            public static void DeleteAllSecrets(this ICatalogOperations operations, string accountName, string databaseName)
+            {
+                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteAllSecretsAsync(accountName, databaseName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes all secrets in the specified database
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the secret.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAllSecretsAsync(this ICatalogOperations operations, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.DeleteAllSecretsWithHttpMessagesAsync(accountName, databaseName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// Retrieves the specified external data source from the Data Lake Analytics
             /// catalog.
             /// </summary>
