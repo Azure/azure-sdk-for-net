@@ -1,0 +1,993 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourcegroups?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6893918f-9b94-45d3-809c-060d2d9d708a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/111c36dc-4047-4c69-acd5-301072ff1fc2\",\r\n      \"name\": \"111c36dc-4047-4c69-acd5-301072ff1fc2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/aftest\",\r\n      \"name\": \"aftest\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Api-Default-North-Central-US\",\r\n      \"name\": \"Api-Default-North-Central-US\",\r\n      \"location\": \"northcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/capptaintestvm\",\r\n      \"name\": \"capptaintestvm\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-BizTalk-West-US\",\r\n      \"name\": \"Default-BizTalk-West-US\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-NotificationHubs-CentralUS\",\r\n      \"name\": \"Default-NotificationHubs-CentralUS\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-NotificationHubs-NorthCentralUS\",\r\n      \"name\": \"Default-NotificationHubs-NorthCentralUS\",\r\n      \"location\": \"northcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-NotificationHubs-WestUS\",\r\n      \"name\": \"Default-NotificationHubs-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-ServiceBus-EastUS\",\r\n      \"name\": \"Default-ServiceBus-EastUS\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-ServiceBus-SouthCentralUS\",\r\n      \"name\": \"Default-ServiceBus-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-SQL-SouthCentralUS\",\r\n      \"name\": \"Default-SQL-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-SQL-WestUS\",\r\n      \"name\": \"Default-SQL-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Storage-EastAsia\",\r\n      \"name\": \"Default-Storage-EastAsia\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Storage-EastUS\",\r\n      \"name\": \"Default-Storage-EastUS\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Storage-SouthCentralUS\",\r\n      \"name\": \"Default-Storage-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Web-WestUS\",\r\n      \"name\": \"Default-Web-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup1658\",\r\n      \"name\": \"nodeTestGroup1658\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup2818\",\r\n      \"name\": \"nodeTestGroup2818\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup3789\",\r\n      \"name\": \"nodeTestGroup3789\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup3871\",\r\n      \"name\": \"nodeTestGroup3871\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup4534\",\r\n      \"name\": \"nodeTestGroup4534\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup4877\",\r\n      \"name\": \"nodeTestGroup4877\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup5070\",\r\n      \"name\": \"nodeTestGroup5070\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup5329\",\r\n      \"name\": \"nodeTestGroup5329\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup6473\",\r\n      \"name\": \"nodeTestGroup6473\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup6932\",\r\n      \"name\": \"nodeTestGroup6932\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup8182\",\r\n      \"name\": \"nodeTestGroup8182\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup9003\",\r\n      \"name\": \"nodeTestGroup9003\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/nodeTestGroup9313\",\r\n      \"name\": \"nodeTestGroup9313\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1024\",\r\n      \"name\": \"NotificationHub-RG1024\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1098\",\r\n      \"name\": \"NotificationHub-RG1098\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG114\",\r\n      \"name\": \"NotificationHub-RG114\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1151\",\r\n      \"name\": \"NotificationHub-RG1151\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1292\",\r\n      \"name\": \"NotificationHub-RG1292\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1341\",\r\n      \"name\": \"NotificationHub-RG1341\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1571\",\r\n      \"name\": \"NotificationHub-RG1571\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1763\",\r\n      \"name\": \"NotificationHub-RG1763\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1947\",\r\n      \"name\": \"NotificationHub-RG1947\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2082\",\r\n      \"name\": \"NotificationHub-RG2082\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG214\",\r\n      \"name\": \"NotificationHub-RG214\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2239\",\r\n      \"name\": \"NotificationHub-RG2239\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2250\",\r\n      \"name\": \"NotificationHub-RG2250\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2320\",\r\n      \"name\": \"NotificationHub-RG2320\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2329\",\r\n      \"name\": \"NotificationHub-RG2329\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2402\",\r\n      \"name\": \"NotificationHub-RG2402\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2474\",\r\n      \"name\": \"NotificationHub-RG2474\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2487\",\r\n      \"name\": \"NotificationHub-RG2487\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2569\",\r\n      \"name\": \"NotificationHub-RG2569\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2608\",\r\n      \"name\": \"NotificationHub-RG2608\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2740\",\r\n      \"name\": \"NotificationHub-RG2740\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2766\",\r\n      \"name\": \"NotificationHub-RG2766\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2780\",\r\n      \"name\": \"NotificationHub-RG2780\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG287\",\r\n      \"name\": \"NotificationHub-RG287\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2900\",\r\n      \"name\": \"NotificationHub-RG2900\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2906\",\r\n      \"name\": \"NotificationHub-RG2906\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3062\",\r\n      \"name\": \"NotificationHub-RG3062\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3096\",\r\n      \"name\": \"NotificationHub-RG3096\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG328\",\r\n      \"name\": \"NotificationHub-RG328\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3293\",\r\n      \"name\": \"NotificationHub-RG3293\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3366\",\r\n      \"name\": \"NotificationHub-RG3366\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3499\",\r\n      \"name\": \"NotificationHub-RG3499\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3605\",\r\n      \"name\": \"NotificationHub-RG3605\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3662\",\r\n      \"name\": \"NotificationHub-RG3662\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3689\",\r\n      \"name\": \"NotificationHub-RG3689\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3777\",\r\n      \"name\": \"NotificationHub-RG3777\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3800\",\r\n      \"name\": \"NotificationHub-RG3800\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3832\",\r\n      \"name\": \"NotificationHub-RG3832\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3856\",\r\n      \"name\": \"NotificationHub-RG3856\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3857\",\r\n      \"name\": \"NotificationHub-RG3857\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3933\",\r\n      \"name\": \"NotificationHub-RG3933\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4142\",\r\n      \"name\": \"NotificationHub-RG4142\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4225\",\r\n      \"name\": \"NotificationHub-RG4225\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4301\",\r\n      \"name\": \"NotificationHub-RG4301\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4373\",\r\n      \"name\": \"NotificationHub-RG4373\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4393\",\r\n      \"name\": \"NotificationHub-RG4393\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4618\",\r\n      \"name\": \"NotificationHub-RG4618\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4626\",\r\n      \"name\": \"NotificationHub-RG4626\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4695\",\r\n      \"name\": \"NotificationHub-RG4695\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4794\",\r\n      \"name\": \"NotificationHub-RG4794\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4941\",\r\n      \"name\": \"NotificationHub-RG4941\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG500\",\r\n      \"name\": \"NotificationHub-RG500\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5003\",\r\n      \"name\": \"NotificationHub-RG5003\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG502\",\r\n      \"name\": \"NotificationHub-RG502\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5215\",\r\n      \"name\": \"NotificationHub-RG5215\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5237\",\r\n      \"name\": \"NotificationHub-RG5237\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5307\",\r\n      \"name\": \"NotificationHub-RG5307\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5332\",\r\n      \"name\": \"NotificationHub-RG5332\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5471\",\r\n      \"name\": \"NotificationHub-RG5471\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5492\",\r\n      \"name\": \"NotificationHub-RG5492\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5502\",\r\n      \"name\": \"NotificationHub-RG5502\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5757\",\r\n      \"name\": \"NotificationHub-RG5757\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5811\",\r\n      \"name\": \"NotificationHub-RG5811\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5828\",\r\n      \"name\": \"NotificationHub-RG5828\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5836\",\r\n      \"name\": \"NotificationHub-RG5836\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5897\",\r\n      \"name\": \"NotificationHub-RG5897\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5915\",\r\n      \"name\": \"NotificationHub-RG5915\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5918\",\r\n      \"name\": \"NotificationHub-RG5918\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6265\",\r\n      \"name\": \"NotificationHub-RG6265\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6304\",\r\n      \"name\": \"NotificationHub-RG6304\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6393\",\r\n      \"name\": \"NotificationHub-RG6393\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6401\",\r\n      \"name\": \"NotificationHub-RG6401\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6456\",\r\n      \"name\": \"NotificationHub-RG6456\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6513\",\r\n      \"name\": \"NotificationHub-RG6513\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6515\",\r\n      \"name\": \"NotificationHub-RG6515\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6550\",\r\n      \"name\": \"NotificationHub-RG6550\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG682\",\r\n      \"name\": \"NotificationHub-RG682\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6885\",\r\n      \"name\": \"NotificationHub-RG6885\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7028\",\r\n      \"name\": \"NotificationHub-RG7028\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7053\",\r\n      \"name\": \"NotificationHub-RG7053\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7176\",\r\n      \"name\": \"NotificationHub-RG7176\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7427\",\r\n      \"name\": \"NotificationHub-RG7427\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7444\",\r\n      \"name\": \"NotificationHub-RG7444\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7453\",\r\n      \"name\": \"NotificationHub-RG7453\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7709\",\r\n      \"name\": \"NotificationHub-RG7709\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7714\",\r\n      \"name\": \"NotificationHub-RG7714\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7797\",\r\n      \"name\": \"NotificationHub-RG7797\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7806\",\r\n      \"name\": \"NotificationHub-RG7806\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8062\",\r\n      \"name\": \"NotificationHub-RG8062\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8139\",\r\n      \"name\": \"NotificationHub-RG8139\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8221\",\r\n      \"name\": \"NotificationHub-RG8221\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8245\",\r\n      \"name\": \"NotificationHub-RG8245\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8335\",\r\n      \"name\": \"NotificationHub-RG8335\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8399\",\r\n      \"name\": \"NotificationHub-RG8399\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8421\",\r\n      \"name\": \"NotificationHub-RG8421\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8513\",\r\n      \"name\": \"NotificationHub-RG8513\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8564\",\r\n      \"name\": \"NotificationHub-RG8564\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8761\",\r\n      \"name\": \"NotificationHub-RG8761\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG882\",\r\n      \"name\": \"NotificationHub-RG882\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8946\",\r\n      \"name\": \"NotificationHub-RG8946\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9043\",\r\n      \"name\": \"NotificationHub-RG9043\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9105\",\r\n      \"name\": \"NotificationHub-RG9105\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9139\",\r\n      \"name\": \"NotificationHub-RG9139\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9144\",\r\n      \"name\": \"NotificationHub-RG9144\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9226\",\r\n      \"name\": \"NotificationHub-RG9226\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9292\",\r\n      \"name\": \"NotificationHub-RG9292\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9387\",\r\n      \"name\": \"NotificationHub-RG9387\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9412\",\r\n      \"name\": \"NotificationHub-RG9412\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9638\",\r\n      \"name\": \"NotificationHub-RG9638\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9696\",\r\n      \"name\": \"NotificationHub-RG9696\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9697\",\r\n      \"name\": \"NotificationHub-RG9697\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9698\",\r\n      \"name\": \"NotificationHub-RG9698\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9754\",\r\n      \"name\": \"NotificationHub-RG9754\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9868\",\r\n      \"name\": \"NotificationHub-RG9868\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9939\",\r\n      \"name\": \"NotificationHub-RG9939\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/PushNotification\",\r\n      \"name\": \"PushNotification\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk1160\",\r\n      \"name\": \"RGName-onesdk1160\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk1625\",\r\n      \"name\": \"RGName-onesdk1625\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk1872\",\r\n      \"name\": \"RGName-onesdk1872\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk2096\",\r\n      \"name\": \"RGName-onesdk2096\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk2998\",\r\n      \"name\": \"RGName-onesdk2998\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk3753\",\r\n      \"name\": \"RGName-onesdk3753\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk3811\",\r\n      \"name\": \"RGName-onesdk3811\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk4674\",\r\n      \"name\": \"RGName-onesdk4674\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk5878\",\r\n      \"name\": \"RGName-onesdk5878\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk6372\",\r\n      \"name\": \"RGName-onesdk6372\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk6516\",\r\n      \"name\": \"RGName-onesdk6516\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk6530\",\r\n      \"name\": \"RGName-onesdk6530\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk6604\",\r\n      \"name\": \"RGName-onesdk6604\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk763\",\r\n      \"name\": \"RGName-onesdk763\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk9142\",\r\n      \"name\": \"RGName-onesdk9142\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk956\",\r\n      \"name\": \"RGName-onesdk956\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/RGName-onesdk9821\",\r\n      \"name\": \"RGName-onesdk9821\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/TestBlah\",\r\n      \"name\": \"TestBlah\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/TestBlah1\",\r\n      \"name\": \"TestBlah1\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/TestRG\",\r\n      \"name\": \"TestRG\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/TestRG1231\",\r\n      \"name\": \"TestRG1231\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/TestRG-111\",\r\n      \"name\": \"TestRG-111\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/ubikod\",\r\n      \"name\": \"ubikod\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "34331"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-request-id": [
+          "305ea495-2ef9-4a8d-ab9f-6a7410bc19db"
+        ],
+        "x-ms-correlation-request-id": [
+          "305ea495-2ef9-4a8d-ab9f-6a7410bc19db"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210425Z:305ea495-2ef9-4a8d-ab9f-6a7410bc19db"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:04:25 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourcegroups/NotificationHub-RG4927?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlZ3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5Mjc/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "x-ms-client-request-id": [
+          "2ba00920-728f-4d3d-8a12-47bc35c66074"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927\",\r\n  \"name\": \"NotificationHub-RG4927\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "205"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "15bde195-f9a7-45dd-a71f-e37056495387"
+        ],
+        "x-ms-correlation-request-id": [
+          "15bde195-f9a7-45dd-a71f-e37056495387"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210426Z:15bde195-f9a7-45dd-a71f-e37056495387"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:04:26 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"namespaceType\": \"NotificationHub\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "103"
+        ],
+        "x-ms-client-request-id": [
+          "b5583c23-b0ae-489c-9503-c9a6d5a3c44f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739\",\r\n  \"name\": \"HydraNH-Namespace9739\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n  \"location\": \"South Central US\",\r\n  \"kind\": \"NotificationHub\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Unknown\",\r\n    \"enabled\": false,\r\n    \"namespaceType\": \"NotificationHub\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "406"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9d6c4fc3-09b8-412c-ae14-f4d655e2d0ac_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "65f9890b-4db1-48fa-a91a-06efa1c82bf7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210429Z:65f9890b-4db1-48fa-a91a-06efa1c82bf7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:04:28 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6d4b089a-25bb-49a9-9887-348484578270"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739\",\r\n  \"name\": \"HydraNH-Namespace9739\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n  \"location\": \"South Central US\",\r\n  \"kind\": \"NotificationHub\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2016-04-25T21:04:29.02Z\",\r\n    \"serviceBusEndpoint\": \"https://HydraNH-Namespace9739.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2016-04-25T21:04:30.187Z\",\r\n    \"namespaceType\": \"NotificationHub\",\r\n    \"messagingSku\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "617"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dca85b32-82a1-4770-9605-cc0096101b69_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "470136fa-fe8f-4a21-90ef-e8a9f22b3bc0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210459Z:470136fa-fe8f-4a21-90ef-e8a9f22b3bc0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:04:59 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6d41fe52-adc6-4d6e-bc9b-4dbe40ddeab4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739\",\r\n  \"name\": \"HydraNH-Namespace9739\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n  \"location\": \"South Central US\",\r\n  \"kind\": \"NotificationHub\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2016-04-25T21:04:29.02Z\",\r\n    \"serviceBusEndpoint\": \"https://HydraNH-Namespace9739.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2016-04-25T21:04:30.187Z\",\r\n    \"namespaceType\": \"NotificationHub\",\r\n    \"messagingSku\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "617"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0c8dfe48-b06d-4a8e-aa9b-50244af6df6c_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "2c3b1012-06ec-4579-8acc-495af62d7ae1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210459Z:2c3b1012-06ec-4579-8acc-495af62d7ae1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:04:59 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "59"
+        ],
+        "x-ms-client-request-id": [
+          "aeae95f1-9bbc-430a-a141-ff031cc084c4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": null,\r\n  \"type\": null,\r\n  \"location\": \"South Central US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"registrationTtl\": \"10675199.02:48:05.4775807\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "138"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b9c48dec-6170-425f-aa2a-6ed326836c70_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "7362438e-c18e-4421-9247-47d0713044fd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210501Z:7362438e-c18e-4421-9247-47d0713044fd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:01 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5L0F1dGhvcml6YXRpb25SdWxlcy9IeWRyYU5ILUF1dGhydWxlczgzOTc/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"HydraNH-Authrules8397\",\r\n  \"properties\": {\r\n    \"primaryKey\": \"8TaHXfs87LTqkIAFuLLBOXgbXkPCytstjTTtZzhZ4/Y=\",\r\n    \"secondaryKey\": \"8LIfS1WVnHiGaSr0qPcrsA9Aonf8EPKEC/tVn+mOBg4=\",\r\n    \"keyName\": \"HydraNH-Authrules8397\",\r\n    \"claimType\": \"SharedAccessKey\",\r\n    \"claimValue\": \"None\",\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "360"
+        ],
+        "x-ms-client-request-id": [
+          "602ad270-0059-4a2e-b81a-ee4cd6d92aa7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397\",\r\n  \"name\": \"HydraNH-Authrules8397\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"keyName\": \"HydraNH-Authrules8397\",\r\n    \"primaryKey\": \"8TaHXfs87LTqkIAFuLLBOXgbXkPCytstjTTtZzhZ4/Y=\",\r\n    \"secondaryKey\": \"8LIfS1WVnHiGaSr0qPcrsA9Aonf8EPKEC/tVn+mOBg4=\",\r\n    \"claimType\": \"SharedAccessKey\",\r\n    \"claimValue\": \"None\",\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ],\r\n    \"createdTime\": \"2016-04-25T21:05:02.5055633Z\",\r\n    \"modifiedTime\": \"2016-04-25T21:05:02.5055633Z\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "735"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6052dbcc-c06f-4e97-8870-7481fdf181c1_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "fa109aff-62ce-4120-8b73-b99d25301c4d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210502Z:fa109aff-62ce-4120-8b73-b99d25301c4d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:01 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5L0F1dGhvcml6YXRpb25SdWxlcy9IeWRyYU5ILUF1dGhydWxlczgzOTc/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"primaryKey\": \"w7oyLBUMdkmkjM1QVm3kEFzkZT6qdY8la3TgOjra2u4=\",\r\n    \"secondaryKey\": \"8LIfS1WVnHiGaSr0qPcrsA9Aonf8EPKEC/tVn+mOBg4=\",\r\n    \"keyName\": \"HydraNH-Authrules8397\",\r\n    \"claimType\": \"SharedAccessKey\",\r\n    \"claimValue\": \"None\",\r\n    \"rights\": [\r\n      \"Listen\"\r\n    ],\r\n    \"createdTime\": \"2016-04-25T21:05:02.5055633Z\",\r\n    \"modifiedTime\": \"2016-04-25T21:05:02.5055633Z\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "414"
+        ],
+        "x-ms-client-request-id": [
+          "e776d4bf-1a05-4659-adb0-4a482c0d0391"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397\",\r\n  \"name\": \"HydraNH-Authrules8397\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"keyName\": \"HydraNH-Authrules8397\",\r\n    \"primaryKey\": \"w7oyLBUMdkmkjM1QVm3kEFzkZT6qdY8la3TgOjra2u4=\",\r\n    \"secondaryKey\": \"8LIfS1WVnHiGaSr0qPcrsA9Aonf8EPKEC/tVn+mOBg4=\",\r\n    \"claimType\": \"SharedAccessKey\",\r\n    \"claimValue\": \"None\",\r\n    \"rights\": [\r\n      \"Listen\"\r\n    ],\r\n    \"createdTime\": \"2016-04-25T21:05:02.5055633Z\",\r\n    \"modifiedTime\": \"2016-04-25T21:05:02.5055633Z\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "728"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "18a11814-2237-4cea-a77b-1ffa435970fb_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-correlation-request-id": [
+          "57d164c3-7ddb-465e-be2c-35fe15745ff2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210509Z:57d164c3-7ddb-465e-be2c-35fe15745ff2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:08 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5L0F1dGhvcml6YXRpb25SdWxlcy9IeWRyYU5ILUF1dGhydWxlczgzOTc/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3acc45b9-24a8-4b31-ad1c-a97d42d38526"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397\",\r\n  \"name\": \"HydraNH-Authrules8397\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"keyName\": \"HydraNH-Authrules8397\",\r\n    \"primaryKey\": \"8TaHXfs87LTqkIAFuLLBOXgbXkPCytstjTTtZzhZ4/Y=\",\r\n    \"secondaryKey\": \"8LIfS1WVnHiGaSr0qPcrsA9Aonf8EPKEC/tVn+mOBg4=\",\r\n    \"claimType\": \"SharedAccessKey\",\r\n    \"claimValue\": \"None\",\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ],\r\n    \"createdTime\": \"2016-04-25T21:05:02.5055633Z\",\r\n    \"modifiedTime\": \"2016-04-25T21:05:02.5055633Z\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "735"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f2ee9e29-dc5d-4d45-b27f-b463de81f336_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "aa4f3ee1-74b1-4b0d-8b3c-3c058d4128b0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210508Z:aa4f3ee1-74b1-4b0d-8b3c-3c058d4128b0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:07 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5L0F1dGhvcml6YXRpb25SdWxlcy9IeWRyYU5ILUF1dGhydWxlczgzOTc/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f73e3d6e-3444-4c9c-8164-e908aa56a28e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397\",\r\n  \"name\": \"HydraNH-Authrules8397\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"keyName\": \"HydraNH-Authrules8397\",\r\n    \"primaryKey\": \"w7oyLBUMdkmkjM1QVm3kEFzkZT6qdY8la3TgOjra2u4=\",\r\n    \"secondaryKey\": \"8LIfS1WVnHiGaSr0qPcrsA9Aonf8EPKEC/tVn+mOBg4=\",\r\n    \"claimType\": \"SharedAccessKey\",\r\n    \"claimValue\": \"None\",\r\n    \"rights\": [\r\n      \"Listen\"\r\n    ],\r\n    \"createdTime\": \"2016-04-25T21:05:02.5055633Z\",\r\n    \"modifiedTime\": \"2016-04-25T21:05:02.5055633Z\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "728"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a33a0707-f410-4630-96e0-aa2c55be3eb5_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-correlation-request-id": [
+          "79b249ea-5afc-4cba-b649-548c19103787"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210514Z:79b249ea-5afc-4cba-b649-548c19103787"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:13 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5L0F1dGhvcml6YXRpb25SdWxlcy9IeWRyYU5ILUF1dGhydWxlczgzOTc/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c3796046-4683-4dcf-afec-4af65d5b5184"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"NotificationHub does not exist\",\r\n    \"code\": \"NotFound\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "72"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8659173c-a361-4411-8813-ce6bbb81ba1e_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b35fe24-2771-4c31-9b68-735388dacc2b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210522Z:1b35fe24-2771-4c31-9b68-735388dacc2b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:22 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5L0F1dGhvcml6YXRpb25SdWxlcz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "825cf65b-d5c4-4134-8cbc-fa378c841728"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/DefaultListenSharedAccessSignature\",\r\n      \"name\": \"DefaultListenSharedAccessSignature\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules\",\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"keyName\": \"DefaultListenSharedAccessSignature\",\r\n        \"primaryKey\": \"/8bbbDVlBrLJQOijBLmkPezvpTdN8dpXJ6OQz2HFmv8=\",\r\n        \"secondaryKey\": \"R8cXadCInks1s6dpLbo/xwpiZ/lTlamwP2BTHXVTZKw=\",\r\n        \"claimType\": \"SharedAccessKey\",\r\n        \"claimValue\": \"None\",\r\n        \"rights\": [\r\n          \"Listen\"\r\n        ],\r\n        \"createdTime\": \"2016-04-25T21:04:59.767512Z\",\r\n        \"modifiedTime\": \"2016-04-25T21:04:59.767512Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/DefaultFullSharedAccessSignature\",\r\n      \"name\": \"DefaultFullSharedAccessSignature\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules\",\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"keyName\": \"DefaultFullSharedAccessSignature\",\r\n        \"primaryKey\": \"K6sSw3BLEEi86/Bx9ggRvGvVeJvch3mw40LTP0nV/kE=\",\r\n        \"secondaryKey\": \"OixG9CmvUkOdHhLVmSFw3C1BjCczCixOUQKJnTLmQro=\",\r\n        \"claimType\": \"SharedAccessKey\",\r\n        \"claimValue\": \"None\",\r\n        \"rights\": [\r\n          \"Listen\",\r\n          \"Manage\",\r\n          \"Send\"\r\n        ],\r\n        \"createdTime\": \"2016-04-25T21:04:59.767512Z\",\r\n        \"modifiedTime\": \"2016-04-25T21:04:59.767512Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397\",\r\n      \"name\": \"HydraNH-Authrules8397\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules\",\r\n      \"location\": null,\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"keyName\": \"HydraNH-Authrules8397\",\r\n        \"primaryKey\": \"8TaHXfs87LTqkIAFuLLBOXgbXkPCytstjTTtZzhZ4/Y=\",\r\n        \"secondaryKey\": \"8LIfS1WVnHiGaSr0qPcrsA9Aonf8EPKEC/tVn+mOBg4=\",\r\n        \"claimType\": \"SharedAccessKey\",\r\n        \"claimValue\": \"None\",\r\n        \"rights\": [\r\n          \"Listen\",\r\n          \"Send\"\r\n        ],\r\n        \"createdTime\": \"2016-04-25T21:05:02.5055633Z\",\r\n        \"modifiedTime\": \"2016-04-25T21:05:02.5055633Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2305"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2b1c1477-e5b1-45f5-8541-17b523eee1c7_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "b3a713e7-5382-4403-bd93-5e111e068758"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210508Z:b3a713e7-5382-4403-bd93-5e111e068758"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:08 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397/listKeys?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5L0F1dGhvcml6YXRpb25SdWxlcy9IeWRyYU5ILUF1dGhydWxlczgzOTcvbGlzdEtleXM/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1532853c-8b81-4177-a405-e4926e20b924"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://hydranh-namespace9739.servicebus.windows.net/;SharedAccessKeyName=HydraNH-Authrules8397;SharedAccessKey=w7oyLBUMdkmkjM1QVm3kEFzkZT6qdY8la3TgOjra2u4=\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://hydranh-namespace9739.servicebus.windows.net/;SharedAccessKeyName=HydraNH-Authrules8397;SharedAccessKey=8LIfS1WVnHiGaSr0qPcrsA9Aonf8EPKEC/tVn+mOBg4=\",\r\n  \"primaryKey\": null,\r\n  \"secondaryKey\": null,\r\n  \"keyName\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "438"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8780319b-e5a5-4179-9e11-41e17ef7e360_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1191"
+        ],
+        "x-ms-correlation-request-id": [
+          "a4b8522f-ef42-4ddf-86ea-adcfeaf87785"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210514Z:a4b8522f-ef42-4ddf-86ea-adcfeaf87785"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:13 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739/notificationHubs/HydraNH-NotificationHub1369/AuthorizationRules/HydraNH-Authrules8397?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5L25vdGlmaWNhdGlvbkh1YnMvSHlkcmFOSC1Ob3RpZmljYXRpb25IdWIxMzY5L0F1dGhvcml6YXRpb25SdWxlcy9IeWRyYU5ILUF1dGhydWxlczgzOTc/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9930b231-0c78-4531-a3dd-8e28a3eb1496"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "82e1c30c-e407-47a2-aef1-c7a3fc939d03_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1190"
+        ],
+        "x-ms-correlation-request-id": [
+          "85592834-6279-4502-bbaa-6fabd5367d2e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210515Z:85592834-6279-4502-bbaa-6fabd5367d2e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:14 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4927/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9739?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzQ5MjcvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U5NzM5P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "870d8d96-2471-4c98-ad8f-e74d570bd1da"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a2e6f845-c8d1-43b6-9f0a-5831aad0369a_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/111c36dc40474c69acd5301072ff1fc2/providers/Microsoft.NotificationHubs/locations/southcentralus/operationresults/HydraNH-Namespace9739?api-version=2014-09-01"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-correlation-request-id": [
+          "064aeb86-8922-427f-801d-0af7f4c1deb1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210523Z:064aeb86-8922-427f-801d-0af7f4c1deb1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:23 GMT"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc40474c69acd5301072ff1fc2/providers/Microsoft.NotificationHubs/locations/southcentralus/operationresults/HydraNH-Namespace9739?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGM0MDQ3NGM2OWFjZDUzMDEwNzJmZjFmYzIvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL2xvY2F0aW9ucy9zb3V0aGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzL0h5ZHJhTkgtTmFtZXNwYWNlOTczOT9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidSubscriptionId\",\r\n    \"message\": \"The provided subscription identifier '111c36dc40474c69acd5301072ff1fc2' is malformed or invalid.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "151"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "9963fd02-95de-4fb9-84ef-33b4753dceac"
+        ],
+        "x-ms-correlation-request-id": [
+          "9963fd02-95de-4fb9-84ef-33b4753dceac"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160425T210553Z:9963fd02-95de-4fb9-84ef-33b4753dceac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 25 Apr 2016 21:05:52 GMT"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {
+    "NotificationHubCreateGetUpdateDeleteAuthorizationRules": [
+      "NotificationHub-RG4927",
+      "HydraNH-Namespace9739",
+      "HydraNH-NotificationHub1369",
+      "HydraNH-Authrules8397"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "111c36dc-4047-4c69-acd5-301072ff1fc2",
+    "CreatePrimaryKey": "8TaHXfs87LTqkIAFuLLBOXgbXkPCytstjTTtZzhZ4/Y=",
+    "UpdatePrimaryKey": "w7oyLBUMdkmkjM1QVm3kEFzkZT6qdY8la3TgOjra2u4="
+  }
+}
