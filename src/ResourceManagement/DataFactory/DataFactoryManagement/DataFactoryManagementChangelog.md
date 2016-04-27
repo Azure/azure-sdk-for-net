@@ -1,11 +1,11 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
-## Version 4.6.0
+## Version 4.6.1
 _Release date: 2016.04.26_
 
 ### Bug Fixes
-* Fix list activity windows request payload matching the service object model
-	* it should not contain DFName and RGName
+* Fixes HTTP request for listing activity windows.
+    * Removes the resource group name and the data factory name from the request payload.
 
 ## Version 4.6.0
 _Release date: 2016.04.14_ 
