@@ -123,6 +123,8 @@ namespace DataLakeAnalytics.Tests
                         commonData.SecondDataLakeAnalyticsAccountName,
                         commonData.DatabaseName, "dbo", commonData.ProcName);
 
+                    Assert.Equal(commonData.ProcName, procGetResponse.Name);
+
                     // Get all the types
                     var typeGetResponse = clientToUse.Catalog.ListTypes(
                         commonData.SecondDataLakeAnalyticsAccountName,
