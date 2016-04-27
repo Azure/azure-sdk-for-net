@@ -27,20 +27,11 @@ namespace Microsoft.Azure.Batch.Tests
 {
     public class InMemorySubscriptionTests
     {
-        public BatchManagementClient GetBatchManagementClient(RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = false;
-            var client = new BatchManagementClient(handler);
-            client.ApiVersion = "2015-12-01";
-            client.SubscriptionId = "00000000-0000-0000-0000-000000000000";
-            return client;
-        }
-
         [Fact]
         public void GetSubscriptionQuotasThrowsException()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = GetBatchManagementClient(handler);
+            var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             Assert.Throws<ValidationException>(() => client.Subscription.GetSubscriptionQuotas(null));
         }
@@ -57,7 +48,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             response.Headers.Add("x-ms-request-id", "1");
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-            var client = GetBatchManagementClient(handler);
+            var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = client.Subscription.GetSubscriptionQuotas("westus");
 
