@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Graph Parameters
+    /// Defines a global parameter in the graph.
     /// </summary>
     public partial class GraphParameter
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the GraphParameter class.
         /// </summary>
-        public GraphParameter(string description = default(string), ParameterType? type = default(ParameterType?), IList<GraphParameterLink> links = default(IList<GraphParameterLink>))
+        public GraphParameter(string type, IList<GraphParameterLink> links, string description = default(string))
         {
             Description = description;
             Type = type;
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Description for this graph parameter.
+        /// Description of this graph parameter.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
@@ -48,13 +48,37 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// 'Double', 'ColumnPicker', 'ParameterRange', 'DataGatewayName'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public ParameterType? Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
-        /// [TODO] Links of this parameter
+        /// Association links for this parameter to nodes in the graph.
         /// </summary>
         [JsonProperty(PropertyName = "links")]
         public IList<GraphParameterLink> Links { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+            if (Links == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Links");
+            }
+            if (this.Links != null)
+            {
+                foreach (var element in this.Links)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

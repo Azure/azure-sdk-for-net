@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] The link in graph parameter
+    /// Association link for a graph global parameter to a node in the graph.
     /// </summary>
     public partial class GraphParameterLink
     {
@@ -29,23 +29,38 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the GraphParameterLink class.
         /// </summary>
-        public GraphParameterLink(string nodeId = default(string), string parameterKey = default(string))
+        public GraphParameterLink(string nodeId, string parameterKey)
         {
             NodeId = nodeId;
             ParameterKey = parameterKey;
         }
 
         /// <summary>
-        /// [TODO] The node ID
+        /// The graph node's identifier
         /// </summary>
         [JsonProperty(PropertyName = "nodeId")]
         public string NodeId { get; set; }
 
         /// <summary>
-        /// [TODO] The parameter key
+        /// The identifier of the node parameter that the global parameter
+        /// maps to.
         /// </summary>
         [JsonProperty(PropertyName = "parameterKey")]
         public string ParameterKey { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (NodeId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "NodeId");
+            }
+            if (ParameterKey == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ParameterKey");
+            }
+        }
     }
 }

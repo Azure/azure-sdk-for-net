@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// web service Keys
+    /// Access keys for the web service calls.
     /// </summary>
     public partial class WebServiceKeys
     {
@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// The Primary Key
+        /// The primary access key.
         /// </summary>
         [JsonProperty(PropertyName = "primary")]
         public string Primary { get; set; }
 
         /// <summary>
-        /// The Secondary Key
+        /// The secondary access key.
         /// </summary>
         [JsonProperty(PropertyName = "secondary")]
         public string Secondary { get; set; }

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Asset Location
+    /// Describes the access location for a web service asset.
     /// </summary>
     public partial class AssetLocation
     {
@@ -29,24 +29,35 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the AssetLocation class.
         /// </summary>
-        public AssetLocation(string uri = default(string), string credentials = default(string))
+        public AssetLocation(string uri, string credentials = default(string))
         {
             Uri = uri;
             Credentials = credentials;
         }
 
         /// <summary>
-        /// [TODO] Location URI, https:// OR aml:// OR idv :// OR hdfs://
+        /// The URI where the asset is accessible from, (e.g. aml://abc for
+        /// system assets or https://xyz for user asets
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
 
         /// <summary>
-        /// [TODO] null if in BYOS / SAS token / connection string / user
-        /// asset partition key (when in graphSharp)/ etc.
+        /// Access credentials for the asset, if applicable (e.g. asset
+        /// specified by storage account connection string + blob URI)
         /// </summary>
         [JsonProperty(PropertyName = "credentials")]
         public string Credentials { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Uri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Uri");
+            }
+        }
     }
 }

@@ -157,13 +157,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Patch an existing Azure ML web service.
+            /// Patch an existing Azure ML web service resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='patchPayload'>
-            /// The payload to patch the Azure ML with.
+            /// The payload to patch the Azure ML web service with.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the resource group.
@@ -177,13 +177,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Patch an existing Azure ML web service.
+            /// Patch an existing Azure ML web service resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='patchPayload'>
-            /// The payload to patch the Azure ML with.
+            /// The payload to patch the Azure ML web service with.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the resource group.
@@ -203,13 +203,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Patch an existing Azure ML web service.
+            /// Patch an existing Azure ML web service resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='patchPayload'>
-            /// The payload to patch the Azure ML with.
+            /// The payload to patch the Azure ML web service with.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the resource group.
@@ -223,13 +223,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Patch an existing Azure ML web service.
+            /// Patch an existing Azure ML web service resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='patchPayload'>
-            /// The payload to patch the Azure ML with.
+            /// The payload to patch the Azure ML web service with.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the resource group.
@@ -323,8 +323,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Get the primary and secondary access keys of a particular Azure ML web
-            /// service
+            /// Get the access keys of a particular Azure ML web service
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -341,8 +340,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Get the primary and secondary access keys of a particular Azure ML web
-            /// service
+            /// Get the access keys of a particular Azure ML web service
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

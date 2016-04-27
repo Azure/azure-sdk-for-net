@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Paginated list of web services
+    /// Paginated list of web services.
     /// </summary>
     public partial class PaginatedWebServicesList
     {
@@ -36,13 +36,14 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// List of Web Services
+        /// List of web services objects.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<WebService> Value { get; set; }
 
         /// <summary>
-        /// [TODO] Next Link
+        /// Continuation link to be used to potentially retrieve the next page
+        /// of results in the list.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }

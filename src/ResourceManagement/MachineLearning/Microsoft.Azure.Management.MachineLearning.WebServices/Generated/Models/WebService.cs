@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Instance of an Azure ML web service resource.
     /// </summary>
     public partial class WebService : Resource
     {
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
+        /// Web service resource properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public WebServiceProperties Properties { get; set; }
@@ -45,6 +47,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
+            }
         }
     }
 }

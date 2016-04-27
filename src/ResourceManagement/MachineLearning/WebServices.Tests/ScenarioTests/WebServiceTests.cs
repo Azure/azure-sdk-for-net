@@ -26,6 +26,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace WebServices.Tests.ScenarioTests
@@ -34,6 +35,7 @@ namespace WebServices.Tests.ScenarioTests
     {
         private const string DefaultLocation = "South Central US";
         private const string TestServiceNamePrefix = "amlws";
+        private const string TestCommitmentPlanNamePrefix = "amlcp";
         private const string TestResourceGroupNamePrefix = "amlrg";
         private const string ResourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.MachineLearning/webServices/{2}";
         private const string ServiceDefinitionJsonFileDogfood = @".\TestData\GraphWebServiceDefinition_Dogfood.json";
@@ -93,7 +95,7 @@ namespace WebServices.Tests.ScenarioTests
                     {
                         Description = "description was updated!",
                         Keys = new WebServiceKeys("f6ae3d003c63457ab4c5997effb5e4dc"),
-                        Diagnostics = new DiagnosticsConfiguration(DiagnosticsLevel.All)
+                        Diagnostics = new DiagnosticsConfiguration("All")
                     }
                 };
                 var updatedWebService = amlServicesClient.WebServices.PatchWebService(serviceUpdates, resourceGroupName, webServiceName);
@@ -185,6 +187,7 @@ namespace WebServices.Tests.ScenarioTests
                 {
                     var amlServiceName = TestUtilities.GenerateName(WebServiceTests.TestServiceNamePrefix);
                     var resourceGroupName = TestUtilities.GenerateName(WebServiceTests.TestResourceGroupNamePrefix);
+                    ////var commitmentPlanName = TestUtilities.GenerateName(WebServiceTests.TestCommitmentPlanNamePrefix);
 
                     // Create a resource group for the AML service
                     var resourcesClient = context.GetServiceClient<ResourceManagementClient>();
@@ -194,11 +197,17 @@ namespace WebServices.Tests.ScenarioTests
                     };
                     resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroupDefinition);
 
+                    ////// Create an AML commitment plan resource to associate with the services
+                    ////var cpDeployment = WebServiceTests.CreateCommitmentPlanResource(resourceGroupName, commitmentPlanName, resourcesClient);
+    
                     // Create a client for the AML RP and run the actual test
                     var webServicesClient = context.GetServiceClient<AzureMLWebServicesManagementClient>();
                     webServicesClient.LongRunningOperationRetryTimeout = WebServiceTests.AsyncOperationPollingIntervalSeconds;
 
                     actualTest(amlServiceName, resourceGroupName, resourcesClient, webServicesClient);
+
+                    ////// delete the deployment with the commitment plan
+                    ////resourcesClient.Deployments.Delete(resourceGroupName, cpDeployment.Name);
                 }
                 catch (CloudException cloudEx)
                 {
@@ -286,6 +295,28 @@ namespace WebServices.Tests.ScenarioTests
             }
 
             return errorReport.ToString();
+        }
+
+        private static DeploymentExtended CreateCommitmentPlanResource(string resourceGroupName, string commitmentPlanName, ResourceManagementClient resourcesClient)
+        {
+            string deploymentParams = @"{'planName': {'value': '"+ commitmentPlanName +"'}, 'planSkuName': {'value': 'PLAN_SKU_NAME'}, 'planSkuTier': {'value': 'PLAN_SKU_TIER'}}";
+            var deploymentProperties = new DeploymentProperties
+            {
+                Template = JObject.Parse(File.ReadAllText(@".\TestData\DeployCommitmentPlanTemplate.json")),
+                Parameters = JObject.Parse(deploymentParams),
+                Mode = DeploymentMode.Incremental
+            };
+
+            try
+            {
+                var deployment = resourcesClient.Deployments.CreateOrUpdate(resourceGroupName, "depl" + commitmentPlanName, new Deployment(deploymentProperties));
+                return deployment;
+            }
+            catch(Exception ex)
+            {
+                Console.ReadKey();
+                return null;
+            }
         }
     }
 }

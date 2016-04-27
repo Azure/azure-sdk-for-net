@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebServiceProperties class.
         /// </summary>
-        public WebServiceProperties(string title = default(string), string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), ProvisioningState? provisioningState = default(ProvisioningState?), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>))
+        public WebServiceProperties(string title = default(string), string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>))
         {
             Title = title;
             Description = description;
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// The title the Azure ML web service.
+        /// The title of the Azure ML web service.
         /// </summary>
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
         /// <summary>
-        /// The description the Azure ML web service.
+        /// The description of the Azure ML web service.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
@@ -80,79 +80,129 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public ProvisioningState? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// The set of access keys for the web service. If not specified at
+        /// creation time (PUT), they will be generated automatically by the
+        /// resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "keys")]
         public WebServiceKeys Keys { get; set; }
 
         /// <summary>
-        /// True, if the web service should be read-only; False, otherwise
+        /// If true, the web service can no longer be updated / patched, only
+        /// removed. Otherwise, the service resource supports changes.
         /// </summary>
         [JsonProperty(PropertyName = "readOnly")]
         public bool? ReadOnlyProperty { get; set; }
 
         /// <summary>
-        /// The uri for the swagger spec associated with this Azure ML web
-        /// service.
+        /// The uri for the swagger spec associated with this web service.
         /// </summary>
         [JsonProperty(PropertyName = "swaggerLocation")]
         public string SwaggerLocation { get; private set; }
 
         /// <summary>
-        /// [TODO] Realtime configuration
+        /// Configuration for the service's realtime endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "realtimeConfiguration")]
         public RealtimeConfiguration RealtimeConfiguration { get; set; }
 
         /// <summary>
-        /// [TODO] Diagnostics settings
+        /// Settings controlling the diagnostics traces collection for the web
+        /// service.
         /// </summary>
         [JsonProperty(PropertyName = "diagnostics")]
         public DiagnosticsConfiguration Diagnostics { get; set; }
 
         /// <summary>
-        /// [TODO] BYOS description
+        /// The storage account associated with the service. This is used to
+        /// store both datasets and diagnostic traces. This information is
+        /// required at creation time (PUT) and only the key is updateable
+        /// after that. The account credentials are hidden on a GET web
+        /// service call.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccount")]
         public StorageAccount StorageAccount { get; set; }
 
         /// <summary>
-        /// [TODO] Service workspace data
+        /// This is only populated at creation time (PUT) for web services
+        /// originating from an AzureML Studio experiment.
         /// </summary>
         [JsonProperty(PropertyName = "machineLearningWorkspace")]
         public MachineLearningWorkspace MachineLearningWorkspace { get; set; }
 
         /// <summary>
-        /// [TODO] Service commitment plan data
+        /// The commitment plan associated with this web service. This is
+        /// required to be specified at creation time (PUT) and is not
+        /// updateable afterwards.
         /// </summary>
         [JsonProperty(PropertyName = "commitmentPlan")]
         public CommitmentPlan CommitmentPlan { get; set; }
 
         /// <summary>
-        /// [TODO] Service input definition
+        /// Swagger schema for the service's input(s), as applicable.
         /// </summary>
         [JsonProperty(PropertyName = "input")]
         public ServiceInputOutputSpecification Input { get; set; }
 
         /// <summary>
-        /// [TODO] Service output definition
+        /// Swagger schema for the service's output(s), as applicable.
         /// </summary>
         [JsonProperty(PropertyName = "output")]
         public ServiceInputOutputSpecification Output { get; set; }
 
         /// <summary>
-        /// [TODO] Service assets
+        /// Set of assets associated with the web service.
         /// </summary>
         [JsonProperty(PropertyName = "assets")]
         public IDictionary<string, AssetItem> Assets { get; set; }
 
         /// <summary>
-        /// [TODO] Parameters of module package
+        /// The set of global parameters values defined for the web service,
+        /// given as a global parameter name -&gt; default value collection.
+        /// If no default value is specified, the parameter is considered to
+        /// be required.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IDictionary<string, string> Parameters { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (this.RealtimeConfiguration != null)
+            {
+                this.RealtimeConfiguration.Validate();
+            }
+            if (this.MachineLearningWorkspace != null)
+            {
+                this.MachineLearningWorkspace.Validate();
+            }
+            if (this.CommitmentPlan != null)
+            {
+                this.CommitmentPlan.Validate();
+            }
+            if (this.Input != null)
+            {
+                this.Input.Validate();
+            }
+            if (this.Output != null)
+            {
+                this.Output.Validate();
+            }
+            if (this.Assets != null)
+            {
+                foreach (var valueElement in this.Assets.Values)
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Validate();
+                    }
+                }
+            }
+        }
     }
 }

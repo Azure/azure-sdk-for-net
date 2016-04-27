@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Graph Package
+    /// The definition of the graph package making up this web service.
     /// </summary>
     public partial class WebServicePropertiesForGraphPackage
     {
@@ -39,19 +39,23 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] Graph nodes collection
+        /// The set of nodes making up the graph, provided as a nodeId -&gt;
+        /// GraphNode map
         /// </summary>
         [JsonProperty(PropertyName = "nodes")]
         public IDictionary<string, GraphNode> Nodes { get; set; }
 
         /// <summary>
-        /// [TODO] List of Graph Edges
+        /// The list of edges making up the graph.
         /// </summary>
         [JsonProperty(PropertyName = "edges")]
         public IList<GraphEdge> Edges { get; set; }
 
         /// <summary>
-        /// [TODO] Graph parameter collection
+        /// The collection of global parameters for the graph, given as a
+        /// global parameter name -&gt; GraphParameter map. Each parameter
+        /// here has a 1:1 match with the global parameters values map
+        /// declared at the WebServiceProperties level.
         /// </summary>
         [JsonProperty(PropertyName = "graphParameters")]
         public IDictionary<string, GraphParameter> GraphParameters { get; set; }

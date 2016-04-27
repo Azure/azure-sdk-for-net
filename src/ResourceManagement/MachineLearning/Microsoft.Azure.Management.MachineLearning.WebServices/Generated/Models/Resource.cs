@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// Resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Resource Name
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// Resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// Resource tags

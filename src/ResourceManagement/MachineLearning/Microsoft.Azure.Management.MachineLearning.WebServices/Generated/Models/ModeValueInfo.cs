@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Add meaningful description here.
+    /// Nested parameter definition.
     /// </summary>
     public partial class ModeValueInfo
     {
@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] Add meaningful description here.
+        /// The interface string name for the nested parameter.
         /// </summary>
         [JsonProperty(PropertyName = "interfaceString")]
         public string InterfaceString { get; set; }
 
         /// <summary>
-        /// [TODO] Add meaningful description here.
+        /// The definition of the parameter.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IList<ModuleAssetParameter> Parameters { get; set; }

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Graph edge
+    /// Defines an edge within the web service's graph.
     /// </summary>
     public partial class GraphEdge
     {
@@ -38,25 +38,27 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] Edge source
+        /// The source graph node's identifier.
         /// </summary>
         [JsonProperty(PropertyName = "sourceNodeId")]
         public string SourceNodeId { get; set; }
 
         /// <summary>
-        /// [TODO] Source node output port id
+        /// The identifier of the source node's port that the edge connects
+        /// from.
         /// </summary>
         [JsonProperty(PropertyName = "sourcePortId")]
         public string SourcePortId { get; set; }
 
         /// <summary>
-        /// [TODO] Edge target
+        /// The destination graph node's identifier.
         /// </summary>
         [JsonProperty(PropertyName = "targetNodeId")]
         public string TargetNodeId { get; set; }
 
         /// <summary>
-        /// [TODO] Target node input port id
+        /// The identifier of the destination node's port that the edge
+        /// connects into.
         /// </summary>
         [JsonProperty(PropertyName = "targetPortId")]
         public string TargetPortId { get; set; }

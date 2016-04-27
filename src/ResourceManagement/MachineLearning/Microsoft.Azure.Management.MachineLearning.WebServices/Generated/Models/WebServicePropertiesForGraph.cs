@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Payload for Graph package
+    /// Properties specific to a Graph based web service.
     /// </summary>
     [JsonObject("Graph")]
     public partial class WebServicePropertiesForGraph : WebServiceProperties
@@ -32,17 +32,24 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// Initializes a new instance of the WebServicePropertiesForGraph
         /// class.
         /// </summary>
-        public WebServicePropertiesForGraph(string title = default(string), string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), ProvisioningState? provisioningState = default(ProvisioningState?), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>), WebServicePropertiesForGraphPackage package = default(WebServicePropertiesForGraphPackage))
+        public WebServicePropertiesForGraph(string title = default(string), string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>), WebServicePropertiesForGraphPackage package = default(WebServicePropertiesForGraphPackage))
             : base(title, description, createdOn, modifiedOn, provisioningState, keys, readOnlyProperty, swaggerLocation, realtimeConfiguration, diagnostics, storageAccount, machineLearningWorkspace, commitmentPlan, input, output, assets, parameters)
         {
             Package = package;
         }
 
         /// <summary>
-        /// [TODO] Graph Package
+        /// The definition of the graph package making up this web service.
         /// </summary>
         [JsonProperty(PropertyName = "package")]
         public WebServicePropertiesForGraphPackage Package { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

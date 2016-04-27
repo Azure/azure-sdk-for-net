@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Asset output port
+    /// Asset output port
     /// </summary>
     public partial class OutputPort
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] dataset or zip
+        /// Port data type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

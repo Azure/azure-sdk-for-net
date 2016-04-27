@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] The swagger schema describing the service's input.
+    /// The swagger 2.0 schema describing the service's inputs or outputs. See
+    /// Swagger specification: http://swagger.io/specification/
     /// </summary>
     public partial class ServiceInputOutputSpecification
     {
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// Initializes a new instance of the ServiceInputOutputSpecification
         /// class.
         /// </summary>
-        public ServiceInputOutputSpecification(string title = default(string), string description = default(string), string type = default(string), IDictionary<string, TableSpecification> properties = default(IDictionary<string, TableSpecification>))
+        public ServiceInputOutputSpecification(string type, IDictionary<string, TableSpecification> properties, string title = default(string), string description = default(string))
         {
             Title = title;
             Description = description;
@@ -40,28 +41,53 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] Interface title
+        /// Swagger schema title.
         /// </summary>
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
         /// <summary>
-        /// [TODO] Description of the interface
+        /// Swagger schema description.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// [TODO] Interface properties' type. Always use 'object' here.
+        /// The type of the entity described in swagger. Always 'object'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// [TODO]
+        /// Collection of (name -&gt; swagger schema) for each input or output
+        /// of the web service.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public IDictionary<string, TableSpecification> Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (this.Properties != null)
+            {
+                foreach (var valueElement in this.Properties.Values)
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Validate();
+                    }
+                }
+            }
+        }
     }
 }

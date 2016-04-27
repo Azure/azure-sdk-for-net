@@ -19,16 +19,16 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     using Models;
 
     /// <summary>
-    /// [TODO] These APIs allows end users to operate on Web Services in Azure
-    /// ML. They support the following operations:&lt;ul&gt;&lt;li&gt;Create
-    /// a web service&lt;/li&gt;&lt;li&gt;Get a web
+    /// These APIs allow end users to operate on Azure Machine Learning Web
+    /// Services resources. They support the following
+    /// operations:&lt;ul&gt;&lt;li&gt;Create or update a web
+    /// service&lt;/li&gt;&lt;li&gt;Get a web
     /// service&lt;/li&gt;&lt;li&gt;Patch a web
     /// service&lt;/li&gt;&lt;li&gt;Delete a web
     /// service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
     /// &lt;/li&gt;&lt;li&gt;Get All Web Services in a
     /// Subscription&lt;/li&gt;&lt;li&gt;Get Web Services
-    /// Keys&lt;/li&gt;&lt;li&gt;Get All Available
-    /// Operations&lt;/li&gt;&lt;/ul&gt;
+    /// Keys&lt;/li&gt;&lt;/ul&gt;
     /// </summary>
     public partial interface IAzureMLWebServicesManagementClient : IDisposable
     {
@@ -85,18 +85,6 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// Gets the IWebServicesOperations.
         /// </summary>
         IWebServicesOperations WebServices { get; }
-
-            /// <summary>
-        /// Get all available operations for the Microsoft.MachineLearning
-        /// provider.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<GetOperationsOKResponse>> GetOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

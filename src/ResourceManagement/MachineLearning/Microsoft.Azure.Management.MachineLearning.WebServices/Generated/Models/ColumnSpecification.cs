@@ -17,7 +17,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] input column.
+    /// Swagger 2.0 schema for a column within the data table representing a
+    /// web service input or output. See Swagger specification:
+    /// http://swagger.io/specification/
     /// </summary>
     public partial class ColumnSpecification
     {
@@ -29,7 +31,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the ColumnSpecification class.
         /// </summary>
-        public ColumnSpecification(string type = default(string), string format = default(string), IList<object> enumProperty = default(IList<object>), bool? xMsIsnullable = default(bool?), bool? xMsIsordered = default(bool?))
+        public ColumnSpecification(string type, string format = default(string), IList<object> enumProperty = default(IList<object>), bool? xMsIsnullable = default(bool?), bool? xMsIsordered = default(bool?))
         {
             Type = type;
             Format = format;
@@ -39,34 +41,50 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] Data type
+        /// Data type of the column. Possible values include: 'Boolean',
+        /// 'Integer', 'Number', 'String'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// [TODO] Data format
+        /// Additional format information for the data type. Possible values
+        /// include: 'Byte', 'Char', 'Datetime', 'Double', 'Duration',
+        /// 'Float', 'Int8', 'Int16', 'Int32', 'Int64', 'Uint8', 'Uint16',
+        /// 'Uint32', 'Uint64'
         /// </summary>
         [JsonProperty(PropertyName = "format")]
         public string Format { get; set; }
 
         /// <summary>
-        /// [TODO] Options
+        /// If the data type is categorical, this provides the list of
+        /// accepted categories.
         /// </summary>
         [JsonProperty(PropertyName = "enum")]
         public IList<object> EnumProperty { get; set; }
 
         /// <summary>
-        /// [TODO] Is nullable
+        /// Flag indicating if the type supports null values or not.
         /// </summary>
         [JsonProperty(PropertyName = "x-ms-isnullable")]
         public bool? XMsIsnullable { get; set; }
 
         /// <summary>
-        /// [TODO] Is enum in order
+        /// Flag indicating whether the categories are treated as an ordered
+        /// set or not, if this is a categorical column.
         /// </summary>
         [JsonProperty(PropertyName = "x-ms-isordered")]
         public bool? XMsIsordered { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

@@ -78,10 +78,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </param>
         Task<AzureOperationResponse<WebService>> GetWebServiceWithHttpMessagesAsync(string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patch an existing Azure ML web service.
+        /// Patch an existing Azure ML web service resource.
         /// </summary>
         /// <param name='patchPayload'>
-        /// The payload to patch the Azure ML with.
+        /// The payload to patch the Azure ML web service with.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -97,10 +97,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </param>
         Task<AzureOperationResponse<WebService>> PatchWebServiceWithHttpMessagesAsync(WebService patchPayload, string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patch an existing Azure ML web service.
+        /// Patch an existing Azure ML web service resource.
         /// </summary>
         /// <param name='patchPayload'>
-        /// The payload to patch the Azure ML with.
+        /// The payload to patch the Azure ML web service with.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -148,8 +148,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </param>
         Task<AzureOperationResponse> BeginRemoveWebServiceWithHttpMessagesAsync(string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the primary and secondary access keys of a particular Azure ML
-        /// web service
+        /// Get the access keys of a particular Azure ML web service
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.

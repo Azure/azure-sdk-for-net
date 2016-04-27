@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Configuration settings for RRS
+    /// Holds the available configuration options for an Azure ML web service
+    /// endpoint.
     /// </summary>
     public partial class RealtimeConfiguration
     {
@@ -35,10 +36,25 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] Max Concurrent Calls
+        /// Maximum number of concurrent calls allowed on the realtime
+        /// endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "maxConcurrentCalls")]
         public int? MaxConcurrentCalls { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (this.MaxConcurrentCalls > 200)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxConcurrentCalls", 200);
+            }
+            if (this.MaxConcurrentCalls < 4)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxConcurrentCalls", 4);
+            }
+        }
     }
 }

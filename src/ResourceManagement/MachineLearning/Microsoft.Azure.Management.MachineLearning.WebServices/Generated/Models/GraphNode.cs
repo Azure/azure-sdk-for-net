@@ -17,7 +17,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Graph Node
+    /// Specifies a node in the web service graph. The node can either be an
+    /// input, output or asset node, so only one of the corresponding id
+    /// properties is populated at any given time.
     /// </summary>
     public partial class GraphNode
     {
@@ -38,25 +40,26 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] Asset ID
+        /// The id of the asset represented by this node.
         /// </summary>
         [JsonProperty(PropertyName = "assetId")]
         public string AssetId { get; set; }
 
         /// <summary>
-        /// [TODO] Input ID
+        /// The id of the input element represented by this node.
         /// </summary>
         [JsonProperty(PropertyName = "inputId")]
         public string InputId { get; set; }
 
         /// <summary>
-        /// [TODO] Output ID
+        /// The id of the output element represented by this node.
         /// </summary>
         [JsonProperty(PropertyName = "outputId")]
         public string OutputId { get; set; }
 
         /// <summary>
-        /// [TODO] Node Parameters
+        /// If applicable, parameters of the node. Global graph parameters map
+        /// into these, with values set at runtime.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IDictionary<string, string> Parameters { get; set; }

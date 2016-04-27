@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] The machine learning workspace
+    /// Information about the machine learning workspace containing the
+    /// experiment that is source for the web service.
     /// </summary>
     public partial class MachineLearningWorkspace
     {
@@ -29,16 +30,26 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the MachineLearningWorkspace class.
         /// </summary>
-        public MachineLearningWorkspace(string id = default(string))
+        public MachineLearningWorkspace(string id)
         {
             Id = id;
         }
 
         /// <summary>
-        /// [TODO] The Workspace ID
+        /// The workspace ARM resource id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+        }
     }
 }

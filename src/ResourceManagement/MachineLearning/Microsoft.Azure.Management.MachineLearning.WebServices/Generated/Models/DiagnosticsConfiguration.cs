@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Diagnostics Settings
+    /// Diagnostics settings for an Azure ML web service.
     /// </summary>
     public partial class DiagnosticsConfiguration
     {
@@ -29,21 +29,24 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the DiagnosticsConfiguration class.
         /// </summary>
-        public DiagnosticsConfiguration(DiagnosticsLevel? level = default(DiagnosticsLevel?), DateTime? expiry = default(DateTime?))
+        public DiagnosticsConfiguration(string level = default(string), DateTime? expiry = default(DateTime?))
         {
             Level = level;
             Expiry = expiry;
         }
 
         /// <summary>
-        /// Trace Level: None, Error, All. Possible values include: 'None',
-        /// 'Error', 'All'
+        /// Level of tracing to be used: None - disables tracing; Error -
+        /// collects only error (stderr) traces; All - collects all traces
+        /// (stdout and stderr). Possible values include: 'None', 'Error',
+        /// 'All'
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public DiagnosticsLevel? Level { get; set; }
+        public string Level { get; set; }
 
         /// <summary>
-        /// [TODO] Expiry date
+        /// Moment of time after which diagnostics are no longer collected. If
+        /// null, diagnostic collection is not time limited.
         /// </summary>
         [JsonProperty(PropertyName = "expiry")]
         public DateTime? Expiry { get; set; }

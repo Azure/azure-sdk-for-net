@@ -22,33 +22,5 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     /// </summary>
     public static partial class AzureMLWebServicesManagementClientExtensions
     {
-            /// <summary>
-            /// Get all available operations for the Microsoft.MachineLearning provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static GetOperationsOKResponse GetOperations(this IAzureMLWebServicesManagementClient operations)
-            {
-                return Task.Factory.StartNew(s => ((IAzureMLWebServicesManagementClient)s).GetOperationsAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all available operations for the Microsoft.MachineLearning provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<GetOperationsOKResponse> GetOperationsAsync(this IAzureMLWebServicesManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
     }
 }

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Parameter for a custom module asset.
+    /// Parameter definition for a module asset.
     /// </summary>
     public partial class ModuleAssetParameter
     {
@@ -49,7 +49,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public string ParameterType { get; set; }
 
         /// <summary>
-        /// [TODO] Add meaningful description here
+        /// Definitions for nested interface parameters if this is a complex
+        /// module parameter.
         /// </summary>
         [JsonProperty(PropertyName = "modeValuesInfo")]
         public IDictionary<string, ModeValueInfo> ModeValuesInfo { get; set; }

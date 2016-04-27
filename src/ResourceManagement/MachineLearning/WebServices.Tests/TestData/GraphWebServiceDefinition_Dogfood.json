@@ -18,14 +18,14 @@
       "asset1": {
         "name": "Apply Math Operation",
         "type": "Module",
-        "location": {
+        "locationInfo": {
           "uri": "aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675"
         }
       },
       "asset2": {
         "name": "Dataset",
         "type": "Resource",
-        "location": {
+        "locationInfo": {
           "uri": "https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff"
         },
         "outputPorts": {

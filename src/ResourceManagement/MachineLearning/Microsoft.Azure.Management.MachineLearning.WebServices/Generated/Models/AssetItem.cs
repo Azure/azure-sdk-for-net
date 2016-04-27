@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Service asset details
+    /// Information about an asset associated with the web service.
     /// </summary>
     public partial class AssetItem
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the AssetItem class.
         /// </summary>
-        public AssetItem(string name = default(string), string type = default(string), AssetLocation locationInfo = default(AssetLocation), IDictionary<string, InputPort> inputPorts = default(IDictionary<string, InputPort>), IDictionary<string, OutputPort> outputPorts = default(IDictionary<string, OutputPort>), IDictionary<string, string> metadata = default(IDictionary<string, string>), IList<ModuleAssetParameter> parameters = default(IList<ModuleAssetParameter>))
+        public AssetItem(string name, string type, AssetLocation locationInfo, IDictionary<string, InputPort> inputPorts = default(IDictionary<string, InputPort>), IDictionary<string, OutputPort> outputPorts = default(IDictionary<string, OutputPort>), IDictionary<string, string> metadata = default(IDictionary<string, string>), IList<ModuleAssetParameter> parameters = default(IList<ModuleAssetParameter>))
         {
             Name = name;
             Type = type;
@@ -41,43 +41,69 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Asset's friendly name
+        /// Asset's friendly name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Asset's type
+        /// Asset's type. Possible values include: 'Module', 'Resource'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
+        /// Access information for the asset.
         /// </summary>
         [JsonProperty(PropertyName = "locationInfo")]
         public AssetLocation LocationInfo { get; set; }
 
         /// <summary>
+        /// Information about the asset's input ports.
         /// </summary>
         [JsonProperty(PropertyName = "inputPorts")]
         public IDictionary<string, InputPort> InputPorts { get; set; }
 
         /// <summary>
+        /// Information about the asset's output ports.
         /// </summary>
         [JsonProperty(PropertyName = "outputPorts")]
         public IDictionary<string, OutputPort> OutputPorts { get; set; }
 
         /// <summary>
-        /// [TODO] Asset's metadata
+        /// If the asset is a custom module, this holds the module's metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IDictionary<string, string> Metadata { get; set; }
 
         /// <summary>
-        /// [TODO] Asset's parameters
+        /// If the asset is a custom module, this holds the module's
+        /// parameters.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IList<ModuleAssetParameter> Parameters { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+            if (LocationInfo == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "LocationInfo");
+            }
+            if (this.LocationInfo != null)
+            {
+                this.LocationInfo.Validate();
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] The Storage Account used in GraphSharp
+    /// Access information for a storage account.
     /// </summary>
     public partial class StorageAccount
     {
@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] The storage account's name
+        /// The storage account's name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// [TODO] The storage account's active key
+        /// The storage account's active key.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
