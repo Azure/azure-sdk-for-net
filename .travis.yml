@@ -1,48 +1,18 @@
 language: csharp
-sudo: false
-mono:
-  - beta
+sudo: required
+dist: trusty
 addons:
   apt:
     sources:
-    - deadsnakes
     packages:
-    # Packages required for android build
-    - libc6-i386
-    - lib32stdc++6
-    - lib32gcc1
-    - lib32ncurses5
-    - lib32z1
-    # packages for python
-    - python3.5
 install:
-  # Install libunwind required for DNX
-  - wget http://download.savannah.gnu.org/releases/libunwind/libunwind-1.1.tar.gz
-  - tar xzvf libunwind-1.1.tar.gz
-  - libunwind-1.1/configure --prefix=$HOME/.local
-  - make && make install
-  - export LD_LIBRARY_PATH=$HOME/.local/lib/:$LD_LIBRARY_PATH
-  # Install npm
-  - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | sh && source ~/.dnx/dnvm/dnvm.sh && dnvm upgrade
-  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 4
-  - npm install -g npm@'>=1.4.3'
-  - npm install
-  # Install ruby dependencies
-  - rvm use 2.3.0 --install --binary --fuzzy
-  - gem install bundler
-  - bundle install
-  - pip install --user tox
-  # Install android SDK
-  - mkdir android
-  - wget -qO- "http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz" | tar -zxv -C ./android
-  - echo y | ./android/android-sdk-linux/tools/android update sdk --all --filter platform-tools,android-23,build-tools-23.0.1 --no-ui --force
-  - echo y | ./android/android-sdk-linux/tools/android update sdk --all --filter extra-android-support,extra-android-m2repository,extra-google-m2repository --no-ui --force
-  - export ANDROID_HOME=`pwd`/android/android-sdk-linux
+  # CoreCLR RC2
+  - sudo sh -c 'echo "deb [arch=amd64] http://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+  - sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+  - sudo apt-get update
+  - sudo apt-get install dotnet=1.0.0.001598-1 -y
 script:
-  - dnvm install 1.0.0-rc1-final -r mono
-  - dnvm install 1.0.0-rc1-final -r coreclr
-  - dnvm use 1.0.0-rc1-final -r coreclr -persistent
-  - test_on_linux.sh
+  - ./test_on_linux.sh
 after_script:
   - echo "========== Server log: ============"
   - pwd
