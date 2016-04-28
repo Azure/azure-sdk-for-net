@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         object actualValue = type.GetProperty(pi.Name).GetValue(actual, null);
                         object expectedValue = type.GetProperty(pi.Name).GetValue(expected, null);
 
-                        if (notSerializedProperties.Contains(pi.Name, StringComparer.InvariantCultureIgnoreCase))
+                        if (notSerializedProperties.Contains(pi.Name))
                         {
                             if (actualValue != null || expectedValue == null)
                             {
