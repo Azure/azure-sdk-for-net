@@ -59,6 +59,9 @@ namespace Microsoft.Azure.Search
         /// Creates a new Azure Search indexer or updates an indexer if it
         /// already exists.
         /// </summary>
+        /// <param name='indexerName'>
+        /// The name of the indexer to create or update.
+        /// </param>
         /// <param name='indexer'>
         /// The definition of the indexer to create or update.
         /// </param>
@@ -71,7 +74,7 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an Azure Search indexer.
         /// </summary>

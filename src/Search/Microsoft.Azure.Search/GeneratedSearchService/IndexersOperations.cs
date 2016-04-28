@@ -361,6 +361,9 @@ namespace Microsoft.Azure.Search
         /// Creates a new Azure Search indexer or updates an indexer if it already
         /// exists.
         /// </summary>
+        /// <param name='indexerName'>
+        /// The name of the indexer to create or update.
+        /// </param>
         /// <param name='indexer'>
         /// The definition of the indexer to create or update.
         /// </param>
@@ -376,8 +379,12 @@ namespace Microsoft.Azure.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (indexerName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "indexerName");
+            }
             if (indexer == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indexer");
@@ -402,6 +409,7 @@ namespace Microsoft.Azure.Search
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("indexerName", indexerName);
                 tracingParameters.Add("indexer", indexer);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -410,7 +418,7 @@ namespace Microsoft.Azure.Search
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexers('{indexerName}')").ToString();
-            _url = _url.Replace("{indexerName}", Uri.EscapeDataString(indexer.Name));
+            _url = _url.Replace("{indexerName}", Uri.EscapeDataString(indexerName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {

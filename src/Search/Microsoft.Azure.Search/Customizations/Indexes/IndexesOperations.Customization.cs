@@ -13,14 +13,12 @@ namespace Microsoft.Azure.Search
 
     internal partial class IndexesOperations
     {
-        public SearchIndexClient GetClient(string indexName)
+        /// <inheritdoc />
+        public Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // Argument checking is done by the SearchIndexClient constructor. Note that HttpClient can't be shared in
-            // case it has already been used (SearchIndexClient will attempt to set the Timeout property on it).
-            Uri indexBaseUri = new Uri(Client.BaseUri, String.Format("indexes('{0}')", indexName));
-            return new SearchIndexClient(indexBaseUri, Client.Credentials);
+            return CreateOrUpdateWithHttpMessagesAsync(index != null ? index.Name : null, index, searchRequestOptions, customHeaders, cancellationToken);
         }
-
+        
         /// <inheritdoc />
         public Task<AzureOperationResponse<bool>> ExistsWithHttpMessagesAsync(
             string indexName,
@@ -30,6 +28,15 @@ namespace Microsoft.Azure.Search
         {
             return ExistsHelper.ExistsFromGetResponse(() =>
                 this.GetWithHttpMessagesAsync(indexName, searchRequestOptions, customHeaders, cancellationToken));
+        }
+
+        /// <inheritdoc />
+        public SearchIndexClient GetClient(string indexName)
+        {
+            // Argument checking is done by the SearchIndexClient constructor. Note that HttpClient can't be shared in
+            // case it has already been used (SearchIndexClient will attempt to set the Timeout property on it).
+            Uri indexBaseUri = new Uri(Client.BaseUri, String.Format("indexes('{0}')", indexName));
+            return new SearchIndexClient(indexBaseUri, Client.Credentials);
         }
     }
 }
