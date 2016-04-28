@@ -1,6 +1,6 @@
 ﻿{
   "properties": {
-    "title": "TestMlService",
+    "title": "ServiceTitle",
     "description": "This is some service description",
     "readOnly": "false",
     "keys": {
@@ -12,7 +12,7 @@
       "key": "WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA=="
     },
     "commitmentPlan": {
-      "id": "subscriptions/e70f8c94-54db-4fa0-908f-23524526ed72/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/hitesh1"
+      "id": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/testrg/providers/Microsoft.MachineLearning/commitmentPlans/testcp"
     },
     "assets": {
       "asset1": {
@@ -20,18 +20,6 @@
         "type": "Module",
         "locationInfo": {
           "uri": "aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675"
-        }
-      },
-      "asset2": {
-        "name": "Dataset",
-        "type": "Resource",
-        "locationInfo": {
-          "uri": "https://hiteshes.blob.core.windows.net/rlearnertest/Iris Two Class Data.arff"
-        },
-        "outputPorts": {
-          "Results dataset": {
-            "Type": "Dataset"
-          }
         }
       }
     },
@@ -123,12 +111,9 @@
     "package": {
       "Nodes": {
         "node1": {
-          "assetId": "asset2"
-        },
-        "node2": {
           "inputId": "input1"
         },
-        "node3": {
+        "node2": {
           "assetId": "asset1",
           "parameters": {
             "Category": "Trigonometric",
@@ -137,26 +122,20 @@
             "Output mode": "ResultOnly"
           }
         },
-        "node4": {
+        "node3": {
           "outputId": "output1"
         }
       },
       "Edges": [
         {
           "sourceNodeId": "node1",
-          "sourcePortId": "Results dataset",
-          "targetNodeId": "node3",
+          "targetNodeId": "node2",
           "targetPortId": "Dataset"
         },
         {
           "sourceNodeId": "node2",
-          "targetNodeId": "node3",
-          "targetPortId": "Dataset"
-        },
-        {
-          "sourceNodeId": "node3",
           "sourcePortId": "Results dataset",
-          "targetNodeId": "node4"
+          "targetNodeId": "node3"
         }
       ],
       "GraphParameters": {
@@ -164,7 +143,7 @@
           "description": "",
           "Links": [
             {
-              "NodeId": "node3",
+              "NodeId": "node2",
               "ParameterKey": "Category"
             }
           ]
@@ -172,7 +151,7 @@
         "Trigonometric Function": {
           "Links": [
             {
-              "NodeId": "node3",
+              "NodeId": "node2",
               "ParameterKey": "Trigonometric Function"
             }
           ]
@@ -180,7 +159,7 @@
         "Column Set": {
           "Links": [
             {
-              "NodeId": "node3",
+              "NodeId": "node2",
               "ParameterKey": "Column Set"
             }
           ]
@@ -188,7 +167,7 @@
         "Output mode": {
           "Links": [
             {
-              "NodeId": "node3",
+              "NodeId": "node2",
               "ParameterKey": "Output mode"
             }
           ]
