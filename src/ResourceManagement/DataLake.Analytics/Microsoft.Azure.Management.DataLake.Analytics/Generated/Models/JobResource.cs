@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets or sets the job resource type. Possible values include:
-        /// 'VertexResource', 'StatisticsResource'
+        /// 'VertexResource', 'JobManagerResource', 'StatisticsResource',
+        /// 'VertexResourceInUserFolder', 'JobManagerResourceInUserFolder',
+        /// 'StatisticsResourceInUserFolder'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public JobResourceType? Type { get; set; }
