@@ -165,7 +165,7 @@
     <ItemGroup>
       <!--TODO: improve the logic to be more explicit -->
       <TestDlls Include=".\src\**\*.Tests\bin\net45-$(Configuration)\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
-      <TestDlls Include=".\src\$(Scope)\*.Tests\bin\net45-$(Configuration)\*$(TestPartialName)*.Tests.dll" 
+      <TestDlls Include=".\src\$(Scope)\**\*.Tests\bin\net45-$(Configuration)\*.Tests.dll"
                 Condition=" '$(Scope)' != 'All' " />
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
