@@ -27,12 +27,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlJobProperties class.
         /// </summary>
-        public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), string algebraFilePath = default(string), TimeSpan? totalCompilationTime = default(TimeSpan?), TimeSpan? totalPauseTime = default(TimeSpan?), TimeSpan? totalQueuedTime = default(TimeSpan?), TimeSpan? totalRunningTime = default(TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), CompileMode? compileMode = default(CompileMode?))
+        public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), IList<Diagnostics> diagnostics = default(IList<Diagnostics>), string algebraFilePath = default(string), TimeSpan? totalCompilationTime = default(TimeSpan?), TimeSpan? totalPauseTime = default(TimeSpan?), TimeSpan? totalQueuedTime = default(TimeSpan?), TimeSpan? totalRunningTime = default(TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), CompileMode? compileMode = default(CompileMode?))
             : base(script, runtimeVersion)
         {
             Resources = resources;
             Statistics = statistics;
             DebugData = debugData;
+            Diagnostics = diagnostics;
             AlgebraFilePath = algebraFilePath;
             TotalCompilationTime = totalCompilationTime;
             TotalPauseTime = totalPauseTime;
@@ -61,6 +62,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "debugData")]
         public JobDataPath DebugData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the diagnostics for the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "diagnostics")]
+        public IList<Diagnostics> Diagnostics { get; set; }
 
         /// <summary>
         /// Gets the algebra file path after the job has completed
