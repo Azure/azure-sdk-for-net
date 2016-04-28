@@ -20,7 +20,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     {
         [EnumMember(Value = "VertexResource")]
         VertexResource,
+        [EnumMember(Value = "JobManagerResource")]
+        JobManagerResource,
         [EnumMember(Value = "StatisticsResource")]
-        StatisticsResource
+        StatisticsResource,
+        [EnumMember(Value = "VertexResourceInUserFolder")]
+        VertexResourceInUserFolder,
+        [EnumMember(Value = "JobManagerResourceInUserFolder")]
+        JobManagerResourceInUserFolder,
+        [EnumMember(Value = "StatisticsResourceInUserFolder")]
+        StatisticsResourceInUserFolder
     }
 }
