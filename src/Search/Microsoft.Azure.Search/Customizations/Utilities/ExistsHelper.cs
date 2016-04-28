@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Search
                 string headerName = header.Key;
                 foreach (string headerValue in header.Value)
                 {
-                    headers.Add(headerName, headerValue);
+                    headers.TryAddWithoutValidation(headerName, headerValue);
                 }
             }
         }
