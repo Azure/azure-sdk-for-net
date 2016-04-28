@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Data Lake Analytics U-SQL job state audit records for tracking the
+    /// The Data Lake Analytics job state audit records for tracking the
     /// lifecycle of a job.
     /// </summary>
     public partial class JobStateAuditRecord

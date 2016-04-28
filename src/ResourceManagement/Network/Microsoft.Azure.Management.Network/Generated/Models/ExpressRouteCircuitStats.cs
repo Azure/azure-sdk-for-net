@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitStats class.
         /// </summary>
-        public ExpressRouteCircuitStats(int? primarybytesIn = default(int?), int? primarybytesOut = default(int?), int? secondarybytesIn = default(int?), int? secondarybytesOut = default(int?))
+        public ExpressRouteCircuitStats(long? primarybytesIn = default(long?), long? primarybytesOut = default(long?), long? secondarybytesIn = default(long?), long? secondarybytesOut = default(long?))
         {
             PrimarybytesIn = primarybytesIn;
             PrimarybytesOut = primarybytesOut;
@@ -41,25 +41,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets BytesIn of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "primarybytesIn")]
-        public int? PrimarybytesIn { get; set; }
+        public long? PrimarybytesIn { get; set; }
 
         /// <summary>
         /// Gets BytesOut of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "primarybytesOut")]
-        public int? PrimarybytesOut { get; set; }
+        public long? PrimarybytesOut { get; set; }
 
         /// <summary>
         /// Gets BytesIn of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "secondarybytesIn")]
-        public int? SecondarybytesIn { get; set; }
+        public long? SecondarybytesIn { get; set; }
 
         /// <summary>
         /// Gets BytesOut of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "secondarybytesOut")]
-        public int? SecondarybytesOut { get; set; }
+        public long? SecondarybytesOut { get; set; }
 
     }
 }

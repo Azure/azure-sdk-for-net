@@ -134,15 +134,15 @@
     -->
     <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
     <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
-    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(Configuration)' != 'Release' "/>
+    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" @(Dnx_AutoRestLibraries) != '' and '%(Dnx_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
 
     <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
   <Target Name="BuildDnxLibraries">
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" '%(Dnx_AutoRestLibraries.Library)'!= '' "/>
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(Dnx_AutoRestLibraries.Test)' != '' "/>
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
@@ -177,7 +177,7 @@
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
     <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(Dnx_AutoRestLibraries.Filename).xml&quot;" 
           WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"
-          Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+          Condition=" @(Dnx_AutoRestLibraries) != '' and '%(Dnx_AutoRestLibraries.Test)' != '' "/>
   </Target>
   
   <PropertyGroup>

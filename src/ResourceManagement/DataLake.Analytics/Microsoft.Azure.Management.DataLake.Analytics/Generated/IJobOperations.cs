@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         Task<AzureOperationResponse<JobStatistics>> GetStatisticsWithHttpMessagesAsync(string accountName, Guid jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the U-SQL job debug data information specified by the job ID.
+        /// Gets the job debug data information specified by the job ID.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute job operations on.
