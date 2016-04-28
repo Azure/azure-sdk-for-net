@@ -10,7 +10,7 @@
     <AssemblyName>ObjectModelCodeGenerator</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AutoRestProjects>true</AutoRestProjects>
-    <DocumentationFile>$(ProjectDir)$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <TestProject>true</TestProject>
   </PropertyGroup>
   <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>

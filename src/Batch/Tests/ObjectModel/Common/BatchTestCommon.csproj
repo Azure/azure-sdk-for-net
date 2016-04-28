@@ -10,8 +10,7 @@
     <FileAlignment>512</FileAlignment>
     <RestorePackages>true</RestorePackages>
     <AutoRestProjects>true</AutoRestProjects>
-    <DocumentationFile>$(ProjectDir)$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-    <!--<SDKTestProject>true</SDKTestProject>-->
+    <TestProject>true</TestProject>
   </PropertyGroup>
   <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>

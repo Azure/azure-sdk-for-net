@@ -11,8 +11,7 @@
     <UnitTestProject>true</UnitTestProject>
     <TestProjectType>UnitTest</TestProjectType>
     <AutoRestProjects>true</AutoRestProjects>
-    <DocumentationFile>$(ProjectDir)$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-    <!--<SDKTestProject>true</SDKTestProject>-->
+    <TestProject>true</TestProject>
   </PropertyGroup>
   <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
