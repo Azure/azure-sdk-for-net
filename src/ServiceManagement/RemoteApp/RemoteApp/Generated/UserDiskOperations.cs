@@ -33,7 +33,7 @@ using Microsoft.WindowsAzure.Management.RemoteApp;
 namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
-    /// Remoteapp user disk operations.
+    /// RemoteApp user disk operations.
     /// </summary>
     internal partial class UserDiskOperations : IServiceOperations<RemoteAppManagementClient>, IUserDiskOperations
     {
@@ -60,7 +60,8 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         }
         
         /// <summary>
-        /// Migrate user disk from one collection to the other.
+        /// Copy user disk from one collection to the other and keep the source
+        /// user disk.
         /// </summary>
         /// <param name='srcCollectionName'>
         /// Required. The source collection name.

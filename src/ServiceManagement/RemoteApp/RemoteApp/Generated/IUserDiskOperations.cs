@@ -28,12 +28,13 @@ using Microsoft.Azure;
 namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
-    /// Remoteapp user disk operations.
+    /// RemoteApp user disk operations.
     /// </summary>
     public partial interface IUserDiskOperations
     {
         /// <summary>
-        /// Migrate user disk from one collection to the other.
+        /// Copy user disk from one collection to the other and keep the source
+        /// user disk.
         /// </summary>
         /// <param name='srcCollectionName'>
         /// The source collection name.

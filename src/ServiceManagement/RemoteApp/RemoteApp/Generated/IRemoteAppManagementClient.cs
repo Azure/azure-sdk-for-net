@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         }
         
         /// <summary>
-        /// Remoteapp user disk operations.
+        /// RemoteApp user disk operations.
         /// </summary>
         IUserDiskOperations UserDisks
         {

@@ -34,7 +34,8 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
     public static partial class UserDiskOperationsExtensions
     {
         /// <summary>
-        /// Migrate user disk from one collection to the other.
+        /// Copy user disk from one collection to the other and keep the source
+        /// user disk.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -67,7 +68,8 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         }
         
         /// <summary>
-        /// Migrate user disk from one collection to the other.
+        /// Copy user disk from one collection to the other and keep the source
+        /// user disk.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

@@ -161,7 +161,7 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         private IUserDiskOperations _userDisks;
         
         /// <summary>
-        /// Remoteapp user disk operations.
+        /// RemoteApp user disk operations.
         /// </summary>
         public virtual IUserDiskOperations UserDisks
         {
