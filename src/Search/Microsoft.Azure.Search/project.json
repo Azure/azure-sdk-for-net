@@ -15,7 +15,7 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[2.5.2,3.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0)",
     "Microsoft.Spatial": "[6.15.0,7.0)"
   },
 
@@ -31,11 +31,11 @@
     },
     "dnxcore50": {
       "dependencies": {
-        "System.Diagnostics.Tools": "4.0.1-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516",
-        "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
-        "System.Threading.Tasks": "4.0.11-beta-23516",
-        "System.Xml.ReaderWriter": "4.0.11-beta-23516"
+        "System.Diagnostics.Tools": "4.0.0",
+        "System.Net.Http": "4.0.0",
+        "System.Runtime.Serialization.Primitives": "4.1.0",
+        "System.Threading.Tasks": "4.0.10",
+        "System.Xml.ReaderWriter": "4.0.10"
       }
     },
     ".NETPortable,Version=v4.5,Profile=Profile111": {

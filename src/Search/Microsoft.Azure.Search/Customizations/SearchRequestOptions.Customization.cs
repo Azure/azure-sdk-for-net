@@ -9,31 +9,24 @@ namespace Microsoft.Azure.Search.Models
 
     public partial class SearchRequestOptions
     {
-        private Guid? _requestId;
-
-        /// <summary>
-        /// Initializes a new instance of the SearchRequestOptions class.
-        /// </summary>
-        public SearchRequestOptions(Guid? requestId = default(Guid?))
-        {
-            RequestId = requestId;
-        }
-
         /// <summary>
         /// Tracking ID sent with the request to help with debugging.
         /// </summary>
+        /// <remarks>
+        /// This property is deprecated. Please use ClientRequestId instead.
+        /// </remarks>
         [JsonIgnore]
+        [Obsolete("This property is deprecated. Please use ClientRequestId instead.")]
         public Guid? RequestId
         {
             get
             {
-                return this._requestId;
+                return this.ClientRequestId;
             }
 
             set
             {
-                this._requestId = value;
-                this.ClientRequestId = this._requestId.HasValue ? this._requestId.Value.ToString() : null;
+                this.ClientRequestId = value;
             }
         }
     }

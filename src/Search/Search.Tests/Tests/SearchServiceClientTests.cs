@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Tests
                     client.Indexes.ListWithHttpMessagesAsync(searchRequestOptions: options).Result;
                 Assert.Equal(HttpStatusCode.OK, listResponse.Response.StatusCode);
 
-                Assert.Equal(options.RequestId.Value.ToString("D"), listResponse.RequestId);
+                Assert.Equal(options.ClientRequestId.Value.ToString("D"), listResponse.RequestId);
             });
         }
 
