@@ -310,8 +310,7 @@ namespace Microsoft.Azure.Management.Batch
         }
 
         /// <summary>
-        /// Updates the properties of an existing Batch account in the specified
-        /// resource group.
+        /// Updates the properties of an existing Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -727,7 +726,7 @@ namespace Microsoft.Azure.Management.Batch
         }
 
         /// <summary>
-        /// Gets detailed information about the specified Batch account.
+        /// Gets information about the specified Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -1294,7 +1293,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SyncAutoStorageKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SynchronizeAutoStorageKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1344,7 +1343,7 @@ namespace Microsoft.Azure.Management.Batch
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SyncAutoStorageKeys", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "SynchronizeAutoStorageKeys", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1672,7 +1671,7 @@ namespace Microsoft.Azure.Management.Batch
         }
 
         /// <summary>
-        /// Gets the account keys for the specified Batch account.
+        /// Lists the account keys for the specified Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.

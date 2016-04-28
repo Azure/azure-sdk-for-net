@@ -138,7 +138,11 @@ namespace Microsoft.Azure.Batch.Tests
 
             var result = client.Account.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
             {
-                Location = "South Central US"
+                Location = "South Central US",
+                AutoStorage = new AutoStorageBaseProperties()
+                {
+                    StorageAccountId = "//storageAccount1"
+                }
             });
 
             // Validate result
@@ -276,11 +280,14 @@ namespace Microsoft.Azure.Batch.Tests
 
             var result = client.Account.Update("foo", "acctName", new BatchAccountUpdateParameters
             {
-                Tags = tags
+                Tags = tags,
+                AutoStorage = new AutoStorageBaseProperties()
+                {
+                    StorageAccountId = "//StorageAccountId"
+                }
             });
 
             // Validate headers - User-Agent for certs, Authorization for tokens
-            //Assert.Equal(HttpMethod.Patch, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
 
             // Validate result

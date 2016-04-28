@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Batch
     public static partial class SubscriptionOperationsExtensions
     {
             /// <summary>
-            /// Gets the quotas of the subscription in the Batch service.
+            /// Gets the Batch service quotas for the specified suscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets the quotas of the subscription in the Batch service.
+            /// Gets the Batch service quotas for the specified suscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

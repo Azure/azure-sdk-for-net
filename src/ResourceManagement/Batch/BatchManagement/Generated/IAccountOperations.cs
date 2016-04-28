@@ -71,8 +71,7 @@ namespace Microsoft.Azure.Management.Batch
         /// </param>
         Task<AzureOperationResponse<AccountResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string accountName, BatchAccountCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the properties of an existing Batch account in the
-        /// specified resource group.
+        /// Updates the properties of an existing Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -125,7 +124,7 @@ namespace Microsoft.Azure.Management.Batch
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets detailed information about the specified Batch account.
+        /// Gets information about the specified Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -181,7 +180,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> SyncAutoStorageKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SynchronizeAutoStorageKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Regenerates the specified account key for the specified Batch
         /// account.
@@ -203,7 +202,7 @@ namespace Microsoft.Azure.Management.Batch
         /// </param>
         Task<AzureOperationResponse<BatchAccountRegenerateKeyResult>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, BatchAccountRegenerateKeyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the account keys for the specified Batch account.
+        /// Lists the account keys for the specified Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.

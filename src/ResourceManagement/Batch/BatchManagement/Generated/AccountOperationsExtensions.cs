@@ -139,8 +139,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Updates the properties of an existing Batch account in the specified
-            /// resource group.
+            /// Updates the properties of an existing Batch account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -160,8 +159,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Updates the properties of an existing Batch account in the specified
-            /// resource group.
+            /// Updates the properties of an existing Batch account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -265,7 +263,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets detailed information about the specified Batch account.
+            /// Gets information about the specified Batch account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -282,7 +280,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets detailed information about the specified Batch account.
+            /// Gets information about the specified Batch account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -381,9 +379,9 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            public static void SyncAutoStorageKeys(this IAccountOperations operations, string resourceGroupName, string accountName)
+            public static void SynchronizeAutoStorageKeys(this IAccountOperations operations, string resourceGroupName, string accountName)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).SyncAutoStorageKeysAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAccountOperations)s).SynchronizeAutoStorageKeysAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -402,9 +400,9 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SyncAutoStorageKeysAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SynchronizeAutoStorageKeysAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.SyncAutoStorageKeysWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
+                await operations.SynchronizeAutoStorageKeysWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -454,7 +452,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets the account keys for the specified Batch account.
+            /// Lists the account keys for the specified Batch account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -471,7 +469,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets the account keys for the specified Batch account.
+            /// Lists the account keys for the specified Batch account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

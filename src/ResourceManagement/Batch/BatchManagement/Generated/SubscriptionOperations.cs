@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Batch
         public BatchManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the quotas of the subscription in the Batch service.
+        /// Gets the Batch service quotas for the specified suscription.
         /// </summary>
         /// <param name='locationName'>
         /// The desired region for the quotas.
