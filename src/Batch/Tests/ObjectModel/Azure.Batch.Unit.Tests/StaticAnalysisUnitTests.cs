@@ -12,28 +12,26 @@
 
     public class StaticAnalysisUnitTests
     {
-        private readonly string objectModelSourceLocation;
+        private readonly string sourceLocation;
         private readonly string proxySourceLocation;
 
         private readonly IReadOnlyList<string> sourceLocationsToScan;
 
-        private const string SourceFileType = "*.cs";
+        private const string SourceFileType = @".*\.cs";
         private readonly ITestOutputHelper testOutputHelper;
+
+        private const string GeneratedProtocolFolder = "GeneratedProtocol";
 
         public StaticAnalysisUnitTests(ITestOutputHelper testOutputHelper)
         {
             this.testOutputHelper = testOutputHelper;
 
-            //Read source locations from environment
-            string proxySourcePath = Environment.GetEnvironmentVariable("PkgMicrosoft_Azure_Batch_Protocol");
+            this.sourceLocation = @"..\..\..\..\..\src";
+            this.proxySourceLocation = @"..\..\..\..\..\src\" + GeneratedProtocolFolder;
 
-            this.proxySourceLocation = Path.Combine(proxySourcePath, @"content\CSharp");
-
-            this.objectModelSourceLocation = Environment.GetEnvironmentVariable("SRCROOT") + @"\src";
             this.sourceLocationsToScan = new List<string>()
                                          {
-                                             this.objectModelSourceLocation,
-                                             this.proxySourceLocation
+                                             this.sourceLocation
                                          };
         }
 
@@ -50,7 +48,7 @@
             //<text> can be any characters but not newline.
             const string pattern = "(?<!//.*?)(?s:await\\s+.*?(;|$|ConfigureAwait\\([\\w\\W]*?false\\)))";
 
-            SourceParser sourceParser = new SourceParser(this.sourceLocationsToScan, SourceFileType, pattern);
+            SourceParser sourceParser = new SourceParser(this.sourceLocationsToScan, SourceFileType, null, pattern);
 
             List<SourceParserResult> results = sourceParser.Parse().ToList();
 
@@ -111,7 +109,7 @@
             const string exceptionNameCaptureGroup = "ExceptionName";
             string pattern = GetExceptionCaptureRegex(exceptionNameCaptureGroup);
 
-            SourceParser sourceParser = new SourceParser(this.proxySourceLocation, SourceFileType, pattern);
+            SourceParser sourceParser = new SourceParser(this.proxySourceLocation, SourceFileType, null, pattern);
 
             List<SourceParserResult> results = sourceParser.Parse().ToList();
 
@@ -152,7 +150,7 @@
             const string exceptionNameCaptureGroup = "ExceptionName";
             string pattern = GetExceptionCaptureRegex(exceptionNameCaptureGroup);
 
-            SourceParser sourceParser = new SourceParser(this.objectModelSourceLocation, SourceFileType, pattern);
+            SourceParser sourceParser = new SourceParser(this.sourceLocation, SourceFileType, GeneratedProtocolFolder, pattern);
 
             List<SourceParserResult> results = sourceParser.Parse().ToList();
 
@@ -207,7 +205,7 @@
             //\\.Result(\\.|;|\\s|,) -- matches .Result followed by a ., ;, whitespace, or ,
             const string pattern = "(?<!//.*?)(?s:(\\.Wait\\(\\)|\\.Result(\\.|;|\\s|,)))";
 
-            SourceParser sourceParser = new SourceParser(this.objectModelSourceLocation, SourceFileType, pattern);
+            SourceParser sourceParser = new SourceParser(this.sourceLocation, SourceFileType, null, pattern);
 
             List<SourceParserResult> results = sourceParser.Parse().ToList();
 
