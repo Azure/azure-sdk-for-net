@@ -111,6 +111,8 @@ namespace NotificationHubs.Tests.ScenarioTests
 
                 var jsonStr = NotificationHubsManagementHelper.ConvertObjectToJSon(updateNotificationHubParameter);
 
+                ////We are removing the dependency of the header "if-match:*" when trying to update
+                ////Will uncomment this test after the fix goes out 
                 //var updateNotificationHubResponse = NotificationHubsManagementClient.NotificationHubs.CreateOrUpdate(resourceGroup, namespaceName,
                 //                                                    notificationHubName, updateNotificationHubParameter);
 
