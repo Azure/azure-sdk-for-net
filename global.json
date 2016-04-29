@@ -12,7 +12,8 @@
     "src/ResourceManagement/DataLake.Analytics/Microsoft.Azure.Management.DataLake.Analytics",
     "src/ResourceManagement/DataLake.Store/Microsoft.Azure.Management.DataLake.Store",
     "src/ResourceManagement/DataLake.StoreUploader/Microsoft.Azure.Management.DataLake.StoreUploader",
-    "src/ResourceManagement/Microsoft.Azure.Management.RemoteApp"
+    "src/ResourceManagement/Microsoft.Azure.Management.RemoteApp",
+    "src/ResourceManagement/DevTestLabs/Microsoft.Azure.Management.DevTestLabs"
   ],
   "sdk": {
     "version": "1.0.0-rc1-final"
