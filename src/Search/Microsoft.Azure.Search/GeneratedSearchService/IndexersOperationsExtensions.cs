@@ -103,15 +103,18 @@ namespace Microsoft.Azure.Search
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='indexerName'>
+            /// The name of the indexer to create or update.
+            /// </param>
             /// <param name='indexer'>
             /// The definition of the indexer to create or update.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Indexer CreateOrUpdate(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            public static Indexer CreateOrUpdate(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             {
-                return Task.Factory.StartNew(s => ((IIndexersOperations)s).CreateOrUpdateAsync(indexer, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIndexersOperations)s).CreateOrUpdateAsync(indexerName, indexer, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -120,6 +123,9 @@ namespace Microsoft.Azure.Search
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='indexerName'>
+            /// The name of the indexer to create or update.
             /// </param>
             /// <param name='indexer'>
             /// The definition of the indexer to create or update.
@@ -130,9 +136,9 @@ namespace Microsoft.Azure.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Indexer> CreateOrUpdateAsync(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Indexer> CreateOrUpdateAsync(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexerName, indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -13,6 +13,12 @@ namespace Microsoft.Azure.Search
     internal partial class IndexersOperations
     {
         /// <inheritdoc />
+        public Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return CreateOrUpdateWithHttpMessagesAsync(indexer != null ? indexer.Name : null, indexer, searchRequestOptions, customHeaders, cancellationToken);
+        }
+        
+        /// <inheritdoc />
         public Task<AzureOperationResponse<bool>> ExistsWithHttpMessagesAsync(
             string indexerName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
