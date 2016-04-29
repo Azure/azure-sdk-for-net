@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// <summary>
         /// Initializes a new instance of the GatewayResource class.
         /// </summary>
-        public GatewayResource(string id = default(string), string type = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), string desiredVersion = default(string), IList<string> instances = default(IList<string>), int? activeMessageCount = default(int?), string latestPublishedMsiVersion = default(string), DateTime? publishedTimeUtc = default(DateTime?), GatewayStatus status = default(GatewayStatus))
+        public GatewayResource(string id = default(string), string type = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), string desiredVersion = default(string), IList<GatewayStatus> instances = default(IList<GatewayStatus>), int? activeMessageCount = default(int?), string latestPublishedMsiVersion = default(string), DateTime? publishedTimeUtc = default(DateTime?))
             : base(id, type, name, location, tags, etag)
         {
             Created = created;
@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
             ActiveMessageCount = activeMessageCount;
             LatestPublishedMsiVersion = latestPublishedMsiVersion;
             PublishedTimeUtc = publishedTimeUtc;
-            Status = status;
         }
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// names of the nodes in the gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.instances")]
-        public IList<string> Instances { get; set; }
+        public IList<GatewayStatus> Instances { get; set; }
 
         /// <summary>
         /// number of active messages
@@ -86,20 +85,5 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         [JsonProperty(PropertyName = "properties.publishedTimeUtc")]
         public DateTime? PublishedTimeUtc { get; set; }
 
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public GatewayStatus Status { get; set; }
-
-        /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Status != null)
-            {
-                this.Status.Validate();
-            }
-        }
     }
 }

@@ -124,10 +124,6 @@ namespace Microsoft.Azure.Management.ServerManagement
             }
             if (resourceGroupName != null)
             {
-                if (resourceGroupName.Length > 10)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 10);
-                }
                 if (resourceGroupName.Length < 3)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 3);
@@ -372,10 +368,6 @@ namespace Microsoft.Azure.Management.ServerManagement
             }
             if (resourceGroupName != null)
             {
-                if (resourceGroupName.Length > 10)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 10);
-                }
                 if (resourceGroupName.Length < 3)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 3);
@@ -571,10 +563,6 @@ namespace Microsoft.Azure.Management.ServerManagement
             }
             if (resourceGroupName != null)
             {
-                if (resourceGroupName.Length > 10)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 10);
-                }
                 if (resourceGroupName.Length < 3)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 3);

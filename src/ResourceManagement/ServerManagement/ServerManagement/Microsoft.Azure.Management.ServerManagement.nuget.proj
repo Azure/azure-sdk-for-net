@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.ServerManagement
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.ServerManagement">
-      <PackageVersion>1.0.4</PackageVersion>
+      <PackageVersion>1.0.6</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

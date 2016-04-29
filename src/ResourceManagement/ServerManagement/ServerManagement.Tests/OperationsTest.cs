@@ -215,7 +215,7 @@ namespace ServerManagement.Tests
                 await Assert.ThrowsAsync<ValidationException>(() => client.Gateway.CreateAsync(ResourceGroup, ""));
 
                 // try a non existent resource group
-                await Assert.ThrowsAsync<ValidationException>(
+                await Assert.ThrowsAsync<ErrorException>(
                     () => client.Gateway.CreateAsync("mary had a little lamb", "testgateway"));
 
                 // try a bad location
@@ -223,6 +223,25 @@ namespace ServerManagement.Tests
                     () => client.Gateway.CreateAsync(ResourceGroup, "testgateway", "neverneverland"));
             }
         }
+
+#if DEBUG_INTERACTIVE
+        [Fact]
+        public async Task MyGatewayTest()
+        {
+            using (var context = MockContext.Start("ServerManagement.Tests"))
+            {
+                var client = GetServerManagementClient(context);
+
+                var gateway1 = await client.Gateway.GetAsync(ResourceGroup, "mygateway");
+                Assert.NotNull(gateway1);
+
+
+                // get the gateway status
+                var gateway = await client.Gateway.GetAsync(ResourceGroup, "mygateway", GatewayExpandOption.Status);
+                Assert.NotNull(gateway);
+            }
+        }
+#endif 
 
         [Fact]
         public async Task GatewayTest()
