@@ -20,6 +20,7 @@ using Microsoft.Rest;
 using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -411,7 +412,10 @@ namespace Microsoft.Azure.Batch.Tests
                     'location': 'South Central US',
                     'properties': {
                         'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                        'provisioningState' : 'Succeeded'
+                        'provisioningState' : 'Succeeded',
+                        'coreQuota' : '20',
+                        'poolQuota' : '100',
+                        'activeJobAndJobScheduleQuota' : '200'
                     },
                     'tags' : {
                         'tag1' : 'value for tag1',
@@ -470,7 +474,10 @@ namespace Microsoft.Azure.Batch.Tests
                                     'location': 'West US',
                                     'properties': {
                                         'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                        'provisioningState' : 'Succeeded'
+                                        'provisioningState' : 'Succeeded',
+                                        'coreQuota' : '20',
+                                        'poolQuota' : '100',
+                                        'activeJobAndJobScheduleQuota' : '200'
                                     },
                                     'tags' : {
                                         'tag1' : 'value for tag1',
@@ -484,7 +491,10 @@ namespace Microsoft.Azure.Batch.Tests
                                     'location': 'South Central US',
                                     'properties': {
                                         'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                        'provisioningState' : 'Succeeded'
+                                        'provisioningState' : 'Succeeded',
+                                        'coreQuota' : '20',
+                                        'poolQuota' : '100',
+                                        'activeJobAndJobScheduleQuota' : '200'
                                     },
                                     'tags' : {
                                         'tag1' : 'value for tag1',
@@ -509,7 +519,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -550,7 +563,11 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
+
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -564,7 +581,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -649,7 +669,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -663,7 +686,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                    'provisioningState' : 'Failed'
+                                    'provisioningState' : 'Failed',
+                                    'coreQuota' : '10',
+                                    'poolQuota' : '50',
+                                    'activeJobAndJobScheduleQuota' : '100'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1'

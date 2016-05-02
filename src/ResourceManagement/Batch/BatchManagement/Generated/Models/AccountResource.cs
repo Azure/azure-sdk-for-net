@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public AccountProvisioningState? ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties and status of any auto storage
+        /// Gets or sets the properties and status of any auto storage account
         /// associated with the account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoStorage")]

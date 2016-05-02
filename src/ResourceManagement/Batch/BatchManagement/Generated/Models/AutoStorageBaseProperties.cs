@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Batch.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The properties related to auto storage.
+    /// The properties related to auto storage account.
     /// </summary>
     public partial class AutoStorageBaseProperties
     {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Batch.Models
 
         /// <summary>
         /// Gets or sets the resource id of the storage account to be used for
-        /// auto storage.
+        /// auto storage account.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountId")]
         public string StorageAccountId { get; set; }

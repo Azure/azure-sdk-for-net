@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties related to auto storage.
+        /// Gets or sets the properties related to auto storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoStorage")]
         public AutoStorageBaseProperties AutoStorage { get; set; }

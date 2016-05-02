@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Management.Batch
                     }
             };
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
-        }
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
+        }    
     }
 }
