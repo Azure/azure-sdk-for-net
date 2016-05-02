@@ -6,10 +6,12 @@ rootdir="$( cd "$base" && pwd )"
   
 dotnet restore
 cd $rootdir/src/TestFramework/HttpRecorder.Tests
+dotnet restore --infer-runtimes
 dotnet build --framework netcoreapp1.0
 dotnet test
 cd  ../TestFramework.Tests
-dnu build --framework netcoreapp1.0
+dotnet restore --infer-runtimes
+dotnet build --framework netcoreapp1.0
 dotnet test
 
 armdir=$rootdir/src/ResourceManagement
@@ -21,6 +23,7 @@ do
     if [ -d $armdir/$item/$item.Tests ] && [ -f $armdir/$item/$item.Tests/project.json ]
     then
       cd $armdir/$item/$item.Tests
+      dotnet restore --infer-runtimes
       dotnet build --framework netcoreapp1.0
       dotnet test
       cd $armdir 
