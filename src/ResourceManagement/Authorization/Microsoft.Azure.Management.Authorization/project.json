@@ -5,10 +5,6 @@
   "tags": [ "Microsoft Azure Management", "Authorization", "REST HTTP client", "windowsazureofficial" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "http://aka.ms/windowsazureapache2",
-  "compilationOptions": {
-    "delaySign": true,
-    "keyFile": "../../../../tools/MSSharedLibKey.snk"
-  },
 
   "dependencies": {
     "Microsoft.Rest.ClientRuntime.Azure": "[4.0.0,5.0)" 

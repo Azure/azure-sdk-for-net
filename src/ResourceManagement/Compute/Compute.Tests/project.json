@@ -5,12 +5,7 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-
-  "compilationOptions": {
-    "delaySign": true,
-    "keyFile": "../../../../tools/MSSharedLibKey.snk"
-  },
-
+  
   "testRunner": "xunit",
   "frameworks": {
     "netcoreapp1.0": {
