@@ -13,18 +13,17 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using Xunit;
-using System.Net;
-using System.Net.Http;
+using Batch.Tests.Helpers;
 using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
-using Batch.Tests.Helpers;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Rest;
-using System.Threading.Tasks;
 using Microsoft.Rest.Azure;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Microsoft.Azure.Batch.Tests
 {

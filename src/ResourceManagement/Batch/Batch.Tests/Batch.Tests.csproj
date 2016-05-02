@@ -11,6 +11,8 @@
     <Compile Include="Helpers\BatchTestHelper.cs" />
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="InMemoryTests\AccountTests.InMemory.cs" />
+    <Compile Include="InMemoryTests\SubscriptionTests.InMemory.cs" />
+    <Compile Include="InMemoryTests\ApplicationPackageTests.InMemory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

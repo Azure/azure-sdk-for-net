@@ -13,21 +13,16 @@
 // limitations under the License.
 //
 
+using Batch.Tests.Helpers;
+using Microsoft.Azure.Management.Batch;
+using Microsoft.Azure.Management.Batch.Models;
+using Microsoft.Rest;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.InteropServices;
-using Batch.Tests.Helpers;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Batch;
-using Microsoft.Azure.Management.Batch.Models;
-
-using Xunit;
-using Microsoft.Rest;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Batch.Tests.InMemoryTests
 {
