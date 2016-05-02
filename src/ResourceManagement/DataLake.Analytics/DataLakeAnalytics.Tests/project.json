@@ -24,13 +24,13 @@
   "dependencies": {
     "Microsoft.Azure.Management.DataLake.Analytics": "",
     "Microsoft.Azure.Management.DataLake.Store": "",
+    "Microsoft.Azure.Management.Storage": "[4.1.0-preview]",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
-    "Microsoft.Azure.Management.Storage": "4.1.0-preview",
     "Microsoft.Azure.Test.HttpRecorder": "",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
     "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build204",
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0)"
+    "xunit.runner.dnx": "2.1.0-rc1-build204"
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }

@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
-            /// Gets the U-SQL job debug data information specified by the job ID.
+            /// Gets the job debug data information specified by the job ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
-            /// Gets the U-SQL job debug data information specified by the job ID.
+            /// Gets the job debug data information specified by the job ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

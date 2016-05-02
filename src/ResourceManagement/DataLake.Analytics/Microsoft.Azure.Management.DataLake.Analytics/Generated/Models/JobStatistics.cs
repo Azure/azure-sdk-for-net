@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Data Lake Analytics U-SQL job execution statistics.
+    /// The Data Lake Analytics job execution statistics.
     /// </summary>
     public partial class JobStatistics
     {

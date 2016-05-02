@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string LogsLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the runtime version of the U-SQL engine to use
+        /// Gets or sets the location of the Hive warehouse
         /// </summary>
         [JsonProperty(PropertyName = "warehouseLocation")]
         public string WarehouseLocation { get; set; }

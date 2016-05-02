@@ -300,6 +300,51 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
+            /// Reboot specified redis node(s). This operation requires write permission
+            /// to the cache resource. There can be potential data loss.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Specifies which redis node(s) to reboot.
+            /// </param>
+            public static void ForceReboot(this IRedisOperations operations, string resourceGroupName, string name, RedisRebootParameters parameters)
+            {
+                Task.Factory.StartNew(s => ((IRedisOperations)s).ForceRebootAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reboot specified redis node(s). This operation requires write permission
+            /// to the cache resource. There can be potential data loss.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Specifies which redis node(s) to reboot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ForceRebootAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisRebootParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.ForceRebootWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// Gets all redis caches in a resource group.
             /// </summary>
             /// <param name='operations'>

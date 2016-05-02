@@ -91,6 +91,7 @@ namespace Microsoft.Azure.Search
         {
             return new JsonSerializerSettings()
             {
+                Binder = baseSettings.Binder,
                 CheckAdditionalContent = baseSettings.CheckAdditionalContent,
                 ConstructorHandling = baseSettings.ConstructorHandling,
                 Context = baseSettings.Context,
@@ -102,7 +103,6 @@ namespace Microsoft.Azure.Search
                 DateParseHandling = baseSettings.DateParseHandling,
                 DateTimeZoneHandling = baseSettings.DateTimeZoneHandling,
                 DefaultValueHandling = baseSettings.DefaultValueHandling,
-                EqualityComparer = baseSettings.EqualityComparer,
                 Error = baseSettings.Error,
                 FloatFormatHandling = baseSettings.FloatFormatHandling,
                 FloatParseHandling = baseSettings.FloatParseHandling,
@@ -114,10 +114,10 @@ namespace Microsoft.Azure.Search
                 ObjectCreationHandling = baseSettings.ObjectCreationHandling,
                 PreserveReferencesHandling = baseSettings.PreserveReferencesHandling,
                 ReferenceLoopHandling = baseSettings.ReferenceLoopHandling,
-                ReferenceResolverProvider = baseSettings.ReferenceResolverProvider,
                 StringEscapeHandling = baseSettings.StringEscapeHandling,
                 TraceWriter = baseSettings.TraceWriter,
-                TypeNameHandling = baseSettings.TypeNameHandling
+                TypeNameHandling = baseSettings.TypeNameHandling,
+                TypeNameAssemblyFormat = baseSettings.TypeNameAssemblyFormat
             };
         }
     }
