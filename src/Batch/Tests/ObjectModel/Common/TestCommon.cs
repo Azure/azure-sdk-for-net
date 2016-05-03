@@ -96,7 +96,12 @@
 
         }
 
-        public static readonly TestConfiguration Configuration = new TestConfiguration();
+        private static readonly Lazy<TestConfiguration> configurationInstance = new Lazy<TestConfiguration>(() => new TestConfiguration());
+
+        public static TestConfiguration Configuration
+        {
+            get { return configurationInstance.Value; }
+        }
 
         public static BatchManagementClient OpenBatchManagementClient()
         {
