@@ -340,9 +340,7 @@
 
                         req.CancellationToken = customToken;
 
-                        var castRequest = (Protocol.BatchRequest<
-                            Protocol.Models.JobGetOptions,
-                            AzureOperationResponse<Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>>)req;
+                        var castRequest = (Protocol.BatchRequests.JobGetBatchRequest)req;
                         castRequest.ServiceRequestFunc = async (token) =>
                         {
                             TaskCompletionSource<TimeSpan> taskCompletionSource = new TaskCompletionSource<TimeSpan>();
