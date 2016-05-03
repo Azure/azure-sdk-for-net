@@ -24,6 +24,7 @@ using Cdn.Tests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Threading;
+using Microsoft.Rest;
 
 namespace Cdn.Tests.ScenarioTests
 {
@@ -49,7 +50,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -140,7 +141,7 @@ namespace Cdn.Tests.ScenarioTests
                     Tags = new Dictionary<string, string> { { "kay1", "value1" } }
                 };
 
-                Assert.ThrowsAny<ErrorResponseException>(() => {
+                Assert.ThrowsAny<ValidationException>(() => {
                     cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName); });
 
                 // Create a cdn endpoint with both http and https disallowed should fail
@@ -158,7 +159,7 @@ namespace Cdn.Tests.ScenarioTests
                     Tags = new Dictionary<string, string> { { "kay1", "value1" } }
                 };
 
-                Assert.ThrowsAny<ErrorResponseException>(() => {
+                Assert.ThrowsAny<ValidationException>(() => {
                     cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
                 });
 
@@ -187,7 +188,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -308,7 +309,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -409,7 +410,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -528,7 +529,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -592,7 +593,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -704,7 +705,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -715,7 +716,7 @@ namespace Cdn.Tests.ScenarioTests
                 var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
 
                 // Create a cdn endpoint with minimum requirements
-                string endpointName = "endpoint-5b4f5e6b9ea4";
+                string endpointName = "endpoint-5b4f5e6b9ea6";
                 var endpointCreateParameters = new EndpointCreateParameters
                 {
                     Location = "WestUs",
@@ -734,10 +735,10 @@ namespace Cdn.Tests.ScenarioTests
                 var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
 
                 //NOTE: There is a CName mapping already created for this custom domain and endpoint hostname
-                // "customdomain3.azureedge-test.net" maps to "endpoint-5b4f5e6b9ea4.azureedge.net"
+                // "customdomain31.azureedge-test.net" maps to "endpoint-5b4f5e6b9ea6.azureedge-test.net"
 
                 // Validate exisiting custom domain should return true
-                var output = cdnMgmtClient.Endpoints.ValidateCustomDomain(endpointName, profileName, resourceGroupName, "customdomain3.azureedge-test.net");
+                var output = cdnMgmtClient.Endpoints.ValidateCustomDomain(endpointName, profileName, resourceGroupName, "customdomain31.azureedge-test.net");
                 Assert.Equal(output.CustomDomainValidated, true);
 
                 // Validate non-exisiting custom domain should return false

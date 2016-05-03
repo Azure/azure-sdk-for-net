@@ -47,7 +47,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -58,7 +58,7 @@ namespace Cdn.Tests.ScenarioTests
                 var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
 
                 // Create a cdn endpoint with minimum requirements
-                string endpointName = "endpoint-554d5e6b9f55";
+                string endpointName = "endpoint-554d5e6b9f56";
                 var endpointCreateParameters = new EndpointCreateParameters
                 {
                     Location = "WestUs",
@@ -81,12 +81,12 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.Equal(0, customDomains.Count());
 
                 // NOTE: There is a CName mapping already created for this custom domain and endpoint hostname
-                // "sdk-1-5b4d5e6b9f55.azureedge-test.net" maps to "endpoint-554d5e6b9f55.azureedge.net"
-                // "sdk-2-5b4d5e6b9f55.azureedge-test.net" maps to "endpoint-554d5e6b9f55.azureedge.net"
+                // "sdk-1-5b4d5e6b9f56.azureedge-test.net" maps to "endpoint-554d5e6b9f56.azureedge-test.net"
+                // "sdk-2-5b4d5e6b9f56.azureedge-test.net" maps to "endpoint-554d5e6b9f56.azureedge-test.net"
 
                 // Create custom domain on running endpoint should succeed
                 string customDomainName1 = TestUtilities.GenerateName("customDomain");
-                cdnMgmtClient.CustomDomains.Create(customDomainName1, endpointName, profileName, resourceGroupName, "sdk-1-5b4d5e6b9f55.azureedge-test.net");
+                cdnMgmtClient.CustomDomains.Create(customDomainName1, endpointName, profileName, resourceGroupName, "sdk-1-5b4d5e6b9f56.azureedge-test.net");
 
                 // List custom domains one this endpoint should return one
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(endpointName, profileName, resourceGroupName);
@@ -103,7 +103,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create another custom domain on stopped endpoint should succeed
                 string customDomainName2 = TestUtilities.GenerateName("customDomain");
-                cdnMgmtClient.CustomDomains.Create(customDomainName2, endpointName, profileName, resourceGroupName, "sdk-2-5b4d5e6b9f55.azureedge-test.net");
+                cdnMgmtClient.CustomDomains.Create(customDomainName2, endpointName, profileName, resourceGroupName, "sdk-2-5b4d5e6b9f56.azureedge-test.net");
 
                 // List custom domains one this endpoint should return two
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(endpointName, profileName, resourceGroupName);
