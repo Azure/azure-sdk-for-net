@@ -9,14 +9,16 @@ namespace Microsoft.Azure.Management.Batch.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AccountKeyType.
+    /// Defines values for PackageState.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AccountKeyType
+    public enum PackageState
     {
-        [EnumMember(Value = "Primary")]
-        Primary,
-        [EnumMember(Value = "Secondary")]
-        Secondary
+        [EnumMember(Value = "pending")]
+        Pending,
+        [EnumMember(Value = "active")]
+        Active,
+        [EnumMember(Value = "unmapped")]
+        Unmapped
     }
 }
