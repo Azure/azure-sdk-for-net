@@ -1,0 +1,128 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/mary%20had%20a%20little%20lamb/providers/Microsoft.ServerManagement/gateways/testgateway?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL21hcnklMjBoYWQlMjBhJTIwbGl0dGxlJTIwbGFtYi9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZlck1hbmFnZW1lbnQvZ2F0ZXdheXMvdGVzdGdhdGV3YXk/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2"
+        ],
+        "x-ms-client-request-id": [
+          "34e4b826-1374-4891-9bdb-26aec29ddc37"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationRequired\",\r\n    \"message\": \"The location property is required for this definition.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "104"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "c3b97c4e-17c3-45be-9fd0-fccf2838cb22"
+        ],
+        "x-ms-correlation-request-id": [
+          "c3b97c4e-17c3-45be-9fd0-fccf2838cb22"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160429T223452Z:c3b97c4e-17c3-45be-9fd0-fccf2838cb22"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Apr 2016 22:34:52 GMT"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/testgateway?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RnYXRld2F5P2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"neverneverland\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "36"
+        ],
+        "x-ms-client-request-id": [
+          "67556d4a-675a-40a7-80cf-c32aa8ce2e43"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationNotAvailableForResourceType\",\r\n    \"message\": \"The provided location 'neverneverland' is not available for resource type 'Microsoft.ServerManagement/gateways'. List of available regions for the resource type is 'centralus,eastus,northeurope,westeurope'.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "275"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "c9f5c3d6-2a89-4ef7-86a8-1387a55f4657"
+        ],
+        "x-ms-correlation-request-id": [
+          "c9f5c3d6-2a89-4ef7-86a8-1387a55f4657"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160429T223453Z:c9f5c3d6-2a89-4ef7-86a8-1387a55f4657"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Apr 2016 22:34:53 GMT"
+        ]
+      },
+      "StatusCode": 400
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3e82a90d-d19e-42f9-bb43-9112945846ef"
+  }
+}
