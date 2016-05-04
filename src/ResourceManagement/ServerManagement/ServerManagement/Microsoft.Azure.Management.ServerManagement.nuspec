@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.ServerManagement</id>
+    <title>Microsoft Azure Server Management Tools Library</title>
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides azure server management tools capabilities</summary>
+    <description>Allows programatic access to create SMT Gateways, Nodes, Sessions and remotely access PowerShell on a SMT Node.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure SMT RSMT management "server management" REST HTTP client azureofficial windowsazureofficial</tags>
+    <references>
+      <group targetFramework="net45">
+        <reference file="Microsoft.Azure.Management.ServerManagement.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\ServerManagement\ServerManagement\**\*.cs" target="src" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.ServerManagement.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.ServerManagement.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.ServerManagement.xml" target="lib\net45" />
+  </files>
+</package>
