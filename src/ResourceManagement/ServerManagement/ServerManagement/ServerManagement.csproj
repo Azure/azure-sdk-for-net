@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <AutoRestProjects>true</AutoRestProjects>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{92ADE435-1109-447D-8B5B-1F4A52F8DF39}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -27,6 +28,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Net.Http" />
+        <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.2.1.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
