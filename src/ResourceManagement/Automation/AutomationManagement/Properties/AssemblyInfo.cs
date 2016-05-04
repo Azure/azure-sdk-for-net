@@ -19,7 +19,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Automation Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Automation management operations.")]
 
-[assembly: AssemblyVersion("2.0.1.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.1.0")]
 
 [assembly: AssemblyConfiguration("")]

@@ -1048,6 +1048,15 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                             }
+                            
+                            JToken outputTypesArray = responseDoc["outputTypes"];
+                            if (outputTypesArray != null && outputTypesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken outputTypesValue in ((JArray)outputTypesArray))
+                                {
+                                    runbookDraftInstance.OutputTypes.Add(((string)outputTypesValue));
+                                }
+                            }
                         }
                         
                     }
@@ -1132,7 +1141,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1386,7 +1395,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1463,7 +1472,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
