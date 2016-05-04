@@ -9,6 +9,7 @@
 
   "compilationOptions": {
     "delaySign": true,
+    "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
