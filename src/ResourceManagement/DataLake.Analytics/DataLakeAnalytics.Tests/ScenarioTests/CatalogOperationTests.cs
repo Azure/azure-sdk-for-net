@@ -125,6 +125,21 @@ namespace DataLakeAnalytics.Tests
 
                     Assert.Equal(commonData.ProcName, procGetResponse.Name);
 
+                    // Get the Partition list
+                    var partitionList = clientToUse.Catalog.ListTablePartitions(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, "dbo", commonData.TableName);
+
+                    Assert.True(partitionList.Count() >= 1);
+
+                    var specificPartition = partitionList.First();
+                    // Get the specific procedure as well
+                    var partitionGetResponse = clientToUse.Catalog.GetTablePartition(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, "dbo", commonData.TableName, specificPartition.Name);
+
+                    Assert.Equal(specificPartition.Name, partitionGetResponse.Name);
+
                     // Get all the types
                     var typeGetResponse = clientToUse.Catalog.ListTypes(
                         commonData.SecondDataLakeAnalyticsAccountName,
