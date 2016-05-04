@@ -5,7 +5,7 @@
     <title>Microsoft Azure HDInsight Management Library</title>
     <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
-    <authors>Microsoft</authors>
+    <authors>Micr  osoft</authors>
     <owners>azure-sdk, Microsoft</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The generally available HDInsight Management NuGet package. This NuGet package allows you to create and manage Azure HDInsight clusters using Azure Resource Manager (ARM).</description>
@@ -21,7 +21,6 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
-      <dependency id="Microsoft.Azure.Management.Resources" version="2.18.0-preview" />
     </dependencies>
   </metadata>
   <files>
