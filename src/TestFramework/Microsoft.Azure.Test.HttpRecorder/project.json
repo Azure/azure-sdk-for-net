@@ -4,6 +4,11 @@
   "authors": [ "Microsoft Corporation" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+  
+  "compilationOptions": {
+    "delaySign": true,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
 
   "frameworks": {
     "net45": {
