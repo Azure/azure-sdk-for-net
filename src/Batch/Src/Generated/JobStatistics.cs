@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Batch
         #region JobStatistics
 
         /// <summary>
-        /// Gets the total number of tasks failures in the job that failed during the given time range.
+        /// Gets the total number of task failures in the job.
         /// </summary>
         public long FailedTaskCount
         {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total kernel mode CPU time (per core) consumed by all the tasks in the job.
+        /// Gets the total kernel mode CPU time (per core) consumed by all tasks in the job.
         /// </summary>
         public TimeSpan KernelCpuTime
         {
@@ -70,7 +70,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the end time of the time range for the statistics.
+        /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
+        /// cref="StartTime"/> and this value.
         /// </summary>
         public DateTime LastUpdateTime
         {
@@ -78,7 +79,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total gibibytes of I/O (network + disk) disk read made by all the tasks in the job.
+        /// Gets the total gibibytes of I/O read from disk by all tasks in the job.
         /// </summary>
         public double ReadIOGiB
         {
@@ -86,7 +87,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of disk I/O (network + disk) read operations made by all the tasks in the job.
+        /// Gets the total number of disk read operations made by all tasks in the job.
         /// </summary>
         public long ReadIOps
         {
@@ -94,7 +95,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the start time of the time range for the statistics.
+        /// Gets the start time of the time range covered by the statistics.
         /// </summary>
         public DateTime StartTime
         {
@@ -110,7 +111,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of retries occurred on all the tasks in the job during the given time range.
+        /// Gets the total number of task retries in the job.
         /// </summary>
         public long TaskRetryCount
         {
@@ -118,7 +119,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the URL of the job stats.
+        /// Gets the URL of the job statistics.
         /// </summary>
         public string Url
         {
@@ -126,7 +127,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total user mode CPU time (per core) consumed by all the tasks in the job.
+        /// Gets the total user mode CPU time (per core) consumed by all tasks in the job.
         /// </summary>
         public TimeSpan UserCpuTime
         {
@@ -134,8 +135,13 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total wait time across all the tasks in the job.
+        /// Gets the total wait time of all tasks in the job. The wait time for a task is defined as the elapsed time between 
+        /// the creation of the task and the start of task execution. (If the task is retried due to failures, the wait time 
+        /// is the time to the most recent task execution.)
         /// </summary>
+        /// <remarks>
+        /// This value is only reported in the account lifetime statistics.
+        /// </remarks>
         public TimeSpan WaitTime
         {
             get { return this.waitTime; }
@@ -150,7 +156,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total gibibytes of I/O (network + disk) disk written made by all the tasks in the job.
+        /// Gets the total gibibytes of I/O written to disk by all tasks in the job.
         /// </summary>
         public double WriteIOGiB
         {
@@ -158,7 +164,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of disk I/O (network + disk) write operations made by all the tasks in the job.
+        /// Gets the total number of disk write operations made by all tasks in the job.
         /// </summary>
         public long WriteIOps
         {

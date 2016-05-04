@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
-        /// cref="StartTime"/> and LastUpdateTime.
+        /// cref="StartTime"/> and this value.
         /// </summary>
         public DateTime LastUpdateTime
         {
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets statistics related to pool usage information, such as the amount of core-time used.
+        /// Gets statistics related to pool usage, such as the amount of core-time used.
         /// </summary>
         public UsageStatistics UsageStatistics
         {

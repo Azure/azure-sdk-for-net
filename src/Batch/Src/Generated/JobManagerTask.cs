@@ -160,7 +160,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets a set of Windows Azure blobs that are required to run the JobManager task.
+        /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
+        /// line.
         /// </summary>
         public IList<ResourceFile> ResourceFiles
         {
@@ -172,7 +173,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the value that indicates if run the task as admin.
+        /// Gets or sets whether to run the task in elevated mode.
         /// </summary>
         public bool? RunElevated
         {
@@ -181,7 +182,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the value that indicates if the JobManager use the compute node exclusively.
+        /// Gets or sets whether the Job Manager task requires exclusive use of the compute node where it runs.
         /// </summary>
         public bool? RunExclusive
         {

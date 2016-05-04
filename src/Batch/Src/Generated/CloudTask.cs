@@ -360,7 +360,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets a list of files that Batch will download to the compute node before running the command line.
+        /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
+        /// line.
         /// </summary>
         public IList<ResourceFile> ResourceFiles
         {

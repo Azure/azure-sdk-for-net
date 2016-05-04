@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Holds the status of the Job Preparation task and Job Release task for a given compute node in a given pool.
+    /// The status of the Job Preparation task and Job Release task on a compute node.
     /// </summary>
     public partial class JobPreparationAndReleaseTaskExecutionInformation : IPropertyMetadata
     {
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the execution information of Job Preparation task.
+        /// Gets details of the <see cref="CloudJob.JobPreparationTask">Job Preparation task</see> on this compute node.
         /// </summary>
         public JobPreparationTaskExecutionInformation JobPreparationTaskExecutionInformation
         {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the execution information of Job Release task.
+        /// Gets details of the <see cref="CloudJob.JobReleaseTask">Job Release task</see> on this compute node.
         /// </summary>
         public JobReleaseTaskExecutionInformation JobReleaseTaskExecutionInformation
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the identifer of the pool.
+        /// Gets the id of the pool containing the compute node.
         /// </summary>
         public string PoolId
         {

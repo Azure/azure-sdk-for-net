@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// A resource file which specifies a blob path and optionally the name of the file to download the blob to on the Node.
+    /// A file to be downloaded to a compute node from Azure Blob Storage, such as task executables and task input data files.
     /// </summary>
     public partial class ResourceFile : ITransportObjectProvider<Models.ResourceFile>, IPropertyMetadata
     {
@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceFile"/> class.
         /// </summary>
-        /// <param name='blobSource'>The blob source of the file.</param>
-        /// <param name='filePath'>The location to download the file on the compute node.</param>
+        /// <param name='blobSource'>The URL of the file within Azure Blob Storage.</param>
+        /// <param name='filePath'>The location to which to download the file, relative to the task's working directory.</param>
         /// <param name='fileMode'>The file permission mode attribute in octal format.</param>
         public ResourceFile(
             string blobSource,
@@ -47,8 +47,11 @@ namespace Microsoft.Azure.Batch
         #region ResourceFile
 
         /// <summary>
-        /// Gets the blob source of the file.
+        /// Gets the URL of the file within Azure Blob Storage.
         /// </summary>
+        /// <remarks>
+        /// This URL should include a shared access signature if the blob is not publicly readable.
+        /// </remarks>
         public string BlobSource
         {
             get { return this.blobSource; }
@@ -58,9 +61,9 @@ namespace Microsoft.Azure.Batch
         /// Gets the file permission mode attribute in octal format.
         /// </summary>
         /// <remarks>
-        /// <para>This property is applicable only if the resource file is downloaded to Linux node. This property will be 
-        /// ignored if it is specified for a <see cref="ResourceFile"/> which will be downloaded to a Windows node. If this 
-        /// property is not specified for a Linux node, then the default value is 0770.</para>
+        /// <para>This property is applicable only if the resource file is downloaded to a Linux node. This property will 
+        /// be ignored if it is specified for a <see cref="ResourceFile"/> which will be downloaded to a Windows node. If 
+        /// this property is not specified for a Linux node, then the default value is 0770.</para>
         /// </remarks>
         public string FileMode
         {
@@ -68,7 +71,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the location to download the file on the compute node.
+        /// Gets the location to which to download the file, relative to the task's working directory.
         /// </summary>
         public string FilePath
         {

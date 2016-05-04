@@ -10,7 +10,8 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Contains information about the execution of a Job Preparation task on a compute node.
+    /// Details about the execution of a <see cref="CloudJob.JobPreparationTask">Job Preparation task</see> on a compute 
+    /// node.
     /// </summary>
     public partial class JobPreparationTaskExecutionInformation : IPropertyMetadata
     {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Batch
         /// Gets the time at which the task completed.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if the task is in completed state.
+        /// This property is only returned if the task is in the <see cref="Common.JobPreparationTaskState.Completed"/> state.
         /// </remarks>
         public DateTime? EndTime
         {
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Batch
         /// Gets the exit code of the task.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if the task is in completed state.
+        /// This property is only returned if the task is in the <see cref="Common.JobPreparationTaskState.Completed"/> state.
         /// </remarks>
         public int? ExitCode
         {
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the most recent time at which this task's execution was retried by the Batch Service.
+        /// Gets the most recent time at which this task's execution was retried by the Batch service.
         /// </summary>
         /// <remarks>
         /// This is only returned if the <see cref="RetryCount"/> is not 0.
@@ -77,8 +78,9 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the number of times the task has been retried by the Batch Service. Every time the task exits with a non-zero 
-        /// code, it is deemed as an application failure. The Batch Service will retry the task up to the specified MaxTaskRetryLimit.
+        /// Gets the number of times the task has been retried by the Batch service. Every time the task exits with a non-zero 
+        /// exit code, it is deemed a task failure. The Batch service will retry the task up to the limit specified by the 
+        /// <see cref="JobPreparationTask.Constraints"/>.
         /// </summary>
         public int RetryCount
         {
@@ -86,10 +88,11 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the TaskSchedulingError encountered by the service in starting the task.
+        /// Gets the TaskSchedulingError encountered by the service when starting the task.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if there was an error in scheduling the task and it is now in completed state.
+        /// This property is only returned if there was an error when scheduling the task, and it is now in the <see cref="Common.JobPreparationTaskState.Completed"/> 
+        /// state.
         /// </remarks>
         public TaskSchedulingError SchedulingError
         {
@@ -97,7 +100,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the time at which the task started running. Note that every time the task is restarted this value is reset.
+        /// Gets the time at which the task started running. Note that every time the task is restarted, this value is updated.
         /// </summary>
         public DateTime StartTime
         {
@@ -105,12 +108,12 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the current running state of the task.
+        /// Gets the current state of the task.
         /// </summary>
         /// <remarks>
         /// Running means the task is currently running. Completed means the task has completed. The Completed state includes 
         /// the case where the task exits successfully with exit code 0 and the cases where the system fails to start the 
-        /// task process due to scheduling errors or the retry limit has reached after numerous task failures. 
+        /// task process due to scheduling errors or the retry limit has reached after numerous task failures.
         /// </remarks>
         public Common.JobPreparationTaskState State
         {
@@ -119,7 +122,7 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets the root directory of the Job Preparation task on the compute node. You can use this path to retrieve files 
-        /// created by the task such as log files.
+        /// created by the task, such as log files.
         /// </summary>
         public string TaskRootDirectory
         {

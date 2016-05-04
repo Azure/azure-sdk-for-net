@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the size of virtual machines in the pool.
+        /// Gets the size of the virtual machine hosting the compute node.
         /// </summary>
         public string VirtualMachineSize
         {

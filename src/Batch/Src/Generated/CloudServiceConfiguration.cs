@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// The configuration of cloud service for a pool.
+    /// The configuration for compute nodes in a pool based on the Azure Cloud Services platform.
     /// </summary>
     public partial class CloudServiceConfiguration : ITransportObjectProvider<Models.CloudServiceConfiguration>, IPropertyMetadata
     {
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Batch
         /// Initializes a new instance of the <see cref="CloudServiceConfiguration"/> class.
         /// </summary>
         /// <param name='osFamily'>The Azure Guest OS family to be installed on the virtual machines in the pool.</param>
-        /// <param name='targetOSVersion'>The Azure Guest OS version to be installed on the virtual machines in the pool. The default value is * which 
-        /// specifies the latest operating system version for the specified <see cref="OSFamily"/>.</param>
+        /// <param name='targetOSVersion'>The Azure Guest OS version to be installed on the virtual machines in the pool. If no value is provided, the 
+        /// Batch service will default to "'*", which specifies the latest operating system version for the <see cref="OSFamily"/>.</param>
         public CloudServiceConfiguration(
             string osFamily,
             string targetOSVersion = default(string))
@@ -84,6 +84,9 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets or sets the Azure Guest OS family to be installed on the virtual machines in the pool.
         /// </summary>
+        /// <remarks>
+        /// For more information about Guest OS families, see https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/.
+        /// </remarks>
         public string OSFamily
         {
             get { return this.propertyContainer.OSFamilyProperty.Value; }
@@ -91,8 +94,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the Azure Guest OS version to be installed on the virtual machines in the pool. The default value 
-        /// is * which specifies the latest operating system version for the specified <see cref="OSFamily"/>.
+        /// Gets or sets the Azure Guest OS version to be installed on the virtual machines in the pool. If no value is provided, 
+        /// the Batch service will default to "'*", which specifies the latest operating system version for the <see cref="OSFamily"/>.
         /// </summary>
         public string TargetOSVersion
         {

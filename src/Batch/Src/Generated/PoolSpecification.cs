@@ -185,9 +185,10 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets a formula for the desired number of compute nodes in the pool.
         /// </summary>
         /// <remarks>
-        /// <para>This property is required if <see cref="AutoScaleEnabled"/> is set to true.</para><para>The formula is 
-        /// checked for validity before the pool is created. If the formula is not valid, an exception is thrown when you 
-        /// try to commit the <see cref="PoolSpecification"/>.</para>
+        /// <para>For how to write autoscale formulas, see https://azure.microsoft.com/documentation/articles/batch-automatic-scaling/. 
+        /// This property is required if <see cref="AutoScaleEnabled"/> is set to true. It must be null if AutoScaleEnabled 
+        /// is false.</para><para>The formula is checked for validity before the pool is created. If the formula is not valid, 
+        /// an exception is thrown when you try to commit the <see cref="PoolSpecification"/>.</para>
         /// </remarks>
         public string AutoScaleFormula
         {
@@ -320,11 +321,16 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the size of virtual machines in the pool. All VMs in a pool are the same size.
+        /// Gets or sets the size of the virtual machines in the pool.  All virtual machines in a pool are the same size.
         /// </summary>
         /// <remarks>
-        /// For information about available sizes of virtual machines, see https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/. 
-        /// Batch supports all Azure cloud service VM sizes except ExtraSmall.
+        /// <para>For information about available sizes of virtual machines for Cloud Services pools (pools created with 
+        /// a <see cref="CloudServiceConfiguration"/>), see https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/. 
+        /// Batch supports all Cloud Services VM sizes except ExtraSmall.</para><para>For information about available VM 
+        /// sizes for pools using images from the Virtual Machines Marketplace (pools created with a <see cref="VirtualMachineConfiguration"/>) 
+        /// see https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/ or https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/. 
+        /// Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (for example STANDARD_GS, 
+        /// STANDARD_DS, and STANDARD_DSV2 series).</para>
         /// </remarks>
         public string VirtualMachineSize
         {

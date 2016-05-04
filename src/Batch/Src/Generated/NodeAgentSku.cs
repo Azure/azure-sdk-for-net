@@ -10,7 +10,9 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// A node agent Sku supported by Batch service.
+    /// A node agent SKU supported by the Batch service. The Batch node agent is a program that runs on each node in the 
+    /// pool, and provides the command-and-control interface between the node and the Batch service. There are different 
+    /// implementations of the node agent, known as SKUs, for different operating systems.
     /// </summary>
     public partial class NodeAgentSku : IPropertyMetadata
     {
@@ -32,7 +34,7 @@ namespace Microsoft.Azure.Batch
         #region NodeAgentSku
 
         /// <summary>
-        /// Gets the id of the node agent sku.
+        /// Gets the id of the node agent SKU.
         /// </summary>
         public string Id
         {
@@ -40,7 +42,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the type of OS that the node agent sku is targeted against.
+        /// Gets the type of operating system compatible with the node agent SKU.
         /// </summary>
         public Common.OSType? OSType
         {
@@ -48,8 +50,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the list of images which the node agent SKU has been verified to run against. This collection is not exhaustive 
-        /// (the node agent may work against other images as well).
+        /// Gets the list of images verified to be compatible with this node agent SKU. This collection is not exhaustive 
+        /// (the node agent may be compatible with other images).
         /// </summary>
         public IReadOnlyList<ImageReference> VerifiedImageReferences
         {

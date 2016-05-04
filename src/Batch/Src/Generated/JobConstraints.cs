@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="JobConstraints"/> class.
         /// </summary>
-        /// <param name='maxWallClockTime'>The maximum duration of time for which a job is allowed to run from the time it is created.</param>
-        /// <param name='maxTaskRetryCount'>The max number of retries for a job.</param>
+        /// <param name='maxWallClockTime'>The maximum elapsed time that the job may run, measured from the time the job is created.</param>
+        /// <param name='maxTaskRetryCount'>The maximum number of times each task may be retried.</param>
         public JobConstraints(
             TimeSpan? maxWallClockTime = default(TimeSpan?),
             int? maxTaskRetryCount = default(int?))
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Batch
         #region JobConstraints
 
         /// <summary>
-        /// Gets or sets the max number of retries for a job.
+        /// Gets or sets the maximum number of times each task may be retried.
         /// </summary>
         public int? MaxTaskRetryCount
         {
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the maximum duration of time for which a job is allowed to run from the time it is created.
+        /// Gets or sets the maximum elapsed time that the job may run, measured from the time the job is created.
         /// </summary>
         public TimeSpan? MaxWallClockTime
         {

@@ -85,8 +85,7 @@ namespace Microsoft.Azure.Batch
         #region StartTask
 
         /// <summary>
-        /// Gets or sets the command line of the task which is run when a compute node joins a pool in the Azure Batch service, 
-        /// or when the compute node is rebooted or reimaged. 
+        /// Gets or sets the command line of the task.
         /// </summary>
         public string CommandLine
         {
@@ -107,7 +106,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the max number of retries for a job.
+        /// Gets or sets the maximum number of retries for the task.
         /// </summary>
         public int? MaxTaskRetryCount
         {
@@ -116,7 +115,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets a set of Windows Azure blobs to run the start task.
+        /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
+        /// line.
         /// </summary>
         public IList<ResourceFile> ResourceFiles
         {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the value that indicates if the task should be run as admin.
+        /// Gets or sets whether to run the task in elevated mode.
         /// </summary>
         public bool? RunElevated
         {
@@ -137,9 +137,12 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Batch Service should wait for start task completion before scheduling 
+        /// Gets or sets a value indicating whether the Batch service should wait for the start task to complete before scheduling 
         /// any tasks on the compute node.
         /// </summary>
+        /// <remarks>
+        /// If this is not specified, the default is false.
+        /// </remarks>
         public bool? WaitForSuccess
         {
             get { return this.propertyContainer.WaitForSuccessProperty.Value; }

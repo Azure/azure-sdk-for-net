@@ -129,7 +129,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the collection of ResourceFile instances.
+        /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
+        /// line.
         /// </summary>
         public IList<ResourceFile> ResourceFiles
         {
@@ -151,8 +152,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the value that determines the elevation state of the process. True specifies that the process is 
-        /// to run under elevation as Administrator. False specifes no elevation.
+        /// Gets or sets whether to run the task in elevated mode.
         /// </summary>
         public bool? RunElevated
         {

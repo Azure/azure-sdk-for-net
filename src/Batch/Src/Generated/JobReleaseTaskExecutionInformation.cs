@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Contains information about the execution of a Job Release task on a compute node.
+    /// Details about the execution of a <see cref="CloudJob.JobReleaseTask">Job Release task</see> on a compute node.
     /// </summary>
     public partial class JobReleaseTaskExecutionInformation : IPropertyMetadata
     {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Batch
         /// Gets the time at which the task completed.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if the task is in completed state.
+        /// This property is only returned if the task is in the <see cref="Common.JobReleaseTaskState.Completed"/> state.
         /// </remarks>
         public DateTime? EndTime
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Batch
         /// Gets the exit code of the task.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if the task is in completed state.
+        /// This property is only returned if the task is in the <see cref="Common.JobReleaseTaskState.Completed"/> state.
         /// </remarks>
         public int? ExitCode
         {
@@ -62,10 +62,11 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the TaskSchedulingError encountered by the service in starting the task.
+        /// Gets the scheduling error encountered by the service when starting the task.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if there was an error in scheduling the task and it is now in completed state.
+        /// This property is only returned if there was an error when scheduling the task and it is now in the <see cref="Common.JobReleaseTaskState.Completed"/> 
+        /// state.
         /// </remarks>
         public TaskSchedulingError SchedulingError
         {
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the time at which the task started running. Note that every time the task is restarted this value is reset.
+        /// Gets the time at which the task started running. Note that every time the task is restarted, this value is updated.
         /// </summary>
         public DateTime StartTime
         {
@@ -81,7 +82,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the current running state of the task.
+        /// Gets the current state of the task.
         /// </summary>
         /// <remarks>
         /// Running means the task is currently running. Completed means the task has completed. The Completed state includes 
@@ -95,7 +96,7 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets the root directory of the Job Release task on the compute node. You can use this path to retrieve files 
-        /// created by the task such as log files.
+        /// created by the task, such as log files.
         /// </summary>
         public string TaskRootDirectory
         {

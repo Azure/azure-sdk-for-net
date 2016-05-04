@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// The information about the platform or marketplace image. To retrieve a list of supported images from the service, 
-    /// <seealso cref="PoolOperations.ListNodeAgentSkus"/> and <seealso cref="NodeAgentSku.VerifiedImageReferences"/>.
+    /// A reference to an Azure Virtual Machines Marketplace image. To retrieve a list of images supported by the Batch service, 
+    /// see <see cref="PoolOperations.ListNodeAgentSkus"/> and <see cref="NodeAgentSku.VerifiedImageReferences"/>.
     /// </summary>
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageReference"/> class.
         /// </summary>
-        /// <param name='offer'>The offer type of the image.</param>
-        /// <param name='publisher'>The publisher of the image.</param>
-        /// <param name='sku'>The SKU of the image.</param>
-        /// <param name='version'>The version of the image.</param>
+        /// <param name='offer'>The offer type of the Azure Virtual Machines Marketplace image.</param>
+        /// <param name='publisher'>The publisher of the Azure Virtual Machines Marketplace image.</param>
+        /// <param name='sku'>The SKU of the Azure Virtual Machines Marketplace image.</param>
+        /// <param name='version'>The version of the Azure Virtual Machines Marketplace image.</param>
         public ImageReference(
             string offer,
             string publisher,
@@ -53,34 +53,43 @@ namespace Microsoft.Azure.Batch
         #region ImageReference
 
         /// <summary>
-        /// Gets the offer type of the image.
+        /// Gets the offer type of the Azure Virtual Machines Marketplace image.
         /// </summary>
+        /// <remarks>
+        /// For example, UbuntuServer or WindowsServer.
+        /// </remarks>
         public string Offer
         {
             get { return this.offer; }
         }
 
         /// <summary>
-        /// Gets the publisher of the image.
+        /// Gets the publisher of the Azure Virtual Machines Marketplace image.
         /// </summary>
+        /// <remarks>
+        /// For example, Canonical or MicrosoftWindowsServer.
+        /// </remarks>
         public string Publisher
         {
             get { return this.publisher; }
         }
 
         /// <summary>
-        /// Gets the SKU of the image.
+        /// Gets the SKU of the Azure Virtual Machines Marketplace image.
         /// </summary>
+        /// <remarks>
+        /// For example, 14.04.0-LTS or 2012-R2-Datacenter.
+        /// </remarks>
         public string Sku
         {
             get { return this.sku; }
         }
 
         /// <summary>
-        /// Gets the version of the image.
+        /// Gets the version of the Azure Virtual Machines Marketplace image.
         /// </summary>
         /// <remarks>
-        /// If this property is not specified, it maps to the latest version of the image.
+        /// If this property is not specified, it defaults to 'latest', which is the latest version of the image.
         /// </remarks>
         public string Version
         {

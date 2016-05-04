@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Windows operating system settings on the virtual machine.
+    /// Windows operating system settings to apply to the virtual machine.
     /// </summary>
     public partial class WindowsConfiguration : ITransportObjectProvider<Models.WindowsConfiguration>, IPropertyMetadata
     {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsConfiguration"/> class.
         /// </summary>
-        /// <param name='enableAutomaticUpdates'>Whether the virtual machine is enabled for automatic updates. If unspecified, the default value is true.</param>
+        /// <param name='enableAutomaticUpdates'>Whether automatic updates are enabled on the virtual machine. If unspecified, the default value is true.</param>
         public WindowsConfiguration(
             bool? enableAutomaticUpdates = default(bool?))
         {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Batch
         #region WindowsConfiguration
 
         /// <summary>
-        /// Gets whether the virtual machine is enabled for automatic updates. If unspecified, the default value is true.
+        /// Gets whether automatic updates are enabled on the virtual machine. If unspecified, the default value is true.
         /// </summary>
         public bool? EnableAutomaticUpdates
         {

@@ -54,19 +54,15 @@ namespace Microsoft.Azure.Batch
         #region JobScheduleStatistics
 
         /// <summary>
-        /// Gets the total number of tasks in the job schedule that failed during the given time range.
+        /// Gets the total number of tasks in the job that failed during the given time range.
         /// </summary>
-        /// <remarks>
-        /// If a task exits with a non-zero exit code, it is deemed as an application error,  and the system will rerun the 
-        /// task up to the given MaxRetryCount. When the retry count is reached, the task is deemed failed.
-        /// </remarks>
         public long FailedTaskCount
         {
             get { return this.failedTaskCount; }
         }
 
         /// <summary>
-        /// Gets the total kernel mode CPU time (per core) consumed by all the tasks in the job schedule.
+        /// Gets the total kernel mode CPU time (per core) consumed by all tasks in the job schedule.
         /// </summary>
         public TimeSpan KernelCpuTime
         {
@@ -74,7 +70,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the end time of the time range for the statistics.
+        /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
+        /// cref="StartTime"/> and this value.
         /// </summary>
         public DateTime LastUpdateTime
         {
@@ -82,7 +79,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total gibibytes of I/O read by all the tasks in the job schedule.
+        /// Gets the total gibibytes of I/O read from disk by all tasks in the job schedule.
         /// </summary>
         public double ReadIOGiB
         {
@@ -90,7 +87,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of I/O read operations made by all the tasks in the job schedule.
+        /// Gets the total number of disk read operations made by all tasks in the job schedule.
         /// </summary>
         public long ReadIOps
         {
@@ -98,7 +95,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the start time of the time range for the statistics.
+        /// Gets the start time of the time range covered by the statistics.
         /// </summary>
         public DateTime StartTime
         {
@@ -106,7 +103,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of tasks successfully completed in the job schedule during the given time range.
+        /// Gets the total number of tasks successfully completed in the job schedule.
         /// </summary>
         public long SucceededTaskCount
         {
@@ -114,7 +111,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of retries occurred on all the tasks in the job schedule during the given time range.
+        /// Gets the total number of retries that occurred on all tasks in the job schedule.
         /// </summary>
         public long TaskRetryCount
         {
@@ -122,7 +119,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the URL.
+        /// Gets the URL of the statistics.
         /// </summary>
         public string Url
         {
@@ -130,7 +127,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total user mode CPU time (per core) consumed by all the tasks in the job schedule.
+        /// Gets the total user mode CPU time (per core) consumed by all tasks in the job schedule.
         /// </summary>
         public TimeSpan UserCpuTime
         {
@@ -138,12 +135,12 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the wait time for a task is the time between the task creation and the start of the most recent task execution 
-        /// (if the task is retried due to failures).
+        /// Gets the total wait time of all tasks in jobs created under the schedule. The wait time for a task is defined 
+        /// as the elapsed time between the creation of the task and the start of task execution. (If the task is retried 
+        /// due to failures, the wait time is the time to the most recent task execution.)
         /// </summary>
         /// <remarks>
-        /// This is the total wait time across all the tasks in the job schedule. This value is only reported in the lifetime 
-        /// statistics.
+        /// This value is only reported in the account lifetime statistics.
         /// </remarks>
         public TimeSpan WaitTime
         {
@@ -151,8 +148,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total wall clock time of all the tasks in the job schedule. Note that if any task was retried multiple 
-        /// times, this includes the wall clock time of all the task retries.
+        /// Gets the total wall clock time of all tasks in the job schedule. Note that if any task was retried multiple times, 
+        /// this includes the wall clock time of all the task retries.
         /// </summary>
         public TimeSpan WallClockTime
         {
@@ -160,7 +157,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total gibibytes of I/O written by all the tasks in the job schedule.
+        /// Gets the total gibibytes of I/O written to disk by all tasks in the job schedule.
         /// </summary>
         public double WriteIOGiB
         {
@@ -168,7 +165,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of I/O write operations made by all the tasks in the job schedule.
+        /// Gets the total number of disk write operations made by all tasks in the job schedule.
         /// </summary>
         public long WriteIOps
         {

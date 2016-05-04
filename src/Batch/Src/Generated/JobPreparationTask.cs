@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the execution constraints provided by the user for this job preparation task.
+        /// Gets or sets the execution constraints provided by the user for this Job Preparation task.
         /// </summary>
         public TaskConstraints Constraints
         {
@@ -135,13 +135,13 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the value that controls the rerun of the job preparation task after a reboot of a compute node which 
-        /// had a previously successful run the job preparation task.
+        /// Gets or sets whether the Batch service should rerun the Job Preparation task after a compute node reboots.
         /// </summary>
         /// <remarks>
-        /// If this property is not specified, a default value of true is assigned by the Batch Service. Note that the job 
-        /// preparation task should still be written to be idempotent because it can be retun if the compute node is rebooted 
-        /// while Job Prep Task is still running.
+        /// The Job Preparation task is always rerun if a compute node is reimaged, or if the Job Preparation task did not 
+        /// complete (e.g. because the reboot occurred while the task was running). Therefore, you should always write a 
+        /// Job Preparation task to be idempotent and to behave correctly if run multiple times. If this property is not 
+        /// specified, a default value of true is assigned by the Batch service.
         /// </remarks>
         public bool? RerunOnComputeNodeRebootAfterSuccess
         {
@@ -150,7 +150,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the collection of ResourceFile instances.
+        /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
+        /// line.
         /// </summary>
         public IList<ResourceFile> ResourceFiles
         {
@@ -162,8 +163,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the value that determines the elevation state of the process. True specifies that the process is 
-        /// to run under elevation as Administrator. False specifes no elevation.
+        /// Gets or sets whether to run the task in elevated mode.
         /// </summary>
         public bool? RunElevated
         {
@@ -172,12 +172,12 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the value that specifies if the Batch Service should wait for the successful completion of the job 
-        /// preparation task before scheduling any tasks on the compute node.
+        /// Gets or sets whether the Batch service should wait for the successful completion of the Job Preparation task 
+        /// before scheduling any tasks on the compute node.
         /// </summary>
         /// <remarks>
-        /// A job preparation task execution is considered successful if its ExitCode is 0. If this property is not specified, 
-        /// a default value of true is assigned by the Batch Service.
+        /// A Job Preparation task execution is considered successful if its ExitCode is 0. If this property is not specified, 
+        /// a default value of true is assigned by the Batch service.
         /// </remarks>
         public bool? WaitForSuccess
         {

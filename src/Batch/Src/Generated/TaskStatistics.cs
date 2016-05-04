@@ -56,7 +56,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the end time of the time range for the statistics.
+        /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
+        /// cref="StartTime"/> and this value.
         /// </summary>
         public DateTime LastUpdateTime
         {
@@ -64,7 +65,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total gibibytes of I/O (network + disk) disk read by the task.
+        /// Gets the total gibibytes of I/O read from disk by the task.
         /// </summary>
         public double ReadIOGiB
         {
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of disk I/O (network + disk) read operations made by the task.
+        /// Gets the total number of disk read operations made by the task.
         /// </summary>
         public long ReadIOps
         {
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the start time of the time range for the statistics.
+        /// Gets the start time of the time range covered by the statistics.
         /// </summary>
         public DateTime StartTime
         {
@@ -104,8 +105,9 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the wait time for a task is the time between the task creation and the start of the most recent task execution 
-        /// (if the task is retried due to failures).
+        /// Gets the total wait time of the task. The wait time for a task is defined as the elapsed time between the creation 
+        /// of the task and the start of task execution. (If the task is retried due to failures, the wait time is the time 
+        /// to the most recent task execution.)
         /// </summary>
         public TimeSpan WaitTime
         {
@@ -121,7 +123,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total gibibytes of I/O (network + disk) disk written by the task.
+        /// Gets the total gibibytes of I/O written to disk by the task.
         /// </summary>
         public double WriteIOGiB
         {
@@ -129,7 +131,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the total number of disk I/O (network + disk) write operations made by the task.
+        /// Gets the total number of disk write operations made by the task.
         /// </summary>
         public long WriteIOps
         {

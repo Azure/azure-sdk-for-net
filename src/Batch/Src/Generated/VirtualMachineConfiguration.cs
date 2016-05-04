@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// The configuration of virtual machines for a pool.
+    /// The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure.
     /// </summary>
     public partial class VirtualMachineConfiguration : ITransportObjectProvider<Models.VirtualMachineConfiguration>, IPropertyMetadata
     {
@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineConfiguration"/> class.
         /// </summary>
-        /// <param name='imageReference'>Information about the platform or marketplace image to use.</param>
-        /// <param name='nodeAgentSkuId'>The SKU of Batch Node Agent that needs to be provisioned on the compute node.</param>
+        /// <param name='imageReference'>A reference to the Azure Virtual Machines Marketplace image to use.</param>
+        /// <param name='nodeAgentSkuId'>The SKU of Batch Node Agent to be provisioned on the compute node.</param>
         /// <param name='windowsConfiguration'>Windows operating system settings on the virtual machine. This property must not be specified if the ImageReference 
-        /// property references a Linux OS image.</param>
+        /// property specifies a Linux OS image.</param>
         public VirtualMachineConfiguration(
             ImageReference imageReference,
             string nodeAgentSkuId,
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Batch
         #region VirtualMachineConfiguration
 
         /// <summary>
-        /// Gets or sets information about the platform or marketplace image to use.
+        /// Gets or sets a reference to the Azure Virtual Machines Marketplace image to use.
         /// </summary>
         public ImageReference ImageReference
         {
@@ -85,8 +85,13 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the SKU of Batch Node Agent that needs to be provisioned on the compute node.
+        /// Gets or sets the SKU of Batch Node Agent to be provisioned on the compute node.
         /// </summary>
+        /// <remarks>
+        /// The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface 
+        /// between the node and the Batch service. There are different implementations of the node agent, known as SKUs, 
+        /// for different operating systems.
+        /// </remarks>
         public string NodeAgentSkuId
         {
             get { return this.propertyContainer.NodeAgentSkuIdProperty.Value; }
@@ -95,7 +100,7 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets or sets windows operating system settings on the virtual machine. This property must not be specified if 
-        /// the ImageReference property references a Linux OS image.
+        /// the ImageReference property specifies a Linux OS image.
         /// </summary>
         public WindowsConfiguration WindowsConfiguration
         {

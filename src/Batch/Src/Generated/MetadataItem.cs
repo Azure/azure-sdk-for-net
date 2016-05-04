@@ -10,7 +10,8 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// An item of metadata.
+    /// A name-value pair associated with a Batch service resource. The Batch service does not assign any meaning to this 
+    /// metadata; it is solely for the use of user code.
     /// </summary>
     public partial class MetadataItem : ITransportObjectProvider<Models.MetadataItem>, IPropertyMetadata
     {
@@ -21,8 +22,8 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="MetadataItem"/> class.
         /// </summary>
-        /// <param name='name'>The metadata name.</param>
-        /// <param name='value'>The metadata value.</param>
+        /// <param name='name'>The name of the <see cref="MetadataItem"/>.</param>
+        /// <param name='value'>The value of the <see cref="MetadataItem"/>.</param>
         public MetadataItem(
             string name,
             string value)
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.Batch
         #region MetadataItem
 
         /// <summary>
-        /// Gets the metadata name.
+        /// Gets the name of the <see cref="MetadataItem"/>.
         /// </summary>
         public string Name
         {
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the metadata value.
+        /// Gets the value of the <see cref="MetadataItem"/>.
         /// </summary>
         public string Value
         {

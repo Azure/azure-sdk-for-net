@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskConstraints"/> class.
         /// </summary>
-        /// <param name='maxWallClockTime'>The maximum duration of time for which a task is allowed to run from the time it is created.</param>
-        /// <param name='retentionTime'>The duration of time for which files in the task's working directory are retained, from the time it completes 
-        /// execution. After this duration, the task's working directory is reclaimed.</param>
-        /// <param name='maxTaskRetryCount'>The max number of retries for the task.</param>
+        /// <param name='maxWallClockTime'>The maximum elapsed time that the task may run, measured from the time the task starts.</param>
+        /// <param name='retentionTime'>The minimum time to retain the working directory for the task on the compute node where it ran, from the time 
+        /// it completes execution. After this time, the Batch service may delete the working directory and all its contents.</param>
+        /// <param name='maxTaskRetryCount'>The maximum number of retries for the task.</param>
         public TaskConstraints(
             TimeSpan? maxWallClockTime = default(TimeSpan?),
             TimeSpan? retentionTime = default(TimeSpan?),
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Batch
         #region TaskConstraints
 
         /// <summary>
-        /// Gets or sets the max number of retries for the task.
+        /// Gets or sets the maximum number of retries for the task.
         /// </summary>
         public int? MaxTaskRetryCount
         {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the maximum duration of time for which a task is allowed to run from the time it is created.
+        /// Gets or sets the maximum elapsed time that the task may run, measured from the time the task starts.
         /// </summary>
         public TimeSpan? MaxWallClockTime
         {
@@ -94,8 +94,9 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the duration of time for which files in the task's working directory are retained, from the time 
-        /// it completes execution. After this duration, the task's working directory is reclaimed.
+        /// Gets or sets the minimum time to retain the working directory for the task on the compute node where it ran, 
+        /// from the time it completes execution. After this time, the Batch service may delete the working directory and 
+        /// all its contents.
         /// </summary>
         public TimeSpan? RetentionTime
         {
