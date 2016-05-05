@@ -350,11 +350,25 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.StartTime = startTimeInstance;
                                 }
                                 
+                                JToken startTimeOffsetMinutesValue = propertiesValue2["startTimeOffsetMinutes"];
+                                if (startTimeOffsetMinutesValue != null && startTimeOffsetMinutesValue.Type != JTokenType.Null)
+                                {
+                                    double startTimeOffsetMinutesInstance = ((double)startTimeOffsetMinutesValue);
+                                    propertiesInstance.StartTimeOffsetMinutes = startTimeOffsetMinutesInstance;
+                                }
+                                
                                 JToken expiryTimeValue = propertiesValue2["expiryTime"];
                                 if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
                                     propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                }
+                                
+                                JToken expiryTimeOffsetMinutesValue = propertiesValue2["expiryTimeOffsetMinutes"];
+                                if (expiryTimeOffsetMinutesValue != null && expiryTimeOffsetMinutesValue.Type != JTokenType.Null)
+                                {
+                                    double expiryTimeOffsetMinutesInstance = ((double)expiryTimeOffsetMinutesValue);
+                                    propertiesInstance.ExpiryTimeOffsetMinutes = expiryTimeOffsetMinutesInstance;
                                 }
                                 
                                 JToken isEnabledValue = propertiesValue2["isEnabled"];
@@ -369,6 +383,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     DateTimeOffset nextRunInstance = ((DateTimeOffset)nextRunValue);
                                     propertiesInstance.NextRun = nextRunInstance;
+                                }
+                                
+                                JToken nextRunOffsetMinutesValue = propertiesValue2["nextRunOffsetMinutes"];
+                                if (nextRunOffsetMinutesValue != null && nextRunOffsetMinutesValue.Type != JTokenType.Null)
+                                {
+                                    double nextRunOffsetMinutesInstance = ((double)nextRunOffsetMinutesValue);
+                                    propertiesInstance.NextRunOffsetMinutes = nextRunOffsetMinutesInstance;
                                 }
                                 
                                 JToken intervalValue = propertiesValue2["interval"];
@@ -830,11 +851,25 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.StartTime = startTimeInstance;
                                 }
                                 
+                                JToken startTimeOffsetMinutesValue = propertiesValue["startTimeOffsetMinutes"];
+                                if (startTimeOffsetMinutesValue != null && startTimeOffsetMinutesValue.Type != JTokenType.Null)
+                                {
+                                    double startTimeOffsetMinutesInstance = ((double)startTimeOffsetMinutesValue);
+                                    propertiesInstance.StartTimeOffsetMinutes = startTimeOffsetMinutesInstance;
+                                }
+                                
                                 JToken expiryTimeValue = propertiesValue["expiryTime"];
                                 if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
                                     propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                }
+                                
+                                JToken expiryTimeOffsetMinutesValue = propertiesValue["expiryTimeOffsetMinutes"];
+                                if (expiryTimeOffsetMinutesValue != null && expiryTimeOffsetMinutesValue.Type != JTokenType.Null)
+                                {
+                                    double expiryTimeOffsetMinutesInstance = ((double)expiryTimeOffsetMinutesValue);
+                                    propertiesInstance.ExpiryTimeOffsetMinutes = expiryTimeOffsetMinutesInstance;
                                 }
                                 
                                 JToken isEnabledValue = propertiesValue["isEnabled"];
@@ -849,6 +884,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     DateTimeOffset nextRunInstance = ((DateTimeOffset)nextRunValue);
                                     propertiesInstance.NextRun = nextRunInstance;
+                                }
+                                
+                                JToken nextRunOffsetMinutesValue = propertiesValue["nextRunOffsetMinutes"];
+                                if (nextRunOffsetMinutesValue != null && nextRunOffsetMinutesValue.Type != JTokenType.Null)
+                                {
+                                    double nextRunOffsetMinutesInstance = ((double)nextRunOffsetMinutesValue);
+                                    propertiesInstance.NextRunOffsetMinutes = nextRunOffsetMinutesInstance;
                                 }
                                 
                                 JToken intervalValue = propertiesValue["interval"];
@@ -1145,11 +1187,25 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.StartTime = startTimeInstance;
                                         }
                                         
+                                        JToken startTimeOffsetMinutesValue = propertiesValue["startTimeOffsetMinutes"];
+                                        if (startTimeOffsetMinutesValue != null && startTimeOffsetMinutesValue.Type != JTokenType.Null)
+                                        {
+                                            double startTimeOffsetMinutesInstance = ((double)startTimeOffsetMinutesValue);
+                                            propertiesInstance.StartTimeOffsetMinutes = startTimeOffsetMinutesInstance;
+                                        }
+                                        
                                         JToken expiryTimeValue = propertiesValue["expiryTime"];
                                         if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
                                         {
                                             DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
                                             propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                        }
+                                        
+                                        JToken expiryTimeOffsetMinutesValue = propertiesValue["expiryTimeOffsetMinutes"];
+                                        if (expiryTimeOffsetMinutesValue != null && expiryTimeOffsetMinutesValue.Type != JTokenType.Null)
+                                        {
+                                            double expiryTimeOffsetMinutesInstance = ((double)expiryTimeOffsetMinutesValue);
+                                            propertiesInstance.ExpiryTimeOffsetMinutes = expiryTimeOffsetMinutesInstance;
                                         }
                                         
                                         JToken isEnabledValue = propertiesValue["isEnabled"];
@@ -1164,6 +1220,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             DateTimeOffset nextRunInstance = ((DateTimeOffset)nextRunValue);
                                             propertiesInstance.NextRun = nextRunInstance;
+                                        }
+                                        
+                                        JToken nextRunOffsetMinutesValue = propertiesValue["nextRunOffsetMinutes"];
+                                        if (nextRunOffsetMinutesValue != null && nextRunOffsetMinutesValue.Type != JTokenType.Null)
+                                        {
+                                            double nextRunOffsetMinutesInstance = ((double)nextRunOffsetMinutesValue);
+                                            propertiesInstance.NextRunOffsetMinutes = nextRunOffsetMinutesInstance;
                                         }
                                         
                                         JToken intervalValue = propertiesValue["interval"];
@@ -1437,11 +1500,25 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.StartTime = startTimeInstance;
                                         }
                                         
+                                        JToken startTimeOffsetMinutesValue = propertiesValue["startTimeOffsetMinutes"];
+                                        if (startTimeOffsetMinutesValue != null && startTimeOffsetMinutesValue.Type != JTokenType.Null)
+                                        {
+                                            double startTimeOffsetMinutesInstance = ((double)startTimeOffsetMinutesValue);
+                                            propertiesInstance.StartTimeOffsetMinutes = startTimeOffsetMinutesInstance;
+                                        }
+                                        
                                         JToken expiryTimeValue = propertiesValue["expiryTime"];
                                         if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
                                         {
                                             DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
                                             propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                        }
+                                        
+                                        JToken expiryTimeOffsetMinutesValue = propertiesValue["expiryTimeOffsetMinutes"];
+                                        if (expiryTimeOffsetMinutesValue != null && expiryTimeOffsetMinutesValue.Type != JTokenType.Null)
+                                        {
+                                            double expiryTimeOffsetMinutesInstance = ((double)expiryTimeOffsetMinutesValue);
+                                            propertiesInstance.ExpiryTimeOffsetMinutes = expiryTimeOffsetMinutesInstance;
                                         }
                                         
                                         JToken isEnabledValue = propertiesValue["isEnabled"];
@@ -1456,6 +1533,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             DateTimeOffset nextRunInstance = ((DateTimeOffset)nextRunValue);
                                             propertiesInstance.NextRun = nextRunInstance;
+                                        }
+                                        
+                                        JToken nextRunOffsetMinutesValue = propertiesValue["nextRunOffsetMinutes"];
+                                        if (nextRunOffsetMinutesValue != null && nextRunOffsetMinutesValue.Type != JTokenType.Null)
+                                        {
+                                            double nextRunOffsetMinutesInstance = ((double)nextRunOffsetMinutesValue);
+                                            propertiesInstance.NextRunOffsetMinutes = nextRunOffsetMinutesInstance;
                                         }
                                         
                                         JToken intervalValue = propertiesValue["interval"];

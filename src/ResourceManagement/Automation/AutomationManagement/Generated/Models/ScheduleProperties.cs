@@ -52,6 +52,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._expiryTime = value; }
         }
         
+        private double _expiryTimeOffsetMinutes;
+        
+        /// <summary>
+        /// Optional. Gets or sets the expiry time's offset in minutes.
+        /// </summary>
+        public double ExpiryTimeOffsetMinutes
+        {
+            get { return this._expiryTimeOffsetMinutes; }
+            set { this._expiryTimeOffsetMinutes = value; }
+        }
+        
         private string _frequency;
         
         /// <summary>
@@ -97,6 +108,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._nextRun = value; }
         }
         
+        private double _nextRunOffsetMinutes;
+        
+        /// <summary>
+        /// Optional. Gets or sets the next run time's offset in minutes.
+        /// </summary>
+        public double NextRunOffsetMinutes
+        {
+            get { return this._nextRunOffsetMinutes; }
+            set { this._nextRunOffsetMinutes = value; }
+        }
+        
         private DateTimeOffset _startTime;
         
         /// <summary>
@@ -106,6 +128,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._startTime; }
             set { this._startTime = value; }
+        }
+        
+        private double _startTimeOffsetMinutes;
+        
+        /// <summary>
+        /// Optional. Gets or sets the start time's offset in minutes.
+        /// </summary>
+        public double StartTimeOffsetMinutes
+        {
+            get { return this._startTimeOffsetMinutes; }
+            set { this._startTimeOffsetMinutes = value; }
         }
         
         private string _timeZone;
