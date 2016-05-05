@@ -1233,6 +1233,8 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 XElement migrationStateElement = virtualNetworkSitesElement.Element(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
                                 if (migrationStateElement != null)
                                 {
+                                    string migrationStateInstance = migrationStateElement.Value;
+                                    virtualNetworkSiteInstance.MigrationState = migrationStateInstance;
                                 }
                             }
                         }

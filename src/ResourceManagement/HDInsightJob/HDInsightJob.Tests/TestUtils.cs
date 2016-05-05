@@ -23,12 +23,12 @@ namespace HDInsightJob.Tests
 {
     public static class TestUtils
     {
-        public static string ClusterName = "pattipakalinux32.azurehdinsight.net";
+        public static string ClusterName = "pattipakalinux330.azurehdinsight.net";
         public static string UserName = "admin";
         public static string Password = "";
         public static string StorageAccountName = "pattipakalinux";
         public static string StorageAccountKey = "";
-        public static string DefaultContainer = "pattipakalinux32";
+        public static string DefaultContainer = "pattipakalinux330";
 
         public static string WinClusterName = "pattipakawin33.azurehdinsight.net";
         public static string WinStorageAccountName = "pattipakastorageaccount";
@@ -36,6 +36,25 @@ namespace HDInsightJob.Tests
         public static string WinDefaultContainer = "pattipakawin33";
         public static string WinUserName = "admin";
         public static string WinPassword = "";
+
+        public static string SQLServerUserName = "";
+        public static string SQLServerPassword = "";
+        public static string SQLServerConnectionString = "jdbc:sqlserver://hdinsightjobtest.database.windows.net:1433;database=HdInsightJobTest;user=" + SQLServerUserName + ";password=" + SQLServerPassword + ";";
+        public static string SQLServerTableName = "dept";
+
+        public static TimeSpan JobPollInterval = TimeSpan.FromSeconds(30);
+        public static TimeSpan JobWaitInterval = TimeSpan.FromMinutes(30);
+
+        public static HDInsightJobManagementClient GetHDInsightJobManagementClient(bool isWindowsCluster = false)
+        {
+            var credentials = new BasicAuthenticationCloudCredentials
+            {
+                Username = isWindowsCluster ? WinUserName : UserName,
+                Password = isWindowsCluster ? WinPassword : Password
+            };
+
+            return TestUtils.GetHDInsightJobManagementClient(isWindowsCluster ? WinClusterName : ClusterName, credentials);
+        }
 
         public static HDInsightJobManagementClient GetHDInsightJobManagementClient(string dnsName, BasicAuthenticationCloudCredentials creds)
         {

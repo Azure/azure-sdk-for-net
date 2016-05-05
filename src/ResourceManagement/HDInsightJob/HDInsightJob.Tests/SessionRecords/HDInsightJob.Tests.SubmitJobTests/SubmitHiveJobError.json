@@ -16,14 +16,17 @@
           "application/json"
         ],
         "useragent": [
-          "HDInsight xplat "
+          "HDInsight Job SDK .Net 2.0.1.0"
         ],
         "User-Agent": [
           "HDInsight",
-          "xplat"
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1457057992149_0020\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1460939678768_0072\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -32,24 +35,24 @@
           "application/json"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1457161067304&s=5H1uLT45Ft4MDtSMfe15cFSAK8M=\"; Path=/; Expires=Sat, 05-Mar-2016 06:57:47 GMT; HttpOnly; path=/; secure"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1461141148154&s=/CQmi722/Kc4wCsz+xhTJ6A9te8=\"; Path=/; Expires=Wed, 20-Apr-2016 08:32:28 GMT; HttpOnly; path=/; secure"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
         ],
         "X-Powered-By": [
-          "ARR/2.5",
+          "ARR/3.0",
           "ASP.NET"
         ],
         "Date": [
-          "Fri, 04 Mar 2016 20:58:15 GMT"
+          "Tue, 19 Apr 2016 22:32:42 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestUri": "/templeton/v1/jobs/job_1460939678768_0072?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwOTM5Njc4NzY4XzAwNzI/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -57,14 +60,17 @@
           "application/json"
         ],
         "useragent": [
-          "HDInsight xplat "
+          "HDInsight Job SDK .Net 2.0.1.0"
         ],
         "User-Agent": [
           "HDInsight",
-          "xplat"
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1461105162562,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1460939678768_0072/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn0-pattip.d2cmq52jtndulpo2pcweyyzj1d.dx.internal.cloudapp.net:8088/proxy/application_1460939678768_0072/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1460939678768_0072/job.xml\",\r\n    \"url\": \"http://hn0-pattip.d2cmq52jtndulpo2pcweyyzj1d.dx.internal.cloudapp.net:8088/proxy/application_1460939678768_0072/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    }\r\n  },\r\n  \"id\": \"job_1460939678768_0072\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1451"
@@ -76,18 +82,18 @@
           "Microsoft-IIS/8.5"
         ],
         "X-Powered-By": [
-          "ARR/2.5",
+          "ARR/3.0",
           "ASP.NET"
         ],
         "Date": [
-          "Fri, 04 Mar 2016 20:58:15 GMT"
+          "Tue, 19 Apr 2016 22:32:42 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestUri": "/templeton/v1/jobs/job_1460939678768_0072?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwOTM5Njc4NzY4XzAwNzI/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -95,17 +101,20 @@
           "application/json"
         ],
         "useragent": [
-          "HDInsight xplat "
+          "HDInsight Job SDK .Net 2.0.1.0"
         ],
         "User-Agent": [
           "HDInsight",
-          "xplat"
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1461105179395,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux330@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1460939678768_0072/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn0-pattip.d2cmq52jtndulpo2pcweyyzj1d.dx.internal.cloudapp.net:8088/proxy/application_1460939678768_0072/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux330@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1460939678768_0072/job.xml\",\r\n    \"url\": \"http://hn0-pattip.d2cmq52jtndulpo2pcweyyzj1d.dx.internal.cloudapp.net:8088/proxy/application_1460939678768_0072/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    }\r\n  },\r\n  \"id\": \"job_1460939678768_0072\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1451"
+          "1573"
         ],
         "Content-Type": [
           "application/json"
@@ -114,18 +123,18 @@
           "Microsoft-IIS/8.5"
         ],
         "X-Powered-By": [
-          "ARR/2.5",
+          "ARR/3.0",
           "ASP.NET"
         ],
         "Date": [
-          "Fri, 04 Mar 2016 20:58:15 GMT"
+          "Tue, 19 Apr 2016 22:33:13 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestUri": "/templeton/v1/jobs/job_1460939678768_0072?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwOTM5Njc4NzY4XzAwNzI/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -133,1914 +142,17 @@
           "application/json"
         ],
         "useragent": [
-          "HDInsight xplat "
+          "HDInsight Job SDK .Net 2.0.1.0"
         ],
         "User-Agent": [
           "HDInsight",
-          "xplat"
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:17 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:19 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:20 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:22 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:23 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:25 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:26 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:28 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:29 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:31 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:32 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1457125096758,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1451"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:34 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:35 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:37 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:40 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:41 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:42 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:44 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:45 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:47 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:48 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:50 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:51 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:53 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:54 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:56 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:57 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:58:58 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:00 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:01 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:03 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:04 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:06 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:07 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:09 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:10 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:12 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:13 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:15 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:16 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:17 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:19 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:20 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:22 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:23 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:25 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:27 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1571"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:29 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 1457125171929,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": 64,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1583"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:30 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"finishTime\": 1457125171929,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"yarn\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"RUNNING\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"yarn\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mapreducestaging/admin/.staging/job_1457057992149_0020/job.xml\",\r\n    \"url\": \"http://hn1-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:8088/proxy/application_1457057992149_0020/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": 64,\r\n  \"user\": \"yarn\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1583"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ARR/2.5",
-          "ASP.NET"
-        ],
-        "Date": [
-          "Fri, 04 Mar 2016 20:59:32 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "accept": [
-          "application/json"
-        ],
-        "useragent": [
-          "HDInsight xplat "
-        ],
-        "User-Agent": [
-          "HDInsight",
-          "xplat"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": \"NaN\",\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mr-history/done/2016/03/04/000000/job_1457057992149_0020_conf.xml\",\r\n    \"finishTime\": 1457125171929,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"hn0-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:19888/jobhistory/job/job_1457057992149_0020\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"SUCCEEDED\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mr-history/done/2016/03/04/000000/job_1457057992149_0020_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": 64,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 1.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1461105179395,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux330@pattipakalinux.blob.core.windows.net/mr-history/done/2016/04/19/000000/job_1460939678768_0072_conf.xml\",\r\n    \"finishTime\": 1461105217580,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"hn0-pattip.d2cmq52jtndulpo2pcweyyzj1d.dx.internal.cloudapp.net:19888/jobhistory/job/job_1460939678768_0072\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"SUCCEEDED\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakalinux330@pattipakalinux.blob.core.windows.net/mr-history/done/2016/04/19/000000/job_1460939678768_0072_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    }\r\n  },\r\n  \"id\": \"job_1460939678768_0072\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": 64,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1479"
@@ -2052,18 +164,18 @@
           "Microsoft-IIS/8.5"
         ],
         "X-Powered-By": [
-          "ARR/2.5",
+          "ARR/3.0",
           "ASP.NET"
         ],
         "Date": [
-          "Fri, 04 Mar 2016 20:59:34 GMT"
+          "Tue, 19 Apr 2016 22:33:45 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestUri": "/templeton/v1/jobs/job_1460939678768_0072?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwOTM5Njc4NzY4XzAwNzI/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2071,14 +183,17 @@
           "application/json"
         ],
         "useragent": [
-          "HDInsight xplat "
+          "HDInsight Job SDK .Net 2.0.1.0"
         ],
         "User-Agent": [
           "HDInsight",
-          "xplat"
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": \"NaN\",\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mr-history/done/2016/03/04/000000/job_1457057992149_0020_conf.xml\",\r\n    \"finishTime\": 1457125171929,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"hn0-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:19888/jobhistory/job/job_1457057992149_0020\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"SUCCEEDED\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mr-history/done/2016/03/04/000000/job_1457057992149_0020_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": 64,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 1.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1461105179395,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux330@pattipakalinux.blob.core.windows.net/mr-history/done/2016/04/19/000000/job_1460939678768_0072_conf.xml\",\r\n    \"finishTime\": 1461105217580,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"hn0-pattip.d2cmq52jtndulpo2pcweyyzj1d.dx.internal.cloudapp.net:19888/jobhistory/job/job_1460939678768_0072\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"SUCCEEDED\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakalinux330@pattipakalinux.blob.core.windows.net/mr-history/done/2016/04/19/000000/job_1460939678768_0072_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    }\r\n  },\r\n  \"id\": \"job_1460939678768_0072\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": 64,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1479"
@@ -2090,18 +205,18 @@
           "Microsoft-IIS/8.5"
         ],
         "X-Powered-By": [
-          "ARR/2.5",
+          "ARR/3.0",
           "ASP.NET"
         ],
         "Date": [
-          "Fri, 04 Mar 2016 20:59:35 GMT"
+          "Tue, 19 Apr 2016 22:33:45 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1457057992149_0020?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDU3MDU3OTkyMTQ5XzAwMjA/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestUri": "/templeton/v1/jobs/job_1460939678768_0072?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwOTM5Njc4NzY4XzAwNzI/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2109,14 +224,17 @@
           "application/json"
         ],
         "useragent": [
-          "HDInsight xplat "
+          "HDInsight Job SDK .Net 2.0.1.0"
         ],
         "User-Agent": [
           "HDInsight",
-          "xplat"
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": \"NaN\",\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1457125117432,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mr-history/done/2016/03/04/000000/job_1457057992149_0020_conf.xml\",\r\n    \"finishTime\": 1457125171929,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"hn0-pattip.y02smytnonzelpycb5wflskfrb.dx.internal.cloudapp.net:19888/jobhistory/job/job_1457057992149_0020\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"SUCCEEDED\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakalinux32@pattipakalinux.blob.core.windows.net/mr-history/done/2016/03/04/000000/job_1457057992149_0020_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1457057992149_0020\",\r\n    \"jobID\": {\r\n      \"id\": 20,\r\n      \"jtIdentifier\": \"1457057992149\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1457057992149_0020\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": 64,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 1.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1461105179395,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakalinux330@pattipakalinux.blob.core.windows.net/mr-history/done/2016/04/19/000000/job_1460939678768_0072_conf.xml\",\r\n    \"finishTime\": 1461105217580,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"hn0-pattip.d2cmq52jtndulpo2pcweyyzj1d.dx.internal.cloudapp.net:19888/jobhistory/job/job_1460939678768_0072\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"SUCCEEDED\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakalinux330@pattipakalinux.blob.core.windows.net/mr-history/done/2016/04/19/000000/job_1460939678768_0072_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1460939678768_0072\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 72,\r\n      \"jtIdentifier\": \"1460939678768\"\r\n    }\r\n  },\r\n  \"id\": \"job_1460939678768_0072\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": 64,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": null,\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"FAKEQUERY;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1479"
@@ -2128,11 +246,11 @@
           "Microsoft-IIS/8.5"
         ],
         "X-Powered-By": [
-          "ARR/2.5",
+          "ARR/3.0",
           "ASP.NET"
         ],
         "Date": [
-          "Fri, 04 Mar 2016 20:59:35 GMT"
+          "Tue, 19 Apr 2016 22:33:45 GMT"
         ]
       },
       "StatusCode": 200

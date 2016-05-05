@@ -20,7 +20,10 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.OperationalInsights.Models;
 
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
@@ -62,6 +65,17 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._query = value; }
         }
         
+        private IList<Tag> _tags;
+        
+        /// <summary>
+        /// Optional. Gets or sets the tags attached to the saved search.
+        /// </summary>
+        public IList<Tag> Tags
+        {
+            get { return this._tags; }
+            set { this._tags = value; }
+        }
+        
         private int? _version;
         
         /// <summary>
@@ -78,6 +92,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         public SavedSearchProperties()
         {
+            this.Tags = new LazyList<Tag>();
         }
     }
 }

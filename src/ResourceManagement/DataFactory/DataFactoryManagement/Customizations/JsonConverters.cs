@@ -17,6 +17,7 @@ using Microsoft.Azure.Management.DataFactories.Models;
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -160,16 +161,29 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 if (actual != null && expected != null)
                 {
                     Type type = typeof(ActivityWindowsByDataFactoryListParameters);
+                    string[] notSerializedProperties = new[] { "ResourceGroupName", "DataFactoryName" };
                     foreach (PropertyInfo pi in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
                     {
                         object actualValue = type.GetProperty(pi.Name).GetValue(actual, null);
                         object expectedValue = type.GetProperty(pi.Name).GetValue(expected, null);
 
+                        if (notSerializedProperties.Contains(pi.Name))
+                        {
+                            if (actualValue != null || expectedValue == null)
+                            {
+                                throw new JsonSerializationException(string.Format(CultureInfo.InvariantCulture,
+                                    "Validation of ListActivityWindows failed for property {0} because unallowed properties are serialized. actualValue={1}, expectedValue={2}. actualJson={3}, expectedJson={4}",
+                                    pi.Name, actualValue, expectedValue, jsonActual, this.JsonRequest));
+                            }
+
+                            continue;
+                        }
+
                         if (actualValue != expectedValue && (actualValue == null || !actualValue.Equals(expectedValue)))
                         {
                             throw new Exception(string.Format(CultureInfo.InvariantCulture,
-                                "Validation of ListActivityWindows failed because the actual parameter serialized does not match the expected. actual={0}, expected={1}.",
-                                jsonActual, this.JsonRequest));
+                                "Validation of ListActivityWindows failed because the actual parameter serialized does not match the expected for property {0}. actualValue={1}, expectedValue={2}. actualJson={3}, expectedJson={4}",
+                                pi.Name, actualValue, expectedValue, jsonActual, this.JsonRequest));
                         }
                     }
                 }
