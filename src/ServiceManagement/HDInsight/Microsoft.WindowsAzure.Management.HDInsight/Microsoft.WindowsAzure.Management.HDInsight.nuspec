@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.HDInsight</id>
-    <title>Microsoft Windows Azure HDInsight Management Library</title>
+    <title>Microsoft Windows Azure HDInsight Management Library [DEPRECATED]</title>
     <releaseNotes>Adds basic subscription operations.</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
@@ -11,8 +11,12 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides .NET API for cluster management and job submission on Windows Azure HDInsight service.</summary>
-    <description>Provides a .NET API for cluster management and job submission on Windows Azure HDInsight service.</description>
+    <summary>
+      NOTE: This package has been deprecated. Please use Microsoft.Azure.Management.HDInsight and Microsoft.Azure.Management.HDInsight.Job packages instead. For more information, go to: http://go.microsoft.com/fwlink/p/?LinkID=785087
+    </summary>
+    <description>
+      NOTE: This package has been deprecated. Please use Microsoft.Azure.Management.HDInsight and Microsoft.Azure.Management.HDInsight.Job packages instead. For more information, go to: http://go.microsoft.com/fwlink/p/?LinkID=785087
+    </description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure HDInsight  management and job submission client.</tags>
     <references>

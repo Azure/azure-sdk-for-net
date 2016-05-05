@@ -2388,6 +2388,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                 }
                 
+                if (parameters.LicenseType != null)
+                {
+                    XElement licenseTypeElement = new XElement(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                    licenseTypeElement.Value = parameters.LicenseType;
+                    persistentVMRoleElement.Add(licenseTypeElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -3713,6 +3720,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 serialOutputBlobUriElement.Value = roleListItem.DebugSettings.SerialOutputBlobUri.AbsoluteUri;
                                 debugSettingsElement.Add(serialOutputBlobUriElement);
                             }
+                        }
+                        
+                        if (roleListItem.LicenseType != null)
+                        {
+                            XElement licenseTypeElement = new XElement(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                            licenseTypeElement.Value = roleListItem.LicenseType;
+                            roleElement.Add(licenseTypeElement);
+                        }
+                        
+                        if (roleListItem.MigrationState != null)
+                        {
+                            XElement migrationStateElement = new XElement(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
+                            migrationStateElement.Value = roleListItem.MigrationState;
+                            roleElement.Add(migrationStateElement);
                         }
                     }
                     deploymentElement.Add(roleListSequenceElement);
@@ -7932,6 +7953,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             
+                            XElement provisionGuestAgentElement = persistentVMRoleElement.Element(XName.Get("ProvisionGuestAgent", "http://schemas.microsoft.com/windowsazure"));
+                            if (provisionGuestAgentElement != null && !string.IsNullOrEmpty(provisionGuestAgentElement.Value))
+                            {
+                                bool provisionGuestAgentInstance = bool.Parse(provisionGuestAgentElement.Value);
+                                result.ProvisionGuestAgent = provisionGuestAgentInstance;
+                            }
+                            
                             XElement debugSettingsElement = persistentVMRoleElement.Element(XName.Get("DebugSettings", "http://schemas.microsoft.com/windowsazure"));
                             if (debugSettingsElement != null)
                             {
@@ -7958,6 +7986,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     Uri serialOutputBlobUriInstance = TypeConversion.TryParseUri(serialOutputBlobUriElement.Value);
                                     debugSettingsInstance.SerialOutputBlobUri = serialOutputBlobUriInstance;
                                 }
+                            }
+                            
+                            XElement licenseTypeElement = persistentVMRoleElement.Element(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                            if (licenseTypeElement != null)
+                            {
+                                string licenseTypeInstance = licenseTypeElement.Value;
+                                result.LicenseType = licenseTypeInstance;
                             }
                             
                             XElement migrationStateElement = persistentVMRoleElement.Element(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));

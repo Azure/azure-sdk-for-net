@@ -25,6 +25,8 @@ using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
+    using System.Runtime.InteropServices;
+
     public class ZoneScenarioTests
     {
         [Fact]
@@ -43,8 +45,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 {
                     Assert.Equal(zoneName, zone.Name);
                     Assert.False(string.IsNullOrEmpty(zone.ETag));
+                    Assert.False(string.IsNullOrEmpty(zone.Properties.ParentResourceGroupName));
                 };
-
+                
                 // Create the zone clean, verify response
                 ZoneCreateOrUpdateResponse createResponse = dnsClient.Zones.CreateOrUpdate(
                     resourceGroup.Name, 
@@ -68,6 +71,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
                 assertZoneInvariants(createResponse.Zone);
                 Assert.Equal(1, createResponse.Zone.Tags.Count);
+                Assert.True(createResponse.Zone.Properties.NameServers != null && createResponse.Zone.Properties.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
+                Assert.True(createResponse.Zone.Properties.ParentResourceGroupName == resourceGroup.Name);
 
                 // Retrieve the zone after create, verify response
                 var getresponse = dnsClient.Zones.Get(resourceGroup.Name, zoneName);
@@ -75,6 +80,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
                 assertZoneInvariants(getresponse.Zone);
                 Assert.Equal(1, getresponse.Zone.Tags.Count);
+                
+                Assert.True(getresponse.Zone.Properties.NameServers != null && getresponse.Zone.Properties.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
 
                 // Call Update on the object returned by Create (important distinction from Get below)
                 Zone createdZone = createResponse.Zone;
@@ -127,7 +134,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 Assert.Equal(2, listresponse.Zones.Count);
                 Assert.True(
                     listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name))
-                    && listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[1], zoneReturned.Name)),
+                    && listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[1], zoneReturned.Name))
+                    && listresponse.Zones.All(zoneReturned => string.Equals(resourceGroup.Name, zoneReturned.Properties.ParentResourceGroupName)),
                     "The response of the List request does not meet expectations.");
 
                 ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
@@ -142,7 +150,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 context.Start();
                 DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
 
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone") + ".com", TestUtilities.GenerateName("hydratestdnszone") + ".con" };
+                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone") + ".com", TestUtilities.GenerateName("hydratestdnszone") + ".com" };
                 ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
                 ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
 
@@ -150,8 +158,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 Assert.NotNull(listresponse);
                 Assert.Equal(1, listresponse.Zones.Count);
-                Assert.True(listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name)),
-                    "The response of the List request does not meet expectations.");
+                Assert.True(zoneNames.Any(zoneName => zoneName == listresponse.Zones[0].Name), string.Format(" did not find zone name {0} in list ", listresponse.Zones[0].Name));
+                Assert.True(listresponse.Zones[0].Properties.ParentResourceGroupName == resourceGroup.Name, string.Format(" expected resource group name {0} is different from actual {1}", resourceGroup.Name, listresponse.Zones[0].Properties.ParentResourceGroupName));
 
                 ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
             }

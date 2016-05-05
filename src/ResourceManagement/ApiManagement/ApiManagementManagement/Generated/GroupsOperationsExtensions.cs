@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Deletes specific product of the Api Management service instance.
+        /// Deletes specific group of the Api Management service instance.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Deletes specific product of the Api Management service instance.
+        /// Deletes specific group of the Api Management service instance.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
