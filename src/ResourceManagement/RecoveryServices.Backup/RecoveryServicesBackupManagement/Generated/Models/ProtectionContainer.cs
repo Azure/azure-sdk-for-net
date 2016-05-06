@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Optional. Type of the protectable object associated with this
         /// protection container. Possible values: IaasVMContainer,
-        /// MABWindowsContainer.
+        /// MABWindowsContainer, AzureSqlContainer.
         /// </summary>
         public string ProtectableObjectType
         {

@@ -38,5 +38,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// The File Folder Workload type.
         /// </summary>
         public const string FileFolder = "FileFolder";
+        
+        /// <summary>
+        /// The Azure SQL Db Workload type.
+        /// </summary>
+        public const string AzureSqlDb = "AzureSqlDb";
     }
 }

@@ -26,25 +26,25 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// Simple policy retention.
+    /// Azure SQL workload-specific protection policy.
     /// </summary>
-    public partial class SimpleRetentionPolicy : RetentionPolicy
+    public partial class AzureSqlProtectionPolicy : ProtectionPolicyBase
     {
-        private RetentionDuration _retentionDuration;
+        private RetentionPolicy _retentionPolicy;
         
         /// <summary>
-        /// Optional. Retention duration of the protection policy.
+        /// Optional. Retention policy.
         /// </summary>
-        public RetentionDuration RetentionDuration
+        public RetentionPolicy RetentionPolicy
         {
-            get { return this._retentionDuration; }
-            set { this._retentionDuration = value; }
+            get { return this._retentionPolicy; }
+            set { this._retentionPolicy = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SimpleRetentionPolicy class.
+        /// Initializes a new instance of the AzureSqlProtectionPolicy class.
         /// </summary>
-        public SimpleRetentionPolicy()
+        public AzureSqlProtectionPolicy()
         {
         }
     }
