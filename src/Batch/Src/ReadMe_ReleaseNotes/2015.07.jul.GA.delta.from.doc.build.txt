@@ -1,0 +1,7 @@
+﻿Changes to publics made after "doc build" was handed off
+
+CloudJob: many props missing "?" nullability
+
+ListPoolUsageMetrics:  
+    DateTime args needed ? I can't remember if the "?"s made it into doc build.
+    ? args get "=null" default value
