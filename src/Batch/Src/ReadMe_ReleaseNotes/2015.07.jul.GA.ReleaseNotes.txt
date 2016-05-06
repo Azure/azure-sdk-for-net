@@ -1,0 +1,94 @@
+﻿Release Notes: Azure Batch Service General Availability
+
+Backwards compatibility and support lifecycle of Public Preview assembly.
+    Please see the following blog post:
+        http://blogs.technet.com/b/windowshpc/archive/2015/07/10/what-39-s-new-in-azure-batch-july-release-general-availability.aspx
+
+Architecture changes:
+    CloudJobSchedule added.                 Use this class to control job schedules.
+    CloudWorkitem removed.                  The features in this class were moved to other classes.
+    CloudJob promoted to top level entity.  This class got some features of the deprecated CloudWorkitem.
+
+    IMPORTANT:
+        You create a CloudJob directly now with the BatchClient.JobOperations.CreateJob() method.
+        It is no longer necessary to create a CloudWorkitem and wait on the RecentJob.
+
+Operations instead of Managers:
+    The interface IBatchClient has been removed (see interface section removal below) and replaced by the implementation class BatchClient.
+    The factories found on IBatchClient have been renamed or removed from the BatchClient class.
+    The BatchClient class now has the following properties:
+
+        CertificateOperations           (replaces IBatchClient.OpenCertificateManager())
+        JobOperations                   (includes methods formerly found on IBatchClient.OpenWorkItemManager())
+        JobScheduleOperations           (methods for use of the CloudJobSchedule class)
+        PoolOperations                  (replaces IBatchClient.OpenPoolManager()
+        Utilities                       (replaces IBatchClient.OpenToolbox())
+
+Interfaces removed:
+    Most of the C# Interfaces have been removed from the library.
+    In their place, the implementation classes have been made public.
+
+    Examples:
+        IBatchClient    removed and replaced by class BatchClient.
+        ICloudWorkItem  removed.
+        ICloudJob       removed and replaced by class CloudJob.
+        ICloudTask      removed.  Class CloudTask was always public.
+        ICloudPool      removed and replaced by class CloudPool
+        etc.
+
+Many implementations of IDisposable removed.
+    IDisposable is no longer on many classes.
+    Please note that class BatchClient still implements IDisposable.
+
+Publics renamed:
+    "Managers" have been renamed (see section above "Operations instead of Managers").
+    The VM class has been renamed to ComputeNode.
+    ITaskFile has been replaced by NodeFile.
+    BatchCredential has been renamed/replaced with BatchSharedKeyCredential.
+    BatchClient.Connect() has been renamed to BatchClient.OpenAsync() and/or BatchClient.Open().
+
+    "Name" to "Id":
+        The "Name" field has been renamed to "Id" in top level classes (CloudJob, CloudPool, CloudTask, etc).
+        In most cases an additional field "DispalyName" has been added.
+
+    PoolManager (now PoolOperations):
+        GetJobPreparationTaskStatusAsync was removed and replaced by JobOperations.ListJobPreparationAndReleaseTaskStatus().
+        GetJobReleaseTaskStatusAsync was removed and replaced by JobOperations.ListJobPreparationAndReleaseTaskStatus().
+
+IEnumerableAsyncExtended and Paged Collections:
+    IPagedEnumerable<T>/IPagedEnumerator<T> replace the IEnumerableAsyncExtended<T> feature set.
+    These interfaces expose asynchronous patterns for enumeration of collections that are backed by paging calls to the Batch Service.
+    IPagedEnumerable<T> also implements IEnumerable<T> so all common collection manipulations are supported.
+    Caution should be used with IEnumerable<T> since it is a synchronous calling pattern and results in 
+    calls to the blocking synchronous wrapper of IPagedEnumerator<T>.MoveNextAsync().
+
+    IPagedEnumerable<T> exposes the following new asynchronous methods:
+
+        Task ForEachAsync<T>()
+        Task<List<T>> ToListAsync<T>()
+
+        These methods can assist the transition to asynchronous programming patterns with paged collections.
+
+REST Proxy Level
+
+    The REST proxies from Public Preview have been replaced by the Protocol.BatchService class and associated namespaces.
+    Azure services are adopting generated proxies to enable multiple languages and platforms.
+    The methods and classes found in the Protocol.BatchService are complete over Batch Service REST API.
+    The BatchClient class constructs an instance of Protocol.BatchService internally.
+    There is an override of BatchClient.OpenAsync()/Open() that allows the caller to provide their own instance of Protocol.BatchService.
+
+    Features found in BatchClient and Protocol.BatchService can be used independently or simultaneously.
+    However, it is important to know that BatchClient classes and features are not automatically aware of the effects of
+    calls made via Protocol.BatchService.
+
+    If a mixed programming model is needed, use the BatchClientBehavior and Interceptor Model.
+
+BatchClientBehavior and Interceptor Model:
+
+    Some behaviors have been renamed (SetRetryPolicy is now RetryPolicyProvider) and some have removed (OperationContextFactory).
+    The YieldInjectionInterceptor has been removed (use BatchRequest<T1,T2>.ServiceRequestFunc).
+
+    Interfaces and signatures of the interceptors have been changed to align with the new BatchRequest<T1,T2>.
+
+
+
