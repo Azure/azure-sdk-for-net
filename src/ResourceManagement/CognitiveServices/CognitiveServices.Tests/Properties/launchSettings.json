@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "test": {
+      "commandName": "test",
+      "environmentVariables": {
+        "TEST_CSM_ORGID_AUTHENTICATION": "SubscriptionId=a064e0b9-e6c9-4a0d-b993-22efebefe2af;Environment=Prod;UserId=danvar@microsoft.com;Password=D4vidThirdkill",
+        "AZURE_TEST_MODE": "Record"
+      }
+    }
+  }
+}
