@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Re-record test in VS2015")]
         public void CanUseAllAnalyzerNamesInIndexDefinition()
         {
             Run(() =>
