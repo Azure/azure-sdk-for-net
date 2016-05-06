@@ -1,0 +1,172 @@
+﻿{
+  "properties": {
+    "packageType": "Graph",
+    "package": {
+      "nodes": {
+        "node1": {
+          "assetId": "asset2"
+        },
+        "node2": {
+          "inputId": "input1"
+        },
+        "node3": {
+          "assetId": "asset1",
+          "parameters": {
+            "Category": "Trigonometric",
+            "Trigonometric Function": "Sin",
+            "Column Set": "{\"isFilter\":true,\"rules\":[{\"ruleType\":\"ColumnTypes\",\"exclude\":false,\"columnTypes\":[\"Numeric\"],\"columnKinds\":[\"All\"]}]}",
+            "Output mode": "ResultOnly"
+          }
+        },
+        "node4": {
+          "outputId": "output1"
+        }
+      },
+      "edges": [
+        {
+          "sourceNodeId": "node1",
+          "sourcePortId": "Results dataset",
+          "targetNodeId": "node3",
+          "targetPortId": "Dataset"
+        },
+        {
+          "sourceNodeId": "node2",
+          "targetNodeId": "node3",
+          "targetPortId": "Dataset"
+        },
+        {
+          "sourceNodeId": "node3",
+          "sourcePortId": "Results dataset",
+          "targetNodeId": "node4"
+        }
+      ],
+      "graphParameters": {
+        "Trigonometric Function": {
+          "links": [
+            {
+              "nodeId": "node3",
+              "parameterKey": "Trigonometric Function"
+            }
+          ]
+        }
+      }
+    },
+    "title": "TestMlService",
+    "description": "This is some service description",
+    "keys": {
+      "primary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==",
+      "secondary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo=="
+    },
+    "readOnly": false,
+    "storageAccount": {
+      "name": "rpbestest1",
+      "key": "WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA=="
+    },
+    "commitmentPlan": {
+      "id": "/subscriptions/d67ad62c-af4c-47a8-a722-9f5ba83d7f8e/resourceGroups/ritbhat/providers/Microsoft.MachineLearning/commitmentPlans/ritbhatcp"
+    },
+    "input": {
+      "title": "",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "input1": {
+          "title": "",
+          "description": "",
+          "type": "object",
+          "properties": {
+            "Class": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "sepal-length": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "sepal-width": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "petal-length": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "petal-width": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "title": "",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "output1": {
+          "title": "",
+          "description": "",
+          "type": "object",
+          "properties": {
+            "Class": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "sepal-length": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "sepal-width": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "petal-length": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "petal-width": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            }
+          }
+        }
+      }
+    },
+    "assets": {
+      "asset1": {
+        "name": "Apply Math Operation",
+        "type": "Module",
+        "locationinfo": {
+          "uri": "aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675"
+        }
+      },
+      "asset2": {
+        "name": "Dataset",
+        "type": "Resource",
+        "locationinfo": {
+          "uri": "https://cloudmlrrs.blob.core.windows.net/testing/iris.arff"
+        },
+        "outputPorts": {
+          "Results dataset": {
+            "type": "Dataset"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "trigonometric Function": "Sin"
+    }
+  },
+  "location": "South Central US"
+}
