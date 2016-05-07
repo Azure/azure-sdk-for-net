@@ -22,7 +22,7 @@
     public class BatchRequestUnitTests
     {
         private readonly ITestOutputHelper testOutputHelper;
-        private const double TimeTolerance = 0.1;
+        private const double TimeTolerance = 5; //5 seconds
 
         public BatchRequestUnitTests(ITestOutputHelper testOutputHelper)
         {
@@ -50,28 +50,28 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestBatchRequestTimeoutCancellation()
         {
-            await this.BatchRequestCancellationViaInterceptorTestAsync(null, TimeSpan.FromSeconds(.3));
+            await this.BatchRequestCancellationViaInterceptorTestAsync(null, TimeSpan.FromSeconds(1));
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestBatchRequestUserCancellation()
         {
-            await this.BatchRequestCancellationViaInterceptorTestAsync(TimeSpan.FromSeconds(.3), null);
+            await this.BatchRequestCancellationViaInterceptorTestAsync(TimeSpan.FromSeconds(1), null);
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestBatchRequestUserTokenAndTimeoutSetUserTokenWins()
         {
-            await this.BatchRequestCancellationViaInterceptorTestAsync(TimeSpan.FromSeconds(.3), TimeSpan.FromSeconds(.6));
+            await this.BatchRequestCancellationViaInterceptorTestAsync(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(10));
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestBatchRequestUserTokenAndTimeoutSetTimeoutWins()
         {
-            await this.BatchRequestCancellationViaInterceptorTestAsync(TimeSpan.FromSeconds(.6), TimeSpan.FromSeconds(.3));
+            await this.BatchRequestCancellationViaInterceptorTestAsync(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1));
         }
 
         [Fact]
@@ -82,7 +82,7 @@
             TimeSpan retryInterval = TimeSpan.FromSeconds(.1);
 
             LinearRetry retryPolicy = new LinearRetry(retryInterval, maxRetries);
-            await this.BatchRequestCancellationViaInterceptorTestAsync(null, TimeSpan.FromSeconds(.3), retryPolicy, maxRetries);
+            await this.BatchRequestCancellationViaInterceptorTestAsync(null, TimeSpan.FromSeconds(0), retryPolicy, maxRetries);
         }
 
         [Fact]
@@ -161,7 +161,7 @@
                             behaviorContainer.CustomBehaviors.Add(CreateRequestInterceptorForCancellationMonitoring());
                         }
 
-                        await this.BatchRequestCancellationViaParameterTestAsync(method, o, TimeSpan.FromSeconds(.1));
+                        await this.BatchRequestCancellationViaParameterTestAsync(method, o, TimeSpan.FromSeconds(0));
                     }
                 }
             }
@@ -201,7 +201,7 @@
                         //pagedEnumerator has the method to call "MoveNextAsync"
                         MethodInfo moveNextAsyncMethod = pagedEnumerator.GetType().GetMethod("MoveNextAsync");
 
-                        await this.BatchRequestCancellationViaParameterTestAsync(moveNextAsyncMethod, pagedEnumerator, TimeSpan.FromSeconds(.1));
+                        await this.BatchRequestCancellationViaParameterTestAsync(moveNextAsyncMethod, pagedEnumerator, TimeSpan.FromSeconds(0));
                     }
                 }
             }
