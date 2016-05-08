@@ -52,8 +52,8 @@ namespace MachineLearning.Tests.ScenarioTests
 
         public WebServiceTests()
         {
-            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=7b373400-c82e-453b-a97b-c53e14325b8b;Environment=Dogfood;UserId=admin@aad216.ccsctp.net;Password=Pa$$w0rd");
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            ////Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=7b373400-c82e-453b-a97b-c53e14325b8b;Environment=Dogfood;UserId=admin@aad216.ccsctp.net;Password=Pa$$w0rd");
+            ////Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
         }
 
         [Fact]
@@ -172,7 +172,7 @@ namespace MachineLearning.Tests.ScenarioTests
                 Assert.NotNull(servicesInSubscription);
                 servicesList = servicesInSubscription.Value;
                 Assert.NotNull(servicesList);
-                Assert.Equal(4, servicesList.Count);
+                Assert.True(servicesList.Count >= 4);
                 Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service1ExpectedId, StringComparison.OrdinalIgnoreCase)));
                 Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service2ExpectedId, StringComparison.OrdinalIgnoreCase)));
                 Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase)));

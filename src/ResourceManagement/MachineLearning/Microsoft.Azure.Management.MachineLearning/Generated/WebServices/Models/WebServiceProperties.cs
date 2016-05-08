@@ -177,6 +177,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
             {
                 this.RealtimeConfiguration.Validate();
             }
+            if (this.Diagnostics != null)
+            {
+                this.Diagnostics.Validate();
+            }
             if (this.MachineLearningWorkspace != null)
             {
                 this.MachineLearningWorkspace.Validate();

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the DiagnosticsConfiguration class.
         /// </summary>
-        public DiagnosticsConfiguration(string level = default(string), DateTime? expiry = default(DateTime?))
+        public DiagnosticsConfiguration(string level, DateTime? expiry = default(DateTime?))
         {
             Level = level;
             Expiry = expiry;
@@ -51,5 +51,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         [JsonProperty(PropertyName = "expiry")]
         public DateTime? Expiry { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Level == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Level");
+            }
+        }
     }
 }

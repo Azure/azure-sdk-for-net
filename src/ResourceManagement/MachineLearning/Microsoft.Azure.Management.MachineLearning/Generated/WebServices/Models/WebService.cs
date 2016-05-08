@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebService class.
         /// </summary>
-        public WebService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), WebServiceProperties properties = default(WebServiceProperties))
+        public WebService(string location, WebServiceProperties properties, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(location, id, name, type, tags)
         {
             Properties = properties;
@@ -47,6 +47,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public override void Validate()
         {
             base.Validate();
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
             if (this.Properties != null)
             {
                 this.Properties.Validate();

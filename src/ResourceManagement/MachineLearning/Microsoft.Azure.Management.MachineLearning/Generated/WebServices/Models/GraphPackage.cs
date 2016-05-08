@@ -17,21 +17,19 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The definition of the graph package making up this web service.
+    /// Defines the graph of modules making up the machine learning solution.
     /// </summary>
-    public partial class WebServicePropertiesForGraphPackage
+    public partial class GraphPackage
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// WebServicePropertiesForGraphPackage class.
+        /// Initializes a new instance of the GraphPackage class.
         /// </summary>
-        public WebServicePropertiesForGraphPackage() { }
+        public GraphPackage() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// WebServicePropertiesForGraphPackage class.
+        /// Initializes a new instance of the GraphPackage class.
         /// </summary>
-        public WebServicePropertiesForGraphPackage(IDictionary<string, GraphNode> nodes = default(IDictionary<string, GraphNode>), IList<GraphEdge> edges = default(IList<GraphEdge>), IDictionary<string, GraphParameter> graphParameters = default(IDictionary<string, GraphParameter>))
+        public GraphPackage(IDictionary<string, GraphNode> nodes = default(IDictionary<string, GraphNode>), IList<GraphEdge> edges = default(IList<GraphEdge>), IDictionary<string, GraphParameter> graphParameters = default(IDictionary<string, GraphParameter>))
         {
             Nodes = nodes;
             Edges = edges;
