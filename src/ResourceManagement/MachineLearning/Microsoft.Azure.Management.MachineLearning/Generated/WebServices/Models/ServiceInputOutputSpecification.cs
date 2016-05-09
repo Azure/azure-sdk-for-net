@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Collection of (name -&gt; swagger schema) for each input or output
-        /// of the web service.
+        /// Map of name to swagger schema for each input or output of the web
+        /// service.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public IDictionary<string, TableSpecification> Properties { get; set; }

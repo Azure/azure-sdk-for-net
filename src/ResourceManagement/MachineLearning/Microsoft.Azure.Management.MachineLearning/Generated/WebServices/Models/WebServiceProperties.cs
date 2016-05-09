@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebServiceProperties class.
         /// </summary>
-        public WebServiceProperties(string title = default(string), string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>))
+        public WebServiceProperties(string title = default(string), string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), ExampleRequest exampleRequest = default(ExampleRequest), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>))
         {
             Title = title;
             Description = description;
@@ -46,6 +46,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
             CommitmentPlan = commitmentPlan;
             Input = input;
             Output = output;
+            ExampleRequest = exampleRequest;
             Assets = assets;
             Parameters = parameters;
         }
@@ -154,6 +155,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public ServiceInputOutputSpecification Output { get; set; }
 
         /// <summary>
+        /// Sample request data for each of the service's inputs, as
+        /// applicable.
+        /// </summary>
+        [JsonProperty(PropertyName = "exampleRequest")]
+        public ExampleRequest ExampleRequest { get; set; }
+
+        /// <summary>
         /// Set of assets associated with the web service.
         /// </summary>
         [JsonProperty(PropertyName = "assets")]
@@ -161,9 +169,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
 
         /// <summary>
         /// The set of global parameters values defined for the web service,
-        /// given as a global parameter name -&gt; default value collection.
-        /// If no default value is specified, the parameter is considered to
-        /// be required.
+        /// given as a global parameter name to default value map. If no
+        /// default value is specified, the parameter is considered to be
+        /// required.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IDictionary<string, string> Parameters { get; set; }

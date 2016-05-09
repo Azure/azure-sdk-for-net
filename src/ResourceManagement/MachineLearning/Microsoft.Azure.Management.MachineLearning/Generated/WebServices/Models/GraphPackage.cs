@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// The set of nodes making up the graph, provided as a nodeId -&gt;
+        /// The set of nodes making up the graph, provided as a nodeId to
         /// GraphNode map
         /// </summary>
         [JsonProperty(PropertyName = "nodes")]
@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
 
         /// <summary>
         /// The collection of global parameters for the graph, given as a
-        /// global parameter name -&gt; GraphParameter map. Each parameter
-        /// here has a 1:1 match with the global parameters values map
-        /// declared at the WebServiceProperties level.
+        /// global parameter name to GraphParameter map. Each parameter here
+        /// has a 1:1 match with the global parameters values map declared at
+        /// the WebServiceProperties level.
         /// </summary>
         [JsonProperty(PropertyName = "graphParameters")]
         public IDictionary<string, GraphParameter> GraphParameters { get; set; }
