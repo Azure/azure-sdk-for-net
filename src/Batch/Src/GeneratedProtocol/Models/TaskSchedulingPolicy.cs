@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets how tasks should be distributed across compute nodes.
-        /// Possible values include: 'spread', 'pack', 'unmapped'
+        /// How tasks should be distributed across compute nodes. Possible
+        /// values include: 'spread', 'pack', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "nodeFillType")]
         public ComputeNodeFillType NodeFillType { get; set; }

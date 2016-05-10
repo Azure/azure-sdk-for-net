@@ -47,23 +47,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets an identifier for the certificate deletion error.
-        /// Codes are invariant and are intended to be consumed
-        /// programmatically.
+        /// An identifier for the certificate deletion error. Codes are
+        /// invariant and are intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a message describing the certificate deletion error,
-        /// intended to be suitable for display in a user interface.
+        /// A message describing the certificate deletion error, intended to
+        /// be suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of additional error details related to the
-        /// certificate deletion error.
+        /// A list of additional error details related to the certificate
+        /// deletion error.
         /// </summary>
         [JsonProperty(PropertyName = "values")]
         public IList<NameValuePair> Values { get; set; }

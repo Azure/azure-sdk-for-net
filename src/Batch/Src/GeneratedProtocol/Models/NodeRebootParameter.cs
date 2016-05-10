@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets when to reboot the compute node and what to do with currently
+        /// When to reboot the compute node and what to do with currently
         /// running tasks. The default value is requeue. Possible values
         /// include: 'requeue', 'terminate', 'taskcompletion', 'retaineddata'
         /// </summary>

@@ -54,49 +54,51 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the time at which the Job Release task started
-        /// running.
+        /// The time at which the task started running. Note that every time
+        /// the task is restarted, this value is updated.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the Job Release task completed.
-        /// This property is set only if the task is in the Completed state.
+        /// The time at which the Job Release task completed. This property is
+        /// set only if the task is in the Completed state.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current running state of the Job Release task on
-        /// the compute node. Possible values include: 'running', 'completed'
+        /// The current state of the Job Release task. Possible values
+        /// include: 'running', 'completed'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public JobReleaseTaskState State { get; set; }
 
         /// <summary>
-        /// Gets or sets the root directory of the Job Release task on the
-        /// compute node.
+        /// The root directory of the Job Release task on the compute node.
+        /// You can use this path to retrieve files created by the task, such
+        /// as log files.
         /// </summary>
         [JsonProperty(PropertyName = "taskRootDirectory")]
         public string TaskRootDirectory { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL to the root directory of the Job Release task
-        /// on the compute node.
+        /// The URL to the root directory of the Job Release task on the
+        /// compute node.
         /// </summary>
         [JsonProperty(PropertyName = "taskRootDirectoryUrl")]
         public string TaskRootDirectoryUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the exit code of the Job Release task. This property
-        /// is set only if the task is in the Completed state.
+        /// The exit code of the Job Release task. This property is set only
+        /// if the task is in the Completed state.
         /// </summary>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets or sets any error starting the Job Release task.
+        /// The scheduling error encountered by the Batch service when
+        /// starting the task.
         /// </summary>
         [JsonProperty(PropertyName = "schedulingError")]
         public TaskSchedulingError SchedulingError { get; set; }

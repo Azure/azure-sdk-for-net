@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol
         public BatchServiceClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all the node agent SKUs supported by Azure Batch Service.
+        /// Lists all node agent SKUs supported by the Azure Batch service.
         /// </summary>
         /// <param name='accountListNodeAgentSkusOptions'>
         /// Additional parameters for the operation
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
-        /// Lists all the node agent SKUs supported by Azure Batch Service.
+        /// Lists all node agent SKUs supported by the Azure Batch service.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

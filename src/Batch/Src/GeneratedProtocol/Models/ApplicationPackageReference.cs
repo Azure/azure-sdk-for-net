@@ -49,14 +49,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the application package id.
+        /// The id of the application to install.
         /// </summary>
         [JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }
 
         /// <summary>
-        /// Gets or sets the application package version. If not specified,
-        /// the default is used.
+        /// The version of the application to install. If omitted, the default
+        /// version is installed.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }

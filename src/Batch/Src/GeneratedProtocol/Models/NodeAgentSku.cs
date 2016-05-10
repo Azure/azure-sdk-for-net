@@ -27,7 +27,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Information about supported node agent SKU.
+    /// A node agent SKU supported by the Batch service. The Batch node agent
+    /// is a program that runs on each node in the pool, and provides the
+    /// command-and-control interface between the node and the Batch service.
+    /// There are different implementations of the node agent, known as SKUs,
+    /// for different operating systems.
     /// </summary>
     public partial class NodeAgentSku
     {
@@ -47,22 +51,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the node agent SKU id.
+        /// The node agent SKU id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets the list of images verified to be compatible with the node
-        /// agent SKU. This collection is not exhaustive; the node agent SKU
-        /// may be compatible with other images.
+        /// The list of images verified to be compatible with this node agent
+        /// SKU. This collection is not exhaustive (the node agent may be
+        /// compatible with other images).
         /// </summary>
         [JsonProperty(PropertyName = "verifiedImageReferences")]
         public IList<ImageReference> VerifiedImageReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of OS that the node Agent SKU is targeted
-        /// against. Possible values include: 'linux', 'windows', 'unmapped'
+        /// The type of operating system compatible with the node agent SKU.
+        /// Possible values include: 'linux', 'windows', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public OSType? OsType { get; set; }

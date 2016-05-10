@@ -371,7 +371,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='cloudJobSchedule'>
-            /// Specifies the job schedule to be added.
+            /// The job schedule to be added.
             /// </param>
             /// <param name='jobScheduleAddOptions'>
             /// Additional parameters for the operation
@@ -388,7 +388,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='cloudJobSchedule'>
-            /// Specifies the job schedule to be added.
+            /// The job schedule to be added.
             /// </param>
             /// <param name='jobScheduleAddOptions'>
             /// Additional parameters for the operation

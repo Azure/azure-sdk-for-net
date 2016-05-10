@@ -2286,7 +2286,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Adds a job schedule to the specified account.
         /// </summary>
         /// <param name='cloudJobSchedule'>
-        /// Specifies the job schedule to be added.
+        /// The job schedule to be added.
         /// </param>
         /// <param name='jobScheduleAddOptions'>
         /// Additional parameters for the operation

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// The id of the job to which the task is to be added.
         /// </param>
         /// <param name='task'>
-        /// Specifies the task to be added.
+        /// The task to be added.
         /// </param>
         /// <param name='taskAddOptions'>
         /// Additional parameters for the operation
@@ -134,8 +134,8 @@ namespace Microsoft.Azure.Batch.Protocol
         /// The id of the task to update.
         /// </param>
         /// <param name='constraints'>
-        /// Sets constraints that apply to this task. If omitted, the task is
-        /// given the default constraints.
+        /// Constraints that apply to this task. If omitted, the task is given
+        /// the default constraints.
         /// </param>
         /// <param name='taskUpdateOptions'>
         /// Additional parameters for the operation

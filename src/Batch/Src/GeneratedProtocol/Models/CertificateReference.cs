@@ -50,21 +50,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the thumbprint of the certificate.
+        /// The thumbprint of the certificate.
         /// </summary>
         [JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
-        /// Gets or sets the algorithm with which the thumbprint is
-        /// associated.  This must be sha1.
+        /// The algorithm with which the thumbprint is associated. This must
+        /// be sha1.
         /// </summary>
         [JsonProperty(PropertyName = "thumbprintAlgorithm")]
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the certificate store on the compute
-        /// node into which to install the certificate. The default value is
+        /// The location of the certificate store on the compute node into
+        /// which to install the certificate. The default value is
         /// CurrentUser. Possible values include: 'currentuser',
         /// 'localmachine', 'unmapped'
         /// </summary>
@@ -72,18 +72,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public CertificateStoreLocation? StoreLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the certificate store on the compute node
-        /// into which to install the certificate. The default value is My.
+        /// The name of the certificate store on the compute node into which
+        /// to install the certificate. The default value is My.
         /// </summary>
         [JsonProperty(PropertyName = "storeName")]
         public string StoreName { get; set; }
 
         /// <summary>
-        /// Gets or sets which user accounts on the compute node should have
-        /// access to the private data of the certificate. This may be any
-        /// subset of the values 'starttask', 'task' and 'remoteuser',
-        /// separated by commas. The default is all accounts, corresponding
-        /// to the string 'starttask,task,remoteuser'.
+        /// Which user accounts on the compute node should have access to the
+        /// private data of the certificate. This may be any subset of the
+        /// values 'starttask', 'task' and 'remoteuser', separated by commas.
+        /// The default is all accounts, corresponding to the string
+        /// 'starttask,task,remoteuser'.
         /// </summary>
         [JsonProperty(PropertyName = "visibility")]
         public IList<CertificateVisibility?> Visibility { get; set; }

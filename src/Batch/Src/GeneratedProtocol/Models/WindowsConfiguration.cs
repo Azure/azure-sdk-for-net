@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Windows operating system settings on the virtual machine.
+    /// Windows operating system settings to apply to the virtual machine.
     /// </summary>
     public partial class WindowsConfiguration
     {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets whether virtual machine is enabled for automatic
-        /// updates. If omitted, the default value is true.
+        /// Whether automatic updates are enabled on the virtual machine. If
+        /// omitted, the default value is true.
         /// </summary>
         [JsonProperty(PropertyName = "enableAutomaticUpdates")]
         public bool? EnableAutomaticUpdates { get; set; }

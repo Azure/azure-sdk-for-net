@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The configuration of virtual machines for a pool.
+    /// The configuration for compute nodes in a pool based on the Azure
+    /// Virtual Machines infrastructure.
     /// </summary>
     public partial class VirtualMachineConfiguration
     {
@@ -49,24 +50,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets information about the platform or marketplace image
-        /// to use.
+        /// A reference to the Azure Virtual Machines Marketplace image to use.
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
-        /// Gets or sets the SKU of Batch Node Agent that needs to be
-        /// provisioned on the compute node. This property must match the
-        /// ImageReference property.
+        /// The SKU of Batch Node Agent to be provisioned on the compute node.
+        /// The Batch node agent is a program that runs on each node in the
+        /// pool, and provides the command-and-control interface between the
+        /// node and the Batch service. There are different implementations
+        /// of the node agent, known as SKUs, for different operating systems.
         /// </summary>
         [JsonProperty(PropertyName = "nodeAgentSKUId")]
         public string NodeAgentSKUId { get; set; }
 
         /// <summary>
-        /// Gets or sets Windows operating system settings on the virtual
-        /// machine. This property must not be specified if the
-        /// ImageReference property referencs a Linux OS image.
+        /// Windows operating system settings on the virtual machine. This
+        /// property must not be specified if the ImageReference property
+        /// specifies a Linux OS image.
         /// </summary>
         [JsonProperty(PropertyName = "windowsConfiguration")]
         public WindowsConfiguration WindowsConfiguration { get; set; }

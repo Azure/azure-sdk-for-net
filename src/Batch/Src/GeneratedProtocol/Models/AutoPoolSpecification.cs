@@ -50,30 +50,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets a prefix to be added to the unique identifier when a
-        /// pool is automatically created. The prefix can be up to 20
-        /// characters long.
+        /// A prefix to be added to the unique identifier when a pool is
+        /// automatically created. The prefix can be up to 20 characters long.
         /// </summary>
         [JsonProperty(PropertyName = "autoPoolIdPrefix")]
         public string AutoPoolIdPrefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum lifetime of created auto pools, and how
-        /// multiple jobs on a schedule are assigned to pools. Possible
-        /// values include: 'jobschedule', 'job', 'unmapped'
+        /// The minimum lifetime of created auto pools, and how multiple jobs
+        /// on a schedule are assigned to pools. Possible values include:
+        /// 'jobschedule', 'job', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "poolLifetimeOption")]
         public PoolLifetimeOption PoolLifetimeOption { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to keep an auto pool alive after its lifetime
-        /// expires.
+        /// Whether to keep an auto pool alive after its lifetime expires.
         /// </summary>
         [JsonProperty(PropertyName = "keepAlive")]
         public bool? KeepAlive { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool specification for the auto pool.
+        /// The pool specification for the auto pool.
         /// </summary>
         [JsonProperty(PropertyName = "pool")]
         public PoolSpecification Pool { get; set; }

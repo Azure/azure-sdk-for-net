@@ -47,22 +47,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets an identifier for the compute node error.  Codes are
-        /// invariant and are intended to be consumed programmatically.
+        /// An identifier for the compute node error. Codes are invariant and
+        /// are intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a message describing the compute node error, intended
-        /// to be suitable for display in a user interface.
+        /// A message describing the compute node error, intended to be
+        /// suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of additional error details related to the
-        /// compute node error.
+        /// The list of additional error details related to the compute node
+        /// error.
         /// </summary>
         [JsonProperty(PropertyName = "errorDetails")]
         public IList<NameValuePair> ErrorDetails { get; set; }

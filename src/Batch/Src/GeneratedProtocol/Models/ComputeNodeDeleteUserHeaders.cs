@@ -48,14 +48,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets the ClientRequestId provided by the client during the
-        /// request, if present and requested to be returned.
+        /// The ClientRequestId provided by the client during the request, if
+        /// present and requested to be returned.
         /// </summary>
         [JsonProperty(PropertyName = "client-request-id")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the value that uniquely identifies a request.
+        /// The value that uniquely identifies a request.
         /// </summary>
         [JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }

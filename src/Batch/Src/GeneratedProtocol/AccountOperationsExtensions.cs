@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch.Protocol
     public static partial class AccountOperationsExtensions
     {
             /// <summary>
-            /// Lists all the node agent SKUs supported by Azure Batch Service.
+            /// Lists all node agent SKUs supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all the node agent SKUs supported by Azure Batch Service.
+            /// Lists all node agent SKUs supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all the node agent SKUs supported by Azure Batch Service.
+            /// Lists all node agent SKUs supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all the node agent SKUs supported by Azure Batch Service.
+            /// Lists all node agent SKUs supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

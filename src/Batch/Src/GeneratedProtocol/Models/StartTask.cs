@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A task defined on a pool and run by compute nodes when they join the
-    /// pool.
+    /// A task which is run when a compute node joins a pool in the Azure
+    /// Batch service, or when the compute node is rebooted or reimaged.
     /// </summary>
     public partial class StartTask
     {
@@ -51,42 +51,41 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the command line of the start task.
+        /// The command line of the start task.
         /// </summary>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of files that Batch will download to the
+        /// A list of files that the Batch service will download to the
         /// compute node before running the command line.
         /// </summary>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of environment variable settings for the start
-        /// task.
+        /// A list of environment variable settings for the start task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to run the start task in elevated mode. The
-        /// default value is false.
+        /// Whether to run the start task in elevated mode. The default value
+        /// is false.
         /// </summary>
         [JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of times the task may be retried.
+        /// The maximum number of times the task may be retried.
         /// </summary>
         [JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the Batch Service should wait for the start
-        /// task to complete successfully (that is, to exit with exit code 0)
-        /// before scheduling any tasks on the compute node.
+        /// Whether the Batch service should wait for the start task to
+        /// complete successfully (that is, to exit with exit code 0) before
+        /// scheduling any tasks on the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }

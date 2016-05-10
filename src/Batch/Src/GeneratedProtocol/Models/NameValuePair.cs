@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the name in the name-value pair.
+        /// The name in the name-value pair.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the value in the name-value pair.
+        /// The value in the name-value pair.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

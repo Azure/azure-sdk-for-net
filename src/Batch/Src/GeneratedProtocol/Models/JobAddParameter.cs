@@ -55,79 +55,76 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the job within the
-        /// account. The id can contain any combination of alphanumeric
-        /// characters including hyphens and underscores, and cannot contain
-        /// more than 64 characters. It is common to use a GUID for the id.
+        /// A string that uniquely identifies the job within the account. The
+        /// id can contain any combination of alphanumeric characters
+        /// including hyphens and underscores, and cannot contain more than
+        /// 64 characters. It is common to use a GUID for the id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name for the job.
+        /// The display name for the job.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the priority of the job. Priority values can range
-        /// from -1000 to 1000, with -1000 being the lowest priority and 1000
-        /// being the highest priority. The default value is 0.
+        /// The priority of the job. Priority values can range from -1000 to
+        /// 1000, with -1000 being the lowest priority and 1000 being the
+        /// highest priority. The default value is 0.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution constraints for the job.
+        /// The execution constraints for the job.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets details of a Job Manager task to be launched when the
-        /// job is started.
+        /// Details of a Job Manager task to be launched when the job is
+        /// started.
         /// </summary>
         [JsonProperty(PropertyName = "jobManagerTask")]
         public JobManagerTask JobManagerTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the Job Preparation task.
+        /// The Job Preparation task.
         /// </summary>
         [JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the Job Release task.
+        /// The Job Release task.
         /// </summary>
         [JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of common environment variable settings.
-        /// These environment variables are set for all tasks in the job
-        /// (including the Job Manager, Job Preparation and Job Release
-        /// tasks).
+        /// The list of common environment variable settings. These
+        /// environment variables are set for all tasks in the job (including
+        /// the Job Manager, Job Preparation and Job Release tasks).
         /// </summary>
         [JsonProperty(PropertyName = "commonEnvironmentSettings")]
         public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool on which the Batch service runs the jobâ€™s
-        /// tasks.
+        /// The pool on which the Batch service runs the jobâ€™s tasks.
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the job as
-        /// metadata.
+        /// A list of name-value pairs associated with the job as metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
-        /// Gets or sets the flag that determines if this job will use tasks
-        /// with dependencies.
+        /// The flag that determines if this job will use tasks with
+        /// dependencies.
         /// </summary>
         [JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }

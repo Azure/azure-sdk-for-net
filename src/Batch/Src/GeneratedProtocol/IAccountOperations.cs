@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch.Protocol
     public partial interface IAccountOperations
     {
         /// <summary>
-        /// Lists all the node agent SKUs supported by Azure Batch Service.
+        /// Lists all node agent SKUs supported by the Azure Batch service.
         /// </summary>
         /// <param name='accountListNodeAgentSkusOptions'>
         /// Additional parameters for the operation
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </param>
         Task<AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusWithHttpMessagesAsync(AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all the node agent SKUs supported by Azure Batch Service.
+        /// Lists all node agent SKUs supported by the Azure Batch service.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

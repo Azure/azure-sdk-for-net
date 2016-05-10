@@ -54,31 +54,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the task within the
-        /// job. The id can contain any combination of alphanumeric
-        /// characters including hyphens and underscores, and cannot contain
-        /// more than 64 characters.
+        /// A string that uniquely identifies the task within the job. The id
+        /// can contain any combination of alphanumeric characters including
+        /// hyphens and underscores, and cannot contain more than 64
+        /// characters.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets a display name for the task.
+        /// A display name for the task.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the command line of the task. For multi-instance
-        /// tasks, the command line is executed on the primary subtask after
-        /// all the subtasks have finished executing the coordianation
-        /// command line.
+        /// The command line of the task. For multi-instance tasks, the
+        /// command line is executed on the primary subtask after all the
+        /// subtasks have finished executing the coordianation command line.
         /// </summary>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of files that Batch will download to the
+        /// A list of files that the Batch service will download to the
         /// compute node before running the command line. For multi-instance
         /// tasks, the resource files will only be downloaded to the compute
         /// node on which the primary subtask is executed.
@@ -87,38 +86,38 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of environment variable settings for the task.
+        /// A list of environment variable settings for the task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets a locality hint that can be used by the Batch service
-        /// to select a compute node on which to start the new task.
+        /// A locality hint that can be used by the Batch service to select a
+        /// compute node on which to start the new task.
         /// </summary>
         [JsonProperty(PropertyName = "affinityInfo")]
         public AffinityInformation AffinityInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution constraints that apply to this task.
+        /// The execution constraints that apply to this task.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to run the task in elevated mode.
+        /// Whether to run the task in elevated mode.
         /// </summary>
         [JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
-        /// Gets or sets information about how to run the multi-instance task.
+        /// Information about how to run the multi-instance task.
         /// </summary>
         [JsonProperty(PropertyName = "multiInstanceSettings")]
         public MultiInstanceSettings MultiInstanceSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets any dependencies this task has.
+        /// Any other tasks that this task depends on.
         /// </summary>
         [JsonProperty(PropertyName = "dependsOn")]
         public TaskDependencies DependsOn { get; set; }

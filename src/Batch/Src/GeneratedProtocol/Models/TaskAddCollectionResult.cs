@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the results of the add task collection operation.
+        /// The results of the add task collection operation.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<TaskAddResult> Value { get; set; }

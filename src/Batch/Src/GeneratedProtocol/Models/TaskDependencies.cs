@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Specifies any dependencies of a task.  Any task that is explicitly
+    /// Specifies any dependencies of a task. Any task that is explicitly
     /// specified or within a dependency range must complete before the
     /// dependant task will be scheduled.
     /// </summary>
@@ -48,15 +48,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the list of task ids that must complete before this
-        /// task can be scheduled.
+        /// The list of task ids that must complete before this task can be
+        /// scheduled.
         /// </summary>
         [JsonProperty(PropertyName = "taskIds")]
         public IList<string> TaskIds { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of task ranges that must complete before
-        /// this task can be scheduled.
+        /// The list of task ranges that must complete before this task can be
+        /// scheduled.
         /// </summary>
         [JsonProperty(PropertyName = "taskIdRanges")]
         public IList<TaskIdRange> TaskIdRanges { get; set; }

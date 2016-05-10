@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the language code of the error message
+        /// The language code of the error message
         /// </summary>
         [JsonProperty(PropertyName = "lang")]
         public string Lang { get; set; }
 
         /// <summary>
-        /// Gets or sets the text of the message.
+        /// The text of the message.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

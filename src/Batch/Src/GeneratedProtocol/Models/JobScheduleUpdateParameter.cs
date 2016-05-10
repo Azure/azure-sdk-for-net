@@ -47,23 +47,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets the schedule according to which jobs will be created. If you
-        /// do not specify this element, it is equivalent to passing the
-        /// default schedule: that is, a single job scheduled to run
-        /// immediately.
+        /// The schedule according to which jobs will be created. If you do
+        /// not specify this element, it is equivalent to passing the default
+        /// schedule: that is, a single job scheduled to run immediately.
         /// </summary>
         [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
-        /// Sets details of the jobs to be created on this schedule.
+        /// Details of the jobs to be created on this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
-        /// Sets a list of name-value pairs associated with the job schedule
-        /// as metadata. If you do not specify this element, it takes the
+        /// A list of name-value pairs associated with the job schedule as
+        /// metadata. If you do not specify this element, it takes the
         /// default value of an empty list; in effect, any existing metadata
         /// is deleted.
         /// </summary>

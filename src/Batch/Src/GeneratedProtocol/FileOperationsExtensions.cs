@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The path to the task file that you want to delete.
             /// </param>
             /// <param name='recursive'>
-            /// Sets whether to delete children of a directory. If the fileName parameter
+            /// Whether to delete children of a directory. If the fileName parameter
             /// represents a directory instead of a file, you can set Recursive to true
             /// to delete the directory and all of the files and subdirectories in it. If
             /// Recursive is false then the directory must be empty or deletion will fail.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The path to the task file that you want to delete.
             /// </param>
             /// <param name='recursive'>
-            /// Sets whether to delete children of a directory. If the fileName parameter
+            /// Whether to delete children of a directory. If the fileName parameter
             /// represents a directory instead of a file, you can set Recursive to true
             /// to delete the directory and all of the files and subdirectories in it. If
             /// Recursive is false then the directory must be empty or deletion will fail.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The path to the file that you want to delete.
             /// </param>
             /// <param name='recursive'>
-            /// Sets whether to delete children of a directory. If the fileName parameter
+            /// Whether to delete children of a directory. If the fileName parameter
             /// represents a directory instead of a file, you can set Recursive to true
             /// to delete the directory and all of the files and subdirectories in it. If
             /// Recursive is false then the directory must be empty or deletion will fail.
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The path to the file that you want to delete.
             /// </param>
             /// <param name='recursive'>
-            /// Sets whether to delete children of a directory. If the fileName parameter
+            /// Whether to delete children of a directory. If the fileName parameter
             /// represents a directory instead of a file, you can set Recursive to true
             /// to delete the directory and all of the files and subdirectories in it. If
             /// Recursive is false then the directory must be empty or deletion will fail.
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the task whose files you want to list.
             /// </param>
             /// <param name='recursive'>
-            /// Sets whether to list children of a directory.
+            /// Whether to list children of a directory.
             /// </param>
             /// <param name='fileListFromTaskOptions'>
             /// Additional parameters for the operation
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the task whose files you want to list.
             /// </param>
             /// <param name='recursive'>
-            /// Sets whether to list children of a directory.
+            /// Whether to list children of a directory.
             /// </param>
             /// <param name='fileListFromTaskOptions'>
             /// Additional parameters for the operation
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the compute node whose files you want to list.
             /// </param>
             /// <param name='recursive'>
-            /// Sets whether to list children of a directory.
+            /// Whether to list children of a directory.
             /// </param>
             /// <param name='fileListFromComputeNodeOptions'>
             /// Additional parameters for the operation
@@ -454,7 +454,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the compute node whose files you want to list.
             /// </param>
             /// <param name='recursive'>
-            /// Sets whether to list children of a directory.
+            /// Whether to list children of a directory.
             /// </param>
             /// <param name='fileListFromComputeNodeOptions'>
             /// Additional parameters for the operation

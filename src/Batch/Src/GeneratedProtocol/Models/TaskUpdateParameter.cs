@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets constraints that apply to this task. If omitted, the task is
-        /// given the default constraints.
+        /// Constraints that apply to this task. If omitted, the task is given
+        /// the default constraints.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }

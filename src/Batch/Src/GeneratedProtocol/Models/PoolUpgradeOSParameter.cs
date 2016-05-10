@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets the Azure Guest OS version to be installed on the virtual
-        /// machines in the pool.
+        /// The Azure Guest OS version to be installed on the virtual machines
+        /// in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetOSVersion")]
         public string TargetOSVersion { get; set; }

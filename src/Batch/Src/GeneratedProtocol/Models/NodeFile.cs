@@ -48,25 +48,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the file path.
+        /// The file path.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL of the file.
+        /// The URL of the file.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the object represents a directory.
+        /// Whether the object represents a directory.
         /// </summary>
         [JsonProperty(PropertyName = "isDirectory")]
         public bool? IsDirectory { get; set; }
 
         /// <summary>
-        /// Gets or sets the file properties.
+        /// The file properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public FileProperties Properties { get; set; }

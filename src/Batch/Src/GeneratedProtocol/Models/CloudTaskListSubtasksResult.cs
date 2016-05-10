@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the list of information of subtasks.
+        /// The list of information of subtasks.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<SubtaskInformation> Value { get; set; }

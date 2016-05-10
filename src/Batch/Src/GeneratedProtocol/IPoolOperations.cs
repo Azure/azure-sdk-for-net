@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Adds a pool to the specified account.
         /// </summary>
         /// <param name='pool'>
-        /// Specifies the pool to be added.
+        /// The pool to be added.
         /// </param>
         /// <param name='poolAddOptions'>
         /// Additional parameters for the operation
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// formula.
         /// </param>
         /// <param name='autoScaleFormula'>
-        /// Sets a formula for the desired number of compute nodes in the pool.
+        /// A formula for the desired number of compute nodes in the pool.
         /// </param>
         /// <param name='poolEvaluateAutoScaleOptions'>
         /// Additional parameters for the operation
@@ -278,8 +278,8 @@ namespace Microsoft.Azure.Batch.Protocol
         /// The id of the pool to upgrade.
         /// </param>
         /// <param name='targetOSVersion'>
-        /// Sets the Azure Guest OS version to be installed on the virtual
-        /// machines in the pool.
+        /// The Azure Guest OS version to be installed on the virtual machines
+        /// in the pool.
         /// </param>
         /// <param name='poolUpgradeOSOptions'>
         /// Additional parameters for the operation

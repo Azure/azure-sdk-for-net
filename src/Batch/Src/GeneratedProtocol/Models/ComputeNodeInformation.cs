@@ -50,40 +50,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets an identifier for the compute node on which the task
-        /// ran, which can be passed when adding a task to request that the
-        /// task be scheduled close to this compute node.
+        /// An identifier for the compute node on which the task ran, which
+        /// can be passed when adding a task to request that the task be
+        /// scheduled close to this compute node.
         /// </summary>
         [JsonProperty(PropertyName = "affinityId")]
         public string AffinityId { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL of the node on which the task ran.
+        /// The URL of the node on which the task ran.
         /// </summary>
         [JsonProperty(PropertyName = "nodeUrl")]
         public string NodeUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the pool on which the task ran.
+        /// The id of the pool on which the task ran.
         /// </summary>
         [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the node on which the task ran.
+        /// The id of the node on which the task ran.
         /// </summary>
         [JsonProperty(PropertyName = "nodeId")]
         public string NodeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the root directory of the task on the compute node.
+        /// The root directory of the task on the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "taskRootDirectory")]
         public string TaskRootDirectory { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL to the root directory of the task on the
-        /// compute node.
+        /// The URL to the root directory of the task on the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "taskRootDirectoryUrl")]
         public string TaskRootDirectoryUrl { get; set; }

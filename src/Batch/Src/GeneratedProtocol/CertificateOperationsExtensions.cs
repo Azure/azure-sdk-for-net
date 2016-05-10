@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='certificate'>
-            /// Specifies the certificate to be added.
+            /// The certificate to be added.
             /// </param>
             /// <param name='certificateAddOptions'>
             /// Additional parameters for the operation
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='certificate'>
-            /// Specifies the certificate to be added.
+            /// The certificate to be added.
             /// </param>
             /// <param name='certificateAddOptions'>
             /// Additional parameters for the operation

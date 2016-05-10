@@ -53,59 +53,61 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the job preparation
-        /// task within the job. The id can contain any combination of
-        /// alphanumeric characters including hyphens and underscores and
-        /// cannot contain more than 64 characters.
+        /// A string that uniquely identifies the job preparation task within
+        /// the job. The id can contain any combination of alphanumeric
+        /// characters including hyphens and underscores and cannot contain
+        /// more than 64 characters.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the command line of the Job Preparation task.
+        /// The command line of the Job Preparation task.
         /// </summary>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of files that Batch will download to the
+        /// A list of files that the Batch service will download to the
         /// compute node before running the command line.
         /// </summary>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of environment variable settings for the Job
-        /// Preparation task.
+        /// A list of environment variable settings for the Job Preparation
+        /// task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets constraints that apply to the Job Preparation task..
+        /// Constraints that apply to the Job Preparation task.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the Batch Service should wait for the Job
-        /// Preparation task to complete successfully before scheduling any
-        /// other tasks of the job on the compute node.
+        /// Whether the Batch service should wait for the Job Preparation task
+        /// to complete successfully before scheduling any other tasks of the
+        /// job on the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to run the Job Preparation task in elevated
-        /// mode. The default value is false.
+        /// Whether to run the Job Preparation task in elevated mode. The
+        /// default value is false.
         /// </summary>
         [JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the Batch service should rerun the Job
-        /// Preparation task after a compute node reboots. The default value
-        /// is true.
+        /// Whether the Batch service should rerun the Job Preparation task
+        /// after a compute node reboots. Note that the Job Preparation task
+        /// should still be written to be idempotent because it can be rerun
+        /// if the compute node is rebooted while Job Preparation task is
+        /// still running. The default value is true.
         /// </summary>
         [JsonProperty(PropertyName = "rerunOnNodeRebootAfterSuccess")]
         public bool? RerunOnNodeRebootAfterSuccess { get; set; }

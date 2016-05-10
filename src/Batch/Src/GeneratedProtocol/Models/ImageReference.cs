@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The information about the platform or marketplace image.
+    /// A reference to an Azure Virtual Machines Marketplace image.
     /// </summary>
     public partial class ImageReference
     {
@@ -48,27 +48,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the publisher of the image.
+        /// The publisher of the Azure Virtual Machines Marketplace image. For
+        /// example, Canonical or MicrosoftWindowsServer.
         /// </summary>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets the offer of the image.
+        /// The offer type of the Azure Virtual Machines Marketplace image.
+        /// For example, UbuntuServer or WindowsServer.
         /// </summary>
         [JsonProperty(PropertyName = "offer")]
         public string Offer { get; set; }
 
         /// <summary>
-        /// Gets or sets the SKU of the image.
+        /// The SKU of the Azure Virtual Machines Marketplace image. For
+        /// example, 14.04.0-LTS or 2012-R2-Datacenter.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the version of the image. A value of 'latest' can be
-        /// specified to select the latest version of an image. If omitted,
-        /// the default is 'latest'.
+        /// The version of the Azure Virtual Machines Marketplace image. A
+        /// value of 'latest' can be specified to select the latest version
+        /// of an image. If omitted, the default is 'latest'.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }

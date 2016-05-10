@@ -47,23 +47,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the start time of the time range covered by the
-        /// statistics.
+        /// The start time of the time range covered by the statistics.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the statistics were last updated.
-        /// All statistics are limited to the range between startTime and
-        /// lastUpdateTime.
+        /// The time at which the statistics were last updated. All statistics
+        /// are limited to the range between startTime and lastUpdateTime.
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateTime")]
         public DateTime LastUpdateTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the aggregated wall-clock time of the dedicated
-        /// compute node cores being part of the pool.
+        /// The aggregated wall-clock time of the dedicated compute node cores
+        /// being part of the pool.
         /// </summary>
         [JsonProperty(PropertyName = "dedicatedCoreTime")]
         public TimeSpan DedicatedCoreTime { get; set; }

@@ -46,19 +46,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of an existing pool. All the tasks of the job
-        /// will run on the specified pool. You must specify either PoolId or
+        /// The id of an existing pool. All the tasks of the job will run on
+        /// the specified pool. You must specify either PoolId or
         /// AutoPoolSpecification, but not both.
         /// </summary>
         [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
-        /// Gets or sets characteristics for a temporary 'auto pool'. The
-        /// Batch service will create this auto pool and run all of the tasks
-        /// of the job on it, and will delete the pool once the job has
-        /// completed. You must specify either PoolId or
-        /// AutoPoolSpecification, but not both.
+        /// Characteristics for a temporary 'auto pool'. The Batch service
+        /// will create this auto pool and run all of the tasks of the job on
+        /// it, and will delete the pool once the job has completed. You must
+        /// specify either PoolId or AutoPoolSpecification, but not both.
         /// </summary>
         [JsonProperty(PropertyName = "autoPoolSpecification")]
         public AutoPoolSpecification AutoPoolSpecification { get; set; }

@@ -48,31 +48,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets a task to run on each compute node as it joins the pool. If
+        /// A task to run on each compute node as it joins the pool. If
         /// omitted, any existing start task is left unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
-        /// Sets a list of certificates to be installed on each compute node
-        /// in the pool. If omitted, any existing certificate references are
-        /// left unchanged.
+        /// A list of certificates to be installed on each compute node in the
+        /// pool. If omitted, any existing certificate references are left
+        /// unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
-        /// Sets a list of application packages to be installed on each
-        /// compute node in the pool. If omitted, any existing application
-        /// package references are left unchanged.
+        /// A list of application packages to be installed on each compute
+        /// node in the pool. If omitted, any existing application package
+        /// references are left unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
-        /// Sets a list of name-value pairs associated with the pool as
-        /// metadata. If omitted, any existing metadata is left unchanged.
+        /// A list of name-value pairs associated with the pool as metadata.
+        /// If omitted, any existing metadata is left unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }

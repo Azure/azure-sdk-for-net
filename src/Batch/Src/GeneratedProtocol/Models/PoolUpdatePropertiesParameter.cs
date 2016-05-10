@@ -50,23 +50,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets a task to run on each compute node as it joins the pool. If
+        /// A task to run on each compute node as it joins the pool. If
         /// omitted, any existing start task is removed from the pool.
         /// </summary>
         [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
-        /// Sets a list of certificates to be installed on each compute node
-        /// in the pool. If you specify an empty collection, any existing
+        /// A list of certificates to be installed on each compute node in the
+        /// pool. If you specify an empty collection, any existing
         /// certificate references are removed from the pool.
         /// </summary>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
-        /// Sets a list of application packages to be installed on each
-        /// compute node in the pool. If you specify an empty collection, any
+        /// A list of application packages to be installed on each compute
+        /// node in the pool. If you specify an empty collection, any
         /// existing application packages references are removed from the
         /// pool.
         /// </summary>
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
-        /// Sets a list of name-value pairs associated with the pool as
-        /// metadata. If you specify an empty collection, any existing
-        /// metadata is removed from the pool.
+        /// A list of name-value pairs associated with the pool as metadata.
+        /// If you specify an empty collection, any existing metadata is
+        /// removed from the pool.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }

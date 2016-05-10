@@ -52,23 +52,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets the maximum time that the server can spend processing the
-        /// request, in seconds. The default is 30 seconds.
+        /// The maximum time that the server can spend processing the request,
+        /// in seconds. The default is 30 seconds.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public int? Timeout { get; set; }
 
         /// <summary>
-        /// Caller generated request identity, in the form of a GUID with no
-        /// decoration such as curly braces e.g.
+        /// The caller-generated request identity, in the form of a GUID with
+        /// no decoration such as curly braces, e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
-        /// Specifies if the server should return the client-request-id
-        /// identifier in the response.
+        /// Whether the server should return the client-request-id identifier
+        /// in the response.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }

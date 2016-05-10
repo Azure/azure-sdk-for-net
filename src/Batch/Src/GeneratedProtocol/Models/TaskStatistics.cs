@@ -55,77 +55,74 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the URL for the statistics.
+        /// The URL of the statistics.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the start time of the time range covered by the
-        /// statistics.
+        /// The start time of the time range covered by the statistics.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the statistics were last updated.
-        /// All statistics are limited to the range between startTime and
-        /// lastUpdateTime.
+        /// The time at which the statistics were last updated. All statistics
+        /// are limited to the range between startTime and lastUpdateTime.
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateTime")]
         public DateTime LastUpdateTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the total user mode CPU time (summed across all cores
-        /// and all compute nodes) consumed by the task.
+        /// The total user mode CPU time (summed across all cores and all
+        /// compute nodes) consumed by the task.
         /// </summary>
         [JsonProperty(PropertyName = "userCPUTime")]
         public TimeSpan UserCPUTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the total kernel mode CPU time (summed across all
-        /// cores and all compute nodes) consumed by the task.
+        /// The total kernel mode CPU time (summed across all cores and all
+        /// compute nodes) consumed by the task.
         /// </summary>
         [JsonProperty(PropertyName = "kernelCPUTime")]
         public TimeSpan KernelCPUTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the total wall clock time of the task.
+        /// The total wall clock time of the task.
         /// </summary>
         [JsonProperty(PropertyName = "wallClockTime")]
         public TimeSpan WallClockTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the total number of I/O read operations performed by
-        /// the task.
+        /// The total number of disk read operations made by the task.
         /// </summary>
         [JsonProperty(PropertyName = "readIOps")]
         public long ReadIOps { get; set; }
 
         /// <summary>
-        /// Gets or sets the total number of I/O write operations performed by
-        /// the task.
+        /// The total number of disk write operations made by the task.
         /// </summary>
         [JsonProperty(PropertyName = "writeIOps")]
         public long WriteIOps { get; set; }
 
         /// <summary>
-        /// Gets or sets the total amount of data in GiB of I/O read by the
-        /// task.
+        /// The total gibibytes read from disk by the task.
         /// </summary>
         [JsonProperty(PropertyName = "readIOGiB")]
         public double ReadIOGiB { get; set; }
 
         /// <summary>
-        /// Gets or sets the total amount of data in GiB of I/O written by the
-        /// task.
+        /// The total gibibytes written to disk by the task.
         /// </summary>
         [JsonProperty(PropertyName = "writeIOGiB")]
         public double WriteIOGiB { get; set; }
 
         /// <summary>
-        /// Gets or sets the elapsed time between the creation of the task and
-        /// the start of task execution.
+        /// The total wait time of the task. The wait time for a task is
+        /// defined as the elapsed time between the creation of the task and
+        /// the start of task execution. (If the task is retried due to
+        /// failures, the wait time is the time to the most recent task
+        /// execution.)
         /// </summary>
         [JsonProperty(PropertyName = "waitTime")]
         public TimeSpan WaitTime { get; set; }

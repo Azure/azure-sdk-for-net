@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The status of the Job Preparation and Job Release tasks on a
-    /// particular compute node.
+    /// The status of the Job Preparation and Job Release tasks on a compute
+    /// node.
     /// </summary>
     public partial class JobPreparationAndReleaseTaskExecutionInformation
     {
@@ -52,36 +52,35 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of the pool containing the compute node to
-        /// which this entry refers.
+        /// The id of the pool containing the compute node to which this entry
+        /// refers.
         /// </summary>
         [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the compute node to which this entry refers.
+        /// The id of the compute node to which this entry refers.
         /// </summary>
         [JsonProperty(PropertyName = "nodeId")]
         public string NodeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL of the compute node to which this entry
-        /// refers.
+        /// The URL of the compute node to which this entry refers.
         /// </summary>
         [JsonProperty(PropertyName = "nodeUrl")]
         public string NodeUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets information about the execution status of the Job
-        /// Preparation task on this compute node.
+        /// Information about the execution status of the Job Preparation task
+        /// on this compute node.
         /// </summary>
         [JsonProperty(PropertyName = "jobPreparationTaskExecutionInfo")]
         public JobPreparationTaskExecutionInformation JobPreparationTaskExecutionInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets information about the execution status of the Job
-        /// Release task on this compute node. This property is set only if
-        /// the Job Release task has run on the node.
+        /// Information about the execution status of the Job Release task on
+        /// this compute node. This property is set only if the Job Release
+        /// task has run on the node.
         /// </summary>
         [JsonProperty(PropertyName = "jobReleaseTaskExecutionInfo")]
         public JobReleaseTaskExecutionInformation JobReleaseTaskExecutionInfo { get; set; }

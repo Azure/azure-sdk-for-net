@@ -54,76 +54,73 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the priority of jobs created under this schedule.
-        /// Priority values can range from -1000 to 1000, with -1000 being
-        /// the lowest priority and 1000 being the highest priority. The
-        /// default value is 0.
+        /// The priority of jobs created under this schedule. Priority values
+        /// can range from -1000 to 1000, with -1000 being the lowest
+        /// priority and 1000 being the highest priority. The default value
+        /// is 0.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name for jobs created under this
-        /// schedule. It need not be unique and can contain any Unicode
-        /// characters up to a maximum length of 1024.
+        /// The display name for jobs created under this schedule. It need not
+        /// be unique and can contain any Unicode characters up to a maximum
+        /// length of 1024.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the flag that determines if this job will use tasks
-        /// with dependencies.
+        /// The flag that determines if this job will use tasks with
+        /// dependencies.
         /// </summary>
         [JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution constraints for jobs created under this
-        /// schedule.
+        /// The execution constraints for jobs created under this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets the details of a Job Manager task to be launched when
-        /// a job is started under this schedule.
+        /// The details of a Job Manager task to be launched when a job is
+        /// started under this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "jobManagerTask")]
         public JobManagerTask JobManagerTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the Job Preparation task for jobs created under this
-        /// schedule.
+        /// The Job Preparation task for jobs created under this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the Job Release task for jobs created under this
-        /// schedule.
+        /// The Job Release task for jobs created under this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of common environment variable settings.
-        /// These environment variables are set for all tasks in jobs
-        /// created under this schedule (including the Job Manager, Job
-        /// Preparation and Job Release tasks).
+        /// A list of common environment variable settings. These environment
+        /// variables are set for all tasks in jobs created under this
+        /// schedule (including the Job Manager, Job Preparation and Job
+        /// Release tasks).
         /// </summary>
         [JsonProperty(PropertyName = "commonEnvironmentSettings")]
         public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool on which the Batch service runs the tasks of
-        /// jobs created under this schedule.
+        /// The pool on which the Batch service runs the tasks of jobs created
+        /// under this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with each job
-        /// created under this schedule as metadata.
+        /// A list of name-value pairs associated with each job created under
+        /// this schedule as metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }

@@ -50,34 +50,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the schedule within
-        /// the account. A GUID is recommended.
+        /// A string that uniquely identifies the schedule within the account.
+        /// A GUID is recommended.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name for the schedule.
+        /// The display name for the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the schedule according to which jobs will be created.
+        /// The schedule according to which jobs will be created.
         /// </summary>
         [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
-        /// Gets or sets the details of the jobs to be created on this
-        /// schedule.
+        /// The details of the jobs to be created on this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the
-        /// schedule as metadata.
+        /// A list of name-value pairs associated with the schedule as
+        /// metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }

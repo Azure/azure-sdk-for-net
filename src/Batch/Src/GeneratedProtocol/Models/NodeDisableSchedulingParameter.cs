@@ -47,10 +47,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets what to do with currently running tasks when disable
-        /// task scheduling on the compute node. The default value is
-        /// requeue. Possible values include: 'requeue', 'terminate',
-        /// 'taskcompletion'
+        /// What to do with currently running tasks when disable task
+        /// scheduling on the compute node. The default value is requeue.
+        /// Possible values include: 'requeue', 'terminate', 'taskcompletion'
         /// </summary>
         [JsonProperty(PropertyName = "nodeDisableSchedulingOption")]
         public DisableComputeNodeSchedulingOption? NodeDisableSchedulingOption { get; set; }

@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Information about the settings required for multi-instance task.
+    /// Settings which specify how to run a multi-instance task.
+    /// Multi-instance tasks are commonly used to support MPI tasks.
     /// </summary>
     public partial class MultiInstanceSettings
     {
@@ -47,22 +48,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the number of compute node instances used for
-        /// multi-instance task.
+        /// The number of compute nodes required by the multi-instance task.
         /// </summary>
         [JsonProperty(PropertyName = "numberOfInstances")]
         public int NumberOfInstances { get; set; }
 
         /// <summary>
-        /// Gets or sets the command to be run on the compute node instances
-        /// to setup coordination among the subtasks.
+        /// The command to run on the compute node instances for coordinating
+        /// among the subtasks.
         /// </summary>
         [JsonProperty(PropertyName = "coordinationCommandLine")]
         public string CoordinationCommandLine { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of files that Batch will download on all
-        /// subtasks.
+        /// A list of files that the Batch service will download before
+        /// running the coordination command line. The difference between
+        /// common resource files and task resource files is that common
+        /// resource files are downloaded for all subtasks including the
+        /// primary, whereas task resource files are downloaded only for the
+        /// primary.
         /// </summary>
         [JsonProperty(PropertyName = "commonResourceFiles")]
         public IList<ResourceFile> CommonResourceFiles { get; set; }

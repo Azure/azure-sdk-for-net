@@ -56,65 +56,67 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the time at which the Job Preparation task started
-        /// running.
+        /// The time at which the task started running. Note that every time
+        /// the task is restarted, this value is updated.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the Job Preparation task completed.
-        /// This property is set only if the task is in the Completed state.
+        /// The time at which the Job Preparation task completed. This
+        /// property is set only if the task is in the Completed state.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current running state of the Job Preparation task
-        /// on the compute node. Possible values include: 'running',
-        /// 'completed'
+        /// The current state of the Job Preparation task. Possible values
+        /// include: 'running', 'completed'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public JobPreparationTaskState State { get; set; }
 
         /// <summary>
-        /// Gets or sets the root directory of the Job Preparation task on the
-        /// compute node.
+        /// The root directory of the Job Preparation task on the compute
+        /// node. You can use this path to retrieve files created by the
+        /// task, such as log files.
         /// </summary>
         [JsonProperty(PropertyName = "taskRootDirectory")]
         public string TaskRootDirectory { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL to the root directory of the Job Preparation
-        /// task on the compute node.
+        /// The URL to the root directory of the Job Preparation task on the
+        /// compute node.
         /// </summary>
         [JsonProperty(PropertyName = "taskRootDirectoryUrl")]
         public string TaskRootDirectoryUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the exit code of the Job Preparation task. This
-        /// property is set only if the task is in the Completed state.
+        /// The exit code of the Job Preparation task. This property is set
+        /// only if the task is in the Completed state.
         /// </summary>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets or sets any error starting the Job Preparation task.
+        /// The error encountered by the Batch service when starting the task.
         /// </summary>
         [JsonProperty(PropertyName = "schedulingError")]
         public TaskSchedulingError SchedulingError { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of times the Job Preparation task has been
-        /// retried by the Batch service.
+        /// The number of times the task has been retried by the Batch
+        /// service. Every time the task exits with a non-zero exit code, it
+        /// is deemed a task failure. The Batch service will retry the task
+        /// up to the limit specified by the constraints.
         /// </summary>
         [JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the most recent time at which a retry of the Job
-        /// Preparation task started running. This property is set only if
-        /// the task was retried (i.e. retryCount is nonzero).
+        /// The most recent time at which a retry of the Job Preparation task
+        /// started running. This property is set only if the task was
+        /// retried (i.e. retryCount is nonzero).
         /// </summary>
         [JsonProperty(PropertyName = "lastRetryTime")]
         public DateTime? LastRetryTime { get; set; }

@@ -47,24 +47,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the URL of a blob in Azure storage. The Batch service
-        /// downloads the blob to the specified file path. The URL must be
-        /// readable using anonymous access.
+        /// The URL of the file within Azure Blob Storage. This URL should
+        /// include a shared access signature if the blob is not publicly
+        /// readable.
         /// </summary>
         [JsonProperty(PropertyName = "blobSource")]
         public string BlobSource { get; set; }
 
         /// <summary>
-        /// Gets or sets the location on the compute node to which the file
-        /// should be downloaded.
+        /// The location to which to download the file, relative to the task's
+        /// working directory.
         /// </summary>
         [JsonProperty(PropertyName = "filePath")]
         public string FilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the file mode attribute in octal format. This
-        /// property will be ignored if it is specified for a resourceFile
-        /// which will be downloaded to a Windows compute node.
+        /// The file mode attribute in octal format. This property will be
+        /// ignored if it is specified for a resourceFile which will be
+        /// downloaded to a Windows compute node.
         /// </summary>
         [JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }

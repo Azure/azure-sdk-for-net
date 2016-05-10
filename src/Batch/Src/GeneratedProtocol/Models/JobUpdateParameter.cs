@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets the priority of the job. Priority values can range from -1000
-        /// to 1000, with -1000 being the lowest priority and 1000 being the
+        /// The priority of the job. Priority values can range from -1000 to
+        /// 1000, with -1000 being the lowest priority and 1000 being the
         /// highest priority. If omitted, the priority of the job is left
         /// unchanged.
         /// </summary>
@@ -57,22 +57,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Sets the execution constraints for the job. If omitted, the
-        /// existing execution constraints are left unchanged.
+        /// The execution constraints for the job. If omitted, the existing
+        /// execution constraints are left unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Sets the pool on which the Batch service runs the job's tasks. If
+        /// The pool on which the Batch service runs the job's tasks. If
         /// omitted, the job continues to run on its current pool.
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
-        /// Sets a list of name-value pairs associated with the job as
-        /// metadata. If omitted, the existing job metadata is left unchanged.
+        /// A list of name-value pairs associated with the job as metadata. If
+        /// omitted, the existing job metadata is left unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }

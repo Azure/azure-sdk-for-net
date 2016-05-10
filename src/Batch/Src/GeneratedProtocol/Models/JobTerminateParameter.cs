@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Sets the text you want to appear as the job's TerminateReason. The
+        /// The text you want to appear as the job's TerminateReason. The
         /// default is 'UserTerminate'.
         /// </summary>
         [JsonProperty(PropertyName = "terminateReason")]

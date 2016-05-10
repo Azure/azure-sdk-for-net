@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the job to disable.
             /// </param>
             /// <param name='disableTasks'>
-            /// Sets what to do with active tasks associated with the job. Possible values
+            /// What to do with active tasks associated with the job. Possible values
             /// include: 'requeue', 'terminate', 'wait'
             /// </param>
             /// <param name='jobDisableOptions'>
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the job to disable.
             /// </param>
             /// <param name='disableTasks'>
-            /// Sets what to do with active tasks associated with the job. Possible values
+            /// What to do with active tasks associated with the job. Possible values
             /// include: 'requeue', 'terminate', 'wait'
             /// </param>
             /// <param name='jobDisableOptions'>
@@ -342,8 +342,8 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the job to terminate.
             /// </param>
             /// <param name='terminateReason'>
-            /// Sets the text you want to appear as the job's TerminateReason. The default
-            /// is 'UserTerminate'.
+            /// The text you want to appear as the job's TerminateReason. The default is
+            /// 'UserTerminate'.
             /// </param>
             /// <param name='jobTerminateOptions'>
             /// Additional parameters for the operation
@@ -363,8 +363,8 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the job to terminate.
             /// </param>
             /// <param name='terminateReason'>
-            /// Sets the text you want to appear as the job's TerminateReason. The default
-            /// is 'UserTerminate'.
+            /// The text you want to appear as the job's TerminateReason. The default is
+            /// 'UserTerminate'.
             /// </param>
             /// <param name='jobTerminateOptions'>
             /// Additional parameters for the operation
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='job'>
-            /// Specifies the job to be added.
+            /// The job to be added.
             /// </param>
             /// <param name='jobAddOptions'>
             /// Additional parameters for the operation
@@ -404,7 +404,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='job'>
-            /// Specifies the job to be added.
+            /// The job to be added.
             /// </param>
             /// <param name='jobAddOptions'>
             /// Additional parameters for the operation

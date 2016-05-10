@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Adds a certificate to the specified account.
         /// </summary>
         /// <param name='certificate'>
-        /// Specifies the certificate to be added.
+        /// The certificate to be added.
         /// </param>
         /// <param name='certificateAddOptions'>
         /// Additional parameters for the operation

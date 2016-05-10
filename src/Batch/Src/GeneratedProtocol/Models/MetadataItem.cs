@@ -27,9 +27,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A metadata item associated with an Azure Batch resource. The Batch
-    /// service does not assign any meaning to metadata; it is solely for the
-    /// use of user code.
+    /// A name-value pair associated with a Batch service resource. The Batch
+    /// service does not assign any meaning to this metadata; it is solely
+    /// for the use of user code.
     /// </summary>
     public partial class MetadataItem
     {
@@ -48,13 +48,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the name of the metadata item.
+        /// The name of the metadata item.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of the metadata item.
+        /// The value of the metadata item.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

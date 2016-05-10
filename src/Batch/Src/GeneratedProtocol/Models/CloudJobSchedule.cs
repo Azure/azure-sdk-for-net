@@ -60,102 +60,96 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the schedule within
-        /// the account. A GUID is recommended.
+        /// A string that uniquely identifies the schedule within the account.
+        /// A GUID is recommended.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name for the schedule.
+        /// The display name for the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL of the job schedule.
+        /// The URL of the job schedule.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the ETag of the job schedule.
+        /// The ETag of the job schedule.
         /// </summary>
         [JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
-        /// Gets or sets the last modified time of the job schedule.
+        /// The last modified time of the job schedule.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
         public DateTime? LastModified { get; set; }
 
         /// <summary>
-        /// Gets or sets the creation time of the job schedule.
+        /// The creation time of the job schedule.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTime? CreationTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the job schedule. Possible
-        /// values include: 'active', 'completed', 'disabled', 'terminating',
-        /// 'deleting'
+        /// The current state of the job schedule. Possible values include:
+        /// 'active', 'completed', 'disabled', 'terminating', 'deleting'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public JobScheduleState? State { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the job schedule entered the
-        /// current state.
+        /// The time at which the job schedule entered the current state.
         /// </summary>
         [JsonProperty(PropertyName = "stateTransitionTime")]
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the previous state of the job schedule. Possible
-        /// values include: 'active', 'completed', 'disabled', 'terminating',
-        /// 'deleting'
+        /// The previous state of the job schedule. Possible values include:
+        /// 'active', 'completed', 'disabled', 'terminating', 'deleting'
         /// </summary>
         [JsonProperty(PropertyName = "previousState")]
         public JobScheduleState? PreviousState { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the job schedule entered its
-        /// previous state.
+        /// The time at which the job schedule entered its previous state.
         /// </summary>
         [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the schedule according to which jobs will be created.
+        /// The schedule according to which jobs will be created.
         /// </summary>
         [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
-        /// Gets or sets the details of the jobs to be created on this
-        /// schedule.
+        /// The details of the jobs to be created on this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
-        /// Gets or sets information about jobs that have been and will be run
-        /// under this schedule.
+        /// Information about jobs that have been and will be run under this
+        /// schedule.
         /// </summary>
         [JsonProperty(PropertyName = "executionInfo")]
         public JobScheduleExecutionInformation ExecutionInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the
-        /// schedule as metadata.
+        /// A list of name-value pairs associated with the schedule as
+        /// metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
-        /// Gets or sets the lifetime resource usage statistics for the job
-        /// schedule.
+        /// The lifetime resource usage statistics for the job schedule.
         /// </summary>
         [JsonProperty(PropertyName = "stats")]
         public JobScheduleStatistics Stats { get; set; }

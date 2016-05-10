@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the machine on which you want to create a user account.
             /// </param>
             /// <param name='user'>
-            /// Specifies the user account to be created.
+            /// The user account to be created.
             /// </param>
             /// <param name='computeNodeAddUserOptions'>
             /// Additional parameters for the operation
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the machine on which you want to create a user account.
             /// </param>
             /// <param name='user'>
-            /// Specifies the user account to be created.
+            /// The user account to be created.
             /// </param>
             /// <param name='computeNodeAddUserOptions'>
             /// Additional parameters for the operation
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the compute node that you want to restart.
             /// </param>
             /// <param name='nodeRebootOption'>
-            /// Sets when to reboot the compute node and what to do with currently running
+            /// When to reboot the compute node and what to do with currently running
             /// tasks. The default value is requeue. Possible values include: 'requeue',
             /// 'terminate', 'taskcompletion', 'retaineddata'
             /// </param>
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the compute node that you want to restart.
             /// </param>
             /// <param name='nodeRebootOption'>
-            /// Sets when to reboot the compute node and what to do with currently running
+            /// When to reboot the compute node and what to do with currently running
             /// tasks. The default value is requeue. Possible values include: 'requeue',
             /// 'terminate', 'taskcompletion', 'retaineddata'
             /// </param>
@@ -311,9 +311,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the compute node that you want to restart.
             /// </param>
             /// <param name='nodeReimageOption'>
-            /// Sets when to reimage the compute node and what to do with currently
-            /// running tasks. The default value is requeue. Possible values include:
-            /// 'requeue', 'terminate', 'taskcompletion', 'retaineddata'
+            /// When to reimage the compute node and what to do with currently running
+            /// tasks. The default value is requeue. Possible values include: 'requeue',
+            /// 'terminate', 'taskcompletion', 'retaineddata'
             /// </param>
             /// <param name='computeNodeReimageOptions'>
             /// Additional parameters for the operation
@@ -336,9 +336,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the compute node that you want to restart.
             /// </param>
             /// <param name='nodeReimageOption'>
-            /// Sets when to reimage the compute node and what to do with currently
-            /// running tasks. The default value is requeue. Possible values include:
-            /// 'requeue', 'terminate', 'taskcompletion', 'retaineddata'
+            /// When to reimage the compute node and what to do with currently running
+            /// tasks. The default value is requeue. Possible values include: 'requeue',
+            /// 'terminate', 'taskcompletion', 'retaineddata'
             /// </param>
             /// <param name='computeNodeReimageOptions'>
             /// Additional parameters for the operation
@@ -367,9 +367,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the compute node that you want to disable task scheduling.
             /// </param>
             /// <param name='nodeDisableSchedulingOption'>
-            /// Gets or sets what to do with currently running tasks when disable task
-            /// scheduling on the compute node. The default value is requeue. Possible
-            /// values include: 'requeue', 'terminate', 'taskcompletion'
+            /// What to do with currently running tasks when disable task scheduling on
+            /// the compute node. The default value is requeue. Possible values include:
+            /// 'requeue', 'terminate', 'taskcompletion'
             /// </param>
             /// <param name='computeNodeDisableSchedulingOptions'>
             /// Additional parameters for the operation
@@ -392,9 +392,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The id of the compute node that you want to disable task scheduling.
             /// </param>
             /// <param name='nodeDisableSchedulingOption'>
-            /// Gets or sets what to do with currently running tasks when disable task
-            /// scheduling on the compute node. The default value is requeue. Possible
-            /// values include: 'requeue', 'terminate', 'taskcompletion'
+            /// What to do with currently running tasks when disable task scheduling on
+            /// the compute node. The default value is requeue. Possible values include:
+            /// 'requeue', 'terminate', 'taskcompletion'
             /// </param>
             /// <param name='computeNodeDisableSchedulingOptions'>
             /// Additional parameters for the operation
