@@ -56,14 +56,7 @@ namespace MachineLearning.Tests.ScenarioTests
         private const int AsyncOperationPollingIntervalSeconds = 5;
 
         private delegate void AMLWebServiceTestDelegate(string webServiceName, string resourceGroupName, ResourceManagementClient resourcesClient, AzureMLWebServicesManagementClient amlServicesClient, string cpResourceId);
-
-        public WebServiceTests()
-        {
-            ////Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=7b373400-c82e-453b-a97b-c53e14325b8b;Environment=Dogfood;UserId=admin@aad216.ccsctp.net;Password=Pa$$w0rd");
-            ////Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=80c77c76-74ba-4c8c-8229-4c3b2957990c;Environment=Prod");
-            ////Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
-        }
-
+        
         [Fact]
         public void CreateGetRemoveGraphWebService()
         {
