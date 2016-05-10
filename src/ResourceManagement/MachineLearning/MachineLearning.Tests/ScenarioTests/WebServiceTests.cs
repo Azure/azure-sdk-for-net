@@ -139,8 +139,6 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.NotNull(serviceKeys);
                     Assert.Equal(serviceKeys.Primary, serviceUpdates.Properties.Keys.Primary);
                     Assert.Equal(serviceKeys.Secondary, serviceDefinition.Properties.Keys.Secondary);
-
-                    
                 }
                 finally
                 {
