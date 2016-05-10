@@ -61,6 +61,11 @@
                 #>Nullable<<#+ GenerateType((dynamic)unionSchema.Schemas[0], isDeclaration, inAttribute, false); #>><#+
             }
         }
+		else if (unionSchema.Schemas.Count == 2 && (unionSchema.Schemas.Count(s => s is NullSchema)) == 1)
+        {
+			var matching = unionSchema.Schemas.Single(schema => !(schema is PrimitiveTypeSchema));
+            GenerateType(matching, isDeclaration, inAttribute, false);
+        }
         else
         {
             #>object<#+;
