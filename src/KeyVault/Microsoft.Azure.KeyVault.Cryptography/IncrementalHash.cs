@@ -18,10 +18,7 @@
 #if !DNXCORE50
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.KeyVault.Cryptography
 {
@@ -37,9 +34,10 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         SHA512,
     }
 
-
     public sealed class IncrementalHash : IDisposable
     {
+        private static readonly byte[] NullBuffer = new byte[0];
+
         public static IncrementalHash CreateHMAC( HashAlgorithmName algorithmName, byte[] key )
         {
             HMAC hmac = null;
@@ -81,6 +79,9 @@ namespace Microsoft.Azure.KeyVault.Cryptography
 
         public byte[] GetHashAndReset()
         {
+            // This is the only opportunity we have to finalize the hash for dnx451
+            _hmac.TransformFinalBlock( NullBuffer, 0, 0 );
+
             return _hmac.Hash;
         }
 

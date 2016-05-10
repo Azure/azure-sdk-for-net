@@ -207,9 +207,6 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 // Add the associated_data_length bytes to the hash
                 _hmac.AppendData( _associated_data_length );
 
-                // Finalize hash
-                ///???
-
                 // Compute the tag
                 _tag = _hmac.GetHashAndReset().Take( _hmac_key.Length );
 
