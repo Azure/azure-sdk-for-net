@@ -1,8 +1,8 @@
-﻿{
-  "version": "1.0.3-preview",
-  "description": "Microsoft Azure CDN Management Library",
+{
+  "version": "0.1.0-preview",
+  "description": "Microsoft Azure Management Cognitive Services Library",
   "authors": [ "Microsoft" ],
-  "tags": [ "Microsoft Azure CDN management", "CDN", "Cdn management", "REST HTTP client", "windowsazureofficial" ],
+  "tags": [ "Microsoft Azure Cognitive Services management", "Cognitive Services", "Cognitive Services management", "REST HTTP client", "windowsazureofficial" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
@@ -12,7 +12,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.0.2,4.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0, 4.0)"
   },
 
   "frameworks": {
