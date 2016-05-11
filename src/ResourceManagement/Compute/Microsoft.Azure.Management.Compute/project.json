@@ -18,13 +18,10 @@
     "net45": {
       "frameworkAssemblies": {
         "System.Collections": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Runtime": { "type": "build" },
+        "System.Linq.Expressions": {"type": "build"},
+        "System.Runtime": {"type": "build"},
         "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": { "type": "build" }
-      },
-      "dependencies": {
-        "Microsoft.Rest.ClientRuntime": "2.0"
+        "System.Threading.Tasks": {"type": "build"}
       }
     },
     "dnxcore50": {
