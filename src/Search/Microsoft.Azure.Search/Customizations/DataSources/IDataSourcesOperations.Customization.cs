@@ -13,6 +13,24 @@ namespace Microsoft.Azure.Search
     public partial interface IDataSourcesOperations
     {
         /// <summary>
+        /// Creates a new Azure Search datasource or updates a datasource if
+        /// it already exists.
+        /// </summary>
+        /// <param name='dataSource'>
+        /// The definition of the datasource to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<DataSource>> CreateOrUpdateWithHttpMessagesAsync(DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Determines whether or not the given data source exists in the Azure Search service.
         /// </summary>
         /// <param name="dataSourceName">

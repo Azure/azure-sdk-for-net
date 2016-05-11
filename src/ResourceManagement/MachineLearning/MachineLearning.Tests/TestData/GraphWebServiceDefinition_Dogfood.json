@@ -1,0 +1,178 @@
+﻿{
+  "properties": {
+    "title": "ServiceTitle",
+    "description": "This is some service description",
+    "readOnly": "false",
+    "keys": {
+      "primary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==",
+      "secondary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo=="
+    },
+    "storageAccount": {
+      "name": "rpbestest1",
+      "key": "WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA=="
+    },
+    "commitmentPlan": {
+      "id": "/subscriptions/325f8243-f630-45ec-8a57-6c173a30cfca/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/cptest"
+    },
+    "assets": {
+      "asset1": {
+        "name": "Apply Math Operation",
+        "type": "Module",
+        "locationInfo": {
+          "uri": "aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1675"
+        }
+      }
+    },
+    "parameters": {
+      "category": "Trigonometric",
+      "trigonometric Function": "Sin",
+      "column Set": "{\"isFilter\":true,\"rules\":[{\"ruleType\":\"ColumnTypes\",\"exclude\":false,\"columnTypes\":[\"Numeric\"],\"columnKinds\":[\"All\"]}]}",
+      "output mode": "ResultOnly"
+    },
+    "input": {
+      "title": "",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "input1": {
+          "title": "",
+          "description": "",
+          "type": "object",
+          "properties": {
+            "Class": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "sepal-length": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "sepal-width": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "petal-length": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "petal-width": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "title": "",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "output1": {
+          "title": "",
+          "description": "",
+          "type": "object",
+          "properties": {
+            "Class": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "sepal-length": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "sepal-width": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "petal-length": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            },
+            "petal-width": {
+              "type": "Number",
+              "format": "Double",
+              "x-ms-isnullable": false
+            }
+          }
+        }
+      }
+    },
+    "packageType": "Graph",
+    "package": {
+      "Nodes": {
+        "node1": {
+          "inputId": "input1"
+        },
+        "node2": {
+          "assetId": "asset1",
+          "parameters": {
+            "Category": "Trigonometric",
+            "Trigonometric Function": "Sin",
+            "Column Set": "{\"isFilter\":true,\"rules\":[{\"ruleType\":\"ColumnTypes\",\"exclude\":false,\"columnTypes\":[\"Numeric\"],\"columnKinds\":[\"All\"]}]}",
+            "Output mode": "ResultOnly"
+          }
+        },
+        "node3": {
+          "outputId": "output1"
+        }
+      },
+      "Edges": [
+        {
+          "sourceNodeId": "node1",
+          "targetNodeId": "node2",
+          "targetPortId": "Dataset"
+        },
+        {
+          "sourceNodeId": "node2",
+          "sourcePortId": "Results dataset",
+          "targetNodeId": "node3"
+        }
+      ],
+      "GraphParameters": {
+        "Category": {
+          "description": "",
+          "Links": [
+            {
+              "NodeId": "node2",
+              "ParameterKey": "Category"
+            }
+          ]
+        },
+        "Trigonometric Function": {
+          "Links": [
+            {
+              "NodeId": "node2",
+              "ParameterKey": "Trigonometric Function"
+            }
+          ]
+        },
+        "Column Set": {
+          "Links": [
+            {
+              "NodeId": "node2",
+              "ParameterKey": "Column Set"
+            }
+          ]
+        },
+        "Output mode": {
+          "Links": [
+            {
+              "NodeId": "node2",
+              "ParameterKey": "Output mode"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

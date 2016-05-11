@@ -173,8 +173,6 @@ namespace DataLakeAnalytics.Tests
                                 Uri = "https://adlasecrettest.contoso.com:443"
                             });
 
-
-                        // * TODO: Enable once confirmed that we throw 409s when a secret already exists
                         // Attempt to create the secret again, which should throw
                         Assert.Throws<CloudException>(
                             () => clientToUse.Catalog.CreateSecret(
@@ -185,7 +183,17 @@ namespace DataLakeAnalytics.Tests
                                         Password = commonData.SecretPwd,
                                         Uri = "https://adlasecrettest.contoso.com:443"
                                     }));
-                        
+
+                        // create another secret
+                        var secondSecretName = commonData.SecretName + "dup";
+                        clientToUse.Catalog.CreateSecret(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, secondSecretName,
+                        new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
+                        {
+                            Password = commonData.SecretPwd,
+                            Uri = "https://adlasecrettest.contoso.com:443"
+                        });
                         // Get the secret and ensure the response contains a date.
                         var secretGetResponse = clientToUse.Catalog.GetSecret(
                             commonData.SecondDataLakeAnalyticsAccountName,
@@ -235,6 +243,17 @@ namespace DataLakeAnalytics.Tests
                         Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(
                             commonData.SecondDataLakeAnalyticsAccountName,
                             commonData.DatabaseName, commonData.SecretName));
+
+                        // Delete all secrets
+                        clientToUse.Catalog.DeleteAllSecrets(
+                            commonData.SecondDataLakeAnalyticsAccountName,
+                            commonData.DatabaseName);
+
+                        // Try to get the second secret, which should throw.
+                        // Try to get the secret which should throw
+                        Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(
+                            commonData.SecondDataLakeAnalyticsAccountName,
+                            commonData.DatabaseName, secondSecretName));
                     }
 
                 }

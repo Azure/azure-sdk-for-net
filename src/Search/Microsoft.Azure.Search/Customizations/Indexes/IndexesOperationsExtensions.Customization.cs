@@ -18,6 +18,46 @@ namespace Microsoft.Azure.Search
     public static partial class IndexesOperationsExtensions
     {
         /// <summary>
+        /// Creates a new Azure Search index or updates an index if it already exists.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='index'>
+        /// The definition of the index to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static Index CreateOrUpdate(this IIndexesOperations operations, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+        {
+            return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(index, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Creates a new Azure Search index or updates an index if it already exists.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='index'>
+        /// The definition of the index to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(index, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
         /// Determines whether or not the given index exists in the Azure Search service.
         /// </summary>
         /// <param name='operations'>

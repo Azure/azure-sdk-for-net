@@ -16,6 +16,48 @@ namespace Microsoft.Azure.Search
     public static partial class IndexersOperationsExtensions
     {
         /// <summary>
+        /// Creates a new Azure Search indexer or updates an indexer if it already
+        /// exists.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='indexer'>
+        /// The definition of the indexer to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static Indexer CreateOrUpdate(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+        {
+            return Task.Factory.StartNew(s => ((IIndexersOperations)s).CreateOrUpdateAsync(indexer, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Creates a new Azure Search indexer or updates an indexer if it already
+        /// exists.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='indexer'>
+        /// The definition of the indexer to create or update.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<Indexer> CreateOrUpdateAsync(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
         /// Determines whether or not the given indexer exists in the Azure Search service.
         /// </summary>
         /// <param name='operations'>

@@ -818,6 +818,157 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
+        /// Deletes all secrets in the specified database
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the secret.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> DeleteAllSecretsWithHttpMessagesAsync(string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteAllSecrets", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/secrets";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Retrieves the specified external data source from the Data Lake Analytics
         /// catalog.
         /// </summary>
@@ -1030,7 +1181,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -1466,7 +1617,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -1914,7 +2065,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -2368,7 +2519,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -2822,7 +2973,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -3054,7 +3205,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Retrieves the specified table from the Data Lake Analytics catalog.
+        /// Retrieves the specified table statistics from the Data Lake Analytics
+        /// catalog.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog operations on.
@@ -3263,7 +3415,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Retrieves the list of tables from the Data Lake Analytics catalog.
+        /// Retrieves the list of table statistics from the Data Lake Analytics
+        /// catalog.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog operations on.
@@ -3288,7 +3441,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -3973,7 +4126,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -4415,7 +4568,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -4851,7 +5004,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -5275,7 +5428,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='expand'>
         /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories/$expand=Products would expand Product data in
+        /// resources, e.g. Categories?$expand=Products would expand Product data in
         /// line with each Category entry. Optional.
         /// </param>
         /// <param name='select'>
@@ -6291,7 +6444,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Retrieves the list of tables from the Data Lake Analytics catalog.
+        /// Retrieves the list of table statistics from the Data Lake Analytics
+        /// catalog.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
