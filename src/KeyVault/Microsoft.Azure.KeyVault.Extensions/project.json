@@ -1,8 +1,8 @@
 {
   "version": "2.0.0-preview",
-  "description": "Microsoft Azure Key Vault Cryptography Class Library",
+  "description": "Microsoft Azure Key Vault Extensions Class Library",
   "authors": [ "Microsoft Corporation" ],
-  "tags": [ "Microsoft Azure key vault cryptography" ],
+  "tags": [ "Microsoft Azure key vault extensions" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
   "compilationOptions": {
@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "Microsoft.Azure.KeyVault": "2.0.0-preview",
-    "Microsoft.Azure.KeyVault.Core": "2.0.0-*"
+    "Microsoft.Azure.KeyVault.Core": "2.0.0-*",
+    "Microsoft.Azure.KeyVault.Cryptography": "2.0.0-preview"
   },
   "configurations": {
   }

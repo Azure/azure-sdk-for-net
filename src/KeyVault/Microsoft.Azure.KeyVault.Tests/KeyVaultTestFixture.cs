@@ -32,6 +32,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace KeyVault.Tests
 {
@@ -84,7 +85,7 @@ namespace KeyVault.Tests
                     throw new Exception("Please provide the test data in the appsettings.json configuration.\n"+
                         "Graph SDK has a bug for creating applications: https://github.com/Azure/azure-sdk-for-net/issues/1934; so the application cannot be created.");
 
-                    /*var testEnv = TestEnvironmentFactory.GetTestEnvironment();
+                    var testEnv = TestEnvironmentFactory.GetTestEnvironment();
                     var context = new MockContext();
 
                     var secret = Guid.NewGuid().ToString();
@@ -122,7 +123,7 @@ namespace KeyVault.Tests
                     clientCredential = new ClientCredential(app.AppId, secret);
 
                     //Wait a few seconds before trying to authenticate
-                    TestUtilities.Wait(TimeSpan.FromSeconds(30));*/
+                    TestUtilities.Wait(TimeSpan.FromSeconds(30));
                 }
             }
         }
@@ -230,7 +231,7 @@ namespace KeyVault.Tests
             }
         }
         
-        private async Task<string> GetAccessToken(string authority, string resource, string scope)
+        public async Task<string> GetAccessToken(string authority, string resource, string scope)
         {
             var context = new AuthenticationContext(authority, tokenCache);
             var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);

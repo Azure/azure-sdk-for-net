@@ -21,7 +21,7 @@ using Microsoft.Extensions.Configuration.Json;
 
 namespace KeyVault.Tests
 {
-    class TestConfigurationManager
+    public class TestConfigurationManager
     {
         public static string GetEnvironmentOrAppSetting(string settingName)
         {
