@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </remarks>
         public static WebService CreateOrUpdateWithRequestId(this IWebServicesOperations operations, WebService createOrUpdatePayload, string resourceGroupName, string webServiceName)
         {
-            return Task.Factory.StartNew(s => ((IWebServicesOperations)s).CreateOrUpdateAsync(createOrUpdatePayload, resourceGroupName, webServiceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IWebServicesOperations)s).CreateOrUpdateWithRequestIdAsync(createOrUpdatePayload, resourceGroupName, webServiceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </param>
         public static WebService PatchWithRequestId(this IWebServicesOperations operations, WebService patchPayload, string resourceGroupName, string webServiceName)
         {
-            return Task.Factory.StartNew(s => ((IWebServicesOperations)s).PatchAsync(patchPayload, resourceGroupName, webServiceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IWebServicesOperations)s).PatchWithRequestIdAsync(patchPayload, resourceGroupName, webServiceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </param>
         public static void RemoveWithRequestId(this IWebServicesOperations operations, string resourceGroupName, string webServiceName)
         {
-            Task.Factory.StartNew(s => ((IWebServicesOperations)s).RemoveAsync(resourceGroupName, webServiceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            Task.Factory.StartNew(s => ((IWebServicesOperations)s).RemoveWithRequestIdAsync(resourceGroupName, webServiceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
