@@ -1,6 +1,6 @@
 {
   "version": "2.0.0-*",
-  "description": "Microsoft Azure Key Vault Cryptography Class Library",
+  "description": "Microsoft Azure Key Vault Cryptography tests",
   "authors": [ "Microsoft Corporation" ],
   "tags": [ "" ],
   "projectUrl": "",
