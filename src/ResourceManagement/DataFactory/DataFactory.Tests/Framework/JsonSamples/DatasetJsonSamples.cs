@@ -526,5 +526,49 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string BlobOrcFormatTable = @"
+{
+    name: ""MyDemoBlob"",
+    properties:
+    {
+        type: ""AzureBlob"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        structure:
+        [
+            { name: ""PartitionKey"", type: ""Guid"" },
+            { name: ""RowKey"", type: ""String"" },
+            { name: ""Timestamp"", type: ""String"" },
+            { name: ""game_id "", type: ""String"" },
+        ],
+        typeProperties:
+        {
+            folderPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time\\{PartitionKey}"",
+            fileName: ""TestBlobName"",
+            format:
+            {
+                type: ""OrcFormat""
+            },
+            partitionedBy:
+            [
+                { name: ""PartitionKey"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy-MM-dd"" } },
+            ]
+        },
+        availability:
+        {
+            interval: 1,
+            frequency: ""Hour"",
+            style: ""StartOfInterval""
+        },
+        policy:
+        {
+            validation:
+            {
+                minimumSizeMB: 200.0
+            }
+        }
+    }
+}";
     }
 }

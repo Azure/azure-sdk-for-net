@@ -1,5 +1,11 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.7.0
+_Release date: 2016.05.20_
+
+### Feature Additions
+* Added new StorageFormat type OrcFormat type to copy files in optimized row columnar (ORC) format.
+
 ## Version 4.6.1
 _Release date: 2016.04.26_
 
