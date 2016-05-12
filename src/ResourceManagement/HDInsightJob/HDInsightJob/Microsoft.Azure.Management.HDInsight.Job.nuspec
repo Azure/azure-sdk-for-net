@@ -84,7 +84,7 @@ The methods “GetJobOutput”(+Async) and “GetJobErrorLogsAsync”(+Async) no
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
-      <dependency id="WindowsAzure.Storage" version="[6.0.0,7.0)" />
+      <dependency id="WindowsAzure.Storage" version="[6.0.0,8.0)" />
     </dependencies>
   </metadata>
   <files>
