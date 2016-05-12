@@ -162,6 +162,7 @@
     <Compile Include="Generated\Models\ProtectionContainerResource.cs" />
     <Compile Include="Generated\Models\ProtectionContainerResourceList.cs" />
     <Compile Include="Generated\Models\ProtectionContainerResponse.cs" />
+    <Compile Include="Generated\Models\ProtectionPolicy.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyBase.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyQueryParameters.cs" />
