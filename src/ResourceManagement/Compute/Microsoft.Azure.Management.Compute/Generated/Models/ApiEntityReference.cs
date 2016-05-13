@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets ARM resource id in the form of
+        /// Gets or sets the ARM resource id in the form of
         /// /subscriptions/{SubcriptionId}/resourceGroups/{ResourceGroupName}/...
         /// </summary>
         [JsonProperty(PropertyName = "id")]
