@@ -169,6 +169,48 @@ namespace DataLakeStore.Tests
         }
 
         [Fact]
+        public void DataLakeStoreFileSystemGetNonExistentFile()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    try
+                    {
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(commonData.DataLakeStoreFileSystemAccountName, "/nonexistentfile001.txt");
+                    }
+                    catch (AdlsErrorException e)
+                    {
+                        Assert.Equal(typeof(AdlsFileNotFoundException), e.Body.RemoteException.GetType());
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemTestAccessDenied()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    try
+                    {
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(commonData.NoPermissionDataLakeStoreAccountName, "/");
+                    }
+                    catch (AdlsErrorException e)
+                    {
+                        Assert.Equal(typeof(AdlsAccessControlException), e.Body.RemoteException.GetType());
+                    }
+                }
+            }
+        }
+
+        [Fact]
         public void DataLakeStoreFileSystemEmptyFileCreate()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
