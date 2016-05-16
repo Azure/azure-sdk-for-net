@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// IaaS VM workload-specific protection policy.
     /// </summary>
-    public partial class AzureIaaSVMProtectionPolicy : ProtectionPolicyBase
+    public partial class AzureIaaSVMProtectionPolicy : ProtectionPolicy
     {
         private RetentionPolicy _retentionPolicy;
         

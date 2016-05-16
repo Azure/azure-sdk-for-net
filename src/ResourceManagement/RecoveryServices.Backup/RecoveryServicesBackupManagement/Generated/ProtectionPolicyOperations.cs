@@ -195,153 +195,160 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     {
                         JObject propertiesValue = new JObject();
                         itemValue["properties"] = propertiesValue;
+                        if (request.Item.Properties is ProtectionPolicy)
+                        {
+                            propertiesValue["backupManagementType"] = "ProtectionPolicy";
+                            ProtectionPolicy derived = ((ProtectionPolicy)request.Item.Properties);
+                            
+                            propertiesValue["protectedItemsCount"] = derived.ProtectedItemsCount;
+                        }
                         if (request.Item.Properties is AzureIaaSVMProtectionPolicy)
                         {
                             propertiesValue["backupManagementType"] = "AzureIaasVM";
-                            AzureIaaSVMProtectionPolicy derived = ((AzureIaaSVMProtectionPolicy)request.Item.Properties);
+                            AzureIaaSVMProtectionPolicy derived2 = ((AzureIaaSVMProtectionPolicy)request.Item.Properties);
                             
-                            if (derived.SchedulePolicy != null)
+                            if (derived2.SchedulePolicy != null)
                             {
                                 JObject schedulePolicyValue = new JObject();
                                 propertiesValue["schedulePolicy"] = schedulePolicyValue;
-                                if (derived.SchedulePolicy is SimpleSchedulePolicy)
+                                if (derived2.SchedulePolicy is SimpleSchedulePolicy)
                                 {
                                     schedulePolicyValue["schedulePolicyType"] = "SimpleSchedulePolicy";
-                                    SimpleSchedulePolicy derived2 = ((SimpleSchedulePolicy)derived.SchedulePolicy);
+                                    SimpleSchedulePolicy derived3 = ((SimpleSchedulePolicy)derived2.SchedulePolicy);
                                     
-                                    if (derived2.ScheduleRunFrequency != null)
+                                    if (derived3.ScheduleRunFrequency != null)
                                     {
-                                        schedulePolicyValue["scheduleRunFrequency"] = derived2.ScheduleRunFrequency;
+                                        schedulePolicyValue["scheduleRunFrequency"] = derived3.ScheduleRunFrequency;
                                     }
                                     
-                                    if (derived2.ScheduleRunDays != null)
+                                    if (derived3.ScheduleRunDays != null)
                                     {
                                         JArray scheduleRunDaysArray = new JArray();
-                                        foreach (string scheduleRunDaysItem in derived2.ScheduleRunDays)
+                                        foreach (string scheduleRunDaysItem in derived3.ScheduleRunDays)
                                         {
                                             scheduleRunDaysArray.Add(scheduleRunDaysItem);
                                         }
                                         schedulePolicyValue["scheduleRunDays"] = scheduleRunDaysArray;
                                     }
                                     
-                                    if (derived2.ScheduleRunTimes != null)
+                                    if (derived3.ScheduleRunTimes != null)
                                     {
                                         JArray scheduleRunTimesArray = new JArray();
-                                        foreach (DateTime scheduleRunTimesItem in derived2.ScheduleRunTimes)
+                                        foreach (DateTime scheduleRunTimesItem in derived3.ScheduleRunTimes)
                                         {
                                             scheduleRunTimesArray.Add(scheduleRunTimesItem);
                                         }
                                         schedulePolicyValue["scheduleRunTimes"] = scheduleRunTimesArray;
                                     }
                                 }
-                                if (derived.SchedulePolicy is LongTermSchedulePolicy)
+                                if (derived2.SchedulePolicy is LongTermSchedulePolicy)
                                 {
                                     schedulePolicyValue["schedulePolicyType"] = "LongTermSchedulePolicy";
-                                    LongTermSchedulePolicy derived3 = ((LongTermSchedulePolicy)derived.SchedulePolicy);
+                                    LongTermSchedulePolicy derived4 = ((LongTermSchedulePolicy)derived2.SchedulePolicy);
                                 }
                             }
                             
-                            if (derived.RetentionPolicy != null)
+                            if (derived2.RetentionPolicy != null)
                             {
                                 JObject retentionPolicyValue = new JObject();
                                 propertiesValue["retentionPolicy"] = retentionPolicyValue;
-                                if (derived.RetentionPolicy is SimpleRetentionPolicy)
+                                if (derived2.RetentionPolicy is SimpleRetentionPolicy)
                                 {
                                     retentionPolicyValue["retentionPolicyType"] = "SimpleRetentionPolicy";
-                                    SimpleRetentionPolicy derived4 = ((SimpleRetentionPolicy)derived.RetentionPolicy);
+                                    SimpleRetentionPolicy derived5 = ((SimpleRetentionPolicy)derived2.RetentionPolicy);
                                 }
-                                if (derived.RetentionPolicy is LongTermRetentionPolicy)
+                                if (derived2.RetentionPolicy is LongTermRetentionPolicy)
                                 {
                                     retentionPolicyValue["retentionPolicyType"] = "LongTermRetentionPolicy";
-                                    LongTermRetentionPolicy derived5 = ((LongTermRetentionPolicy)derived.RetentionPolicy);
+                                    LongTermRetentionPolicy derived6 = ((LongTermRetentionPolicy)derived2.RetentionPolicy);
                                     
-                                    if (derived5.DailySchedule != null)
+                                    if (derived6.DailySchedule != null)
                                     {
                                         JObject dailyScheduleValue = new JObject();
                                         retentionPolicyValue["dailySchedule"] = dailyScheduleValue;
                                         
-                                        if (derived5.DailySchedule.RetentionTimes != null)
+                                        if (derived6.DailySchedule.RetentionTimes != null)
                                         {
                                             JArray retentionTimesArray = new JArray();
-                                            foreach (DateTime retentionTimesItem in derived5.DailySchedule.RetentionTimes)
+                                            foreach (DateTime retentionTimesItem in derived6.DailySchedule.RetentionTimes)
                                             {
                                                 retentionTimesArray.Add(retentionTimesItem);
                                             }
                                             dailyScheduleValue["retentionTimes"] = retentionTimesArray;
                                         }
                                         
-                                        if (derived5.DailySchedule.RetentionDuration != null)
+                                        if (derived6.DailySchedule.RetentionDuration != null)
                                         {
                                             JObject retentionDurationValue = new JObject();
                                             dailyScheduleValue["retentionDuration"] = retentionDurationValue;
                                             
-                                            retentionDurationValue["count"] = derived5.DailySchedule.RetentionDuration.Count;
+                                            retentionDurationValue["count"] = derived6.DailySchedule.RetentionDuration.Count;
                                             
-                                            if (derived5.DailySchedule.RetentionDuration.DurationType != null)
+                                            if (derived6.DailySchedule.RetentionDuration.DurationType != null)
                                             {
-                                                retentionDurationValue["durationType"] = derived5.DailySchedule.RetentionDuration.DurationType;
+                                                retentionDurationValue["durationType"] = derived6.DailySchedule.RetentionDuration.DurationType;
                                             }
                                         }
                                     }
                                     
-                                    if (derived5.WeeklySchedule != null)
+                                    if (derived6.WeeklySchedule != null)
                                     {
                                         JObject weeklyScheduleValue = new JObject();
                                         retentionPolicyValue["weeklySchedule"] = weeklyScheduleValue;
                                         
-                                        if (derived5.WeeklySchedule.DaysOfTheWeek != null)
+                                        if (derived6.WeeklySchedule.DaysOfTheWeek != null)
                                         {
                                             JArray daysOfTheWeekArray = new JArray();
-                                            foreach (string daysOfTheWeekItem in derived5.WeeklySchedule.DaysOfTheWeek)
+                                            foreach (string daysOfTheWeekItem in derived6.WeeklySchedule.DaysOfTheWeek)
                                             {
                                                 daysOfTheWeekArray.Add(daysOfTheWeekItem);
                                             }
                                             weeklyScheduleValue["daysOfTheWeek"] = daysOfTheWeekArray;
                                         }
                                         
-                                        if (derived5.WeeklySchedule.RetentionTimes != null)
+                                        if (derived6.WeeklySchedule.RetentionTimes != null)
                                         {
                                             JArray retentionTimesArray2 = new JArray();
-                                            foreach (DateTime retentionTimesItem2 in derived5.WeeklySchedule.RetentionTimes)
+                                            foreach (DateTime retentionTimesItem2 in derived6.WeeklySchedule.RetentionTimes)
                                             {
                                                 retentionTimesArray2.Add(retentionTimesItem2);
                                             }
                                             weeklyScheduleValue["retentionTimes"] = retentionTimesArray2;
                                         }
                                         
-                                        if (derived5.WeeklySchedule.RetentionDuration != null)
+                                        if (derived6.WeeklySchedule.RetentionDuration != null)
                                         {
                                             JObject retentionDurationValue2 = new JObject();
                                             weeklyScheduleValue["retentionDuration"] = retentionDurationValue2;
                                             
-                                            retentionDurationValue2["count"] = derived5.WeeklySchedule.RetentionDuration.Count;
+                                            retentionDurationValue2["count"] = derived6.WeeklySchedule.RetentionDuration.Count;
                                             
-                                            if (derived5.WeeklySchedule.RetentionDuration.DurationType != null)
+                                            if (derived6.WeeklySchedule.RetentionDuration.DurationType != null)
                                             {
-                                                retentionDurationValue2["durationType"] = derived5.WeeklySchedule.RetentionDuration.DurationType;
+                                                retentionDurationValue2["durationType"] = derived6.WeeklySchedule.RetentionDuration.DurationType;
                                             }
                                         }
                                     }
                                     
-                                    if (derived5.MonthlySchedule != null)
+                                    if (derived6.MonthlySchedule != null)
                                     {
                                         JObject monthlyScheduleValue = new JObject();
                                         retentionPolicyValue["monthlySchedule"] = monthlyScheduleValue;
                                         
-                                        if (derived5.MonthlySchedule.RetentionScheduleFormatType != null)
+                                        if (derived6.MonthlySchedule.RetentionScheduleFormatType != null)
                                         {
-                                            monthlyScheduleValue["retentionScheduleFormatType"] = derived5.MonthlySchedule.RetentionScheduleFormatType;
+                                            monthlyScheduleValue["retentionScheduleFormatType"] = derived6.MonthlySchedule.RetentionScheduleFormatType;
                                         }
                                         
-                                        if (derived5.MonthlySchedule.RetentionScheduleDaily != null)
+                                        if (derived6.MonthlySchedule.RetentionScheduleDaily != null)
                                         {
                                             JObject retentionScheduleDailyValue = new JObject();
                                             monthlyScheduleValue["retentionScheduleDaily"] = retentionScheduleDailyValue;
                                             
-                                            if (derived5.MonthlySchedule.RetentionScheduleDaily.DaysOfTheMonth != null)
+                                            if (derived6.MonthlySchedule.RetentionScheduleDaily.DaysOfTheMonth != null)
                                             {
                                                 JArray daysOfTheMonthArray = new JArray();
-                                                foreach (Day daysOfTheMonthItem in derived5.MonthlySchedule.RetentionScheduleDaily.DaysOfTheMonth)
+                                                foreach (Day daysOfTheMonthItem in derived6.MonthlySchedule.RetentionScheduleDaily.DaysOfTheMonth)
                                                 {
                                                     JObject dayValue = new JObject();
                                                     daysOfTheMonthArray.Add(dayValue);
@@ -354,25 +361,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                         }
                                         
-                                        if (derived5.MonthlySchedule.RetentionScheduleWeekly != null)
+                                        if (derived6.MonthlySchedule.RetentionScheduleWeekly != null)
                                         {
                                             JObject retentionScheduleWeeklyValue = new JObject();
                                             monthlyScheduleValue["retentionScheduleWeekly"] = retentionScheduleWeeklyValue;
                                             
-                                            if (derived5.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek != null)
+                                            if (derived6.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek != null)
                                             {
                                                 JArray daysOfTheWeekArray2 = new JArray();
-                                                foreach (string daysOfTheWeekItem2 in derived5.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
+                                                foreach (string daysOfTheWeekItem2 in derived6.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
                                                 {
                                                     daysOfTheWeekArray2.Add(daysOfTheWeekItem2);
                                                 }
                                                 retentionScheduleWeeklyValue["daysOfTheWeek"] = daysOfTheWeekArray2;
                                             }
                                             
-                                            if (derived5.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth != null)
+                                            if (derived6.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth != null)
                                             {
                                                 JArray weeksOfTheMonthArray = new JArray();
-                                                foreach (string weeksOfTheMonthItem in derived5.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
+                                                foreach (string weeksOfTheMonthItem in derived6.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
                                                 {
                                                     weeksOfTheMonthArray.Add(weeksOfTheMonthItem);
                                                 }
@@ -380,59 +387,59 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                         }
                                         
-                                        if (derived5.MonthlySchedule.RetentionTimes != null)
+                                        if (derived6.MonthlySchedule.RetentionTimes != null)
                                         {
                                             JArray retentionTimesArray3 = new JArray();
-                                            foreach (DateTime retentionTimesItem3 in derived5.MonthlySchedule.RetentionTimes)
+                                            foreach (DateTime retentionTimesItem3 in derived6.MonthlySchedule.RetentionTimes)
                                             {
                                                 retentionTimesArray3.Add(retentionTimesItem3);
                                             }
                                             monthlyScheduleValue["retentionTimes"] = retentionTimesArray3;
                                         }
                                         
-                                        if (derived5.MonthlySchedule.RetentionDuration != null)
+                                        if (derived6.MonthlySchedule.RetentionDuration != null)
                                         {
                                             JObject retentionDurationValue3 = new JObject();
                                             monthlyScheduleValue["retentionDuration"] = retentionDurationValue3;
                                             
-                                            retentionDurationValue3["count"] = derived5.MonthlySchedule.RetentionDuration.Count;
+                                            retentionDurationValue3["count"] = derived6.MonthlySchedule.RetentionDuration.Count;
                                             
-                                            if (derived5.MonthlySchedule.RetentionDuration.DurationType != null)
+                                            if (derived6.MonthlySchedule.RetentionDuration.DurationType != null)
                                             {
-                                                retentionDurationValue3["durationType"] = derived5.MonthlySchedule.RetentionDuration.DurationType;
+                                                retentionDurationValue3["durationType"] = derived6.MonthlySchedule.RetentionDuration.DurationType;
                                             }
                                         }
                                     }
                                     
-                                    if (derived5.YearlySchedule != null)
+                                    if (derived6.YearlySchedule != null)
                                     {
                                         JObject yearlyScheduleValue = new JObject();
                                         retentionPolicyValue["yearlySchedule"] = yearlyScheduleValue;
                                         
-                                        if (derived5.YearlySchedule.RetentionScheduleFormatType != null)
+                                        if (derived6.YearlySchedule.RetentionScheduleFormatType != null)
                                         {
-                                            yearlyScheduleValue["retentionScheduleFormatType"] = derived5.YearlySchedule.RetentionScheduleFormatType;
+                                            yearlyScheduleValue["retentionScheduleFormatType"] = derived6.YearlySchedule.RetentionScheduleFormatType;
                                         }
                                         
-                                        if (derived5.YearlySchedule.MonthsOfYear != null)
+                                        if (derived6.YearlySchedule.MonthsOfYear != null)
                                         {
                                             JArray monthsOfYearArray = new JArray();
-                                            foreach (string monthsOfYearItem in derived5.YearlySchedule.MonthsOfYear)
+                                            foreach (string monthsOfYearItem in derived6.YearlySchedule.MonthsOfYear)
                                             {
                                                 monthsOfYearArray.Add(monthsOfYearItem);
                                             }
                                             yearlyScheduleValue["monthsOfYear"] = monthsOfYearArray;
                                         }
                                         
-                                        if (derived5.YearlySchedule.RetentionScheduleDaily != null)
+                                        if (derived6.YearlySchedule.RetentionScheduleDaily != null)
                                         {
                                             JObject retentionScheduleDailyValue2 = new JObject();
                                             yearlyScheduleValue["retentionScheduleDaily"] = retentionScheduleDailyValue2;
                                             
-                                            if (derived5.YearlySchedule.RetentionScheduleDaily.DaysOfTheMonth != null)
+                                            if (derived6.YearlySchedule.RetentionScheduleDaily.DaysOfTheMonth != null)
                                             {
                                                 JArray daysOfTheMonthArray2 = new JArray();
-                                                foreach (Day daysOfTheMonthItem2 in derived5.YearlySchedule.RetentionScheduleDaily.DaysOfTheMonth)
+                                                foreach (Day daysOfTheMonthItem2 in derived6.YearlySchedule.RetentionScheduleDaily.DaysOfTheMonth)
                                                 {
                                                     JObject dayValue2 = new JObject();
                                                     daysOfTheMonthArray2.Add(dayValue2);
@@ -445,25 +452,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                         }
                                         
-                                        if (derived5.YearlySchedule.RetentionScheduleWeekly != null)
+                                        if (derived6.YearlySchedule.RetentionScheduleWeekly != null)
                                         {
                                             JObject retentionScheduleWeeklyValue2 = new JObject();
                                             yearlyScheduleValue["retentionScheduleWeekly"] = retentionScheduleWeeklyValue2;
                                             
-                                            if (derived5.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek != null)
+                                            if (derived6.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek != null)
                                             {
                                                 JArray daysOfTheWeekArray3 = new JArray();
-                                                foreach (string daysOfTheWeekItem3 in derived5.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
+                                                foreach (string daysOfTheWeekItem3 in derived6.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
                                                 {
                                                     daysOfTheWeekArray3.Add(daysOfTheWeekItem3);
                                                 }
                                                 retentionScheduleWeeklyValue2["daysOfTheWeek"] = daysOfTheWeekArray3;
                                             }
                                             
-                                            if (derived5.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth != null)
+                                            if (derived6.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth != null)
                                             {
                                                 JArray weeksOfTheMonthArray2 = new JArray();
-                                                foreach (string weeksOfTheMonthItem2 in derived5.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
+                                                foreach (string weeksOfTheMonthItem2 in derived6.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
                                                 {
                                                     weeksOfTheMonthArray2.Add(weeksOfTheMonthItem2);
                                                 }
@@ -471,31 +478,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                         }
                                         
-                                        if (derived5.YearlySchedule.RetentionTimes != null)
+                                        if (derived6.YearlySchedule.RetentionTimes != null)
                                         {
                                             JArray retentionTimesArray4 = new JArray();
-                                            foreach (DateTime retentionTimesItem4 in derived5.YearlySchedule.RetentionTimes)
+                                            foreach (DateTime retentionTimesItem4 in derived6.YearlySchedule.RetentionTimes)
                                             {
                                                 retentionTimesArray4.Add(retentionTimesItem4);
                                             }
                                             yearlyScheduleValue["retentionTimes"] = retentionTimesArray4;
                                         }
                                         
-                                        if (derived5.YearlySchedule.RetentionDuration != null)
+                                        if (derived6.YearlySchedule.RetentionDuration != null)
                                         {
                                             JObject retentionDurationValue4 = new JObject();
                                             yearlyScheduleValue["retentionDuration"] = retentionDurationValue4;
                                             
-                                            retentionDurationValue4["count"] = derived5.YearlySchedule.RetentionDuration.Count;
+                                            retentionDurationValue4["count"] = derived6.YearlySchedule.RetentionDuration.Count;
                                             
-                                            if (derived5.YearlySchedule.RetentionDuration.DurationType != null)
+                                            if (derived6.YearlySchedule.RetentionDuration.DurationType != null)
                                             {
-                                                retentionDurationValue4["durationType"] = derived5.YearlySchedule.RetentionDuration.DurationType;
+                                                retentionDurationValue4["durationType"] = derived6.YearlySchedule.RetentionDuration.DurationType;
                                             }
                                         }
                                     }
                                 }
                             }
+                            
+                            propertiesValue["protectedItemsCount"] = derived2.ProtectedItemsCount;
                         }
                     }
                     
@@ -590,6 +599,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
                                 string typeName = ((string)propertiesValue2["backupManagementType"]);
+                                if (typeName == "ProtectionPolicy")
+                                {
+                                    ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                    
+                                    JToken protectedItemsCountValue = propertiesValue2["protectedItemsCount"];
+                                    if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance = ((int)protectedItemsCountValue);
+                                        protectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance;
+                                    }
+                                    itemInstance.Properties = protectionPolicyInstance;
+                                }
                                 if (typeName == "AzureIaasVM")
                                 {
                                     AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
@@ -941,6 +962,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
+                                    }
+                                    
+                                    JToken protectedItemsCountValue2 = propertiesValue2["protectedItemsCount"];
+                                    if (protectedItemsCountValue2 != null && protectedItemsCountValue2.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance2 = ((int)protectedItemsCountValue2);
+                                        azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                 }
@@ -1384,6 +1412,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
                                 string typeName = ((string)propertiesValue["backupManagementType"]);
+                                if (typeName == "ProtectionPolicy")
+                                {
+                                    ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                    
+                                    JToken protectedItemsCountValue = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance = ((int)protectedItemsCountValue);
+                                        protectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance;
+                                    }
+                                    itemInstance.Properties = protectionPolicyInstance;
+                                }
                                 if (typeName == "AzureIaasVM")
                                 {
                                     AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
@@ -1735,6 +1775,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
+                                    }
+                                    
+                                    JToken protectedItemsCountValue2 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue2 != null && protectedItemsCountValue2.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance2 = ((int)protectedItemsCountValue2);
+                                        azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                 }
@@ -2007,6 +2054,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
                                 string typeName = ((string)propertiesValue["backupManagementType"]);
+                                if (typeName == "ProtectionPolicy")
+                                {
+                                    ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                    
+                                    JToken protectedItemsCountValue = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance = ((int)protectedItemsCountValue);
+                                        protectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance;
+                                    }
+                                    itemInstance.Properties = protectionPolicyInstance;
+                                }
                                 if (typeName == "AzureIaasVM")
                                 {
                                     AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
@@ -2358,6 +2417,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
+                                    }
+                                    
+                                    JToken protectedItemsCountValue2 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue2 != null && protectedItemsCountValue2.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance2 = ((int)protectedItemsCountValue2);
+                                        azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                 }
@@ -2583,6 +2649,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
                                 string typeName = ((string)propertiesValue["backupManagementType"]);
+                                if (typeName == "ProtectionPolicy")
+                                {
+                                    ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                    
+                                    JToken protectedItemsCountValue = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance = ((int)protectedItemsCountValue);
+                                        protectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance;
+                                    }
+                                    itemInstance.Properties = protectionPolicyInstance;
+                                }
                                 if (typeName == "AzureIaasVM")
                                 {
                                     AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
@@ -2934,6 +3012,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
+                                    }
+                                    
+                                    JToken protectedItemsCountValue2 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue2 != null && protectedItemsCountValue2.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance2 = ((int)protectedItemsCountValue2);
+                                        azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                 }
@@ -3222,6 +3307,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
                                         string typeName = ((string)propertiesValue["backupManagementType"]);
+                                        if (typeName == "ProtectionPolicy")
+                                        {
+                                            ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                            
+                                            JToken protectedItemsCountValue = propertiesValue["protectedItemsCount"];
+                                            if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
+                                            {
+                                                int protectedItemsCountInstance = ((int)protectedItemsCountValue);
+                                                protectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance;
+                                            }
+                                            protectionPolicyResourceInstance.Properties = protectionPolicyInstance;
+                                        }
                                         if (typeName == "AzureIaasVM")
                                         {
                                             AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
@@ -3573,6 +3670,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                     azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                                 }
+                                            }
+                                            
+                                            JToken protectedItemsCountValue2 = propertiesValue["protectedItemsCount"];
+                                            if (protectedItemsCountValue2 != null && protectedItemsCountValue2.Type != JTokenType.Null)
+                                            {
+                                                int protectedItemsCountInstance2 = ((int)protectedItemsCountValue2);
+                                                azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                             }
                                             protectionPolicyResourceInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                         }
