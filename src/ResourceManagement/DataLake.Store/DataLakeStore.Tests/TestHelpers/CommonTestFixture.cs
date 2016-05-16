@@ -49,7 +49,7 @@ namespace DataLakeStore.Tests
                         this.Location, this.DataLakeStoreFileSystemAccountName);
                 if(this.HostUrl.ToUpperInvariant().Contains("CABOACCOUNTDOGFOOD.NET"))
                 {
-                    NoPermissionDataLakeStoreAccountName = "e2etestcabokobo02";
+                    NoPermissionDataLakeStoreAccountName = "adlsaccesstest01";
                 }
                 else
                 {
