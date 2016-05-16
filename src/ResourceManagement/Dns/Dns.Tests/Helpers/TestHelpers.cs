@@ -19,11 +19,13 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
+    using System.Net;
+
     public class TestHelpers
     {
         public static bool AreEqualPrereq(
-           ResourceBaseExtended first,
-           ResourceBaseExtended second,
+           Resource first,
+           Resource second,
            bool ignoreEtag = false)
         {
             if (first == null && second == null)
@@ -69,17 +71,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
             if (first != null && second != null)
             {
-                if (first.Properties == null && second.Properties == null)
-                {
-                    return true;
-                }
 
-                if (first.Properties == null || second.Properties == null)
-                {
-                    return false;
-                }
-
-                return ignoreEtag || (first.ETag == second.ETag);
+                return ignoreEtag || (first.Etag == second.Etag);
             }
 
             return true;
@@ -87,33 +80,23 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
         public static bool AreEqual(Models.RecordSet first, Models.RecordSet second, bool ignoreEtag = false)
         {
-            if (!AreEqualPrereq(first, second))
-            {
-                return false;
-            }
+            //if (!AreEqualPrereq(first, second))
+            //{
+            //    return false;
+            //}
 
             if (first != null && second != null)
             {
-                if (first.Properties == null && second.Properties == null)
-                {
-                    return true;
-                }
-
-                if (first.Properties == null || second.Properties == null)
-                {
-                    return false;
-                }
-
-                return (ignoreEtag || (first.ETag == second.ETag))
-                    && first.Properties.Ttl == second.Properties.Ttl
-                    && AreEqual(first.Properties.ARecords, second.Properties.ARecords)
-                    && AreEqual(first.Properties.AaaaRecords, second.Properties.AaaaRecords)
-                    && AreEqual(first.Properties.MxRecords, second.Properties.MxRecords)
-                    && AreEqual(first.Properties.NsRecords, second.Properties.NsRecords)
-                    && AreEqual(first.Properties.PtrRecords, second.Properties.PtrRecords)
-                    && AreEqual(first.Properties.SrvRecords, second.Properties.SrvRecords)
-                    && AreEqual(first.Properties.CnameRecord, second.Properties.CnameRecord)
-                    && AreEqual(first.Properties.SoaRecord, second.Properties.SoaRecord);
+                return (ignoreEtag || (first.Etag == second.Etag))
+                    && first.TTL == second.TTL
+                    && AreEqual(first.ARecords, second.ARecords)
+                    && AreEqual(first.AaaaRecords, second.AaaaRecords)
+                    && AreEqual(first.MxRecords, second.MxRecords)
+                    && AreEqual(first.NsRecords, second.NsRecords)
+                    && AreEqual(first.PtrRecords, second.PtrRecords)
+                    && AreEqual(first.SrvRecords, second.SrvRecords)
+                    && AreEqual(first.CnameRecord, second.CnameRecord)
+                    && AreEqual(first.SoaRecord, second.SoaRecord);
             }
 
             return true;
@@ -201,7 +184,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 for (int i = 0; i < first.Count; i++)
                 {
-                    if (first[i].Ipv6Address != second[i].Ipv6Address)
+                    var firstAddress = IPAddress.Parse(first[i].Ipv6Address);
+                    var secondAddress = IPAddress.Parse(second[i].Ipv6Address);
+                    if (!firstAddress.Equals(secondAddress))
                     {
                         return false;
                     }
