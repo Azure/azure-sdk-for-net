@@ -34,6 +34,25 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string SqlWriterCleanupScript { get; set; }
 
         /// <summary>
+        /// Optional. If true, use PolyBase to copy data into SQL Data Warehouse when all below criteria are met:
+        /// 1. Source linked service must be <see cref="AzureStorageLinkedService"/>.
+        /// 2. Source dataset must be <see cref="AzureBlobDataset"/>.
+        /// 3. Format of source dataset must be <see cref="TextFormat"/>.
+        /// 5. EncodingName of source dataset format must be "utf-8".
+        /// 6. RowDelimiter of source dataset format must be "\n".
+        /// 7. NullValue of source dataset format must be <see cref="string.Empty"/>.
+        /// 8. Compression of source dataset only supports <see cref="GZipCompression"/> and <see cref="DeflateCompression"/>.
+        /// 9. Source must be <see cref="BlobSource"/>.
+        /// Default value is false.
+        /// </summary>
+        public bool? AllowPolyBase { get; set; }
+
+        /// <summary>
+        /// Optional. Specifies PolyBase-related settings when AllowPolyBase is true.
+        /// </summary>
+        public PolyBaseSettings PolyBaseSettings { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlDWSink class.
         /// </summary>
         public SqlDWSink()

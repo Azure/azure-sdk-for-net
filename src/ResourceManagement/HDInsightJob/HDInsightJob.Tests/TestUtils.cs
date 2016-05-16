@@ -42,7 +42,7 @@ namespace HDInsightJob.Tests
         public static string SQLServerConnectionString = "jdbc:sqlserver://hdinsightjobtest.database.windows.net:1433;database=HdInsightJobTest;user=" + SQLServerUserName + ";password=" + SQLServerPassword + ";";
         public static string SQLServerTableName = "dept";
 
-        public static TimeSpan JobPollInterval = TimeSpan.FromSeconds(1);
+        public static TimeSpan JobPollInterval = TimeSpan.FromSeconds(30);
         public static TimeSpan JobWaitInterval = TimeSpan.FromMinutes(30);
 
         public static HDInsightJobManagementClient GetHDInsightJobManagementClient(bool isWindowsCluster = false)

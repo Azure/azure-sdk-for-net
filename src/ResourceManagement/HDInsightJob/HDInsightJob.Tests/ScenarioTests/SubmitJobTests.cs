@@ -296,7 +296,7 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var response = runAyncAPI ? client.JobManagement.SubmitHiveJobAsync(parameters).GetAwaiter().GetResult() 
+                var response = runAyncAPI ? client.JobManagement.SubmitHiveJobAsync(parameters).Result
                                     : client.JobManagement.SubmitHiveJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
@@ -370,7 +370,7 @@ namespace HDInsightJob.Tests
 
                 var parameters = GetMapReduceJobParameters();
 
-                var response = runAyncAPI ? client.JobManagement.SubmitMapReduceJobAsync(parameters).GetAwaiter().GetResult() 
+                var response = runAyncAPI ? client.JobManagement.SubmitMapReduceJobAsync(parameters).Result
                                 : client.JobManagement.SubmitMapReduceJob(parameters);
 
                 Assert.NotNull(response);
@@ -469,7 +469,7 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var response = runAyncAPI ? client.JobManagement.SubmitMapReduceStreamingJobAsync(parameters).GetAwaiter().GetResult()
+                var response = runAyncAPI ? client.JobManagement.SubmitMapReduceStreamingJobAsync(parameters).Result
                     : client.JobManagement.SubmitMapReduceStreamingJob(parameters);
 
                 Assert.NotNull(response);
@@ -560,7 +560,7 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var response = runAyncAPI ? client.JobManagement.SubmitPigJobAsync(parameters).GetAwaiter().GetResult()
+                var response = runAyncAPI ? client.JobManagement.SubmitPigJobAsync(parameters).Result
                     : client.JobManagement.SubmitPigJob(parameters);
 
                 Assert.NotNull(response);
@@ -656,7 +656,7 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient(isWindowsCluster);
 
-                var response = runAyncAPI ? client.JobManagement.SubmitSqoopJobAsync(parameters).GetAwaiter().GetResult()
+                var response = runAyncAPI ? client.JobManagement.SubmitSqoopJobAsync(parameters).Result
                                 : client.JobManagement.SubmitSqoopJob(parameters);
 
                 Assert.NotNull(response);
