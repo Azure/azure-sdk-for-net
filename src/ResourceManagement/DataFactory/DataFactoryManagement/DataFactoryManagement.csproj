@@ -29,6 +29,7 @@
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\StorageFormats\OrcFormat.cs" />
     <Compile Include="Customizations\Models\Datasets\WebTableDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormat.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormatFilePattern.cs" />
