@@ -13,6 +13,9 @@
     <TestProject>true</TestProject>
   </PropertyGroup>
   <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
+  <PropertyGroup>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.TextTemplating.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.VisualStudio.TextTemplating.14.0\lib\net45\Microsoft.VisualStudio.TextTemplating.14.0.dll</HintPath>
@@ -73,10 +76,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ModelClassTemplate.cs</LastGenOutput>
     </Content>
-    <!--<Content Include="NamedBatchRequests.tt">
+    <Content Include="NamedBatchRequests.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>NamedBatchRequests.cs</LastGenOutput>
-    </Content>-->
+    </Content>
     <Compile Include="CollectionConversionSnippetPartial.cs" />
     <Compile Include="StaticReadOnlyClassTemplatePartial.cs" />
     <Compile Include="StaticReadOnlyClassTemplate.cs">
@@ -90,12 +93,12 @@
       <DependentUpon>ModifiableClassTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="ModifiableClassTemplatePartial.cs" />
-    <!--<Compile Include="NamedBatchRequests.cs">
+    <Compile Include="NamedBatchRequests.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NamedBatchRequests.tt</DependentUpon>
     </Compile>
-    <Compile Include="NamedBatchRequestsPartial.cs" />-->
+    <Compile Include="NamedBatchRequestsPartial.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -109,10 +112,10 @@
       <Project>{4d93a489-2576-400b-93cd-9340a892b0e8}</Project>
       <Name>CodeGenerationLibrary</Name>
     </ProjectReference>
-    <!--<ProjectReference Include="..\RoslynParser\RoslynParser.csproj">
+    <ProjectReference Include="..\RoslynParser\ProxyLayerParser.csproj">
       <Project>{13a13bb2-684f-4a2b-bcf9-34a9f9616599}</Project>
-      <Name>RoslynParser</Name>
-    </ProjectReference>-->
+      <Name>ProxyLayerParser</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

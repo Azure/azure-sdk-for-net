@@ -13,7 +13,7 @@ namespace ObjectModelCodeGenerator
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
-    using RoslynParser;
+    using ProxyLayerParser;
     
     /// <summary>
     /// Class to produce the template output
@@ -36,16 +36,16 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
 
 ");
 
-foreach (var operationType in batchRequests.Keys)
+foreach (var group in batchRequests)
 {
 
             this.Write("    #region ");
-            this.Write(this.ToStringHelper.ToStringWithCulture(operationType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(group.Name));
             this.Write("\r\n\r\n");
 
-    foreach (var batchRequest in batchRequests[operationType])
+    foreach (var batchRequest in group.BatchRequests)
     {
-        var fullClassName = operationType + batchRequest.OperationType;
+        var fullClassName = group.Name + batchRequest.OperationType;
 
             this.Write("    /// <summary>\r\n    /// An <see cref=\"IBatchRequest\"/> for the ");
             this.Write(this.ToStringHelper.ToStringWithCulture(fullClassName));
@@ -126,28 +126,13 @@ foreach (var operationType in batchRequests.Keys)
             this.Write("}\r\n");
             return this.GenerationEnvironment.ToString();
         }
-        private global::Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost hostValue;
-        /// <summary>
-        /// The current host for the text templating engine
-        /// </summary>
-        public virtual global::Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost Host
-        {
-            get
-            {
-                return this.hostValue;
-            }
-            set
-            {
-                this.hostValue = value;
-            }
-        }
 
-private global::System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<RoslynParser.BatchRequestTemplate>> _batchRequestsField;
+private global::System.Collections.Generic.IEnumerable<ProxyLayerParser.BatchRequestGroup> _batchRequestsField;
 
 /// <summary>
 /// Access the batchRequests parameter of the template.
 /// </summary>
-private global::System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<RoslynParser.BatchRequestTemplate>> batchRequests
+private global::System.Collections.Generic.IEnumerable<ProxyLayerParser.BatchRequestGroup> batchRequests
 {
     get
     {
@@ -166,35 +151,15 @@ public virtual void Initialize()
 bool batchRequestsValueAcquired = false;
 if (this.Session.ContainsKey("batchRequests"))
 {
-    this._batchRequestsField = ((global::System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<RoslynParser.BatchRequestTemplate>>)(this.Session["batchRequests"]));
+    this._batchRequestsField = ((global::System.Collections.Generic.IEnumerable<ProxyLayerParser.BatchRequestGroup>)(this.Session["batchRequests"]));
     batchRequestsValueAcquired = true;
-}
-if ((batchRequestsValueAcquired == false))
-{
-    string parameterValue = this.Host.ResolveParameterValue("Property", "PropertyDirectiveProcessor", "batchRequests");
-    if ((string.IsNullOrEmpty(parameterValue) == false))
-    {
-        global::System.ComponentModel.TypeConverter tc = global::System.ComponentModel.TypeDescriptor.GetConverter(typeof(global::System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<RoslynParser.BatchRequestTemplate>>));
-        if (((tc != null) 
-                    && tc.CanConvertFrom(typeof(string))))
-        {
-            this._batchRequestsField = ((global::System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<RoslynParser.BatchRequestTemplate>>)(tc.ConvertFrom(parameterValue)));
-            batchRequestsValueAcquired = true;
-        }
-        else
-        {
-            this.Error("The type \'System.Collections.Generic.Dictionary<string, System.Collections.Generi" +
-                    "c.IEnumerable<RoslynParser.BatchRequestTemplate>>\' of the parameter \'batchReques" +
-                    "ts\' did not match the type of the data passed to the template.");
-        }
-    }
 }
 if ((batchRequestsValueAcquired == false))
 {
     object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("batchRequests");
     if ((data != null))
     {
-        this._batchRequestsField = ((global::System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<RoslynParser.BatchRequestTemplate>>)(data));
+        this._batchRequestsField = ((global::System.Collections.Generic.IEnumerable<ProxyLayerParser.BatchRequestGroup>)(data));
     }
 }
 

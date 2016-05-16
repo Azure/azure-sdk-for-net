@@ -1,14 +1,18 @@
 ﻿namespace ObjectModelCodeGenerator
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using CodeGenerationLibrary;
+    using ProxyLayerParser;
 
     public class Program
     {
         public static void Main(string[] args)
         {
             GenerateModelFiles();
+
+            GenerateSomeRoslynFiles();
         }
 
         private static void GenerateModelFiles()
@@ -45,6 +49,17 @@
 
                 File.WriteAllText(outputFilePath, batchModel.TransformText());
             }
+        }
+
+        private static void GenerateSomeRoslynFiles()
+        {
+            var projectFile = @"..\..\..\..\..\src\Batch.csproj";
+            IEnumerable<BatchRequestGroup> batchRequests = BatchRequestTemplateBuilder.GetBatchRequestTemplatesAsync(projectFile).Result;
+
+            NamedBatchRequests generator = new NamedBatchRequests(batchRequests);
+            string resultDirectory = CreateResultDirectoryIfNotExist("GeneratedNamedBatchRequests");
+            string outputFilePath = Path.Combine(resultDirectory, "NamedBatchRequests.cs");
+            File.WriteAllText(outputFilePath, generator.TransformText());
         }
 
         private static string CreateResultDirectoryIfNotExist(string directoryName)
