@@ -922,14 +922,16 @@
 
         public Task<AzureOperationHeaderResponse<Models.PoolResizeHeaders>> ResizePool(
             string poolId,
-            int targetDedicated,
+            int? targetDedicatedComputeNodes,
+            int? targetLowPriorityComputeNodes,
             TimeSpan? resizeTimeout,
             Common.ComputeNodeDeallocationOption? deallocationOption,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
             var parameters = new Models.PoolResizeParameter(
-                targetDedicated,
+                targetDedicatedComputeNodes,
+                targetLowPriorityComputeNodes,
                 resizeTimeout,
                 UtilitiesInternal.MapNullableEnum<Common.ComputeNodeDeallocationOption, Protocol.Models.ComputeNodeDeallocationOption>(deallocationOption));
 

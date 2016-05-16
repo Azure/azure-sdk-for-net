@@ -169,7 +169,7 @@
         /// <remarks>
         /// <para>Each call to this method incurs a request to the Batch service. Therefore, using this method to add
         /// multiple tasks is less efficient than using a bulk add method, and can incur HTTP connection restrictions.
-        /// If you are performing many of these operations in parallel and are seeing client side timeouts, please see 
+        /// If you are performing many of these operations in parallel and are seeing client side timeouts (a <see cref="TaskCanceledException"/>), please see 
         /// http://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.defaultconnectionlimit%28v=vs.110%29.aspx
         /// or use JobOperations.AddTaskAsync.</para>
         /// <para>The add task operation runs asynchronously.</para>
@@ -201,7 +201,7 @@
         /// <remarks>
         /// <para>Each call to this method incurs a request to the Batch service. Therefore, using this method to add
         /// multiple tasks is less efficient than using a bulk add method, and can incur HTTP connection restrictions.
-        /// If you are performing many of these operations in parallel and are seeing client side timeouts, please see 
+        /// If you are performing many of these operations in parallel and are seeing client side timeouts (a <see cref="TaskCanceledException"/>), please see 
         /// http://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.defaultconnectionlimit%28v=vs.110%29.aspx
         /// or use JobOperations.AddTask.</para>
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="AddTaskAsync(CloudTask, ConcurrentDictionary{Type, IFileStagingArtifact}, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</para>
@@ -243,7 +243,7 @@
         /// the <paramref name="parallelOptions"/>.</para>
         /// <para>Issuing a large number of simultaneous requests to the Batch service can incur HTTP connection restrictions.
         /// If you are performing many of these operations in parallel (or have specified a large MaxDegreeOfParallelism in
-        /// the parallelOptions) and are seeing client side timeouts, please see 
+        /// the parallelOptions) and are seeing client side timeouts (a <see cref="TaskCanceledException"/>), please see 
         /// http://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.defaultconnectionlimit%28v=vs.110%29.aspx .</para>
         /// <para>The progress of the operation in the face of errors is determined by <see cref="AddTaskCollectionResultHandler"/> behavior.
         /// You do not normally need to specify this behavior, as the Batch client uses a default which works in normal circumstances.
@@ -292,7 +292,7 @@
         /// the <paramref name="parallelOptions"/>.</para>
         /// <para>Issuing a large number of simultaneous requests to the Batch service can incur HTTP connection restrictions.
         /// If you are performing many of these operations in parallel (or have specified a large MaxDegreeOfParallelism in
-        /// the parallelOptions) and are seeing client side timeouts, please see 
+        /// the parallelOptions) and are seeing client side timeouts (a <see cref="TaskCanceledException"/>), please see 
         /// http://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.defaultconnectionlimit%28v=vs.110%29.aspx .</para>
         /// <para>The progress of the operation in the face of errors is determined by <see cref="AddTaskCollectionResultHandler"/> behavior.
         /// You do not normally need to specify this behavior, as the Batch client uses a default which works in normal circumstances.

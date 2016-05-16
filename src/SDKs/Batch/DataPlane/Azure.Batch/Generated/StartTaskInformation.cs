@@ -25,9 +25,10 @@ namespace Microsoft.Azure.Batch
     {
         private readonly DateTime? endTime;
         private readonly int? exitCode;
+        private readonly TaskFailureInformation failureInformation;
         private readonly DateTime? lastRetryTime;
+        private readonly Common.TaskExecutionResult? result;
         private readonly int retryCount;
-        private readonly TaskSchedulingError schedulingError;
         private readonly DateTime startTime;
         private readonly Common.StartTaskState state;
 
@@ -37,9 +38,10 @@ namespace Microsoft.Azure.Batch
         {
             this.endTime = protocolObject.EndTime;
             this.exitCode = protocolObject.ExitCode;
+            this.failureInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.FailureInfo, o => new TaskFailureInformation(o).Freeze());
             this.lastRetryTime = protocolObject.LastRetryTime;
+            this.result = UtilitiesInternal.MapNullableEnum<Models.TaskExecutionResult, Common.TaskExecutionResult>(protocolObject.Result);
             this.retryCount = protocolObject.RetryCount;
-            this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new TaskSchedulingError(o).Freeze());
             this.startTime = protocolObject.StartTime;
             this.state = UtilitiesInternal.MapEnum<Models.StartTaskState, Common.StartTaskState>(protocolObject.State);
         }
@@ -72,6 +74,18 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets information describing the task failure, if any.
+        /// </summary>
+        /// <remarks>
+        /// This property is set only if the task is in the <see cref="Common.StartTaskState.Completed"/> state and encountered 
+        /// a failure.
+        /// </remarks>
+        public TaskFailureInformation FailureInformation
+        {
+            get { return this.failureInformation; }
+        }
+
+        /// <summary>
         /// Gets the most recent time at which execution of the start task was retried by the Batch service.
         /// </summary>
         public DateTime? LastRetryTime
@@ -80,19 +94,23 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets the result of the task execution.
+        /// </summary>
+        /// <remarks>
+        /// If the value is <see cref="Common.TaskExecutionResult.Failure" />, then the details of the failure can be found 
+        /// in the <see cref="FailureInformation" /> property.
+        /// </remarks>
+        public Common.TaskExecutionResult? Result
+        {
+            get { return this.result; }
+        }
+
+        /// <summary>
         /// Gets the number of times the start task has been retried by the Batch system.
         /// </summary>
         public int RetryCount
         {
             get { return this.retryCount; }
-        }
-
-        /// <summary>
-        /// Gets the error encountered by the service when scheduling the task.
-        /// </summary>
-        public TaskSchedulingError SchedulingError
-        {
-            get { return this.schedulingError; }
         }
 
         /// <summary>

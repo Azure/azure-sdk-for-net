@@ -10,16 +10,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 {
 
     /// <summary>
-    /// Defines values for SchedulingErrorCategory.
+    /// Defines values for ErrorCategory.
     /// </summary>
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum SchedulingErrorCategory
+    public enum ErrorCategory
     {
         [System.Runtime.Serialization.EnumMember(Value = "userError")]
         UserError,
         [System.Runtime.Serialization.EnumMember(Value = "serverError")]
-        ServerError,
-        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
-        Unmapped
+        ServerError
     }
 }

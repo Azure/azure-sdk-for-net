@@ -20,8 +20,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "task")]
         Task,
         [System.Runtime.Serialization.EnumMember(Value = "remoteUser")]
-        RemoteUser,
-        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
-        Unmapped
+        RemoteUser
     }
 }

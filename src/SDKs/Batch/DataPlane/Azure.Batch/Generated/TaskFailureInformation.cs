@@ -18,20 +18,20 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Information about an error when scheduling a task.
+    /// Information about a task failure.
     /// </summary>
-    public partial class TaskSchedulingError : IPropertyMetadata
+    public partial class TaskFailureInformation : IPropertyMetadata
     {
-        private readonly Common.SchedulingErrorCategory category;
+        private readonly Common.ErrorCategory category;
         private readonly string code;
         private readonly IReadOnlyList<NameValuePair> details;
         private readonly string message;
 
         #region Constructors
 
-        internal TaskSchedulingError(Models.TaskSchedulingError protocolObject)
+        internal TaskFailureInformation(Models.TaskFailureInformation protocolObject)
         {
-            this.category = UtilitiesInternal.MapEnum<Models.SchedulingErrorCategory, Common.SchedulingErrorCategory>(protocolObject.Category);
+            this.category = UtilitiesInternal.MapEnum<Models.ErrorCategory, Common.ErrorCategory>(protocolObject.Category);
             this.code = protocolObject.Code;
             this.details = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.Details);
             this.message = protocolObject.Message;
@@ -39,18 +39,19 @@ namespace Microsoft.Azure.Batch
 
         #endregion Constructors
 
-        #region TaskSchedulingError
+        #region TaskFailureInformation
 
         /// <summary>
-        /// Gets the category of the task scheduling error.
+        /// Gets the category of the task error.
         /// </summary>
-        public Common.SchedulingErrorCategory Category
+        public Common.ErrorCategory Category
         {
             get { return this.category; }
         }
 
         /// <summary>
-        /// Gets a code for the task scheduling error. See <see cref="Common.TaskSchedulingErrorCodes"/> for possible values.
+        /// Gets a code for the task scheduling error. See <see cref="Common.TaskFailureInformationCodes"/> for possible 
+        /// values.
         /// </summary>
         public string Code
         {
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets a list of additional error details related to the scheduling error.
+        /// Gets a list of additional error details related to the error.
         /// </summary>
         public IReadOnlyList<NameValuePair> Details
         {
@@ -66,14 +67,14 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets a message describing the task scheduling error, intended to be suitable for display in a user interface.
+        /// Gets a message describing the task error, intended to be suitable for display in a user interface.
         /// </summary>
         public string Message
         {
             get { return this.message; }
         }
 
-        #endregion // TaskSchedulingError
+        #endregion // TaskFailureInformation
 
         #region IPropertyMetadata
 

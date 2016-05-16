@@ -366,10 +366,10 @@
                                 {
                                     prepNotCompleted = false; // we see a JP has completed
 
-                                    Assert.NotNull(jpStatus.JobPreparationTaskExecutionInformation.SchedulingError);
+                                    Assert.NotNull(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
 
-                                    // spew the schederror
-                                    OutputSchedulingError(jpStatus.JobPreparationTaskExecutionInformation.SchedulingError);
+                                    // spew the failure
+                                    this.OutputFailureInfo(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
                                 }
 
                                 this.testOutputHelper.WriteLine("Job Prep is running (waiting for blob dl to timeout)");
@@ -486,12 +486,12 @@
                                 {
                                     releaseNotCompleted = false; // we see a JP has been run
 
-                                    // now assert the scheduling error
+                                    // now assert the failure info
                                     Assert.NotNull(prepAndReleaseStatus);
-                                    Assert.NotNull(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.SchedulingError);
+                                    Assert.NotNull(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
 
-                                    // spew the schederror
-                                    OutputSchedulingError(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.SchedulingError);
+                                    // spew the failure info
+                                    this.OutputFailureInfo(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
                                 }
                             }
                             Thread.Sleep(2000);
@@ -572,7 +572,7 @@
                     Assert.NotNull(jptei);
                     Assert.Equal(0, jptei.JobPreparationTaskExecutionInformation.RetryCount);
                     Assert.True(beforeJobPrepRuns < jptei.JobPreparationTaskExecutionInformation.StartTime + TimeSpan.FromSeconds(10));  // test that the start time is rational -- 10s of wiggle room
-                    Assert.Null(jptei.JobPreparationTaskExecutionInformation.SchedulingError);
+                    Assert.Null(jptei.JobPreparationTaskExecutionInformation.FailureInformation);
 
                     this.testOutputHelper.WriteLine("");
                     this.testOutputHelper.WriteLine("listing files for compute node: " + victimComputeNodeRunningPrepAndRelease.Id);
@@ -828,22 +828,22 @@
             return myTask.ResourceFiles;
         }
 
-        private void OutputSchedulingError(TaskSchedulingError se)
+        private void OutputFailureInfo(TaskFailureInformation failureInfo)
         {
             this.testOutputHelper.WriteLine("JP Scheduling Error:");
-            this.testOutputHelper.WriteLine("    category: " + se.Category.ToString());
-            this.testOutputHelper.WriteLine("    code: " + se.Code);
-            this.testOutputHelper.WriteLine("    details:" + ((null == se) ? " <null>" : string.Empty));
+            this.testOutputHelper.WriteLine("    category: " + failureInfo.Category.ToString());
+            this.testOutputHelper.WriteLine("    code: " + failureInfo.Code);
+            this.testOutputHelper.WriteLine("    details:" + ((null == failureInfo) ? " <null>" : string.Empty));
 
-            if (null != se.Details)
+            if (null != failureInfo.Details)
             {
-                foreach (NameValuePair curDetail in se.Details)
+                foreach (NameValuePair curDetail in failureInfo.Details)
                 {
                     this.testOutputHelper.WriteLine("        name: " + curDetail.Name + ", value: " + curDetail.Value);
                 }
             }
 
-            this.testOutputHelper.WriteLine("    message: " + se.Message);
+            this.testOutputHelper.WriteLine("    message: " + failureInfo.Message);
         }
 
         #endregion

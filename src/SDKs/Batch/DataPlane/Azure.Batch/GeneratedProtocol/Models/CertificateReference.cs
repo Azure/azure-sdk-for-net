@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node into which to install the certificate.</param>
         /// <param name="visibility">Which user accounts on the compute node
         /// should have access to the private data of the certificate.</param>
-        public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), System.Collections.Generic.IList<CertificateVisibility?> visibility = default(System.Collections.Generic.IList<CertificateVisibility?>))
+        public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), System.Collections.Generic.IList<CertificateVisibility> visibility = default(System.Collections.Generic.IList<CertificateVisibility>))
         {
             Thumbprint = thumbprint;
             ThumbprintAlgorithm = thumbprintAlgorithm;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// with visibility of 'remoteUser', a 'certs' directory is created in
         /// the user's home directory (e.g., /home/{user-name}/certs) and
         /// certificates are placed in that directory. Possible values include:
-        /// 'currentUser', 'localMachine', 'unmapped'
+        /// 'currentUser', 'localMachine'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "storeLocation")]
         public CertificateStoreLocation? StoreLocation { get; set; }
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default is all accounts.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "visibility")]
-        public System.Collections.Generic.IList<CertificateVisibility?> Visibility { get; set; }
+        public System.Collections.Generic.IList<CertificateVisibility> Visibility { get; set; }
 
         /// <summary>
         /// Validate the object.

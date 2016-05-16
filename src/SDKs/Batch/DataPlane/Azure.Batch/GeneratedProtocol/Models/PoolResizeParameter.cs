@@ -23,26 +23,37 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolResizeParameter class.
         /// </summary>
-        /// <param name="targetDedicated">The desired number of compute nodes
-        /// in the pool.</param>
+        /// <param name="targetDedicatedNodes">The desired number of dedicated
+        /// compute nodes in the pool.</param>
+        /// <param name="targetLowPriorityNodes">The desired number of
+        /// low-priority compute nodes in the pool.</param>
         /// <param name="resizeTimeout">The timeout for allocation of compute
         /// nodes to the pool or removal of compute nodes from the
         /// pool.</param>
         /// <param name="nodeDeallocationOption">Determines what to do with a
         /// node and its running task(s) if the pool size is
         /// decreasing.</param>
-        public PoolResizeParameter(int targetDedicated, System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
+        public PoolResizeParameter(int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
-            TargetDedicated = targetDedicated;
+            TargetDedicatedNodes = targetDedicatedNodes;
+            TargetLowPriorityNodes = targetLowPriorityNodes;
             ResizeTimeout = resizeTimeout;
             NodeDeallocationOption = nodeDeallocationOption;
         }
 
         /// <summary>
-        /// Gets or sets the desired number of compute nodes in the pool.
+        /// Gets or sets the desired number of dedicated compute nodes in the
+        /// pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicated")]
-        public int TargetDedicated { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicatedNodes")]
+        public int? TargetDedicatedNodes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired number of low-priority compute nodes in
+        /// the pool.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetLowPriorityNodes")]
+        public int? TargetLowPriorityNodes { get; set; }
 
         /// <summary>
         /// Gets or sets the timeout for allocation of compute nodes to the
@@ -68,14 +79,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
     }
 }

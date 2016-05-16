@@ -54,7 +54,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Throws<InvalidOperationException>(() => cloudPool.CloudServiceConfiguration = null);
                 Assert.Throws<InvalidOperationException>(() => cloudPool.ResizeTimeout = TimeSpan.FromSeconds(10));
                 Assert.Throws<InvalidOperationException>(() => cloudPool.Metadata = null);
-                Assert.Throws<InvalidOperationException>(() => cloudPool.TargetDedicated = 5);
+                Assert.Throws<InvalidOperationException>(() => cloudPool.TargetDedicatedComputeNodes = 5);
                 Assert.Throws<InvalidOperationException>(() => cloudPool.VirtualMachineConfiguration = null);
                 Assert.Throws<InvalidOperationException>(() => cloudPool.VirtualMachineSize = "small");
 
@@ -64,7 +64,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.NotNull(cloudPool.CloudServiceConfiguration);
                 Assert.Null(cloudPool.ResizeTimeout);
                 Assert.Equal(1, cloudPool.Metadata.Count);
-                Assert.Null(cloudPool.TargetDedicated);
+                Assert.Null(cloudPool.TargetDedicatedComputeNodes);
                 Assert.Null(cloudPool.VirtualMachineConfiguration);
                 Assert.Equal(virtualMachineSize, cloudPool.VirtualMachineSize);
             }
@@ -95,8 +95,7 @@ namespace Azure.Batch.Unit.Tests
                 // Cannot change these bound properties.
                 Assert.Throws<InvalidOperationException>(() => boundPool.DisplayName = "cannot-change-display-name");
                 Assert.Throws<InvalidOperationException>(() => boundPool.Id = "cannot-change-id");
-
-                Assert.Throws<InvalidOperationException>(() => boundPool.TargetDedicated = 1);
+                Assert.Throws<InvalidOperationException>(() => boundPool.TargetDedicatedComputeNodes = 1);
                 Assert.Throws<InvalidOperationException>(() => boundPool.VirtualMachineSize = "cannot-change-1");
 
 
@@ -336,7 +335,8 @@ namespace Azure.Batch.Unit.Tests
                         DefaultProperty = disableExitOption,
                         ExitCodeRanges = new List<Models.ExitCodeRangeMapping>() { new Models.ExitCodeRangeMapping(exitCodeRangeStart, exitCodeRangeEnd, terminateExitOption) },
                         ExitCodes = new List<Models.ExitCodeMapping>() { new Models.ExitCodeMapping(exitCode, terminateExitOption) },
-                        SchedulingError = terminateExitOption,
+                        PreProcessingError = terminateExitOption,
+                        FileUploadError = disableExitOption
                     }
                 };
 
@@ -345,11 +345,11 @@ namespace Azure.Batch.Unit.Tests
                     taskId,
                     additionalBehaviors: InterceptorFactory.CreateGetTaskRequestInterceptor(cloudTask));
 
-
                 Assert.Equal(taskId, boundTask.Id); // reading is allowed from a task that is returned from the server.
                 // These need to be compared as strings because they are different types but we are interested in the values being the same.
                 Assert.Equal(disableExitOption.JobAction.ToString(), boundTask.ExitConditions.Default.JobAction.ToString());
                 Assert.Equal(DependencyAction.Satisfy, boundTask.ExitConditions.Default.DependencyAction);
+                Assert.Equal(DependencyAction.Satisfy, boundTask.ExitConditions.FileUploadError.DependencyAction);
                 Assert.Throws<InvalidOperationException>(() => boundTask.ExitConditions = new ExitConditions());
                 Assert.Throws<InvalidOperationException>(() => boundTask.DependsOn = new TaskDependencies(new List<string>(), new List<TaskIdRange>()));
                 Assert.Throws<InvalidOperationException>(() => boundTask.UserIdentity = new UserIdentity("abc"));

@@ -51,7 +51,7 @@
                             poolId,
                             PoolFixture.VMSize,
                             new CloudServiceConfiguration(PoolFixture.OSFamily),
-                            targetDedicated: 0);
+                            targetDedicatedComputeNodes: 0);
 
                         await pool.CommitAsync().ConfigureAwait(false);
                         await pool.RefreshAsync().ConfigureAwait(false);
@@ -92,7 +92,7 @@
                     string poolId = "Bug1505248SupportMultipleTasksPerComputeNode-pool-" + TestUtilities.GetMyName();
                     try
                     {
-                        CloudPool newPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: 0);
+                        CloudPool newPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
 
                         newPool.MaxTasksPerComputeNode = 3;
 
@@ -123,7 +123,7 @@
                             unboundAPS.PoolSpecification = unboundPS;
 
                             unboundPS.MaxTasksPerComputeNode = 3;
-                            unboundAPS.PoolSpecification.TargetDedicated = 0; // don't use up compute nodes for this test
+                            unboundAPS.PoolSpecification.TargetDedicatedComputeNodes = 0; // don't use up compute nodes for this test
                             unboundPS.TaskSchedulingPolicy = new TaskSchedulingPolicy(Microsoft.Azure.Batch.Common.ComputeNodeFillType.Pack);
 
                             // required but unrelated to test
@@ -192,7 +192,7 @@
                     {
                         // create a pool with env-settings and ResFiles
                         {
-                            CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: 0);
+                            CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
 
                             StartTask st = new StartTask("dir");
 
@@ -263,7 +263,7 @@
 
                         // check pool create with empty-but-non-null collections
                         {
-                            CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: 0);
+                            CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
 
                             StartTask st = new StartTask("dir");
                             // use the empty collections from above
@@ -315,7 +315,7 @@
 
                         // create a pool with env-settings and ResFiles
                         {
-                            CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: 0);
+                            CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
 
                             // set the reference value
                             myPool.ResizeTimeout = referenceRST;
@@ -381,7 +381,7 @@
 
                             iaps.PoolSpecification = ips;
 
-                            ips.TargetDedicated = 0;
+                            ips.TargetDedicatedComputeNodes = 0;
                             ips.VirtualMachineSize = PoolFixture.VMSize;
 
                             ips.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
@@ -502,7 +502,7 @@
                     string poolId = "Bug1432819-" + TestUtilities.GetMyName();
                     try
                     {
-                        CloudPool unboundPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: 0);
+                        CloudPool unboundPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
                         unboundPool.Commit();
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
@@ -609,7 +609,7 @@
                     try
                     {
                         //Create a pool
-                        CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: targetDedicated);
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
                         pool.Commit();
 
                         this.testOutputHelper.WriteLine("Created pool {0}", poolId);
@@ -618,7 +618,7 @@
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
 
                         //Resize the pool
-                        boundPool.Resize(newTargetDedicated);
+                        boundPool.Resize(newTargetDedicated, 0);
 
                         boundPool.Refresh();
                         Assert.Equal(AllocationState.Resizing, boundPool.AllocationState);
@@ -794,7 +794,7 @@
                             new UserAccount("test1", nodeUserPassword),
                             new UserAccount("test2", nodeUserPassword, ElevationLevel.NonAdmin),
                             new UserAccount("test3", nodeUserPassword, ElevationLevel.Admin),
-                            new UserAccount("test4", nodeUserPassword, sshPrivateKey: "AAAA=="),
+                            new UserAccount("test4", nodeUserPassword, linuxUserConfiguration: new LinuxUserConfiguration(sshPrivateKey: "AAAA==")),
                         };
                         pool.Commit();
 
@@ -807,7 +807,7 @@
                             Assert.Equal(result.Submitted.Name, result.Returned.Name);
                             Assert.Null(result.Returned.Password);
                             Assert.Equal(result.Submitted.ElevationLevel ?? ElevationLevel.NonAdmin, result.Returned.ElevationLevel);
-                            Assert.Null(result.Returned.SshPrivateKey);
+                            Assert.Null(result.Returned.LinuxUserConfiguration.SshPrivateKey);
                         }
                     }
                     finally
@@ -996,7 +996,7 @@
                     try
                     {
                         //Create a pool with 2 compute nodes
-                        CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: targetDedicated);
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
                         pool.Commit();
 
                         this.testOutputHelper.WriteLine("Created pool {0}", poolId);
@@ -1013,7 +1013,7 @@
                             this.testOutputHelper.WriteLine("Pool is in State: {0}", refreshablePool.AllocationState);
                             Assert.False(DateTime.UtcNow > timeoutAfterThisTimeUtc, "Timed out waiting for pool to reach steady state");
                         }
-                        Assert.Equal(targetDedicated, refreshablePool.CurrentDedicated);
+                        Assert.Equal(targetDedicated, refreshablePool.CurrentDedicatedComputeNodes);
 
                         IEnumerable<ComputeNode> computeNodes = refreshablePool.ListComputeNodes();
 
@@ -1066,9 +1066,11 @@
 
                             Assert.False(DateTime.UtcNow > allocationWaitStartTime.Add(waitForSteadyTimeout), "Timed out waiting for pool to reach steady state");
                         }
-                        this.testOutputHelper.WriteLine("Resize error: {0}", refreshablePool.ResizeError == null ? null : refreshablePool.ResizeError.Message);
-                        Assert.NotNull(refreshablePool.ResizeError);
-                        
+                        Assert.NotNull(refreshablePool.ResizeErrors);
+                        foreach (ResizeError resizeError in refreshablePool.ResizeErrors)
+                        {
+                            this.testOutputHelper.WriteLine("Resize error: {0}", resizeError.Message);
+                        }
                     }
                     finally
                     {
@@ -1114,7 +1116,7 @@
                     try
                     {
                         //Create a pool
-                        CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: targetDedicated);
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
 
                         pool.Commit();
 
@@ -1132,7 +1134,7 @@
                                 DateTime.UtcNow > allocationWaitStartTime.Add(computeNodeAllocationTimeout),
                                 "Timed out waiting for pool to reach steady state");
                         }
-                        Assert.Equal(targetDedicated, refreshablePool.CurrentDedicated);
+                        Assert.Equal(targetDedicated, refreshablePool.CurrentDedicatedComputeNodes);
 
                         IEnumerable<ComputeNode> computeNodes = refreshablePool.ListComputeNodes();
 
@@ -1287,7 +1289,7 @@
 
                         string taskCmdLine = string.Format("ping 127.0.0.1 -n {0}", taskDurationSeconds);
 
-                        for (int i = 0; i < pool.CurrentDedicated; i++)
+                        for (int i = 0; i < pool.CurrentDedicatedComputeNodes; i++)
                         {
                             string taskId = string.Format("T_{0}", i);
                             boundWorkflowJob.AddTask(new CloudTask(taskId, taskCmdLine));

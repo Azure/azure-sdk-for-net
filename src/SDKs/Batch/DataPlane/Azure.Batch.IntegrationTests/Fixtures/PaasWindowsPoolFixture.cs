@@ -31,7 +31,7 @@
                     this.PoolId,
                     VMSize,
                     passConfiguration,
-                    targetDedicated: 1);
+                    targetDedicatedComputeNodes: 1);
                 var password = TestUtilities.GenerateRandomPassword();
                 currentPool.UserAccounts = new List<UserAccount>()
                     {

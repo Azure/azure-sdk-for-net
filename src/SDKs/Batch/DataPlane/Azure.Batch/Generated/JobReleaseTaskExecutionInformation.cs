@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Batch
     {
         private readonly DateTime? endTime;
         private readonly int? exitCode;
-        private readonly TaskSchedulingError schedulingError;
+        private readonly TaskFailureInformation failureInformation;
+        private readonly Common.TaskExecutionResult? result;
         private readonly DateTime startTime;
         private readonly Common.JobReleaseTaskState state;
         private readonly string taskRootDirectory;
@@ -36,7 +37,8 @@ namespace Microsoft.Azure.Batch
         {
             this.endTime = protocolObject.EndTime;
             this.exitCode = protocolObject.ExitCode;
-            this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new TaskSchedulingError(o).Freeze());
+            this.failureInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.FailureInfo, o => new TaskFailureInformation(o).Freeze());
+            this.result = UtilitiesInternal.MapNullableEnum<Models.TaskExecutionResult, Common.TaskExecutionResult>(protocolObject.Result);
             this.startTime = protocolObject.StartTime;
             this.state = UtilitiesInternal.MapEnum<Models.JobReleaseTaskState, Common.JobReleaseTaskState>(protocolObject.State);
             this.taskRootDirectory = protocolObject.TaskRootDirectory;
@@ -74,15 +76,27 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the scheduling error encountered by the service when starting the task.
+        /// Gets information describing the task failure, if any.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if there was an error when scheduling the task and it is now in the <see cref="Common.JobReleaseTaskState.Completed"/> 
-        /// state.
+        /// This property is set only if the task is in the <see cref="Common.JobReleaseTaskState.Completed"/> state and 
+        /// encountered a failure.
         /// </remarks>
-        public TaskSchedulingError SchedulingError
+        public TaskFailureInformation FailureInformation
         {
-            get { return this.schedulingError; }
+            get { return this.failureInformation; }
+        }
+
+        /// <summary>
+        /// Gets the result of the task execution.
+        /// </summary>
+        /// <remarks>
+        /// If the value is <see cref="Common.TaskExecutionResult.Failure" />, then the details of the failure can be found 
+        /// in the <see cref="FailureInformation" /> property.
+        /// </remarks>
+        public Common.TaskExecutionResult? Result
+        {
+            get { return this.result; }
         }
 
         /// <summary>

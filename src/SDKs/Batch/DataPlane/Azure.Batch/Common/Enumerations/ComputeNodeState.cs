@@ -82,5 +82,24 @@ namespace Microsoft.Azure.Batch.Common
         /// node.
         /// </summary>
         Offline,
+
+        /// <summary>
+        /// The compute node has been preempted.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The Batch service will not
+        /// schedule any new tasks on the compute node and any tasks which were running at the time of preemption were requeued.
+        /// The Batch service will attempt to recover nodes which are in this state. After recovery, all data that was on the node
+        /// at the time of the preemption is gone.
+        /// </para>
+        /// <para>
+        /// You are not charged for compute nodes that have been preempted.
+        /// </para>
+        /// <para>
+        /// This can only occurr on nodes where <see cref="ComputeNode.IsDedicated"/> is false.
+        /// </para>
+        /// </remarks>
+        Preempted
     }
 }

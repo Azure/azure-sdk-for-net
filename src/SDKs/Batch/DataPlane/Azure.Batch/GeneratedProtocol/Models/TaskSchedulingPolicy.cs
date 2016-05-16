@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets how tasks should be distributed across compute nodes.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'spread', 'pack', 'unmapped'
+        /// Possible values include: 'spread', 'pack'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeFillType")]
         public ComputeNodeFillType NodeFillType { get; set; }

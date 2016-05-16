@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the format of the certificate data.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'pfx', 'cer', 'unmapped'
+        /// Possible values include: 'pfx', 'cer'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "certificateFormat")]
         public CertificateFormat? CertificateFormat { get; set; }

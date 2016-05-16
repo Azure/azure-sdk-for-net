@@ -44,9 +44,9 @@
         /// <returns>
         /// The enum value to convert into list format.
         /// </returns>
-        internal static IList<Protocol.Models.CertificateVisibility?> CertificateVisibilityToList(Common.CertificateVisibility? value)
+        internal static IList<Protocol.Models.CertificateVisibility> CertificateVisibilityToList(Common.CertificateVisibility? value)
         {
-            List<Protocol.Models.CertificateVisibility?> result = new List<Protocol.Models.CertificateVisibility?>();
+            List<Protocol.Models.CertificateVisibility> result = new List<Protocol.Models.CertificateVisibility>();
             if (value.HasValue)
             {
                 IList<Common.CertificateVisibility> enumValues = new List<Common.CertificateVisibility>(
@@ -76,9 +76,9 @@
         /// <returns>
         /// The enum value to convert into list format.
         /// </returns>
-        internal static IList<Protocol.Models.AccessScope?> AccessScopeToList(Common.AccessScope value)
+        internal static IList<Protocol.Models.AccessScope> AccessScopeToList(Common.AccessScope value)
         {
-            List<Protocol.Models.AccessScope?> result = new List<Protocol.Models.AccessScope?>();
+            List<Protocol.Models.AccessScope> result = new List<Protocol.Models.AccessScope>();
 
             IList<Common.AccessScope> enumValues = new List<Common.AccessScope>((Common.AccessScope[])Enum.GetValues(typeof(Common.AccessScope)));
 
@@ -105,7 +105,7 @@
         /// <returns>
         /// The enum value.
         /// </returns>
-        internal static Common.CertificateVisibility? ParseCertificateVisibility(IList<Protocol.Models.CertificateVisibility?> value)
+        internal static Common.CertificateVisibility? ParseCertificateVisibility(IList<Protocol.Models.CertificateVisibility> value)
         {
             if (value == null)
             {
@@ -114,14 +114,11 @@
 
             Common.CertificateVisibility flags = CertificateVisibility.None;
 
-            foreach (Protocol.Models.CertificateVisibility? visibility in value)
+            foreach (Protocol.Models.CertificateVisibility visibility in value)
             {
-                Common.CertificateVisibility? convertedEnum = UtilitiesInternal.MapNullableEnum<Protocol.Models.CertificateVisibility, Common.CertificateVisibility>(visibility);
+                Common.CertificateVisibility convertedEnum = UtilitiesInternal.MapEnum<Protocol.Models.CertificateVisibility, Common.CertificateVisibility>(visibility);
 
-                if (convertedEnum.HasValue)
-                {
-                    flags |= convertedEnum.Value;
-                }
+                flags |= convertedEnum;
             }
 
             return flags;
@@ -137,7 +134,7 @@
         /// <returns>
         /// The enum value.
         /// </returns>
-        internal static Common.AccessScope ParseAccessScope(IList<Protocol.Models.AccessScope?> value)
+        internal static Common.AccessScope ParseAccessScope(IList<Protocol.Models.AccessScope> value)
         {
             if (value == null)
             {
@@ -146,14 +143,11 @@
 
             Common.AccessScope flags = AccessScope.None;
 
-            foreach (Protocol.Models.AccessScope? visibility in value)
+            foreach (Protocol.Models.AccessScope visibility in value)
             {
-                Common.AccessScope? convertedEnum = UtilitiesInternal.MapNullableEnum<Protocol.Models.AccessScope, Common.AccessScope>(visibility);
-
-                if (convertedEnum.HasValue)
-                {
-                    flags |= convertedEnum.Value;
-                }
+                Common.AccessScope convertedEnum = UtilitiesInternal.MapEnum<Protocol.Models.AccessScope, Common.AccessScope>(visibility);
+                
+                flags |= convertedEnum;
             }
 
             return flags;
@@ -294,7 +288,29 @@
 
             return result;
         }
-        
+
+        /// <summary>
+        /// Applies the <paramref name="objectCreationFunc"/> to each item in <paramref name="items"/> and returns a non-threadsafe collection containing the results.
+        /// </summary>
+        /// <typeparam name="TIn">The type of the input collection.</typeparam>
+        /// <typeparam name="TOut">The type of the output collection.</typeparam>
+        /// <param name="items">The collection to convert.</param>
+        /// <param name="objectCreationFunc">The function used to created each <typeparamref name="TOut"/> type object.</param>
+        /// <returns>A non-threadsafe collection containing the results of the conversion, or null if <paramref name="items"/> was null.</returns>
+        internal static IList<TOut> CollectionToThreadSafeCollection<TIn, TOut>(
+            IEnumerable<TIn> items,
+            Func<TIn, TOut> objectCreationFunc)
+            where TIn : class
+            where TOut : class
+        {
+            ConcurrentChangeTrackedList<TOut> result = UtilitiesInternal.ConvertCollection(
+                items,
+                objectCreationFunc,
+                (convertedItemsEnumerable) => new ConcurrentChangeTrackedList<TOut>(convertedItemsEnumerable));
+
+            return result;
+        }
+
         /// <summary>
         /// Applies the <paramref name="objectCreationFunc"/> to each item in <paramref name="items"/> and returns a threadsafe collection containing the results.
         /// </summary>
