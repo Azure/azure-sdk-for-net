@@ -45,9 +45,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// When to reimage the compute node and what to do with currently
-        /// running tasks. The default value is requeue. Possible values
-        /// include: 'requeue', 'terminate', 'taskcompletion', 'retaineddata'
+        /// Gets or sets when to reimage the compute node and what to do with
+        /// currently running tasks. The default value is requeue. Possible
+        /// values include: 'requeue', 'terminate', 'taskcompletion',
+        /// 'retaineddata'
         /// </summary>
         [JsonProperty(PropertyName = "nodeReimageOption")]
         public ComputeNodeReimageOption? NodeReimageOption { get; set; }

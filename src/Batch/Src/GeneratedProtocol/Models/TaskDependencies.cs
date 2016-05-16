@@ -48,15 +48,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The list of task ids that must complete before this task can be
-        /// scheduled.
+        /// Gets or sets the list of task ids that must complete before this
+        /// task can be scheduled.
         /// </summary>
         [JsonProperty(PropertyName = "taskIds")]
         public IList<string> TaskIds { get; set; }
 
         /// <summary>
-        /// The list of task ranges that must complete before this task can be
-        /// scheduled.
+        /// Gets or sets the list of task ranges that must complete before
+        /// this task can be scheduled.
         /// </summary>
         [JsonProperty(PropertyName = "taskIdRanges")]
         public IList<TaskIdRange> TaskIdRanges { get; set; }

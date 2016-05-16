@@ -48,13 +48,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The name of the metadata item.
+        /// Gets or sets the name of the metadata item.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The value of the metadata item.
+        /// Gets or sets the value of the metadata item.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

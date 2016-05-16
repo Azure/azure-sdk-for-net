@@ -49,32 +49,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The file creation time.
+        /// Gets or sets the file creation time.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTime? CreationTime { get; set; }
 
         /// <summary>
-        /// The time at which the file was last modified.
+        /// Gets or sets the time at which the file was last modified.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
         public DateTime LastModified { get; set; }
 
         /// <summary>
-        /// The length of the file.
+        /// Gets or sets the length of the file.
         /// </summary>
         [JsonProperty(PropertyName = "contentLength")]
         public long ContentLength { get; set; }
 
         /// <summary>
-        /// The content type of the file.
+        /// Gets or sets the content type of the file.
         /// </summary>
         [JsonProperty(PropertyName = "contentType")]
         public string ContentType { get; set; }
 
         /// <summary>
-        /// The file mode attribute in octal format. This property will be
-        /// returned only from a Linux compute node.
+        /// Gets or sets the file mode attribute in octal format. This
+        /// property will be returned only from a Linux compute node.
         /// </summary>
         [JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }

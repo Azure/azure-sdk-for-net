@@ -48,28 +48,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The category of the job scheduling error. Possible values include:
-        /// 'usererror', 'servererror', 'unmapped'
+        /// Gets or sets the category of the job scheduling error. Possible
+        /// values include: 'usererror', 'servererror', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "category")]
         public SchedulingErrorCategory Category { get; set; }
 
         /// <summary>
-        /// An identifier for the job scheduling error. Codes are invariant
-        /// and are intended to be consumed programmatically.
+        /// Gets or sets an identifier for the job scheduling error. Codes are
+        /// invariant and are intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// A message describing the job scheduling error, intended to be
-        /// suitable for display in a user interface.
+        /// Gets or sets a message describing the job scheduling error,
+        /// intended to be suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// A list of additional error details related to the scheduling error.
+        /// Gets or sets a list of additional error details related to the
+        /// scheduling error.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public IList<NameValuePair> Details { get; set; }

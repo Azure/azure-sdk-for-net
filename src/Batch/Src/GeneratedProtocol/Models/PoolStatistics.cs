@@ -50,34 +50,36 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The URL for the statistics.
+        /// Gets or sets the URL for the statistics.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// The start time of the time range covered by the statistics.
+        /// Gets or sets the start time of the time range covered by the
+        /// statistics.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// The time at which the statistics were last updated. All statistics
-        /// are limited to the range between startTime and lastUpdateTime.
+        /// Gets or sets the time at which the statistics were last updated.
+        /// All statistics are limited to the range between startTime and
+        /// lastUpdateTime.
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateTime")]
         public DateTime LastUpdateTime { get; set; }
 
         /// <summary>
-        /// Statistics related to pool usage, such as the amount of core-time
-        /// used.
+        /// Gets or sets statistics related to pool usage, such as the amount
+        /// of core-time used.
         /// </summary>
         [JsonProperty(PropertyName = "usageStats")]
         public UsageStatistics UsageStats { get; set; }
 
         /// <summary>
-        /// Statistics related to resource consumption by compute nodes in the
-        /// pool.
+        /// Gets or sets statistics related to resource consumption by compute
+        /// nodes in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "resourceStats")]
         public ResourceStatistics ResourceStats { get; set; }

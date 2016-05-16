@@ -45,9 +45,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// When to reboot the compute node and what to do with currently
-        /// running tasks. The default value is requeue. Possible values
-        /// include: 'requeue', 'terminate', 'taskcompletion', 'retaineddata'
+        /// Gets or sets when to reboot the compute node and what to do with
+        /// currently running tasks. The default value is requeue. Possible
+        /// values include: 'requeue', 'terminate', 'taskcompletion',
+        /// 'retaineddata'
         /// </summary>
         [JsonProperty(PropertyName = "nodeRebootOption")]
         public ComputeNodeRebootOption? NodeRebootOption { get; set; }

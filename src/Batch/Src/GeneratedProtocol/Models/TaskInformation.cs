@@ -50,38 +50,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The URL of the task.
+        /// Gets or sets the URL of the task.
         /// </summary>
         [JsonProperty(PropertyName = "taskUrl")]
         public string TaskUrl { get; set; }
 
         /// <summary>
-        /// The id of the job to which the task belongs.
+        /// Gets or sets the id of the job to which the task belongs.
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
         public string JobId { get; set; }
 
         /// <summary>
-        /// The id of the task.
+        /// Gets or sets the id of the task.
         /// </summary>
         [JsonProperty(PropertyName = "taskId")]
         public string TaskId { get; set; }
 
         /// <summary>
-        /// The id of the subtask if the task is a multi-instance task.
+        /// Gets or sets the id of the subtask if the task is a multi-instance
+        /// task.
         /// </summary>
         [JsonProperty(PropertyName = "subtaskId")]
         public int? SubtaskId { get; set; }
 
         /// <summary>
-        /// The current state of the task. Possible values include: 'active',
-        /// 'preparing', 'running', 'completed'
+        /// Gets or sets the current state of the task. Possible values
+        /// include: 'active', 'preparing', 'running', 'completed'
         /// </summary>
         [JsonProperty(PropertyName = "taskState")]
         public TaskState TaskState { get; set; }
 
         /// <summary>
-        /// Information about the execution of the task.
+        /// Gets or sets information about the execution of the task.
         /// </summary>
         [JsonProperty(PropertyName = "executionInfo")]
         public TaskExecutionInformation ExecutionInfo { get; set; }

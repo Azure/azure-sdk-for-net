@@ -60,108 +60,114 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The display name for the pool.
+        /// Gets or sets the display name for the pool.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// The size of the virtual machines in the pool. All virtual machines
-        /// in a pool are the same size.
+        /// Gets or sets the size of the virtual machines in the pool. All
+        /// virtual machines in a pool are the same size.
         /// </summary>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
-        /// The cloud service configuration for the pool. This property and
-        /// VirtualMachineConfiguration are mutually exclusive and one of the
-        /// properties must be specified.
+        /// Gets or sets the cloud service configuration for the pool. This
+        /// property and VirtualMachineConfiguration are mutually exclusive
+        /// and one of the properties must be specified.
         /// </summary>
         [JsonProperty(PropertyName = "cloudServiceConfiguration")]
         public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
 
         /// <summary>
-        /// The virtual machine configuration for the pool. This property and
-        /// CloudServiceConfiguration are mutually exclusive and one of the
-        /// properties must be specified.
+        /// Gets or sets the virtual machine configuration for the pool. This
+        /// property and CloudServiceConfiguration are mutually exclusive and
+        /// one of the properties must be specified.
         /// </summary>
         [JsonProperty(PropertyName = "virtualMachineConfiguration")]
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
         /// <summary>
-        /// The maximum number of tasks that can run concurrently on a single
-        /// compute node in the pool.
+        /// Gets or sets the maximum number of tasks that can run concurrently
+        /// on a single compute node in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
 
         /// <summary>
-        /// How tasks are distributed among compute nodes in the pool.
+        /// Gets or sets how tasks are distributed among compute nodes in the
+        /// pool.
         /// </summary>
         [JsonProperty(PropertyName = "taskSchedulingPolicy")]
         public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
 
         /// <summary>
-        /// The timeout for allocation of compute nodes to the pool.
+        /// Gets or sets the timeout for allocation of compute nodes to the
+        /// pool.
         /// </summary>
         [JsonProperty(PropertyName = "resizeTimeout")]
         public TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// The desired number of compute nodes in the pool.
+        /// Gets or sets the desired number of compute nodes in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetDedicated")]
         public int? TargetDedicated { get; set; }
 
         /// <summary>
-        /// Whether the pool size should automatically adjust over time.
+        /// Gets or sets whether the pool size should automatically adjust
+        /// over time.
         /// </summary>
         [JsonProperty(PropertyName = "enableAutoScale")]
         public bool? EnableAutoScale { get; set; }
 
         /// <summary>
-        /// The formula for the desired number of compute nodes in the pool.
+        /// Gets or sets the formula for the desired number of compute nodes
+        /// in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
-        /// A time interval for the desired AutoScale evaluation period in the
-        /// pool.
+        /// Gets or sets a time interval for the desired AutoScale evaluation
+        /// period in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
         public TimeSpan? AutoScaleEvaluationInterval { get; set; }
 
         /// <summary>
-        /// Whether the pool permits direct communication between nodes.
+        /// Gets or sets whether the pool permits direct communication between
+        /// nodes.
         /// </summary>
         [JsonProperty(PropertyName = "enableInterNodeCommunication")]
         public bool? EnableInterNodeCommunication { get; set; }
 
         /// <summary>
-        /// A task to run on each compute node as it joins the pool. The task
-        /// runs when the node is added to the pool or when the node is
-        /// restarted.
+        /// Gets or sets a task to run on each compute node as it joins the
+        /// pool. The task runs when the node is added to the pool or when
+        /// the node is restarted.
         /// </summary>
         [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
-        /// A list of certificates to be installed on each compute node in the
-        /// pool.
+        /// Gets or sets a list of certificates to be installed on each
+        /// compute node in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
-        /// The list of application packages to be installed on each compute
-        /// node in the pool.
+        /// Gets or sets the list of application packages to be installed on
+        /// each compute node in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
-        /// A list of name-value pairs associated with the pool as metadata.
+        /// Gets or sets a list of name-value pairs associated with the pool
+        /// as metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }

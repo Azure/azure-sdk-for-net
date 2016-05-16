@@ -51,44 +51,46 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The state of the start task on the compute node. Possible values
-        /// include: 'running', 'completed'
+        /// Gets or sets the state of the start task on the compute node.
+        /// Possible values include: 'running', 'completed'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public StartTaskState State { get; set; }
 
         /// <summary>
-        /// The time at which the start task started running.
+        /// Gets or sets the time at which the start task started running.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// The time at which the start task stopped running.
+        /// Gets or sets the time at which the start task stopped running.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// The exit code of the start task.
+        /// Gets or sets the exit code of the start task.
         /// </summary>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Any error encountered scheduling the start task.
+        /// Gets or sets any error encountered scheduling the start task.
         /// </summary>
         [JsonProperty(PropertyName = "schedulingError")]
         public TaskSchedulingError SchedulingError { get; set; }
 
         /// <summary>
-        /// The number of times the task has been retried by the Batch service.
+        /// Gets or sets the number of times the task has been retried by the
+        /// Batch service.
         /// </summary>
         [JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
 
         /// <summary>
-        /// The most recent time at which a retry of the task started running.
+        /// Gets or sets the most recent time at which a retry of the task
+        /// started running.
         /// </summary>
         [JsonProperty(PropertyName = "lastRetryTime")]
         public DateTime? LastRetryTime { get; set; }

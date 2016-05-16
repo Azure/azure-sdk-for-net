@@ -65,142 +65,147 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// A string that uniquely identifies the job within the account. The
-        /// id can contain any combination of alphanumeric characters
-        /// including hyphens and underscores, and cannot contain more than
-        /// 64 characters. It is common to use a GUID for the id.
+        /// Gets or sets a string that uniquely identifies the job within the
+        /// account. The id can contain any combination of alphanumeric
+        /// characters including hyphens and underscores, and cannot contain
+        /// more than 64 characters. It is common to use a GUID for the id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// The display name for the job.
+        /// Gets or sets the display name for the job.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// The flag that determines if this job will use tasks with
-        /// dependencies.
+        /// Gets or sets the flag that determines if this job will use tasks
+        /// with dependencies.
         /// </summary>
         [JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }
 
         /// <summary>
-        /// The URL of the job.
+        /// Gets or sets the URL of the job.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// The ETag of the job.
+        /// Gets or sets the ETag of the job.
         /// </summary>
         [JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
-        /// The last modified time of the job.
+        /// Gets or sets the last modified time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
         public DateTime? LastModified { get; set; }
 
         /// <summary>
-        /// The creation time of the job.
+        /// Gets or sets the creation time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTime? CreationTime { get; set; }
 
         /// <summary>
-        /// The current state of the job. Possible values include: 'active',
-        /// 'disabling', 'disabled', 'enabling', 'terminating', 'completed',
-        /// 'deleting'
+        /// Gets or sets the current state of the job. Possible values
+        /// include: 'active', 'disabling', 'disabled', 'enabling',
+        /// 'terminating', 'completed', 'deleting'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public JobState? State { get; set; }
 
         /// <summary>
-        /// The time at which the job entered its current state.
+        /// Gets or sets the time at which the job entered its current state.
         /// </summary>
         [JsonProperty(PropertyName = "stateTransitionTime")]
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// The previous state of the job. This property is not set if the job
-        /// is in its initial Active state. Possible values include:
-        /// 'active', 'disabling', 'disabled', 'enabling', 'terminating',
-        /// 'completed', 'deleting'
+        /// Gets or sets the previous state of the job. This property is not
+        /// set if the job is in its initial Active state. Possible values
+        /// include: 'active', 'disabling', 'disabled', 'enabling',
+        /// 'terminating', 'completed', 'deleting'
         /// </summary>
         [JsonProperty(PropertyName = "previousState")]
         public JobState? PreviousState { get; set; }
 
         /// <summary>
-        /// The time at which the job entered its previous state. This
-        /// property is not set if the job is in its initial Active state.
+        /// Gets or sets the time at which the job entered its previous state.
+        /// This property is not set if the job is in its initial Active
+        /// state.
         /// </summary>
         [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
-        /// The priority of the job. Priority values can range from -1000 to
-        /// 1000, with -1000 being the lowest priority and 1000 being the
-        /// highest priority. The default value is 0.
+        /// Gets or sets the priority of the job. Priority values can range
+        /// from -1000 to 1000, with -1000 being the lowest priority and 1000
+        /// being the highest priority. The default value is 0.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// The execution constraints for the job.
+        /// Gets or sets the execution constraints for the job.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Details of a Job Manager task to be launched when the job is
-        /// started.
+        /// Gets or sets details of a Job Manager task to be launched when the
+        /// job is started.
         /// </summary>
         [JsonProperty(PropertyName = "jobManagerTask")]
         public JobManagerTask JobManagerTask { get; set; }
 
         /// <summary>
-        /// The Job Preparation task.
+        /// Gets or sets the Job Preparation task.
         /// </summary>
         [JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
-        /// The Job Release task.
+        /// Gets or sets the Job Release task.
         /// </summary>
         [JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary>
-        /// The list of common environment variable settings. These
-        /// environment variables are set for all tasks in the job (including
-        /// the Job Manager, Job Preparation and Job Release tasks).
+        /// Gets or sets the list of common environment variable settings.
+        /// These environment variables are set for all tasks in the job
+        /// (including the Job Manager, Job Preparation and Job Release
+        /// tasks).
         /// </summary>
         [JsonProperty(PropertyName = "commonEnvironmentSettings")]
         public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
-        /// The pool on which the Batch service runs the jobâ€™s tasks.
+        /// Gets or sets the pool on which the Batch service runs the job’s
+        /// tasks.
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
-        /// A list of name-value pairs associated with the job as metadata.
+        /// Gets or sets a list of name-value pairs associated with the job as
+        /// metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
-        /// The execution information for the job.
+        /// Gets or sets the execution information for the job.
         /// </summary>
         [JsonProperty(PropertyName = "executionInfo")]
         public JobExecutionInformation ExecutionInfo { get; set; }
 
         /// <summary>
-        /// Resource usage statistics for the entire lifetime of the job.
+        /// Gets or sets resource usage statistics for the entire lifetime of
+        /// the job.
         /// </summary>
         [JsonProperty(PropertyName = "stats")]
         public JobStatistics Stats { get; set; }

@@ -51,47 +51,47 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The id of the pool whose metrics are being aggregated.
+        /// Gets or sets the id of the pool whose metrics are being aggregated.
         /// </summary>
         [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
-        /// The start time of the aggregation interval.
+        /// Gets or sets the start time of the aggregation interval.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// The end time of the aggregation interval.
+        /// Gets or sets the end time of the aggregation interval.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime EndTime { get; set; }
 
         /// <summary>
-        /// The size of virtual machines in the pool. All VMs in a pool are
-        /// the same size.
+        /// Gets or sets the size of virtual machines in the pool. All VMs in
+        /// a pool are the same size.
         /// </summary>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
-        /// The total core hours used in the pool during this aggregation
-        /// interval.
+        /// Gets or sets the total core hours used in the pool during this
+        /// aggregation interval.
         /// </summary>
         [JsonProperty(PropertyName = "totalCoreHours")]
         public double TotalCoreHours { get; set; }
 
         /// <summary>
-        /// The cross data center network ingress in GiB to the pool during
-        /// this interval.
+        /// Gets or sets the cross data center network ingress in GiB to the
+        /// pool during this interval.
         /// </summary>
         [JsonProperty(PropertyName = "dataIngressGiB")]
         public double DataIngressGiB { get; set; }
 
         /// <summary>
-        /// The cross data center network egress in GiB from the pool during
-        /// this interval.
+        /// Gets or sets the cross data center network egress in GiB from the
+        /// pool during this interval.
         /// </summary>
         [JsonProperty(PropertyName = "dataEgressGiB")]
         public double DataEgressGiB { get; set; }

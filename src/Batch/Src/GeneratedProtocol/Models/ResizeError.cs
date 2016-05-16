@@ -47,22 +47,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// An identifier for the pool resize error. Codes are invariant and
-        /// are intended to be consumed programmatically.
+        /// Gets or sets an identifier for the pool resize error. Codes are
+        /// invariant and are intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// A message describing the pool resize error, intended to be
-        /// suitable for display in a user interface.
+        /// Gets or sets a message describing the pool resize error, intended
+        /// to be suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// A list of additional error details related to the pool resize
-        /// error.
+        /// Gets or sets a list of additional error details related to the
+        /// pool resize error.
         /// </summary>
         [JsonProperty(PropertyName = "values")]
         public IList<NameValuePair> Values { get; set; }

@@ -50,20 +50,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The next time at which a job will be created under this schedule.
+        /// Gets or sets the next time at which a job will be created under
+        /// this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "nextRunTime")]
         public DateTime? NextRunTime { get; set; }
 
         /// <summary>
-        /// Information about the most recent job under the job schedule.
+        /// Gets or sets information about the most recent job under the job
+        /// schedule.
         /// </summary>
         [JsonProperty(PropertyName = "recentJob")]
         public RecentJob RecentJob { get; set; }
 
         /// <summary>
-        /// The time at which the schedule ended. This property is set only if
-        /// the job schedule is in the completed state.
+        /// Gets or sets the time at which the schedule ended. This property
+        /// is set only if the job schedule is in the completed state.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }

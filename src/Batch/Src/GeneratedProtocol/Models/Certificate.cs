@@ -54,63 +54,67 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The X.509 thumbprint of the certificate. This is a sequence of up
-        /// to 40 hex digits (it may include spaces but these are removed).
+        /// Gets or sets the X.509 thumbprint of the certificate. This is a
+        /// sequence of up to 40 hex digits (it may include spaces but these
+        /// are removed).
         /// </summary>
         [JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
-        /// The algorithm used to derive the thumbprint. This must be sha1.
+        /// Gets or sets the algorithm used to derive the thumbprint. This
+        /// must be sha1.
         /// </summary>
         [JsonProperty(PropertyName = "thumbprintAlgorithm")]
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
-        /// The URL of the certificate.
+        /// Gets or sets the URL of the certificate.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// The current state of the certificate. Possible values include:
-        /// 'active', 'deleting', 'deletefailed'
+        /// Gets or sets the current state of the certificate. Possible values
+        /// include: 'active', 'deleting', 'deletefailed'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public CertificateState? State { get; set; }
 
         /// <summary>
-        /// The time at which the certificate entered its current state.
+        /// Gets or sets the time at which the certificate entered its current
+        /// state.
         /// </summary>
         [JsonProperty(PropertyName = "stateTransitionTime")]
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// The previous state of the certificate. This property is not set if
-        /// the certificate is in its initial Active state. Possible values
-        /// include: 'active', 'deleting', 'deletefailed'
+        /// Gets or sets the previous state of the certificate. This property
+        /// is not set if the certificate is in its initial Active state.
+        /// Possible values include: 'active', 'deleting', 'deletefailed'
         /// </summary>
         [JsonProperty(PropertyName = "previousState")]
         public CertificateState? PreviousState { get; set; }
 
         /// <summary>
-        /// The time at which the certificate entered its previous state. This
-        /// property is not set if the certificate is in its initial Active
-        /// state.
+        /// Gets or sets the time at which the certificate entered its
+        /// previous state. This property is not set if the certificate is in
+        /// its initial Active state.
         /// </summary>
         [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
-        /// The public part of the certificate as a base-64 encoded .cer file.
+        /// Gets or sets the public part of the certificate as a base-64
+        /// encoded .cer file.
         /// </summary>
         [JsonProperty(PropertyName = "publicData")]
         public string PublicData { get; set; }
 
         /// <summary>
-        /// The error that occurred on the last attempt to delete this
-        /// certificate. This property is set only if the certificate is in
-        /// the deletefailed state.
+        /// Gets or sets the error that occurred on the last attempt to delete
+        /// this certificate. This property is set only if the certificate is
+        /// in the deletefailed state.
         /// </summary>
         [JsonProperty(PropertyName = "deleteCertificateError")]
         public DeleteCertificateError DeleteCertificateError { get; set; }

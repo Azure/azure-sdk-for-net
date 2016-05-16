@@ -51,38 +51,41 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The status of the add task request. Possible values include:
-        /// 'success', 'clienterror', 'servererror', 'unmapped'
+        /// Gets or sets the status of the add task request. Possible values
+        /// include: 'success', 'clienterror', 'servererror', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public TaskAddStatus Status { get; set; }
 
         /// <summary>
-        /// The id of the task for which this is the result.
+        /// Gets or sets the id of the task for which this is the result.
         /// </summary>
         [JsonProperty(PropertyName = "taskId")]
         public string TaskId { get; set; }
 
         /// <summary>
-        /// The ETag of the task, if the task was successfully added.
+        /// Gets or sets the ETag of the task, if the task was successfully
+        /// added.
         /// </summary>
         [JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
-        /// The last modified time of the task.
+        /// Gets or sets the last modified time of the task.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
         public DateTime? LastModified { get; set; }
 
         /// <summary>
-        /// The URL of the task, if the task was successfully added.
+        /// Gets or sets the URL of the task, if the task was successfully
+        /// added.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// The error encountered while attempting to add the task.
+        /// Gets or sets the error encountered while attempting to add the
+        /// task.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public BatchError Error { get; set; }

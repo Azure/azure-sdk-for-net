@@ -51,41 +51,42 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The command line of the start task.
+        /// Gets or sets the command line of the start task.
         /// </summary>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// A list of files that the Batch service will download to the
-        /// compute node before running the command line.
+        /// Gets or sets a list of files that the Batch service will download
+        /// to the compute node before running the command line.
         /// </summary>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
-        /// A list of environment variable settings for the start task.
+        /// Gets or sets a list of environment variable settings for the start
+        /// task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Whether to run the start task in elevated mode. The default value
-        /// is false.
+        /// Gets or sets whether to run the start task in elevated mode. The
+        /// default value is false.
         /// </summary>
         [JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
-        /// The maximum number of times the task may be retried.
+        /// Gets or sets the maximum number of times the task may be retried.
         /// </summary>
         [JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }
 
         /// <summary>
-        /// Whether the Batch service should wait for the start task to
-        /// complete successfully (that is, to exit with exit code 0) before
-        /// scheduling any tasks on the compute node.
+        /// Gets or sets whether the Batch service should wait for the start
+        /// task to complete successfully (that is, to exit with exit code 0)
+        /// before scheduling any tasks on the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }

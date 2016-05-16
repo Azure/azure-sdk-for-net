@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The id of the job.
+        /// Gets or sets the id of the job.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// The URL of the job.
+        /// Gets or sets the URL of the job.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }

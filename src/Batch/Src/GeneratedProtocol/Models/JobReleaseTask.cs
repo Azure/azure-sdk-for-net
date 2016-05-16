@@ -52,54 +52,55 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// A string that uniquely identifies the Job Release task within the
-        /// job. The id can contain any combination of alphanumeric
-        /// characters including hyphens and underscores and cannot contain
-        /// more than 64 characters.
+        /// Gets or sets a string that uniquely identifies the Job Release
+        /// task within the job. The id can contain any combination of
+        /// alphanumeric characters including hyphens and underscores and
+        /// cannot contain more than 64 characters.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// The command line of the Job Release task.
+        /// Gets or sets the command line of the Job Release task.
         /// </summary>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// A list of files that the Batch service will download to the
-        /// compute node before running the command line.
+        /// Gets or sets a list of files that the Batch service will download
+        /// to the compute node before running the command line.
         /// </summary>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
-        /// A list of environment variable settings for the Job Release task.
+        /// Gets or sets a list of environment variable settings for the Job
+        /// Release task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// The maximum elapsed time that the Job Release task may run on a
-        /// given compute node, measured from the time the task starts. If
-        /// the task does not complete within the time limit, the Batch
-        /// service terminates it. The default value is 15 minutes.
+        /// Gets or sets the maximum elapsed time that the Job Release task
+        /// may run on a given compute node, measured from the time the task
+        /// starts. If the task does not complete within the time limit, the
+        /// Batch service terminates it. The default value is 15 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "maxWallClockTime")]
         public TimeSpan? MaxWallClockTime { get; set; }
 
         /// <summary>
-        /// The minimum time to retain the working directory for the Job
-        /// Release task on the compute node. After this time, the Batch
-        /// service may delete the working directory and all its contents.
-        /// The default is infinite.
+        /// Gets or sets the minimum time to retain the working directory for
+        /// the Job Release task on the compute node. After this time, the
+        /// Batch service may delete the working directory and all its
+        /// contents. The default is infinite.
         /// </summary>
         [JsonProperty(PropertyName = "retentionTime")]
         public TimeSpan? RetentionTime { get; set; }
 
         /// <summary>
-        /// Whether to run the Job Release task in elevated mode. The default
-        /// value is false.
+        /// Gets or sets whether to run the Job Release task in elevated mode.
+        /// The default value is false.
         /// </summary>
         [JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }

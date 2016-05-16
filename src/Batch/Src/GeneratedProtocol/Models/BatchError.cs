@@ -47,22 +47,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// An identifier for the error. Codes are invariant and are intended
-        /// to be consumed programmatically.
+        /// Gets or sets an identifier for the error. Codes are invariant and
+        /// are intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// A message describing the error, intended to be suitable for
-        /// display in a user interface.
+        /// Gets or sets a message describing the error, intended to be
+        /// suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public ErrorMessage Message { get; set; }
 
         /// <summary>
-        /// A collection of key-value pairs containing additional details
-        /// about the error.
+        /// Gets or sets a collection of key-value pairs containing additional
+        /// details about the error.
         /// </summary>
         [JsonProperty(PropertyName = "values")]
         public IList<BatchErrorDetail> Values { get; set; }

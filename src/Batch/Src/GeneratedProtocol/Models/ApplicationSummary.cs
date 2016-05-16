@@ -47,14 +47,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// A string that uniquely identifies the application within the
-        /// account.
+        /// Gets or sets a string that uniquely identifies the application
+        /// within the account.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// The display name for the application.
+        /// Gets or sets the display name for the application.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }

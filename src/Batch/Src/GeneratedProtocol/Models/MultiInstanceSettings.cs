@@ -48,25 +48,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The number of compute nodes required by the multi-instance task.
+        /// Gets or sets the number of compute nodes required by the
+        /// multi-instance task.
         /// </summary>
         [JsonProperty(PropertyName = "numberOfInstances")]
         public int NumberOfInstances { get; set; }
 
         /// <summary>
-        /// The command to run on the compute node instances for coordinating
-        /// among the subtasks.
+        /// Gets or sets the command to run on the compute node instances for
+        /// coordinating among the subtasks.
         /// </summary>
         [JsonProperty(PropertyName = "coordinationCommandLine")]
         public string CoordinationCommandLine { get; set; }
 
         /// <summary>
-        /// A list of files that the Batch service will download before
-        /// running the coordination command line. The difference between
-        /// common resource files and task resource files is that common
-        /// resource files are downloaded for all subtasks including the
-        /// primary, whereas task resource files are downloaded only for the
-        /// primary.
+        /// Gets or sets a list of files that the Batch service will download
+        /// before running the coordination command line. The difference
+        /// between common resource files and task resource files is that
+        /// common resource files are downloaded for all subtasks including
+        /// the primary, whereas task resource files are downloaded only for
+        /// the primary.
         /// </summary>
         [JsonProperty(PropertyName = "commonResourceFiles")]
         public IList<ResourceFile> CommonResourceFiles { get; set; }

@@ -51,22 +51,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The node agent SKU id.
+        /// Gets or sets the node agent SKU id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// The list of images verified to be compatible with this node agent
-        /// SKU. This collection is not exhaustive (the node agent may be
-        /// compatible with other images).
+        /// Gets or sets the list of images verified to be compatible with
+        /// this node agent SKU. This collection is not exhaustive (the node
+        /// agent may be compatible with other images).
         /// </summary>
         [JsonProperty(PropertyName = "verifiedImageReferences")]
         public IList<ImageReference> VerifiedImageReferences { get; set; }
 
         /// <summary>
-        /// The type of operating system compatible with the node agent SKU.
-        /// Possible values include: 'linux', 'windows', 'unmapped'
+        /// Gets or sets the type of operating system compatible with the node
+        /// agent SKU. Possible values include: 'linux', 'windows', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public OSType? OsType { get; set; }

@@ -47,22 +47,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// A list containing the id of the compute nodes to be removed from
-        /// the specified pool.
+        /// Gets or sets a list containing the id of the compute nodes to be
+        /// removed from the specified pool.
         /// </summary>
         [JsonProperty(PropertyName = "nodeList")]
         public IList<string> NodeList { get; set; }
 
         /// <summary>
-        /// The timeout for removal of compute nodes to the pool. The default
-        /// value is 10 minutes.
+        /// Gets or sets the timeout for removal of compute nodes to the pool.
+        /// The default value is 10 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "resizeTimeout")]
         public TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// When compute nodes may be removed from the pool. Possible values
-        /// include: 'requeue', 'terminate', 'taskcompletion', 'retaineddata'
+        /// Gets or sets when compute nodes may be removed from the pool.
+        /// Possible values include: 'requeue', 'terminate',
+        /// 'taskcompletion', 'retaineddata'
         /// </summary>
         [JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }

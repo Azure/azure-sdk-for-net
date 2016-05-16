@@ -48,26 +48,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The ClientRequestId provided by the client during the request, if
-        /// present and requested to be returned.
+        /// Gets or sets the ClientRequestId provided by the client during the
+        /// request, if present and requested to be returned.
         /// </summary>
         [JsonProperty(PropertyName = "client-request-id")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
-        /// The value that uniquely identifies a request.
+        /// Gets or sets the value that uniquely identifies a request.
         /// </summary>
         [JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }
 
         /// <summary>
-        /// The content of the ETag HTTP response header.
+        /// Gets or sets the content of the ETag HTTP response header.
         /// </summary>
         [JsonProperty(PropertyName = "ETag")]
         public string ETag { get; set; }
 
         /// <summary>
-        /// The content of the Last-Modified HTTP response header.
+        /// Gets or sets the content of the Last-Modified HTTP response header.
         /// </summary>
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
         [JsonProperty(PropertyName = "Last-Modified")]

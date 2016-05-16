@@ -48,13 +48,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The first task id in the range.
+        /// Gets or sets the first task id in the range.
         /// </summary>
         [JsonProperty(PropertyName = "start")]
         public int Start { get; set; }
 
         /// <summary>
-        /// The last task id in the range.
+        /// Gets or sets the last task id in the range.
         /// </summary>
         [JsonProperty(PropertyName = "end")]
         public int End { get; set; }

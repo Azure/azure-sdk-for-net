@@ -47,13 +47,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// An identifier specifying the meaning of the Value property.
+        /// Gets or sets an identifier specifying the meaning of the Value
+        /// property.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
 
         /// <summary>
-        /// The additional information included with the error response.
+        /// Gets or sets the additional information included with the error
+        /// response.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

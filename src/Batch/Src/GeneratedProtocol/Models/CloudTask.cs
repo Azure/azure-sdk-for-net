@@ -65,140 +65,143 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// A string that uniquely identifies the task within the job. The id
-        /// can contain any combination of alphanumeric characters including
-        /// hyphens and underscores, and cannot contain more than 64
-        /// characters.
+        /// Gets or sets a string that uniquely identifies the task within the
+        /// job. The id can contain any combination of alphanumeric
+        /// characters including hyphens and underscores, and cannot contain
+        /// more than 64 characters.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// A display name for the task.
+        /// Gets or sets a display name for the task.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// The URL of the task.
+        /// Gets or sets the URL of the task.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// The ETag of the task.
+        /// Gets or sets the ETag of the task.
         /// </summary>
         [JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
-        /// The last modified time of the task.
+        /// Gets or sets the last modified time of the task.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
         public DateTime? LastModified { get; set; }
 
         /// <summary>
-        /// The creation time of the task.
+        /// Gets or sets the creation time of the task.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTime? CreationTime { get; set; }
 
         /// <summary>
-        /// The current state of the task. Possible values include: 'active',
-        /// 'preparing', 'running', 'completed'
+        /// Gets or sets the current state of the task. Possible values
+        /// include: 'active', 'preparing', 'running', 'completed'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public TaskState? State { get; set; }
 
         /// <summary>
-        /// The time at which the task entered its current state.
+        /// Gets or sets the time at which the task entered its current state.
         /// </summary>
         [JsonProperty(PropertyName = "stateTransitionTime")]
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// The previous state of the task. This property is not set if the
-        /// task is in its initial Active state. Possible values include:
-        /// 'active', 'preparing', 'running', 'completed'
+        /// Gets or sets the previous state of the task. This property is not
+        /// set if the task is in its initial Active state. Possible values
+        /// include: 'active', 'preparing', 'running', 'completed'
         /// </summary>
         [JsonProperty(PropertyName = "previousState")]
         public TaskState? PreviousState { get; set; }
 
         /// <summary>
-        /// The time at which the task entered its previous state. This
-        /// property is not set if the task is in its initial Active state.
+        /// Gets or sets the time at which the task entered its previous
+        /// state. This property is not set if the task is in its initial
+        /// Active state.
         /// </summary>
         [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
-        /// The command line of the task. For multi-instance tasks, the
-        /// command line is executed on the primary subtask after all the
-        /// subtasks have finished executing the coordianation command line.
+        /// Gets or sets the command line of the task. For multi-instance
+        /// tasks, the command line is executed on the primary subtask after
+        /// all the subtasks have finished executing the coordianation
+        /// command line.
         /// </summary>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// A list of files that the Batch service will download to the
-        /// compute node before running the command line. For multi-instance
-        /// tasks, the resource files will only be downloaded to the compute
-        /// node on which the primary subtask is executed.
+        /// Gets or sets a list of files that the Batch service will download
+        /// to the compute node before running the command line. For
+        /// multi-instance tasks, the resource files will only be downloaded
+        /// to the compute node on which the primary subtask is executed.
         /// </summary>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
-        /// A list of environment variable settings for the task.
+        /// Gets or sets a list of environment variable settings for the task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// A locality hint that can be used by the Batch service to select a
-        /// compute node on which to start the new task.
+        /// Gets or sets a locality hint that can be used by the Batch service
+        /// to select a compute node on which to start the new task.
         /// </summary>
         [JsonProperty(PropertyName = "affinityInfo")]
         public AffinityInformation AffinityInfo { get; set; }
 
         /// <summary>
-        /// The execution constraints that apply to this task.
+        /// Gets or sets the execution constraints that apply to this task.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Whether to run the task in elevated mode.
+        /// Gets or sets whether to run the task in elevated mode.
         /// </summary>
         [JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
-        /// Information about the execution of the task.
+        /// Gets or sets information about the execution of the task.
         /// </summary>
         [JsonProperty(PropertyName = "executionInfo")]
         public TaskExecutionInformation ExecutionInfo { get; set; }
 
         /// <summary>
-        /// Information about the compute node on which the task ran.
+        /// Gets or sets information about the compute node on which the task
+        /// ran.
         /// </summary>
         [JsonProperty(PropertyName = "nodeInfo")]
         public ComputeNodeInformation NodeInfo { get; set; }
 
         /// <summary>
-        /// Information about how to run the multi-instance task.
+        /// Gets or sets information about how to run the multi-instance task.
         /// </summary>
         [JsonProperty(PropertyName = "multiInstanceSettings")]
         public MultiInstanceSettings MultiInstanceSettings { get; set; }
 
         /// <summary>
-        /// Resource usage statistics for the task.
+        /// Gets or sets resource usage statistics for the task.
         /// </summary>
         [JsonProperty(PropertyName = "stats")]
         public TaskStatistics Stats { get; set; }
 
         /// <summary>
-        /// Any dependencies this task has.
+        /// Gets or sets any dependencies this task has.
         /// </summary>
         [JsonProperty(PropertyName = "dependsOn")]
         public TaskDependencies DependsOn { get; set; }

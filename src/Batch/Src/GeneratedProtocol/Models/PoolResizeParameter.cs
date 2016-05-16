@@ -47,22 +47,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The desired number of compute nodes in the pool.
+        /// Gets or sets the desired number of compute nodes in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetDedicated")]
         public int TargetDedicated { get; set; }
 
         /// <summary>
-        /// The timeout for allocation of compute nodes to the pool or removal
-        /// of compute nodes from the pool. The default value is 10 minutes.
+        /// Gets or sets the timeout for allocation of compute nodes to the
+        /// pool or removal of compute nodes from the pool. The default value
+        /// is 10 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "resizeTimeout")]
         public TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// When nodes may be removed from the pool, if the pool size is
-        /// decreasing. Possible values include: 'requeue', 'terminate',
-        /// 'taskcompletion', 'retaineddata'
+        /// Gets or sets when nodes may be removed from the pool, if the pool
+        /// size is decreasing. Possible values include: 'requeue',
+        /// 'terminate', 'taskcompletion', 'retaineddata'
         /// </summary>
         [JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }

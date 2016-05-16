@@ -50,34 +50,36 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The X.509 thumbprint of the certificate. This is a sequence of up
-        /// to 40 hex digits (it may include spaces but these are removed).
+        /// Gets or sets the X.509 thumbprint of the certificate. This is a
+        /// sequence of up to 40 hex digits (it may include spaces but these
+        /// are removed).
         /// </summary>
         [JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
-        /// The algorithm used to derive the thumbprint. This must be sha1.
+        /// Gets or sets the algorithm used to derive the thumbprint. This
+        /// must be sha1.
         /// </summary>
         [JsonProperty(PropertyName = "thumbprintAlgorithm")]
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
-        /// The base64-encoded contents of the certificate. The maximum size
-        /// is 10KB.
+        /// Gets or sets the base64-encoded contents of the certificate. The
+        /// maximum size is 10KB.
         /// </summary>
         [JsonProperty(PropertyName = "data")]
         public string Data { get; set; }
 
         /// <summary>
-        /// The format of the certificate data. Possible values include:
-        /// 'pfx', 'cer', 'unmapped'
+        /// Gets or sets the format of the certificate data. Possible values
+        /// include: 'pfx', 'cer', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "certificateFormat")]
         public CertificateFormat? CertificateFormat { get; set; }
 
         /// <summary>
-        /// The password to access the certificate's private key.
+        /// Gets or sets the password to access the certificate's private key.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }

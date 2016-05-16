@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Additional parameters for the ListPoolUsageMetrics operation.
+    /// Additional parameters for the Pool_ListPoolUsageMetrics operation.
     /// </summary>
     public partial class PoolListPoolUsageMetricsOptions
     {
@@ -54,57 +54,57 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The earliest time from which to include metrics. This must be at
-        /// least two and a half hours before the current time.
+        /// Gets or sets the earliest time from which to include metrics. This
+        /// must be at least two and a half hours before the current time.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// The latest time from which to include metrics. This must be at
-        /// least two hours before the current time.
+        /// Gets or sets the latest time from which to include metrics. This
+        /// must be at least two hours before the current time.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// An OData $filter clause.
+        /// Gets or sets an OData $filter clause.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public string Filter { get; set; }
 
         /// <summary>
-        /// The maximum number of items to return in the response.
+        /// Gets or sets the maximum number of items to return in the response.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public int? MaxResults { get; set; }
 
         /// <summary>
-        /// The maximum time that the server can spend processing the request,
-        /// in seconds. The default is 30 seconds.
+        /// Gets or sets the maximum time that the server can spend processing
+        /// the request, in seconds. The default is 30 seconds.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public int? Timeout { get; set; }
 
         /// <summary>
-        /// The caller-generated request identity, in the form of a GUID with
-        /// no decoration such as curly braces, e.g.
+        /// Gets or sets the caller-generated request identity, in the form of
+        /// a GUID with no decoration such as curly braces, e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
-        /// Whether the server should return the client-request-id identifier
-        /// in the response.
+        /// Gets or sets whether the server should return the
+        /// client-request-id identifier in the response.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }
 
         /// <summary>
-        /// The time the request was issued. If not specified, this header
-        /// will be automatically populated with the current system clock
-        /// time.
+        /// Gets or sets the time the request was issued. If not specified,
+        /// this header will be automatically populated with the current
+        /// system clock time.
         /// </summary>
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
         [JsonProperty(PropertyName = "")]

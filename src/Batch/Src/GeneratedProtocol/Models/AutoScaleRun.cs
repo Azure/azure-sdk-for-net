@@ -47,22 +47,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The time at which the autoscale formula was last evaluated.
+        /// Gets or sets the time at which the autoscale formula was last
+        /// evaluated.
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
         public DateTime Timestamp { get; set; }
 
         /// <summary>
-        /// The final values of all variables used in the evaluation of the
-        /// autoscale formula. Each variable value is returned in the form
-        /// $variable=value, and variables are separated by semicolons.
+        /// Gets or sets the final values of all variables used in the
+        /// evaluation of the autoscale formula. Each variable value is
+        /// returned in the form $variable=value, and variables are separated
+        /// by semicolons.
         /// </summary>
         [JsonProperty(PropertyName = "results")]
         public string Results { get; set; }
 
         /// <summary>
-        /// Details of the error encountered evaluating the autoscale formula
-        /// on the pool, if the evaluation was unsuccessful.
+        /// Gets or sets details of the error encountered evaluating the
+        /// autoscale formula on the pool, if the evaluation was unsuccessful.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public AutoScaleRunError Error { get; set; }

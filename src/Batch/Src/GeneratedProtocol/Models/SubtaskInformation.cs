@@ -54,69 +54,73 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The id of the subtask.
+        /// Gets or sets the id of the subtask.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
-        /// Information about the compute node on which the subtask ran.
+        /// Gets or sets information about the compute node on which the
+        /// subtask ran.
         /// </summary>
         [JsonProperty(PropertyName = "nodeInfo")]
         public ComputeNodeInformation NodeInfo { get; set; }
 
         /// <summary>
-        /// The time at which the subtask started running. If the subtask has
-        /// been restarted or retried, this is the most recent time at which
-        /// the subtask started running.
+        /// Gets or sets the time at which the subtask started running. If the
+        /// subtask has been restarted or retried, this is the most recent
+        /// time at which the subtask started running.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// The time at which the subtask completed. This property is set only
-        /// if the subtask is in the Completed state.
+        /// Gets or sets the time at which the subtask completed. This
+        /// property is set only if the subtask is in the Completed state.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// The exit code of the subtask. This property is set only if the
-        /// subtask is in the Completed state.
+        /// Gets or sets the exit code of the subtask. This property is set
+        /// only if the subtask is in the Completed state.
         /// </summary>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Details of any error encountered scheduling the subtask.
+        /// Gets or sets details of any error encountered scheduling the
+        /// subtask.
         /// </summary>
         [JsonProperty(PropertyName = "schedulingError")]
         public TaskSchedulingError SchedulingError { get; set; }
 
         /// <summary>
-        /// The current state of the subtask. Possible values include:
-        /// 'active', 'preparing', 'running', 'completed'
+        /// Gets or sets the current state of the subtask. Possible values
+        /// include: 'active', 'preparing', 'running', 'completed'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public TaskState? State { get; set; }
 
         /// <summary>
-        /// The time at which the subtask entered its current state.
+        /// Gets or sets the time at which the subtask entered its current
+        /// state.
         /// </summary>
         [JsonProperty(PropertyName = "stateTransitionTime")]
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// The previous state of the subtask. This property is not set if the
-        /// subtask is in its initial Active state. Possible values include:
-        /// 'active', 'preparing', 'running', 'completed'
+        /// Gets or sets the previous state of the subtask. This property is
+        /// not set if the subtask is in its initial Active state. Possible
+        /// values include: 'active', 'preparing', 'running', 'completed'
         /// </summary>
         [JsonProperty(PropertyName = "previousState")]
         public TaskState? PreviousState { get; set; }
 
         /// <summary>
-        /// The time at which the subtask entered its previous state. This
-        /// property is not set if the subtask is in its initial Active state.
+        /// Gets or sets the time at which the subtask entered its previous
+        /// state. This property is not set if the subtask is in its initial
+        /// Active state.
         /// </summary>
         [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public DateTime? PreviousStateTransitionTime { get; set; }

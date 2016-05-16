@@ -52,55 +52,57 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The time at which the task started running. If the task has been
-        /// restarted or retried, this is the most recent time at which the
-        /// task started running.
+        /// Gets or sets the time at which the task started running. If the
+        /// task has been restarted or retried, this is the most recent time
+        /// at which the task started running.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// The time at which the task completed. This property is set only if
-        /// the task is in the Completed state.
+        /// Gets or sets the time at which the task completed. This property
+        /// is set only if the task is in the Completed state.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// The exit code of the task. This property is set only if the task
-        /// is in completed state.
+        /// Gets or sets the exit code of the task. This property is set only
+        /// if the task is in completed state.
         /// </summary>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Details of any error encountered scheduling the task.
+        /// Gets or sets details of any error encountered scheduling the task.
         /// </summary>
         [JsonProperty(PropertyName = "schedulingError")]
         public TaskSchedulingError SchedulingError { get; set; }
 
         /// <summary>
-        /// The number of times the task has been retried by the Batch service.
+        /// Gets or sets the number of times the task has been retried by the
+        /// Batch service.
         /// </summary>
         [JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
 
         /// <summary>
-        /// The most recent time at which a retry of the task started running.
+        /// Gets or sets the most recent time at which a retry of the task
+        /// started running.
         /// </summary>
         [JsonProperty(PropertyName = "lastRetryTime")]
         public DateTime? LastRetryTime { get; set; }
 
         /// <summary>
-        /// The number of times the task has been requeued by the Batch
-        /// service as the result of a user request.
+        /// Gets or sets the number of times the task has been requeued by the
+        /// Batch service as the result of a user request.
         /// </summary>
         [JsonProperty(PropertyName = "requeueCount")]
         public int RequeueCount { get; set; }
 
         /// <summary>
-        /// The most recent time at which the task has been requeued by the
-        /// Batch service as the result of a user request.
+        /// Gets or sets the most recent time at which the task has been
+        /// requeued by the Batch service as the result of a user request.
         /// </summary>
         [JsonProperty(PropertyName = "lastRequeueTime")]
         public DateTime? LastRequeueTime { get; set; }

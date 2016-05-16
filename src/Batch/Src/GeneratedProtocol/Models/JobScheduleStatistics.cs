@@ -58,104 +58,107 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The URL of the statistics.
+        /// Gets or sets the URL of the statistics.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// The start time of the time range covered by the statistics.
+        /// Gets or sets the start time of the time range covered by the
+        /// statistics.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// The time at which the statistics were last updated. All statistics
-        /// are limited to the range between startTime and lastUpdateTime.
+        /// Gets or sets the time at which the statistics were last updated.
+        /// All statistics are limited to the range between startTime and
+        /// lastUpdateTime.
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateTime")]
         public DateTime LastUpdateTime { get; set; }
 
         /// <summary>
-        /// The total user mode CPU time (summed across all cores and all
-        /// compute nodes) consumed by all tasks in all jobs created under
-        /// the schedule.
+        /// Gets or sets the total user mode CPU time (summed across all cores
+        /// and all compute nodes) consumed by all tasks in all jobs created
+        /// under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "userCPUTime")]
         public TimeSpan UserCPUTime { get; set; }
 
         /// <summary>
-        /// The total kernel mode CPU time (summed across all cores and all
-        /// compute nodes) consumed by all tasks in all jobs created under
-        /// the schedule.
+        /// Gets or sets the total kernel mode CPU time (summed across all
+        /// cores and all compute nodes) consumed by all tasks in all jobs
+        /// created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "kernelCPUTime")]
         public TimeSpan KernelCPUTime { get; set; }
 
         /// <summary>
-        /// The total wall clock time of all the tasks in all the jobs created
-        /// under the schedule.
+        /// Gets or sets the total wall clock time of all the tasks in all the
+        /// jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "wallClockTime")]
         public TimeSpan WallClockTime { get; set; }
 
         /// <summary>
-        /// The total number of disk read operations made by all tasks in all
-        /// jobs created under the schedule.
+        /// Gets or sets the total number of disk read operations made by all
+        /// tasks in all jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "readIOps")]
         public long ReadIOps { get; set; }
 
         /// <summary>
-        /// The total number of disk write operations made by all tasks in all
-        /// jobs created under the schedule.
+        /// Gets or sets the total number of disk write operations made by all
+        /// tasks in all jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "writeIOps")]
         public long WriteIOps { get; set; }
 
         /// <summary>
-        /// The total gibibytes read from disk by all tasks in all jobs
-        /// created under the schedule.
+        /// Gets or sets the total gibibytes read from disk by all tasks in
+        /// all jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "readIOGiB")]
         public double ReadIOGiB { get; set; }
 
         /// <summary>
-        /// The total gibibytes written to disk by all tasks in all jobs
-        /// created under the schedule.
+        /// Gets or sets the total gibibytes written to disk by all tasks in
+        /// all jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "writeIOGiB")]
         public double WriteIOGiB { get; set; }
 
         /// <summary>
-        /// The total number of tasks successfully completed during the given
-        /// time range in jobs created under the schedule. A task completes
-        /// successfully if it returns exit code 0.
+        /// Gets or sets the total number of tasks successfully completed
+        /// during the given time range in jobs created under the schedule. A
+        /// task completes successfully if it returns exit code 0.
         /// </summary>
         [JsonProperty(PropertyName = "numSucceededTasks")]
         public long NumSucceededTasks { get; set; }
 
         /// <summary>
-        /// The total number of tasks that failed during the given time range
-        /// in jobs created under the schedule. A task fails if it exhausts
-        /// its maximum retry count without returning exit code 0.
+        /// Gets or sets the total number of tasks that failed during the
+        /// given time range in jobs created under the schedule. A task fails
+        /// if it exhausts its maximum retry count without returning exit
+        /// code 0.
         /// </summary>
         [JsonProperty(PropertyName = "numFailedTasks")]
         public long NumFailedTasks { get; set; }
 
         /// <summary>
-        /// The total number of retries during the given time range on all
-        /// tasks in all jobs created under the schedule.
+        /// Gets or sets the total number of retries during the given time
+        /// range on all tasks in all jobs created under the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "numTaskRetries")]
         public long NumTaskRetries { get; set; }
 
         /// <summary>
-        /// The total wait time of all tasks in all jobs created under the
-        /// schedule. The wait time for a task is defined as the elapsed time
-        /// between the creation of the task and the start of task execution.
-        /// (If the task is retried due to failures, the wait time is the
-        /// time to the most recent task execution.)
+        /// Gets or sets the total wait time of all tasks in all jobs created
+        /// under the schedule. The wait time for a task is defined as the
+        /// elapsed time between the creation of the task and the start of
+        /// task execution. (If the task is retried due to failures, the wait
+        /// time is the time to the most recent task execution.)
         /// </summary>
         [JsonProperty(PropertyName = "waitTime")]
         public TimeSpan WaitTime { get; set; }

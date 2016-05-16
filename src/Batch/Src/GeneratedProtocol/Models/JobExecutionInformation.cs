@@ -50,33 +50,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The start time of the job.
+        /// Gets or sets the start time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// The completion time of the job. This property is set only if the
-        /// job is in the completed state.
+        /// Gets or sets the completion time of the job. This property is set
+        /// only if the job is in the completed state.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// The id of the pool to which this job is assigned.
+        /// Gets or sets the id of the pool to which this job is assigned.
         /// </summary>
         [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
-        /// Details of any error encountered by the service in starting the
-        /// job.
+        /// Gets or sets details of any error encountered by the service in
+        /// starting the job.
         /// </summary>
         [JsonProperty(PropertyName = "schedulingError")]
         public JobSchedulingError SchedulingError { get; set; }
 
         /// <summary>
-        /// A string describing the reason the job ended.
+        /// Gets or sets a string describing the reason the job ended.
         /// </summary>
         [JsonProperty(PropertyName = "terminateReason")]
         public string TerminateReason { get; set; }

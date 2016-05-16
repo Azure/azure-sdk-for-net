@@ -48,14 +48,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The formula for the desired number of compute nodes in the pool.
+        /// Gets or sets the formula for the desired number of compute nodes
+        /// in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
-        /// A time interval for the desired autoscale evaluation period in the
-        /// pool.
+        /// Gets or sets a time interval for the desired autoscale evaluation
+        /// period in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
         public TimeSpan? AutoScaleEvaluationInterval { get; set; }

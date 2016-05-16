@@ -48,24 +48,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The Azure Guest OS family to be installed on the virtual machines
-        /// in the pool.
+        /// Gets or sets the Azure Guest OS family to be installed on the
+        /// virtual machines in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "osFamily")]
         public string OsFamily { get; set; }
 
         /// <summary>
-        /// The Azure Guest OS version to be installed on the virtual machines
-        /// in the pool. The default value is * which specifies the latest
-        /// operating system version for the specified OS family.
+        /// Gets or sets the Azure Guest OS version to be installed on the
+        /// virtual machines in the pool. The default value is * which
+        /// specifies the latest operating system version for the specified
+        /// OS family.
         /// </summary>
         [JsonProperty(PropertyName = "targetOSVersion")]
         public string TargetOSVersion { get; set; }
 
         /// <summary>
-        /// The Azure Guest OS Version currently installed on the virtual
-        /// machines in the pool. This may differ from TargetOSVersion if the
-        /// pool state is Upgrading.
+        /// Gets or sets the Azure Guest OS Version currently installed on the
+        /// virtual machines in the pool. This may differ from
+        /// TargetOSVersion if the pool state is Upgrading.
         /// </summary>
         [JsonProperty(PropertyName = "currentOSVersion")]
         public string CurrentOSVersion { get; set; }

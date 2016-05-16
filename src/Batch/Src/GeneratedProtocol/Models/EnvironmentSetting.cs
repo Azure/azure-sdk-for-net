@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The name of the environment variable.
+        /// Gets or sets the name of the environment variable.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The value of the environment variable.
+        /// Gets or sets the value of the environment variable.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

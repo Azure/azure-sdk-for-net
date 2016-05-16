@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Whether automatic updates are enabled on the virtual machine. If
-        /// omitted, the default value is true.
+        /// Gets or sets whether automatic updates are enabled on the virtual
+        /// machine. If omitted, the default value is true.
         /// </summary>
         [JsonProperty(PropertyName = "enableAutomaticUpdates")]
         public bool? EnableAutomaticUpdates { get; set; }

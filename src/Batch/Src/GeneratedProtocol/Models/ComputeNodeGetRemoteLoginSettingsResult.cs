@@ -48,13 +48,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The IP address used for remote login to the compute node.
+        /// Gets or sets the IP address used for remote login to the compute
+        /// node.
         /// </summary>
         [JsonProperty(PropertyName = "remoteLoginIPAddress")]
         public string RemoteLoginIPAddress { get; set; }
 
         /// <summary>
-        /// The port used for remote login to the compute node.
+        /// Gets or sets the port used for remote login to the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "remoteLoginPort")]
         public int RemoteLoginPort { get; set; }

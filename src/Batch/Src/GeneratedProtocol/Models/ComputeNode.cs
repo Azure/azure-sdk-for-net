@@ -62,123 +62,130 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The id of the compute node.
+        /// Gets or sets the id of the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// The URL of the compute node.
+        /// Gets or sets the URL of the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// The current state of the compute node. Possible values include:
-        /// 'idle', 'rebooting', 'reimaging', 'running', 'unusable',
-        /// 'creating', 'starting', 'waitingforstarttask', 'starttaskfailed',
-        /// 'unknown', 'leavingpool', 'offline'
+        /// Gets or sets the current state of the compute node. Possible
+        /// values include: 'idle', 'rebooting', 'reimaging', 'running',
+        /// 'unusable', 'creating', 'starting', 'waitingforstarttask',
+        /// 'starttaskfailed', 'unknown', 'leavingpool', 'offline'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public ComputeNodeState? State { get; set; }
 
         /// <summary>
-        /// Whether the compute node should be available for task scheduling.
-        /// Possible values include: 'enabled', 'disabled'
+        /// Gets or sets whether the compute node should be available for task
+        /// scheduling. Possible values include: 'enabled', 'disabled'
         /// </summary>
         [JsonProperty(PropertyName = "schedulingState")]
         public SchedulingState? SchedulingState { get; set; }
 
         /// <summary>
-        /// The time at which the compute node entered its current state.
+        /// Gets or sets the time at which the compute node entered its
+        /// current state.
         /// </summary>
         [JsonProperty(PropertyName = "stateTransitionTime")]
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// The time at which the compute node was started.
+        /// Gets or sets the time at which the compute node was started.
         /// </summary>
         [JsonProperty(PropertyName = "lastBootTime")]
         public DateTime? LastBootTime { get; set; }
 
         /// <summary>
-        /// The time at which this compute node was allocated to the pool.
+        /// Gets or sets the time at which this compute node was allocated to
+        /// the pool.
         /// </summary>
         [JsonProperty(PropertyName = "allocationTime")]
         public DateTime? AllocationTime { get; set; }
 
         /// <summary>
-        /// The IP address that other compute nodes can use to communicate
-        /// with this compute node.
+        /// Gets or sets the IP address that other compute nodes can use to
+        /// communicate with this compute node.
         /// </summary>
         [JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; set; }
 
         /// <summary>
-        /// An identifier which can be passed in the Add Task API to request
-        /// that the task be scheduled close to this compute node.
+        /// Gets or sets an identifier which can be passed in the Add Task API
+        /// to request that the task be scheduled close to this compute node.
         /// </summary>
         [JsonProperty(PropertyName = "affinityId")]
         public string AffinityId { get; set; }
 
         /// <summary>
-        /// The size of the virtual machine hosting the compute node.
+        /// Gets or sets the size of the virtual machine hosting the compute
+        /// node.
         /// </summary>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
-        /// The total number of job tasks completed on the compute node. This
-        /// includes Job Preparation, Job Release and Job Manager tasks, but
-        /// not the pool start task.
+        /// Gets or sets the total number of job tasks completed on the
+        /// compute node. This includes Job Preparation, Job Release and Job
+        /// Manager tasks, but not the pool start task.
         /// </summary>
         [JsonProperty(PropertyName = "totalTasksRun")]
         public int? TotalTasksRun { get; set; }
 
         /// <summary>
-        /// The total number of currently running job tasks on the compute
-        /// node. This includes Job Preparation, Job Release, and Job Manager
-        /// tasks, but not the pool start task.
+        /// Gets or sets the total number of currently running job tasks on
+        /// the compute node. This includes Job Preparation, Job Release, and
+        /// Job Manager tasks, but not the pool start task.
         /// </summary>
         [JsonProperty(PropertyName = "runningTasksCount")]
         public int? RunningTasksCount { get; set; }
 
         /// <summary>
-        /// The total number of job tasks which completed successfully (with
-        /// exitCode 0) on the compute node. This includes Job Preparation,
-        /// Job Release, and Job Manager tasks, but not the pool start task.
+        /// Gets or sets the total number of job tasks which completed
+        /// successfully (with exitCode 0) on the compute node. This includes
+        /// Job Preparation, Job Release, and Job Manager tasks, but not the
+        /// pool start task.
         /// </summary>
         [JsonProperty(PropertyName = "totalTasksSucceeded")]
         public int? TotalTasksSucceeded { get; set; }
 
         /// <summary>
-        /// The list of tasks that are currently running on the compute node.
+        /// Gets or sets the list of tasks that are currently running on the
+        /// compute node.
         /// </summary>
         [JsonProperty(PropertyName = "recentTasks")]
         public IList<TaskInformation> RecentTasks { get; set; }
 
         /// <summary>
-        /// The task specified to run on the compute node as it joins the pool.
+        /// Gets or sets the task specified to run on the compute node as it
+        /// joins the pool.
         /// </summary>
         [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
-        /// Runtime information about the execution of the start task on the
-        /// compute node.
+        /// Gets or sets runtime information about the execution of the start
+        /// task on the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "startTaskInfo")]
         public StartTaskInformation StartTaskInfo { get; set; }
 
         /// <summary>
-        /// The list of certificates installed on the compute node.
+        /// Gets or sets the list of certificates installed on the compute
+        /// node.
         /// </summary>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
-        /// The list of errors that are currently being encountered by the
-        /// compute node.
+        /// Gets or sets the list of errors that are currently being
+        /// encountered by the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
         public IList<ComputeNodeError> Errors { get; set; }

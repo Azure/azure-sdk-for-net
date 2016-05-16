@@ -53,65 +53,66 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// A string that uniquely identifies the Job Manager task. A GUID is
-        /// recommended.
+        /// Gets or sets a string that uniquely identifies the Job Manager
+        /// task. A GUID is recommended.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// The display name of the Job Manager task.
+        /// Gets or sets the display name of the Job Manager task.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// The command line of the Job Manager task.
+        /// Gets or sets the command line of the Job Manager task.
         /// </summary>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// A list of files that the Batch service will download to the
-        /// compute node before running the command line.
+        /// Gets or sets a list of files that the Batch service will download
+        /// to the compute node before running the command line.
         /// </summary>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
-        /// A list of environment variable settings for the Job Manager task.
+        /// Gets or sets a list of environment variable settings for the Job
+        /// Manager task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Constraints that apply to the Job Manager task.
+        /// Gets or sets constraints that apply to the Job Manager task.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Whether completion of the Job Manager task signifies completion of
-        /// the entire job.
+        /// Gets or sets whether completion of the Job Manager task signifies
+        /// completion of the entire job.
         /// </summary>
         [JsonProperty(PropertyName = "killJobOnCompletion")]
         public bool? KillJobOnCompletion { get; set; }
 
         /// <summary>
-        /// Whether to run the Job Manager task in elevated mode. The default
-        /// value is false.
+        /// Gets or sets whether to run the Job Manager task in elevated mode.
+        /// The default value is false.
         /// </summary>
         [JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
-        /// Whether the Job Manager task requires exclusive use of the compute
-        /// node where it runs. If true, no other tasks will run on the same
-        /// compute node for as long as the Job Manager is running. If false,
-        /// other tasks can run simultaneously with the Job Manager on a
-        /// compute node. (The Job Manager task counts normally against the
-        /// nodeâ€™s concurrent task limit, so this is only relevant if the
-        /// node allows multiple concurrent tasks.)
+        /// Gets or sets whether the Job Manager task requires exclusive use
+        /// of the compute node where it runs. If true, no other tasks will
+        /// run on the same compute node for as long as the Job Manager is
+        /// running. If false, other tasks can run simultaneously with the
+        /// Job Manager on a compute node. (The Job Manager task counts
+        /// normally against the node’s concurrent task limit, so this is
+        /// only relevant if the node allows multiple concurrent tasks.)
         /// </summary>
         [JsonProperty(PropertyName = "runExclusive")]
         public bool? RunExclusive { get; set; }

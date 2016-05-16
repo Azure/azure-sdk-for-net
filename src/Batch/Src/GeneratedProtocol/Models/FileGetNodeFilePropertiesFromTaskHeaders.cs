@@ -56,64 +56,64 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The ClientRequestId provided by the client during the request, if
-        /// present and requested to be returned.
+        /// Gets or sets the ClientRequestId provided by the client during the
+        /// request, if present and requested to be returned.
         /// </summary>
         [JsonProperty(PropertyName = "client-request-id")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
-        /// The value that uniquely identifies a request.
+        /// Gets or sets the value that uniquely identifies a request.
         /// </summary>
         [JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }
 
         /// <summary>
-        /// The content of the ETag HTTP response header.
+        /// Gets or sets the content of the ETag HTTP response header.
         /// </summary>
         [JsonProperty(PropertyName = "ETag")]
         public string ETag { get; set; }
 
         /// <summary>
-        /// The content of the Last-Modified HTTP response header.
+        /// Gets or sets the content of the Last-Modified HTTP response header.
         /// </summary>
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
         [JsonProperty(PropertyName = "Last-Modified")]
         public DateTime? LastModified { get; set; }
 
         /// <summary>
-        /// The file creation time.
+        /// Gets or sets the file creation time.
         /// </summary>
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
         [JsonProperty(PropertyName = "ocp-creation-time")]
         public DateTime? OcpCreationTime { get; set; }
 
         /// <summary>
-        /// Whether the object represents a directory.
+        /// Gets or sets whether the object represents a directory.
         /// </summary>
         [JsonProperty(PropertyName = "ocp-batch-file-isdirectory")]
         public bool? OcpBatchFileIsdirectory { get; set; }
 
         /// <summary>
-        /// The URL of the file.
+        /// Gets or sets the URL of the file.
         /// </summary>
         [JsonProperty(PropertyName = "ocp-batch-file-url")]
         public string OcpBatchFileUrl { get; set; }
 
         /// <summary>
-        /// The file mode attribute in octal format.
+        /// Gets or sets the file mode attribute in octal format.
         /// </summary>
         [JsonProperty(PropertyName = "ocp-batch-file-mode")]
         public string OcpBatchFileMode { get; set; }
 
         /// <summary>
-        /// The content type of the file.
+        /// Gets or sets the content type of the file.
         /// </summary>
         [JsonProperty(PropertyName = "Content-Type")]
         public string ContentType { get; set; }
 
         /// <summary>
-        /// The length of the file.
+        /// Gets or sets the length of the file.
         /// </summary>
         [JsonProperty(PropertyName = "Content-Length")]
         public long? ContentLength { get; set; }

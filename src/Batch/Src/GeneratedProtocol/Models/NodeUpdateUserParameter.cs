@@ -47,21 +47,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The password of the account.
+        /// Gets or sets the password of the account.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
-        /// The time at which the account should expire. If omitted, the
-        /// default is 1 day from the current time.
+        /// Gets or sets the time at which the account should expire. If
+        /// omitted, the default is 1 day from the current time.
         /// </summary>
         [JsonProperty(PropertyName = "expiryTime")]
         public DateTime? ExpiryTime { get; set; }
 
         /// <summary>
-        /// The SSH public key that can be used for remote login to the
-        /// compute node.
+        /// Gets or sets the SSH public key that can be used for remote login
+        /// to the compute node.
         /// </summary>
         [JsonProperty(PropertyName = "sshPublicKey")]
         public string SshPublicKey { get; set; }

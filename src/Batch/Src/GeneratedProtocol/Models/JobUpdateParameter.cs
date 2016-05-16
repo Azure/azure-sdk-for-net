@@ -48,31 +48,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// The priority of the job. Priority values can range from -1000 to
-        /// 1000, with -1000 being the lowest priority and 1000 being the
-        /// highest priority. If omitted, the priority of the job is left
-        /// unchanged.
+        /// Gets or sets the priority of the job. Priority values can range
+        /// from -1000 to 1000, with -1000 being the lowest priority and 1000
+        /// being the highest priority. If omitted, the priority of the job
+        /// is left unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// The execution constraints for the job. If omitted, the existing
-        /// execution constraints are left unchanged.
+        /// Gets or sets the execution constraints for the job. If omitted,
+        /// the existing execution constraints are left unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
-        /// The pool on which the Batch service runs the job's tasks. If
-        /// omitted, the job continues to run on its current pool.
+        /// Gets or sets the pool on which the Batch service runs the job's
+        /// tasks. If omitted, the job continues to run on its current pool.
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
-        /// A list of name-value pairs associated with the job as metadata. If
-        /// omitted, the existing job metadata is left unchanged.
+        /// Gets or sets a list of name-value pairs associated with the job as
+        /// metadata. If omitted, the existing job metadata is left unchanged.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
