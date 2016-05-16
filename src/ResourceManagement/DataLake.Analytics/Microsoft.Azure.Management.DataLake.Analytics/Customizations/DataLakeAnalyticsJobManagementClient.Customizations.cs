@@ -36,6 +36,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
         /// </param>
+        /// <param name='userAgentAssemblyVersion'>
+        /// Optional. The version string that should be sent in the user-agent header for all requests. The default is the current version of the SDK.
+        /// </param>
+        /// <param name='adlaJobDnsSuffix'>
+        /// Optional. The dns suffix to use for all requests for this client instance. The default is 'azuredatalakeanalytics.net'.
+        /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
@@ -53,6 +59,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='userAgentAssemblyVersion'>
+        /// Optional. The version string that should be sent in the user-agent header for all requests. The default is the current version of the SDK.
+        /// </param>
+        /// <param name='adlaJobDnsSuffix'>
+        /// Optional. The dns suffix to use for all requests for this client instance. The default is 'azuredatalakeanalytics.net'.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.

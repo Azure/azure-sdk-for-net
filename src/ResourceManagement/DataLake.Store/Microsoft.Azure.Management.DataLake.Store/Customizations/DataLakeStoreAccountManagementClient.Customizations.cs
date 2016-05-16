@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
         /// </param>
+        /// <param name='userAgentAssemblyVersion'>
+        /// Optional. The version string that should be sent in the user-agent header for all requests. The default is the current version of the SDK.
+        /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
@@ -53,6 +56,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
         /// </param>
+        /// <param name='userAgentAssemblyVersion'>
+        /// Optional. The version string that should be sent in the user-agent header for all requests. The default is the current version of the SDK.
+        /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
@@ -69,6 +75,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
+        /// </param>
+        /// <param name='userAgentAssemblyVersion'>
+        /// Optional. The version string that should be sent in the user-agent header for all requests. The default is the current version of the SDK.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -89,6 +98,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='userAgentAssemblyVersion'>
+        /// Optional. The version string that should be sent in the user-agent header for all requests. The default is the current version of the SDK.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
