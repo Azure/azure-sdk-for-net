@@ -23,6 +23,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.WebKey;
+using Microsoft.Azure.KeyVault.Models;
 
 namespace Sample.Microsoft.HelloKeyVault
 {
@@ -365,7 +366,6 @@ namespace Sample.Microsoft.HelloKeyVault
         /// <summary>
         /// Gets key bundle from args or uses a default key bundle
         /// </summary>
-        /// <param name="args"> the input arguments of the console program </param>
         /// <returns> key bundle </returns>
         public KeyBundle GetKeyBundle()
         {
@@ -379,8 +379,8 @@ namespace Sample.Microsoft.HelloKeyVault
                 Attributes = new KeyAttributes()
                 {
                     Enabled = true,
-                    Expires = UnixEpoch.FromUnixTime(int.MaxValue),
-                    NotBefore = UnixEpoch.FromUnixTime(0),
+                    Expires = DateTime.UtcNow.AddDays(2),
+                    NotBefore = DateTime.UtcNow.AddDays(-1)
                 }
             };
 
@@ -415,8 +415,8 @@ namespace Sample.Microsoft.HelloKeyVault
                 Attributes = new KeyAttributes()
                 {
                     Enabled = true,
-                    Expires = UnixEpoch.FromUnixTime(int.MaxValue),
-                    NotBefore = UnixEpoch.FromUnixTime(0),
+                    Expires = DateTime.UtcNow.AddDays(2),
+                    NotBefore = DateTime.UtcNow.AddDays(-1)
                 }
             };
 
@@ -487,7 +487,7 @@ namespace Sample.Microsoft.HelloKeyVault
             string result = string.Empty;
             for ( int i = 0; i < args.Count(); i++ )
             {
-                if ( string.Compare( args[i], argTag, true ) == 0 )
+                if ( String.Compare(args[i], argTag, StringComparison.OrdinalIgnoreCase) == 0 )
                 {
                     if ( i + 1 < args.Count() )
                     {

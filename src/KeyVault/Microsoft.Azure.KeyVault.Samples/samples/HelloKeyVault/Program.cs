@@ -20,13 +20,14 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Hyak.Common;
 using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Rest;
+using Microsoft.Rest.Serialization;
 
 namespace Sample.Microsoft.HelloKeyVault
 {
@@ -40,20 +41,20 @@ namespace Sample.Microsoft.HelloKeyVault
         {
 
             KeyBundle keyBundle = null; // The key specification and attributes
-            Secret secret = null;
+            SecretBundle secret = null;
             string keyName = string.Empty;
             string secretName = string.Empty;
 
             inputValidator = new InputValidator(args);
 
-            TracingAdapter.AddTracingInterceptor(new ConsoleTracingInterceptor());
-            TracingAdapter.IsEnabled = inputValidator.GetTracingEnabled();
+            ServiceClientTracing.AddTracingInterceptor(new ConsoleTracingInterceptor());
+            ServiceClientTracing.IsEnabled = inputValidator.GetTracingEnabled();
 
             var clientId = ConfigurationManager.AppSettings["AuthClientId"];
             var clientSecret = ConfigurationManager.AppSettings["AuthClientSecret"];
             clientCredential = new ClientCredential(clientId, clientSecret);
 
-            keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken), GetHttpClient());
+            keyVaultClient = new KeyVaultClient(GetAccessToken, new InjectHostHeaderHttpMessageHandler());
 
             // SECURITY: DO NOT USE IN PRODUCTION CODE; FOR TEST PURPOSES ONLY
             //ServicePointManager.ServerCertificateValidationCallback += ( sender, cert, chain, sslPolicyErrors ) => true;
@@ -65,7 +66,7 @@ namespace Sample.Microsoft.HelloKeyVault
             {
                 try
                 {
-                    Console.Out.WriteLine(string.Format("\n\n {0} is in process ...", operation.ToString()));
+                    Console.Out.WriteLine("\n\n {0} is in process ...", operation);
                     switch (operation)
                     {
                         case KeyOperationType.CREATE_KEY:
@@ -134,7 +135,7 @@ namespace Sample.Microsoft.HelloKeyVault
                     }
                     successfulOperations.Add(operation);
                 }
-                catch (KeyVaultClientException exception)
+                catch (KeyVaultErrorException exception)
                 {
                     // The Key Vault exceptions are logged but not thrown to avoid blocking execution for other commands running in batch
                     Console.Out.WriteLine("Operation failed: {0}", exception.Message);
@@ -256,20 +257,20 @@ namespace Sample.Microsoft.HelloKeyVault
 
             var results = keyVaultClient.GetKeyVersionsAsync(vaultAddress, keyName, maxResults).GetAwaiter().GetResult();
 
-            if (results != null && results.Value != null)
+            if (results != null)
             {
-                numKeyVersions += results.Value.Count();
-                foreach (var m in results.Value)
+                numKeyVersions += results.Count();
+                foreach (var m in results)
                     Console.Out.WriteLine("\t{0}-{1}", m.Identifier.Name, m.Identifier.Version);
             }
 
-            while (results != null && !string.IsNullOrWhiteSpace(results.NextLink))
+            while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
             {
-                results = keyVaultClient.GetKeyVersionsNextAsync(results.NextLink).GetAwaiter().GetResult();
-                if (results != null && results.Value != null)
+                results = keyVaultClient.GetKeyVersionsNextAsync(results.NextPageLink).GetAwaiter().GetResult();
+                if (results != null)
                 {
-                    numKeyVersions += results.Value.Count();
-                    foreach (var m in results.Value)
+                    numKeyVersions += results.Count();
+                    foreach (var m in results)
                         Console.Out.WriteLine("\t{0}-{1}", m.Identifier.Name, m.Identifier.Version);
                 }
             }
@@ -306,7 +307,7 @@ namespace Sample.Microsoft.HelloKeyVault
         /// Creates or updates a secret
         /// </summary>
         /// <returns> The created or the updated secret </returns>
-        private static Secret CreateSecret(out string secretName)
+        private static SecretBundle CreateSecret(out string secretName)
         {
             secretName = inputValidator.GetSecretName();
             string secretValue = inputValidator.GetSecretValue();
@@ -328,9 +329,9 @@ namespace Sample.Microsoft.HelloKeyVault
         /// </summary>
         /// <param name="secretId"> The secret ID </param>
         /// <returns> The created or the updated secret </returns>
-        private static Secret GetSecret(string secretId)
+        private static SecretBundle GetSecret(string secretId)
         {
-            Secret secret;
+            SecretBundle secret;
             string secretVersion = inputValidator.GetSecretVersion();
 
             if (secretVersion != string.Empty)
@@ -362,20 +363,20 @@ namespace Sample.Microsoft.HelloKeyVault
             Console.Out.WriteLine("List secrets:---------------");
             var results = keyVaultClient.GetSecretsAsync(vaultAddress, maxResults).GetAwaiter().GetResult();
 
-            if (results != null && results.Value != null)
+            if (results != null)
             {
-                numSecretsInVault += results.Value.Count();
-                foreach (var m in results.Value)
+                numSecretsInVault += results.Count();
+                foreach (var m in results)
                     Console.Out.WriteLine("\t{0}", m.Identifier.Name);
             }
 
-            while (results != null && !string.IsNullOrWhiteSpace(results.NextLink))
+            while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
             {
-                results = keyVaultClient.GetSecretsNextAsync(results.NextLink).GetAwaiter().GetResult();
-                if (results != null && results.Value != null)
+                results = keyVaultClient.GetSecretsNextAsync(results.NextPageLink).GetAwaiter().GetResult();
+                if (results != null)
                 {
-                    numSecretsInVault += results.Value.Count();
-                    foreach (var m in results.Value)
+                    numSecretsInVault += results.Count();
+                    foreach (var m in results)
                         Console.Out.WriteLine("\t{0}", m.Identifier.Name);
                 }
             }
@@ -386,9 +387,9 @@ namespace Sample.Microsoft.HelloKeyVault
         /// <summary>
         /// Deletes secret
         /// </summary>
-        /// <param name="secretId"> The secret ID</param>
+        /// <param name="secretName"> The secret name</param>
         /// <returns> The deleted secret </returns>
-        private static Secret DeleteSecret(string secretName)
+        private static SecretBundle DeleteSecret(string secretName)
         {
             // If the secret is not initialized get the secret Id from args
             var vaultAddress = inputValidator.GetVaultAddress();
@@ -405,7 +406,7 @@ namespace Sample.Microsoft.HelloKeyVault
         /// <summary>
         /// backup the specified key and then restores the key into a vault
         /// </summary>
-        /// <param name="keyId"> a global key identifier of the key to get </param>
+        /// <param name="keyName"> the name of the key to get </param>
         /// <returns> restored key bundle </returns>
         private static KeyBundle BackupRestoreKey(string keyName)
         {
@@ -413,9 +414,9 @@ namespace Sample.Microsoft.HelloKeyVault
             keyName = inputValidator.GetKeyName();
 
             // Get a backup of the key and cache its backup value
-            var backupKeyValue = keyVaultClient.BackupKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
+            var backupKeyResult = keyVaultClient.BackupKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
             Console.Out.WriteLine(string.Format(
-                "The backup key value contains {0} bytes.\nTo restore it into a key vault this value should be provided!", backupKeyValue.Length));
+                "The backup key value contains {0} bytes.\nTo restore it into a key vault this value should be provided!", backupKeyResult.Value.Length));
 
             // Get the vault address from args or use the default one
             var newVaultAddress = inputValidator.GetVaultAddress();
@@ -424,7 +425,7 @@ namespace Sample.Microsoft.HelloKeyVault
             keyVaultClient.DeleteKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
 
             // Restore the backed up value into the vault
-            var restoredKey = keyVaultClient.RestoreKeyAsync(newVaultAddress, backupKeyValue).GetAwaiter().GetResult();
+            var restoredKey = keyVaultClient.RestoreKeyAsync(newVaultAddress, backupKeyResult.Value).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Restored key:---------------");
             PrintoutKey(restoredKey);
@@ -436,7 +437,7 @@ namespace Sample.Microsoft.HelloKeyVault
         /// <summary>
         /// Deletes the specified key
         /// </summary>
-        /// <param name="keyId"> a global key identifier of the key to get </param>
+        /// <param name="keyName"> the name of the key to delete </param>
         private static void DeleteKey(string keyName)
         {
             // If the key ID is not initialized get the key id from args
@@ -451,7 +452,7 @@ namespace Sample.Microsoft.HelloKeyVault
         /// <summary>
         /// Wraps a symmetric key and then unwrapps the wrapped key
         /// </summary>
-        /// <param name="keyId"> a global key identifier of the key to get </param>
+        /// <param name="key"> key bundle </param>
         private static void WrapUnwrap(KeyBundle key)
         {
             KeyOperationResult wrappedKey;
@@ -622,7 +623,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             var notBeforeStr = keyBundle.Attributes.NotBefore.HasValue
                 ? keyBundle.Attributes.NotBefore.ToString()
-                : UnixEpoch.EpochDate.ToString();
+                : UnixTimeJsonConverter.EpochDate.ToString();
 
             Console.Out.WriteLine("Key attributes: \n\tIs the key enabled: {0}\n\tExpiry date: {1}\n\tEnable date: {2}",
                 keyBundle.Attributes.Enabled, expiryDateStr, notBeforeStr);
@@ -632,7 +633,7 @@ namespace Sample.Microsoft.HelloKeyVault
         /// Prints out secret values
         /// </summary>
         /// <param name="secret"> secret </param>
-        private static void PrintoutSecret(Secret secret)
+        private static void PrintoutSecret(SecretBundle secret)
         {
             Console.Out.WriteLine("\n\tSecret ID: {0}\n\tSecret Value: {1}",
                 secret.Id, secret.Value);
@@ -643,7 +644,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             var notBeforeStr = secret.Attributes.NotBefore.HasValue
                 ? secret.Attributes.NotBefore.ToString()
-                : UnixEpoch.EpochDate.ToString();
+                : UnixTimeJsonConverter.EpochDate.ToString();
 
             Console.Out.WriteLine("Secret attributes: \n\tIs the key enabled: {0}\n\tExpiry date: {1}\n\tEnable date: {2}\n\tContent type: {3}",
                 secret.Attributes.Enabled, expiryDateStr, notBeforeStr, secret.ContentType);
@@ -655,7 +656,7 @@ namespace Sample.Microsoft.HelloKeyVault
         /// Prints out the tags for a key/secret
         /// </summary>
         /// <param name="tags"></param>
-        private static void PrintoutTags(Dictionary<string, string> tags)
+        private static void PrintoutTags(IDictionary<string, string> tags)
         {
             if (tags != null)
             {
@@ -681,16 +682,6 @@ namespace Sample.Microsoft.HelloKeyVault
             var result = await context.AcquireTokenAsync(resource, clientCredential);
 
             return result.AccessToken;
-        }
-
-        /// <summary>
-        /// Create an HttpClient object that optionally includes logic to override the HOST header
-        /// field for advanced testing purposes.
-        /// </summary>
-        /// <returns>HttpClient instance to use for Key Vault service communication</returns>
-        private static HttpClient GetHttpClient()
-        {
-            return (HttpClientFactory.Create(new InjectHostHeaderHttpMessageHandler()));
         }
     }
 }
