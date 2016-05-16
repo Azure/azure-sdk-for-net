@@ -21,18 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// Base class for protection policy.
+    /// Base class for protection policy. Workload-specific protection policies
+    /// are derived from this class.
     /// </summary>
-    public partial class ProtectionPolicyBase
+    public partial class ProtectionPolicy : ProtectionPolicyBase
     {
+        private int _protectedItemsCount;
+        
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyBase class.
+        /// Optional. Number of items associated with this policy.
         /// </summary>
-        public ProtectionPolicyBase()
+        public int ProtectedItemsCount
+        {
+            get { return this._protectedItemsCount; }
+            set { this._protectedItemsCount = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ProtectionPolicy class.
+        /// </summary>
+        public ProtectionPolicy()
         {
         }
     }
