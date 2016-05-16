@@ -28,6 +28,10 @@
     <Compile Include="ScenarioTests\SmapiTestsFixture.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiOperations.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiProducts.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Loggers.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.OpenIdConnectProviders.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Properties.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.TenantAccessGitInformation.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.TenantAccessInformationGetUpdate.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Apis.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.AuthorizationServers.cs" />
@@ -43,6 +47,7 @@
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ProductSubscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Regions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Reports.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.TenantGitSaveValidateDeploy.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserSubscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Subscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserGroups.cs" />
@@ -220,6 +225,12 @@
     <None Include="SessionRecords\SmapiFunctionalTests\GroupUsersListAddRemove.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\LoggersCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\OpenIdConnectProviderCreateUpdateDeleteList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\PolicyCreateGetUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -238,6 +249,9 @@
     <None Include="SessionRecords\SmapiFunctionalTests\ProductSubscriptionsList.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\PropertyCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\RegionsList.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -250,7 +264,13 @@
     <None Include="SessionRecords\SmapiFunctionalTests\SubscriptionsCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\TenantAccessGitInformationGetUpdate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\TenantAccessInformationGetUpdate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\TenantGitSaveValidateAndDeploy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\UserGroupsListAddRemove.json">

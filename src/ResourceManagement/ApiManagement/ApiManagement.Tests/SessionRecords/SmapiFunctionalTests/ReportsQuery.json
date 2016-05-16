@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/reports/byApi?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9yZXBvcnRzL2J5QXBpP2FwaS12ZXJzaW9uPTIwMTQtMDItMTQmJGZpbHRlcj10aW1lc3RhbXAlMjBnZSUyMGRhdGV0aW1lJTI3MjAxNS0wNS0xOFQwMCUzQTAwJTNBMDAlMjc=",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/reports/byApi?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9yZXBvcnRzL2J5QXBpP2FwaS12ZXJzaW9uPTIwMTQtMDItMTQmJGZpbHRlcj10aW1lc3RhbXAlMjBnZSUyMGRhdGV0aW1lJTI3MjAxNS0wNS0xOFQwMCUzQTAwJTNBMDAlMjc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,7 +10,7 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Echo API\",\r\n      \"apiId\": \"/apis/56745d9f9f6efc0502040001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 1,\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Echo API\",\r\n      \"apiId\": \"/apis/57158aee97afa706c4040001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 1,\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "363"
@@ -25,16 +25,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "95d12f9e-1918-4f10-813f-9bca02622a1a"
+          "cf0eee81-ca78-453d-a2f2-83cdf056fcaf"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "3b9825bd-3435-4b14-b142-6d6d4c9eaaca"
+          "1658cf5d-13c0-40c9-904f-f9e6eb52c944"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194718Z:3b9825bd-3435-4b14-b142-6d6d4c9eaaca"
+          "CENTRALUS:20160419T015346Z:1658cf5d-13c0-40c9-904f-f9e6eb52c944"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -43,7 +43,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:18 GMT"
+          "Tue, 19 Apr 2016 01:53:45 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -52,8 +52,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/reports/byGeo?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9yZXBvcnRzL2J5R2VvP2FwaS12ZXJzaW9uPTIwMTQtMDItMTQmJGZpbHRlcj10aW1lc3RhbXAlMjBnZSUyMGRhdGV0aW1lJTI3MjAxNS0wNS0xOFQwMCUzQTAwJTNBMDAlMjc=",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/reports/byGeo?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9yZXBvcnRzL2J5R2VvP2FwaS12ZXJzaW9uPTIwMTQtMDItMTQmJGZpbHRlcj10aW1lc3RhbXAlMjBnZSUyMGRhdGV0aW1lJTI3MjAxNS0wNS0xOFQwMCUzQTAwJTNBMDAlMjc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -76,16 +76,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "4254ff7a-83fa-4e4b-ae0d-3b88ac424495"
+          "6c53965f-3bd5-4bfb-a2dc-296adc2c3207"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "ddd1c006-fa5c-4ad8-b57b-b68cf7606a4d"
+          "e5f9961f-0152-41c3-a5ad-99545904dfa1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194719Z:ddd1c006-fa5c-4ad8-b57b-b68cf7606a4d"
+          "CENTRALUS:20160419T015346Z:e5f9961f-0152-41c3-a5ad-99545904dfa1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -94,7 +94,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:18 GMT"
+          "Tue, 19 Apr 2016 01:53:45 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -103,8 +103,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/reports/byOperation?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9yZXBvcnRzL2J5T3BlcmF0aW9uP2FwaS12ZXJzaW9uPTIwMTQtMDItMTQmJGZpbHRlcj10aW1lc3RhbXAlMjBnZSUyMGRhdGV0aW1lJTI3MjAxNS0wNS0xOFQwMCUzQTAwJTNBMDAlMjc=",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/reports/byOperation?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9yZXBvcnRzL2J5T3BlcmF0aW9uP2FwaS12ZXJzaW9uPTIwMTQtMDItMTQmJGZpbHRlcj10aW1lc3RhbXAlMjBnZSUyMGRhdGV0aW1lJTI3MjAxNS0wNS0xOFQwMCUzQTAwJTNBMDAlMjc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -112,7 +112,7 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Retrieve resource\",\r\n      \"apiId\": \"/apis/56745d9f9f6efc0502040001\",\r\n      \"operationId\": \"/apis/56745d9f9f6efc0502040001/operations/56745d9f9f6efc0502080001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Retrieve resource (cached)\",\r\n      \"apiId\": \"/apis/56745d9f9f6efc0502040001\",\r\n      \"operationId\": \"/apis/56745d9f9f6efc0502040001/operations/56745d9f9f6efc0502080002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Modify Resource\",\r\n      \"apiId\": \"/apis/56745d9f9f6efc0502040001\",\r\n      \"operationId\": \"/apis/56745d9f9f6efc0502040001/operations/56745d9f9f6efc0502080003\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Create resource\",\r\n      \"apiId\": \"/apis/56745d9f9f6efc0502040001\",\r\n      \"operationId\": \"/apis/56745d9f9f6efc0502040001/operations/56745d9f9f6efc0502080004\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Remove resource\",\r\n      \"apiId\": \"/apis/56745d9f9f6efc0502040001\",\r\n      \"operationId\": \"/apis/56745d9f9f6efc0502040001/operations/56745d9f9f6efc0502080005\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Retrieve header only\",\r\n      \"apiId\": \"/apis/56745d9f9f6efc0502040001\",\r\n      \"operationId\": \"/apis/56745d9f9f6efc0502040001/operations/56745d9f9f6efc0502080006\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 6,\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Retrieve resource\",\r\n      \"apiId\": \"/apis/57158aee97afa706c4040001\",\r\n      \"operationId\": \"/apis/57158aee97afa706c4040001/operations/57158aee97afa706c4080001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Retrieve resource (cached)\",\r\n      \"apiId\": \"/apis/57158aee97afa706c4040001\",\r\n      \"operationId\": \"/apis/57158aee97afa706c4040001/operations/57158aee97afa706c4080002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Modify Resource\",\r\n      \"apiId\": \"/apis/57158aee97afa706c4040001\",\r\n      \"operationId\": \"/apis/57158aee97afa706c4040001/operations/57158aee97afa706c4080003\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Create resource\",\r\n      \"apiId\": \"/apis/57158aee97afa706c4040001\",\r\n      \"operationId\": \"/apis/57158aee97afa706c4040001/operations/57158aee97afa706c4080004\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Remove resource\",\r\n      \"apiId\": \"/apis/57158aee97afa706c4040001\",\r\n      \"operationId\": \"/apis/57158aee97afa706c4040001/operations/57158aef97afa706c4080005\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Retrieve header only\",\r\n      \"apiId\": \"/apis/57158aee97afa706c4040001\",\r\n      \"operationId\": \"/apis/57158aee97afa706c4040001/operations/57158aef97afa706c4080006\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 6,\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "2551"
@@ -127,16 +127,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "0c7d504e-33c9-431b-8e6c-068cc084e8de"
+          "62df3d2e-be10-4ce6-9113-f3d01f826dab"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "78143af0-97ef-45d1-be6d-d75688335de5"
+          "ad877981-22cf-499d-8e2d-bd70ff9bba9c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194720Z:78143af0-97ef-45d1-be6d-d75688335de5"
+          "CENTRALUS:20160419T015347Z:ad877981-22cf-499d-8e2d-bd70ff9bba9c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -145,7 +145,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:19 GMT"
+          "Tue, 19 Apr 2016 01:53:46 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -154,8 +154,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/reports/byProduct?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9yZXBvcnRzL2J5UHJvZHVjdD9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/reports/byProduct?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9yZXBvcnRzL2J5UHJvZHVjdD9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -163,7 +163,7 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Starter\",\r\n      \"productId\": \"/products/56745d9f9f6efc0502060001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Unlimited\",\r\n      \"productId\": \"/products/56745d9f9f6efc0502060002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Starter\",\r\n      \"productId\": \"/products/57158aee97afa706c4060001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"Unlimited\",\r\n      \"productId\": \"/products/57158aee97afa706c4060002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "705"
@@ -178,16 +178,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "417c77e6-793f-465d-8b7a-e0e5a36036f8"
+          "52b3ee01-422d-4303-932e-2fa1f0d3fe8f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "d740748a-7907-4ac0-8a95-f9be8849bd85"
+          "87a74bc9-e5bf-4491-b80b-e926a6b1823c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194720Z:d740748a-7907-4ac0-8a95-f9be8849bd85"
+          "CENTRALUS:20160419T015347Z:87a74bc9-e5bf-4491-b80b-e926a6b1823c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -196,7 +196,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:19 GMT"
+          "Tue, 19 Apr 2016 01:53:46 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -205,8 +205,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/reports/bySubscription?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9yZXBvcnRzL2J5U3Vic2NyaXB0aW9uP2FwaS12ZXJzaW9uPTIwMTQtMDItMTQmJGZpbHRlcj10aW1lc3RhbXAlMjBnZSUyMGRhdGV0aW1lJTI3MjAxNS0wNS0xOFQwMCUzQTAwJTNBMDAlMjc=",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/reports/bySubscription?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9yZXBvcnRzL2J5U3Vic2NyaXB0aW9uP2FwaS12ZXJzaW9uPTIwMTQtMDItMTQmJGZpbHRlcj10aW1lc3RhbXAlMjBnZSUyMGRhdGV0aW1lJTI3MjAxNS0wNS0xOFQwMCUzQTAwJTNBMDAlMjc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -214,7 +214,7 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"\",\r\n      \"userId\": \"/users/1\",\r\n      \"productId\": \"/products/56745d9f9f6efc0502060001\",\r\n      \"subscriptionId\": \"/subscriptions/56745d9f9f6efc0502070001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"\",\r\n      \"userId\": \"/users/1\",\r\n      \"productId\": \"/products/56745d9f9f6efc0502060002\",\r\n      \"subscriptionId\": \"/subscriptions/56745d9f9f6efc0502070002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"\",\r\n      \"userId\": \"/users/1\",\r\n      \"productId\": \"/products/57158aee97afa706c4060001\",\r\n      \"subscriptionId\": \"/subscriptions/57158aee97afa706c4070001\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    },\r\n    {\r\n      \"name\": \"\",\r\n      \"userId\": \"/users/1\",\r\n      \"productId\": \"/products/57158aee97afa706c4060002\",\r\n      \"subscriptionId\": \"/subscriptions/57158aee97afa706c4070002\",\r\n      \"callCountSuccess\": 0,\r\n      \"callCountBlocked\": 0,\r\n      \"callCountFailed\": 0,\r\n      \"callCountOther\": 0,\r\n      \"callCountTotal\": 0,\r\n      \"bandwidth\": 0,\r\n      \"cacheHitCount\": 0,\r\n      \"cacheMissCount\": 0,\r\n      \"apiTimeAvg\": 0.0,\r\n      \"apiTimeMin\": 0.0,\r\n      \"apiTimeMax\": 0.0,\r\n      \"serviceTimeAvg\": 0.0,\r\n      \"serviceTimeMin\": 0.0,\r\n      \"serviceTimeMax\": 0.0\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "847"
@@ -229,16 +229,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "70f1e7d8-af10-47b4-a294-8cb0947b0725"
+          "ba1f71e6-1408-4354-84ea-d87a53be6750"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14995"
         ],
         "x-ms-correlation-request-id": [
-          "622d9d97-046d-42ba-b688-911f0698da44"
+          "25cb86ec-6045-44b3-b4a2-78554cafb51a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194720Z:622d9d97-046d-42ba-b688-911f0698da44"
+          "CENTRALUS:20160419T015348Z:25cb86ec-6045-44b3-b4a2-78554cafb51a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -247,7 +247,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:20 GMT"
+          "Tue, 19 Apr 2016 01:53:48 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -256,8 +256,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/reports/byTime?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'&interval=PT30M",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9yZXBvcnRzL2J5VGltZT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3JmludGVydmFsPVBUMzBN",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/reports/byTime?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'&interval=PT30M",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9yZXBvcnRzL2J5VGltZT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3JmludGVydmFsPVBUMzBN",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -280,16 +280,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5c9a62c6-cdd7-4026-b2db-33341463d776"
+          "1bb20a40-bb25-4d43-814c-26e4ce1af173"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "400d63f9-9b8f-4ade-b454-16490cfa103c"
+          "39353993-c1d3-4c9e-834b-49244a4150bc"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194721Z:400d63f9-9b8f-4ade-b454-16490cfa103c"
+          "CENTRALUS:20160419T015348Z:39353993-c1d3-4c9e-834b-49244a4150bc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -298,7 +298,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:20 GMT"
+          "Tue, 19 Apr 2016 01:53:48 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -307,8 +307,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/reports/byUser?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9yZXBvcnRzL2J5VXNlcj9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/reports/byUser?api-version=2014-02-14&$filter=timestamp%20ge%20datetime'2015-05-18T00:00:00'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9yZXBvcnRzL2J5VXNlcj9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JiRmaWx0ZXI9dGltZXN0YW1wJTIwZ2UlMjBkYXRldGltZSUyNzIwMTUtMDUtMThUMDAlM0EwMCUzQTAwJTI3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -331,16 +331,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "78e157bc-63e6-4b91-bf88-fd3a2b927d35"
+          "2ed126e6-a121-426f-b6d2-e1995563c9be"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "e1bf0dcc-ea7e-4b99-8371-2a723092c9ad"
+          "220d55cf-af38-4648-87b7-b495e54bfe0d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194721Z:e1bf0dcc-ea7e-4b99-8371-2a723092c9ad"
+          "CENTRALUS:20160419T015348Z:220d55cf-af38-4648-87b7-b495e54bfe0d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -349,7 +349,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:21 GMT"
+          "Tue, 19 Apr 2016 01:53:48 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -360,6 +360,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "0baef07a-330c-42f7-92a0-e80993f45d1d"
+    "SubscriptionId": "3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f"
   }
 }

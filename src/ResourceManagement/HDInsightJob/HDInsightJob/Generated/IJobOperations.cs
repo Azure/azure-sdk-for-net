@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         Task<JobListResponse> ListJobsAfterJobIdAsync(string jobId, int numOfJobs, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// Submits a Hive job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// Hive job parameters.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         Task<JobSubmissionResponse> SubmitHiveJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Submits a MapReduce job to an HDINSIGHT cluster.
+        /// Submits a MapReduce job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// MapReduce job parameters.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         Task<JobSubmissionResponse> SubmitMapReduceJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Submits a MapReduce streaming job to an HDINSIGHT cluster.
+        /// Submits a MapReduce streaming job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// MapReduce job parameters.
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// Submits a Pig job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// Pig job parameters.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         Task<JobSubmissionResponse> SubmitPigJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// Submits a Sqoop job to an HDInsight cluster.
         /// </summary>
         /// <param name='parameters'>
         /// Sqoop job parameters.
