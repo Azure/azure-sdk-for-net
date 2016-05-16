@@ -56,7 +56,7 @@ namespace KeyVault.Tests
                     var secret = Guid.NewGuid().ToString();
                     var mgmtClient = TestBase.GetServiceClient<KeyVaultManagementClient>(testFactory);
                     var resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(testFactory);
-                    var tenantId = testEnv.AuthorizationContext.TenatId;
+                    var tenantId = testEnv.AuthorizationContext.TenantId;
                     var graphClient = TestBase.GetGraphServiceClient<GraphRbacManagementClient>(testFactory, tenantId);
                     var appDisplayName = TestUtilities.GenerateName("sdktestapp");
 
@@ -196,7 +196,7 @@ namespace KeyVault.Tests
                 var testEnv = testFactory.GetTestEnvironment();
                 var mgmtClient = TestBase.GetServiceClient<KeyVaultManagementClient>(testFactory);
                 var resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(testFactory);
-                var tenantId = testEnv.AuthorizationContext.TenatId;
+                var tenantId = testEnv.AuthorizationContext.TenantId;
                 var graphClient = TestBase.GetGraphServiceClient<GraphRbacManagementClient>(testFactory, tenantId);
 
                 mgmtClient.Vaults.Delete(rgName, vaultName);
