@@ -17,6 +17,8 @@
     <Compile Include="Customizations\Models\Activities\AzureMLUpdateResourceActivity.cs" />
     <Compile Include="Customizations\Models\Activities\AzureMLBatchExecutionActivity .cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\WebSource.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\PolyBaseRejectType.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\PolyBaseSettings.cs" />
     <Compile Include="Customizations\Models\Activities\DataLakeAnalyticsUSQLActivity.cs" />
     <Compile Include="Customizations\Models\Activities\USqlCompilationMode.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\AzureDataLakeStoreSink.cs" />
