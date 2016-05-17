@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// adl://&lt;accountName&gt;.azuredatalakestore.net/system/jobservice/jobs/Usql/2016/03/13/17/18/5fe51957-93bc-4de0-8ddc-c5a4753b068b/logs/.
         /// </summary>
         [JsonProperty(PropertyName = "logFolder")]
-        public string LogFolder { get; set; }
+        public string LogFolder { get; private set; }
 
         /// <summary>
         /// Gets or sets the list of log file name patterns to find in the
