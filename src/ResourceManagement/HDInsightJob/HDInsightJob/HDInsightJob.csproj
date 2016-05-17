@@ -21,7 +21,7 @@
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\WindowsAzure.Storage.6.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <HintPath>..\..\..\..\packages\WindowsAzure.Storage.7.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
