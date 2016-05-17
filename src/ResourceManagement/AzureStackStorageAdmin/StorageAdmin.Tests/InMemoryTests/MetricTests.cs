@@ -22,11 +22,11 @@ using System;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Azure;
-using Microsoft.AzureStack.Management.StorageAdmin;
-using Microsoft.AzureStack.Management.StorageAdmin.Models;
+using Microsoft.AzureStack.AzureConsistentStorage;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Xunit;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     public class MetricTests : TestBase
     {

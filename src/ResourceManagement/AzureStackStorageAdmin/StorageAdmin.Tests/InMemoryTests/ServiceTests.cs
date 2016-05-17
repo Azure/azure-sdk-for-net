@@ -17,16 +17,20 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Azure;
-using Microsoft.AzureStack.Management.StorageAdmin;
-using Microsoft.AzureStack.Management.StorageAdmin.Models;
+using Microsoft.AzureStack.AzureConsistentStorage;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Xunit;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     public class ServiceTests : TestBase
     {
         private const string TableServiceUriTemplate =
             "{0}/subscriptions/{1}/resourcegroups/{2}/providers/Microsoft.Storage.Admin/farms/{3}/tableservices/default?"
+            + Constants.ApiVersionParameter;
+
+        private const string QueueServiceUriTemplate =
+            "{0}/subscriptions/{1}/resourcegroups/{2}/providers/Microsoft.Storage.Admin/farms/{3}/queueservices/default?"
             + Constants.ApiVersionParameter;
 
         private const string BlobServiceUriTemplate =
@@ -73,6 +77,41 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
             Assert.Equal(HttpMethod.Get, handler.Method);
 
             CompareExpectedResult(result.Resource.TableService);
+        }
+
+        [Fact]
+        public void GetQueueService()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ExpectedResults.QueueServiceGetResponse)
+            };
+
+            var handler = new RecordedDelegatingHandler(response)
+            {
+                StatusCodeToReturn = HttpStatusCode.OK
+            };
+
+            var subscriptionId = Guid.NewGuid().ToString();
+
+            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
+            var client = GetClient(handler, token);
+
+            var result = client.QueueService.Get(Constants.ResourceGroupName, Constants.FarmId);
+
+            // validate requestor
+            Assert.Equal(handler.Method, HttpMethod.Get);
+
+            var expectedUri = string.Format(
+                QueueServiceUriTemplate,
+                Constants.BaseUri,
+                subscriptionId,
+                Constants.ResourceGroupName,
+                Constants.FarmId);
+
+            Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
+
+            CompareExpectedResult(result.Resource.QueueService);
         }
 
         [Fact]
@@ -124,6 +163,57 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
             Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
 
             CompareExpectedResult(result.Resource.TableService);
+        }
+
+        [Fact]
+        public void PatchQueueService()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ExpectedResults.QueueServiceGetResponse)
+            };
+
+            var handler = new RecordedDelegatingHandler(response)
+            {
+                StatusCodeToReturn = HttpStatusCode.OK
+            };
+
+            var subscriptionId = Guid.NewGuid().ToString();
+
+            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
+            var client = GetClient(handler, token);
+
+            var settings = new QueueServiceWritableSettings
+            {
+                FrontEndCallbackThreadsCount = 100
+            };
+
+            var patchParam = new QueueServicePatchParameters
+            {
+                QueueService = new QueueServiceRequest()
+                {
+                    Settings = settings
+                }
+            };
+
+            var result = client.QueueService.Patch(
+                Constants.ResourceGroupName,
+                Constants.FarmId,
+                patchParam);
+
+            // validate requestor
+            Assert.Equal(handler.Method.Method, "PATCH", StringComparer.OrdinalIgnoreCase);
+
+            var expectedUri = string.Format(
+                QueueServiceUriTemplate,
+                Constants.BaseUri,
+                subscriptionId,
+                Constants.ResourceGroupName,
+                Constants.FarmId);
+
+            Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
+
+            CompareExpectedResult(result.Resource.QueueService);
         }
 
         [Fact]
@@ -321,6 +411,30 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
             Assert.Equal(10, result.Settings.FrontEndMinimumThreadPoolThreads);
             Assert.Equal(11002, result.Settings.FrontEndHttpListenPort);
             Assert.Equal(11102, result.Settings.FrontEndHttpsListenPort);
+            Assert.Equal(10, result.Settings.FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold);
+            Assert.Equal(80, result.Settings.FrontEndThreadPoolBasedKeepAlivePercentage);
+            Assert.Equal(10, result.Settings.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold);
+            Assert.Equal(10, result.Settings.FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds);
+            Assert.Equal(false, result.Settings.FrontEndUseSlaTimeInAvailability);
+
+        }
+
+        private void CompareExpectedResult(QueueServiceResponse result)
+        {
+            // Validate response 
+            Assert.Equal("1.0", result.Version);
+            Assert.Equal(HealthStatus.Healthy, result.HealthStatus);
+            Assert.Equal(1, result.Settings.FrontEndCallbackThreadsCount);
+            Assert.Equal(10, result.Settings.FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds);
+            Assert.Equal(true, result.Settings.FrontEndCpuBasedKeepAliveThrottlingEnabled);
+            Assert.Equal(10, result.Settings.FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold);
+            Assert.Equal(90.5, result.Settings.FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle);
+            Assert.Equal(100, result.Settings.FrontEndMaxMillisecondsBetweenMemorySamples);
+            Assert.Equal("2;3", result.Settings.FrontEndMemoryThrottleThresholdSettings);
+            Assert.Equal(true, result.Settings.FrontEndMemoryThrottlingEnabled);
+            Assert.Equal(10, result.Settings.FrontEndMinimumThreadPoolThreads);
+            Assert.Equal(11001, result.Settings.FrontEndHttpListenPort);
+            Assert.Equal(11101, result.Settings.FrontEndHttpsListenPort);
             Assert.Equal(10, result.Settings.FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold);
             Assert.Equal(80, result.Settings.FrontEndThreadPoolBasedKeepAlivePercentage);
             Assert.Equal(10, result.Settings.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold);
