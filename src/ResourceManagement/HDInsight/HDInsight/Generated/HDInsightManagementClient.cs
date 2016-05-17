@@ -114,6 +114,7 @@ namespace Microsoft.Azure.Management.HDInsight
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+            this.SetRetryPolicy(HDInsightRetryPolicy);
         }
         
         /// <summary>
@@ -180,6 +181,7 @@ namespace Microsoft.Azure.Management.HDInsight
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+            this.SetRetryPolicy(HDInsightRetryPolicy);
         }
         
         /// <summary>
