@@ -397,9 +397,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             ListRecordsInZone(isCrossType: true);
         }
 
-        private void ListRecordsInZone(bool isCrossType)
+        private void ListRecordsInZone(bool isCrossType,
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName = "testframework_failed")
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 SingleRecordSetTestContext testContext = SetupSingleRecordSetTest(context);
 
@@ -452,9 +454,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             this.ListRecordsInZoneWithTop(isCrossType: true);
         }
 
-        private void ListRecordsInZoneWithTop(bool isCrossType)
+        private void ListRecordsInZoneWithTop(bool isCrossType,
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName = "testframework_failed")
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
 
                 SingleRecordSetTestContext testContext = RecordSetScenarioTests.SetupSingleRecordSetTest(context);
@@ -472,6 +476,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         "3");
+                    // verify if TXT is in the list
+                    Assert.True(listResponse.Where(rs => rs.Type == "TXT").All(listedRecordSet => recordSetNames.Any(createdName => createdName == listedRecordSet.Name)), "The returned records do not meet expectations");
                 }
                 else
                 {
@@ -481,12 +487,10 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ZoneName,
                         RecordType.TXT,
                          "3");
+                    Assert.True(listResponse.All(listedRecordSet => recordSetNames.Any(createdName => createdName == listedRecordSet.Name)), "The returned records do not meet expectations");
                 }
 
-                Assert.NotNull(listResponse);
-                Assert.True(
-                    listResponse.Any(recordReturned => string.Equals(recordSetNames[0], recordReturned.Name)),
-                    "The returned records do not meet expectations");
+                
 
                 RecordSetScenarioTests.DeleteRecordSetsAndZone(testContext, recordSetNames);
             }
@@ -550,9 +554,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
         private void RecordSetCreateGet(
             RecordType recordType,
-            Action<RecordSet> setRecordsAction)
+            Action<RecordSet> setRecordsAction,
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName= "testframework_failed")
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 SingleRecordSetTestContext testContext = SetupSingleRecordSetTest(context);
                 var createParameters = testContext.TestRecordSkeleton;

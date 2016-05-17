@@ -60,12 +60,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         {
                             Location = location,
                             Tags = new Dictionary<string, string> { { "tag1", "value1" } },
-                            Properties = new ZoneProperties(),
                         });
 
                 assertZoneInvariants(createdZone);
                 Assert.Equal(1, createdZone.Tags.Count);
-                Assert.True(createdZone.Properties.NameServers != null && createdZone.Properties.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
+                Assert.True(createdZone.NameServers != null && createdZone.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
 
                 // Ensure that Id is parseable into resourceGroup
                 string resourceGroupName = ExtractResourceGroupNameFromId(createdZone.Id);
@@ -77,7 +76,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 assertZoneInvariants(retrievedZone);
                 Assert.Equal(1, retrievedZone.Tags.Count);
 
-                Assert.True(retrievedZone.Properties.NameServers != null && retrievedZone.Properties.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
+                Assert.True(retrievedZone.NameServers != null && retrievedZone.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
 
                 // Call Update on the object returned by Create (important distinction from Get below)
                 createdZone.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } };
@@ -173,8 +172,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 Assert.NotNull(listresponse);
                 Assert.Equal(1, listresponse.Count());
-                Assert.True(listresponse.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name)),
-                    "The response of the List request does not meet expectations.");
+                Assert.True(zoneNames.Any(zoneName => zoneName == listresponse.ElementAt(0).Name));
 
                 ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
             }
@@ -258,22 +256,19 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     new Zone
                     {
                         Location = location,
-                        Properties = new ZoneProperties()
-                        {
-                            MaxNumberOfRecordSets = 42, // Test that specifying this value does not break Create (it must be ignored on server side).
-                            NumberOfRecordSets = 65,    // Test that specifying this value does not break Create (it must be ignored on server side).
-                        },
+                        MaxNumberOfRecordSets = 42, // Test that specifying this value does not break Create (it must be ignored on server side).
+                        NumberOfRecordSets = 65,    // Test that specifying this value does not break Create (it must be ignored on server side).
                     });
 
                 // Retrieve the zone after create
                 Zone retrievedZone = dnsClient.Zones.Get(resourceGroup.Name, zoneName);
 
                 // Verify RecordSet numbers in the response.
-                Assert.True(retrievedZone.Properties.NumberOfRecordSets == 2);
+                Assert.True(retrievedZone.NumberOfRecordSets == 2);
 
                 retrievedZone.Tags = new Dictionary<string, string> { { "tag1", "value1" } };
-                retrievedZone.Properties.NumberOfRecordSets = null;
-                retrievedZone.Properties.MaxNumberOfRecordSets = null;
+                retrievedZone.NumberOfRecordSets = null;
+                retrievedZone.MaxNumberOfRecordSets = null;
 
                 // Delete the zone
                 DeleteZones(dnsClient, resourceGroup, new [] { zoneName});

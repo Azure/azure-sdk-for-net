@@ -100,8 +100,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 new Microsoft.Azure.Management.Dns.Models.Zone
                 {
                     Location = location,
-                    Etag = null,
-                    Properties = new ZoneProperties(),
+                    Etag = null
                 },
                 null,
                 null);
