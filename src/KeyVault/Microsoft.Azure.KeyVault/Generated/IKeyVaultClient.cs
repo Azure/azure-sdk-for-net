@@ -548,6 +548,422 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<SecretItem>>> GetSecretVersionsWithHttpMessagesAsync(string vault, string secretName, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// List certificates in the specified vault
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='maxresults'>
+        /// Maximum number of results to return.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CertificateItem>>> GetCertificatesWithHttpMessagesAsync(string vault, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Deletes a certificate from the specified vault.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate in the given vault
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateBundle>> DeleteCertificateWithHttpMessagesAsync(string vault, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Sets the certificate contacts for the specified vault.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='contacts'>
+        /// Contacts.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Contacts>> SetCertificateContactsWithHttpMessagesAsync(string vault, Contacts contacts, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the certificate contacts for the specified vault.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Contacts>> GetCertificateContactsWithHttpMessagesAsync(string vault, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Deletes the certificate contacts for the specified vault.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Contacts>> DeleteCertificateContactsWithHttpMessagesAsync(string vault, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List certificate issuers for the specified vault.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='maxresults'>
+        /// Maximum number of results to return.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CertificateIssuerItem>>> GetCertificateIssuersWithHttpMessagesAsync(string vault, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Sets the certificate contacts for the specified vault.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='issuerName'>
+        /// The name of the issuer.
+        /// </param>
+        /// <param name='issuer'>
+        /// The issuer bundle.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IssuerBundle>> SetCertificateIssuerWithHttpMessagesAsync(string vault, string issuerName, IssuerBundle issuer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Updates the specified certificate issuer.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='issuerName'>
+        /// The name of the issuer.
+        /// </param>
+        /// <param name='issuer'>
+        /// The issuer bundle.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IssuerBundle>> UpdateCertificateIssuerWithHttpMessagesAsync(string vault, string issuerName, IssuerBundle issuer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the specified certificate issuer.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='issuerName'>
+        /// The name of the issuer.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IssuerBundle>> GetCertificateIssuerWithHttpMessagesAsync(string vault, string issuerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Deletes the specified certificate issuer.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='issuerName'>
+        /// The name of the issuer.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IssuerBundle>> DeleteCertificateIssuerWithHttpMessagesAsync(string vault, string issuerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Creates a new certificate version. If this is the first version,
+        /// the certificate resource is created.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='certificatePolicy'>
+        /// The management policy for the certificate
+        /// </param>
+        /// <param name='certificateAttributes'>
+        /// The attributes of the certificate (optional)
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateOperation>> CreateCertificateWithHttpMessagesAsync(string vault, string certificateName, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Imports a certificate into the specified vault
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='base64EncodedCertificate'>
+        /// Base64 encoded representaion of the certificate object to import.
+        /// This certificate needs to contain the private key.
+        /// </param>
+        /// <param name='password'>
+        /// If the private key in base64EncodedCertificate is encrypted, the
+        /// password used for encryption
+        /// </param>
+        /// <param name='certificatePolicy'>
+        /// The management policy for the certificate
+        /// </param>
+        /// <param name='certificateAttributes'>
+        /// The attributes of the certificate (optional)
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateBundle>> ImportCertificateWithHttpMessagesAsync(string vault, string certificateName, string base64EncodedCertificate, string password, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List the versions of a certificate.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='maxresults'>
+        /// Maximum number of results to return.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CertificateItem>>> GetCertificateVersionsWithHttpMessagesAsync(string vault, string certificateName, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the policy for a certificate.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate in the given vault.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificatePolicy>> GetCertificatePolicyWithHttpMessagesAsync(string vault, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Updates the policy for a certificate. Set appropriate members in
+        /// the certificatePolicy that must be updated. Leave others as null.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate in the given vault.
+        /// </param>
+        /// <param name='certificatePolicy'>
+        /// The policy for the certificate.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificatePolicy>> UpdateCertificatePolicyWithHttpMessagesAsync(string vault, string certificateName, CertificatePolicy certificatePolicy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Updates the attributes associated with the specified certificate
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate in the given vault
+        /// </param>
+        /// <param name='certificateVersion'>
+        /// The version of the certificate
+        /// </param>
+        /// <param name='certificateAttributes'>
+        /// The attributes of the certificate (optional)
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateBundle>> UpdateCertificateWithHttpMessagesAsync(string vault, string certificateName, string certificateVersion, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets a Certificate.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate in the given vault
+        /// </param>
+        /// <param name='certificateVersion'>
+        /// The version of the certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateBundle>> GetCertificateWithHttpMessagesAsync(string vault, string certificateName, string certificateVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Updates a certificate operation.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='certificateOperation'>
+        /// The certificate operation response.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateOperation>> UpdateCertificateOperationWithHttpMessagesAsync(string vault, string certificateName, CertificateOperation certificateOperation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the certificate operation response.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateOperation>> GetCertificateOperationWithHttpMessagesAsync(string vault, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Deletes the certificate operation.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateOperation>> DeleteCertificateOperationWithHttpMessagesAsync(string vault, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Merges a certificate or a certificate chain with a key pair
+        /// existing on the server.
+        /// </summary>
+        /// <param name='vault'>
+        /// The vault name, e.g. https://myvault.vault.azure.net
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='x509Certificates'>
+        /// The certificate or the certificte chain to merge
+        /// </param>
+        /// <param name='certificateAttributes'>
+        /// The attributes of the certificate (optional)
+        /// </param>
+        /// <param name='tags'>
+        /// Application-specific metadata in the form of key-value pairs
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateBundle>> MergeCertificateWithHttpMessagesAsync(string vault, string certificateName, IList<byte[]> x509Certificates, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// List the versions of the specified key
         /// </summary>
         /// <param name='nextPageLink'>
@@ -602,6 +1018,48 @@ namespace Microsoft.Azure.KeyVault
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<SecretItem>>> GetSecretVersionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List certificates in the specified vault
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CertificateItem>>> GetCertificatesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List certificate issuers for the specified vault.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CertificateIssuerItem>>> GetCertificateIssuersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List the versions of a certificate.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CertificateItem>>> GetCertificateVersionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

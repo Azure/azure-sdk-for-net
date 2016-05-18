@@ -27,6 +27,10 @@ using Xunit;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Serialization;
+using System.Security.Cryptography.X509Certificates;
+using System.Net;
+using System.Globalization;
+using System.Threading;
 
 namespace KeyVault.Tests
 {
@@ -827,7 +831,1297 @@ namespace KeyVault.Tests
 
         #endregion
 
-        #region Helper Methods
+        #region Certificate Operations
+        [Fact]
+        public void KeyVaultCertificateImportTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string certificateName = "importCert01";
+                const string certificateContent =
+                    "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";
+                const string certificatePassword = "123";
+                const string certificateMimeType = "application/x-pkcs12";
+
+                var myCertificate = new X509Certificate2(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
+
+                // Import cert
+                var createdCertificateBundle = client.ImportCertificateAsync(_vaultAddress, certificateName, certificateContent, certificatePassword, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(createdCertificateBundle);
+                Assert.NotNull(createdCertificateBundle.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.Policy);
+                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                Assert.NotNull(createdCertificateBundle.Cer);
+                var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
+                Assert.NotNull(publicCer);
+                Assert.False(publicCer.HasPrivateKey);
+
+                try
+                {
+                    // Get the current version
+                    var certificateBundleLatest =
+                        client.GetCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleLatest);
+                    Assert.NotNull(certificateBundleLatest.SecretIdentifier);
+                    Assert.NotNull(certificateBundleLatest.KeyIdentifier);
+                    Assert.NotNull(certificateBundleLatest.X5t);
+                    Assert.NotNull(createdCertificateBundle.Policy);
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                    Assert.NotNull(certificateBundleLatest.Cer);
+                    publicCer = new X509Certificate2(certificateBundleLatest.Cer);
+                    Assert.NotNull(publicCer);
+                    Assert.False(publicCer.HasPrivateKey);
+
+                    // Get the specific version
+                    var certificateBundleVersion =
+                        client.GetCertificateAsync(createdCertificateBundle.CertificateIdentifier.Identifier).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleVersion);
+                    Assert.NotNull(certificateBundleVersion.SecretIdentifier);
+                    Assert.NotNull(certificateBundleVersion.KeyIdentifier);
+                    Assert.NotNull(certificateBundleVersion.X5t);
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                    Assert.NotNull(certificateBundleVersion.Cer);
+                    publicCer = new X509Certificate2(certificateBundleVersion.Cer);
+                    Assert.NotNull(publicCer);
+                    Assert.False(publicCer.HasPrivateKey);
+
+                    // Get the secret
+                    var retrievedSecret =
+                        client.GetSecretAsync(certificateBundleVersion.SecretIdentifier.Identifier).GetAwaiter().GetResult();
+                    Assert.True(0 == string.CompareOrdinal(retrievedSecret.ContentType, certificateMimeType));
+
+                    var retrievedCertificate = new X509Certificate2(
+                        Convert.FromBase64String(retrievedSecret.Value),
+                        string.Empty,
+                        X509KeyStorageFlags.Exportable);
+
+                    Assert.True(retrievedCertificate.HasPrivateKey);
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, retrievedCertificate.Thumbprint));
+                }
+                finally
+                {
+                    // Delete
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateImportTest2()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string certificateName = "importCert02";
+                const string certificateContent =
+                    "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";
+
+                const string certificatePassword = "123";
+                const string certificateMimeType = "application/x-pkcs12";
+
+                var myCertificateCollection = new X509Certificate2Collection();
+                myCertificateCollection.Import(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
+
+                var privateKeyCertificateIndex = 0;
+                for (var i = 0; i < myCertificateCollection.Count; i++)
+                {
+                    if (myCertificateCollection[i].HasPrivateKey)
+                    {
+                        privateKeyCertificateIndex = i;
+                        break;
+                    }
+                }
+
+                // Import cert
+                var createdCertificateBundle = client.ImportCertificateAsync(_vaultAddress, certificateName, myCertificateCollection, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(createdCertificateBundle);
+                Assert.NotNull(createdCertificateBundle.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.Policy);
+                Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                Assert.NotNull(createdCertificateBundle.Cer);
+                var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
+                Assert.NotNull(publicCer);
+                Assert.False(publicCer.HasPrivateKey);
+
+                try
+                {
+                    // Get the current version
+                    var certificateBundleLatest =
+                        client.GetCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleLatest);
+                    Assert.NotNull(certificateBundleLatest.SecretIdentifier);
+                    Assert.NotNull(certificateBundleLatest.KeyIdentifier);
+                    Assert.NotNull(certificateBundleLatest.X5t);
+                    Assert.NotNull(createdCertificateBundle.Policy);
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                    Assert.NotNull(certificateBundleLatest.Cer);
+                    publicCer = new X509Certificate2(certificateBundleLatest.Cer);
+                    Assert.NotNull(publicCer);
+                    Assert.False(publicCer.HasPrivateKey);
+
+                    // Get the specific version
+                    var certificateBundleVersion =
+                        client.GetCertificateAsync(createdCertificateBundle.CertificateIdentifier.Identifier).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleVersion);
+                    Assert.NotNull(certificateBundleVersion.SecretIdentifier);
+                    Assert.NotNull(certificateBundleVersion.KeyIdentifier);
+                    Assert.NotNull(certificateBundleVersion.X5t);
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                    Assert.NotNull(certificateBundleVersion.Cer);
+                    publicCer = new X509Certificate2(certificateBundleVersion.Cer);
+                    Assert.NotNull(publicCer);
+                    Assert.False(publicCer.HasPrivateKey);
+
+                    // Get the secret
+                    var retrievedSecret =
+                        client.GetSecretAsync(certificateBundleVersion.SecretIdentifier.Identifier).GetAwaiter().GetResult();
+                    Assert.True(0 == string.CompareOrdinal(retrievedSecret.ContentType, certificateMimeType));
+
+                    var retrievedCertificate = new X509Certificate2(
+                        Convert.FromBase64String(retrievedSecret.Value),
+                        string.Empty,
+                        X509KeyStorageFlags.Exportable);
+
+                    Assert.True(retrievedCertificate.HasPrivateKey);
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, retrievedCertificate.Thumbprint));
+                }
+                finally
+                {
+                    // Delete
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateImportTest3()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string certificateName = "importCert03";
+                const string certificateContent =
+                    "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";
+
+                const string certificatePassword = "123";
+                const string certificateMimeType = "application/x-pkcs12";
+
+                var myCertificateCollection = new X509Certificate2Collection();
+                myCertificateCollection.Import(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
+
+                var privateKeyCertificateIndex = 0;
+                for (var i = 0; i < myCertificateCollection.Count; i++)
+                {
+                    if (myCertificateCollection[i].HasPrivateKey)
+                    {
+                        privateKeyCertificateIndex = i;
+                        break;
+                    }
+                }
+
+                // Import cert
+                var createdCertificateBundle = client.ImportCertificateAsync(_vaultAddress, certificateName, myCertificateCollection, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(createdCertificateBundle);
+                Assert.NotNull(createdCertificateBundle.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.Policy);
+                Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                Assert.NotNull(createdCertificateBundle.Cer);
+                var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
+                Assert.NotNull(publicCer);
+                Assert.False(publicCer.HasPrivateKey);
+
+                try
+                {
+                    // Get the current version
+                    var certificateBundleLatest =
+                        client.GetCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleLatest);
+                    Assert.NotNull(certificateBundleLatest.SecretIdentifier);
+                    Assert.NotNull(certificateBundleLatest.KeyIdentifier);
+                    Assert.NotNull(certificateBundleLatest.X5t);
+                    Assert.NotNull(createdCertificateBundle.Policy);
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                    Assert.NotNull(certificateBundleLatest.Cer);
+                    publicCer = new X509Certificate2(certificateBundleLatest.Cer);
+                    Assert.NotNull(publicCer);
+                    Assert.False(publicCer.HasPrivateKey);
+
+                    // Get the specific version
+                    var certificateBundleVersion =
+                        client.GetCertificateAsync(createdCertificateBundle.CertificateIdentifier.Identifier).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleVersion);
+                    Assert.NotNull(certificateBundleVersion.SecretIdentifier);
+                    Assert.NotNull(certificateBundleVersion.KeyIdentifier);
+                    Assert.NotNull(certificateBundleVersion.X5t);
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                    Assert.NotNull(certificateBundleVersion.Cer);
+                    publicCer = new X509Certificate2(certificateBundleVersion.Cer);
+                    Assert.NotNull(publicCer);
+                    Assert.False(publicCer.HasPrivateKey);
+
+                    // Get the secret
+                    var retrievedSecret =
+                        client.GetSecretAsync(certificateBundleVersion.SecretIdentifier.Identifier).GetAwaiter().GetResult();
+                    Assert.True(0 == string.CompareOrdinal(retrievedSecret.ContentType, certificateMimeType));
+
+                    var retrievedCertificate = new X509Certificate2(
+                        Convert.FromBase64String(retrievedSecret.Value),
+                        string.Empty,
+                        X509KeyStorageFlags.Exportable);
+
+                    Assert.True(retrievedCertificate.HasPrivateKey);
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, retrievedCertificate.Thumbprint));
+                }
+                finally
+                {
+                    // Delete
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateListTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // Create two certificates
+                const string certificate01Name = "listCert01";
+                const string certificate01Content =
+                    "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";
+                const string certificate01Password = "123";
+                const string certificate01MimeType = "application/x-pkcs12";
+
+                var certificate01 = new X509Certificate2(Convert.FromBase64String(certificate01Content), certificate01Password, X509KeyStorageFlags.Exportable);
+                var createdCertificateBundle01 = client.ImportCertificateAsync(_vaultAddress, certificate01Name, certificate01Content, certificate01Password, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificate01MimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(createdCertificateBundle01);
+                Assert.NotNull(createdCertificateBundle01.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle01.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle01.X5t);
+                Assert.NotNull(createdCertificateBundle01.Policy);
+                Assert.True(0 == string.CompareOrdinal(certificate01.Thumbprint, ToHexString(createdCertificateBundle01.X5t)));
+
+                Assert.NotNull(createdCertificateBundle01.Cer);
+                var publicCer = new X509Certificate2(createdCertificateBundle01.Cer);
+                Assert.NotNull(publicCer);
+                Assert.False(publicCer.HasPrivateKey);
+
+                const string certificate02Name = "listCert02";
+                const string certificate02Content =
+                    "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";
+                const string certificate02Password = "123";
+                const string certificate02MimeType = "application/x-pkcs12";
+
+                var certificate02 = new X509Certificate2(Convert.FromBase64String(certificate02Content), certificate02Password, X509KeyStorageFlags.Exportable);
+
+                var createdCertificateBundle02 = client.ImportCertificateAsync(_vaultAddress, certificate02Name, certificate02Content, certificate02Password, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificate02MimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+
+                Assert.NotNull(createdCertificateBundle02);
+                Assert.NotNull(createdCertificateBundle02.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle02.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle02.X5t);
+                Assert.NotNull(createdCertificateBundle02.Policy);
+                Assert.True(0 == string.CompareOrdinal(certificate02.Thumbprint, ToHexString(createdCertificateBundle02.X5t)));
+
+                Assert.NotNull(createdCertificateBundle02.Cer);
+                publicCer = new X509Certificate2(createdCertificateBundle02.Cer);
+                Assert.NotNull(publicCer);
+                Assert.False(publicCer.HasPrivateKey);
+
+                try
+                {
+                    var certList = client.GetCertificatesAsync(_vaultAddress).GetAwaiter().GetResult();
+                    Assert.NotNull(certList);
+                    Assert.True(certList.Count() >= 2);
+                    Assert.True(certList.Any(s => 0 == string.CompareOrdinal(ToHexString(s.X5T), ToHexString(createdCertificateBundle01.X5t))));
+                    Assert.True(certList.Any(s => 0 == string.CompareOrdinal(ToHexString(s.X5T), ToHexString(createdCertificateBundle02.X5t))));
+                }
+                finally
+                {
+                    // Delete
+                    var certificateBundleDeleted01 =
+                        client.DeleteCertificateAsync(_vaultAddress, certificate01Name).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted01);
+
+                    var certificateBundleDeleted02 =
+                        client.DeleteCertificateAsync(_vaultAddress, certificate02Name).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted02);
+                }
+            }
+
+        }
+
+        [Fact]
+        public void KeyVaultCertificateListVersionsTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // Create two certificates
+                const string certificateName = "listVersionsCert01";
+                const string certificate01Content =
+                    "MIIJOwIBAzCCCPcGCSqGSIb3DQEHAaCCCOgEggjkMIII4DCCBgkGCSqGSIb3DQEHAaCCBfoEggX2MIIF8jCCBe4GCyqGSIb3DQEMCgECoIIE/jCCBPowHAYKKoZIhvcNAQwBAzAOBAj15YH9pOE58AICB9AEggTYLrI+SAru2dBZRQRlJY7XQ3LeLkah2FcRR3dATDshZ2h0IA2oBrkQIdsLyAAWZ32qYR1qkWxLHn9AqXgu27AEbOk35+pITZaiy63YYBkkpR+pDdngZt19Z0PWrGwHEq5z6BHS2GLyyN8SSOCbdzCz7blj3+7IZYoMj4WOPgOm/tQ6U44SFWek46QwN2zeA4i97v7ftNNns27ms52jqfhOvTA9c/wyfZKAY4aKJfYYUmycKjnnRl012ldS2lOkASFt+lu4QCa72IY6ePtRudPCvmzRv2pkLYS6z3cI7omT8nHP3DymNOqLbFqr5O2M1ZYaLC63Q3xt3eVvbcPh3N08D1hHkhz/KDTvkRAQpvrW8ISKmgDdmzN55Pe55xHfSWGB7gPw8sZea57IxFzWHTK2yvTslooWoosmGxanYY2IG/no3EbPOWDKjPZ4ilYJe5JJ2immlxPz+2e2EOCKpDI+7fzQcRz3PTd3BK+budZ8aXX8aW/lOgKS8WmxZoKnOJBNWeTNWQFugmktXfdPHAdxMhjUXqeGQd8wTvZ4EzQNNafovwkI7IV/ZYoa++RGofVR3ZbRSiBNF6TDj/qXFt0wN/CQnsGAmQAGNiN+D4mY7i25dtTu/Jc7OxLdhAUFpHyJpyrYWLfvOiS5WYBeEDHkiPUa/8eZSPA3MXWZR1RiuDvuNqMjct1SSwdXADTtF68l/US1ksU657+XSC+6ly1A/upz+X71+C4Ho6W0751j5ZMT6xKjGh5pee7MVuduxIzXjWIy3YSd0fIT3U0A5NLEvJ9rfkx6JiHjRLx6V1tqsrtT6BsGtmCQR1UCJPLqsKVDvAINx3cPA/CGqr5OX2BGZlAihGmN6n7gv8w4O0k0LPTAe5YefgXN3m9pE867N31GtHVZaJ/UVgDNYS2jused4rw76ZWN41akx2QN0JSeMJqHXqVz6AKfz8ICS/dFnEGyBNpXiMRxrY/QPKi/wONwqsbDxRW7vZRVKs78pBkE0ksaShlZk5GkeayDWC/7Hi/NqUFtIloK9XB3paLxo1DGu5qqaF34jZdktzkXp0uZqpp+FfKZaiovMjt8F7yHCPk+LYpRsU2Cyc9DVoDA6rIgf+uEP4jppgehsxyT0lJHax2t869R2jYdsXwYUXjgwHIV0voj7bJYPGFlFjXOp6ZW86scsHM5xfsGQoK2Fp838VT34SHE1ZXU/puM7rviREHYW72pfpgGZUILQMohuTPnd8tFtAkbrmjLDo+k9xx7HUvgoFTiNNWuq/cRjr70FKNguMMTIrid+HwfmbRoaxENWdLcOTNeascER2a+37UQolKD5ksrPJG6RdNA7O2pzp3micDYRs/+s28cCIxO//J/d4nsgHp6RTuCu4+Jm9k0YTw2Xg75b2cWKrxGnDUgyIlvNPaZTB5QbMid4x44/lE0LLi9kcPQhRgrK07OnnrMgZvVGjt1CLGhKUv7KFc3xV1r1rwKkosxnoG99oCoTQtregcX5rIMjHgkc1IdflGJkZzaWMkYVFOJ4Weynz008i4ddkske5vabZs37Lb8iggUYNBYZyGzalruBgnQyK4fz38Fae4nWYjyildVfgyo/fCePR2ovOfphx9OQJi+M9BoFmPrAg+8ARDZ+R+5yzYuEc9ZoVX7nkp7LTGB3DANBgkrBgEEAYI3EQIxADATBgkqhkiG9w0BCRUxBgQEAQAAADBXBgkqhkiG9w0BCRQxSh5IAGEAOAAwAGQAZgBmADgANgAtAGUAOQA2AGUALQA0ADIAMgA0AC0AYQBhADEAMQAtAGIAZAAxADkANABkADUAYQA2AGIANwA3MF0GCSsGAQQBgjcRATFQHk4ATQBpAGMAcgBvAHMAbwBmAHQAIABTAHQAcgBvAG4AZwAgAEMAcgB5AHAAdABvAGcAcgBhAHAAaABpAGMAIABQAHIAbwB2AGkAZABlAHIwggLPBgkqhkiG9w0BBwagggLAMIICvAIBADCCArUGCSqGSIb3DQEHATAcBgoqhkiG9w0BDAEGMA4ECNX+VL2MxzzWAgIH0ICCAojmRBO+CPfVNUO0s+BVuwhOzikAGNBmQHNChmJ/pyzPbMUbx7tO63eIVSc67iERda2WCEmVwPigaVQkPaumsfp8+L6iV/BMf5RKlyRXcwh0vUdu2Qa7qadD+gFQ2kngf4Dk6vYo2/2HxayuIf6jpwe8vql4ca3ZtWXfuRix2fwgltM0bMz1g59d7x/glTfNqxNlsty0A/rWrPJjNbOPRU2XykLuc3AtlTtYsQ32Zsmu67A7UNBw6tVtkEXlFDqhavEhUEO3dvYqMY+QLxzpZhA0q44ZZ9/ex0X6QAFNK5wuWxCbupHWsgxRwKftrxyszMHsAvNoNcTlqcctee+ecNwTJQa1/MDbnhO6/qHA7cfG1qYDq8Th635vGNMW1w3sVS7l0uEvdayAsBHWTcOC2tlMa5bfHrhY8OEIqj5bN5H9RdFy8G/W239tjDu1OYjBDydiBqzBn8HG1DSj1Pjc0kd/82d4ZU0308KFTC3yGcRad0GnEH0Oi3iEJ9HbriUbfVMbXNHOF+MktWiDVqzndGMKmuJSdfTBKvGFvejAWVO5E4mgLvoaMmbchc3BO7sLeraHnJN5hvMBaLcQI38N86mUfTR8AP6AJ9c2k514KaDLclm4z6J8dMz60nUeo5D3YD09G6BavFHxSvJ8MF0Lu5zOFzEePDRFm9mH8W0N/sFlIaYfD/GWU/w44mQucjaBk95YtqOGRIj58tGDWr8iUdHwaYKGqU24zGeRae9DhFXPzZshV1ZGsBQFRaoYkyLAwdJWIXTi+c37YaC8FRSEnnNmS79Dou1Kc3BvK4EYKAD2KxjtUebrV174gD0Q+9YuJ0GXOTspBvCFd5VT2Rw5zDNrA/J3F5fMCk4wOzAfMAcGBSsOAwIaBBSxgh2xyF+88V4vAffBmZXv8Txt4AQU4O/NX4MjxSodbE7ApNAMIvrtREwCAgfQ";
+                const string certificate01Password = "123";
+                const string certificate01MimeType = "application/x-pkcs12";
+
+                var version01 = new X509Certificate2(Convert.FromBase64String(certificate01Content), certificate01Password, X509KeyStorageFlags.Exportable);
+                var createdCertificateBundle01 = client.ImportCertificateAsync(_vaultAddress, certificateName, certificate01Content, certificate01Password, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificate01MimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(createdCertificateBundle01);
+                Assert.NotNull(createdCertificateBundle01.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle01.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle01.X5t);
+                Assert.NotNull(createdCertificateBundle01.Policy);
+                Assert.True(0 == string.CompareOrdinal(version01.Thumbprint, ToHexString(createdCertificateBundle01.X5t)));
+
+                Assert.NotNull(createdCertificateBundle01.Cer);
+                var publicCer = new X509Certificate2(createdCertificateBundle01.Cer);
+                Assert.NotNull(publicCer);
+                Assert.False(publicCer.HasPrivateKey);
+
+                const string certificate02Content =
+    "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";
+                const string certificate02Password = "123";
+                const string certificate02MimeType = "application/x-pkcs12";
+
+                var version02 = new X509Certificate2(Convert.FromBase64String(certificate02Content), certificate02Password, X509KeyStorageFlags.Exportable);
+                var createdCertificateBundle02 = client.ImportCertificateAsync(_vaultAddress, certificateName, certificate02Content, certificate02Password, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificate02MimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(createdCertificateBundle02);
+                Assert.NotNull(createdCertificateBundle02.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle02.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle02.X5t);
+                Assert.NotNull(createdCertificateBundle02.Policy);
+                Assert.True(0 == string.CompareOrdinal(version02.Thumbprint, ToHexString(createdCertificateBundle02.X5t)));
+
+                Assert.NotNull(createdCertificateBundle02.Cer);
+                publicCer = new X509Certificate2(createdCertificateBundle02.Cer);
+                Assert.NotNull(publicCer);
+                Assert.False(publicCer.HasPrivateKey);
+
+                try
+                {
+                    var certList = client.GetCertificateVersionsAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+                    Assert.NotNull(certList);
+                    Assert.True(2 == certList.Count());
+                    Assert.True(certList.Any(s => s.X5T.SequenceEqual(createdCertificateBundle01.X5t)));
+                    Assert.True(certList.Any(s => s.X5T.SequenceEqual(createdCertificateBundle02.X5t)));
+                }
+                finally
+                {
+                    // Delete
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+
+        }
+
+        [Fact]
+        public void KeyVaultCertificateCreateSelfSignedTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string certificateName = "selfSignedCert01";
+                const string certificateMimeType = "application/x-pkcs12";
+                const string certificateSubjectName = "CN=*.microsoft.com";
+                try
+                {
+                    var certificateOperation = client.CreateCertificateAsync(_vaultAddress, certificateName, new CertificatePolicy
+                    {
+                        KeyProperties = new KeyProperties
+                        {
+                            Exportable = true,
+                            KeySize = 2048,
+                            Kty = "RSA",
+                            ReuseKey = false
+                        },
+                        SecretProperties = new SecretProperties
+                        {
+                            ContentType = certificateMimeType
+                        },
+                        IssuerReference = new IssuerReference
+                        {
+                            Name = WellKnownIssuers.Self
+                        },
+                        X509CertificateProperties = new X509CertificateProperties
+                        {
+                            Subject = certificateSubjectName,
+                            SubjectAlternativeNames = new SubjectAlternativeNames
+                            {
+                                DnsNames = new[]
+                                {
+                                    "onedrive.microsoft.com",
+                                    "xbox.microsoft.com"
+                                }
+                            }
+                        }
+                    }).GetAwaiter().GetResult();
+
+                    var createdCertificateBundle = PollOnCertificateOperation(client, certificateOperation);
+                    Assert.NotNull(createdCertificateBundle);
+                    Assert.NotNull(createdCertificateBundle.SecretIdentifier);
+                    Assert.NotNull(createdCertificateBundle.KeyIdentifier);
+                    Assert.NotNull(createdCertificateBundle.X5t);
+                    Assert.NotNull(createdCertificateBundle.Policy);
+
+                    Assert.NotNull(createdCertificateBundle.Cer);
+                    var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
+                    Assert.NotNull(publicCer);
+                    Assert.False(publicCer.HasPrivateKey);
+
+                    // Get the certificate as a secret
+                    var retrievedSecret = client.GetSecretAsync(createdCertificateBundle.SecretIdentifier.Identifier).GetAwaiter().GetResult();
+                    Assert.True(0 == string.CompareOrdinal(retrievedSecret.ContentType, certificateMimeType));
+
+                    var retrievedCertificate = new X509Certificate2(
+                        Convert.FromBase64String(retrievedSecret.Value),
+                        string.Empty,
+                        X509KeyStorageFlags.Exportable);
+
+                    Assert.True(retrievedCertificate.HasPrivateKey);
+                    Assert.True(0 == string.CompareOrdinal(retrievedCertificate.SubjectName.Name, certificateSubjectName));
+                    Assert.True(0 == string.CompareOrdinal(retrievedCertificate.IssuerName.Name, certificateSubjectName));
+                }
+                finally
+                {
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateCreateLongSelfSignedTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string certificateName = "longSelfSignedCert01";
+                const string certificateMimeType = "application/x-pkcs12";
+                const string certificateSubjectName = "CN=*.microsoft.com";
+
+                var certificateOperation = client.CreateCertificateAsync(_vaultAddress, certificateName, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    },
+                    IssuerReference = new IssuerReference
+                    {
+                        Name = WellKnownIssuers.Self
+                    },
+                    X509CertificateProperties = new X509CertificateProperties
+                    {
+                        Subject = certificateSubjectName,
+                        SubjectAlternativeNames = new SubjectAlternativeNames
+                        {
+                            DnsNames = new[]
+                            {
+                                "onedrive.microsoft.com",
+                                "xbox.microsoft.com"
+                            }
+                        },
+                        ValidityInMonths = 24,
+                    }
+                }).GetAwaiter().GetResult();
+
+                var createdCertificateBundle = PollOnCertificateOperation(client, certificateOperation);
+                Assert.NotNull(createdCertificateBundle);
+                Assert.NotNull(createdCertificateBundle.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.Policy);
+
+                try
+                {
+                    // Get the certificate as a secret
+                    var retrievedSecret = client.GetSecretAsync(createdCertificateBundle.SecretIdentifier.Identifier).GetAwaiter().GetResult();
+                    Assert.True(0 == string.CompareOrdinal(retrievedSecret.ContentType, certificateMimeType));
+
+                    var retrievedCertificate = new X509Certificate2(
+                        Convert.FromBase64String(retrievedSecret.Value),
+                        string.Empty,
+                        X509KeyStorageFlags.Exportable);
+
+                    Assert.True(retrievedCertificate.HasPrivateKey);
+                    Assert.True(0 == string.CompareOrdinal(retrievedCertificate.SubjectName.Name, certificateSubjectName));
+                    Assert.True(0 == string.CompareOrdinal(retrievedCertificate.IssuerName.Name, certificateSubjectName));
+
+                    // 24 months (ie 2 years) is 729 or 730 days. 
+                    // for some reason the validity is 731 (+ some) days though
+                    var validity = retrievedCertificate.NotAfter - retrievedCertificate.NotBefore;
+                    Assert.True(validity >= TimeSpan.FromDays(729));
+                    Assert.True(validity <= TimeSpan.FromDays(732));
+                }
+                finally
+                {
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateCreateTestIssuerTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string issuer01Name = "issuer01";
+                var issuer01 = new IssuerBundle
+                {
+                    Provider = "Test",
+                };
+
+                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01).GetAwaiter().GetResult();
+                Assert.NotNull(createdIssuer01);
+                
+                const string certificateName = "testIssuerCert01";
+                const string certificateMimeType = "application/x-pkcs12";
+                const string certificateSubjectName = "CN=*.microsoft.com";
+
+                var certificateOperation = client.CreateCertificateAsync(_vaultAddress, certificateName, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    },
+                    IssuerReference = new IssuerReference
+                    {
+                        Name = createdIssuer01.IssuerIdentifier.Name
+                    },
+                    X509CertificateProperties = new X509CertificateProperties
+                    {
+                        Subject = certificateSubjectName,
+                        SubjectAlternativeNames = new SubjectAlternativeNames
+                        {
+                            DnsNames = new[]
+                            {
+                                "onedrive.microsoft.com",
+                                "xbox.microsoft.com"
+                            }
+                        },
+                        ValidityInMonths = 24,
+                    }
+                }).GetAwaiter().GetResult();
+
+                try
+                {
+                    var createdCertificateBundle = PollOnCertificateOperation(client, certificateOperation);
+
+                    Assert.NotNull(createdCertificateBundle);
+                    Assert.NotNull(createdCertificateBundle.Policy);
+                    Assert.NotNull(createdCertificateBundle.SecretIdentifier);
+                    Assert.NotNull(createdCertificateBundle.KeyIdentifier);
+                    Assert.NotNull(createdCertificateBundle.X5t);
+
+                    // Get the certificate as a secret
+                    var retrievedSecret = client.GetSecretAsync(createdCertificateBundle.SecretIdentifier.Identifier).GetAwaiter().GetResult();
+                    Assert.True(0 == string.CompareOrdinal(retrievedSecret.ContentType, certificateMimeType));
+
+                    var retrievedCertificate = new X509Certificate2(
+                        Convert.FromBase64String(retrievedSecret.Value),
+                        string.Empty,
+                        X509KeyStorageFlags.Exportable);
+
+                    Assert.True(retrievedCertificate.HasPrivateKey);
+                    Assert.True(0 == string.CompareOrdinal(retrievedCertificate.SubjectName.Name, certificateSubjectName));
+                    Assert.True(0 == string.CompareOrdinal(retrievedCertificate.IssuerName.Name, certificateSubjectName));
+
+                    // 24 months (ie 2 years) is 729 or 730 days. 
+                    // for some reason the validity is 731 (+ some) days though
+                    var validity = retrievedCertificate.NotAfter - retrievedCertificate.NotBefore;
+                    Assert.True(validity >= TimeSpan.FromDays(729));
+                    Assert.True(validity <= TimeSpan.FromDays(732));
+                }
+                finally
+                {
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateAsyncRequestCancellationTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string issuer01Name = "issuer02";
+                var issuer01 = new IssuerBundle
+                {
+                    Provider = "Test",
+                };
+
+                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01).GetAwaiter().GetResult();
+                Assert.NotNull(createdIssuer01);
+
+                const string certificateName = "cancellationRequestedCert01";
+                const string certificateMimeType = "application/x-pkcs12";
+                const string certificateSubjectName = "CN=*.microsoft.com";
+
+                var certificateOperation = client.CreateCertificateAsync(_vaultAddress, certificateName, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    },
+                    IssuerReference = new IssuerReference
+                    {
+                        Name = createdIssuer01.IssuerIdentifier.Name
+                    },
+                    X509CertificateProperties = new X509CertificateProperties
+                    {
+                        Subject = certificateSubjectName,
+                        SubjectAlternativeNames = new SubjectAlternativeNames
+                        {
+                            DnsNames = new[]
+                            {
+                                "onedrive.microsoft.com",
+                                "xbox.microsoft.com"
+                            }
+                        },
+                        ValidityInMonths = 24,
+                    }
+                }).GetAwaiter().GetResult();
+
+                try
+                {
+                    Assert.NotNull(certificateOperation);
+                    var cancelledCertificateOperation = client.UpdateCertificateOperationAsync(_vaultAddress, certificateName, new CertificateOperation
+                    {
+                        CancellationRequested = true,
+                    }).GetAwaiter().GetResult();
+
+                    Assert.NotNull(cancelledCertificateOperation);
+                    Assert.True(cancelledCertificateOperation.CancellationRequested.HasValue && cancelledCertificateOperation.CancellationRequested.Value);
+
+                    certificateOperation = client.GetCertificateOperationAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+                    Assert.NotNull(certificateOperation);
+                    Assert.True(certificateOperation.CancellationRequested.HasValue && certificateOperation.CancellationRequested.Value);
+                }
+                finally
+                {
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateAsyncDeleteOperationTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string issuer01Name = "issuer03";
+                var issuer01 = new IssuerBundle
+                {
+                    Provider = "Test",
+                };
+
+                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01).GetAwaiter().GetResult();
+                Assert.NotNull(createdIssuer01);
+
+                const string certificateName = "deletedRequestedCert01";
+                const string certificateMimeType = "application/x-pkcs12";
+                const string certificateSubjectName = "CN=*.microsoft.com";
+
+                var certificateOperation = client.CreateCertificateAsync(_vaultAddress, certificateName, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    },
+                    IssuerReference = new IssuerReference
+                    {
+                        Name = createdIssuer01.IssuerIdentifier.Name
+                    },
+                    X509CertificateProperties = new X509CertificateProperties
+                    {
+                        Subject = certificateSubjectName,
+                        SubjectAlternativeNames = new SubjectAlternativeNames
+                        {
+                            DnsNames = new[]
+                            {
+                                "onedrive.microsoft.com",
+                                "xbox.microsoft.com"
+                            }
+                        },
+                        ValidityInMonths = 24,
+                    }
+                }).GetAwaiter().GetResult();
+
+                try
+                {
+                    Assert.NotNull(certificateOperation);
+                    var deletedCertificateOperation = client.DeleteCertificateOperationAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(deletedCertificateOperation);
+
+                    var exceptionThrown = false;
+                    try
+                    {
+                        client.GetCertificateOperationAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException e)
+                    {
+                        if (e.Response.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            exceptionThrown = true;
+                        }
+                    }
+
+                    Assert.True(exceptionThrown);
+                }
+                finally
+                {
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateUpdateTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string certificateName = "updateCert01";
+                const string certificateContent =
+                    "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";
+                const string certificatePassword = "123";
+                const string certificateMimeType = "application/x-pkcs12";
+
+                var myCertificate = new X509Certificate2(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
+
+                // Import cert
+                var createdCertificateBundle = client.ImportCertificateAsync(_vaultAddress, certificateName, certificateContent, certificatePassword, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(createdCertificateBundle);
+                Assert.NotNull(createdCertificateBundle.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.Policy);
+                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                try
+                {
+                    // Get the certificate bundle
+                    var certificateBundleLatest = client.GetCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleLatest);
+                    Assert.NotNull(certificateBundleLatest.SecretIdentifier);
+                    Assert.NotNull(certificateBundleLatest.KeyIdentifier);
+                    Assert.NotNull(certificateBundleLatest.X5t);
+                    Assert.NotNull(certificateBundleLatest.Policy);
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                    // Update certificate bundle
+                    var tags = certificateBundleLatest.Tags ?? new Dictionary<string, string>();
+                    tags.Add("department", "KeyVaultTest");
+                    certificateBundleLatest.Tags = tags;
+
+                    var certificateBundleUpdatedResponse = client.UpdateCertificateAsync(
+                        certificateBundleLatest.CertificateIdentifier.Identifier, certificateBundleLatest.Attributes, certificateBundleLatest.Tags).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleUpdatedResponse);
+                    Assert.NotNull(certificateBundleUpdatedResponse.SecretIdentifier);
+                    Assert.NotNull(certificateBundleUpdatedResponse.KeyIdentifier);
+                    Assert.NotNull(certificateBundleUpdatedResponse.X5t);
+                    Assert.True(certificateBundleUpdatedResponse.Tags.ContainsKey("department"));
+                    Assert.True(0 == string.CompareOrdinal(certificateBundleUpdatedResponse.Tags["department"], "KeyVaultTest"));
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(certificateBundleUpdatedResponse.X5t)));
+
+                    // Get the update certificate bundle
+                    var certificateBundleUpdated = client.GetCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleUpdated);
+                    Assert.NotNull(certificateBundleUpdated.SecretIdentifier);
+                    Assert.NotNull(certificateBundleUpdated.KeyIdentifier);
+                    Assert.NotNull(certificateBundleUpdated.X5t);
+                    Assert.NotNull(certificateBundleUpdated.Policy);
+                    Assert.True(certificateBundleUpdated.Tags.ContainsKey("department"));
+                    Assert.True(0 == string.CompareOrdinal(certificateBundleUpdated.Tags["department"], "KeyVaultTest"));
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(certificateBundleUpdated.X5t)));
+                }
+                finally
+                {
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificatePolicyTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string certificateName = "updateCert01";
+                const string certificateContent =
+                    "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";
+                const string certificatePassword = "123";
+                const string certificateMimeType = "application/x-pkcs12";
+
+                var myCertificate = new X509Certificate2(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
+
+                // Import cert
+                var createdCertificateBundle = client.ImportCertificateAsync(_vaultAddress, certificateName, certificateContent, certificatePassword, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(createdCertificateBundle);
+                Assert.NotNull(createdCertificateBundle.SecretIdentifier);
+                Assert.NotNull(createdCertificateBundle.KeyIdentifier);
+                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.Policy);
+                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+
+                try
+                {
+                    // Get the certificate policy
+                    var certificateBundlePolicy = client.GetCertificatePolicyAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+                    Assert.NotNull(certificateBundlePolicy);
+
+                    // Update certificate policy
+                    certificateBundlePolicy.IssuerReference = new IssuerReference
+                    {
+                        Name = WellKnownIssuers.Self
+                    };
+
+                    var certificateBundlePolicyUpdatedResponse = client.UpdateCertificatePolicyAsync(_vaultAddress, certificateName, certificateBundlePolicy).GetAwaiter().GetResult();
+                    Assert.NotNull(certificateBundlePolicyUpdatedResponse);
+                    Assert.True(0 == string.CompareOrdinal(certificateBundlePolicyUpdatedResponse.IssuerReference.Name, WellKnownIssuers.Self));
+
+                    // Get the update certificate policy
+                    var certificateBundlePolicyUpdated = client.GetCertificatePolicyAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+                    Assert.NotNull(certificateBundlePolicyUpdated);
+                    Assert.True(0 == string.CompareOrdinal(certificateBundlePolicyUpdated.IssuerReference.Name, WellKnownIssuers.Self));
+                }
+                finally
+                {
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void KeyVaultCertificateContactsTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                // Create contacts
+                var contacts = new Contacts
+                {
+                    ContactList = new List<Contact>
+                    {
+                        new Contact
+                        {
+                            EmailAddress = "admin@contoso.com",
+                            Name = "John Doe",
+                            Phone = "1111111111"
+                        },
+                    }
+                };
+
+                var createdContacts = client.SetCertificateContactsAsync(_vaultAddress, contacts).GetAwaiter().GetResult();
+                Assert.NotNull(createdContacts);
+
+                Assert.True(createdContacts.ContactList.Count() == 1);
+                Assert.True(createdContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
+                Assert.True(createdContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
+                Assert.True(createdContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+
+                try
+                {
+                    // Get contacts
+                    var retrievedContacts = client.GetCertificateContactsAsync(_vaultAddress).GetAwaiter().GetResult();
+                    Assert.NotNull(retrievedContacts);
+
+                    Assert.True(retrievedContacts.ContactList.Count() == 1);
+                    Assert.True(retrievedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
+                    Assert.True(retrievedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
+                    Assert.True(retrievedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+
+                    // Update contacts
+                    retrievedContacts.ContactList = new List<Contact>
+                    {
+                        new Contact
+                        {
+                            EmailAddress = "admin@contoso.com",
+                            Name = "John Doe",
+                            Phone = "1111111111"
+                        },
+                        new Contact
+                        {
+                            EmailAddress = "admin@contoso2.com",
+                            Name = "Johnathan Doeman",
+                            Phone = "2222222222"
+                        }
+                    };
+
+
+                    var updatedContacts = client.SetCertificateContactsAsync(_vaultAddress, retrievedContacts).GetAwaiter().GetResult();
+                    Assert.NotNull(updatedContacts);
+
+                    Assert.True(updatedContacts.ContactList.Count() == 2);
+                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
+                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
+                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+
+                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com")));
+                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman")));
+                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "2222222222")));
+
+                    // Retrieve updated
+                    var retrievedUpdatedContacts = client.GetCertificateContactsAsync(_vaultAddress).GetAwaiter().GetResult();
+                    Assert.NotNull(retrievedUpdatedContacts);
+
+                    Assert.True(retrievedUpdatedContacts.ContactList.Count() == 2);
+                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
+                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
+                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+
+                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com")));
+                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman")));
+                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "2222222222")));
+                }
+                finally
+                {
+                    // Delete contacts
+                    var deletedContacts = client.DeleteCertificateContactsAsync(_vaultAddress).GetAwaiter().GetResult();
+                    Assert.NotNull(deletedContacts);
+
+                    Assert.True(deletedContacts.ContactList.Count() == 2);
+                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
+                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
+                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+
+                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com")));
+                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman")));
+                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "2222222222")));
+                }
+            }
+
+        }
+
+        [Fact]
+        public void KeyVaultCertificateIssuersTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string issuer01Name = "issuer01";
+                var issuer01 = new IssuerBundle
+                {
+                    Provider = "Test",
+                    Credentials = new IssuerCredentials
+                    {
+                        AccountId = "keyvaultuser",
+                        Password = "password"
+                    },
+                    OrganizationDetails = new OrganizationDetails
+                    {
+                        Name = "MICROSOFT CORP",
+                        Address1 = "1 Microsoft Way",
+                        City = "Redmond",
+                        State = "WA",
+                        Zipcode = "98007",
+                        Country = "US",
+                        AdministratorDetails = new List<AdministratorDetails>
+                        {
+                            new AdministratorDetails
+                            {
+                                FirstName = "John",
+                                LastName = "Doe",
+                                EmailAddress = "admin@microsoft.com",
+                                Phone = "4255555555"
+                            },
+                        },
+                    }
+                };
+
+                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01).GetAwaiter().GetResult();
+                Assert.NotNull(createdIssuer01);
+
+                var retrievedIssuer01 = client.GetCertificateIssuerAsync(_vaultAddress, issuer01Name).GetAwaiter().GetResult();
+                Assert.NotNull(retrievedIssuer01);
+
+                const string issuer02Name = "issuer02";
+                var issuer02 = new IssuerBundle
+                {
+                    Provider = "Test",
+                    Credentials = new IssuerCredentials
+                    {
+                        AccountId = "xboxuser",
+                        Password = "security"
+                    },
+                    OrganizationDetails = new OrganizationDetails
+                    {
+                        Name = "Xbox CORP",
+                        Address1 = "1 Xbox Way",
+                        City = "Bellevue",
+                        State = "WA",
+                        Zipcode = "98004",
+                        Country = "US",
+                        AdministratorDetails = new List<AdministratorDetails>
+                        {
+                            new AdministratorDetails
+                            {
+                                FirstName = "Jane",
+                                LastName = "Doe",
+                                EmailAddress = "admin@microsoft.com",
+                                Phone = "4256666666"
+                            },
+                        },
+                    }
+                };
+
+                var createdIssuer02 = client.SetCertificateIssuerAsync(_vaultAddress, issuer02Name, issuer02).GetAwaiter().GetResult();
+                Assert.NotNull(createdIssuer02);
+
+                var issuers = client.GetCertificateIssuersAsync(_vaultAddress).GetAwaiter().GetResult();
+                Assert.NotNull(issuers);
+                Assert.True(issuers.Count() > 1);
+                Assert.True(issuers.Any(i => i.Id.Contains(issuer01Name)));
+                Assert.True(issuers.Any(i => i.Id.Contains(issuer02Name)));
+
+                var deletedIssuer01 = client.DeleteCertificateIssuerAsync(_vaultAddress, issuer01Name).GetAwaiter().GetResult();
+                Assert.NotNull(deletedIssuer01);
+
+                var deletedIssuer02 = client.DeleteCertificateIssuerAsync(_vaultAddress, issuer02Name).GetAwaiter().GetResult();
+                Assert.NotNull(deletedIssuer02);
+
+                var emptyIssuers = client.GetCertificateIssuersAsync(_vaultAddress).GetAwaiter().GetResult();
+                Assert.NotNull(emptyIssuers);
+                Assert.False(emptyIssuers.Any(i => i.Id.Contains(issuer01Name)));
+                Assert.False(emptyIssuers.Any(i => i.Id.Contains(issuer02Name)));
+            }
+        }
+
+#endregion
+
+#region Helper Methods
 
         private static SecretAttributes NewSecretAttributes(bool enabled, bool active, bool expired)
         {
@@ -1098,8 +2392,52 @@ namespace KeyVault.Tests
 
             return key;
         }
+        
+        private CertificateBundle PollOnCertificateOperation(KeyVaultClient client, CertificateOperation pendingCertificate)
+        {
+            // Wait till pending is complete. We will wait for 200 seconds
+            var pendingPollCount = 0;
+            while (pendingPollCount < 11)
+            {
+                var pendingCertificateResponse = client.GetCertificateOperationAsync(_vaultAddress, pendingCertificate.CertificateOperationIdentifier.Name).GetAwaiter().GetResult();
+                if (0 == string.Compare(pendingCertificateResponse.Status, "InProgress", true))
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(20));
+                    pendingPollCount += 1;
+                    continue;
+                }
 
-        #endregion
+                if (0 == string.Compare(pendingCertificateResponse.Status, "Completed", true))
+                {
+                    return client.GetCertificateAsync(pendingCertificateResponse.Target).GetAwaiter().GetResult();
+                }
+
+                throw new Exception(string.Format(
+                    CultureInfo.InvariantCulture,
+                    "Polling on pending certificate returned an unexpected result. Error code = {0}, Error message = {1}",
+                    pendingCertificate.Error.Code,
+                    pendingCertificate.Error.Message));
+            }
+
+            throw new Exception(string.Format(
+                CultureInfo.InvariantCulture,
+                "Pending certificate processing delayed"));
+        }
+
+        /// <summary>
+        /// Converts a byte array to a Hex encoded string
+        /// </summary>
+        /// <param name="input">The byte array to convert</param>
+        /// <returns>The Hex encoded form of the input</returns>
+        private static string ToHexString(byte[] input)
+        {
+            if (input == null)
+                return string.Empty;
+
+            return BitConverter.ToString(input).Replace("-", string.Empty);
+        }
+
+#endregion
 
     }
 }

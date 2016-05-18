@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/keys/listkeytest0/create?api-version=2015-06-01",
-      "EncodedRequestUri": "L2tleXMvbGlzdGtleXRlc3QwL2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE1LTA2LTAx",
+      "RequestUri": "/keys/listkeytest0/create?api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L2tleXMvbGlzdGtleXRlc3QwL2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "20"
         ],
         "x-ms-client-request-id": [
-          "575650e8-d870-460d-a70e-1d733ea19e75"
+          "af0f4203-60a5-43c1-8c33-9795c74cda3e"
         ],
         "accept-language": [
           "en-US"
@@ -22,7 +22,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://sdktestvault0422.vault.azure.net/keys/listkeytest0/8d563d5489154fb88f37c4b178d14d90\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"1-Oo69W1DqDAPaN6Epq7OxNTnuBy0mNNcuSWnt9v1sdg5PfZsfKWbn5ShyoT0Z43zv9hr1Ff1cSh_9urlFOHbnACnY3jT1dlwXEHX6vHooz0vx8PCxTCxanXPYkDtARCzjuUTe-7hJT0AYGs9pKB7_2gZDLsAuomsmipoOz02JBSomWt6SG5Or7JZYe3rlMh9hdvZyEXbv2S6nSmUwQrZff8eCfwv3CZoMUoU6Bj6_L-JYGkXbxo61A-Ow2VIvur64t3zKl-yAfESHUjXejN3Ul1CylqoimI7Uk_tH7KoaKA4RatMXiVqB6r-GrN2s78QmClgaFsxd-5T81J-HqI-w\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1461347730,\r\n    \"updated\": 1461347730\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/listkeytest0/f519c14fcec4405abeaa841b22b17386\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"0P-u2T-eGBBJHZIFl-kf-isPXpQ248h9DVghLnjxxUZYFQqFTzLptH2GApB3H16aWAyZqVq1HQ3m1kr7kBEOK1CC3bIuYJtqCKYFRDwUdApkeq_AJjxF1hRtILheVfTQw5juVPlVb7DV8wQ2lSJQ5fnw_fJPXgmPDn2CsRrb0M6l5DHtd6ijfRjoShShed0PGJlk0wPU5ydw00O75otL4sUH1AlmmmFma-QNwogynyUZb9w3abxI-USBT0q7_kLgmmDezplGjvzuMPdHnCP6AMi_VoDAdqylESCz-uwl_znH-SV8ZVHTHPPlCrmUwRRgUFIzR-CyCJEmY3uLSfQsgw\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1463588810,\r\n    \"updated\": 1463588810\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "623"
@@ -33,42 +33,42 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "2497be7b-2c26-404f-8e2b-bf12834a2954"
+          "82eb4695-b77f-4e55-9bc3-ae080524522b"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:50 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/listkeytest1/create?api-version=2015-06-01",
-      "EncodedRequestUri": "L2tleXMvbGlzdGtleXRlc3QxL2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE1LTA2LTAx",
+      "RequestUri": "/keys/listkeytest1/create?api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L2tleXMvbGlzdGtleXRlc3QxL2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
       "RequestHeaders": {
@@ -79,7 +79,7 @@
           "20"
         ],
         "x-ms-client-request-id": [
-          "ade489fa-a62e-4f97-94ca-15afc2b2b0f7"
+          "21d84e13-1a91-4e19-9e49-b46082c09c28"
         ],
         "accept-language": [
           "en-US"
@@ -88,7 +88,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://sdktestvault0422.vault.azure.net/keys/listkeytest1/339aec7c42e44675905bf02da6f820d0\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"xnv5E-QdMp9kFHuVcx1C8whV2h0CudwI2Fr1unZ2VoEY75dyQNIIrFgiiafKKt2oNJLwfeWgSfYKnVq4BOJriIJs_8cwwdzvT7qOhzIPalW83hMwbKfAGrLSxZcgrvlXIt-5a3Dhnzo48P-L668UMskLt8e6oI7EHLtXRcTSpfy0nn_pS7rvZvTZwhfw31pKEvpDKBO64Z6sAvzuijFWIGcquV01ZObjmNZpkOY197ajZ0_YqMFtezCScbbscJs7dAZy3WztoKAUyqCaP8s-RRsv5BMe4tdf_PszIe8W2c4f1-i9vFxPWIbIbKwxza0Ep8zkCMTGjHg8nHWxJQO8HQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1461347730,\r\n    \"updated\": 1461347730\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/listkeytest1/396e9635a12143ab90bf06f64e77cd63\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"rS9F6rB8svOTPJId8xFmTMW4GdE6NArW_UzV-BgNZdTdYjKBIYj45uNPDl0Ewd01zCSpvnE7mbolu-L4KOctRKR7zGOV8G652QW5-xP8Pt8JA7XaW4ArdltnknZtwGwXmMuQDDgubXiteg82l_v0abqYVz3nyZ17CcrMixWV1GAAX6mHRQhnNuygUR_goXp3EmJzm45wEfsRgkLR3ldstanLtwWO_BhBt7JezJYSuj6pdoHkVy5fpGkWlorlKgOD9eik1R2rT9xFMI3uUfEO1NYAXCBPFBToh92fUPfGjpWMCNcEP7HWULIkZzQfEi-uVFI8MokfvGmr7bphbIbcew\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1463588810,\r\n    \"updated\": 1463588810\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "623"
@@ -99,42 +99,42 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "6478b8b1-60da-4b83-a4e9-2ade8879e58c"
+          "6682af37-dde7-456c-ac6d-a3a068e5ccee"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:50 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/listkeytest2/create?api-version=2015-06-01",
-      "EncodedRequestUri": "L2tleXMvbGlzdGtleXRlc3QyL2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE1LTA2LTAx",
+      "RequestUri": "/keys/listkeytest2/create?api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L2tleXMvbGlzdGtleXRlc3QyL2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
       "RequestHeaders": {
@@ -145,7 +145,7 @@
           "20"
         ],
         "x-ms-client-request-id": [
-          "706924d1-6257-4a31-8338-a9e784e101dc"
+          "e78d61f7-a147-45bb-8f8e-eaca1162a157"
         ],
         "accept-language": [
           "en-US"
@@ -154,7 +154,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://sdktestvault0422.vault.azure.net/keys/listkeytest2/e36cf4c4cc15425e9ec0a8314e05654f\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"wRIn8L-Er1HIchvfUc_VgX8BhWlPyZ1avqHCJB-DGy5Oyb1Yt8BgMjoobfOzpVC5r7WwfOQKVCBdZwye88vyJO35jOPR0jcycBdh238PAQv12Uus2WIqvJczVYYxOo1HKgVS0eMqIsQ9FW_7nfmDmypsE3GfCfFA_s9VWwID7aB6c5t9S8ERV0iGKhD2jnwXGz52yXDLkd2poiQwJ-c1s4a1LLiMqS9pAt_4kwXVtdVMsRTxQ_PkBoWIhyium65Q3b5eGIQtTet7xe4SuPnSkIApYfRYv34BIoYR_PJ73U7OCAHau8GqLsf5IAMBaxkV_yUd6lRCtEy1zHNtirtZuw\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1461347731,\r\n    \"updated\": 1461347731\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/listkeytest2/d6b8281dd57f44539d68a5416cce257c\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"l2TMDACdF4WXglswxe1ZWXJGwsUdTfEAhQJPzV4JAlsnEqQbFAc22czw9YNArIAJaJ2eiRkxO7XyqmU0iWEO0TK0TOtnr1q18W5-lYujmCJBKSWzD3pvy27xmVipKlihwnCuQzTikMHfcNCOvryS5XK8dqnNOhtYNv1ySXRhi_z1sMgP7eSSwkB46ncHqvwdKIzrkKiKGh9B6iO3N9va6KATrQxlcb2_rnDWYSsCyW3gU9AtYq54Fl8LPWtoQoh_aqHqcq0TJblGeVxtrLFgDLYlLiSRpXWRtInW40rHmkbzIifTSmWhVe-4a9f-CY-0P0ONWdUVuFK9qULm0_POIQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1463588811,\r\n    \"updated\": 1463588811\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "623"
@@ -165,47 +165,47 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "2bc879d0-ed8e-4b78-a55f-d08b05905b15"
+          "b670966a-d9eb-4715-9e0d-c652c731db95"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:50 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?maxresults=1&api-version=2015-06-01",
-      "EncodedRequestUri": "L2tleXM/bWF4cmVzdWx0cz0xJmFwaS12ZXJzaW9uPTIwMTUtMDYtMDE=",
+      "RequestUri": "/keys?maxresults=1&api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L2tleXM/bWF4cmVzdWx0cz0xJmFwaS12ZXJzaW9uPTIwMTUtMDYtMDEtcHJldmlldzI=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8e914332-b51c-4f5a-867e-4725eefada7d"
+          "c293ddfa-6827-4a15-bcdb-be9a7251be5b"
         ],
         "accept-language": [
           "en-US"
@@ -214,10 +214,10 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0422.vault.azure.net/keys/listkeytest0\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1461347730,\r\n        \"updated\": 1461347730\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0422.vault.azure.net:443/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/listkeytest0\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1463588810,\r\n        \"updated\": 1463588810\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0518.vault.azure.net:443/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UWXRNRFV0TVRoVU1UWTZNalk2TlRBdU9EWXlPRGMyTmxvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "425"
+          "434"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -225,47 +225,47 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "fedbbc5d-80d4-4998-8a06-3e42253428bf"
+          "032c1d8e-af83-4e47-9e1f-3974a9f2a641"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
-      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE1DRk5SRUYzVFVSRk1rbFhkR3hsVXpsTlUxWk9WVk13VmxwV1JWWlVWa1JGYUUxRVFYZE5SRWswU1ZSck5VOVVhM1JOVkVsMFRYcEdWVTFxVFRaT1ZHczJUbFJyZFU5VWF6VlBWR3MxVDFadmFDSXNJbFJoY21kbGRFeHZZMkYwYVc5dUlqb3dmUSZtYXhyZXN1bHRzPTE=",
+      "RequestUri": "/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UWXRNRFV0TVRoVU1UWTZNalk2TlRBdU9EWXlPRGMyTmxvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3MiYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE1DRk5SRUYzVFVSRk1rbFhkR3hsVXpsTlUxWk9WVk13VmxwV1JWWlVWa1JGYUUxRVFYZE5SRWswU1ZSSmQwMVVXWFJOUkZWMFRWUm9WVTFVV1RaTmFsazJUbFJCZFU5RVdYbFBSR015VG14dmFDSXNJbFJoY21kbGRFeHZZMkYwYVc5dUlqb3dmUSZtYXhyZXN1bHRzPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "457a3f16-9704-4e86-b5cd-af1514f29f00"
+          "d5f040d9-d138-4a6c-bb6f-1c955b350e64"
         ],
         "accept-language": [
           "en-US"
@@ -274,10 +274,10 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0422.vault.azure.net/keys/listkeytest1\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1461347730,\r\n        \"updated\": 1461347730\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0422.vault.azure.net:443/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/listkeytest1\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1463588810,\r\n        \"updated\": 1463588810\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0518.vault.azure.net:443/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UWXRNRFV0TVRoVU1UWTZNalk2TlRFdU5ESXdPVFEzTlZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "425"
+          "434"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -285,47 +285,47 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "25c534db-0548-4055-a01f-c446c1b883be"
+          "185326f2-361f-4885-88fe-38fb07899913"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
-      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE1DRk5SRUYzVFVSRk1rbFhkR3hsVXpsTlUxWk9WVk13VmxwV1JWWlVWa1JKYUUxRVFYZE5SRWswU1ZSck5VOVVhM1JOVkVsMFRYcEdWVTFxVFRaT1ZHczJUbFJyZFU5VWF6VlBWR3MxVDFadmFDSXNJbFJoY21kbGRFeHZZMkYwYVc5dUlqb3dmUSZtYXhyZXN1bHRzPTE=",
+      "RequestUri": "/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UWXRNRFV0TVRoVU1UWTZNalk2TlRFdU5ESXdPVFEzTlZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3MiYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE1DRk5SRUYzVFVSRk1rbFhkR3hsVXpsTlUxWk9WVk13VmxwV1JWWlVWa1JKYUUxRVFYZE5SRWswU1ZSSmQwMVVXWFJOUkZWMFRWUm9WVTFVV1RaTmFsazJUbFJGZFU1RVNYZFBWRkV6VGxadmFDSXNJbFJoY21kbGRFeHZZMkYwYVc5dUlqb3dmUSZtYXhyZXN1bHRzPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a25ff4fb-062e-4e65-98ce-6d8ddcd8f640"
+          "2c18e0fd-49e3-49a0-bf89-88d94b1dba30"
         ],
         "accept-language": [
           "en-US"
@@ -334,10 +334,10 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0422.vault.azure.net/keys/listkeytest2\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1461347731,\r\n        \"updated\": 1461347731\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0422.vault.azure.net:443/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFMkxUQTBMVEl5VkRFM09qVTFPak13TGpBNU1UVTNOamRhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/listkeytest2\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1463588811,\r\n        \"updated\": 1463588811\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0518.vault.azure.net:443/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFMkxUQTFMVEU0VkRFMk9qSXpPakV6TGprNE5qTXhNemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "441"
+          "450"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -345,47 +345,47 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "b9bab250-7e56-4c92-95b3-14bda65f5f15"
+          "f3b945e4-4ef7-491d-9035-9442ec0a2fb2"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFMkxUQTBMVEl5VkRFM09qVTFPak13TGpBNU1UVTNOamRhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
-      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNU1pRk5SRUYzVFVSSmVrbFhkR3hsVXpsTlUxWk9WVk13VmxwV2ExWlRWVEJzVUZSc1RsVlNWazVWU1ZSQmQwMUVRWGxQUTBWNVRVUkZNa3hVUVRCTVZFbDVWa1JGTTA5cVZURlBhazEzVEdwQk5VMVVWVE5PYW1SaFNWRXRMU0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
+      "RequestUri": "/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFMkxUQTFMVEU0VkRFMk9qSXpPakV6TGprNE5qTXhNemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3MiYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNU1pRk5SRUYzVFVSSmVrbFhkR3hsVXpsTlUxWk9WVk13VmxwV2ExWlRWVEJzVUZSc1RsVlNWazVWU1ZSQmQwMUVRWGxQUTBWNVRVUkZNa3hVUVRGTVZFVTBWa1JGTWs5cVNYcFBha1Y2VEdwck5FNXFUWGhOZW1oaFNWRXRMU0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "855192f2-043f-4f39-80aa-8387b2de1079"
+          "d7b8506e-add3-4023-ba00-751cd0a3fe1d"
         ],
         "accept-language": [
           "en-US"
@@ -394,10 +394,10 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0422.vault.azure.net/keys/listkeyversionstest\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1461347730,\r\n        \"updated\": 1461347730\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0422.vault.azure.net:443/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFMkxUQTBMVEl5VkRFM09qVTFPakUwTGpnMk56WXlPREJhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/listkeyversionstest\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1463588809,\r\n        \"updated\": 1463588809\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0518.vault.azure.net:443/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeUlXdGxlUzlNU1ZOVVZrVlNVMGxQVGxORFJWSlVNREVoTURBd01ESTRJVGs1T1RrdE1USXRNekZVTWpNNk5UazZOVGt1T1RrNU9UazVPVm9oIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "432"
+          "451"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -405,47 +405,47 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "83205262-af4b-44cc-83e2-91b74c076c4f"
+          "65497d57-cebe-426b-a973-43c6ed78b8ce"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFMkxUQTBMVEl5VkRFM09qVTFPakUwTGpnMk56WXlPREJhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
-      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE1DRk5SRUYzVFVSRk1FbFhkR3hsVXpsVVVrVjBWVkpXVGxWVE1GWmFTVlJCZDAxRVFYbFBRMFY1VFVSRk1reFVRVEJNVkVsNVZrUkZNMDlxVlRGUGFrVXdUR3BuTWs1NldYbFBSRUpoU1ZFdExTSXNJbFJoY21kbGRFeHZZMkYwYVc5dUlqb3dmUSZtYXhyZXN1bHRzPTE=",
+      "RequestUri": "/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeUlXdGxlUzlNU1ZOVVZrVlNVMGxQVGxORFJWSlVNREVoTURBd01ESTRJVGs1T1RrdE1USXRNekZVTWpNNk5UazZOVGt1T1RrNU9UazVPVm9oIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
+      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3MiYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE9DRk5SRUYzVFVSSmVVbFhkR3hsVXpsTlUxWk9WVlpyVmxOVk1HeFFWR3hPUkZKV1NsVk5SRVZvVFVSQmQwMUVTVFJKVkdzMVQxUnJkRTFVU1hSTmVrWlZUV3BOTms1VWF6Wk9WR3QxVDFSck5VOVVhelZQVm05b0lpd2lWR0Z5WjJWMFRHOWpZWFJwYjI0aU9qQjkmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0a5a0e1b-0983-4c0e-b34e-d19f27560ec3"
+          "b59c07d8-b934-4ed7-aa60-b8c55923ceaf"
         ],
         "accept-language": [
           "en-US"
@@ -454,10 +454,10 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0422.vault.azure.net/keys/sdktestkey\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1461347725,\r\n        \"updated\": 1461347725\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0422.vault.azure.net:443/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOaTB3TkMweU1sUXhOem8xTlRveU9DNDVNRFEwTWpRNFdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/sdktestkey\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1463588800,\r\n        \"updated\": 1463588800\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://sdktestvault0518.vault.azure.net:443/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJd0lXdGxlUzlUUlV4R1UwbEhUa1ZFUTBWU1ZEQXhJVEF3TURBeU9DRTVPVGs1TFRFeUxUTXhWREl6T2pVNU9qVTVMams1T1RrNU9UbGFJUS0tIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "444"
+          "442"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -465,47 +465,47 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "168311d9-ebf4-4250-a4bb-2162c81e05c4"
+          "7840e1e8-54a4-488b-af64-f87d5f459fbc"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2015-06-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOaTB3TkMweU1sUXhOem8xTlRveU9DNDVNRFEwTWpRNFdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
-      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNU5pRk5SRUYzVFVSSk0wbFhkR3hsVXpsV1ZVVlNRbFpGVmt4U1ZteENWa1pTVTFOVlNsWldSVlpVVmtWV1ZGWkRSWGROUkVGM1RXcG5hRTFxUVhoT2FUQjNUa013ZVUxc1VYaE9lbTh4VGxSdmVVOURORFZOUkZFd1RXcFJORmRwUlMwaUxDSlVZWEpuWlhSTWIyTmhkR2x2YmlJNk1IMCZtYXhyZXN1bHRzPTE=",
+      "RequestUri": "/keys?api-version=2015-06-01-preview2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJd0lXdGxlUzlUUlV4R1UwbEhUa1ZFUTBWU1ZEQXhJVEF3TURBeU9DRTVPVGs1TFRFeUxUTXhWREl6T2pVNU9qVTVMams1T1RrNU9UbGFJUS0tIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
+      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3MiYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE9DRk5SRUYzVFVSSmQwbFhkR3hsVXpsVVVsVjRSMVV3YkVoVWExWkZVVEJXVTFaRVFYaEpWRUYzVFVSQmVVOURSVFZQVkdzMVRGUkZlVXhVVFhoV1JFbDZUMnBWTlU5cVZUVk1hbXMxVDFSck5VOVViR0ZKVVMwdElpd2lWR0Z5WjJWMFRHOWpZWFJwYjI0aU9qQjkmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fda3aabf-b2b9-4604-877e-0a2761ececec"
+          "cf79cb0f-da27-40ee-96bd-76016cdf9f7f"
         ],
         "accept-language": [
           "en-US"
@@ -525,35 +525,35 @@
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 22 Apr 2016 17:55:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "83da00a6-af74-4014-8f0a-fdfaaa9bafe4"
+          "7ae18e04-3a0a-49b1-a051-2a2dd3e317ab"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.749"
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
         ]
       },
       "StatusCode": 200
@@ -561,8 +561,8 @@
   ],
   "Names": {},
   "Variables": {
-    "VaultAddress": "https://sdktestvault0422.vault.azure.net",
+    "VaultAddress": "https://sdktestvault0518.vault.azure.net",
     "KeyName": "sdktestkey",
-    "KeyVersion": "b7875c40bfb44951bc87bbc7b2576b5b"
+    "KeyVersion": "24be47dea9334e4687f117bd566701ca"
   }
 }

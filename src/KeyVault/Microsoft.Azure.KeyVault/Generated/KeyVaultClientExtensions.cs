@@ -1111,6 +1111,964 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
+            /// List certificates in the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return.
+            /// </param>
+            public static IPage<CertificateItem> GetCertificates(this IKeyVaultClient operations, string vault, int? maxresults = default(int?))
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificatesAsync(vault, maxresults), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List certificates in the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CertificateItem>> GetCertificatesAsync(this IKeyVaultClient operations, string vault, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificatesWithHttpMessagesAsync(vault, maxresults, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a certificate from the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault
+            /// </param>
+            public static CertificateBundle DeleteCertificate(this IKeyVaultClient operations, string vault, string certificateName)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).DeleteCertificateAsync(vault, certificateName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a certificate from the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateBundle> DeleteCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteCertificateWithHttpMessagesAsync(vault, certificateName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Sets the certificate contacts for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='contacts'>
+            /// Contacts.
+            /// </param>
+            public static Contacts SetCertificateContacts(this IKeyVaultClient operations, string vault, Contacts contacts)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).SetCertificateContactsAsync(vault, contacts), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets the certificate contacts for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='contacts'>
+            /// Contacts.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Contacts> SetCertificateContactsAsync(this IKeyVaultClient operations, string vault, Contacts contacts, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SetCertificateContactsWithHttpMessagesAsync(vault, contacts, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the certificate contacts for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            public static Contacts GetCertificateContacts(this IKeyVaultClient operations, string vault)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificateContactsAsync(vault), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the certificate contacts for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Contacts> GetCertificateContactsAsync(this IKeyVaultClient operations, string vault, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificateContactsWithHttpMessagesAsync(vault, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the certificate contacts for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            public static Contacts DeleteCertificateContacts(this IKeyVaultClient operations, string vault)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).DeleteCertificateContactsAsync(vault), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the certificate contacts for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Contacts> DeleteCertificateContactsAsync(this IKeyVaultClient operations, string vault, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteCertificateContactsWithHttpMessagesAsync(vault, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List certificate issuers for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return.
+            /// </param>
+            public static IPage<CertificateIssuerItem> GetCertificateIssuers(this IKeyVaultClient operations, string vault, int? maxresults = default(int?))
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificateIssuersAsync(vault, maxresults), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List certificate issuers for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CertificateIssuerItem>> GetCertificateIssuersAsync(this IKeyVaultClient operations, string vault, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificateIssuersWithHttpMessagesAsync(vault, maxresults, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Sets the certificate contacts for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='issuerName'>
+            /// The name of the issuer.
+            /// </param>
+            /// <param name='issuer'>
+            /// The issuer bundle.
+            /// </param>
+            public static IssuerBundle SetCertificateIssuer(this IKeyVaultClient operations, string vault, string issuerName, IssuerBundle issuer)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).SetCertificateIssuerAsync(vault, issuerName, issuer), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets the certificate contacts for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='issuerName'>
+            /// The name of the issuer.
+            /// </param>
+            /// <param name='issuer'>
+            /// The issuer bundle.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IssuerBundle> SetCertificateIssuerAsync(this IKeyVaultClient operations, string vault, string issuerName, IssuerBundle issuer, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SetCertificateIssuerWithHttpMessagesAsync(vault, issuerName, issuer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the specified certificate issuer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='issuerName'>
+            /// The name of the issuer.
+            /// </param>
+            /// <param name='issuer'>
+            /// The issuer bundle.
+            /// </param>
+            public static IssuerBundle UpdateCertificateIssuer(this IKeyVaultClient operations, string vault, string issuerName, IssuerBundle issuer)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).UpdateCertificateIssuerAsync(vault, issuerName, issuer), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the specified certificate issuer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='issuerName'>
+            /// The name of the issuer.
+            /// </param>
+            /// <param name='issuer'>
+            /// The issuer bundle.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IssuerBundle> UpdateCertificateIssuerAsync(this IKeyVaultClient operations, string vault, string issuerName, IssuerBundle issuer, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateCertificateIssuerWithHttpMessagesAsync(vault, issuerName, issuer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the specified certificate issuer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='issuerName'>
+            /// The name of the issuer.
+            /// </param>
+            public static IssuerBundle GetCertificateIssuer(this IKeyVaultClient operations, string vault, string issuerName)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificateIssuerAsync(vault, issuerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified certificate issuer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='issuerName'>
+            /// The name of the issuer.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IssuerBundle> GetCertificateIssuerAsync(this IKeyVaultClient operations, string vault, string issuerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificateIssuerWithHttpMessagesAsync(vault, issuerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the specified certificate issuer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='issuerName'>
+            /// The name of the issuer.
+            /// </param>
+            public static IssuerBundle DeleteCertificateIssuer(this IKeyVaultClient operations, string vault, string issuerName)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).DeleteCertificateIssuerAsync(vault, issuerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified certificate issuer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='issuerName'>
+            /// The name of the issuer.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IssuerBundle> DeleteCertificateIssuerAsync(this IKeyVaultClient operations, string vault, string issuerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteCertificateIssuerWithHttpMessagesAsync(vault, issuerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates a new certificate version. If this is the first version, the
+            /// certificate resource is created.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='certificatePolicy'>
+            /// The management policy for the certificate
+            /// </param>
+            /// <param name='certificateAttributes'>
+            /// The attributes of the certificate (optional)
+            /// </param>
+            /// <param name='tags'>
+            /// Application-specific metadata in the form of key-value pairs
+            /// </param>
+            public static CertificateOperation CreateCertificate(this IKeyVaultClient operations, string vault, string certificateName, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).CreateCertificateAsync(vault, certificateName, certificatePolicy, certificateAttributes, tags), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new certificate version. If this is the first version, the
+            /// certificate resource is created.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='certificatePolicy'>
+            /// The management policy for the certificate
+            /// </param>
+            /// <param name='certificateAttributes'>
+            /// The attributes of the certificate (optional)
+            /// </param>
+            /// <param name='tags'>
+            /// Application-specific metadata in the form of key-value pairs
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateOperation> CreateCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateCertificateWithHttpMessagesAsync(vault, certificateName, certificatePolicy, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Imports a certificate into the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='base64EncodedCertificate'>
+            /// Base64 encoded representaion of the certificate object to import. This
+            /// certificate needs to contain the private key.
+            /// </param>
+            /// <param name='password'>
+            /// If the private key in base64EncodedCertificate is encrypted, the password
+            /// used for encryption
+            /// </param>
+            /// <param name='certificatePolicy'>
+            /// The management policy for the certificate
+            /// </param>
+            /// <param name='certificateAttributes'>
+            /// The attributes of the certificate (optional)
+            /// </param>
+            /// <param name='tags'>
+            /// Application-specific metadata in the form of key-value pairs
+            /// </param>
+            public static CertificateBundle ImportCertificate(this IKeyVaultClient operations, string vault, string certificateName, string base64EncodedCertificate, string password, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).ImportCertificateAsync(vault, certificateName, base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Imports a certificate into the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='base64EncodedCertificate'>
+            /// Base64 encoded representaion of the certificate object to import. This
+            /// certificate needs to contain the private key.
+            /// </param>
+            /// <param name='password'>
+            /// If the private key in base64EncodedCertificate is encrypted, the password
+            /// used for encryption
+            /// </param>
+            /// <param name='certificatePolicy'>
+            /// The management policy for the certificate
+            /// </param>
+            /// <param name='certificateAttributes'>
+            /// The attributes of the certificate (optional)
+            /// </param>
+            /// <param name='tags'>
+            /// Application-specific metadata in the form of key-value pairs
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateBundle> ImportCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, string base64EncodedCertificate, string password, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ImportCertificateWithHttpMessagesAsync(vault, certificateName, base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List the versions of a certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return.
+            /// </param>
+            public static IPage<CertificateItem> GetCertificateVersions(this IKeyVaultClient operations, string vault, string certificateName, int? maxresults = default(int?))
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificateVersionsAsync(vault, certificateName, maxresults), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the versions of a certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CertificateItem>> GetCertificateVersionsAsync(this IKeyVaultClient operations, string vault, string certificateName, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificateVersionsWithHttpMessagesAsync(vault, certificateName, maxresults, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the policy for a certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault.
+            /// </param>
+            public static CertificatePolicy GetCertificatePolicy(this IKeyVaultClient operations, string vault, string certificateName)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificatePolicyAsync(vault, certificateName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the policy for a certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificatePolicy> GetCertificatePolicyAsync(this IKeyVaultClient operations, string vault, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificatePolicyWithHttpMessagesAsync(vault, certificateName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the policy for a certificate. Set appropriate members in the
+            /// certificatePolicy that must be updated. Leave others as null.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault.
+            /// </param>
+            /// <param name='certificatePolicy'>
+            /// The policy for the certificate.
+            /// </param>
+            public static CertificatePolicy UpdateCertificatePolicy(this IKeyVaultClient operations, string vault, string certificateName, CertificatePolicy certificatePolicy)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).UpdateCertificatePolicyAsync(vault, certificateName, certificatePolicy), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the policy for a certificate. Set appropriate members in the
+            /// certificatePolicy that must be updated. Leave others as null.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault.
+            /// </param>
+            /// <param name='certificatePolicy'>
+            /// The policy for the certificate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificatePolicy> UpdateCertificatePolicyAsync(this IKeyVaultClient operations, string vault, string certificateName, CertificatePolicy certificatePolicy, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateCertificatePolicyWithHttpMessagesAsync(vault, certificateName, certificatePolicy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the attributes associated with the specified certificate
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault
+            /// </param>
+            /// <param name='certificateVersion'>
+            /// The version of the certificate
+            /// </param>
+            /// <param name='certificateAttributes'>
+            /// The attributes of the certificate (optional)
+            /// </param>
+            /// <param name='tags'>
+            /// Application-specific metadata in the form of key-value pairs
+            /// </param>
+            public static CertificateBundle UpdateCertificate(this IKeyVaultClient operations, string vault, string certificateName, string certificateVersion, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).UpdateCertificateAsync(vault, certificateName, certificateVersion, certificateAttributes, tags), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the attributes associated with the specified certificate
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault
+            /// </param>
+            /// <param name='certificateVersion'>
+            /// The version of the certificate
+            /// </param>
+            /// <param name='certificateAttributes'>
+            /// The attributes of the certificate (optional)
+            /// </param>
+            /// <param name='tags'>
+            /// Application-specific metadata in the form of key-value pairs
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateBundle> UpdateCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, string certificateVersion, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateCertificateWithHttpMessagesAsync(vault, certificateName, certificateVersion, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a Certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault
+            /// </param>
+            /// <param name='certificateVersion'>
+            /// The version of the certificate
+            /// </param>
+            public static CertificateBundle GetCertificate(this IKeyVaultClient operations, string vault, string certificateName, string certificateVersion)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificateAsync(vault, certificateName, certificateVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a Certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate in the given vault
+            /// </param>
+            /// <param name='certificateVersion'>
+            /// The version of the certificate
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateBundle> GetCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, string certificateVersion, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificateWithHttpMessagesAsync(vault, certificateName, certificateVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates a certificate operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='certificateOperation'>
+            /// The certificate operation response.
+            /// </param>
+            public static CertificateOperation UpdateCertificateOperation(this IKeyVaultClient operations, string vault, string certificateName, CertificateOperation certificateOperation)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).UpdateCertificateOperationAsync(vault, certificateName, certificateOperation), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a certificate operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='certificateOperation'>
+            /// The certificate operation response.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateOperation> UpdateCertificateOperationAsync(this IKeyVaultClient operations, string vault, string certificateName, CertificateOperation certificateOperation, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateCertificateOperationWithHttpMessagesAsync(vault, certificateName, certificateOperation, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the certificate operation response.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            public static CertificateOperation GetCertificateOperation(this IKeyVaultClient operations, string vault, string certificateName)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificateOperationAsync(vault, certificateName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the certificate operation response.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateOperation> GetCertificateOperationAsync(this IKeyVaultClient operations, string vault, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificateOperationWithHttpMessagesAsync(vault, certificateName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the certificate operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            public static CertificateOperation DeleteCertificateOperation(this IKeyVaultClient operations, string vault, string certificateName)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).DeleteCertificateOperationAsync(vault, certificateName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the certificate operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateOperation> DeleteCertificateOperationAsync(this IKeyVaultClient operations, string vault, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteCertificateOperationWithHttpMessagesAsync(vault, certificateName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Merges a certificate or a certificate chain with a key pair existing on
+            /// the server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='x509Certificates'>
+            /// The certificate or the certificte chain to merge
+            /// </param>
+            /// <param name='certificateAttributes'>
+            /// The attributes of the certificate (optional)
+            /// </param>
+            /// <param name='tags'>
+            /// Application-specific metadata in the form of key-value pairs
+            /// </param>
+            public static CertificateBundle MergeCertificate(this IKeyVaultClient operations, string vault, string certificateName, IList<byte[]> x509Certificates, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).MergeCertificateAsync(vault, certificateName, x509Certificates, certificateAttributes, tags), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Merges a certificate or a certificate chain with a key pair existing on
+            /// the server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vault'>
+            /// The vault name, e.g. https://myvault.vault.azure.net
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='x509Certificates'>
+            /// The certificate or the certificte chain to merge
+            /// </param>
+            /// <param name='certificateAttributes'>
+            /// The attributes of the certificate (optional)
+            /// </param>
+            /// <param name='tags'>
+            /// Application-specific metadata in the form of key-value pairs
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateBundle> MergeCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, IList<byte[]> x509Certificates, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MergeCertificateWithHttpMessagesAsync(vault, certificateName, x509Certificates, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the versions of the specified key
             /// </summary>
             /// <param name='operations'>
@@ -1241,6 +2199,108 @@ namespace Microsoft.Azure.KeyVault
             public static async Task<IPage<SecretItem>> GetSecretVersionsNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSecretVersionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List certificates in the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CertificateItem> GetCertificatesNext(this IKeyVaultClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificatesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List certificates in the specified vault
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CertificateItem>> GetCertificatesNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificatesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List certificate issuers for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CertificateIssuerItem> GetCertificateIssuersNext(this IKeyVaultClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificateIssuersNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List certificate issuers for the specified vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CertificateIssuerItem>> GetCertificateIssuersNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificateIssuersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List the versions of a certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CertificateItem> GetCertificateVersionsNext(this IKeyVaultClient operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IKeyVaultClient)s).GetCertificateVersionsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the versions of a certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CertificateItem>> GetCertificateVersionsNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCertificateVersionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

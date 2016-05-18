@@ -22,27 +22,15 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyVaultError class.
         /// </summary>
-        public KeyVaultError(string code = default(string), string message = default(string), IDictionary<string, string> additionalInfo = default(IDictionary<string, string>))
+        public KeyVaultError(Error error = default(Error))
         {
-            Code = code;
-            Message = message;
-            AdditionalInfo = additionalInfo;
+            Error = error;
         }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "additionalInfo")]
-        public IDictionary<string, string> AdditionalInfo { get; private set; }
+        [JsonProperty(PropertyName = "error")]
+        public Error Error { get; private set; }
 
     }
 }

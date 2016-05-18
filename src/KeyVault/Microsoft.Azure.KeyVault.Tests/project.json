@@ -18,13 +18,17 @@
         "System.Collections": "4.0.11-beta-23516",
         "System.Linq": "4.0.1-beta-23516",
         "System.Runtime": "4.0.21-beta-23516",
+        "System.Security.Cryptography.Cng": "4.0.0-beta-23516",
         "System.Security.Cryptography.Csp": "4.0.0-beta-23516",
         "System.Security.Cryptography.X509Certificates": "4.0.0-beta-23516",
         "System.Threading": "4.0.11-beta-23516"
       }
     },
     "dnx451": {
-      "frameworkAssemblies": { "System.Net.Http.WebRequest": "" }
+      "frameworkAssemblies": {
+        "System.Net.Http.WebRequest": "",
+        "System.Security": "4.0.0.0"
+      }
     }
   },
   "dependencies": {

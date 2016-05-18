@@ -32,7 +32,7 @@ namespace Microsoft.Azure.KeyVault.Models
         }
 
         /// <summary>
-        /// Determines whether the key is enabled
+        /// Determines whether the object is enabled
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }

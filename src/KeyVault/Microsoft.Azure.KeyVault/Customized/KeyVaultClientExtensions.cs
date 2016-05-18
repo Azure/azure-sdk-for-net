@@ -6,12 +6,11 @@ namespace Microsoft.Azure.KeyVault
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Models;
-    using Rest.Azure;
-    using WebKey;
+    using System.Security.Cryptography.X509Certificates;
+
     /// <summary>
     /// Extension methods for KeyVaultClient.
     /// </summary>
@@ -369,5 +368,142 @@ namespace Microsoft.Azure.KeyVault
         }
         #endregion
 
+        #region Certificate Management
+
+        /// <summary>
+        /// Gets a certificate.
+        /// </summary>
+        /// <param name="vault">The URL for the vault containing the certificate.</param>
+        /// <param name="certificateName">The name of the certificate in the given vault.</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>
+        /// <returns>The retrieved certificate</returns>
+        public static async Task<CertificateBundle> GetCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrEmpty(vault))
+                throw new ArgumentNullException("vault");
+
+            if (string.IsNullOrEmpty(certificateName))
+                throw new ArgumentNullException("keyName");
+
+            using (var _result = await operations.GetCertificateWithHttpMessagesAsync(vault, certificateName, string.Empty, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Gets a certificate.
+        /// </summary>
+        /// <param name="certificateIdentifier">The URL for the certificate.</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>
+        /// <returns>The retrieved certificate</returns>
+        public static async Task<CertificateBundle> GetCertificateAsync(this IKeyVaultClient operations, string certificateIdentifier, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrEmpty(certificateIdentifier))
+                throw new ArgumentNullException("certificateIdentifier");
+
+            var certId = new CertificateIdentifier(certificateIdentifier);
+
+            using (var _result = await operations.GetCertificateWithHttpMessagesAsync(certId.Vault, certId.Name, certId.Version ?? string.Empty, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Updates a certificate version.
+        /// </summary>
+        /// <param name="certificateIdentifier">The URL for the certificate.</param>             
+        /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>
+        /// <returns>The updated certificate.</returns>
+        public static async Task<CertificateBundle> UpdateCertificateAsync(this IKeyVaultClient operations, string certificateIdentifier, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrWhiteSpace(certificateIdentifier))
+                throw new ArgumentNullException("certificateIdentifier");
+
+            var certId = new CertificateIdentifier(certificateIdentifier);
+            using (var _result = await operations.UpdateCertificateWithHttpMessagesAsync(certId.Vault, certId.Name, certId.Version ?? string.Empty, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+
+        /// <summary>
+        /// Imports a new certificate version. If this is the first version, the certificate resource is created.
+        /// </summary>
+        /// <param name="vault">The URL for the vault containing the certificate</param>
+        /// <param name="certificateName">The name of the certificate</param>
+        /// <param name="certificateCollection">The certificate collection with the private key</param>
+        /// <param name="certificatePolicy">The management policy for the certificate</param>
+        /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>
+        /// <returns>Imported certificate bundle to the vault.</returns>
+        public static async Task<CertificateBundle> ImportCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, X509Certificate2Collection certificateCollection, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (null == certificateCollection)
+                throw new ArgumentNullException("certificateCollection");
+
+            var base64EncodedCertificate = Convert.ToBase64String(certificateCollection.Export(X509ContentType.Pfx));
+            using (var _result = await operations.ImportCertificateWithHttpMessagesAsync(vault, certificateName, base64EncodedCertificate, string.Empty, certificatePolicy, certificateAttributes, tags, null, cancellationToken))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Merges a certificate or a certificate chain with a key pair existing on the server.
+        /// </summary>
+        /// <param name="vault">The URL for the vault containing the certificate</param>
+        /// <param name="certificateName">The name of the certificate</param>
+        /// <param name="x509Certificates">The certificate or the certificte chain to merge</param>
+        /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>
+        /// <returns>A response message containing the merged certificate.</returns>
+        public static async Task<CertificateBundle> MergeCertificateAsync(this IKeyVaultClient operations, string vault, string certificateName, X509Certificate2Collection x509Certificates, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrWhiteSpace(vault))
+                throw new ArgumentNullException("vault");
+
+            if (string.IsNullOrWhiteSpace(certificateName))
+                throw new ArgumentNullException("certificateName");
+
+            if (x509Certificates == null || x509Certificates.Count == 0)
+                throw new ArgumentException("x509Certificates");
+
+            var X5C = new List<byte[]> { x509Certificates.Export(X509ContentType.Cert) };
+
+            using (var _result = await operations.MergeCertificateWithHttpMessagesAsync(vault, certificateName, X5C, certificateAttributes, tags, null, cancellationToken))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Base64 pending certificate signing request (PKCS-10) 
+        /// </summary>
+        /// <param name="vault">The URL for the vault containing the certificate</param>
+        /// <param name="certificateName">The name of the certificate</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>
+        /// <returns>The pending certificate signing request as Base64 encoded string.</returns>
+        public static async Task<string> GetPendingCertificateSigningRequestAsync(this IKeyVaultClient operations, string vault, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrWhiteSpace(vault))
+                throw new ArgumentNullException("vault");
+
+            if (string.IsNullOrWhiteSpace(certificateName))
+                throw new ArgumentNullException("certificateName");
+            
+            using (var _result = await operations.GetPendingCertificateSigningRequestWithHttpMessagesAsync(vault, certificateName, null, cancellationToken))
+            {
+                return _result.Body;
+            }
+        }
+
+        #endregion
     }
 }

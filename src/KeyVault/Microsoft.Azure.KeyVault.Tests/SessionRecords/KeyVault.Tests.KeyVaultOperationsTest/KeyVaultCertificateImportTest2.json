@@ -1,0 +1,316 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/certificates/importCert02/import?api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDIvaW1wb3J0P2FwaS12ZXJzaW9uPTIwMTUtMDYtMDEtcHJldmlldzI=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"value\": \"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\",\r\n  \"pwd\": \"\",\r\n  \"policy\": {\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"ContentType\": \"application/x-pkcs12\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "3340"
+        ],
+        "x-ms-client-request-id": [
+          "ccf8a6f6-e2bb-4aaf-92bf-25399739c918"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"sid\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1463588781,\r\n    \"updated\": 1463588781\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert02/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1463588781,\r\n      \"updated\": 1463588781\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1741"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-keyvault-region": [
+          "East US"
+        ],
+        "x-ms-request-id": [
+          "b0f38310-cd1d-4902-9691-1f62a90f96f3"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:21 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/certificates/importCert02/?api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDIvP2FwaS12ZXJzaW9uPTIwMTUtMDYtMDEtcHJldmlldzI=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1d9affef-148a-4bf3-bb77-a893f5b71e8c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"sid\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1463588781,\r\n    \"updated\": 1463588781\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert02/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1463588781,\r\n      \"updated\": 1463588781\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1741"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-keyvault-region": [
+          "East US"
+        ],
+        "x-ms-request-id": [
+          "4da2fd1c-98c5-4fd6-9579-b7e14b03c7be"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:21 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/certificates/importCert02/a05f89ea4be848d587f24aa38b74cdd9?api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDIvYTA1Zjg5ZWE0YmU4NDhkNTg3ZjI0YWEzOGI3NGNkZDk/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3Mg==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "14b677bf-bf6d-4a30-bd75-bbd2c9bc176a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"sid\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1463588781,\r\n    \"updated\": 1463588781\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1226"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-keyvault-region": [
+          "East US"
+        ],
+        "x-ms-request-id": [
+          "35589427-8f83-4317-ae43-50e00559105d"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:21 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/secrets/importCert02/a05f89ea4be848d587f24aa38b74cdd9?api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L3NlY3JldHMvaW1wb3J0Q2VydDAyL2EwNWY4OWVhNGJlODQ4ZDU4N2YyNGFhMzhiNzRjZGQ5P2FwaS12ZXJzaW9uPTIwMTUtMDYtMDEtcHJldmlldzI=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4e05a071-a36d-46f9-8dc8-a331ae75d6d8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": \"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\",\r\n  \"contentType\": \"application/x-pkcs12\",\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1463588781,\r\n    \"updated\": 1463588781\r\n  },\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert02/a05f89ea4be848d587f24aa38b74cdd9\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3489"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-keyvault-region": [
+          "East US"
+        ],
+        "x-ms-request-id": [
+          "bbc65502-a40b-4703-a278-1ca0cf761f57"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:21 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/certificates/importCert02?api-version=2015-06-01-preview2",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDI/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3Mg==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4b6bd0ea-0540-47d5-a75b-603a5ac32cc7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"sid\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert02/a05f89ea4be848d587f24aa38b74cdd9\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1463588781,\r\n    \"updated\": 1463588781\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert02/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1463588781,\r\n      \"updated\": 1463588781\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1741"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-keyvault-region": [
+          "East US"
+        ],
+        "x-ms-request-id": [
+          "8f933c82-2169-4871-9594-d003f78643d7"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.751"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 May 2016 16:26:21 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "VaultAddress": "https://sdktestvault0518.vault.azure.net",
+    "KeyName": "sdktestkey",
+    "KeyVersion": "24be47dea9334e4687f117bd566701ca"
+  }
+}
