@@ -29,7 +29,8 @@
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
     "Microsoft.Rest.ClientRuntime.Azure": "[3.0.2,4.0)",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
-    "Microsoft.Azure.Management.MachineLearning": ""    
+    "Microsoft.Azure.Management.Storage": "[4.1.0-preview]",
+    "Microsoft.Azure.Management.MachineLearning": ""
   },
   "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
 }

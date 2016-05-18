@@ -8,11 +8,11 @@
       "secondary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo=="
     },
     "storageAccount": {
-      "name": "rpbestest1",
-      "key": "WaE2n0G4e/RIWqhShWYMISPPOko8fhBFSPWoVGAOkTFjHc/iJpiPQN2PSJD3VxMnOzK9TQ+JYVn6mUIYf6J6MA=="
+      "name": "THIS IS FILLED IN DYNAMICALLY BY THE TEST",
+      "key": "THIS IS FILLED IN DYNAMICALLY BY THE TEST"
     },
     "commitmentPlan": {
-      "id": "/subscriptions/325f8243-f630-45ec-8a57-6c173a30cfca/resourceGroups/rg1/providers/Microsoft.MachineLearning/commitmentPlans/cptest"
+      "id": "THIS IS FILLED IN DYNAMICALLY BY THE TEST"
     },
     "assets": {
       "asset1": {
@@ -105,6 +105,18 @@
             }
           }
         }
+      }
+    },
+    "exposeSampleData": "true",
+    "exampleRequest": {
+      "inputs": {
+        "input1": [
+          [ "1", "2.3", "0.5", "4.3", "1.2" ],
+          [ "0", "0.5", "4.3", "1.2", "2.5" ],
+          [ "0", "4.3", "1.2", "6.5", "6.3" ],
+          [ "1", "7.8", "8.0", "2.3", "0.5" ],
+          [ "1", "1.3", "5.5", "2.2", "9.2" ]
+        ]
       }
     },
     "packageType": "Graph",
