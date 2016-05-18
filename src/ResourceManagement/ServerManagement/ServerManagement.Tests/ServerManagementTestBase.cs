@@ -31,7 +31,7 @@ namespace ServerManagement.Tests
 
         public ServerManagementTestBase(ITestOutputHelper output)
         {
-
+#if WHEN_RUNNING_IN_VS
             // add environment variables so that we can just use the visual studio test runner for doing interactive testing.
             // these get ignored when they are already set.
             Extensions.SetEnvironmentVariableIfNotAlreadySet("TEST_HTTPMOCK_OUTPUT",
@@ -39,7 +39,7 @@ namespace ServerManagement.Tests
             Extensions.SetEnvironmentVariableIfNotAlreadySet("TEST_CSM_ORGID_AUTHENTICATION",
                 "SubscriptionId=3e82a90d-d19e-42f9-bb43-9112945846ef;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/");
             Extensions.SetEnvironmentVariableIfNotAlreadySet("AZURE_TEST_MODE", "Record");
-
+#endif
             // since HttpMockServer.Mode doesn't get set until after I'd like to know what state we're in
             // we'll preemptively set it to what it will get set to later anyway.
             HttpMockServer.Mode = "record".Equals(Environment.GetEnvironmentVariable("AZURE_TEST_MODE"),
