@@ -110,11 +110,11 @@ namespace Microsoft.Azure.Management.HDInsight
             : base()
         {
             this._clusters = new ClusterOperations(this);
+			this.SetRetryPolicy(HDInsightRetryPolicy);
             this._apiVersion = "2015-03-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
-            this.SetRetryPolicy(HDInsightRetryPolicy);
         }
         
         /// <summary>
@@ -177,11 +177,11 @@ namespace Microsoft.Azure.Management.HDInsight
             : base(httpClient)
         {
             this._clusters = new ClusterOperations(this);
+			this.SetRetryPolicy(HDInsightRetryPolicy);
             this._apiVersion = "2015-03-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
-            this.SetRetryPolicy(HDInsightRetryPolicy);
         }
         
         /// <summary>
