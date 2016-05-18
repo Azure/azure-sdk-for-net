@@ -149,19 +149,19 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (ifMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfMatch"))
+                if (_httpRequest.Headers.Contains("If-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfMatch");
+                    _httpRequest.Headers.Remove("If-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfMatch", ifMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
             }
             if (ifNoneMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfNoneMatch"))
+                if (_httpRequest.Headers.Contains("If-None-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfNoneMatch");
+                    _httpRequest.Headers.Remove("If-None-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfNoneMatch", ifNoneMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.Management.Dns
         /// Parameters supplied to the CreateOrUpdate operation.
         /// </param>
         /// <param name='ifMatch'>
-        /// The etag of RecordSet.
+        /// The etag of Recordset.
         /// </param>
         /// <param name='ifNoneMatch'>
         /// Defines the If-None-Match condition. Set to '*' to force
@@ -385,19 +385,19 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (ifMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfMatch"))
+                if (_httpRequest.Headers.Contains("If-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfMatch");
+                    _httpRequest.Headers.Remove("If-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfMatch", ifMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
             }
             if (ifNoneMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfNoneMatch"))
+                if (_httpRequest.Headers.Contains("If-None-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfNoneMatch");
+                    _httpRequest.Headers.Remove("If-None-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfNoneMatch", ifNoneMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -633,19 +633,19 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (ifMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfMatch"))
+                if (_httpRequest.Headers.Contains("If-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfMatch");
+                    _httpRequest.Headers.Remove("If-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfMatch", ifMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
             }
             if (ifNoneMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfNoneMatch"))
+                if (_httpRequest.Headers.Contains("If-None-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfNoneMatch");
+                    _httpRequest.Headers.Remove("If-None-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfNoneMatch", ifNoneMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -692,7 +692,20 @@ namespace Microsoft.Azure.Management.Dns
             if ((int)_statusCode != 204 && (int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))

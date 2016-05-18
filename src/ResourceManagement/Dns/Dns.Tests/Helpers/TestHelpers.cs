@@ -310,6 +310,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
             try
             {
                 actionExpectedToThrow();
+                Assert.False(true, " Ni exception was thrown where expected");
             }
             catch (T ex)
             {

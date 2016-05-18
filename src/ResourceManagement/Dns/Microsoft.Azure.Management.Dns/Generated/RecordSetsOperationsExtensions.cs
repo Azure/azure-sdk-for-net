@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Dns
             /// Parameters supplied to the CreateOrUpdate operation.
             /// </param>
             /// <param name='ifMatch'>
-            /// The etag of RecordSet.
+            /// The etag of Recordset.
             /// </param>
             /// <param name='ifNoneMatch'>
             /// Defines the If-None-Match condition. Set to '*' to force
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Dns
             /// Parameters supplied to the CreateOrUpdate operation.
             /// </param>
             /// <param name='ifMatch'>
-            /// The etag of RecordSet.
+            /// The etag of Recordset.
             /// </param>
             /// <param name='ifNoneMatch'>
             /// Defines the If-None-Match condition. Set to '*' to force

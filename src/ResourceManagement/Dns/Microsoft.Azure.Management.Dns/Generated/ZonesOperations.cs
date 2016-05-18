@@ -138,19 +138,19 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (ifMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfMatch"))
+                if (_httpRequest.Headers.Contains("If-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfMatch");
+                    _httpRequest.Headers.Remove("If-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfMatch", ifMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
             }
             if (ifNoneMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfNoneMatch"))
+                if (_httpRequest.Headers.Contains("If-None-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfNoneMatch");
+                    _httpRequest.Headers.Remove("If-None-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfNoneMatch", ifNoneMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -403,19 +403,19 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (ifMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfMatch"))
+                if (_httpRequest.Headers.Contains("If-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfMatch");
+                    _httpRequest.Headers.Remove("If-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfMatch", ifMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
             }
             if (ifNoneMatch != null)
             {
-                if (_httpRequest.Headers.Contains("IfNoneMatch"))
+                if (_httpRequest.Headers.Contains("If-None-Match"))
                 {
-                    _httpRequest.Headers.Remove("IfNoneMatch");
+                    _httpRequest.Headers.Remove("If-None-Match");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("IfNoneMatch", ifNoneMatch);
+                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
             }
             if (this.Client.AcceptLanguage != null)
             {

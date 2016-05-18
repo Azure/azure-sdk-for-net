@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 // expect Precondition Failed 412
                 TestHelpers.AssertThrows<CloudException>(
                     () => dnsClient.Zones.CreateOrUpdate(resourceGroup.Name, zoneName, createdZone, "somegibberish", null),
-                    ex => ex.InnerException.Message == "PreconditionFailed");
+                    ex => ex.Body.Code == "PreconditionFailed");
 
                 var result = dnsClient.Zones.Delete(resourceGroup.Name, zoneName, ifMatch: null, ifNoneMatch: null);
                 Assert.Equal(result.Status, OperationStatus.Succeeded);

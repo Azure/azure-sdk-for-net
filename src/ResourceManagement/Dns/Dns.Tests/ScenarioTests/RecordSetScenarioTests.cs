@@ -515,7 +515,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     parameters: createParameters);
 
                 var updateParameters = createResponse;
-                updateParameters.Etag = "somegibberish";
 
                 // expect Precondition Failed 412
                 TestHelpers.AssertThrows<CloudException>(
@@ -524,10 +523,10 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ZoneName,
                         testContext.RecordSetName,
                         RecordType.CNAME,
-                        ifMatch: null,
+                        ifMatch: "somegibberish",
                         ifNoneMatch: null,
                         parameters: updateParameters),
-                    exceptionAsserts: ex => ex.InnerException.Message == "PreconditionFailed");
+                    exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
 
                 // expect Precondition Failed 412
                 TestHelpers.AssertThrows<CloudException>(
@@ -536,9 +535,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ZoneName,
                         testContext.RecordSetName,
                         RecordType.CNAME,
-                        ifMatch: null,
+                        ifMatch: "somegibberish",
                         ifNoneMatch: null),
-                    exceptionAsserts: ex => ex.InnerException.Message == "PreconditionFailed");
+                    exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
 
                 testContext.DnsClient.RecordSets.Delete(
                         testContext.ResourceGroup.Name,
