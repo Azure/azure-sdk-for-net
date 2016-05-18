@@ -29,6 +29,10 @@ namespace ApiManagement.Tests
 
     public static class ApiManagementHelper
     {
+        // Event Hub/Service Bus secrets
+        public const string EventHubName = "sdkeventhub";
+        public const string EventHubConnectionSendPolicyConnectionString = @"$TestStringToBeReplaced";
+        
         public static ApiManagementClient GetApiManagementClient()
         {
             return TestBase.GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());

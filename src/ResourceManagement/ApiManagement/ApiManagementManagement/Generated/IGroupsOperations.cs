@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         Task<AzureOperationResponse> CreateAsync(string resourceGroupName, string serviceName, string gid, GroupCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Deletes specific product of the Api Management service instance.
+        /// Deletes specific group of the Api Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

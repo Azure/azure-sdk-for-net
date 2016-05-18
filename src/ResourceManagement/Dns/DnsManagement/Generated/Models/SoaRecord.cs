@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Dns.Models
         private string _host;
         
         /// <summary>
-        /// Required. Gets or sets the domain name of the authoritative name
+        /// Optional. Gets or sets the domain name of the authoritative name
         /// server, without a temrinating dot.
         /// </summary>
         public string Host

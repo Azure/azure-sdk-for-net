@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the JobSubmissionParameters class.
         /// </summary>
-        internal JobSubmissionParameters()
+        public JobSubmissionParameters()
         {
         }
     }

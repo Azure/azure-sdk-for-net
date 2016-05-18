@@ -147,6 +147,22 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
+        /// Operations for managing Loggers.
+        /// </summary>
+        ILoggerOperations Loggers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing OpenID Connect Providers.
+        /// </summary>
+        IOpenIdConnectProvidersOperations OpenIdConnectProviders
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing Policy Snippets.
         /// </summary>
         IPolicySnippetsOperations PolicySnippents
@@ -195,6 +211,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
+        /// Operations for managing Properties.
+        /// </summary>
+        IPropertiesOperations Property
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing Regions.
         /// </summary>
         IRegionsOperations Regions
@@ -228,9 +252,35 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
+        /// Operations for managing Tenant Access Git Information.
+        /// </summary>
+        ITenantAccessGitOperations TenantAccessGit
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing Tenant Access Information.
         /// </summary>
         ITenantAccessInformationOperations TenantAccess
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operation to apply changes from specified Git branch to the
+        /// configuration database.
+        /// </summary>
+        ITenantConfigurationOperations TenantConfiguration
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operation to return the status of the most recent synchronization
+        /// between configuration database and the Git repository.
+        /// </summary>
+        ITenantConfigurationSyncStateOperation TenantConfigurationSyncState
         {
             get; 
         }

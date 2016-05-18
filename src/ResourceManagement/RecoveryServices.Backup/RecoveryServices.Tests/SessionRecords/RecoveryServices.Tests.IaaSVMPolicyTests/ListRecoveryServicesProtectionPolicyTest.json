@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupPolicies?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBQb2xpY2llcz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2a91339c-03a6-484b-8ebd-c5f29d16aeb3"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupPolicies/DefaultPolicy\",\r\n      \"name\": \"DefaultPolicy\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n      \"properties\": {\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"schedulePolicy\": {\r\n          \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n          \"scheduleRunFrequency\": \"Daily\",\r\n          \"scheduleRunTimes\": [\r\n            \"2016-04-13T23:00:00Z\"\r\n          ]\r\n        },\r\n        \"retentionPolicy\": {\r\n          \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n          \"dailySchedule\": {\r\n            \"retentionTimes\": [\r\n              \"2016-04-13T23:00:00Z\"\r\n            ],\r\n            \"retentionDuration\": {\r\n              \"count\": 30,\r\n              \"durationType\": \"Days\"\r\n            }\r\n          }\r\n        },\r\n        \"protectedItemsCount\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupPolicies/RsvTestPolicy\",\r\n      \"name\": \"RsvTestPolicy\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n      \"properties\": {\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"schedulePolicy\": {\r\n          \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n          \"scheduleRunFrequency\": \"Weekly\",\r\n          \"scheduleRunDays\": [\r\n            \"Sunday\",\r\n            \"Monday\",\r\n            \"Wednesday\"\r\n          ],\r\n          \"scheduleRunTimes\": [\r\n            \"2016-04-13T20:30:00Z\"\r\n          ]\r\n        },\r\n        \"retentionPolicy\": {\r\n          \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n          \"weeklySchedule\": {\r\n            \"daysOfTheWeek\": [\r\n              \"Sunday\",\r\n              \"Monday\",\r\n              \"Wednesday\"\r\n            ],\r\n            \"retentionTimes\": [\r\n              \"2016-04-13T20:30:00Z\"\r\n            ],\r\n            \"retentionDuration\": {\r\n              \"count\": 100,\r\n              \"durationType\": \"Weeks\"\r\n            }\r\n          }\r\n        },\r\n        \"protectedItemsCount\": 0\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1407"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5b77013e-3806-4858-97ad-c59cbcca8908"
+        ],
+        "x-ms-client-request-id": [
+          "2a91339c-03a6-484b-8ebd-c5f29d16aeb3",
+          "2a91339c-03a6-484b-8ebd-c5f29d16aeb3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13303"
+        ],
+        "x-ms-correlation-request-id": [
+          "5b77013e-3806-4858-97ad-c59cbcca8908"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160415T092342Z:5b77013e-3806-4858-97ad-c59cbcca8908"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 Apr 2016 09:23:41 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "04cf684a-d41f-4550-9f70-7708a3a2283b"
+  }
+}

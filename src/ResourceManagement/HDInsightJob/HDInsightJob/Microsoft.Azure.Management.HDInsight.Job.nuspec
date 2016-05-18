@@ -4,6 +4,19 @@
     <id>Microsoft.Azure.Management.HDInsight.Job</id>
     <title>Microsoft Azure HDInsight Job Management Library</title>
     <releaseNotes><![CDATA[
+2.0.2
+  * This package is now generally available.
+  
+2.0.1-preview
+
+  * Task cancellation exception can come if http request doesn’t get finished before couple of minutes.
+
+  * If empty job id is passed for Kill job operation then ArgumentException is raised instead of making a kill job request call.
+  
+  * Added missing Async APIs for submitting Jobs.
+
+2.0.0-preview:
+
 Some parameters of the job submission objects have changed:
 
   *  HiveJobSubmissionParameters

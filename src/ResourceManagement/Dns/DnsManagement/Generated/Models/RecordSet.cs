@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns.Models
@@ -30,7 +29,7 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// Describes a DNS RecordSet (a set of DNS records with the same name and
     /// type).
     /// </summary>
-    public partial class RecordSet : ResourceBaseExtended
+    public partial class RecordSet
     {
         private string _eTag;
         
@@ -43,6 +42,39 @@ namespace Microsoft.Azure.Management.Dns.Models
             set { this._eTag = value; }
         }
         
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the ID of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _location;
+        
+        /// <summary>
+        /// Required. Gets or sets the location of the resource.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets the name of the resource.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
         private RecordSetProperties _properties;
         
         /// <summary>
@@ -52,6 +84,17 @@ namespace Microsoft.Azure.Management.Dns.Models
         {
             get { return this._properties; }
             set { this._properties = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets or sets the type of the resource.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>

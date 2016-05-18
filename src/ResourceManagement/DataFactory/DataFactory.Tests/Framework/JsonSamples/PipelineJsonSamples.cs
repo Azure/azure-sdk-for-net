@@ -317,7 +317,15 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
                         sqlWriterCleanupScript: ""Script"",
-                        sliceIdentifierColumnName: ""SliceID""
+                        sliceIdentifierColumnName: ""SliceID"",
+                        allowPolyBase: true,
+                        polyBaseSettings:
+                        {
+                            rejectType: ""percentage"",
+                            rejectValue: 10,
+                            rejectSampleValue: 100,
+                            useTypeDefault: true
+                        }
                     },
                 },
                 inputs: 
