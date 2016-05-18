@@ -59,7 +59,13 @@ namespace MachineLearning.Tests.ScenarioTests
 
         private const int AsyncOperationPollingIntervalSeconds = 5;
 
-        private delegate void AMLWebServiceTestDelegate(string webServiceName, string resourceGroupName, ResourceManagementClient resourcesClient, AzureMLWebServicesManagementClient amlServicesClient, string cpResourceId, StorageAccount storageAccount);
+        private delegate void AMLWebServiceTestDelegate(
+            string webServiceName, 
+            string resourceGroupName, 
+            ResourceManagementClient resourcesClient, 
+            AzureMLWebServicesManagementClient amlServicesClient, 
+            string cpResourceId, 
+            StorageAccount storageAccount);
 
         [Fact]
         public void CreateGetRemoveGraphWebService()
