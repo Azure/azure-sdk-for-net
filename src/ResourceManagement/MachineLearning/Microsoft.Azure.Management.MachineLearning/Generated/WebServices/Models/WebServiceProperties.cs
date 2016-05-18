@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebServiceProperties class.
         /// </summary>
-        public WebServiceProperties(string title = default(string), string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), ExampleRequest exampleRequest = default(ExampleRequest), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>))
+        public WebServiceProperties(string title = default(string), string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), bool? exposeSampleData = default(bool?), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), ExampleRequest exampleRequest = default(ExampleRequest), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>))
         {
             Title = title;
             Description = description;
@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
             Keys = keys;
             ReadOnlyProperty = readOnlyProperty;
             SwaggerLocation = swaggerLocation;
+            ExposeSampleData = exposeSampleData;
             RealtimeConfiguration = realtimeConfiguration;
             Diagnostics = diagnostics;
             StorageAccount = storageAccount;
@@ -103,6 +104,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "swaggerLocation")]
         public string SwaggerLocation { get; private set; }
+
+        /// <summary>
+        /// Flag that controls whether to expose sample data or not in the web
+        /// service's swagger definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "exposeSampleData")]
+        public bool? ExposeSampleData { get; set; }
 
         /// <summary>
         /// Configuration for the service's realtime endpoint.
