@@ -61,12 +61,6 @@ namespace MachineLearning.Tests.ScenarioTests
 
         private delegate void AMLWebServiceTestDelegate(string webServiceName, string resourceGroupName, ResourceManagementClient resourcesClient, AzureMLWebServicesManagementClient amlServicesClient, string cpResourceId, StorageAccount storageAccount);
 
-        public WebServiceTests()
-        {
-            ////Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=80c77c76-74ba-4c8c-8229-4c3b2957990c;Environment=Prod");  
-            ////Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-        }
-
         [Fact]
         public void CreateGetRemoveGraphWebService()
         {
