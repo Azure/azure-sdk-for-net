@@ -69,6 +69,245 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Abort Deployment Operation validates and aborts your deployment
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> AbortMigrationAsync(string serviceName, string deploymentName, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                TracingAdapter.Enter(invocationId, this, "AbortMigrationAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.Deployments.BeginAbortMigrationAsync(serviceName, deploymentName, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == OperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Abort Deployment Operation validates and aborts your deployment
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> BeginAbortMigrationAsync(string serviceName, string deploymentName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                TracingAdapter.Enter(invocationId, this, "BeginAbortMigrationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/migration";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=abort");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Begin Changing Deployment Configuration By Name operation
         /// initiates a change to the deployment configuration. This operation
         /// is an asynchronous operation. To determine whether the Management
@@ -208,7 +447,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -281,6 +520,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -311,6 +557,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -519,7 +772,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -592,6 +845,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -622,6 +882,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -654,6 +921,152 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Commit Deployment Operation validates and commits your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> BeginCommitMigrationAsync(string serviceName, string deploymentName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                TracingAdapter.Enter(invocationId, this, "BeginCommitMigrationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/migration";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=commit");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -840,7 +1253,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -925,6 +1338,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -955,6 +1375,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -1123,7 +1550,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1266,7 +1693,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1422,7 +1849,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1601,7 +2028,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1794,7 +2221,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1960,7 +2387,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1985,6 +2412,203 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Prepare Deployment Operation validates and prepares your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> BeginPrepareMigrationAsync(string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.DestinationVirtualNetwork == null)
+            {
+                throw new ArgumentNullException("parameters.DestinationVirtualNetwork");
+            }
+            if (parameters.ResourceGroupName == null)
+            {
+                throw new ArgumentNullException("parameters.ResourceGroupName");
+            }
+            if (parameters.SubNetName == null)
+            {
+                throw new ArgumentNullException("parameters.SubNetName");
+            }
+            if (parameters.VirtualNetworkName == null)
+            {
+                throw new ArgumentNullException("parameters.VirtualNetworkName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginPrepareMigrationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/migration";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=prepare");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement deploymentNetworkResourceElement = new XElement(XName.Get("DeploymentNetworkResource", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(deploymentNetworkResourceElement);
+                
+                XElement resourceGroupNameElement = new XElement(XName.Get("ResourceGroupName", "http://schemas.microsoft.com/windowsazure"));
+                resourceGroupNameElement.Value = parameters.ResourceGroupName;
+                deploymentNetworkResourceElement.Add(resourceGroupNameElement);
+                
+                XElement virtualNetworkNameElement = new XElement(XName.Get("VirtualNetworkName", "http://schemas.microsoft.com/windowsazure"));
+                virtualNetworkNameElement.Value = parameters.VirtualNetworkName;
+                deploymentNetworkResourceElement.Add(virtualNetworkNameElement);
+                
+                XElement subNetNameElement = new XElement(XName.Get("SubNetName", "http://schemas.microsoft.com/windowsazure"));
+                subNetNameElement.Value = parameters.SubNetName;
+                deploymentNetworkResourceElement.Add(subNetNameElement);
+                
+                XElement destinationVirtualNetworkElement = new XElement(XName.Get("DestinationVirtualNetwork", "http://schemas.microsoft.com/windowsazure"));
+                destinationVirtualNetworkElement.Value = parameters.DestinationVirtualNetwork;
+                deploymentNetworkResourceElement.Add(destinationVirtualNetworkElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -2124,7 +2748,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2284,7 +2908,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2458,7 +3082,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2632,7 +3256,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2796,7 +3420,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2956,7 +3580,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3108,7 +3732,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3295,7 +3919,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3471,7 +4095,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3729,7 +4353,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3811,6 +4435,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -3841,6 +4472,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -4087,7 +4725,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4169,6 +4807,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -4199,6 +4844,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -4392,7 +5044,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4590,7 +5242,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4730,7 +5382,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4836,7 +5488,100 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The Commit Deployment Operation validates and commits your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> CommitMigrationAsync(string serviceName, string deploymentName, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                TracingAdapter.Enter(invocationId, this, "CommitMigrationAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.Deployments.BeginCommitMigrationAsync(serviceName, deploymentName, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4942,7 +5687,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5048,7 +5793,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5147,7 +5892,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5246,7 +5991,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5345,7 +6090,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5466,7 +6211,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7140,6 +7885,48 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             }
                                         }
                                     }
+                                    
+                                    XElement debugSettingsElement = roleListElement.Element(XName.Get("DebugSettings", "http://schemas.microsoft.com/windowsazure"));
+                                    if (debugSettingsElement != null)
+                                    {
+                                        DebugSettings debugSettingsInstance = new DebugSettings();
+                                        roleInstance.DebugSettings = debugSettingsInstance;
+                                        
+                                        XElement bootDiagnosticsEnabledElement = debugSettingsElement.Element(XName.Get("BootDiagnosticsEnabled", "http://schemas.microsoft.com/windowsazure"));
+                                        if (bootDiagnosticsEnabledElement != null)
+                                        {
+                                            bool bootDiagnosticsEnabledInstance = bool.Parse(bootDiagnosticsEnabledElement.Value);
+                                            debugSettingsInstance.BootDiagnosticsEnabled = bootDiagnosticsEnabledInstance;
+                                        }
+                                        
+                                        XElement consoleScreenshotBlobUriElement = debugSettingsElement.Element(XName.Get("ConsoleScreenshotBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                                        if (consoleScreenshotBlobUriElement != null)
+                                        {
+                                            Uri consoleScreenshotBlobUriInstance = TypeConversion.TryParseUri(consoleScreenshotBlobUriElement.Value);
+                                            debugSettingsInstance.ConsoleScreenshotBlobUri = consoleScreenshotBlobUriInstance;
+                                        }
+                                        
+                                        XElement serialOutputBlobUriElement = debugSettingsElement.Element(XName.Get("SerialOutputBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                                        if (serialOutputBlobUriElement != null)
+                                        {
+                                            Uri serialOutputBlobUriInstance = TypeConversion.TryParseUri(serialOutputBlobUriElement.Value);
+                                            debugSettingsInstance.SerialOutputBlobUri = serialOutputBlobUriInstance;
+                                        }
+                                    }
+                                    
+                                    XElement licenseTypeElement = roleListElement.Element(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (licenseTypeElement != null)
+                                    {
+                                        string licenseTypeInstance = licenseTypeElement.Value;
+                                        roleInstance.LicenseType = licenseTypeInstance;
+                                    }
+                                    
+                                    XElement migrationStateElement = roleListElement.Element(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
+                                    if (migrationStateElement != null)
+                                    {
+                                        string migrationStateInstance = migrationStateElement.Value;
+                                        roleInstance.MigrationState = migrationStateInstance;
+                                    }
                                 }
                             }
                             
@@ -7313,6 +8100,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             string idInstance = idElement.Value;
                                             extensionInstance.Id = idInstance;
                                         }
+                                        
+                                        XElement stateElement2 = allRolesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement2 != null)
+                                        {
+                                            string stateInstance2 = stateElement2.Value;
+                                            extensionInstance.State = stateInstance2;
+                                        }
                                     }
                                 }
                                 
@@ -7344,6 +8138,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 {
                                                     string idInstance2 = idElement2.Value;
                                                     extensionInstance2.Id = idInstance2;
+                                                }
+                                                
+                                                XElement stateElement3 = extensionsElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                                if (stateElement3 != null)
+                                                {
+                                                    string stateInstance3 = stateElement3.Value;
+                                                    extensionInstance2.State = stateInstance3;
                                                 }
                                             }
                                         }
@@ -7505,7 +8306,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -9179,6 +9980,48 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             }
                                         }
                                     }
+                                    
+                                    XElement debugSettingsElement = roleListElement.Element(XName.Get("DebugSettings", "http://schemas.microsoft.com/windowsazure"));
+                                    if (debugSettingsElement != null)
+                                    {
+                                        DebugSettings debugSettingsInstance = new DebugSettings();
+                                        roleInstance.DebugSettings = debugSettingsInstance;
+                                        
+                                        XElement bootDiagnosticsEnabledElement = debugSettingsElement.Element(XName.Get("BootDiagnosticsEnabled", "http://schemas.microsoft.com/windowsazure"));
+                                        if (bootDiagnosticsEnabledElement != null)
+                                        {
+                                            bool bootDiagnosticsEnabledInstance = bool.Parse(bootDiagnosticsEnabledElement.Value);
+                                            debugSettingsInstance.BootDiagnosticsEnabled = bootDiagnosticsEnabledInstance;
+                                        }
+                                        
+                                        XElement consoleScreenshotBlobUriElement = debugSettingsElement.Element(XName.Get("ConsoleScreenshotBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                                        if (consoleScreenshotBlobUriElement != null)
+                                        {
+                                            Uri consoleScreenshotBlobUriInstance = TypeConversion.TryParseUri(consoleScreenshotBlobUriElement.Value);
+                                            debugSettingsInstance.ConsoleScreenshotBlobUri = consoleScreenshotBlobUriInstance;
+                                        }
+                                        
+                                        XElement serialOutputBlobUriElement = debugSettingsElement.Element(XName.Get("SerialOutputBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                                        if (serialOutputBlobUriElement != null)
+                                        {
+                                            Uri serialOutputBlobUriInstance = TypeConversion.TryParseUri(serialOutputBlobUriElement.Value);
+                                            debugSettingsInstance.SerialOutputBlobUri = serialOutputBlobUriInstance;
+                                        }
+                                    }
+                                    
+                                    XElement licenseTypeElement = roleListElement.Element(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (licenseTypeElement != null)
+                                    {
+                                        string licenseTypeInstance = licenseTypeElement.Value;
+                                        roleInstance.LicenseType = licenseTypeInstance;
+                                    }
+                                    
+                                    XElement migrationStateElement = roleListElement.Element(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
+                                    if (migrationStateElement != null)
+                                    {
+                                        string migrationStateInstance = migrationStateElement.Value;
+                                        roleInstance.MigrationState = migrationStateInstance;
+                                    }
                                 }
                             }
                             
@@ -9352,6 +10195,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             string idInstance = idElement.Value;
                                             extensionInstance.Id = idInstance;
                                         }
+                                        
+                                        XElement stateElement2 = allRolesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement2 != null)
+                                        {
+                                            string stateInstance2 = stateElement2.Value;
+                                            extensionInstance.State = stateInstance2;
+                                        }
                                     }
                                 }
                                 
@@ -9383,6 +10233,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 {
                                                     string idInstance2 = idElement2.Value;
                                                     extensionInstance2.Id = idInstance2;
+                                                }
+                                                
+                                                XElement stateElement3 = extensionsElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                                if (stateElement3 != null)
+                                                {
+                                                    string stateInstance3 = stateElement3.Value;
+                                                    extensionInstance2.State = stateInstance3;
                                                 }
                                             }
                                         }
@@ -9532,7 +10389,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9637,7 +10494,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9773,7 +10630,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -9980,7 +10837,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -10102,6 +10959,103 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Prepare Deployment Operation validates and prepares your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> PrepareMigrationAsync(string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "PrepareMigrationAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.Deployments.BeginPrepareMigrationAsync(serviceName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == OperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
         /// The Reboot Role Instance By Deployment Name operation requests a
         /// reboot of a role instance that is running in a deployment. This
         /// operation is an asynchronous operation. To determine whether the
@@ -10160,7 +11114,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10265,7 +11219,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10376,7 +11330,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10487,7 +11441,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10592,7 +11546,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10697,7 +11651,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10842,7 +11796,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -11021,7 +11975,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -11161,7 +12115,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11268,7 +12222,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11375,7 +12329,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11507,7 +12461,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11639,7 +12593,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11769,7 +12723,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11899,7 +12853,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

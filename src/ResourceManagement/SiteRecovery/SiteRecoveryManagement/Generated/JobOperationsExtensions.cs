@@ -77,6 +77,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Export jobs to blob.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Job Query Filters
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginExporting(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).BeginExportingAsync(parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Export jobs to blob.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Job Query Filters
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginExportingAsync(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginExportingAsync(parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Restart the job .
         /// </summary>
         /// <param name='operations'>
@@ -234,9 +280,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse Export(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse Export(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -259,9 +305,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> ExportAsync(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> ExportAsync(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ExportAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
@@ -356,6 +402,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public static Task<JobOperationResponse> GetCancelStatusAsync(this IJobOperations operations, string operationStatusLink)
         {
             return operations.GetCancelStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static JobOperationResponse GetExportStatus(this IJobOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).GetExportStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<JobOperationResponse> GetExportStatusAsync(this IJobOperations operations, string operationStatusLink)
+        {
+            return operations.GetExportStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>

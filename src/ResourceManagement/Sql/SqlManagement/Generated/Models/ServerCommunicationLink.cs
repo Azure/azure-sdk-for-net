@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database Server communication link.
+    /// Represents an Azure SQL Server communication link.
     /// </summary>
     public partial class ServerCommunicationLink : ResourceBaseExtended
     {

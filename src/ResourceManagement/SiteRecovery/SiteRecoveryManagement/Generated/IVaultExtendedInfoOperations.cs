@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
     /// <summary>
     /// Definition of vault extended info operations for the Site Recovery

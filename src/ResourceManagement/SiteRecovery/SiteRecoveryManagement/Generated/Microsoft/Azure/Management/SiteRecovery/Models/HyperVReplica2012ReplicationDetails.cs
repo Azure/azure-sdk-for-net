@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._initialReplicationDetails = value; }
         }
         
-        private string _lastReplicatedTime;
+        private System.DateTime? _lastReplicatedTime;
         
         /// <summary>
         /// Optional. Gets or sets the Last replication time.
         /// </summary>
-        public string LastReplicatedTime
+        public System.DateTime? LastReplicatedTime
         {
             get { return this._lastReplicatedTime; }
             set { this._lastReplicatedTime = value; }
@@ -63,6 +63,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._vMDiskDetails; }
             set { this._vMDiskDetails = value; }
+        }
+        
+        private string _vmId;
+        
+        /// <summary>
+        /// Optional. Virtual machine Id.
+        /// </summary>
+        public string VmId
+        {
+            get { return this._vmId; }
+            set { this._vmId = value; }
         }
         
         private IList<VMNicDetails> _vmNics;

@@ -1,4 +1,5 @@
-﻿@model SampleKeyVaultClientWebRole.Models.Message
+﻿@using SampleKeyVaultClientWebRole.Models
+@model Message
 
 @{
     ViewBag.Title = "Save";
@@ -25,10 +26,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MessageStr, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MessageText, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MessageStr)
-                @Html.ValidationMessageFor(model => model.MessageStr)
+                @Html.EditorFor(model => model.MessageText)
+                @Html.ValidationMessageFor(model => model.MessageText)
             </div>
         </div>
 

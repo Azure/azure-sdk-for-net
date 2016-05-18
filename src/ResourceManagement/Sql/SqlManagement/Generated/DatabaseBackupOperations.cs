@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
     /// Represents all the operations for operating on Azure SQL Database
-    /// restore points. Contains operations to: List restore points.
+    /// database backups.
     /// </summary>
     internal partial class DatabaseBackupOperations : IServiceOperations<SqlManagementClient>, IDatabaseBackupOperations
     {
@@ -59,6 +59,1054 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client
         {
             get { return this._client; }
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL deleted database backup (a resource
+        /// representing a deleted database that can be restored).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve
+        /// deleted databases for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database Database to retrieve
+        /// deleted databases for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database deleted
+        /// database backup request.
+        /// </returns>
+        public async Task<DeletedDatabaseBackupGetResponse> GetDeletedDatabaseBackupAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "GetDeletedDatabaseBackupAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/restorabledroppeddatabases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DeletedDatabaseBackupGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DeletedDatabaseBackupGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            DeletedDatabaseBackup deletedDatabaseBackupInstance = new DeletedDatabaseBackup();
+                            result.DeletedDatabaseBackup = deletedDatabaseBackupInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                DeletedDatabaseBackupProperties propertiesInstance = new DeletedDatabaseBackupProperties();
+                                deletedDatabaseBackupInstance.Properties = propertiesInstance;
+                                
+                                JToken databaseNameValue = propertiesValue["databaseName"];
+                                if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                                {
+                                    string databaseNameInstance = ((string)databaseNameValue);
+                                    propertiesInstance.DatabaseName = databaseNameInstance;
+                                }
+                                
+                                JToken editionValue = propertiesValue["edition"];
+                                if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                {
+                                    string editionInstance = ((string)editionValue);
+                                    propertiesInstance.Edition = editionInstance;
+                                }
+                                
+                                JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
+                                if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                {
+                                    long maxSizeBytesInstance = ((long)maxSizeBytesValue);
+                                    propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
+                                }
+                                
+                                JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                {
+                                    string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                    propertiesInstance.ServiceLevelObjective = serviceLevelObjectiveInstance;
+                                }
+                                
+                                JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                {
+                                    string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                    propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                }
+                                
+                                JToken creationDateValue = propertiesValue["creationDate"];
+                                if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                    propertiesInstance.CreationDate = creationDateInstance;
+                                }
+                                
+                                JToken deletionDateValue = propertiesValue["deletionDate"];
+                                if (deletionDateValue != null && deletionDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime deletionDateInstance = ((DateTime)deletionDateValue);
+                                    propertiesInstance.DeletionDate = deletionDateInstance;
+                                }
+                                
+                                JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
+                                if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                    propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                deletedDatabaseBackupInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                deletedDatabaseBackupInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                deletedDatabaseBackupInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                deletedDatabaseBackupInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    deletedDatabaseBackupInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database geo backup.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backups for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo
+        /// backups for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database geo backup
+        /// request.
+        /// </returns>
+        public async Task<GeoBackupGetResponse> GetGeoBackupAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "GetGeoBackupAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/recoverabledatabases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GeoBackupGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GeoBackupGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            GeoBackup geoBackupInstance = new GeoBackup();
+                            result.GeoBackup = geoBackupInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                GeoBackupProperties propertiesInstance = new GeoBackupProperties();
+                                geoBackupInstance.Properties = propertiesInstance;
+                                
+                                JToken editionValue = propertiesValue["edition"];
+                                if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                {
+                                    string editionInstance = ((string)editionValue);
+                                    propertiesInstance.Edition = editionInstance;
+                                }
+                                
+                                JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                {
+                                    string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                    propertiesInstance.ServiceLevelObjective = serviceLevelObjectiveInstance;
+                                }
+                                
+                                JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                {
+                                    string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                    propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                }
+                                
+                                JToken lastAvailableBackupDateValue = propertiesValue["lastAvailableBackupDate"];
+                                if (lastAvailableBackupDateValue != null && lastAvailableBackupDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastAvailableBackupDateInstance = ((DateTime)lastAvailableBackupDateValue);
+                                    propertiesInstance.LastAvailableBackupDate = lastAvailableBackupDateInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                geoBackupInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                geoBackupInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                geoBackupInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                geoBackupInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    geoBackupInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns a list of Azure SQL deleted database backups (a resource
+        /// representing a deleted database that can be restored).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve
+        /// deleted databases for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database deleted
+        /// database backups request.
+        /// </returns>
+        public async Task<DeletedDatabaseBackupListResponse> ListDeletedDatabaseBackupsAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                TracingAdapter.Enter(invocationId, this, "ListDeletedDatabaseBackupsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/restorabledroppeddatabases";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DeletedDatabaseBackupListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DeletedDatabaseBackupListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    DeletedDatabaseBackup deletedDatabaseBackupInstance = new DeletedDatabaseBackup();
+                                    result.DeletedDatabaseBackups.Add(deletedDatabaseBackupInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        DeletedDatabaseBackupProperties propertiesInstance = new DeletedDatabaseBackupProperties();
+                                        deletedDatabaseBackupInstance.Properties = propertiesInstance;
+                                        
+                                        JToken databaseNameValue = propertiesValue["databaseName"];
+                                        if (databaseNameValue != null && databaseNameValue.Type != JTokenType.Null)
+                                        {
+                                            string databaseNameInstance = ((string)databaseNameValue);
+                                            propertiesInstance.DatabaseName = databaseNameInstance;
+                                        }
+                                        
+                                        JToken editionValue = propertiesValue["edition"];
+                                        if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                        {
+                                            string editionInstance = ((string)editionValue);
+                                            propertiesInstance.Edition = editionInstance;
+                                        }
+                                        
+                                        JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
+                                        if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                        {
+                                            long maxSizeBytesInstance = ((long)maxSizeBytesValue);
+                                            propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
+                                        }
+                                        
+                                        JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                        if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                            propertiesInstance.ServiceLevelObjective = serviceLevelObjectiveInstance;
+                                        }
+                                        
+                                        JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                        if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                        {
+                                            string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                            propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                        }
+                                        
+                                        JToken creationDateValue = propertiesValue["creationDate"];
+                                        if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                            propertiesInstance.CreationDate = creationDateInstance;
+                                        }
+                                        
+                                        JToken deletionDateValue = propertiesValue["deletionDate"];
+                                        if (deletionDateValue != null && deletionDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime deletionDateInstance = ((DateTime)deletionDateValue);
+                                            propertiesInstance.DeletionDate = deletionDateInstance;
+                                        }
+                                        
+                                        JToken earliestRestoreDateValue = propertiesValue["earliestRestoreDate"];
+                                        if (earliestRestoreDateValue != null && earliestRestoreDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime earliestRestoreDateInstance = ((DateTime)earliestRestoreDateValue);
+                                            propertiesInstance.EarliestRestoreDate = earliestRestoreDateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        deletedDatabaseBackupInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        deletedDatabaseBackupInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        deletedDatabaseBackupInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        deletedDatabaseBackupInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            deletedDatabaseBackupInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Database geo backups.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backups for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database geo backups
+        /// request.
+        /// </returns>
+        public async Task<GeoBackupListResponse> ListGeoBackupsAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                TracingAdapter.Enter(invocationId, this, "ListGeoBackupsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/recoverabledatabases";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GeoBackupListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GeoBackupListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    GeoBackup geoBackupInstance = new GeoBackup();
+                                    result.GeoBackups.Add(geoBackupInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        GeoBackupProperties propertiesInstance = new GeoBackupProperties();
+                                        geoBackupInstance.Properties = propertiesInstance;
+                                        
+                                        JToken editionValue = propertiesValue["edition"];
+                                        if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                        {
+                                            string editionInstance = ((string)editionValue);
+                                            propertiesInstance.Edition = editionInstance;
+                                        }
+                                        
+                                        JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                        if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                            propertiesInstance.ServiceLevelObjective = serviceLevelObjectiveInstance;
+                                        }
+                                        
+                                        JToken elasticPoolNameValue = propertiesValue["elasticPoolName"];
+                                        if (elasticPoolNameValue != null && elasticPoolNameValue.Type != JTokenType.Null)
+                                        {
+                                            string elasticPoolNameInstance = ((string)elasticPoolNameValue);
+                                            propertiesInstance.ElasticPoolName = elasticPoolNameInstance;
+                                        }
+                                        
+                                        JToken lastAvailableBackupDateValue = propertiesValue["lastAvailableBackupDate"];
+                                        if (lastAvailableBackupDateValue != null && lastAvailableBackupDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime lastAvailableBackupDateInstance = ((DateTime)lastAvailableBackupDateValue);
+                                            propertiesInstance.LastAvailableBackupDate = lastAvailableBackupDateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        geoBackupInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        geoBackupInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        geoBackupInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        geoBackupInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            geoBackupInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
         
         /// <summary>

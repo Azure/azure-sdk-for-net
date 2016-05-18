@@ -401,7 +401,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-
                     result.Location = url;
                     
                     if (shouldTrace)

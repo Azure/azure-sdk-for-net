@@ -1,0 +1,22 @@
+﻿<NetworkConfiguration
+  xmlns="http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <VirtualNetworkConfiguration>
+    <Dns>
+      <DnsServers />
+    </Dns>
+    <VirtualNetworkSites>
+      <VirtualNetworkSite name="virtualNetworkSiteName" Location="East US">
+        <AddressSpace>
+          <AddressPrefix>192.168.100.0/24</AddressPrefix>
+        </AddressSpace>
+        <Subnets>
+          <Subnet name="FrontEndSubnet5">
+            <AddressPrefix>192.168.100.0/28</AddressPrefix>
+          </Subnet>
+        </Subnets>
+        <DnsServersRef/>
+      </VirtualNetworkSite>
+    </VirtualNetworkSites>
+  </VirtualNetworkConfiguration>
+</NetworkConfiguration>

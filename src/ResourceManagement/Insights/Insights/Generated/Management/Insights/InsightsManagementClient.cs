@@ -124,6 +124,16 @@ namespace Microsoft.Azure.Management.Insights
             get { return this._autoscaleOperations; }
         }
         
+        private ILogProfilesOperations _logProfilesOperations;
+        
+        /// <summary>
+        /// Operations for managing log profiles.
+        /// </summary>
+        public virtual ILogProfilesOperations LogProfilesOperations
+        {
+            get { return this._logProfilesOperations; }
+        }
+        
         private IMonitoringConfigurationOperations _monitoringConfigurationOperations;
         
         /// <summary>
@@ -175,6 +185,7 @@ namespace Microsoft.Azure.Management.Insights
             this._alertOperations = new AlertOperations(this);
             this._automatedExportOperations = new AutomatedExportOperations(this);
             this._autoscaleOperations = new AutoscaleOperations(this);
+            this._logProfilesOperations = new LogProfilesOperations(this);
             this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
             this._serviceDiagnosticSettingsOperations = new ServiceDiagnosticSettingsOperations(this);
             this._skuOperations = new SkuOperations(this);
@@ -248,6 +259,7 @@ namespace Microsoft.Azure.Management.Insights
             this._alertOperations = new AlertOperations(this);
             this._automatedExportOperations = new AutomatedExportOperations(this);
             this._autoscaleOperations = new AutoscaleOperations(this);
+            this._logProfilesOperations = new LogProfilesOperations(this);
             this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
             this._serviceDiagnosticSettingsOperations = new ServiceDiagnosticSettingsOperations(this);
             this._skuOperations = new SkuOperations(this);

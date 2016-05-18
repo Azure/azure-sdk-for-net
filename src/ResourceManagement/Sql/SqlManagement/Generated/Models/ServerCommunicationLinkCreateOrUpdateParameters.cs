@@ -27,8 +27,7 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Create or update Sql Azure Database Server communication link
-    /// parameters.
+    /// Create or update Azure SQL Server communication link parameters.
     /// </summary>
     public partial class ServerCommunicationLinkCreateOrUpdateParameters : ResourceBase
     {

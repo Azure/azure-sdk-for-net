@@ -40,12 +40,7 @@ namespace SiteRecovery.Tests
                 {
                     var dras = client.RecoveryServicesProvider.List(fabric.Name, RequestHeaders).RecoveryServicesProviders;
 
-                    RecoveryServicesProviderDeletionInput input = new RecoveryServicesProviderDeletionInput()
-                    {
-                        Properties = new RecoveryServicesProviderDeletionInputProperties()
-                    };
-
-                    var removeServerResponse = client.RecoveryServicesProvider.Delete(fabric.Name, dras[0].Name, input, RequestHeaders);
+                    var removeServerResponse = client.RecoveryServicesProvider.Delete(fabric.Name, dras[0].Name, RequestHeaders);
                 }
 
                 Assert.NotNull(response.Fabric);

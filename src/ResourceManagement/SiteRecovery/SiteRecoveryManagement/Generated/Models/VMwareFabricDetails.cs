@@ -165,17 +165,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._lastHeartbeat = value; }
         }
         
-        private string _latestUpdateVersion;
-        
-        /// <summary>
-        /// Optional. The latest update version.
-        /// </summary>
-        public string LatestUpdateVersion
-        {
-            get { return this._latestUpdateVersion; }
-            set { this._latestUpdateVersion = value; }
-        }
-        
         private IList<MasterTargetServer> _masterTargetServers;
         
         /// <summary>
@@ -309,17 +298,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._totalSpaceInBytes = value; }
         }
         
-        private IList<VCenter> _vCenters;
-        
-        /// <summary>
-        /// Optional. The list of vCenters associated with the fabric.
-        /// </summary>
-        public IList<VCenter> VCenters
-        {
-            get { return this._vCenters; }
-            set { this._vCenters = value; }
-        }
-        
         private string _versionStatus;
         
         /// <summary>
@@ -361,7 +339,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             this.MasterTargetServers = new LazyList<MasterTargetServer>();
             this.ProcessServers = new LazyList<ProcessServer>();
             this.RunAsAccounts = new LazyList<RunAsAccount>();
-            this.VCenters = new LazyList<VCenter>();
         }
     }
 }

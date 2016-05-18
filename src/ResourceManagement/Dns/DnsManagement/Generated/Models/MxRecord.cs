@@ -41,12 +41,12 @@ namespace Microsoft.Azure.Management.Dns.Models
             set { this._exchange = value; }
         }
         
-        private ushort _preference;
+        private int _preference;
         
         /// <summary>
         /// Required. Gets or sets the preference metric for this record.
         /// </summary>
-        public ushort Preference
+        public int Preference
         {
             get { return this._preference; }
             set { this._preference = value; }
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// Initializes a new instance of the MxRecord class with required
         /// arguments.
         /// </summary>
-        public MxRecord(ushort preference, string exchange)
+        public MxRecord(int preference, string exchange)
             : this()
         {
             if (exchange == null)

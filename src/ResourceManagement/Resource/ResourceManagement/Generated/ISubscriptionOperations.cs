@@ -70,5 +70,19 @@ namespace Microsoft.Azure.Subscriptions
         /// Location list operation response.
         /// </returns>
         Task<LocationListResult> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a list of the subscriptionIds.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Subscription list operation response.
+        /// </returns>
+        Task<SubscriptionListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
     }
 }

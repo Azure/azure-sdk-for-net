@@ -71,6 +71,31 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._dataVirtualHardDisks = value; }
         }
         
+        private DebugSettings _debugSettings;
+        
+        /// <summary>
+        /// Optional. Debug settings for console output.
+        /// </summary>
+        public DebugSettings DebugSettings
+        {
+            get { return this._debugSettings; }
+            set { this._debugSettings = value; }
+        }
+        
+        private string _licenseType;
+        
+        /// <summary>
+        /// Optional. Specifies that the image or disk that is being used was
+        /// licensed on-premises. This element is only used for images that
+        /// contain the Windows Server operating system. Possible values are:
+        /// Windows_Client, Windows_Server
+        /// </summary>
+        public string LicenseType
+        {
+            get { return this._licenseType; }
+            set { this._licenseType = value; }
+        }
+        
         private Uri _mediaLocation;
         
         /// <summary>

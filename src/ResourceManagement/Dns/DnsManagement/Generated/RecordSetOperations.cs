@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns;
 using Microsoft.Azure.Management.Dns.Models;
@@ -82,13 +83,20 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='parameters'>
         /// Required. Parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='ifMatch'>
+        /// Optional. The etag of RecordSet.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response to a RecordSet CreateOrUpdate operation.
         /// </returns>
-        public async Task<RecordSetCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<RecordSetCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetCreateOrUpdateParameters parameters, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -180,10 +188,6 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Email");
                     }
-                    if (parameters.RecordSet.Properties.SoaRecord.Host == null)
-                    {
-                        throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Host");
-                    }
                 }
                 if (parameters.RecordSet.Properties.SrvRecords != null)
                 {
@@ -219,6 +223,8 @@ namespace Microsoft.Azure.Management.Dns
                 tracingParameters.Add("relativeRecordSetName", relativeRecordSetName);
                 tracingParameters.Add("recordType", recordType);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("ifNoneMatch", ifNoneMatch);
                 TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
@@ -240,7 +246,7 @@ namespace Microsoft.Azure.Management.Dns
             url = url + "/";
             url = url + relativeRecordSetName;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-04-preview");
+            queryParameters.Add("api-version=2016-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -267,8 +273,8 @@ namespace Microsoft.Azure.Management.Dns
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.TryAddWithoutValidation("If-Match", parameters.RecordSet.ETag);
-                httpRequest.Headers.Add("If-None-Match", parameters.IfNoneMatch);
+                httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+                httpRequest.Headers.Add("If-None-Match", ifNoneMatch);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -281,15 +287,47 @@ namespace Microsoft.Azure.Management.Dns
                 JObject recordSetCreateOrUpdateParametersValue = new JObject();
                 requestDoc = recordSetCreateOrUpdateParametersValue;
                 
+                if (parameters.RecordSet.Id != null)
+                {
+                    recordSetCreateOrUpdateParametersValue["id"] = parameters.RecordSet.Id;
+                }
+                
+                if (parameters.RecordSet.Name != null)
+                {
+                    recordSetCreateOrUpdateParametersValue["name"] = parameters.RecordSet.Name;
+                }
+                
+                if (parameters.RecordSet.Type != null)
+                {
+                    recordSetCreateOrUpdateParametersValue["type"] = parameters.RecordSet.Type;
+                }
+                
                 if (parameters.RecordSet.ETag != null)
                 {
                     recordSetCreateOrUpdateParametersValue["etag"] = parameters.RecordSet.ETag;
                 }
                 
+                recordSetCreateOrUpdateParametersValue["location"] = parameters.RecordSet.Location;
+                
                 if (parameters.RecordSet.Properties != null)
                 {
                     JObject propertiesValue = new JObject();
                     recordSetCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.RecordSet.Properties.Metadata != null)
+                    {
+                        if (parameters.RecordSet.Properties.Metadata is ILazyCollection == false || ((ILazyCollection)parameters.RecordSet.Properties.Metadata).IsInitialized)
+                        {
+                            JObject metadataDictionary = new JObject();
+                            foreach (KeyValuePair<string, string> pair in parameters.RecordSet.Properties.Metadata)
+                            {
+                                string metadataKey = pair.Key;
+                                string metadataValue = pair.Value;
+                                metadataDictionary[metadataKey] = metadataValue;
+                            }
+                            propertiesValue["metadata"] = metadataDictionary;
+                        }
+                    }
                     
                     propertiesValue["TTL"] = parameters.RecordSet.Properties.Ttl;
                     
@@ -387,7 +425,15 @@ namespace Microsoft.Azure.Management.Dns
                             JObject txtRecordValue = new JObject();
                             tXTRecordsArray.Add(txtRecordValue);
                             
-                            txtRecordValue["value"] = tXTRecordsItem.Value;
+                            if (tXTRecordsItem.Value != null)
+                            {
+                                JArray valueArray = new JArray();
+                                foreach (string valueItem in tXTRecordsItem.Value)
+                                {
+                                    valueArray.Add(valueItem);
+                                }
+                                txtRecordValue["value"] = valueArray;
+                            }
                         }
                         propertiesValue["TXTRecords"] = tXTRecordsArray;
                     }
@@ -405,7 +451,10 @@ namespace Microsoft.Azure.Management.Dns
                         JObject sOARecordValue = new JObject();
                         propertiesValue["SOARecord"] = sOARecordValue;
                         
-                        sOARecordValue["host"] = parameters.RecordSet.Properties.SoaRecord.Host;
+                        if (parameters.RecordSet.Properties.SoaRecord.Host != null)
+                        {
+                            sOARecordValue["host"] = parameters.RecordSet.Properties.SoaRecord.Host;
+                        }
                         
                         sOARecordValue["email"] = parameters.RecordSet.Properties.SoaRecord.Email;
                         
@@ -419,35 +468,6 @@ namespace Microsoft.Azure.Management.Dns
                         
                         sOARecordValue["minimumTTL"] = parameters.RecordSet.Properties.SoaRecord.MinimumTtl;
                     }
-                }
-                
-                if (parameters.RecordSet.Id != null)
-                {
-                    recordSetCreateOrUpdateParametersValue["id"] = parameters.RecordSet.Id;
-                }
-                
-                if (parameters.RecordSet.Name != null)
-                {
-                    recordSetCreateOrUpdateParametersValue["name"] = parameters.RecordSet.Name;
-                }
-                
-                if (parameters.RecordSet.Type != null)
-                {
-                    recordSetCreateOrUpdateParametersValue["type"] = parameters.RecordSet.Type;
-                }
-                
-                recordSetCreateOrUpdateParametersValue["location"] = parameters.RecordSet.Location;
-                
-                if (parameters.RecordSet.Tags != null)
-                {
-                    JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.RecordSet.Tags)
-                    {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
-                    }
-                    recordSetCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -469,7 +489,7 @@ namespace Microsoft.Azure.Management.Dns
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -483,305 +503,311 @@ namespace Microsoft.Azure.Management.Dns
                     // Create Result
                     RecordSetCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RecordSetCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RecordSetCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            RecordSet recordSetInstance = new RecordSet();
+                            result.RecordSet = recordSetInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                recordSetInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                recordSetInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                recordSetInstance.Type = typeInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                recordSetInstance.ETag = etagInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                recordSetInstance.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                RecordSetProperties propertiesInstance = new RecordSetProperties();
+                                recordSetInstance.Properties = propertiesInstance;
+                                
+                                JToken metadataSequenceElement = ((JToken)propertiesValue2["metadata"]);
+                                if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in metadataSequenceElement)
+                                    {
+                                        string metadataKey2 = ((string)property.Name);
+                                        string metadataValue2 = ((string)property.Value);
+                                        propertiesInstance.Metadata.Add(metadataKey2, metadataValue2);
+                                    }
+                                }
+                                
+                                JToken tTLValue = propertiesValue2["TTL"];
+                                if (tTLValue != null && tTLValue.Type != JTokenType.Null)
+                                {
+                                    uint tTLInstance = ((uint)tTLValue);
+                                    propertiesInstance.Ttl = tTLInstance;
+                                }
+                                
+                                JToken aRecordsArray2 = propertiesValue2["ARecords"];
+                                if (aRecordsArray2 != null && aRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.ARecords = new List<ARecord>();
+                                    foreach (JToken aRecordsValue in ((JArray)aRecordsArray2))
+                                    {
+                                        ARecord aRecordInstance = new ARecord();
+                                        propertiesInstance.ARecords.Add(aRecordInstance);
+                                        
+                                        JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
+                                        if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
+                                        {
+                                            string ipv4AddressInstance = ((string)ipv4AddressValue);
+                                            aRecordInstance.Ipv4Address = ipv4AddressInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken aAAARecordsArray2 = propertiesValue2["AAAARecords"];
+                                if (aAAARecordsArray2 != null && aAAARecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.AaaaRecords = new List<AaaaRecord>();
+                                    foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray2))
+                                    {
+                                        AaaaRecord aaaaRecordInstance = new AaaaRecord();
+                                        propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
+                                        
+                                        JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
+                                        if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
+                                        {
+                                            string ipv6AddressInstance = ((string)ipv6AddressValue);
+                                            aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken mXRecordsArray2 = propertiesValue2["MXRecords"];
+                                if (mXRecordsArray2 != null && mXRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.MxRecords = new List<MxRecord>();
+                                    foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray2))
+                                    {
+                                        MxRecord mxRecordInstance = new MxRecord();
+                                        propertiesInstance.MxRecords.Add(mxRecordInstance);
+                                        
+                                        JToken preferenceValue = mXRecordsValue["preference"];
+                                        if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
+                                        {
+                                            int preferenceInstance = ((int)preferenceValue);
+                                            mxRecordInstance.Preference = preferenceInstance;
+                                        }
+                                        
+                                        JToken exchangeValue = mXRecordsValue["exchange"];
+                                        if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
+                                        {
+                                            string exchangeInstance = ((string)exchangeValue);
+                                            mxRecordInstance.Exchange = exchangeInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken nSRecordsArray2 = propertiesValue2["NSRecords"];
+                                if (nSRecordsArray2 != null && nSRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.NsRecords = new List<NsRecord>();
+                                    foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray2))
+                                    {
+                                        NsRecord nsRecordInstance = new NsRecord();
+                                        propertiesInstance.NsRecords.Add(nsRecordInstance);
+                                        
+                                        JToken nsdnameValue = nSRecordsValue["nsdname"];
+                                        if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
+                                        {
+                                            string nsdnameInstance = ((string)nsdnameValue);
+                                            nsRecordInstance.Nsdname = nsdnameInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken pTRRecordsArray2 = propertiesValue2["PTRRecords"];
+                                if (pTRRecordsArray2 != null && pTRRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.PtrRecords = new List<PtrRecord>();
+                                    foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray2))
+                                    {
+                                        PtrRecord ptrRecordInstance = new PtrRecord();
+                                        propertiesInstance.PtrRecords.Add(ptrRecordInstance);
+                                        
+                                        JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
+                                        if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
+                                        {
+                                            string ptrdnameInstance = ((string)ptrdnameValue);
+                                            ptrRecordInstance.Ptrdname = ptrdnameInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken sRVRecordsArray2 = propertiesValue2["SRVRecords"];
+                                if (sRVRecordsArray2 != null && sRVRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.SrvRecords = new List<SrvRecord>();
+                                    foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray2))
+                                    {
+                                        SrvRecord srvRecordInstance = new SrvRecord();
+                                        propertiesInstance.SrvRecords.Add(srvRecordInstance);
+                                        
+                                        JToken priorityValue = sRVRecordsValue["priority"];
+                                        if (priorityValue != null && priorityValue.Type != JTokenType.Null)
+                                        {
+                                            int priorityInstance = ((int)priorityValue);
+                                            srvRecordInstance.Priority = priorityInstance;
+                                        }
+                                        
+                                        JToken weightValue = sRVRecordsValue["weight"];
+                                        if (weightValue != null && weightValue.Type != JTokenType.Null)
+                                        {
+                                            int weightInstance = ((int)weightValue);
+                                            srvRecordInstance.Weight = weightInstance;
+                                        }
+                                        
+                                        JToken portValue = sRVRecordsValue["port"];
+                                        if (portValue != null && portValue.Type != JTokenType.Null)
+                                        {
+                                            int portInstance = ((int)portValue);
+                                            srvRecordInstance.Port = portInstance;
+                                        }
+                                        
+                                        JToken targetValue = sRVRecordsValue["target"];
+                                        if (targetValue != null && targetValue.Type != JTokenType.Null)
+                                        {
+                                            string targetInstance = ((string)targetValue);
+                                            srvRecordInstance.Target = targetInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken tXTRecordsArray2 = propertiesValue2["TXTRecords"];
+                                if (tXTRecordsArray2 != null && tXTRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.TxtRecords = new List<TxtRecord>();
+                                    foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray2))
+                                    {
+                                        TxtRecord txtRecordInstance = new TxtRecord();
+                                        propertiesInstance.TxtRecords.Add(txtRecordInstance);
+                                        
+                                        JToken valueArray2 = tXTRecordsValue["value"];
+                                        if (valueArray2 != null && valueArray2.Type != JTokenType.Null)
+                                        {
+                                            txtRecordInstance.Value = new List<string>();
+                                            foreach (JToken valueValue in ((JArray)valueArray2))
+                                            {
+                                                txtRecordInstance.Value.Add(((string)valueValue));
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken cNAMERecordValue2 = propertiesValue2["CNAMERecord"];
+                                if (cNAMERecordValue2 != null && cNAMERecordValue2.Type != JTokenType.Null)
+                                {
+                                    CnameRecord cNAMERecordInstance = new CnameRecord();
+                                    propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                    
+                                    JToken cnameValue = cNAMERecordValue2["cname"];
+                                    if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                    {
+                                        string cnameInstance = ((string)cnameValue);
+                                        cNAMERecordInstance.Cname = cnameInstance;
+                                    }
+                                }
+                                
+                                JToken sOARecordValue2 = propertiesValue2["SOARecord"];
+                                if (sOARecordValue2 != null && sOARecordValue2.Type != JTokenType.Null)
+                                {
+                                    SoaRecord sOARecordInstance = new SoaRecord();
+                                    propertiesInstance.SoaRecord = sOARecordInstance;
+                                    
+                                    JToken hostValue = sOARecordValue2["host"];
+                                    if (hostValue != null && hostValue.Type != JTokenType.Null)
+                                    {
+                                        string hostInstance = ((string)hostValue);
+                                        sOARecordInstance.Host = hostInstance;
+                                    }
+                                    
+                                    JToken emailValue = sOARecordValue2["email"];
+                                    if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                    {
+                                        string emailInstance = ((string)emailValue);
+                                        sOARecordInstance.Email = emailInstance;
+                                    }
+                                    
+                                    JToken serialNumberValue = sOARecordValue2["serialNumber"];
+                                    if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
+                                    {
+                                        uint serialNumberInstance = ((uint)serialNumberValue);
+                                        sOARecordInstance.SerialNumber = serialNumberInstance;
+                                    }
+                                    
+                                    JToken refreshTimeValue = sOARecordValue2["refreshTime"];
+                                    if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint refreshTimeInstance = ((uint)refreshTimeValue);
+                                        sOARecordInstance.RefreshTime = refreshTimeInstance;
+                                    }
+                                    
+                                    JToken retryTimeValue = sOARecordValue2["retryTime"];
+                                    if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint retryTimeInstance = ((uint)retryTimeValue);
+                                        sOARecordInstance.RetryTime = retryTimeInstance;
+                                    }
+                                    
+                                    JToken expireTimeValue = sOARecordValue2["expireTime"];
+                                    if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint expireTimeInstance = ((uint)expireTimeValue);
+                                        sOARecordInstance.ExpireTime = expireTimeInstance;
+                                    }
+                                    
+                                    JToken minimumTTLValue = sOARecordValue2["minimumTTL"];
+                                    if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
+                                    {
+                                        uint minimumTTLInstance = ((uint)minimumTTLValue);
+                                        sOARecordInstance.MinimumTtl = minimumTTLInstance;
+                                    }
+                                }
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        RecordSet recordSetInstance = new RecordSet();
-                        result.RecordSet = recordSetInstance;
-                        
-                        JToken etagValue = responseDoc["etag"];
-                        if (etagValue != null && etagValue.Type != JTokenType.Null)
-                        {
-                            string etagInstance = ((string)etagValue);
-                            recordSetInstance.ETag = etagInstance;
-                        }
-                        
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                        {
-                            RecordSetProperties propertiesInstance = new RecordSetProperties();
-                            recordSetInstance.Properties = propertiesInstance;
-                            
-                            JToken tTLValue = propertiesValue2["TTL"];
-                            if (tTLValue != null && tTLValue.Type != JTokenType.Null)
-                            {
-                                uint tTLInstance = ((uint)tTLValue);
-                                propertiesInstance.Ttl = tTLInstance;
-                            }
-                            
-                            JToken aRecordsArray2 = propertiesValue2["ARecords"];
-                            if (aRecordsArray2 != null && aRecordsArray2.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.ARecords = new List<ARecord>();
-                                foreach (JToken aRecordsValue in ((JArray)aRecordsArray2))
-                                {
-                                    ARecord aRecordInstance = new ARecord();
-                                    propertiesInstance.ARecords.Add(aRecordInstance);
-                                    
-                                    JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
-                                    if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
-                                    {
-                                        string ipv4AddressInstance = ((string)ipv4AddressValue);
-                                        aRecordInstance.Ipv4Address = ipv4AddressInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken aAAARecordsArray2 = propertiesValue2["AAAARecords"];
-                            if (aAAARecordsArray2 != null && aAAARecordsArray2.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.AaaaRecords = new List<AaaaRecord>();
-                                foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray2))
-                                {
-                                    AaaaRecord aaaaRecordInstance = new AaaaRecord();
-                                    propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
-                                    
-                                    JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
-                                    if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
-                                    {
-                                        string ipv6AddressInstance = ((string)ipv6AddressValue);
-                                        aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken mXRecordsArray2 = propertiesValue2["MXRecords"];
-                            if (mXRecordsArray2 != null && mXRecordsArray2.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.MxRecords = new List<MxRecord>();
-                                foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray2))
-                                {
-                                    MxRecord mxRecordInstance = new MxRecord();
-                                    propertiesInstance.MxRecords.Add(mxRecordInstance);
-                                    
-                                    JToken preferenceValue = mXRecordsValue["preference"];
-                                    if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
-                                    {
-                                        ushort preferenceInstance = ((ushort)preferenceValue);
-                                        mxRecordInstance.Preference = preferenceInstance;
-                                    }
-                                    
-                                    JToken exchangeValue = mXRecordsValue["exchange"];
-                                    if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
-                                    {
-                                        string exchangeInstance = ((string)exchangeValue);
-                                        mxRecordInstance.Exchange = exchangeInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken nSRecordsArray2 = propertiesValue2["NSRecords"];
-                            if (nSRecordsArray2 != null && nSRecordsArray2.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.NsRecords = new List<NsRecord>();
-                                foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray2))
-                                {
-                                    NsRecord nsRecordInstance = new NsRecord();
-                                    propertiesInstance.NsRecords.Add(nsRecordInstance);
-                                    
-                                    JToken nsdnameValue = nSRecordsValue["nsdname"];
-                                    if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
-                                    {
-                                        string nsdnameInstance = ((string)nsdnameValue);
-                                        nsRecordInstance.Nsdname = nsdnameInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken pTRRecordsArray2 = propertiesValue2["PTRRecords"];
-                            if (pTRRecordsArray2 != null && pTRRecordsArray2.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.PtrRecords = new List<PtrRecord>();
-                                foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray2))
-                                {
-                                    PtrRecord ptrRecordInstance = new PtrRecord();
-                                    propertiesInstance.PtrRecords.Add(ptrRecordInstance);
-                                    
-                                    JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
-                                    if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
-                                    {
-                                        string ptrdnameInstance = ((string)ptrdnameValue);
-                                        ptrRecordInstance.Ptrdname = ptrdnameInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken sRVRecordsArray2 = propertiesValue2["SRVRecords"];
-                            if (sRVRecordsArray2 != null && sRVRecordsArray2.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.SrvRecords = new List<SrvRecord>();
-                                foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray2))
-                                {
-                                    SrvRecord srvRecordInstance = new SrvRecord();
-                                    propertiesInstance.SrvRecords.Add(srvRecordInstance);
-                                    
-                                    JToken priorityValue = sRVRecordsValue["priority"];
-                                    if (priorityValue != null && priorityValue.Type != JTokenType.Null)
-                                    {
-                                        ushort priorityInstance = ((ushort)priorityValue);
-                                        srvRecordInstance.Priority = priorityInstance;
-                                    }
-                                    
-                                    JToken weightValue = sRVRecordsValue["weight"];
-                                    if (weightValue != null && weightValue.Type != JTokenType.Null)
-                                    {
-                                        ushort weightInstance = ((ushort)weightValue);
-                                        srvRecordInstance.Weight = weightInstance;
-                                    }
-                                    
-                                    JToken portValue = sRVRecordsValue["port"];
-                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                    {
-                                        ushort portInstance = ((ushort)portValue);
-                                        srvRecordInstance.Port = portInstance;
-                                    }
-                                    
-                                    JToken targetValue = sRVRecordsValue["target"];
-                                    if (targetValue != null && targetValue.Type != JTokenType.Null)
-                                    {
-                                        string targetInstance = ((string)targetValue);
-                                        srvRecordInstance.Target = targetInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken tXTRecordsArray2 = propertiesValue2["TXTRecords"];
-                            if (tXTRecordsArray2 != null && tXTRecordsArray2.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.TxtRecords = new List<TxtRecord>();
-                                foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray2))
-                                {
-                                    TxtRecord txtRecordInstance = new TxtRecord();
-                                    propertiesInstance.TxtRecords.Add(txtRecordInstance);
-                                    
-                                    JToken valueValue = tXTRecordsValue["value"];
-                                    if (valueValue != null && valueValue.Type != JTokenType.Null)
-                                    {
-                                        string valueInstance = ((string)valueValue);
-                                        txtRecordInstance.Value = valueInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken cNAMERecordValue2 = propertiesValue2["CNAMERecord"];
-                            if (cNAMERecordValue2 != null && cNAMERecordValue2.Type != JTokenType.Null)
-                            {
-                                CnameRecord cNAMERecordInstance = new CnameRecord();
-                                propertiesInstance.CnameRecord = cNAMERecordInstance;
-                                
-                                JToken cnameValue = cNAMERecordValue2["cname"];
-                                if (cnameValue != null && cnameValue.Type != JTokenType.Null)
-                                {
-                                    string cnameInstance = ((string)cnameValue);
-                                    cNAMERecordInstance.Cname = cnameInstance;
-                                }
-                            }
-                            
-                            JToken sOARecordValue2 = propertiesValue2["SOARecord"];
-                            if (sOARecordValue2 != null && sOARecordValue2.Type != JTokenType.Null)
-                            {
-                                SoaRecord sOARecordInstance = new SoaRecord();
-                                propertiesInstance.SoaRecord = sOARecordInstance;
-                                
-                                JToken hostValue = sOARecordValue2["host"];
-                                if (hostValue != null && hostValue.Type != JTokenType.Null)
-                                {
-                                    string hostInstance = ((string)hostValue);
-                                    sOARecordInstance.Host = hostInstance;
-                                }
-                                
-                                JToken emailValue = sOARecordValue2["email"];
-                                if (emailValue != null && emailValue.Type != JTokenType.Null)
-                                {
-                                    string emailInstance = ((string)emailValue);
-                                    sOARecordInstance.Email = emailInstance;
-                                }
-                                
-                                JToken serialNumberValue = sOARecordValue2["serialNumber"];
-                                if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
-                                {
-                                    uint serialNumberInstance = ((uint)serialNumberValue);
-                                    sOARecordInstance.SerialNumber = serialNumberInstance;
-                                }
-                                
-                                JToken refreshTimeValue = sOARecordValue2["refreshTime"];
-                                if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
-                                {
-                                    uint refreshTimeInstance = ((uint)refreshTimeValue);
-                                    sOARecordInstance.RefreshTime = refreshTimeInstance;
-                                }
-                                
-                                JToken retryTimeValue = sOARecordValue2["retryTime"];
-                                if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
-                                {
-                                    uint retryTimeInstance = ((uint)retryTimeValue);
-                                    sOARecordInstance.RetryTime = retryTimeInstance;
-                                }
-                                
-                                JToken expireTimeValue = sOARecordValue2["expireTime"];
-                                if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
-                                {
-                                    uint expireTimeInstance = ((uint)expireTimeValue);
-                                    sOARecordInstance.ExpireTime = expireTimeInstance;
-                                }
-                                
-                                JToken minimumTTLValue = sOARecordValue2["minimumTTL"];
-                                if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
-                                {
-                                    uint minimumTTLInstance = ((uint)minimumTTLValue);
-                                    sOARecordInstance.MinimumTtl = minimumTTLInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            recordSetInstance.Id = idInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            recordSetInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            recordSetInstance.Type = typeInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            recordSetInstance.Location = locationInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey2 = ((string)property.Name);
-                                string tagsValue2 = ((string)property.Value);
-                                recordSetInstance.Tags.Add(tagsKey2, tagsValue2);
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -827,8 +853,15 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='recordType'>
         /// Required. The type of DNS record.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to delete a record set.
+        /// <param name='ifMatch'>
+        /// Optional. Defines the If-Match condition. The delete operation will
+        /// be performed only if the ETag of the zone on the server matches
+        /// this value.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. The delete operation
+        /// will be performed only if the ETag of the zone on the server does
+        /// not match this value.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -837,7 +870,7 @@ namespace Microsoft.Azure.Management.Dns
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetDeleteParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -852,10 +885,6 @@ namespace Microsoft.Azure.Management.Dns
             {
                 throw new ArgumentNullException("relativeRecordSetName");
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -868,7 +897,8 @@ namespace Microsoft.Azure.Management.Dns
                 tracingParameters.Add("zoneName", zoneName);
                 tracingParameters.Add("relativeRecordSetName", relativeRecordSetName);
                 tracingParameters.Add("recordType", recordType);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("ifNoneMatch", ifNoneMatch);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
@@ -890,7 +920,7 @@ namespace Microsoft.Azure.Management.Dns
             url = url + "/";
             url = url + relativeRecordSetName;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-04-preview");
+            queryParameters.Add("api-version=2016-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -917,7 +947,8 @@ namespace Microsoft.Azure.Management.Dns
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.TryAddWithoutValidation("If-Match", parameters.IfMatch);
+                httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+                httpRequest.Headers.Add("If-None-Match", ifNoneMatch);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -938,7 +969,7 @@ namespace Microsoft.Azure.Management.Dns
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1052,7 +1083,7 @@ namespace Microsoft.Azure.Management.Dns
             url = url + "/";
             url = url + relativeRecordSetName;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-04-preview");
+            queryParameters.Add("api-version=2016-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1099,7 +1130,7 @@ namespace Microsoft.Azure.Management.Dns
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1113,305 +1144,311 @@ namespace Microsoft.Azure.Management.Dns
                     // Create Result
                     RecordSetGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RecordSetGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RecordSetGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            RecordSet recordSetInstance = new RecordSet();
+                            result.RecordSet = recordSetInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                recordSetInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                recordSetInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                recordSetInstance.Type = typeInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                recordSetInstance.ETag = etagInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                recordSetInstance.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                RecordSetProperties propertiesInstance = new RecordSetProperties();
+                                recordSetInstance.Properties = propertiesInstance;
+                                
+                                JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                                if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in metadataSequenceElement)
+                                    {
+                                        string metadataKey = ((string)property.Name);
+                                        string metadataValue = ((string)property.Value);
+                                        propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                    }
+                                }
+                                
+                                JToken tTLValue = propertiesValue["TTL"];
+                                if (tTLValue != null && tTLValue.Type != JTokenType.Null)
+                                {
+                                    uint tTLInstance = ((uint)tTLValue);
+                                    propertiesInstance.Ttl = tTLInstance;
+                                }
+                                
+                                JToken aRecordsArray = propertiesValue["ARecords"];
+                                if (aRecordsArray != null && aRecordsArray.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.ARecords = new List<ARecord>();
+                                    foreach (JToken aRecordsValue in ((JArray)aRecordsArray))
+                                    {
+                                        ARecord aRecordInstance = new ARecord();
+                                        propertiesInstance.ARecords.Add(aRecordInstance);
+                                        
+                                        JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
+                                        if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
+                                        {
+                                            string ipv4AddressInstance = ((string)ipv4AddressValue);
+                                            aRecordInstance.Ipv4Address = ipv4AddressInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken aAAARecordsArray = propertiesValue["AAAARecords"];
+                                if (aAAARecordsArray != null && aAAARecordsArray.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.AaaaRecords = new List<AaaaRecord>();
+                                    foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray))
+                                    {
+                                        AaaaRecord aaaaRecordInstance = new AaaaRecord();
+                                        propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
+                                        
+                                        JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
+                                        if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
+                                        {
+                                            string ipv6AddressInstance = ((string)ipv6AddressValue);
+                                            aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken mXRecordsArray = propertiesValue["MXRecords"];
+                                if (mXRecordsArray != null && mXRecordsArray.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.MxRecords = new List<MxRecord>();
+                                    foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray))
+                                    {
+                                        MxRecord mxRecordInstance = new MxRecord();
+                                        propertiesInstance.MxRecords.Add(mxRecordInstance);
+                                        
+                                        JToken preferenceValue = mXRecordsValue["preference"];
+                                        if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
+                                        {
+                                            int preferenceInstance = ((int)preferenceValue);
+                                            mxRecordInstance.Preference = preferenceInstance;
+                                        }
+                                        
+                                        JToken exchangeValue = mXRecordsValue["exchange"];
+                                        if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
+                                        {
+                                            string exchangeInstance = ((string)exchangeValue);
+                                            mxRecordInstance.Exchange = exchangeInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken nSRecordsArray = propertiesValue["NSRecords"];
+                                if (nSRecordsArray != null && nSRecordsArray.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.NsRecords = new List<NsRecord>();
+                                    foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray))
+                                    {
+                                        NsRecord nsRecordInstance = new NsRecord();
+                                        propertiesInstance.NsRecords.Add(nsRecordInstance);
+                                        
+                                        JToken nsdnameValue = nSRecordsValue["nsdname"];
+                                        if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
+                                        {
+                                            string nsdnameInstance = ((string)nsdnameValue);
+                                            nsRecordInstance.Nsdname = nsdnameInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken pTRRecordsArray = propertiesValue["PTRRecords"];
+                                if (pTRRecordsArray != null && pTRRecordsArray.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.PtrRecords = new List<PtrRecord>();
+                                    foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray))
+                                    {
+                                        PtrRecord ptrRecordInstance = new PtrRecord();
+                                        propertiesInstance.PtrRecords.Add(ptrRecordInstance);
+                                        
+                                        JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
+                                        if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
+                                        {
+                                            string ptrdnameInstance = ((string)ptrdnameValue);
+                                            ptrRecordInstance.Ptrdname = ptrdnameInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken sRVRecordsArray = propertiesValue["SRVRecords"];
+                                if (sRVRecordsArray != null && sRVRecordsArray.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.SrvRecords = new List<SrvRecord>();
+                                    foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray))
+                                    {
+                                        SrvRecord srvRecordInstance = new SrvRecord();
+                                        propertiesInstance.SrvRecords.Add(srvRecordInstance);
+                                        
+                                        JToken priorityValue = sRVRecordsValue["priority"];
+                                        if (priorityValue != null && priorityValue.Type != JTokenType.Null)
+                                        {
+                                            int priorityInstance = ((int)priorityValue);
+                                            srvRecordInstance.Priority = priorityInstance;
+                                        }
+                                        
+                                        JToken weightValue = sRVRecordsValue["weight"];
+                                        if (weightValue != null && weightValue.Type != JTokenType.Null)
+                                        {
+                                            int weightInstance = ((int)weightValue);
+                                            srvRecordInstance.Weight = weightInstance;
+                                        }
+                                        
+                                        JToken portValue = sRVRecordsValue["port"];
+                                        if (portValue != null && portValue.Type != JTokenType.Null)
+                                        {
+                                            int portInstance = ((int)portValue);
+                                            srvRecordInstance.Port = portInstance;
+                                        }
+                                        
+                                        JToken targetValue = sRVRecordsValue["target"];
+                                        if (targetValue != null && targetValue.Type != JTokenType.Null)
+                                        {
+                                            string targetInstance = ((string)targetValue);
+                                            srvRecordInstance.Target = targetInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken tXTRecordsArray = propertiesValue["TXTRecords"];
+                                if (tXTRecordsArray != null && tXTRecordsArray.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.TxtRecords = new List<TxtRecord>();
+                                    foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray))
+                                    {
+                                        TxtRecord txtRecordInstance = new TxtRecord();
+                                        propertiesInstance.TxtRecords.Add(txtRecordInstance);
+                                        
+                                        JToken valueArray = tXTRecordsValue["value"];
+                                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                                        {
+                                            txtRecordInstance.Value = new List<string>();
+                                            foreach (JToken valueValue in ((JArray)valueArray))
+                                            {
+                                                txtRecordInstance.Value.Add(((string)valueValue));
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken cNAMERecordValue = propertiesValue["CNAMERecord"];
+                                if (cNAMERecordValue != null && cNAMERecordValue.Type != JTokenType.Null)
+                                {
+                                    CnameRecord cNAMERecordInstance = new CnameRecord();
+                                    propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                    
+                                    JToken cnameValue = cNAMERecordValue["cname"];
+                                    if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                    {
+                                        string cnameInstance = ((string)cnameValue);
+                                        cNAMERecordInstance.Cname = cnameInstance;
+                                    }
+                                }
+                                
+                                JToken sOARecordValue = propertiesValue["SOARecord"];
+                                if (sOARecordValue != null && sOARecordValue.Type != JTokenType.Null)
+                                {
+                                    SoaRecord sOARecordInstance = new SoaRecord();
+                                    propertiesInstance.SoaRecord = sOARecordInstance;
+                                    
+                                    JToken hostValue = sOARecordValue["host"];
+                                    if (hostValue != null && hostValue.Type != JTokenType.Null)
+                                    {
+                                        string hostInstance = ((string)hostValue);
+                                        sOARecordInstance.Host = hostInstance;
+                                    }
+                                    
+                                    JToken emailValue = sOARecordValue["email"];
+                                    if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                    {
+                                        string emailInstance = ((string)emailValue);
+                                        sOARecordInstance.Email = emailInstance;
+                                    }
+                                    
+                                    JToken serialNumberValue = sOARecordValue["serialNumber"];
+                                    if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
+                                    {
+                                        uint serialNumberInstance = ((uint)serialNumberValue);
+                                        sOARecordInstance.SerialNumber = serialNumberInstance;
+                                    }
+                                    
+                                    JToken refreshTimeValue = sOARecordValue["refreshTime"];
+                                    if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint refreshTimeInstance = ((uint)refreshTimeValue);
+                                        sOARecordInstance.RefreshTime = refreshTimeInstance;
+                                    }
+                                    
+                                    JToken retryTimeValue = sOARecordValue["retryTime"];
+                                    if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint retryTimeInstance = ((uint)retryTimeValue);
+                                        sOARecordInstance.RetryTime = retryTimeInstance;
+                                    }
+                                    
+                                    JToken expireTimeValue = sOARecordValue["expireTime"];
+                                    if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint expireTimeInstance = ((uint)expireTimeValue);
+                                        sOARecordInstance.ExpireTime = expireTimeInstance;
+                                    }
+                                    
+                                    JToken minimumTTLValue = sOARecordValue["minimumTTL"];
+                                    if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
+                                    {
+                                        uint minimumTTLInstance = ((uint)minimumTTLValue);
+                                        sOARecordInstance.MinimumTtl = minimumTTLInstance;
+                                    }
+                                }
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        RecordSet recordSetInstance = new RecordSet();
-                        result.RecordSet = recordSetInstance;
-                        
-                        JToken etagValue = responseDoc["etag"];
-                        if (etagValue != null && etagValue.Type != JTokenType.Null)
-                        {
-                            string etagInstance = ((string)etagValue);
-                            recordSetInstance.ETag = etagInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            RecordSetProperties propertiesInstance = new RecordSetProperties();
-                            recordSetInstance.Properties = propertiesInstance;
-                            
-                            JToken tTLValue = propertiesValue["TTL"];
-                            if (tTLValue != null && tTLValue.Type != JTokenType.Null)
-                            {
-                                uint tTLInstance = ((uint)tTLValue);
-                                propertiesInstance.Ttl = tTLInstance;
-                            }
-                            
-                            JToken aRecordsArray = propertiesValue["ARecords"];
-                            if (aRecordsArray != null && aRecordsArray.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.ARecords = new List<ARecord>();
-                                foreach (JToken aRecordsValue in ((JArray)aRecordsArray))
-                                {
-                                    ARecord aRecordInstance = new ARecord();
-                                    propertiesInstance.ARecords.Add(aRecordInstance);
-                                    
-                                    JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
-                                    if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
-                                    {
-                                        string ipv4AddressInstance = ((string)ipv4AddressValue);
-                                        aRecordInstance.Ipv4Address = ipv4AddressInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken aAAARecordsArray = propertiesValue["AAAARecords"];
-                            if (aAAARecordsArray != null && aAAARecordsArray.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.AaaaRecords = new List<AaaaRecord>();
-                                foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray))
-                                {
-                                    AaaaRecord aaaaRecordInstance = new AaaaRecord();
-                                    propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
-                                    
-                                    JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
-                                    if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
-                                    {
-                                        string ipv6AddressInstance = ((string)ipv6AddressValue);
-                                        aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken mXRecordsArray = propertiesValue["MXRecords"];
-                            if (mXRecordsArray != null && mXRecordsArray.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.MxRecords = new List<MxRecord>();
-                                foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray))
-                                {
-                                    MxRecord mxRecordInstance = new MxRecord();
-                                    propertiesInstance.MxRecords.Add(mxRecordInstance);
-                                    
-                                    JToken preferenceValue = mXRecordsValue["preference"];
-                                    if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
-                                    {
-                                        ushort preferenceInstance = ((ushort)preferenceValue);
-                                        mxRecordInstance.Preference = preferenceInstance;
-                                    }
-                                    
-                                    JToken exchangeValue = mXRecordsValue["exchange"];
-                                    if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
-                                    {
-                                        string exchangeInstance = ((string)exchangeValue);
-                                        mxRecordInstance.Exchange = exchangeInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken nSRecordsArray = propertiesValue["NSRecords"];
-                            if (nSRecordsArray != null && nSRecordsArray.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.NsRecords = new List<NsRecord>();
-                                foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray))
-                                {
-                                    NsRecord nsRecordInstance = new NsRecord();
-                                    propertiesInstance.NsRecords.Add(nsRecordInstance);
-                                    
-                                    JToken nsdnameValue = nSRecordsValue["nsdname"];
-                                    if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
-                                    {
-                                        string nsdnameInstance = ((string)nsdnameValue);
-                                        nsRecordInstance.Nsdname = nsdnameInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken pTRRecordsArray = propertiesValue["PTRRecords"];
-                            if (pTRRecordsArray != null && pTRRecordsArray.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.PtrRecords = new List<PtrRecord>();
-                                foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray))
-                                {
-                                    PtrRecord ptrRecordInstance = new PtrRecord();
-                                    propertiesInstance.PtrRecords.Add(ptrRecordInstance);
-                                    
-                                    JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
-                                    if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
-                                    {
-                                        string ptrdnameInstance = ((string)ptrdnameValue);
-                                        ptrRecordInstance.Ptrdname = ptrdnameInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken sRVRecordsArray = propertiesValue["SRVRecords"];
-                            if (sRVRecordsArray != null && sRVRecordsArray.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.SrvRecords = new List<SrvRecord>();
-                                foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray))
-                                {
-                                    SrvRecord srvRecordInstance = new SrvRecord();
-                                    propertiesInstance.SrvRecords.Add(srvRecordInstance);
-                                    
-                                    JToken priorityValue = sRVRecordsValue["priority"];
-                                    if (priorityValue != null && priorityValue.Type != JTokenType.Null)
-                                    {
-                                        ushort priorityInstance = ((ushort)priorityValue);
-                                        srvRecordInstance.Priority = priorityInstance;
-                                    }
-                                    
-                                    JToken weightValue = sRVRecordsValue["weight"];
-                                    if (weightValue != null && weightValue.Type != JTokenType.Null)
-                                    {
-                                        ushort weightInstance = ((ushort)weightValue);
-                                        srvRecordInstance.Weight = weightInstance;
-                                    }
-                                    
-                                    JToken portValue = sRVRecordsValue["port"];
-                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                    {
-                                        ushort portInstance = ((ushort)portValue);
-                                        srvRecordInstance.Port = portInstance;
-                                    }
-                                    
-                                    JToken targetValue = sRVRecordsValue["target"];
-                                    if (targetValue != null && targetValue.Type != JTokenType.Null)
-                                    {
-                                        string targetInstance = ((string)targetValue);
-                                        srvRecordInstance.Target = targetInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken tXTRecordsArray = propertiesValue["TXTRecords"];
-                            if (tXTRecordsArray != null && tXTRecordsArray.Type != JTokenType.Null)
-                            {
-                                propertiesInstance.TxtRecords = new List<TxtRecord>();
-                                foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray))
-                                {
-                                    TxtRecord txtRecordInstance = new TxtRecord();
-                                    propertiesInstance.TxtRecords.Add(txtRecordInstance);
-                                    
-                                    JToken valueValue = tXTRecordsValue["value"];
-                                    if (valueValue != null && valueValue.Type != JTokenType.Null)
-                                    {
-                                        string valueInstance = ((string)valueValue);
-                                        txtRecordInstance.Value = valueInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken cNAMERecordValue = propertiesValue["CNAMERecord"];
-                            if (cNAMERecordValue != null && cNAMERecordValue.Type != JTokenType.Null)
-                            {
-                                CnameRecord cNAMERecordInstance = new CnameRecord();
-                                propertiesInstance.CnameRecord = cNAMERecordInstance;
-                                
-                                JToken cnameValue = cNAMERecordValue["cname"];
-                                if (cnameValue != null && cnameValue.Type != JTokenType.Null)
-                                {
-                                    string cnameInstance = ((string)cnameValue);
-                                    cNAMERecordInstance.Cname = cnameInstance;
-                                }
-                            }
-                            
-                            JToken sOARecordValue = propertiesValue["SOARecord"];
-                            if (sOARecordValue != null && sOARecordValue.Type != JTokenType.Null)
-                            {
-                                SoaRecord sOARecordInstance = new SoaRecord();
-                                propertiesInstance.SoaRecord = sOARecordInstance;
-                                
-                                JToken hostValue = sOARecordValue["host"];
-                                if (hostValue != null && hostValue.Type != JTokenType.Null)
-                                {
-                                    string hostInstance = ((string)hostValue);
-                                    sOARecordInstance.Host = hostInstance;
-                                }
-                                
-                                JToken emailValue = sOARecordValue["email"];
-                                if (emailValue != null && emailValue.Type != JTokenType.Null)
-                                {
-                                    string emailInstance = ((string)emailValue);
-                                    sOARecordInstance.Email = emailInstance;
-                                }
-                                
-                                JToken serialNumberValue = sOARecordValue["serialNumber"];
-                                if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
-                                {
-                                    uint serialNumberInstance = ((uint)serialNumberValue);
-                                    sOARecordInstance.SerialNumber = serialNumberInstance;
-                                }
-                                
-                                JToken refreshTimeValue = sOARecordValue["refreshTime"];
-                                if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
-                                {
-                                    uint refreshTimeInstance = ((uint)refreshTimeValue);
-                                    sOARecordInstance.RefreshTime = refreshTimeInstance;
-                                }
-                                
-                                JToken retryTimeValue = sOARecordValue["retryTime"];
-                                if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
-                                {
-                                    uint retryTimeInstance = ((uint)retryTimeValue);
-                                    sOARecordInstance.RetryTime = retryTimeInstance;
-                                }
-                                
-                                JToken expireTimeValue = sOARecordValue["expireTime"];
-                                if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
-                                {
-                                    uint expireTimeInstance = ((uint)expireTimeValue);
-                                    sOARecordInstance.ExpireTime = expireTimeInstance;
-                                }
-                                
-                                JToken minimumTTLValue = sOARecordValue["minimumTTL"];
-                                if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
-                                {
-                                    uint minimumTTLInstance = ((uint)minimumTTLValue);
-                                    sOARecordInstance.MinimumTtl = minimumTTLInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            recordSetInstance.Id = idInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            recordSetInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            recordSetInstance.Type = typeInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            recordSetInstance.Location = locationInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                recordSetInstance.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1518,7 +1555,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
-            queryParameters.Add("api-version=2015-05-04-preview");
+            queryParameters.Add("api-version=2016-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1565,7 +1602,7 @@ namespace Microsoft.Azure.Management.Dns
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1579,319 +1616,325 @@ namespace Microsoft.Azure.Management.Dns
                     // Create Result
                     RecordSetListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RecordSetListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RecordSetListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                RecordSet recordSetInstance = new RecordSet();
-                                result.RecordSets.Add(recordSetInstance);
-                                
-                                JToken etagValue = valueValue["etag"];
-                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string etagInstance = ((string)etagValue);
-                                    recordSetInstance.ETag = etagInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    RecordSetProperties propertiesInstance = new RecordSetProperties();
-                                    recordSetInstance.Properties = propertiesInstance;
+                                    RecordSet recordSetInstance = new RecordSet();
+                                    result.RecordSets.Add(recordSetInstance);
                                     
-                                    JToken tTLValue = propertiesValue["TTL"];
-                                    if (tTLValue != null && tTLValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        uint tTLInstance = ((uint)tTLValue);
-                                        propertiesInstance.Ttl = tTLInstance;
+                                        string idInstance = ((string)idValue);
+                                        recordSetInstance.Id = idInstance;
                                     }
                                     
-                                    JToken aRecordsArray = propertiesValue["ARecords"];
-                                    if (aRecordsArray != null && aRecordsArray.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.ARecords = new List<ARecord>();
-                                        foreach (JToken aRecordsValue in ((JArray)aRecordsArray))
-                                        {
-                                            ARecord aRecordInstance = new ARecord();
-                                            propertiesInstance.ARecords.Add(aRecordInstance);
-                                            
-                                            JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
-                                            if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
-                                            {
-                                                string ipv4AddressInstance = ((string)ipv4AddressValue);
-                                                aRecordInstance.Ipv4Address = ipv4AddressInstance;
-                                            }
-                                        }
+                                        string nameInstance = ((string)nameValue);
+                                        recordSetInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken aAAARecordsArray = propertiesValue["AAAARecords"];
-                                    if (aAAARecordsArray != null && aAAARecordsArray.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.AaaaRecords = new List<AaaaRecord>();
-                                        foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray))
-                                        {
-                                            AaaaRecord aaaaRecordInstance = new AaaaRecord();
-                                            propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
-                                            
-                                            JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
-                                            if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
-                                            {
-                                                string ipv6AddressInstance = ((string)ipv6AddressValue);
-                                                aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
-                                            }
-                                        }
+                                        string typeInstance = ((string)typeValue);
+                                        recordSetInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken mXRecordsArray = propertiesValue["MXRecords"];
-                                    if (mXRecordsArray != null && mXRecordsArray.Type != JTokenType.Null)
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.MxRecords = new List<MxRecord>();
-                                        foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray))
-                                        {
-                                            MxRecord mxRecordInstance = new MxRecord();
-                                            propertiesInstance.MxRecords.Add(mxRecordInstance);
-                                            
-                                            JToken preferenceValue = mXRecordsValue["preference"];
-                                            if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
-                                            {
-                                                ushort preferenceInstance = ((ushort)preferenceValue);
-                                                mxRecordInstance.Preference = preferenceInstance;
-                                            }
-                                            
-                                            JToken exchangeValue = mXRecordsValue["exchange"];
-                                            if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
-                                            {
-                                                string exchangeInstance = ((string)exchangeValue);
-                                                mxRecordInstance.Exchange = exchangeInstance;
-                                            }
-                                        }
+                                        string etagInstance = ((string)etagValue);
+                                        recordSetInstance.ETag = etagInstance;
                                     }
                                     
-                                    JToken nSRecordsArray = propertiesValue["NSRecords"];
-                                    if (nSRecordsArray != null && nSRecordsArray.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.NsRecords = new List<NsRecord>();
-                                        foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray))
-                                        {
-                                            NsRecord nsRecordInstance = new NsRecord();
-                                            propertiesInstance.NsRecords.Add(nsRecordInstance);
-                                            
-                                            JToken nsdnameValue = nSRecordsValue["nsdname"];
-                                            if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
-                                            {
-                                                string nsdnameInstance = ((string)nsdnameValue);
-                                                nsRecordInstance.Nsdname = nsdnameInstance;
-                                            }
-                                        }
+                                        string locationInstance = ((string)locationValue);
+                                        recordSetInstance.Location = locationInstance;
                                     }
                                     
-                                    JToken pTRRecordsArray = propertiesValue["PTRRecords"];
-                                    if (pTRRecordsArray != null && pTRRecordsArray.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.PtrRecords = new List<PtrRecord>();
-                                        foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray))
-                                        {
-                                            PtrRecord ptrRecordInstance = new PtrRecord();
-                                            propertiesInstance.PtrRecords.Add(ptrRecordInstance);
-                                            
-                                            JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
-                                            if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
-                                            {
-                                                string ptrdnameInstance = ((string)ptrdnameValue);
-                                                ptrRecordInstance.Ptrdname = ptrdnameInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken sRVRecordsArray = propertiesValue["SRVRecords"];
-                                    if (sRVRecordsArray != null && sRVRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.SrvRecords = new List<SrvRecord>();
-                                        foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray))
-                                        {
-                                            SrvRecord srvRecordInstance = new SrvRecord();
-                                            propertiesInstance.SrvRecords.Add(srvRecordInstance);
-                                            
-                                            JToken priorityValue = sRVRecordsValue["priority"];
-                                            if (priorityValue != null && priorityValue.Type != JTokenType.Null)
-                                            {
-                                                ushort priorityInstance = ((ushort)priorityValue);
-                                                srvRecordInstance.Priority = priorityInstance;
-                                            }
-                                            
-                                            JToken weightValue = sRVRecordsValue["weight"];
-                                            if (weightValue != null && weightValue.Type != JTokenType.Null)
-                                            {
-                                                ushort weightInstance = ((ushort)weightValue);
-                                                srvRecordInstance.Weight = weightInstance;
-                                            }
-                                            
-                                            JToken portValue = sRVRecordsValue["port"];
-                                            if (portValue != null && portValue.Type != JTokenType.Null)
-                                            {
-                                                ushort portInstance = ((ushort)portValue);
-                                                srvRecordInstance.Port = portInstance;
-                                            }
-                                            
-                                            JToken targetValue = sRVRecordsValue["target"];
-                                            if (targetValue != null && targetValue.Type != JTokenType.Null)
-                                            {
-                                                string targetInstance = ((string)targetValue);
-                                                srvRecordInstance.Target = targetInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken tXTRecordsArray = propertiesValue["TXTRecords"];
-                                    if (tXTRecordsArray != null && tXTRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.TxtRecords = new List<TxtRecord>();
-                                        foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray))
-                                        {
-                                            TxtRecord txtRecordInstance = new TxtRecord();
-                                            propertiesInstance.TxtRecords.Add(txtRecordInstance);
-                                            
-                                            JToken valueValue2 = tXTRecordsValue["value"];
-                                            if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                            {
-                                                string valueInstance = ((string)valueValue2);
-                                                txtRecordInstance.Value = valueInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken cNAMERecordValue = propertiesValue["CNAMERecord"];
-                                    if (cNAMERecordValue != null && cNAMERecordValue.Type != JTokenType.Null)
-                                    {
-                                        CnameRecord cNAMERecordInstance = new CnameRecord();
-                                        propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                        RecordSetProperties propertiesInstance = new RecordSetProperties();
+                                        recordSetInstance.Properties = propertiesInstance;
                                         
-                                        JToken cnameValue = cNAMERecordValue["cname"];
-                                        if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                        JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                                        if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
                                         {
-                                            string cnameInstance = ((string)cnameValue);
-                                            cNAMERecordInstance.Cname = cnameInstance;
-                                        }
-                                    }
-                                    
-                                    JToken sOARecordValue = propertiesValue["SOARecord"];
-                                    if (sOARecordValue != null && sOARecordValue.Type != JTokenType.Null)
-                                    {
-                                        SoaRecord sOARecordInstance = new SoaRecord();
-                                        propertiesInstance.SoaRecord = sOARecordInstance;
-                                        
-                                        JToken hostValue = sOARecordValue["host"];
-                                        if (hostValue != null && hostValue.Type != JTokenType.Null)
-                                        {
-                                            string hostInstance = ((string)hostValue);
-                                            sOARecordInstance.Host = hostInstance;
+                                            foreach (JProperty property in metadataSequenceElement)
+                                            {
+                                                string metadataKey = ((string)property.Name);
+                                                string metadataValue = ((string)property.Value);
+                                                propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                            }
                                         }
                                         
-                                        JToken emailValue = sOARecordValue["email"];
-                                        if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                        JToken tTLValue = propertiesValue["TTL"];
+                                        if (tTLValue != null && tTLValue.Type != JTokenType.Null)
                                         {
-                                            string emailInstance = ((string)emailValue);
-                                            sOARecordInstance.Email = emailInstance;
+                                            uint tTLInstance = ((uint)tTLValue);
+                                            propertiesInstance.Ttl = tTLInstance;
                                         }
                                         
-                                        JToken serialNumberValue = sOARecordValue["serialNumber"];
-                                        if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
+                                        JToken aRecordsArray = propertiesValue["ARecords"];
+                                        if (aRecordsArray != null && aRecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint serialNumberInstance = ((uint)serialNumberValue);
-                                            sOARecordInstance.SerialNumber = serialNumberInstance;
+                                            propertiesInstance.ARecords = new List<ARecord>();
+                                            foreach (JToken aRecordsValue in ((JArray)aRecordsArray))
+                                            {
+                                                ARecord aRecordInstance = new ARecord();
+                                                propertiesInstance.ARecords.Add(aRecordInstance);
+                                                
+                                                JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
+                                                if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
+                                                {
+                                                    string ipv4AddressInstance = ((string)ipv4AddressValue);
+                                                    aRecordInstance.Ipv4Address = ipv4AddressInstance;
+                                                }
+                                            }
                                         }
                                         
-                                        JToken refreshTimeValue = sOARecordValue["refreshTime"];
-                                        if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
+                                        JToken aAAARecordsArray = propertiesValue["AAAARecords"];
+                                        if (aAAARecordsArray != null && aAAARecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint refreshTimeInstance = ((uint)refreshTimeValue);
-                                            sOARecordInstance.RefreshTime = refreshTimeInstance;
+                                            propertiesInstance.AaaaRecords = new List<AaaaRecord>();
+                                            foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray))
+                                            {
+                                                AaaaRecord aaaaRecordInstance = new AaaaRecord();
+                                                propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
+                                                
+                                                JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
+                                                if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
+                                                {
+                                                    string ipv6AddressInstance = ((string)ipv6AddressValue);
+                                                    aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
+                                                }
+                                            }
                                         }
                                         
-                                        JToken retryTimeValue = sOARecordValue["retryTime"];
-                                        if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
+                                        JToken mXRecordsArray = propertiesValue["MXRecords"];
+                                        if (mXRecordsArray != null && mXRecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint retryTimeInstance = ((uint)retryTimeValue);
-                                            sOARecordInstance.RetryTime = retryTimeInstance;
+                                            propertiesInstance.MxRecords = new List<MxRecord>();
+                                            foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray))
+                                            {
+                                                MxRecord mxRecordInstance = new MxRecord();
+                                                propertiesInstance.MxRecords.Add(mxRecordInstance);
+                                                
+                                                JToken preferenceValue = mXRecordsValue["preference"];
+                                                if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
+                                                {
+                                                    int preferenceInstance = ((int)preferenceValue);
+                                                    mxRecordInstance.Preference = preferenceInstance;
+                                                }
+                                                
+                                                JToken exchangeValue = mXRecordsValue["exchange"];
+                                                if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
+                                                {
+                                                    string exchangeInstance = ((string)exchangeValue);
+                                                    mxRecordInstance.Exchange = exchangeInstance;
+                                                }
+                                            }
                                         }
                                         
-                                        JToken expireTimeValue = sOARecordValue["expireTime"];
-                                        if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
+                                        JToken nSRecordsArray = propertiesValue["NSRecords"];
+                                        if (nSRecordsArray != null && nSRecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint expireTimeInstance = ((uint)expireTimeValue);
-                                            sOARecordInstance.ExpireTime = expireTimeInstance;
+                                            propertiesInstance.NsRecords = new List<NsRecord>();
+                                            foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray))
+                                            {
+                                                NsRecord nsRecordInstance = new NsRecord();
+                                                propertiesInstance.NsRecords.Add(nsRecordInstance);
+                                                
+                                                JToken nsdnameValue = nSRecordsValue["nsdname"];
+                                                if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
+                                                {
+                                                    string nsdnameInstance = ((string)nsdnameValue);
+                                                    nsRecordInstance.Nsdname = nsdnameInstance;
+                                                }
+                                            }
                                         }
                                         
-                                        JToken minimumTTLValue = sOARecordValue["minimumTTL"];
-                                        if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
+                                        JToken pTRRecordsArray = propertiesValue["PTRRecords"];
+                                        if (pTRRecordsArray != null && pTRRecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint minimumTTLInstance = ((uint)minimumTTLValue);
-                                            sOARecordInstance.MinimumTtl = minimumTTLInstance;
+                                            propertiesInstance.PtrRecords = new List<PtrRecord>();
+                                            foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray))
+                                            {
+                                                PtrRecord ptrRecordInstance = new PtrRecord();
+                                                propertiesInstance.PtrRecords.Add(ptrRecordInstance);
+                                                
+                                                JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
+                                                if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
+                                                {
+                                                    string ptrdnameInstance = ((string)ptrdnameValue);
+                                                    ptrRecordInstance.Ptrdname = ptrdnameInstance;
+                                                }
+                                            }
                                         }
-                                    }
-                                }
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    recordSetInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    recordSetInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    recordSetInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    recordSetInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        recordSetInstance.Tags.Add(tagsKey, tagsValue);
+                                        
+                                        JToken sRVRecordsArray = propertiesValue["SRVRecords"];
+                                        if (sRVRecordsArray != null && sRVRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.SrvRecords = new List<SrvRecord>();
+                                            foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray))
+                                            {
+                                                SrvRecord srvRecordInstance = new SrvRecord();
+                                                propertiesInstance.SrvRecords.Add(srvRecordInstance);
+                                                
+                                                JToken priorityValue = sRVRecordsValue["priority"];
+                                                if (priorityValue != null && priorityValue.Type != JTokenType.Null)
+                                                {
+                                                    int priorityInstance = ((int)priorityValue);
+                                                    srvRecordInstance.Priority = priorityInstance;
+                                                }
+                                                
+                                                JToken weightValue = sRVRecordsValue["weight"];
+                                                if (weightValue != null && weightValue.Type != JTokenType.Null)
+                                                {
+                                                    int weightInstance = ((int)weightValue);
+                                                    srvRecordInstance.Weight = weightInstance;
+                                                }
+                                                
+                                                JToken portValue = sRVRecordsValue["port"];
+                                                if (portValue != null && portValue.Type != JTokenType.Null)
+                                                {
+                                                    int portInstance = ((int)portValue);
+                                                    srvRecordInstance.Port = portInstance;
+                                                }
+                                                
+                                                JToken targetValue = sRVRecordsValue["target"];
+                                                if (targetValue != null && targetValue.Type != JTokenType.Null)
+                                                {
+                                                    string targetInstance = ((string)targetValue);
+                                                    srvRecordInstance.Target = targetInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken tXTRecordsArray = propertiesValue["TXTRecords"];
+                                        if (tXTRecordsArray != null && tXTRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.TxtRecords = new List<TxtRecord>();
+                                            foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray))
+                                            {
+                                                TxtRecord txtRecordInstance = new TxtRecord();
+                                                propertiesInstance.TxtRecords.Add(txtRecordInstance);
+                                                
+                                                JToken valueArray2 = tXTRecordsValue["value"];
+                                                if (valueArray2 != null && valueArray2.Type != JTokenType.Null)
+                                                {
+                                                    txtRecordInstance.Value = new List<string>();
+                                                    foreach (JToken valueValue2 in ((JArray)valueArray2))
+                                                    {
+                                                        txtRecordInstance.Value.Add(((string)valueValue2));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken cNAMERecordValue = propertiesValue["CNAMERecord"];
+                                        if (cNAMERecordValue != null && cNAMERecordValue.Type != JTokenType.Null)
+                                        {
+                                            CnameRecord cNAMERecordInstance = new CnameRecord();
+                                            propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                            
+                                            JToken cnameValue = cNAMERecordValue["cname"];
+                                            if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                            {
+                                                string cnameInstance = ((string)cnameValue);
+                                                cNAMERecordInstance.Cname = cnameInstance;
+                                            }
+                                        }
+                                        
+                                        JToken sOARecordValue = propertiesValue["SOARecord"];
+                                        if (sOARecordValue != null && sOARecordValue.Type != JTokenType.Null)
+                                        {
+                                            SoaRecord sOARecordInstance = new SoaRecord();
+                                            propertiesInstance.SoaRecord = sOARecordInstance;
+                                            
+                                            JToken hostValue = sOARecordValue["host"];
+                                            if (hostValue != null && hostValue.Type != JTokenType.Null)
+                                            {
+                                                string hostInstance = ((string)hostValue);
+                                                sOARecordInstance.Host = hostInstance;
+                                            }
+                                            
+                                            JToken emailValue = sOARecordValue["email"];
+                                            if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                            {
+                                                string emailInstance = ((string)emailValue);
+                                                sOARecordInstance.Email = emailInstance;
+                                            }
+                                            
+                                            JToken serialNumberValue = sOARecordValue["serialNumber"];
+                                            if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
+                                            {
+                                                uint serialNumberInstance = ((uint)serialNumberValue);
+                                                sOARecordInstance.SerialNumber = serialNumberInstance;
+                                            }
+                                            
+                                            JToken refreshTimeValue = sOARecordValue["refreshTime"];
+                                            if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint refreshTimeInstance = ((uint)refreshTimeValue);
+                                                sOARecordInstance.RefreshTime = refreshTimeInstance;
+                                            }
+                                            
+                                            JToken retryTimeValue = sOARecordValue["retryTime"];
+                                            if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint retryTimeInstance = ((uint)retryTimeValue);
+                                                sOARecordInstance.RetryTime = retryTimeInstance;
+                                            }
+                                            
+                                            JToken expireTimeValue = sOARecordValue["expireTime"];
+                                            if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint expireTimeInstance = ((uint)expireTimeValue);
+                                                sOARecordInstance.ExpireTime = expireTimeInstance;
+                                            }
+                                            
+                                            JToken minimumTTLValue = sOARecordValue["minimumTTL"];
+                                            if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
+                                            {
+                                                uint minimumTTLInstance = ((uint)minimumTTLValue);
+                                                sOARecordInstance.MinimumTtl = minimumTTLInstance;
+                                            }
+                                        }
                                     }
                                 }
                             }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
                         }
                         
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                        {
-                            string nextLinkInstance = ((string)nextLinkValue);
-                            result.NextLink = nextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1993,7 +2036,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
-            queryParameters.Add("api-version=2015-05-04-preview");
+            queryParameters.Add("api-version=2016-04-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2040,7 +2083,7 @@ namespace Microsoft.Azure.Management.Dns
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -2054,319 +2097,325 @@ namespace Microsoft.Azure.Management.Dns
                     // Create Result
                     RecordSetListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RecordSetListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RecordSetListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                RecordSet recordSetInstance = new RecordSet();
-                                result.RecordSets.Add(recordSetInstance);
-                                
-                                JToken etagValue = valueValue["etag"];
-                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string etagInstance = ((string)etagValue);
-                                    recordSetInstance.ETag = etagInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    RecordSetProperties propertiesInstance = new RecordSetProperties();
-                                    recordSetInstance.Properties = propertiesInstance;
+                                    RecordSet recordSetInstance = new RecordSet();
+                                    result.RecordSets.Add(recordSetInstance);
                                     
-                                    JToken tTLValue = propertiesValue["TTL"];
-                                    if (tTLValue != null && tTLValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        uint tTLInstance = ((uint)tTLValue);
-                                        propertiesInstance.Ttl = tTLInstance;
+                                        string idInstance = ((string)idValue);
+                                        recordSetInstance.Id = idInstance;
                                     }
                                     
-                                    JToken aRecordsArray = propertiesValue["ARecords"];
-                                    if (aRecordsArray != null && aRecordsArray.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.ARecords = new List<ARecord>();
-                                        foreach (JToken aRecordsValue in ((JArray)aRecordsArray))
-                                        {
-                                            ARecord aRecordInstance = new ARecord();
-                                            propertiesInstance.ARecords.Add(aRecordInstance);
-                                            
-                                            JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
-                                            if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
-                                            {
-                                                string ipv4AddressInstance = ((string)ipv4AddressValue);
-                                                aRecordInstance.Ipv4Address = ipv4AddressInstance;
-                                            }
-                                        }
+                                        string nameInstance = ((string)nameValue);
+                                        recordSetInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken aAAARecordsArray = propertiesValue["AAAARecords"];
-                                    if (aAAARecordsArray != null && aAAARecordsArray.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.AaaaRecords = new List<AaaaRecord>();
-                                        foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray))
-                                        {
-                                            AaaaRecord aaaaRecordInstance = new AaaaRecord();
-                                            propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
-                                            
-                                            JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
-                                            if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
-                                            {
-                                                string ipv6AddressInstance = ((string)ipv6AddressValue);
-                                                aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
-                                            }
-                                        }
+                                        string typeInstance = ((string)typeValue);
+                                        recordSetInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken mXRecordsArray = propertiesValue["MXRecords"];
-                                    if (mXRecordsArray != null && mXRecordsArray.Type != JTokenType.Null)
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.MxRecords = new List<MxRecord>();
-                                        foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray))
-                                        {
-                                            MxRecord mxRecordInstance = new MxRecord();
-                                            propertiesInstance.MxRecords.Add(mxRecordInstance);
-                                            
-                                            JToken preferenceValue = mXRecordsValue["preference"];
-                                            if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
-                                            {
-                                                ushort preferenceInstance = ((ushort)preferenceValue);
-                                                mxRecordInstance.Preference = preferenceInstance;
-                                            }
-                                            
-                                            JToken exchangeValue = mXRecordsValue["exchange"];
-                                            if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
-                                            {
-                                                string exchangeInstance = ((string)exchangeValue);
-                                                mxRecordInstance.Exchange = exchangeInstance;
-                                            }
-                                        }
+                                        string etagInstance = ((string)etagValue);
+                                        recordSetInstance.ETag = etagInstance;
                                     }
                                     
-                                    JToken nSRecordsArray = propertiesValue["NSRecords"];
-                                    if (nSRecordsArray != null && nSRecordsArray.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.NsRecords = new List<NsRecord>();
-                                        foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray))
-                                        {
-                                            NsRecord nsRecordInstance = new NsRecord();
-                                            propertiesInstance.NsRecords.Add(nsRecordInstance);
-                                            
-                                            JToken nsdnameValue = nSRecordsValue["nsdname"];
-                                            if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
-                                            {
-                                                string nsdnameInstance = ((string)nsdnameValue);
-                                                nsRecordInstance.Nsdname = nsdnameInstance;
-                                            }
-                                        }
+                                        string locationInstance = ((string)locationValue);
+                                        recordSetInstance.Location = locationInstance;
                                     }
                                     
-                                    JToken pTRRecordsArray = propertiesValue["PTRRecords"];
-                                    if (pTRRecordsArray != null && pTRRecordsArray.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.PtrRecords = new List<PtrRecord>();
-                                        foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray))
-                                        {
-                                            PtrRecord ptrRecordInstance = new PtrRecord();
-                                            propertiesInstance.PtrRecords.Add(ptrRecordInstance);
-                                            
-                                            JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
-                                            if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
-                                            {
-                                                string ptrdnameInstance = ((string)ptrdnameValue);
-                                                ptrRecordInstance.Ptrdname = ptrdnameInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken sRVRecordsArray = propertiesValue["SRVRecords"];
-                                    if (sRVRecordsArray != null && sRVRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.SrvRecords = new List<SrvRecord>();
-                                        foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray))
-                                        {
-                                            SrvRecord srvRecordInstance = new SrvRecord();
-                                            propertiesInstance.SrvRecords.Add(srvRecordInstance);
-                                            
-                                            JToken priorityValue = sRVRecordsValue["priority"];
-                                            if (priorityValue != null && priorityValue.Type != JTokenType.Null)
-                                            {
-                                                ushort priorityInstance = ((ushort)priorityValue);
-                                                srvRecordInstance.Priority = priorityInstance;
-                                            }
-                                            
-                                            JToken weightValue = sRVRecordsValue["weight"];
-                                            if (weightValue != null && weightValue.Type != JTokenType.Null)
-                                            {
-                                                ushort weightInstance = ((ushort)weightValue);
-                                                srvRecordInstance.Weight = weightInstance;
-                                            }
-                                            
-                                            JToken portValue = sRVRecordsValue["port"];
-                                            if (portValue != null && portValue.Type != JTokenType.Null)
-                                            {
-                                                ushort portInstance = ((ushort)portValue);
-                                                srvRecordInstance.Port = portInstance;
-                                            }
-                                            
-                                            JToken targetValue = sRVRecordsValue["target"];
-                                            if (targetValue != null && targetValue.Type != JTokenType.Null)
-                                            {
-                                                string targetInstance = ((string)targetValue);
-                                                srvRecordInstance.Target = targetInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken tXTRecordsArray = propertiesValue["TXTRecords"];
-                                    if (tXTRecordsArray != null && tXTRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.TxtRecords = new List<TxtRecord>();
-                                        foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray))
-                                        {
-                                            TxtRecord txtRecordInstance = new TxtRecord();
-                                            propertiesInstance.TxtRecords.Add(txtRecordInstance);
-                                            
-                                            JToken valueValue2 = tXTRecordsValue["value"];
-                                            if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                            {
-                                                string valueInstance = ((string)valueValue2);
-                                                txtRecordInstance.Value = valueInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken cNAMERecordValue = propertiesValue["CNAMERecord"];
-                                    if (cNAMERecordValue != null && cNAMERecordValue.Type != JTokenType.Null)
-                                    {
-                                        CnameRecord cNAMERecordInstance = new CnameRecord();
-                                        propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                        RecordSetProperties propertiesInstance = new RecordSetProperties();
+                                        recordSetInstance.Properties = propertiesInstance;
                                         
-                                        JToken cnameValue = cNAMERecordValue["cname"];
-                                        if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                        JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                                        if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
                                         {
-                                            string cnameInstance = ((string)cnameValue);
-                                            cNAMERecordInstance.Cname = cnameInstance;
-                                        }
-                                    }
-                                    
-                                    JToken sOARecordValue = propertiesValue["SOARecord"];
-                                    if (sOARecordValue != null && sOARecordValue.Type != JTokenType.Null)
-                                    {
-                                        SoaRecord sOARecordInstance = new SoaRecord();
-                                        propertiesInstance.SoaRecord = sOARecordInstance;
-                                        
-                                        JToken hostValue = sOARecordValue["host"];
-                                        if (hostValue != null && hostValue.Type != JTokenType.Null)
-                                        {
-                                            string hostInstance = ((string)hostValue);
-                                            sOARecordInstance.Host = hostInstance;
+                                            foreach (JProperty property in metadataSequenceElement)
+                                            {
+                                                string metadataKey = ((string)property.Name);
+                                                string metadataValue = ((string)property.Value);
+                                                propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                            }
                                         }
                                         
-                                        JToken emailValue = sOARecordValue["email"];
-                                        if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                        JToken tTLValue = propertiesValue["TTL"];
+                                        if (tTLValue != null && tTLValue.Type != JTokenType.Null)
                                         {
-                                            string emailInstance = ((string)emailValue);
-                                            sOARecordInstance.Email = emailInstance;
+                                            uint tTLInstance = ((uint)tTLValue);
+                                            propertiesInstance.Ttl = tTLInstance;
                                         }
                                         
-                                        JToken serialNumberValue = sOARecordValue["serialNumber"];
-                                        if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
+                                        JToken aRecordsArray = propertiesValue["ARecords"];
+                                        if (aRecordsArray != null && aRecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint serialNumberInstance = ((uint)serialNumberValue);
-                                            sOARecordInstance.SerialNumber = serialNumberInstance;
+                                            propertiesInstance.ARecords = new List<ARecord>();
+                                            foreach (JToken aRecordsValue in ((JArray)aRecordsArray))
+                                            {
+                                                ARecord aRecordInstance = new ARecord();
+                                                propertiesInstance.ARecords.Add(aRecordInstance);
+                                                
+                                                JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
+                                                if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
+                                                {
+                                                    string ipv4AddressInstance = ((string)ipv4AddressValue);
+                                                    aRecordInstance.Ipv4Address = ipv4AddressInstance;
+                                                }
+                                            }
                                         }
                                         
-                                        JToken refreshTimeValue = sOARecordValue["refreshTime"];
-                                        if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
+                                        JToken aAAARecordsArray = propertiesValue["AAAARecords"];
+                                        if (aAAARecordsArray != null && aAAARecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint refreshTimeInstance = ((uint)refreshTimeValue);
-                                            sOARecordInstance.RefreshTime = refreshTimeInstance;
+                                            propertiesInstance.AaaaRecords = new List<AaaaRecord>();
+                                            foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray))
+                                            {
+                                                AaaaRecord aaaaRecordInstance = new AaaaRecord();
+                                                propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
+                                                
+                                                JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
+                                                if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
+                                                {
+                                                    string ipv6AddressInstance = ((string)ipv6AddressValue);
+                                                    aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
+                                                }
+                                            }
                                         }
                                         
-                                        JToken retryTimeValue = sOARecordValue["retryTime"];
-                                        if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
+                                        JToken mXRecordsArray = propertiesValue["MXRecords"];
+                                        if (mXRecordsArray != null && mXRecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint retryTimeInstance = ((uint)retryTimeValue);
-                                            sOARecordInstance.RetryTime = retryTimeInstance;
+                                            propertiesInstance.MxRecords = new List<MxRecord>();
+                                            foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray))
+                                            {
+                                                MxRecord mxRecordInstance = new MxRecord();
+                                                propertiesInstance.MxRecords.Add(mxRecordInstance);
+                                                
+                                                JToken preferenceValue = mXRecordsValue["preference"];
+                                                if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
+                                                {
+                                                    int preferenceInstance = ((int)preferenceValue);
+                                                    mxRecordInstance.Preference = preferenceInstance;
+                                                }
+                                                
+                                                JToken exchangeValue = mXRecordsValue["exchange"];
+                                                if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
+                                                {
+                                                    string exchangeInstance = ((string)exchangeValue);
+                                                    mxRecordInstance.Exchange = exchangeInstance;
+                                                }
+                                            }
                                         }
                                         
-                                        JToken expireTimeValue = sOARecordValue["expireTime"];
-                                        if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
+                                        JToken nSRecordsArray = propertiesValue["NSRecords"];
+                                        if (nSRecordsArray != null && nSRecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint expireTimeInstance = ((uint)expireTimeValue);
-                                            sOARecordInstance.ExpireTime = expireTimeInstance;
+                                            propertiesInstance.NsRecords = new List<NsRecord>();
+                                            foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray))
+                                            {
+                                                NsRecord nsRecordInstance = new NsRecord();
+                                                propertiesInstance.NsRecords.Add(nsRecordInstance);
+                                                
+                                                JToken nsdnameValue = nSRecordsValue["nsdname"];
+                                                if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
+                                                {
+                                                    string nsdnameInstance = ((string)nsdnameValue);
+                                                    nsRecordInstance.Nsdname = nsdnameInstance;
+                                                }
+                                            }
                                         }
                                         
-                                        JToken minimumTTLValue = sOARecordValue["minimumTTL"];
-                                        if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
+                                        JToken pTRRecordsArray = propertiesValue["PTRRecords"];
+                                        if (pTRRecordsArray != null && pTRRecordsArray.Type != JTokenType.Null)
                                         {
-                                            uint minimumTTLInstance = ((uint)minimumTTLValue);
-                                            sOARecordInstance.MinimumTtl = minimumTTLInstance;
+                                            propertiesInstance.PtrRecords = new List<PtrRecord>();
+                                            foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray))
+                                            {
+                                                PtrRecord ptrRecordInstance = new PtrRecord();
+                                                propertiesInstance.PtrRecords.Add(ptrRecordInstance);
+                                                
+                                                JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
+                                                if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
+                                                {
+                                                    string ptrdnameInstance = ((string)ptrdnameValue);
+                                                    ptrRecordInstance.Ptrdname = ptrdnameInstance;
+                                                }
+                                            }
                                         }
-                                    }
-                                }
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    recordSetInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    recordSetInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    recordSetInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    recordSetInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        recordSetInstance.Tags.Add(tagsKey, tagsValue);
+                                        
+                                        JToken sRVRecordsArray = propertiesValue["SRVRecords"];
+                                        if (sRVRecordsArray != null && sRVRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.SrvRecords = new List<SrvRecord>();
+                                            foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray))
+                                            {
+                                                SrvRecord srvRecordInstance = new SrvRecord();
+                                                propertiesInstance.SrvRecords.Add(srvRecordInstance);
+                                                
+                                                JToken priorityValue = sRVRecordsValue["priority"];
+                                                if (priorityValue != null && priorityValue.Type != JTokenType.Null)
+                                                {
+                                                    int priorityInstance = ((int)priorityValue);
+                                                    srvRecordInstance.Priority = priorityInstance;
+                                                }
+                                                
+                                                JToken weightValue = sRVRecordsValue["weight"];
+                                                if (weightValue != null && weightValue.Type != JTokenType.Null)
+                                                {
+                                                    int weightInstance = ((int)weightValue);
+                                                    srvRecordInstance.Weight = weightInstance;
+                                                }
+                                                
+                                                JToken portValue = sRVRecordsValue["port"];
+                                                if (portValue != null && portValue.Type != JTokenType.Null)
+                                                {
+                                                    int portInstance = ((int)portValue);
+                                                    srvRecordInstance.Port = portInstance;
+                                                }
+                                                
+                                                JToken targetValue = sRVRecordsValue["target"];
+                                                if (targetValue != null && targetValue.Type != JTokenType.Null)
+                                                {
+                                                    string targetInstance = ((string)targetValue);
+                                                    srvRecordInstance.Target = targetInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken tXTRecordsArray = propertiesValue["TXTRecords"];
+                                        if (tXTRecordsArray != null && tXTRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.TxtRecords = new List<TxtRecord>();
+                                            foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray))
+                                            {
+                                                TxtRecord txtRecordInstance = new TxtRecord();
+                                                propertiesInstance.TxtRecords.Add(txtRecordInstance);
+                                                
+                                                JToken valueArray2 = tXTRecordsValue["value"];
+                                                if (valueArray2 != null && valueArray2.Type != JTokenType.Null)
+                                                {
+                                                    txtRecordInstance.Value = new List<string>();
+                                                    foreach (JToken valueValue2 in ((JArray)valueArray2))
+                                                    {
+                                                        txtRecordInstance.Value.Add(((string)valueValue2));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken cNAMERecordValue = propertiesValue["CNAMERecord"];
+                                        if (cNAMERecordValue != null && cNAMERecordValue.Type != JTokenType.Null)
+                                        {
+                                            CnameRecord cNAMERecordInstance = new CnameRecord();
+                                            propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                            
+                                            JToken cnameValue = cNAMERecordValue["cname"];
+                                            if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                            {
+                                                string cnameInstance = ((string)cnameValue);
+                                                cNAMERecordInstance.Cname = cnameInstance;
+                                            }
+                                        }
+                                        
+                                        JToken sOARecordValue = propertiesValue["SOARecord"];
+                                        if (sOARecordValue != null && sOARecordValue.Type != JTokenType.Null)
+                                        {
+                                            SoaRecord sOARecordInstance = new SoaRecord();
+                                            propertiesInstance.SoaRecord = sOARecordInstance;
+                                            
+                                            JToken hostValue = sOARecordValue["host"];
+                                            if (hostValue != null && hostValue.Type != JTokenType.Null)
+                                            {
+                                                string hostInstance = ((string)hostValue);
+                                                sOARecordInstance.Host = hostInstance;
+                                            }
+                                            
+                                            JToken emailValue = sOARecordValue["email"];
+                                            if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                            {
+                                                string emailInstance = ((string)emailValue);
+                                                sOARecordInstance.Email = emailInstance;
+                                            }
+                                            
+                                            JToken serialNumberValue = sOARecordValue["serialNumber"];
+                                            if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
+                                            {
+                                                uint serialNumberInstance = ((uint)serialNumberValue);
+                                                sOARecordInstance.SerialNumber = serialNumberInstance;
+                                            }
+                                            
+                                            JToken refreshTimeValue = sOARecordValue["refreshTime"];
+                                            if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint refreshTimeInstance = ((uint)refreshTimeValue);
+                                                sOARecordInstance.RefreshTime = refreshTimeInstance;
+                                            }
+                                            
+                                            JToken retryTimeValue = sOARecordValue["retryTime"];
+                                            if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint retryTimeInstance = ((uint)retryTimeValue);
+                                                sOARecordInstance.RetryTime = retryTimeInstance;
+                                            }
+                                            
+                                            JToken expireTimeValue = sOARecordValue["expireTime"];
+                                            if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint expireTimeInstance = ((uint)expireTimeValue);
+                                                sOARecordInstance.ExpireTime = expireTimeInstance;
+                                            }
+                                            
+                                            JToken minimumTTLValue = sOARecordValue["minimumTTL"];
+                                            if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
+                                            {
+                                                uint minimumTTLInstance = ((uint)minimumTTLValue);
+                                                sOARecordInstance.MinimumTtl = minimumTTLInstance;
+                                            }
+                                        }
                                     }
                                 }
                             }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
                         }
                         
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                        {
-                            string nextLinkInstance = ((string)nextLinkValue);
-                            result.NextLink = nextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2463,7 +2512,7 @@ namespace Microsoft.Azure.Management.Dns
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -2477,319 +2526,1098 @@ namespace Microsoft.Azure.Management.Dns
                     // Create Result
                     RecordSetListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RecordSetListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RecordSetListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    RecordSet recordSetInstance = new RecordSet();
+                                    result.RecordSets.Add(recordSetInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        recordSetInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        recordSetInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        recordSetInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        recordSetInstance.ETag = etagInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        recordSetInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        RecordSetProperties propertiesInstance = new RecordSetProperties();
+                                        recordSetInstance.Properties = propertiesInstance;
+                                        
+                                        JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                                        if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in metadataSequenceElement)
+                                            {
+                                                string metadataKey = ((string)property.Name);
+                                                string metadataValue = ((string)property.Value);
+                                                propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                            }
+                                        }
+                                        
+                                        JToken tTLValue = propertiesValue["TTL"];
+                                        if (tTLValue != null && tTLValue.Type != JTokenType.Null)
+                                        {
+                                            uint tTLInstance = ((uint)tTLValue);
+                                            propertiesInstance.Ttl = tTLInstance;
+                                        }
+                                        
+                                        JToken aRecordsArray = propertiesValue["ARecords"];
+                                        if (aRecordsArray != null && aRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.ARecords = new List<ARecord>();
+                                            foreach (JToken aRecordsValue in ((JArray)aRecordsArray))
+                                            {
+                                                ARecord aRecordInstance = new ARecord();
+                                                propertiesInstance.ARecords.Add(aRecordInstance);
+                                                
+                                                JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
+                                                if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
+                                                {
+                                                    string ipv4AddressInstance = ((string)ipv4AddressValue);
+                                                    aRecordInstance.Ipv4Address = ipv4AddressInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken aAAARecordsArray = propertiesValue["AAAARecords"];
+                                        if (aAAARecordsArray != null && aAAARecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.AaaaRecords = new List<AaaaRecord>();
+                                            foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray))
+                                            {
+                                                AaaaRecord aaaaRecordInstance = new AaaaRecord();
+                                                propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
+                                                
+                                                JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
+                                                if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
+                                                {
+                                                    string ipv6AddressInstance = ((string)ipv6AddressValue);
+                                                    aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken mXRecordsArray = propertiesValue["MXRecords"];
+                                        if (mXRecordsArray != null && mXRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.MxRecords = new List<MxRecord>();
+                                            foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray))
+                                            {
+                                                MxRecord mxRecordInstance = new MxRecord();
+                                                propertiesInstance.MxRecords.Add(mxRecordInstance);
+                                                
+                                                JToken preferenceValue = mXRecordsValue["preference"];
+                                                if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
+                                                {
+                                                    int preferenceInstance = ((int)preferenceValue);
+                                                    mxRecordInstance.Preference = preferenceInstance;
+                                                }
+                                                
+                                                JToken exchangeValue = mXRecordsValue["exchange"];
+                                                if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
+                                                {
+                                                    string exchangeInstance = ((string)exchangeValue);
+                                                    mxRecordInstance.Exchange = exchangeInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken nSRecordsArray = propertiesValue["NSRecords"];
+                                        if (nSRecordsArray != null && nSRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.NsRecords = new List<NsRecord>();
+                                            foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray))
+                                            {
+                                                NsRecord nsRecordInstance = new NsRecord();
+                                                propertiesInstance.NsRecords.Add(nsRecordInstance);
+                                                
+                                                JToken nsdnameValue = nSRecordsValue["nsdname"];
+                                                if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
+                                                {
+                                                    string nsdnameInstance = ((string)nsdnameValue);
+                                                    nsRecordInstance.Nsdname = nsdnameInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken pTRRecordsArray = propertiesValue["PTRRecords"];
+                                        if (pTRRecordsArray != null && pTRRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.PtrRecords = new List<PtrRecord>();
+                                            foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray))
+                                            {
+                                                PtrRecord ptrRecordInstance = new PtrRecord();
+                                                propertiesInstance.PtrRecords.Add(ptrRecordInstance);
+                                                
+                                                JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
+                                                if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
+                                                {
+                                                    string ptrdnameInstance = ((string)ptrdnameValue);
+                                                    ptrRecordInstance.Ptrdname = ptrdnameInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken sRVRecordsArray = propertiesValue["SRVRecords"];
+                                        if (sRVRecordsArray != null && sRVRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.SrvRecords = new List<SrvRecord>();
+                                            foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray))
+                                            {
+                                                SrvRecord srvRecordInstance = new SrvRecord();
+                                                propertiesInstance.SrvRecords.Add(srvRecordInstance);
+                                                
+                                                JToken priorityValue = sRVRecordsValue["priority"];
+                                                if (priorityValue != null && priorityValue.Type != JTokenType.Null)
+                                                {
+                                                    int priorityInstance = ((int)priorityValue);
+                                                    srvRecordInstance.Priority = priorityInstance;
+                                                }
+                                                
+                                                JToken weightValue = sRVRecordsValue["weight"];
+                                                if (weightValue != null && weightValue.Type != JTokenType.Null)
+                                                {
+                                                    int weightInstance = ((int)weightValue);
+                                                    srvRecordInstance.Weight = weightInstance;
+                                                }
+                                                
+                                                JToken portValue = sRVRecordsValue["port"];
+                                                if (portValue != null && portValue.Type != JTokenType.Null)
+                                                {
+                                                    int portInstance = ((int)portValue);
+                                                    srvRecordInstance.Port = portInstance;
+                                                }
+                                                
+                                                JToken targetValue = sRVRecordsValue["target"];
+                                                if (targetValue != null && targetValue.Type != JTokenType.Null)
+                                                {
+                                                    string targetInstance = ((string)targetValue);
+                                                    srvRecordInstance.Target = targetInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken tXTRecordsArray = propertiesValue["TXTRecords"];
+                                        if (tXTRecordsArray != null && tXTRecordsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.TxtRecords = new List<TxtRecord>();
+                                            foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray))
+                                            {
+                                                TxtRecord txtRecordInstance = new TxtRecord();
+                                                propertiesInstance.TxtRecords.Add(txtRecordInstance);
+                                                
+                                                JToken valueArray2 = tXTRecordsValue["value"];
+                                                if (valueArray2 != null && valueArray2.Type != JTokenType.Null)
+                                                {
+                                                    txtRecordInstance.Value = new List<string>();
+                                                    foreach (JToken valueValue2 in ((JArray)valueArray2))
+                                                    {
+                                                        txtRecordInstance.Value.Add(((string)valueValue2));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken cNAMERecordValue = propertiesValue["CNAMERecord"];
+                                        if (cNAMERecordValue != null && cNAMERecordValue.Type != JTokenType.Null)
+                                        {
+                                            CnameRecord cNAMERecordInstance = new CnameRecord();
+                                            propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                            
+                                            JToken cnameValue = cNAMERecordValue["cname"];
+                                            if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                            {
+                                                string cnameInstance = ((string)cnameValue);
+                                                cNAMERecordInstance.Cname = cnameInstance;
+                                            }
+                                        }
+                                        
+                                        JToken sOARecordValue = propertiesValue["SOARecord"];
+                                        if (sOARecordValue != null && sOARecordValue.Type != JTokenType.Null)
+                                        {
+                                            SoaRecord sOARecordInstance = new SoaRecord();
+                                            propertiesInstance.SoaRecord = sOARecordInstance;
+                                            
+                                            JToken hostValue = sOARecordValue["host"];
+                                            if (hostValue != null && hostValue.Type != JTokenType.Null)
+                                            {
+                                                string hostInstance = ((string)hostValue);
+                                                sOARecordInstance.Host = hostInstance;
+                                            }
+                                            
+                                            JToken emailValue = sOARecordValue["email"];
+                                            if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                            {
+                                                string emailInstance = ((string)emailValue);
+                                                sOARecordInstance.Email = emailInstance;
+                                            }
+                                            
+                                            JToken serialNumberValue = sOARecordValue["serialNumber"];
+                                            if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
+                                            {
+                                                uint serialNumberInstance = ((uint)serialNumberValue);
+                                                sOARecordInstance.SerialNumber = serialNumberInstance;
+                                            }
+                                            
+                                            JToken refreshTimeValue = sOARecordValue["refreshTime"];
+                                            if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint refreshTimeInstance = ((uint)refreshTimeValue);
+                                                sOARecordInstance.RefreshTime = refreshTimeInstance;
+                                            }
+                                            
+                                            JToken retryTimeValue = sOARecordValue["retryTime"];
+                                            if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint retryTimeInstance = ((uint)retryTimeValue);
+                                                sOARecordInstance.RetryTime = retryTimeInstance;
+                                            }
+                                            
+                                            JToken expireTimeValue = sOARecordValue["expireTime"];
+                                            if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
+                                            {
+                                                uint expireTimeInstance = ((uint)expireTimeValue);
+                                                sOARecordInstance.ExpireTime = expireTimeInstance;
+                                            }
+                                            
+                                            JToken minimumTTLValue = sOARecordValue["minimumTTL"];
+                                            if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
+                                            {
+                                                uint minimumTTLInstance = ((uint)minimumTTLValue);
+                                                sOARecordInstance.MinimumTtl = minimumTTLInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    if (shouldTrace)
                     {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Creates a RecordSet within a DNS zone.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='zoneName'>
+        /// Required. The name of the zone without a terminating dot.
+        /// </param>
+        /// <param name='relativeRecordSetName'>
+        /// Required. The name of the RecordSet, relative to the name of the
+        /// zone.
+        /// </param>
+        /// <param name='recordType'>
+        /// Required. The type of DNS record.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the CreateOrUpdate operation.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// Optional. The etag of Zone.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a RecordSet Update operation.
+        /// </returns>
+        public async Task<RecordSetUpdateResponse> UpdateAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetUpdateParameters parameters, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (zoneName == null)
+            {
+                throw new ArgumentNullException("zoneName");
+            }
+            if (relativeRecordSetName == null)
+            {
+                throw new ArgumentNullException("relativeRecordSetName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.RecordSet == null)
+            {
+                throw new ArgumentNullException("parameters.RecordSet");
+            }
+            if (parameters.RecordSet.Location == null)
+            {
+                throw new ArgumentNullException("parameters.RecordSet.Location");
+            }
+            if (parameters.RecordSet.Properties != null)
+            {
+                if (parameters.RecordSet.Properties.AaaaRecords != null)
+                {
+                    foreach (AaaaRecord aaaaRecordsParameterItem in parameters.RecordSet.Properties.AaaaRecords)
+                    {
+                        if (aaaaRecordsParameterItem.Ipv6Address == null)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.AaaaRecords.Ipv6Address");
+                        }
+                    }
+                }
+                if (parameters.RecordSet.Properties.ARecords != null)
+                {
+                    foreach (ARecord aRecordsParameterItem in parameters.RecordSet.Properties.ARecords)
+                    {
+                        if (aRecordsParameterItem.Ipv4Address == null)
+                        {
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.ARecords.Ipv4Address");
+                        }
+                    }
+                }
+                if (parameters.RecordSet.Properties.CnameRecord != null)
+                {
+                    if (parameters.RecordSet.Properties.CnameRecord.Cname == null)
+                    {
+                        throw new ArgumentNullException("parameters.RecordSet.Properties.CnameRecord.Cname");
+                    }
+                }
+                if (parameters.RecordSet.Properties.MxRecords != null)
+                {
+                    foreach (MxRecord mxRecordsParameterItem in parameters.RecordSet.Properties.MxRecords)
+                    {
+                        if (mxRecordsParameterItem.Exchange == null)
+                        {
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.MxRecords.Exchange");
+                        }
+                    }
+                }
+                if (parameters.RecordSet.Properties.NsRecords != null)
+                {
+                    foreach (NsRecord nsRecordsParameterItem in parameters.RecordSet.Properties.NsRecords)
+                    {
+                        if (nsRecordsParameterItem.Nsdname == null)
+                        {
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.NsRecords.Nsdname");
+                        }
+                    }
+                }
+                if (parameters.RecordSet.Properties.PtrRecords != null)
+                {
+                    foreach (PtrRecord ptrRecordsParameterItem in parameters.RecordSet.Properties.PtrRecords)
+                    {
+                        if (ptrRecordsParameterItem.Ptrdname == null)
+                        {
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.PtrRecords.Ptrdname");
+                        }
+                    }
+                }
+                if (parameters.RecordSet.Properties.SoaRecord != null)
+                {
+                    if (parameters.RecordSet.Properties.SoaRecord.Email == null)
+                    {
+                        throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Email");
+                    }
+                }
+                if (parameters.RecordSet.Properties.SrvRecords != null)
+                {
+                    foreach (SrvRecord srvRecordsParameterItem in parameters.RecordSet.Properties.SrvRecords)
+                    {
+                        if (srvRecordsParameterItem.Target == null)
+                        {
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.SrvRecords.Target");
+                        }
+                    }
+                }
+                if (parameters.RecordSet.Properties.TxtRecords != null)
+                {
+                    foreach (TxtRecord txtRecordsParameterItem in parameters.RecordSet.Properties.TxtRecords)
+                    {
+                        if (txtRecordsParameterItem.Value == null)
+                        {
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.TxtRecords.Value");
+                        }
+                    }
+                }
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("zoneName", zoneName);
+                tracingParameters.Add("relativeRecordSetName", relativeRecordSetName);
+                tracingParameters.Add("recordType", recordType);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("ifNoneMatch", ifNoneMatch);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Network";
+            url = url + "/dnszones/";
+            url = url + Uri.EscapeDataString(zoneName);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(recordType.ToString());
+            url = url + "/";
+            url = url + relativeRecordSetName;
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2016-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+                httpRequest.Headers.Add("If-None-Match", ifNoneMatch);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject recordSetUpdateParametersValue = new JObject();
+                requestDoc = recordSetUpdateParametersValue;
+                
+                if (parameters.RecordSet.Id != null)
+                {
+                    recordSetUpdateParametersValue["id"] = parameters.RecordSet.Id;
+                }
+                
+                if (parameters.RecordSet.Name != null)
+                {
+                    recordSetUpdateParametersValue["name"] = parameters.RecordSet.Name;
+                }
+                
+                if (parameters.RecordSet.Type != null)
+                {
+                    recordSetUpdateParametersValue["type"] = parameters.RecordSet.Type;
+                }
+                
+                if (parameters.RecordSet.ETag != null)
+                {
+                    recordSetUpdateParametersValue["etag"] = parameters.RecordSet.ETag;
+                }
+                
+                recordSetUpdateParametersValue["location"] = parameters.RecordSet.Location;
+                
+                if (parameters.RecordSet.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    recordSetUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.RecordSet.Properties.Metadata != null)
+                    {
+                        if (parameters.RecordSet.Properties.Metadata is ILazyCollection == false || ((ILazyCollection)parameters.RecordSet.Properties.Metadata).IsInitialized)
+                        {
+                            JObject metadataDictionary = new JObject();
+                            foreach (KeyValuePair<string, string> pair in parameters.RecordSet.Properties.Metadata)
                             {
-                                RecordSet recordSetInstance = new RecordSet();
-                                result.RecordSets.Add(recordSetInstance);
-                                
-                                JToken etagValue = valueValue["etag"];
-                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                string metadataKey = pair.Key;
+                                string metadataValue = pair.Value;
+                                metadataDictionary[metadataKey] = metadataValue;
+                            }
+                            propertiesValue["metadata"] = metadataDictionary;
+                        }
+                    }
+                    
+                    propertiesValue["TTL"] = parameters.RecordSet.Properties.Ttl;
+                    
+                    if (parameters.RecordSet.Properties.ARecords != null)
+                    {
+                        JArray aRecordsArray = new JArray();
+                        foreach (ARecord aRecordsItem in parameters.RecordSet.Properties.ARecords)
+                        {
+                            JObject aRecordValue = new JObject();
+                            aRecordsArray.Add(aRecordValue);
+                            
+                            aRecordValue["ipv4Address"] = aRecordsItem.Ipv4Address;
+                        }
+                        propertiesValue["ARecords"] = aRecordsArray;
+                    }
+                    
+                    if (parameters.RecordSet.Properties.AaaaRecords != null)
+                    {
+                        JArray aAAARecordsArray = new JArray();
+                        foreach (AaaaRecord aAAARecordsItem in parameters.RecordSet.Properties.AaaaRecords)
+                        {
+                            JObject aaaaRecordValue = new JObject();
+                            aAAARecordsArray.Add(aaaaRecordValue);
+                            
+                            aaaaRecordValue["ipv6Address"] = aAAARecordsItem.Ipv6Address;
+                        }
+                        propertiesValue["AAAARecords"] = aAAARecordsArray;
+                    }
+                    
+                    if (parameters.RecordSet.Properties.MxRecords != null)
+                    {
+                        JArray mXRecordsArray = new JArray();
+                        foreach (MxRecord mXRecordsItem in parameters.RecordSet.Properties.MxRecords)
+                        {
+                            JObject mxRecordValue = new JObject();
+                            mXRecordsArray.Add(mxRecordValue);
+                            
+                            mxRecordValue["preference"] = mXRecordsItem.Preference;
+                            
+                            mxRecordValue["exchange"] = mXRecordsItem.Exchange;
+                        }
+                        propertiesValue["MXRecords"] = mXRecordsArray;
+                    }
+                    
+                    if (parameters.RecordSet.Properties.NsRecords != null)
+                    {
+                        JArray nSRecordsArray = new JArray();
+                        foreach (NsRecord nSRecordsItem in parameters.RecordSet.Properties.NsRecords)
+                        {
+                            JObject nsRecordValue = new JObject();
+                            nSRecordsArray.Add(nsRecordValue);
+                            
+                            nsRecordValue["nsdname"] = nSRecordsItem.Nsdname;
+                        }
+                        propertiesValue["NSRecords"] = nSRecordsArray;
+                    }
+                    
+                    if (parameters.RecordSet.Properties.PtrRecords != null)
+                    {
+                        JArray pTRRecordsArray = new JArray();
+                        foreach (PtrRecord pTRRecordsItem in parameters.RecordSet.Properties.PtrRecords)
+                        {
+                            JObject ptrRecordValue = new JObject();
+                            pTRRecordsArray.Add(ptrRecordValue);
+                            
+                            ptrRecordValue["ptrdname"] = pTRRecordsItem.Ptrdname;
+                        }
+                        propertiesValue["PTRRecords"] = pTRRecordsArray;
+                    }
+                    
+                    if (parameters.RecordSet.Properties.SrvRecords != null)
+                    {
+                        JArray sRVRecordsArray = new JArray();
+                        foreach (SrvRecord sRVRecordsItem in parameters.RecordSet.Properties.SrvRecords)
+                        {
+                            JObject srvRecordValue = new JObject();
+                            sRVRecordsArray.Add(srvRecordValue);
+                            
+                            srvRecordValue["priority"] = sRVRecordsItem.Priority;
+                            
+                            srvRecordValue["weight"] = sRVRecordsItem.Weight;
+                            
+                            srvRecordValue["port"] = sRVRecordsItem.Port;
+                            
+                            srvRecordValue["target"] = sRVRecordsItem.Target;
+                        }
+                        propertiesValue["SRVRecords"] = sRVRecordsArray;
+                    }
+                    
+                    if (parameters.RecordSet.Properties.TxtRecords != null)
+                    {
+                        JArray tXTRecordsArray = new JArray();
+                        foreach (TxtRecord tXTRecordsItem in parameters.RecordSet.Properties.TxtRecords)
+                        {
+                            JObject txtRecordValue = new JObject();
+                            tXTRecordsArray.Add(txtRecordValue);
+                            
+                            if (tXTRecordsItem.Value != null)
+                            {
+                                JArray valueArray = new JArray();
+                                foreach (string valueItem in tXTRecordsItem.Value)
                                 {
-                                    string etagInstance = ((string)etagValue);
-                                    recordSetInstance.ETag = etagInstance;
+                                    valueArray.Add(valueItem);
+                                }
+                                txtRecordValue["value"] = valueArray;
+                            }
+                        }
+                        propertiesValue["TXTRecords"] = tXTRecordsArray;
+                    }
+                    
+                    if (parameters.RecordSet.Properties.CnameRecord != null)
+                    {
+                        JObject cNAMERecordValue = new JObject();
+                        propertiesValue["CNAMERecord"] = cNAMERecordValue;
+                        
+                        cNAMERecordValue["cname"] = parameters.RecordSet.Properties.CnameRecord.Cname;
+                    }
+                    
+                    if (parameters.RecordSet.Properties.SoaRecord != null)
+                    {
+                        JObject sOARecordValue = new JObject();
+                        propertiesValue["SOARecord"] = sOARecordValue;
+                        
+                        if (parameters.RecordSet.Properties.SoaRecord.Host != null)
+                        {
+                            sOARecordValue["host"] = parameters.RecordSet.Properties.SoaRecord.Host;
+                        }
+                        
+                        sOARecordValue["email"] = parameters.RecordSet.Properties.SoaRecord.Email;
+                        
+                        sOARecordValue["serialNumber"] = parameters.RecordSet.Properties.SoaRecord.SerialNumber;
+                        
+                        sOARecordValue["refreshTime"] = parameters.RecordSet.Properties.SoaRecord.RefreshTime;
+                        
+                        sOARecordValue["retryTime"] = parameters.RecordSet.Properties.SoaRecord.RetryTime;
+                        
+                        sOARecordValue["expireTime"] = parameters.RecordSet.Properties.SoaRecord.ExpireTime;
+                        
+                        sOARecordValue["minimumTTL"] = parameters.RecordSet.Properties.SoaRecord.MinimumTtl;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    RecordSetUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RecordSetUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            RecordSet recordSetInstance = new RecordSet();
+                            result.RecordSet = recordSetInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                recordSetInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                recordSetInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                recordSetInstance.Type = typeInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                recordSetInstance.ETag = etagInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                recordSetInstance.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                RecordSetProperties propertiesInstance = new RecordSetProperties();
+                                recordSetInstance.Properties = propertiesInstance;
+                                
+                                JToken metadataSequenceElement = ((JToken)propertiesValue2["metadata"]);
+                                if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in metadataSequenceElement)
+                                    {
+                                        string metadataKey2 = ((string)property.Name);
+                                        string metadataValue2 = ((string)property.Value);
+                                        propertiesInstance.Metadata.Add(metadataKey2, metadataValue2);
+                                    }
                                 }
                                 
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                JToken tTLValue = propertiesValue2["TTL"];
+                                if (tTLValue != null && tTLValue.Type != JTokenType.Null)
                                 {
-                                    RecordSetProperties propertiesInstance = new RecordSetProperties();
-                                    recordSetInstance.Properties = propertiesInstance;
-                                    
-                                    JToken tTLValue = propertiesValue["TTL"];
-                                    if (tTLValue != null && tTLValue.Type != JTokenType.Null)
+                                    uint tTLInstance = ((uint)tTLValue);
+                                    propertiesInstance.Ttl = tTLInstance;
+                                }
+                                
+                                JToken aRecordsArray2 = propertiesValue2["ARecords"];
+                                if (aRecordsArray2 != null && aRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.ARecords = new List<ARecord>();
+                                    foreach (JToken aRecordsValue in ((JArray)aRecordsArray2))
                                     {
-                                        uint tTLInstance = ((uint)tTLValue);
-                                        propertiesInstance.Ttl = tTLInstance;
-                                    }
-                                    
-                                    JToken aRecordsArray = propertiesValue["ARecords"];
-                                    if (aRecordsArray != null && aRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.ARecords = new List<ARecord>();
-                                        foreach (JToken aRecordsValue in ((JArray)aRecordsArray))
-                                        {
-                                            ARecord aRecordInstance = new ARecord();
-                                            propertiesInstance.ARecords.Add(aRecordInstance);
-                                            
-                                            JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
-                                            if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
-                                            {
-                                                string ipv4AddressInstance = ((string)ipv4AddressValue);
-                                                aRecordInstance.Ipv4Address = ipv4AddressInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken aAAARecordsArray = propertiesValue["AAAARecords"];
-                                    if (aAAARecordsArray != null && aAAARecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.AaaaRecords = new List<AaaaRecord>();
-                                        foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray))
-                                        {
-                                            AaaaRecord aaaaRecordInstance = new AaaaRecord();
-                                            propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
-                                            
-                                            JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
-                                            if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
-                                            {
-                                                string ipv6AddressInstance = ((string)ipv6AddressValue);
-                                                aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken mXRecordsArray = propertiesValue["MXRecords"];
-                                    if (mXRecordsArray != null && mXRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.MxRecords = new List<MxRecord>();
-                                        foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray))
-                                        {
-                                            MxRecord mxRecordInstance = new MxRecord();
-                                            propertiesInstance.MxRecords.Add(mxRecordInstance);
-                                            
-                                            JToken preferenceValue = mXRecordsValue["preference"];
-                                            if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
-                                            {
-                                                ushort preferenceInstance = ((ushort)preferenceValue);
-                                                mxRecordInstance.Preference = preferenceInstance;
-                                            }
-                                            
-                                            JToken exchangeValue = mXRecordsValue["exchange"];
-                                            if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
-                                            {
-                                                string exchangeInstance = ((string)exchangeValue);
-                                                mxRecordInstance.Exchange = exchangeInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken nSRecordsArray = propertiesValue["NSRecords"];
-                                    if (nSRecordsArray != null && nSRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.NsRecords = new List<NsRecord>();
-                                        foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray))
-                                        {
-                                            NsRecord nsRecordInstance = new NsRecord();
-                                            propertiesInstance.NsRecords.Add(nsRecordInstance);
-                                            
-                                            JToken nsdnameValue = nSRecordsValue["nsdname"];
-                                            if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
-                                            {
-                                                string nsdnameInstance = ((string)nsdnameValue);
-                                                nsRecordInstance.Nsdname = nsdnameInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken pTRRecordsArray = propertiesValue["PTRRecords"];
-                                    if (pTRRecordsArray != null && pTRRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.PtrRecords = new List<PtrRecord>();
-                                        foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray))
-                                        {
-                                            PtrRecord ptrRecordInstance = new PtrRecord();
-                                            propertiesInstance.PtrRecords.Add(ptrRecordInstance);
-                                            
-                                            JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
-                                            if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
-                                            {
-                                                string ptrdnameInstance = ((string)ptrdnameValue);
-                                                ptrRecordInstance.Ptrdname = ptrdnameInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken sRVRecordsArray = propertiesValue["SRVRecords"];
-                                    if (sRVRecordsArray != null && sRVRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.SrvRecords = new List<SrvRecord>();
-                                        foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray))
-                                        {
-                                            SrvRecord srvRecordInstance = new SrvRecord();
-                                            propertiesInstance.SrvRecords.Add(srvRecordInstance);
-                                            
-                                            JToken priorityValue = sRVRecordsValue["priority"];
-                                            if (priorityValue != null && priorityValue.Type != JTokenType.Null)
-                                            {
-                                                ushort priorityInstance = ((ushort)priorityValue);
-                                                srvRecordInstance.Priority = priorityInstance;
-                                            }
-                                            
-                                            JToken weightValue = sRVRecordsValue["weight"];
-                                            if (weightValue != null && weightValue.Type != JTokenType.Null)
-                                            {
-                                                ushort weightInstance = ((ushort)weightValue);
-                                                srvRecordInstance.Weight = weightInstance;
-                                            }
-                                            
-                                            JToken portValue = sRVRecordsValue["port"];
-                                            if (portValue != null && portValue.Type != JTokenType.Null)
-                                            {
-                                                ushort portInstance = ((ushort)portValue);
-                                                srvRecordInstance.Port = portInstance;
-                                            }
-                                            
-                                            JToken targetValue = sRVRecordsValue["target"];
-                                            if (targetValue != null && targetValue.Type != JTokenType.Null)
-                                            {
-                                                string targetInstance = ((string)targetValue);
-                                                srvRecordInstance.Target = targetInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken tXTRecordsArray = propertiesValue["TXTRecords"];
-                                    if (tXTRecordsArray != null && tXTRecordsArray.Type != JTokenType.Null)
-                                    {
-                                        propertiesInstance.TxtRecords = new List<TxtRecord>();
-                                        foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray))
-                                        {
-                                            TxtRecord txtRecordInstance = new TxtRecord();
-                                            propertiesInstance.TxtRecords.Add(txtRecordInstance);
-                                            
-                                            JToken valueValue2 = tXTRecordsValue["value"];
-                                            if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                            {
-                                                string valueInstance = ((string)valueValue2);
-                                                txtRecordInstance.Value = valueInstance;
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken cNAMERecordValue = propertiesValue["CNAMERecord"];
-                                    if (cNAMERecordValue != null && cNAMERecordValue.Type != JTokenType.Null)
-                                    {
-                                        CnameRecord cNAMERecordInstance = new CnameRecord();
-                                        propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                        ARecord aRecordInstance = new ARecord();
+                                        propertiesInstance.ARecords.Add(aRecordInstance);
                                         
-                                        JToken cnameValue = cNAMERecordValue["cname"];
-                                        if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                        JToken ipv4AddressValue = aRecordsValue["ipv4Address"];
+                                        if (ipv4AddressValue != null && ipv4AddressValue.Type != JTokenType.Null)
                                         {
-                                            string cnameInstance = ((string)cnameValue);
-                                            cNAMERecordInstance.Cname = cnameInstance;
-                                        }
-                                    }
-                                    
-                                    JToken sOARecordValue = propertiesValue["SOARecord"];
-                                    if (sOARecordValue != null && sOARecordValue.Type != JTokenType.Null)
-                                    {
-                                        SoaRecord sOARecordInstance = new SoaRecord();
-                                        propertiesInstance.SoaRecord = sOARecordInstance;
-                                        
-                                        JToken hostValue = sOARecordValue["host"];
-                                        if (hostValue != null && hostValue.Type != JTokenType.Null)
-                                        {
-                                            string hostInstance = ((string)hostValue);
-                                            sOARecordInstance.Host = hostInstance;
-                                        }
-                                        
-                                        JToken emailValue = sOARecordValue["email"];
-                                        if (emailValue != null && emailValue.Type != JTokenType.Null)
-                                        {
-                                            string emailInstance = ((string)emailValue);
-                                            sOARecordInstance.Email = emailInstance;
-                                        }
-                                        
-                                        JToken serialNumberValue = sOARecordValue["serialNumber"];
-                                        if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
-                                        {
-                                            uint serialNumberInstance = ((uint)serialNumberValue);
-                                            sOARecordInstance.SerialNumber = serialNumberInstance;
-                                        }
-                                        
-                                        JToken refreshTimeValue = sOARecordValue["refreshTime"];
-                                        if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
-                                        {
-                                            uint refreshTimeInstance = ((uint)refreshTimeValue);
-                                            sOARecordInstance.RefreshTime = refreshTimeInstance;
-                                        }
-                                        
-                                        JToken retryTimeValue = sOARecordValue["retryTime"];
-                                        if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
-                                        {
-                                            uint retryTimeInstance = ((uint)retryTimeValue);
-                                            sOARecordInstance.RetryTime = retryTimeInstance;
-                                        }
-                                        
-                                        JToken expireTimeValue = sOARecordValue["expireTime"];
-                                        if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
-                                        {
-                                            uint expireTimeInstance = ((uint)expireTimeValue);
-                                            sOARecordInstance.ExpireTime = expireTimeInstance;
-                                        }
-                                        
-                                        JToken minimumTTLValue = sOARecordValue["minimumTTL"];
-                                        if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
-                                        {
-                                            uint minimumTTLInstance = ((uint)minimumTTLValue);
-                                            sOARecordInstance.MinimumTtl = minimumTTLInstance;
+                                            string ipv4AddressInstance = ((string)ipv4AddressValue);
+                                            aRecordInstance.Ipv4Address = ipv4AddressInstance;
                                         }
                                     }
                                 }
                                 
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                JToken aAAARecordsArray2 = propertiesValue2["AAAARecords"];
+                                if (aAAARecordsArray2 != null && aAAARecordsArray2.Type != JTokenType.Null)
                                 {
-                                    string idInstance = ((string)idValue);
-                                    recordSetInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    recordSetInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    recordSetInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    recordSetInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
+                                    propertiesInstance.AaaaRecords = new List<AaaaRecord>();
+                                    foreach (JToken aAAARecordsValue in ((JArray)aAAARecordsArray2))
                                     {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        recordSetInstance.Tags.Add(tagsKey, tagsValue);
+                                        AaaaRecord aaaaRecordInstance = new AaaaRecord();
+                                        propertiesInstance.AaaaRecords.Add(aaaaRecordInstance);
+                                        
+                                        JToken ipv6AddressValue = aAAARecordsValue["ipv6Address"];
+                                        if (ipv6AddressValue != null && ipv6AddressValue.Type != JTokenType.Null)
+                                        {
+                                            string ipv6AddressInstance = ((string)ipv6AddressValue);
+                                            aaaaRecordInstance.Ipv6Address = ipv6AddressInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken mXRecordsArray2 = propertiesValue2["MXRecords"];
+                                if (mXRecordsArray2 != null && mXRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.MxRecords = new List<MxRecord>();
+                                    foreach (JToken mXRecordsValue in ((JArray)mXRecordsArray2))
+                                    {
+                                        MxRecord mxRecordInstance = new MxRecord();
+                                        propertiesInstance.MxRecords.Add(mxRecordInstance);
+                                        
+                                        JToken preferenceValue = mXRecordsValue["preference"];
+                                        if (preferenceValue != null && preferenceValue.Type != JTokenType.Null)
+                                        {
+                                            int preferenceInstance = ((int)preferenceValue);
+                                            mxRecordInstance.Preference = preferenceInstance;
+                                        }
+                                        
+                                        JToken exchangeValue = mXRecordsValue["exchange"];
+                                        if (exchangeValue != null && exchangeValue.Type != JTokenType.Null)
+                                        {
+                                            string exchangeInstance = ((string)exchangeValue);
+                                            mxRecordInstance.Exchange = exchangeInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken nSRecordsArray2 = propertiesValue2["NSRecords"];
+                                if (nSRecordsArray2 != null && nSRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.NsRecords = new List<NsRecord>();
+                                    foreach (JToken nSRecordsValue in ((JArray)nSRecordsArray2))
+                                    {
+                                        NsRecord nsRecordInstance = new NsRecord();
+                                        propertiesInstance.NsRecords.Add(nsRecordInstance);
+                                        
+                                        JToken nsdnameValue = nSRecordsValue["nsdname"];
+                                        if (nsdnameValue != null && nsdnameValue.Type != JTokenType.Null)
+                                        {
+                                            string nsdnameInstance = ((string)nsdnameValue);
+                                            nsRecordInstance.Nsdname = nsdnameInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken pTRRecordsArray2 = propertiesValue2["PTRRecords"];
+                                if (pTRRecordsArray2 != null && pTRRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.PtrRecords = new List<PtrRecord>();
+                                    foreach (JToken pTRRecordsValue in ((JArray)pTRRecordsArray2))
+                                    {
+                                        PtrRecord ptrRecordInstance = new PtrRecord();
+                                        propertiesInstance.PtrRecords.Add(ptrRecordInstance);
+                                        
+                                        JToken ptrdnameValue = pTRRecordsValue["ptrdname"];
+                                        if (ptrdnameValue != null && ptrdnameValue.Type != JTokenType.Null)
+                                        {
+                                            string ptrdnameInstance = ((string)ptrdnameValue);
+                                            ptrRecordInstance.Ptrdname = ptrdnameInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken sRVRecordsArray2 = propertiesValue2["SRVRecords"];
+                                if (sRVRecordsArray2 != null && sRVRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.SrvRecords = new List<SrvRecord>();
+                                    foreach (JToken sRVRecordsValue in ((JArray)sRVRecordsArray2))
+                                    {
+                                        SrvRecord srvRecordInstance = new SrvRecord();
+                                        propertiesInstance.SrvRecords.Add(srvRecordInstance);
+                                        
+                                        JToken priorityValue = sRVRecordsValue["priority"];
+                                        if (priorityValue != null && priorityValue.Type != JTokenType.Null)
+                                        {
+                                            int priorityInstance = ((int)priorityValue);
+                                            srvRecordInstance.Priority = priorityInstance;
+                                        }
+                                        
+                                        JToken weightValue = sRVRecordsValue["weight"];
+                                        if (weightValue != null && weightValue.Type != JTokenType.Null)
+                                        {
+                                            int weightInstance = ((int)weightValue);
+                                            srvRecordInstance.Weight = weightInstance;
+                                        }
+                                        
+                                        JToken portValue = sRVRecordsValue["port"];
+                                        if (portValue != null && portValue.Type != JTokenType.Null)
+                                        {
+                                            int portInstance = ((int)portValue);
+                                            srvRecordInstance.Port = portInstance;
+                                        }
+                                        
+                                        JToken targetValue = sRVRecordsValue["target"];
+                                        if (targetValue != null && targetValue.Type != JTokenType.Null)
+                                        {
+                                            string targetInstance = ((string)targetValue);
+                                            srvRecordInstance.Target = targetInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken tXTRecordsArray2 = propertiesValue2["TXTRecords"];
+                                if (tXTRecordsArray2 != null && tXTRecordsArray2.Type != JTokenType.Null)
+                                {
+                                    propertiesInstance.TxtRecords = new List<TxtRecord>();
+                                    foreach (JToken tXTRecordsValue in ((JArray)tXTRecordsArray2))
+                                    {
+                                        TxtRecord txtRecordInstance = new TxtRecord();
+                                        propertiesInstance.TxtRecords.Add(txtRecordInstance);
+                                        
+                                        JToken valueArray2 = tXTRecordsValue["value"];
+                                        if (valueArray2 != null && valueArray2.Type != JTokenType.Null)
+                                        {
+                                            txtRecordInstance.Value = new List<string>();
+                                            foreach (JToken valueValue in ((JArray)valueArray2))
+                                            {
+                                                txtRecordInstance.Value.Add(((string)valueValue));
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken cNAMERecordValue2 = propertiesValue2["CNAMERecord"];
+                                if (cNAMERecordValue2 != null && cNAMERecordValue2.Type != JTokenType.Null)
+                                {
+                                    CnameRecord cNAMERecordInstance = new CnameRecord();
+                                    propertiesInstance.CnameRecord = cNAMERecordInstance;
+                                    
+                                    JToken cnameValue = cNAMERecordValue2["cname"];
+                                    if (cnameValue != null && cnameValue.Type != JTokenType.Null)
+                                    {
+                                        string cnameInstance = ((string)cnameValue);
+                                        cNAMERecordInstance.Cname = cnameInstance;
+                                    }
+                                }
+                                
+                                JToken sOARecordValue2 = propertiesValue2["SOARecord"];
+                                if (sOARecordValue2 != null && sOARecordValue2.Type != JTokenType.Null)
+                                {
+                                    SoaRecord sOARecordInstance = new SoaRecord();
+                                    propertiesInstance.SoaRecord = sOARecordInstance;
+                                    
+                                    JToken hostValue = sOARecordValue2["host"];
+                                    if (hostValue != null && hostValue.Type != JTokenType.Null)
+                                    {
+                                        string hostInstance = ((string)hostValue);
+                                        sOARecordInstance.Host = hostInstance;
+                                    }
+                                    
+                                    JToken emailValue = sOARecordValue2["email"];
+                                    if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                    {
+                                        string emailInstance = ((string)emailValue);
+                                        sOARecordInstance.Email = emailInstance;
+                                    }
+                                    
+                                    JToken serialNumberValue = sOARecordValue2["serialNumber"];
+                                    if (serialNumberValue != null && serialNumberValue.Type != JTokenType.Null)
+                                    {
+                                        uint serialNumberInstance = ((uint)serialNumberValue);
+                                        sOARecordInstance.SerialNumber = serialNumberInstance;
+                                    }
+                                    
+                                    JToken refreshTimeValue = sOARecordValue2["refreshTime"];
+                                    if (refreshTimeValue != null && refreshTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint refreshTimeInstance = ((uint)refreshTimeValue);
+                                        sOARecordInstance.RefreshTime = refreshTimeInstance;
+                                    }
+                                    
+                                    JToken retryTimeValue = sOARecordValue2["retryTime"];
+                                    if (retryTimeValue != null && retryTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint retryTimeInstance = ((uint)retryTimeValue);
+                                        sOARecordInstance.RetryTime = retryTimeInstance;
+                                    }
+                                    
+                                    JToken expireTimeValue = sOARecordValue2["expireTime"];
+                                    if (expireTimeValue != null && expireTimeValue.Type != JTokenType.Null)
+                                    {
+                                        uint expireTimeInstance = ((uint)expireTimeValue);
+                                        sOARecordInstance.ExpireTime = expireTimeInstance;
+                                    }
+                                    
+                                    JToken minimumTTLValue = sOARecordValue2["minimumTTL"];
+                                    if (minimumTTLValue != null && minimumTTLValue.Type != JTokenType.Null)
+                                    {
+                                        uint minimumTTLInstance = ((uint)minimumTTLValue);
+                                        sOARecordInstance.MinimumTtl = minimumTTLInstance;
                                     }
                                 }
                             }
                         }
                         
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                        {
-                            string nextLinkInstance = ((string)nextLinkValue);
-                            result.NextLink = nextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

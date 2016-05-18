@@ -138,5 +138,44 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         /// The list of principals with consent status.
         /// </returns>
         Task<SecurityPrincipalInfoListResult> ListForAppAsync(string collectionName, string appAlias, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// app in a collection using continuation token.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Application alias.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Continuation token.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        Task<SecurityPrincipalInfoListWithTokenResult> ListForAppWithTokenAsync(string collectionName, string appAlias, string previousContinuationToken, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// collection using continuation token.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The RemoteApp collection name.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Continuation token.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        Task<SecurityPrincipalInfoListWithTokenResult> ListWithTokenAsync(string collectionName, string previousContinuationToken, CancellationToken cancellationToken);
     }
 }

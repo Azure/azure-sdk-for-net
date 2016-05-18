@@ -1,0 +1,264 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/c36fd9e7-e5b1-4d3e-bb85-2e538040258b/resourcegroups/hdi4083?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzM2ZmQ5ZTctZTViMS00ZDNlLWJiODUtMmU1MzgwNDAyNThiL3Jlc291cmNlZ3JvdXBzL2hkaTQwODM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c36fd9e7-e5b1-4d3e-bb85-2e538040258b/resourceGroups/hdi4083\",\r\n  \"name\": \"hdi4083\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "167"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "9481cea3-924b-4e9d-aa47-e2dc94a0d424"
+        ],
+        "x-ms-correlation-request-id": [
+          "9481cea3-924b-4e9d-aa47-e2dc94a0d424"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160314T213656Z:9481cea3-924b-4e9d-aa47-e2dc94a0d424"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Mar 2016 21:36:55 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/c36fd9e7-e5b1-4d3e-bb85-2e538040258b/resourceGroups/hdi4083/providers/Microsoft.HDInsight/clusters/hdiscriptaction8acbd2ae-670a-4c99-87ff-7324f079ed36/executeScriptActions?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzM2ZmQ5ZTctZTViMS00ZDNlLWJiODUtMmU1MzgwNDAyNThiL3Jlc291cmNlR3JvdXBzL2hkaTQwODMvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2NyaXB0YWN0aW9uOGFjYmQyYWUtNjcwYS00Yzk5LTg3ZmYtNzMyNGYwNzllZDM2L2V4ZWN1dGVTY3JpcHRBY3Rpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"scriptActions\": [\r\n    {\r\n      \"name\": \"script8d39c120-9\",\r\n      \"uri\": \"https://hdiconfigactions.blob.core.windows.net/linuxgiraphconfigactionv01/giraph-installer-v01.sh\",\r\n      \"roles\": [\r\n        \"headnode\",\r\n        \"workernode\"\r\n      ]\r\n    }\r\n  ],\r\n  \"persistOnSuccess\": true\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "294"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.HDInsight/clusters/hdiscriptaction8acbd2ae-670a-4c99-87ff-7324f079ed36' under resource group 'hdi4083' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "191"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "8b1b418f-918f-4200-995a-6c87333befbd"
+        ],
+        "x-ms-correlation-request-id": [
+          "8b1b418f-918f-4200-995a-6c87333befbd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160314T213657Z:8b1b418f-918f-4200-995a-6c87333befbd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Mar 2016 21:36:56 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/c36fd9e7-e5b1-4d3e-bb85-2e538040258b/resourceGroups/hdi4083/providers/Microsoft.HDInsight/clusters/hdiscriptaction8acbd2ae-670a-4c99-87ff-7324f079ed36/scriptActions?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzM2ZmQ5ZTctZTViMS00ZDNlLWJiODUtMmU1MzgwNDAyNThiL3Jlc291cmNlR3JvdXBzL2hkaTQwODMvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2NyaXB0YWN0aW9uOGFjYmQyYWUtNjcwYS00Yzk5LTg3ZmYtNzMyNGYwNzllZDM2L3NjcmlwdEFjdGlvbnM/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.HDInsight/clusters/hdiscriptaction8acbd2ae-670a-4c99-87ff-7324f079ed36' under resource group 'hdi4083' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "191"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "01d36775-5584-491c-af94-ae658967f49f"
+        ],
+        "x-ms-correlation-request-id": [
+          "01d36775-5584-491c-af94-ae658967f49f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160314T213657Z:01d36775-5584-491c-af94-ae658967f49f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Mar 2016 21:36:56 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/c36fd9e7-e5b1-4d3e-bb85-2e538040258b/resourceGroups/hdi4083/providers/Microsoft.HDInsight//clusters/hdiscriptaction8acbd2ae-670a-4c99-87ff-7324f079ed36/scriptExecutionHistory?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzM2ZmQ5ZTctZTViMS00ZDNlLWJiODUtMmU1MzgwNDAyNThiL3Jlc291cmNlR3JvdXBzL2hkaTQwODMvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvL2NsdXN0ZXJzL2hkaXNjcmlwdGFjdGlvbjhhY2JkMmFlLTY3MGEtNGM5OS04N2ZmLTczMjRmMDc5ZWQzNi9zY3JpcHRFeGVjdXRpb25IaXN0b3J5P2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.HDInsight/clusters/hdiscriptaction8acbd2ae-670a-4c99-87ff-7324f079ed36' under resource group 'hdi4083' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "191"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "f253eef1-e9ab-46d4-9139-ebaa48939807"
+        ],
+        "x-ms-correlation-request-id": [
+          "f253eef1-e9ab-46d4-9139-ebaa48939807"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160314T213657Z:f253eef1-e9ab-46d4-9139-ebaa48939807"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Mar 2016 21:36:56 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/c36fd9e7-e5b1-4d3e-bb85-2e538040258b/resourceGroups/hdi4083/providers/Microsoft.HDInsight//clusters/hdiscriptaction8acbd2ae-670a-4c99-87ff-7324f079ed36/scriptExecutionHistory/24?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzM2ZmQ5ZTctZTViMS00ZDNlLWJiODUtMmU1MzgwNDAyNThiL3Jlc291cmNlR3JvdXBzL2hkaTQwODMvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvL2NsdXN0ZXJzL2hkaXNjcmlwdGFjdGlvbjhhY2JkMmFlLTY3MGEtNGM5OS04N2ZmLTczMjRmMDc5ZWQzNi9zY3JpcHRFeGVjdXRpb25IaXN0b3J5LzI0P2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.HDInsight/clusters/hdiscriptaction8acbd2ae-670a-4c99-87ff-7324f079ed36' under resource group 'hdi4083' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "191"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "7893e0db-67f7-4457-912a-b7accb9714c9"
+        ],
+        "x-ms-correlation-request-id": [
+          "7893e0db-67f7-4457-912a-b7accb9714c9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160314T213657Z:7893e0db-67f7-4457-912a-b7accb9714c9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Mar 2016 21:36:56 GMT"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "hdi4083"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "c36fd9e7-e5b1-4d3e-bb85-2e538040258b"
+  }
+}

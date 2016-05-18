@@ -421,7 +421,7 @@ namespace Sample.Microsoft.HelloKeyVault
             var newVaultAddress = inputValidator.GetVaultAddress();
 
             // Delete any existing key in that vault.
-            keyVaultClient.DeleteKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult(); ;
+            keyVaultClient.DeleteKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
 
             // Restore the backed up value into the vault
             var restoredKey = keyVaultClient.RestoreKeyAsync(newVaultAddress, backupKeyValue).GetAwaiter().GetResult();
@@ -444,7 +444,7 @@ namespace Sample.Microsoft.HelloKeyVault
             keyName = (keyName == string.Empty) ? inputValidator.GetKeyName() : keyName;
 
             // Delete the key with the specified ID
-            var keyBundle = keyVaultClient.DeleteKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult(); ;
+            var keyBundle = keyVaultClient.DeleteKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
             Console.Out.WriteLine(string.Format("Key {0} is deleted successfully!", keyBundle.Key.Kid));
         }
 

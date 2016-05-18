@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RecoveryServices.Models;
 using Microsoft.Azure.Management.SiteRecovery.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
     /// <summary>
     /// Definition of vault operations for the Site Recovery extension.

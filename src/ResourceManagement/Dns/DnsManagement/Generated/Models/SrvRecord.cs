@@ -29,23 +29,23 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// </summary>
     public partial class SrvRecord
     {
-        private ushort _port;
+        private int _port;
         
         /// <summary>
         /// Required. Gets or sets the port of the service for this record.
         /// </summary>
-        public ushort Port
+        public int Port
         {
             get { return this._port; }
             set { this._port = value; }
         }
         
-        private ushort _priority;
+        private int _priority;
         
         /// <summary>
         /// Required. Gets or sets the priority metric for this record.
         /// </summary>
-        public ushort Priority
+        public int Priority
         {
             get { return this._priority; }
             set { this._priority = value; }
@@ -63,12 +63,12 @@ namespace Microsoft.Azure.Management.Dns.Models
             set { this._target = value; }
         }
         
-        private ushort _weight;
+        private int _weight;
         
         /// <summary>
         /// Required. Gets or sets the weight metric for this this record.
         /// </summary>
-        public ushort Weight
+        public int Weight
         {
             get { return this._weight; }
             set { this._weight = value; }
