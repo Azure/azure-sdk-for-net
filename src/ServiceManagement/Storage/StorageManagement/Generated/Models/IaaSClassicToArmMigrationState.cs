@@ -25,12 +25,26 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
     /// <summary>
-    /// Indicates whether the storage region is available.
+    /// Known values of IaaS Classic to ARM migration state.
     /// </summary>
-    public enum GeoRegionStatus
+    public static partial class IaaSClassicToArmMigrationState
     {
-        Available = 0,
+        public const string None = "None";
         
-        Unavailable = 1,
+        public const string Preparing = "Preparing";
+        
+        public const string Prepared = "Prepared";
+        
+        public const string PrepareFailed = "PrepareFailed";
+        
+        public const string Committing = "Committing";
+        
+        public const string Committed = "Committed";
+        
+        public const string CommitFailed = "CommitFailed";
+        
+        public const string Aborting = "Aborting";
+        
+        public const string AbortFailed = "AbortFailed";
     }
 }
