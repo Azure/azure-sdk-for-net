@@ -162,7 +162,7 @@ namespace ServerManagement.Tests
 
             var profile = await client.Gateway.GetProfileAsync(ResourceGroup, GatewayName);
 
-            if (Recording)
+            if (TestingInteractively)
             {
                 // stop the service
                 StopGateway();
@@ -178,6 +178,9 @@ namespace ServerManagement.Tests
 
                 // start the service.
                 StartGateway();
+
+                // wait for service to initialize itself.
+                Task.Delay(180 * 1000).Wait();
             }
             Assert.NotNull(gateway);
 
@@ -227,25 +230,6 @@ namespace ServerManagement.Tests
                     () => client.Gateway.CreateAsync(ResourceGroup, "testgateway", "neverneverland"));
             }
         }
-
-#if DEBUG_INTERACTIVE
-        [Fact]
-        public async Task MyGatewayTest()
-        {
-            using (var context = MockContext.Start("ServerManagement.Tests"))
-            {
-                var client = GetServerManagementClient(context);
-
-                var gateway1 = await client.Gateway.GetAsync(ResourceGroup, "mygateway");
-                Assert.NotNull(gateway1);
-
-
-                // get the gateway status
-                var gateway = await client.Gateway.GetAsync(ResourceGroup, "mygateway", GatewayExpandOption.Status);
-                Assert.NotNull(gateway);
-            }
-        }
-#endif 
 
         [Fact]
         public async Task GatewayTest()
@@ -333,18 +317,20 @@ namespace ServerManagement.Tests
                 var client = GetServerManagementClient(context);
                 GatewayResource gateway = null;
 
-                try
+                if (!ForceResetGatewayProfile)
                 {
-                    gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo);
+                    try
+                    {
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo);
 
-                    // make sure the gateway service is running.
-                    StartGateway();
+                        // make sure the gateway service is running.
+                        StartGateway();
+                    }
+                    catch
+                    {
+                        // if it's not there, we'll create it anyway.
+                    }
                 }
-                catch
-                {
-                    // if it's not there, we'll create it anyway.
-                }
-
                 try
                 {
                     if (gateway == null)

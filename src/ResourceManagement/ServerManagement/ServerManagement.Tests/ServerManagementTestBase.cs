@@ -28,9 +28,10 @@ namespace ServerManagement.Tests
         private static string _sessionId;
         private readonly ITestOutputHelper _output;
 
+
         public ServerManagementTestBase(ITestOutputHelper output)
         {
-#if DEBUG_INTERACTIVE
+
             // add environment variables so that we can just use the visual studio test runner for doing interactive testing.
             // these get ignored when they are already set.
             Extensions.SetEnvironmentVariableIfNotAlreadySet("TEST_HTTPMOCK_OUTPUT",
@@ -45,7 +46,7 @@ namespace ServerManagement.Tests
                 StringComparison.OrdinalIgnoreCase)
                 ? HttpRecorderMode.Record
                 : HttpRecorderMode.Playback;
-#endif 
+
 
             if (TestingInteractively)
             {
@@ -60,17 +61,20 @@ namespace ServerManagement.Tests
             get { return HttpMockServer.Mode == HttpRecorderMode.Record; }
         }
 
+        internal static bool ForceResetGatewayProfile
+        {
+            get
+            {
+                return "true".Equals(Environment.GetEnvironmentVariable("SMT_FORCE_GATEWAY_RESET"),
+                    StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
         protected static bool TestingInteractively
         {
             get
             {
-                // use this when interactively testing from visual studio
-                // and you want to have the tests not delete the gateway.
-#if DEBUG_INTERACTIVE
-                return Recording && true;
-#else
-                return false;
-#endif
+                return Recording && !ForceResetGatewayProfile;
             }
         }
 
@@ -84,7 +88,7 @@ namespace ServerManagement.Tests
                 return _nodename ??
                        (_nodename =
                            HttpMockServer.GetVariable("SMT_NODE_NAME",
-                               Environment.GetEnvironmentVariable("SMT_NODE_NAME") ?? "saddlebags"));
+                               Environment.GetEnvironmentVariable("SMT_NODE_NAME") ?? "saddlebags").ToLower());
             }
         }
 
@@ -127,7 +131,7 @@ namespace ServerManagement.Tests
                        (_gatewayone =
                            HttpMockServer.GetVariable("SMT_GATEWAY_1",
                                Environment.GetEnvironmentVariable("SMT_GATEWAY_1") ??
-                               "test_gateway_" + new Random().Next(0, int.MaxValue)));
+                               "test_gateway_" + new Random().Next(0, int.MaxValue)).ToLower());
             }
         }
 
@@ -137,20 +141,16 @@ namespace ServerManagement.Tests
         /// </summary>
         protected static string GatewayTwo
         {
-            // use this when interactively testing from visual studio
-            // and you want to have the tests use a specific gateway
-#if DEBUG_INTERACTIVE
-            get { return _gatewaytwo ?? (_gatewaytwo = "mygateway"); }
-#else
             get
             {
+                // if the SMT_GATEWAY_2 isn't set, we default to 'mygateway' ... 
+                // makes it easier to not regenerate the gateway profile every time
                 return _gatewaytwo ??
                        (_gatewaytwo =
                            HttpMockServer.GetVariable("SMT_GATEWAY_2",
                                Environment.GetEnvironmentVariable("SMT_GATEWAY_2") ??
-                               "test_gateway_" + new Random().Next(0, int.MaxValue)));
-            }
-#endif
+                               "mygateway").ToLower());
+            } 
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace ServerManagement.Tests
             get
             {
                 return _sessionId ??
-                       (_sessionId = HttpMockServer.GetVariable("SMT_SESSION_ID", Guid.NewGuid().ToString()));
+                       (_sessionId = HttpMockServer.GetVariable("SMT_SESSION_ID", Guid.NewGuid().ToString()).ToLower());
             }
         }
 
@@ -244,8 +244,6 @@ namespace ServerManagement.Tests
                     Task.Delay(100).Wait();
                 }
 
-                // wait for service to initialize itself.
-                Task.Delay(180*1000).Wait();
             }
         }
 
@@ -316,7 +314,10 @@ namespace ServerManagement.Tests
             {
                 foreach (var each in gateways)
                 {
-                    await RemoveGateway(client, each.Name);
+                    if (each.Name != GatewayTwo)
+                    {
+                        await RemoveGateway(client, each.Name);
+                    }
                 }
             }
         }
