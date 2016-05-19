@@ -17,47 +17,44 @@ namespace Microsoft.Azure.Management.Redis.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Specifies which redis node(s) to reboot.
+    /// Parameters for redis import operation.
     /// </summary>
-    public partial class RedisRebootParameters
+    public partial class ImportRDBParameters
     {
         /// <summary>
-        /// Initializes a new instance of the RedisRebootParameters class.
+        /// Initializes a new instance of the ImportRDBParameters class.
         /// </summary>
-        public RedisRebootParameters() { }
+        public ImportRDBParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the RedisRebootParameters class.
+        /// Initializes a new instance of the ImportRDBParameters class.
         /// </summary>
-        public RedisRebootParameters(string rebootType, int? shardId = default(int?))
+        public ImportRDBParameters(IList<string> files, string format = default(string))
         {
-            RebootType = rebootType;
-            ShardId = shardId;
+            Format = format;
+            Files = files;
         }
 
         /// <summary>
-        /// Which redis node(s) to reboot. Depending on this value data loss
-        /// is possible. Possible values include: 'PrimaryNode',
-        /// 'SecondaryNode', 'AllNodes'
+        /// File format.
         /// </summary>
-        [JsonProperty(PropertyName = "rebootType")]
-        public string RebootType { get; set; }
+        [JsonProperty(PropertyName = "format")]
+        public string Format { get; set; }
 
         /// <summary>
-        /// In case of cluster cache, this specifies shard id which should be
-        /// rebooted.
+        /// files to import
         /// </summary>
-        [JsonProperty(PropertyName = "shardId")]
-        public int? ShardId { get; set; }
+        [JsonProperty(PropertyName = "files")]
+        public IList<string> Files { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (RebootType == null)
+            if (Files == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RebootType");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Files");
             }
         }
     }

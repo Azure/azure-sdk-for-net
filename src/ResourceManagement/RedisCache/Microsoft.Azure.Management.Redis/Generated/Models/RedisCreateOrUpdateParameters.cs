@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Initializes a new instance of the RedisCreateOrUpdateParameters
         /// class.
         /// </summary>
-        public RedisCreateOrUpdateParameters(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string redisVersion = default(string), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string virtualNetwork = default(string), string subnet = default(string), string staticIP = default(string))
+        public RedisCreateOrUpdateParameters(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string redisVersion = default(string), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string))
             : base(location, id, name, type, tags)
         {
             RedisVersion = redisVersion;
@@ -41,8 +41,7 @@ namespace Microsoft.Azure.Management.Redis.Models
             EnableNonSslPort = enableNonSslPort;
             TenantSettings = tenantSettings;
             ShardCount = shardCount;
-            VirtualNetwork = virtualNetwork;
-            Subnet = subnet;
+            SubnetId = subnetId;
             StaticIP = staticIP;
         }
 
@@ -88,19 +87,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         public int? ShardCount { get; set; }
 
         /// <summary>
-        /// The exact ARM resource ID of the virtual network to deploy the
-        /// redis cache in. Example format:
-        /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.ClassicNetwork/VirtualNetworks/vnet1
+        /// The full resource ID of a subnet in a virtual network to deploy
+        /// the redis cache in. Example format:
+        /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1
         /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualNetwork")]
-        public string VirtualNetwork { get; set; }
-
-        /// <summary>
-        /// Required when deploying a redis cache inside an existing Azure
-        /// Virtual Network.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.subnet")]
-        public string Subnet { get; set; }
+        [JsonProperty(PropertyName = "properties.subnetId")]
+        public string SubnetId { get; set; }
 
         /// <summary>
         /// Required when deploying a redis cache inside an existing Azure

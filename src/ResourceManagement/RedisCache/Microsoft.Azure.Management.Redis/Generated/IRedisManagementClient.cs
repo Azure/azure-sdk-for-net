@@ -19,8 +19,7 @@ namespace Microsoft.Azure.Management.Redis
     using Models;
 
     /// <summary>
-    /// .Net client wrapper for the REST API for Azure Redis Cache Management
-    /// Service
+    /// REST API for Azure Redis Cache Service
     /// </summary>
     public partial interface IRedisManagementClient : IDisposable
     {

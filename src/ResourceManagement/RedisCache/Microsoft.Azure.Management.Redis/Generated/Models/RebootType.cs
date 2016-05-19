@@ -15,14 +15,10 @@ namespace Microsoft.Azure.Management.Redis.Models
     /// <summary>
     /// Defines values for RebootType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RebootType
+    public static class RebootType
     {
-        [EnumMember(Value = "PrimaryNode")]
-        PrimaryNode,
-        [EnumMember(Value = "SecondaryNode")]
-        SecondaryNode,
-        [EnumMember(Value = "AllNodes")]
-        AllNodes
+        public const string PrimaryNode = "PrimaryNode";
+        public const string SecondaryNode = "SecondaryNode";
+        public const string AllNodes = "AllNodes";
     }
 }

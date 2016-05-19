@@ -26,8 +26,7 @@ namespace Microsoft.Azure.Management.Redis
     using Models;
 
     /// <summary>
-    /// .Net client wrapper for the REST API for Azure Redis Cache Management
-    /// Service
+    /// REST API for Azure Redis Cache Service
     /// </summary>
     public partial class RedisManagementClient : ServiceClient<RedisManagementClient>, IRedisManagementClient, IAzureClient
     {
@@ -266,7 +265,7 @@ namespace Microsoft.Azure.Management.Redis
         {
             this.Redis = new RedisOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-08-01";
+            this.ApiVersion = "2016-04-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;
