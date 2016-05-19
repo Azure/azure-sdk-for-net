@@ -261,5 +261,15 @@ namespace Microsoft.AzureStack.Management
         {
             get; 
         }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        IUsageConnectionsOperations UsageConnections
+        {
+            get; 
+        }
     }
 }
