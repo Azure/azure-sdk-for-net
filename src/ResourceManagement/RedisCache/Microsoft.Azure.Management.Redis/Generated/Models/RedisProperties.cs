@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Redis.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters supplied to CreateOrUpdate redis operation.
+    /// Properties supplied to CreateOrUpdate redis operation.
     /// </summary>
     public partial class RedisProperties
     {
