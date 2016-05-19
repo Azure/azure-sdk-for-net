@@ -25,11 +25,13 @@ namespace Sql2.Tests.ScenarioTests
 {
     class Sql2ScenarioHelper
     {
-        
+
         /// <summary>
         /// The region in which the tests will create their needed resources
         /// </summary>
-        private static string TestEnvironmentRegion = "Australia East";
+        private static string TestEnvironmentRegion = "North Europe";
+
+        private static string TestEnvironmentSecondaryRegion = "Southeast Asia";
         
         /// <summary>
         /// Generate a SQL Client from the test base to use.
@@ -123,9 +125,9 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="handler">A delegation handler to create a Sql client based on it</param>
         /// <param name="serverVersion">The version of the server being created</param>
         /// <param name="test">A function that receives a sql client, names of a created resource group and server</param>
-        public static void RunTwoServersTestInEnvironment(BasicDelegatingHandler handler, string serverVersion, Action<SqlManagementClient, string, Server, Server> test)
+        public static void RunTwoServersTestInEnvironment(BasicDelegatingHandler handler, string serverVersion, bool useDifferentEnvironments, Action<SqlManagementClient, string, Server, Server> test)
         {
-            RunTwoServersTestInEnvironment(handler, serverVersion, TestEnvironmentRegion, test);
+            RunTwoServersTestInEnvironment(handler, serverVersion, TestEnvironmentRegion, useDifferentEnvironments ? TestEnvironmentSecondaryRegion: TestEnvironmentRegion, test);
         }
 
         /// <summary>
@@ -136,14 +138,15 @@ namespace Sql2.Tests.ScenarioTests
         /// <param name="handler">A delegation handler to create a Sql client based on it</param>
         /// <param name="serverVersion">The version of the server being created</param>
         /// <param name="serverLocation">The location of the server being created</param>
+        /// <param name="secondaryServerLocation">The location of the second server being created</param>
         /// <param name="test">A function that receives a sql client, names of a created resource group and server</param>
-        public static void RunTwoServersTestInEnvironment(BasicDelegatingHandler handler, string serverVersion, string serverLocation, Action<SqlManagementClient, string, Server, Server> test)
+        public static void RunTwoServersTestInEnvironment(BasicDelegatingHandler handler, string serverVersion, string serverLocation, string secondaryServerLocation, Action<SqlManagementClient, string, Server, Server> test)
         {
             // Management Clients
             var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
             var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
-            // Variables for server create
+            // Variables for server create.
             string resGroupName = TestUtilities.GenerateName("csm-sql-rg-");
             string server1Name = TestUtilities.GenerateName("csm-sql-server-");
             string server2Name = TestUtilities.GenerateName("csm-sql-server-");
@@ -152,7 +155,7 @@ namespace Sql2.Tests.ScenarioTests
             string adminPass = "testp@ssMakingIt1007Longer";
             string version = serverVersion;
 
-            // Create the resource group.
+            // Create the resource group(s)
             resClient.ResourceGroups.CreateOrUpdate(resGroupName, new ResourceGroup()
             {
                 Location = serverLocation,
@@ -161,35 +164,37 @@ namespace Sql2.Tests.ScenarioTests
             try
             {
                 //////////////////////////////////////////////////////////////////////
-                // Create server for test.
-                var server1 = sqlClient.Servers.CreateOrUpdate(resGroupName, server1Name, new ServerCreateOrUpdateParameters()
-                {
-                    Location = serverLocation,
-                    Properties = new ServerCreateOrUpdateProperties()
+                // Create servers for test.
+                var server1 =
+                    sqlClient.Servers.CreateOrUpdate(resGroupName, server1Name, new ServerCreateOrUpdateParameters()
                     {
-                        AdministratorLogin = adminLogin,
-                        AdministratorLoginPassword = adminPass,
-                        Version = version,
-                    }
-                }).Server;
+                        Location = serverLocation,
+                        Properties = new ServerCreateOrUpdateProperties()
+                        {
+                            AdministratorLogin = adminLogin,
+                            AdministratorLoginPassword = adminPass,
+                            Version = version,
+                        }
+                    }).Server;
 
-                var server2 = sqlClient.Servers.CreateOrUpdate(resGroupName, server2Name, new ServerCreateOrUpdateParameters()
-                {
-                    Location = serverLocation,
-                    Properties = new ServerCreateOrUpdateProperties()
+                var server2 =
+                    sqlClient.Servers.CreateOrUpdate(resGroupName, server2Name, new ServerCreateOrUpdateParameters()
                     {
-                        AdministratorLogin = adminLogin,
-                        AdministratorLoginPassword = adminPass,
-                        Version = version,
-                    }
-                }).Server;
+                        Location = secondaryServerLocation,
+                        Properties = new ServerCreateOrUpdateProperties()
+                        {
+                            AdministratorLogin = adminLogin,
+                            AdministratorLoginPassword = adminPass,
+                            Version = version,
+                        }
+                    }).Server;
 
                 test(sqlClient, resGroupName, server1, server2);
             }
             finally
             {
-                // Clean up the resource group.
-                resClient.ResourceGroups.Delete(resGroupName);
+                // Clean up the resource group(s)
+                resClient.ResourceGroups.DeleteAsync(resGroupName);
             }
         }
 

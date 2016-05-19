@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class ProtectedItemsQueryParameter
     {
+        private string _recoveryPlanName;
+        
+        /// <summary>
+        /// Optional. Recovery plan filter.
+        /// </summary>
+        public string RecoveryPlanName
+        {
+            get { return this._recoveryPlanName; }
+            set { this._recoveryPlanName = value; }
+        }
+        
         private string _sourceFabricName;
         
         /// <summary>

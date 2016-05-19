@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/d22f872b-f3f1-425a-8100-c74a376452b1/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/rsv6/usages?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZDIyZjg3MmItZjNmMS00MjVhLTgxMDAtYzc0YTM3NjQ1MmIxL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL3JzdjYvdXNhZ2VzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ca6ed4a0-cbdb-4473-a3a4-94798c724f10"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"name\": {\r\n        \"value\": \"ProtectedItemCount\",\r\n        \"localizedValue\": \"Backup items/Azure virtual machine backup\"\r\n      }\r\n    },\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"quotaPeriod\": \"P1D\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"name\": {\r\n        \"value\": \"JobsCount\",\r\n        \"localizedValue\": \"Azure virtual machine backup\"\r\n      }\r\n    },\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"name\": {\r\n        \"value\": \"MABContainersCount\",\r\n        \"localizedValue\": \"Backup management servers\"\r\n      }\r\n    },\r\n    {\r\n      \"unit\": \"Bytes\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"name\": {\r\n        \"value\": \"GRSStorageUsage\",\r\n        \"localizedValue\": \"Cloud - GRS\"\r\n      }\r\n    },\r\n    {\r\n      \"unit\": \"Bytes\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"name\": {\r\n        \"value\": \"LRSStorageUsage\",\r\n        \"localizedValue\": \"Cloud - LRS\"\r\n      }\r\n    },\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"name\": {\r\n        \"value\": \"ManagedInstances\",\r\n        \"localizedValue\": \"Proctected Instances\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "768"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "27249324-0dae-462f-b3dd-23292aad7632"
+        ],
+        "x-ms-client-request-id": [
+          "ca6ed4a0-cbdb-4473-a3a4-94798c724f10"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14247"
+        ],
+        "x-ms-correlation-request-id": [
+          "27249324-0dae-462f-b3dd-23292aad7632"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160415T082930Z:27249324-0dae-462f-b3dd-23292aad7632"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 Apr 2016 08:29:29 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "d22f872b-f3f1-425a-8100-c74a376452b1"
+  }
+}

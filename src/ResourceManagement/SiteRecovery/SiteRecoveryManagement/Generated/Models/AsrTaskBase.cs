@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._actions = value; }
         }
         
+        private TaskTypeDetails _customDetails;
+        
+        /// <summary>
+        /// Required. The custom task details based on the task type.
+        /// </summary>
+        public TaskTypeDetails CustomDetails
+        {
+            get { return this._customDetails; }
+            set { this._customDetails = value; }
+        }
+        
         private DateTime _endTime;
         
         /// <summary>

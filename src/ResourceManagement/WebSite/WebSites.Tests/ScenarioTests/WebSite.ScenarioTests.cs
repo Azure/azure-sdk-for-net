@@ -575,7 +575,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Test needs to be re-recorded")]
         public void CloneSite()
         {
             RunWebsiteTestScenario(
@@ -640,8 +640,10 @@ namespace WebSites.Tests.ScenarioTests
                 {
                     interval = (endTime - DateTime.Now).TotalMilliseconds;
                 }
-
-                Thread.Sleep((int)interval);
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Thread.Sleep((int)interval);
+                }
             }
 
             switch (status)

@@ -33,6 +33,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public partial interface IRecoveryPlanOperations
     {
         /// <summary>
+        /// Commit failover of the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginCommitFailoverAsync(string recoveryPlanName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Creates a recovery plan.
         /// </summary>
         /// <param name='recoveryPlanName'>
@@ -70,6 +87,83 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<LongRunningOperationResponse> BeginDeletingAsync(string recoveryPlanName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Planned failover of the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='input'>
+        /// Recovery plan planned failover input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginPlannedFailoverAsync(string recoveryPlanName, RecoveryPlanPlannedFailoverInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Reprotects the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginReprotectAsync(string recoveryPlanName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Test failover of the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='input'>
+        /// Recovery plan test failover input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginTestFailoverAsync(string recoveryPlanName, RecoveryPlanTestFailoverInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Unplanned failover of the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='input'>
+        /// Recovery plan unplanned failover input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginUnplannedFailoverAsync(string recoveryPlanName, RecoveryPlanUnplannedFailoverInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Updates the given recovery plan.
         /// </summary>
         /// <param name='recoveryPlanName'>
@@ -88,6 +182,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// A standard service response for long running operations.
         /// </returns>
         Task<LongRunningOperationResponse> BeginUpdatingAsync(string recoveryPlanName, UpdateRecoveryPlanInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Commit failover of the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> CommitFailoverAsync(string recoveryPlanName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates a recovery plan.
@@ -158,6 +269,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
+        Task<RecoveryPlanOperationResponse> GetCommitFailoverStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
         Task<CreateRecoveryPlanOperationResponse> GetCreateStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
@@ -192,6 +320,74 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
+        Task<RecoveryPlanOperationResponse> GetPlannedFailoverStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<RecoveryPlanOperationResponse> GetReprotectStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<RecoveryPlanOperationResponse> GetTestFailoverStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<RecoveryPlanOperationResponse> GetUnplannedFailoverStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
         Task<UpdateRecoveryPlanOperationResponse> GetUpdateStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
@@ -207,6 +403,83 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// The response model for the list recovery plan operation.
         /// </returns>
         Task<RecoveryPlanListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Planned failover of the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='input'>
+        /// Recovery plan planned failover input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> PlannedFailoverAsync(string recoveryPlanName, RecoveryPlanPlannedFailoverInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Reprotects the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> ReprotectAsync(string recoveryPlanName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Test failover of the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='input'>
+        /// Recovery plan test failover input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> TestFailoverAsync(string recoveryPlanName, RecoveryPlanTestFailoverInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Unplanned failover of the recovery plan.
+        /// </summary>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='input'>
+        /// Recovery plan unplanned failover input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> UnplannedFailoverAsync(string recoveryPlanName, RecoveryPlanUnplannedFailoverInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Updates the given recovery plan.

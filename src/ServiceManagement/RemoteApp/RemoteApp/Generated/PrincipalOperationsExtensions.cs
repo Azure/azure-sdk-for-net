@@ -322,5 +322,107 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         {
             return operations.ListForAppAsync(collectionName, appAlias, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// app in a collection using continuation token.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Required. Application alias.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Optional. Continuation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        public static SecurityPrincipalInfoListWithTokenResult ListForAppWithToken(this IPrincipalOperations operations, string collectionName, string appAlias, string previousContinuationToken)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IPrincipalOperations)s).ListForAppWithTokenAsync(collectionName, appAlias, previousContinuationToken);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// app in a collection using continuation token.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Required. Application alias.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Optional. Continuation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        public static Task<SecurityPrincipalInfoListWithTokenResult> ListForAppWithTokenAsync(this IPrincipalOperations operations, string collectionName, string appAlias, string previousContinuationToken)
+        {
+            return operations.ListForAppWithTokenAsync(collectionName, appAlias, previousContinuationToken, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// collection using continuation token.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Optional. Continuation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        public static SecurityPrincipalInfoListWithTokenResult ListWithToken(this IPrincipalOperations operations, string collectionName, string previousContinuationToken)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IPrincipalOperations)s).ListWithTokenAsync(collectionName, previousContinuationToken);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// collection using continuation token.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IPrincipalOperations.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Optional. Continuation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        public static Task<SecurityPrincipalInfoListWithTokenResult> ListWithTokenAsync(this IPrincipalOperations operations, string collectionName, string previousContinuationToken)
+        {
+            return operations.ListWithTokenAsync(collectionName, previousContinuationToken, CancellationToken.None);
+        }
     }
 }

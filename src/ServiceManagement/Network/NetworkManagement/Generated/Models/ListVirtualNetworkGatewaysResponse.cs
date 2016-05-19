@@ -71,6 +71,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         
         public partial class VirtualNetworkGateway
         {
+            private BgpSettings _bgpSettings;
+            
+            /// <summary>
+            /// Optional. Virtual network gateway's BGP settings
+            /// </summary>
+            public BgpSettings BgpSettings
+            {
+                get { return this._bgpSettings; }
+                set { this._bgpSettings = value; }
+            }
+            
             private GatewayDefaultSite _defaultSite;
             
             /// <summary>

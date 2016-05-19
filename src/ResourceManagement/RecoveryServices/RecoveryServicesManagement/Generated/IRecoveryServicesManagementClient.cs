@@ -114,6 +114,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
+        /// Definition of vault operations for the Recovery Services extension.
+        /// </summary>
+        IVaultUsageOperations VaultUsage
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of
         /// thespecified operation. After calling an asynchronous operation,
         /// you can call Get Operation Status to determine whether the

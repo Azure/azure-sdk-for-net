@@ -49,5 +49,33 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Create database as non-readable geo-secondary.
         /// </summary>
         public const string NonReadableSecondary = "NonReadableSecondary";
+        
+        /// <summary>
+        /// Database created as restore target where source is another live
+        /// database
+        /// </summary>
+        public const string PointInTimeRestore = "PointInTimeRestore";
+        
+        /// <summary>
+        /// Database created as restore target where source is a deleted
+        /// database
+        /// </summary>
+        public const string Restore = "Restore";
+        
+        /// <summary>
+        /// Database created by restoring the backups of another database from
+        /// XStore
+        /// </summary>
+        public const string Recovery = "Recovery";
+        
+        /// <summary>
+        /// Database created by restoring an external backup
+        /// </summary>
+        public const string RestoreExternalBackup = "RestoreExternalBackup";
+        
+        /// <summary>
+        /// Database created by restoring an archived backup
+        /// </summary>
+        public const string RestoreArchivedBackup = "RestoreArchivedBackup";
     }
 }

@@ -95,6 +95,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             get { return this._activityTypes; }
         }
         
+        private IActivityWindowOperations _activityWindows;
+        
+        /// <summary>
+        /// Operations for activity windows.
+        /// </summary>
+        public virtual IActivityWindowOperations ActivityWindows
+        {
+            get { return this._activityWindows; }
+        }
+        
         private IComputeTypeOperations _computeTypes;
         
         /// <summary>
@@ -202,6 +212,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             : base()
         {
             this._activityTypes = new ActivityTypeOperations(this);
+            this._activityWindows = new ActivityWindowOperations(this);
             this._computeTypes = new ComputeTypeOperations(this);
             this._dataFactories = new DataFactoryOperations(this);
             this._datasets = new DatasetOperations(this);
@@ -285,6 +296,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             : base(httpClient)
         {
             this._activityTypes = new ActivityTypeOperations(this);
+            this._activityWindows = new ActivityWindowOperations(this);
             this._computeTypes = new ComputeTypeOperations(this);
             this._dataFactories = new DataFactoryOperations(this);
             this._datasets = new DatasetOperations(this);

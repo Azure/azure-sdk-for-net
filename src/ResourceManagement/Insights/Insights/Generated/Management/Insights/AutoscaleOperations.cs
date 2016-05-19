@@ -364,6 +364,82 @@ namespace Microsoft.Azure.Management.Insights
                         }
                     }
                     
+                    if (parameters.Properties.Notifications != null)
+                    {
+                        if (parameters.Properties.Notifications is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Notifications).IsInitialized)
+                        {
+                            JArray notificationsArray = new JArray();
+                            foreach (AutoscaleNotification notificationsItem in parameters.Properties.Notifications)
+                            {
+                                JObject notificationValue = new JObject();
+                                notificationsArray.Add(notificationValue);
+                                
+                                if (notificationsItem.Operation != null)
+                                {
+                                    notificationValue["operation"] = notificationsItem.Operation;
+                                }
+                                
+                                if (notificationsItem.Email != null)
+                                {
+                                    JObject emailValue = new JObject();
+                                    notificationValue["email"] = emailValue;
+                                    
+                                    emailValue["sendToSubscriptionAdministrator"] = notificationsItem.Email.SendToSubscriptionAdministrator;
+                                    
+                                    emailValue["sendToSubscriptionCoAdministrators"] = notificationsItem.Email.SendToSubscriptionCoAdministrators;
+                                    
+                                    if (notificationsItem.Email.CustomEmails != null)
+                                    {
+                                        if (notificationsItem.Email.CustomEmails is ILazyCollection == false || ((ILazyCollection)notificationsItem.Email.CustomEmails).IsInitialized)
+                                        {
+                                            JArray customEmailsArray = new JArray();
+                                            foreach (string customEmailsItem in notificationsItem.Email.CustomEmails)
+                                            {
+                                                customEmailsArray.Add(customEmailsItem);
+                                            }
+                                            emailValue["customEmails"] = customEmailsArray;
+                                        }
+                                    }
+                                }
+                                
+                                if (notificationsItem.Webhooks != null)
+                                {
+                                    if (notificationsItem.Webhooks is ILazyCollection == false || ((ILazyCollection)notificationsItem.Webhooks).IsInitialized)
+                                    {
+                                        JArray webhooksArray = new JArray();
+                                        foreach (WebhookNotification webhooksItem in notificationsItem.Webhooks)
+                                        {
+                                            JObject webhookValue = new JObject();
+                                            webhooksArray.Add(webhookValue);
+                                            
+                                            if (webhooksItem.ServiceUri != null)
+                                            {
+                                                webhookValue["serviceUri"] = webhooksItem.ServiceUri;
+                                            }
+                                            
+                                            if (webhooksItem.Properties != null)
+                                            {
+                                                if (webhooksItem.Properties is ILazyCollection == false || ((ILazyCollection)webhooksItem.Properties).IsInitialized)
+                                                {
+                                                    JObject propertiesDictionary = new JObject();
+                                                    foreach (KeyValuePair<string, string> pair2 in webhooksItem.Properties)
+                                                    {
+                                                        string propertiesKey = pair2.Key;
+                                                        string propertiesValue2 = pair2.Value;
+                                                        propertiesDictionary[propertiesKey] = propertiesValue2;
+                                                    }
+                                                    webhookValue["properties"] = propertiesDictionary;
+                                                }
+                                            }
+                                        }
+                                        notificationValue["webhooks"] = webhooksArray;
+                                    }
+                                }
+                            }
+                            propertiesValue["notifications"] = notificationsArray;
+                        }
+                    }
+                    
                     propertiesValue["enabled"] = parameters.Properties.Enabled;
                     
                     if (parameters.Properties.Name != null)
@@ -1016,6 +1092,81 @@ namespace Microsoft.Azure.Management.Insights
                                     }
                                 }
                                 
+                                JToken notificationsArray = propertiesValue["notifications"];
+                                if (notificationsArray != null && notificationsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken notificationsValue in ((JArray)notificationsArray))
+                                    {
+                                        AutoscaleNotification notificationInstance = new AutoscaleNotification();
+                                        propertiesInstance.Notifications.Add(notificationInstance);
+                                        
+                                        JToken operationValue = notificationsValue["operation"];
+                                        if (operationValue != null && operationValue.Type != JTokenType.Null)
+                                        {
+                                            string operationInstance = ((string)operationValue);
+                                            notificationInstance.Operation = operationInstance;
+                                        }
+                                        
+                                        JToken emailValue = notificationsValue["email"];
+                                        if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                        {
+                                            EmailNotification emailInstance = new EmailNotification();
+                                            notificationInstance.Email = emailInstance;
+                                            
+                                            JToken sendToSubscriptionAdministratorValue = emailValue["sendToSubscriptionAdministrator"];
+                                            if (sendToSubscriptionAdministratorValue != null && sendToSubscriptionAdministratorValue.Type != JTokenType.Null)
+                                            {
+                                                bool sendToSubscriptionAdministratorInstance = ((bool)sendToSubscriptionAdministratorValue);
+                                                emailInstance.SendToSubscriptionAdministrator = sendToSubscriptionAdministratorInstance;
+                                            }
+                                            
+                                            JToken sendToSubscriptionCoAdministratorsValue = emailValue["sendToSubscriptionCoAdministrators"];
+                                            if (sendToSubscriptionCoAdministratorsValue != null && sendToSubscriptionCoAdministratorsValue.Type != JTokenType.Null)
+                                            {
+                                                bool sendToSubscriptionCoAdministratorsInstance = ((bool)sendToSubscriptionCoAdministratorsValue);
+                                                emailInstance.SendToSubscriptionCoAdministrators = sendToSubscriptionCoAdministratorsInstance;
+                                            }
+                                            
+                                            JToken customEmailsArray = emailValue["customEmails"];
+                                            if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
+                                                {
+                                                    emailInstance.CustomEmails.Add(((string)customEmailsValue));
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken webhooksArray = notificationsValue["webhooks"];
+                                        if (webhooksArray != null && webhooksArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken webhooksValue in ((JArray)webhooksArray))
+                                            {
+                                                WebhookNotification webhookInstance = new WebhookNotification();
+                                                notificationInstance.Webhooks.Add(webhookInstance);
+                                                
+                                                JToken serviceUriValue = webhooksValue["serviceUri"];
+                                                if (serviceUriValue != null && serviceUriValue.Type != JTokenType.Null)
+                                                {
+                                                    string serviceUriInstance = ((string)serviceUriValue);
+                                                    webhookInstance.ServiceUri = serviceUriInstance;
+                                                }
+                                                
+                                                JToken propertiesSequenceElement = ((JToken)webhooksValue["properties"]);
+                                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in propertiesSequenceElement)
+                                                    {
+                                                        string propertiesKey = ((string)property2.Name);
+                                                        string propertiesValue2 = ((string)property2.Value);
+                                                        webhookInstance.Properties.Add(propertiesKey, propertiesValue2);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                
                                 JToken enabledValue = propertiesValue["enabled"];
                                 if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                 {
@@ -1489,6 +1640,81 @@ namespace Microsoft.Azure.Management.Insights
                                             }
                                         }
                                         
+                                        JToken notificationsArray = propertiesValue["notifications"];
+                                        if (notificationsArray != null && notificationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken notificationsValue in ((JArray)notificationsArray))
+                                            {
+                                                AutoscaleNotification notificationInstance = new AutoscaleNotification();
+                                                propertiesInstance.Notifications.Add(notificationInstance);
+                                                
+                                                JToken operationValue = notificationsValue["operation"];
+                                                if (operationValue != null && operationValue.Type != JTokenType.Null)
+                                                {
+                                                    string operationInstance = ((string)operationValue);
+                                                    notificationInstance.Operation = operationInstance;
+                                                }
+                                                
+                                                JToken emailValue = notificationsValue["email"];
+                                                if (emailValue != null && emailValue.Type != JTokenType.Null)
+                                                {
+                                                    EmailNotification emailInstance = new EmailNotification();
+                                                    notificationInstance.Email = emailInstance;
+                                                    
+                                                    JToken sendToSubscriptionAdministratorValue = emailValue["sendToSubscriptionAdministrator"];
+                                                    if (sendToSubscriptionAdministratorValue != null && sendToSubscriptionAdministratorValue.Type != JTokenType.Null)
+                                                    {
+                                                        bool sendToSubscriptionAdministratorInstance = ((bool)sendToSubscriptionAdministratorValue);
+                                                        emailInstance.SendToSubscriptionAdministrator = sendToSubscriptionAdministratorInstance;
+                                                    }
+                                                    
+                                                    JToken sendToSubscriptionCoAdministratorsValue = emailValue["sendToSubscriptionCoAdministrators"];
+                                                    if (sendToSubscriptionCoAdministratorsValue != null && sendToSubscriptionCoAdministratorsValue.Type != JTokenType.Null)
+                                                    {
+                                                        bool sendToSubscriptionCoAdministratorsInstance = ((bool)sendToSubscriptionCoAdministratorsValue);
+                                                        emailInstance.SendToSubscriptionCoAdministrators = sendToSubscriptionCoAdministratorsInstance;
+                                                    }
+                                                    
+                                                    JToken customEmailsArray = emailValue["customEmails"];
+                                                    if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
+                                                        {
+                                                            emailInstance.CustomEmails.Add(((string)customEmailsValue));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken webhooksArray = notificationsValue["webhooks"];
+                                                if (webhooksArray != null && webhooksArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken webhooksValue in ((JArray)webhooksArray))
+                                                    {
+                                                        WebhookNotification webhookInstance = new WebhookNotification();
+                                                        notificationInstance.Webhooks.Add(webhookInstance);
+                                                        
+                                                        JToken serviceUriValue = webhooksValue["serviceUri"];
+                                                        if (serviceUriValue != null && serviceUriValue.Type != JTokenType.Null)
+                                                        {
+                                                            string serviceUriInstance = ((string)serviceUriValue);
+                                                            webhookInstance.ServiceUri = serviceUriInstance;
+                                                        }
+                                                        
+                                                        JToken propertiesSequenceElement = ((JToken)webhooksValue["properties"]);
+                                                        if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property2 in propertiesSequenceElement)
+                                                            {
+                                                                string propertiesKey = ((string)property2.Name);
+                                                                string propertiesValue2 = ((string)property2.Value);
+                                                                webhookInstance.Properties.Add(propertiesKey, propertiesValue2);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken enabledValue = propertiesValue["enabled"];
                                         if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                         {
@@ -1840,6 +2066,82 @@ namespace Microsoft.Azure.Management.Insights
                                 }
                             }
                             propertiesValue["profiles"] = profilesArray;
+                        }
+                    }
+                    
+                    if (parameters.Properties.Notifications != null)
+                    {
+                        if (parameters.Properties.Notifications is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Notifications).IsInitialized)
+                        {
+                            JArray notificationsArray = new JArray();
+                            foreach (AutoscaleNotification notificationsItem in parameters.Properties.Notifications)
+                            {
+                                JObject notificationValue = new JObject();
+                                notificationsArray.Add(notificationValue);
+                                
+                                if (notificationsItem.Operation != null)
+                                {
+                                    notificationValue["operation"] = notificationsItem.Operation;
+                                }
+                                
+                                if (notificationsItem.Email != null)
+                                {
+                                    JObject emailValue = new JObject();
+                                    notificationValue["email"] = emailValue;
+                                    
+                                    emailValue["sendToSubscriptionAdministrator"] = notificationsItem.Email.SendToSubscriptionAdministrator;
+                                    
+                                    emailValue["sendToSubscriptionCoAdministrators"] = notificationsItem.Email.SendToSubscriptionCoAdministrators;
+                                    
+                                    if (notificationsItem.Email.CustomEmails != null)
+                                    {
+                                        if (notificationsItem.Email.CustomEmails is ILazyCollection == false || ((ILazyCollection)notificationsItem.Email.CustomEmails).IsInitialized)
+                                        {
+                                            JArray customEmailsArray = new JArray();
+                                            foreach (string customEmailsItem in notificationsItem.Email.CustomEmails)
+                                            {
+                                                customEmailsArray.Add(customEmailsItem);
+                                            }
+                                            emailValue["customEmails"] = customEmailsArray;
+                                        }
+                                    }
+                                }
+                                
+                                if (notificationsItem.Webhooks != null)
+                                {
+                                    if (notificationsItem.Webhooks is ILazyCollection == false || ((ILazyCollection)notificationsItem.Webhooks).IsInitialized)
+                                    {
+                                        JArray webhooksArray = new JArray();
+                                        foreach (WebhookNotification webhooksItem in notificationsItem.Webhooks)
+                                        {
+                                            JObject webhookValue = new JObject();
+                                            webhooksArray.Add(webhookValue);
+                                            
+                                            if (webhooksItem.ServiceUri != null)
+                                            {
+                                                webhookValue["serviceUri"] = webhooksItem.ServiceUri;
+                                            }
+                                            
+                                            if (webhooksItem.Properties != null)
+                                            {
+                                                if (webhooksItem.Properties is ILazyCollection == false || ((ILazyCollection)webhooksItem.Properties).IsInitialized)
+                                                {
+                                                    JObject propertiesDictionary = new JObject();
+                                                    foreach (KeyValuePair<string, string> pair2 in webhooksItem.Properties)
+                                                    {
+                                                        string propertiesKey = pair2.Key;
+                                                        string propertiesValue2 = pair2.Value;
+                                                        propertiesDictionary[propertiesKey] = propertiesValue2;
+                                                    }
+                                                    webhookValue["properties"] = propertiesDictionary;
+                                                }
+                                            }
+                                        }
+                                        notificationValue["webhooks"] = webhooksArray;
+                                    }
+                                }
+                            }
+                            propertiesValue["notifications"] = notificationsArray;
                         }
                     }
                     

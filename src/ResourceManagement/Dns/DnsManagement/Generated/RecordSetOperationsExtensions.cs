@@ -57,14 +57,21 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='parameters'>
         /// Required. Parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='ifMatch'>
+        /// Optional. The etag of RecordSet.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
         /// <returns>
         /// The response to a RecordSet CreateOrUpdate operation.
         /// </returns>
-        public static RecordSetCreateOrUpdateResponse CreateOrUpdate(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetCreateOrUpdateParameters parameters)
+        public static RecordSetCreateOrUpdateResponse CreateOrUpdate(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetCreateOrUpdateParameters parameters, string ifMatch, string ifNoneMatch)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecordSetOperations)s).CreateOrUpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters);
+                return ((IRecordSetOperations)s).CreateOrUpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch, ifNoneMatch);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -92,12 +99,19 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='parameters'>
         /// Required. Parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='ifMatch'>
+        /// Optional. The etag of RecordSet.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
         /// <returns>
         /// The response to a RecordSet CreateOrUpdate operation.
         /// </returns>
-        public static Task<RecordSetCreateOrUpdateResponse> CreateOrUpdateAsync(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetCreateOrUpdateParameters parameters)
+        public static Task<RecordSetCreateOrUpdateResponse> CreateOrUpdateAsync(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetCreateOrUpdateParameters parameters, string ifMatch, string ifNoneMatch)
         {
-            return operations.CreateOrUpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch, ifNoneMatch, CancellationToken.None);
         }
         
         /// <summary>
@@ -120,18 +134,25 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='recordType'>
         /// Required. The type of DNS record.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to delete a record set.
+        /// <param name='ifMatch'>
+        /// Optional. Defines the If-Match condition. The delete operation will
+        /// be performed only if the ETag of the zone on the server matches
+        /// this value.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. The delete operation
+        /// will be performed only if the ETag of the zone on the server does
+        /// not match this value.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Delete(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetDeleteParameters parameters)
+        public static AzureOperationResponse Delete(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, string ifMatch, string ifNoneMatch)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecordSetOperations)s).DeleteAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters);
+                return ((IRecordSetOperations)s).DeleteAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, ifMatch, ifNoneMatch);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -156,16 +177,23 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='recordType'>
         /// Required. The type of DNS record.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to delete a record set.
+        /// <param name='ifMatch'>
+        /// Optional. Defines the If-Match condition. The delete operation will
+        /// be performed only if the ETag of the zone on the server matches
+        /// this value.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. The delete operation
+        /// will be performed only if the ETag of the zone on the server does
+        /// not match this value.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetDeleteParameters parameters)
+        public static Task<AzureOperationResponse> DeleteAsync(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, string ifMatch, string ifNoneMatch)
         {
-            return operations.DeleteAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, CancellationToken.None);
+            return operations.DeleteAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, ifMatch, ifNoneMatch, CancellationToken.None);
         }
         
         /// <summary>
@@ -384,6 +412,86 @@ namespace Microsoft.Azure.Management.Dns
         public static Task<RecordSetListResponse> ListNextAsync(this IRecordSetOperations operations, string nextLink)
         {
             return operations.ListNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Creates a RecordSet within a DNS zone.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Dns.IRecordSetOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='zoneName'>
+        /// Required. The name of the zone without a terminating dot.
+        /// </param>
+        /// <param name='relativeRecordSetName'>
+        /// Required. The name of the RecordSet, relative to the name of the
+        /// zone.
+        /// </param>
+        /// <param name='recordType'>
+        /// Required. The type of DNS record.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the CreateOrUpdate operation.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// Optional. The etag of Zone.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
+        /// <returns>
+        /// The response to a RecordSet Update operation.
+        /// </returns>
+        public static RecordSetUpdateResponse Update(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetUpdateParameters parameters, string ifMatch, string ifNoneMatch)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecordSetOperations)s).UpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch, ifNoneMatch);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates a RecordSet within a DNS zone.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Dns.IRecordSetOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='zoneName'>
+        /// Required. The name of the zone without a terminating dot.
+        /// </param>
+        /// <param name='relativeRecordSetName'>
+        /// Required. The name of the RecordSet, relative to the name of the
+        /// zone.
+        /// </param>
+        /// <param name='recordType'>
+        /// Required. The type of DNS record.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the CreateOrUpdate operation.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// Optional. The etag of Zone.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Optional. Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
+        /// <returns>
+        /// The response to a RecordSet Update operation.
+        /// </returns>
+        public static Task<RecordSetUpdateResponse> UpdateAsync(this IRecordSetOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetUpdateParameters parameters, string ifMatch, string ifNoneMatch)
+        {
+            return operations.UpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch, ifNoneMatch, CancellationToken.None);
         }
     }
 }

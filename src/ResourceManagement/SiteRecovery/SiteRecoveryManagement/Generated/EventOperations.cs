@@ -365,66 +365,66 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         }
                                         propertiesInstance.ProviderDetails = hyperVReplicaAzureEventDetailsInstance;
                                     }
-                                    if (typeName == "VMwareAzureV2")
+                                    if (typeName == "InMageAzureV2")
                                     {
-                                        VMwareAzureV2EventDetails vMwareAzureV2EventDetailsInstance = new VMwareAzureV2EventDetails();
+                                        InMageAzureV2EventDetails inMageAzureV2EventDetailsInstance = new InMageAzureV2EventDetails();
                                         
                                         JToken eventTypeValue2 = providerSpecificDetailsValue["eventType"];
                                         if (eventTypeValue2 != null && eventTypeValue2.Type != JTokenType.Null)
                                         {
                                             string eventTypeInstance2 = ((string)eventTypeValue2);
-                                            vMwareAzureV2EventDetailsInstance.EventType = eventTypeInstance2;
+                                            inMageAzureV2EventDetailsInstance.EventType = eventTypeInstance2;
                                         }
                                         
                                         JToken categoryValue = providerSpecificDetailsValue["category"];
                                         if (categoryValue != null && categoryValue.Type != JTokenType.Null)
                                         {
                                             string categoryInstance = ((string)categoryValue);
-                                            vMwareAzureV2EventDetailsInstance.Category = categoryInstance;
+                                            inMageAzureV2EventDetailsInstance.Category = categoryInstance;
                                         }
                                         
                                         JToken componentValue = providerSpecificDetailsValue["component"];
                                         if (componentValue != null && componentValue.Type != JTokenType.Null)
                                         {
                                             string componentInstance = ((string)componentValue);
-                                            vMwareAzureV2EventDetailsInstance.Component = componentInstance;
+                                            inMageAzureV2EventDetailsInstance.Component = componentInstance;
                                         }
                                         
                                         JToken correctiveActionValue = providerSpecificDetailsValue["correctiveAction"];
                                         if (correctiveActionValue != null && correctiveActionValue.Type != JTokenType.Null)
                                         {
                                             string correctiveActionInstance = ((string)correctiveActionValue);
-                                            vMwareAzureV2EventDetailsInstance.CorrectiveAction = correctiveActionInstance;
+                                            inMageAzureV2EventDetailsInstance.CorrectiveAction = correctiveActionInstance;
                                         }
                                         
                                         JToken detailsValue = providerSpecificDetailsValue["details"];
                                         if (detailsValue != null && detailsValue.Type != JTokenType.Null)
                                         {
                                             string detailsInstance = ((string)detailsValue);
-                                            vMwareAzureV2EventDetailsInstance.Details = detailsInstance;
+                                            inMageAzureV2EventDetailsInstance.Details = detailsInstance;
                                         }
                                         
                                         JToken summaryValue = providerSpecificDetailsValue["summary"];
                                         if (summaryValue != null && summaryValue.Type != JTokenType.Null)
                                         {
                                             string summaryInstance = ((string)summaryValue);
-                                            vMwareAzureV2EventDetailsInstance.Summary = summaryInstance;
+                                            inMageAzureV2EventDetailsInstance.Summary = summaryInstance;
                                         }
                                         
                                         JToken siteNameValue = providerSpecificDetailsValue["siteName"];
                                         if (siteNameValue != null && siteNameValue.Type != JTokenType.Null)
                                         {
                                             string siteNameInstance = ((string)siteNameValue);
-                                            vMwareAzureV2EventDetailsInstance.SiteName = siteNameInstance;
+                                            inMageAzureV2EventDetailsInstance.SiteName = siteNameInstance;
                                         }
                                         
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
                                             string instanceTypeInstance4 = ((string)instanceTypeValue4);
-                                            vMwareAzureV2EventDetailsInstance.InstanceType = instanceTypeInstance4;
+                                            inMageAzureV2EventDetailsInstance.InstanceType = instanceTypeInstance4;
                                         }
-                                        propertiesInstance.ProviderDetails = vMwareAzureV2EventDetailsInstance;
+                                        propertiesInstance.ProviderDetails = inMageAzureV2EventDetailsInstance;
                                     }
                                 }
                                 
@@ -923,66 +923,66 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 }
                                                 propertiesInstance.ProviderDetails = hyperVReplicaAzureEventDetailsInstance;
                                             }
-                                            if (typeName == "VMwareAzureV2")
+                                            if (typeName == "InMageAzureV2")
                                             {
-                                                VMwareAzureV2EventDetails vMwareAzureV2EventDetailsInstance = new VMwareAzureV2EventDetails();
+                                                InMageAzureV2EventDetails inMageAzureV2EventDetailsInstance = new InMageAzureV2EventDetails();
                                                 
                                                 JToken eventTypeValue2 = providerSpecificDetailsValue["eventType"];
                                                 if (eventTypeValue2 != null && eventTypeValue2.Type != JTokenType.Null)
                                                 {
                                                     string eventTypeInstance2 = ((string)eventTypeValue2);
-                                                    vMwareAzureV2EventDetailsInstance.EventType = eventTypeInstance2;
+                                                    inMageAzureV2EventDetailsInstance.EventType = eventTypeInstance2;
                                                 }
                                                 
                                                 JToken categoryValue = providerSpecificDetailsValue["category"];
                                                 if (categoryValue != null && categoryValue.Type != JTokenType.Null)
                                                 {
                                                     string categoryInstance = ((string)categoryValue);
-                                                    vMwareAzureV2EventDetailsInstance.Category = categoryInstance;
+                                                    inMageAzureV2EventDetailsInstance.Category = categoryInstance;
                                                 }
                                                 
                                                 JToken componentValue = providerSpecificDetailsValue["component"];
                                                 if (componentValue != null && componentValue.Type != JTokenType.Null)
                                                 {
                                                     string componentInstance = ((string)componentValue);
-                                                    vMwareAzureV2EventDetailsInstance.Component = componentInstance;
+                                                    inMageAzureV2EventDetailsInstance.Component = componentInstance;
                                                 }
                                                 
                                                 JToken correctiveActionValue = providerSpecificDetailsValue["correctiveAction"];
                                                 if (correctiveActionValue != null && correctiveActionValue.Type != JTokenType.Null)
                                                 {
                                                     string correctiveActionInstance = ((string)correctiveActionValue);
-                                                    vMwareAzureV2EventDetailsInstance.CorrectiveAction = correctiveActionInstance;
+                                                    inMageAzureV2EventDetailsInstance.CorrectiveAction = correctiveActionInstance;
                                                 }
                                                 
                                                 JToken detailsValue = providerSpecificDetailsValue["details"];
                                                 if (detailsValue != null && detailsValue.Type != JTokenType.Null)
                                                 {
                                                     string detailsInstance = ((string)detailsValue);
-                                                    vMwareAzureV2EventDetailsInstance.Details = detailsInstance;
+                                                    inMageAzureV2EventDetailsInstance.Details = detailsInstance;
                                                 }
                                                 
                                                 JToken summaryValue = providerSpecificDetailsValue["summary"];
                                                 if (summaryValue != null && summaryValue.Type != JTokenType.Null)
                                                 {
                                                     string summaryInstance = ((string)summaryValue);
-                                                    vMwareAzureV2EventDetailsInstance.Summary = summaryInstance;
+                                                    inMageAzureV2EventDetailsInstance.Summary = summaryInstance;
                                                 }
                                                 
                                                 JToken siteNameValue = providerSpecificDetailsValue["siteName"];
                                                 if (siteNameValue != null && siteNameValue.Type != JTokenType.Null)
                                                 {
                                                     string siteNameInstance = ((string)siteNameValue);
-                                                    vMwareAzureV2EventDetailsInstance.SiteName = siteNameInstance;
+                                                    inMageAzureV2EventDetailsInstance.SiteName = siteNameInstance;
                                                 }
                                                 
                                                 JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                                 if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                                 {
                                                     string instanceTypeInstance4 = ((string)instanceTypeValue4);
-                                                    vMwareAzureV2EventDetailsInstance.InstanceType = instanceTypeInstance4;
+                                                    inMageAzureV2EventDetailsInstance.InstanceType = instanceTypeInstance4;
                                                 }
-                                                propertiesInstance.ProviderDetails = vMwareAzureV2EventDetailsInstance;
+                                                propertiesInstance.ProviderDetails = inMageAzureV2EventDetailsInstance;
                                             }
                                         }
                                         

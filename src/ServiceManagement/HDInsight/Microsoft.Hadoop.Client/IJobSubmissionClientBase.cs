@@ -24,7 +24,9 @@ namespace Microsoft.Hadoop.Client
     /// <summary>
     /// Represents the base interface of a Job Submission Client.
     /// </summary>
+#pragma warning disable 618
     public interface IJobSubmissionClientBase : IHadoopClientBase
+#pragma warning restore 618
     {
     }
 }

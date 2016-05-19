@@ -17,6 +17,7 @@
 
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -27,13 +28,14 @@ namespace Microsoft.Azure.KeyVault
     /// </summary>
     /// <typeparam name="K">The type of the key</typeparam>
     /// <typeparam name="V">The type of the value</typeparam>
-    internal class LRUCache<K, V> : IDisposable where K : class where V : class
+    internal class LRUCache<K, V> : IDisposable, IEnumerable<V> where K : class where V : class
     {
         private int                  _capacity;
         private Dictionary<K, V>     _cache = new Dictionary<K, V>();
         private LinkedList<K>        _list  = new LinkedList<K>();
         private ReaderWriterLockSlim _lock  = new ReaderWriterLockSlim();
-
+        private bool                 _isDisposed;
+ 
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -53,7 +55,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="value">The value</param>
         public void Add( K key, V value )
         {
-            if ( _lock == null )
+            if ( _isDisposed )
                 throw new ObjectDisposedException( "LRUCache" );
 
             if ( key == null )
@@ -66,16 +68,19 @@ namespace Microsoft.Azure.KeyVault
             {
                 _lock.EnterWriteLock();
 
-                // Cache before List as the cache may throw an exception
-                _cache.Add( key, value );
-                _list.AddLast( key );
-
-                if ( _list.Count > _capacity )
+                if ( !_cache.ContainsKey( key ) )
                 {
-                    LinkedListNode<K> lruKey = _list.First;
+                    // Cache before List as the cache may throw an exception
+                    _cache.Add(key, value);
+                    _list.AddLast( key );
 
-                    _cache.Remove( lruKey.Value );
-                    _list.RemoveFirst();
+                    if ( _list.Count > _capacity )
+                    {
+                        LinkedListNode<K> lruKey = _list.First;
+
+                        _cache.Remove( lruKey.Value );
+                        _list.RemoveFirst();
+                    }
                 }
             }
             finally
@@ -91,7 +96,7 @@ namespace Microsoft.Azure.KeyVault
         /// <returns>The value for the key or null</returns>
         public V Get( K key )
         {
-            if ( _lock == null )
+            if ( _isDisposed )
                 throw new ObjectDisposedException( "LRUCache" );
 
             if ( key == null )
@@ -133,7 +138,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name="key">The key to remove</param>
         public void Remove( K key )
         {
-            if ( _lock == null )
+            if ( _isDisposed )
                 throw new ObjectDisposedException( "LRUCache" );
 
             if ( key == null )
@@ -160,7 +165,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         public void Reset()
         {
-            if ( _lock == null )
+            if ( _isDisposed )
                 throw new ObjectDisposedException( "LRUCache" );
 
             try
@@ -176,6 +181,20 @@ namespace Microsoft.Azure.KeyVault
             }
         }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+ 
+        /// <summary>
+        /// Get enumerator on the cached values
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<V> GetEnumerator()
+        {
+            return _cache.Values.GetEnumerator();
+        }
+ 
         public void Dispose()
         {
             Dispose( true );
@@ -186,8 +205,9 @@ namespace Microsoft.Azure.KeyVault
         {
             if ( disposing )
             {
-                if ( _lock != null )
+                if ( !_isDisposed )
                 {
+                    _isDisposed = true;
                     _lock.Dispose();
                     _lock = null;
                 }

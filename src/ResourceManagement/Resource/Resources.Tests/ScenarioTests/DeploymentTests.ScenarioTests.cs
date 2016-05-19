@@ -89,7 +89,6 @@ namespace ResourceGroups.Tests
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 JObject json = JObject.Parse(handler.Request);
-
                 Assert.Equal(HttpStatusCode.OK, client.Deployments.Get(groupName, deploymentName).StatusCode);
             }
         }
@@ -111,11 +110,15 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(GoodWebsiteTemplateUri),
+                            Uri = new Uri("https://raw.githubusercontent.com/vivsriaus/armtemplates/master/test3light.json"),
                         },
                         Parameters =
-                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                            @"{ 'hostingPlanName': {'value': 'mctest0101'},'siteLocation': {'value': 'West US'}}",
                         Mode = DeploymentMode.Incremental,
+                        DebugSetting = new DeploymentDebugSetting
+                        {
+                            DeploymentDebugDetailLevel = "RequestContent"
+                        }
                     }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -134,17 +137,21 @@ namespace ResourceGroups.Tests
                 Assert.NotEmpty(deploymentListResult.Deployments);
                 Assert.Equal(deploymentName, deploymentGetResult.Deployment.Name);
                 Assert.Equal(deploymentName, deploymentListResult.Deployments[0].Name);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentGetResult.Deployment.Properties.TemplateLink.Uri.AbsoluteUri);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.Deployments[0].Properties.TemplateLink.Uri.AbsoluteUri);
+                Assert.Equal("https://raw.githubusercontent.com/vivsriaus/armtemplates/master/test3light.json", deploymentGetResult.Deployment.Properties.TemplateLink.Uri.AbsoluteUri);
+                Assert.Equal("https://raw.githubusercontent.com/vivsriaus/armtemplates/master/test3light.json", deploymentListResult.Deployments[0].Properties.TemplateLink.Uri.AbsoluteUri);
                 Assert.NotNull(deploymentGetResult.Deployment.Properties.ProvisioningState);
                 Assert.NotNull(deploymentListResult.Deployments[0].Properties.ProvisioningState);
                 Assert.NotNull(deploymentGetResult.Deployment.Properties.CorrelationId);
                 Assert.NotNull(deploymentListResult.Deployments[0].Properties.CorrelationId);
                 Assert.True(deploymentGetResult.Deployment.Properties.Parameters.Contains("mctest0101"));
                 Assert.True(deploymentListResult.Deployments[0].Properties.Parameters.Contains("mctest0101"));
-
+                Assert.Equal("RequestContent", deploymentGetResult.Deployment.Properties.DebugSetting.DeploymentDebugDetailLevel);
                 //stop the deployment
-                client.Deployments.Cancel(groupName, deploymentName);
+                if(deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Running")
+                    || deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Accepted"))
+                {
+                    client.Deployments.Cancel(groupName, deploymentName);
+                }
                 TestUtilities.Wait(2000);
 
                 //Delete deployment
@@ -174,7 +181,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = DeploymentMode.Incremental,
+                        Mode = DeploymentMode.Incremental
                     }
                 };
 
