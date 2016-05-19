@@ -28,6 +28,7 @@ using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Serialization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Sample.Microsoft.HelloKeyVault
 {
@@ -35,7 +36,6 @@ namespace Sample.Microsoft.HelloKeyVault
     {
         static KeyVaultClient keyVaultClient;
         static InputValidator inputValidator;
-        static ClientCredential clientCredential;
 
         static void Main(string[] args)
         {
@@ -51,10 +51,14 @@ namespace Sample.Microsoft.HelloKeyVault
             ServiceClientTracing.IsEnabled = inputValidator.GetTracingEnabled();
 
             var clientId = ConfigurationManager.AppSettings["AuthClientId"];
-            var clientSecret = ConfigurationManager.AppSettings["AuthClientSecret"];
-            clientCredential = new ClientCredential(clientId, clientSecret);
+            var cerificateThumbprint = ConfigurationManager.AppSettings["AuthCertThumbprint"];
 
-            keyVaultClient = new KeyVaultClient(GetAccessToken, new InjectHostHeaderHttpMessageHandler());
+            var certificate = FindCertificateByThumbprint(cerificateThumbprint);
+            var assertionCert = new ClientAssertionCertificate(clientId, certificate);
+
+            keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback( 
+                   (authority, resource, scope) => GetAccessToken(authority, resource, scope, assertionCert)), 
+                   new InjectHostHeaderHttpMessageHandler());
 
             // SECURITY: DO NOT USE IN PRODUCTION CODE; FOR TEST PURPOSES ONLY
             //ServicePointManager.ServerCertificateValidationCallback += ( sender, cert, chain, sslPolicyErrors ) => true;
@@ -676,12 +680,38 @@ namespace Sample.Microsoft.HelloKeyVault
         /// <param name="resource"> Resource </param>
         /// <param name="scope"> scope </param>
         /// <returns> token </returns>
-        public static async Task<string> GetAccessToken(string authority, string resource, string scope)
+        public static async Task<string> GetAccessToken(string authority, string resource, string scope, ClientAssertionCertificate assertionCert)
         {            
             var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
-            var result = await context.AcquireTokenAsync(resource, clientCredential);
+            var result = await context.AcquireTokenAsync(resource, assertionCert);
 
             return result.AccessToken;
+        }
+
+        /// <summary>
+        /// Helper function to load an X509 certificate
+        /// </summary>
+        /// <param name="certificateThumbprint">Thumbprint of the certificate to be loaded</param>
+        /// <returns>X509 Certificate</returns>
+        public static X509Certificate2 FindCertificateByThumbprint(string certificateThumbprint)
+        {
+            if (certificateThumbprint == null)
+                throw new System.ArgumentNullException("certificateThumbprint");
+
+            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            try
+            {
+                store.Open(OpenFlags.ReadOnly);
+                X509Certificate2Collection col = store.Certificates.Find(X509FindType.FindByThumbprint, certificateThumbprint, false); // Don't validate certs, since the test root isn't installed.
+                if (col == null || col.Count == 0)
+                    throw new System.Exception(
+                        string.Format("Could not find the certificate with thumbprint {0} in the Local Machine's Personal certificate store.", certificateThumbprint));
+                return col[0];
+            }
+            finally
+            {
+                store.Close();
+            }
         }
     }
 }
