@@ -64,6 +64,8 @@
     <Compile Include="ScenarioTests\AzureIaasVMTests\BackupTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\RecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\RestoreTests.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlProtectedItemTest.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlRecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\DpmTests\BackupEngineTest.cs" />
     <Compile Include="ScenarioTests\JobTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectableObjectTests.cs" />

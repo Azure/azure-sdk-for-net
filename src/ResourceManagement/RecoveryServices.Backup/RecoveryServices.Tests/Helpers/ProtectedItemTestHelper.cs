@@ -99,5 +99,23 @@ namespace RecoveryServices.Tests.Helpers
 
             return response;
         }
+
+        public ProtectedItemResponse GetProtectedItem(string fabricName, string containerName, string protectedItemName)
+        {
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+            var customHeader = CommonTestHelper.GetCustomRequestHeaders();
+            GetProtectedItemQueryParam queryFilter = new GetProtectedItemQueryParam()
+            {
+                Expand = "extendedinfo"
+            };
+            ProtectedItemResponse response = Client.ProtectedItems.Get(rsVaultRgName, rsVaultName,
+                fabricName, containerName, protectedItemName, queryFilter, customHeader);
+            Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Item);
+
+            return response;
+        }
     }
 }
