@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(outputName);
             url = url + "/test";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Output.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1582,7 +1582,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2327,7 +2327,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2484,7 +2484,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3229,7 +3229,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("$select=" + Uri.EscapeDataString(parameters.PropertiesToSelect));
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3992,7 +3992,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/outputs/";
             url = url + Uri.EscapeDataString(outputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

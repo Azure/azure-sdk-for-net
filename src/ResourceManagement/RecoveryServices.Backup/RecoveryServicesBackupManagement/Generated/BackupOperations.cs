@@ -72,29 +72,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Optional. Container Name for the backup item
+        /// Optional. Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Optional. Protected item name for the backup item
+        /// Optional. Name of the protected item which has to be backed up.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         public async Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, CancellationToken cancellationToken)
         {
@@ -138,7 +137,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";

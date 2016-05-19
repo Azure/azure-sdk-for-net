@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a OperationResultInfoBase object.
+    /// Base class for operation result info.
     /// </summary>
     public partial class OperationResultInfoBase
     {

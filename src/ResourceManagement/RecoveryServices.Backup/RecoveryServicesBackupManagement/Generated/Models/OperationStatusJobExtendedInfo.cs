@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a OperationStatusJobExtendedInfo object.
+    /// Operation status job extended info.
     /// </summary>
     public partial class OperationStatusJobExtendedInfo : OperationStatusExtendedInfo
     {
         private string _jobId;
         
         /// <summary>
-        /// Optional. JobId for the protected item
+        /// Optional. ID of the job created for this protected item.
         /// </summary>
         public string JobId
         {

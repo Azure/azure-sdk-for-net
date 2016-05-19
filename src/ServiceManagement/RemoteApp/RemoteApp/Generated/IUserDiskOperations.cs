@@ -23,51 +23,57 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
+using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
     /// <summary>
-    /// Definition of OperationResults operations for the Azure Backup
-    /// extension.
+    /// RemoteApp user disk operations.
     /// </summary>
-    public partial interface IBackupOperationResults
+    public partial interface IUserDiskOperations
     {
         /// <summary>
-        /// Get the Delete Item Operation Result by OperationId
+        /// Copy user disk from one collection to the other and keep the source
+        /// user disk.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// <param name='srcCollectionName'>
+        /// The source collection name.
         /// </param>
-        /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// <param name='dstCollectionName'>
+        /// The destination collection name.
         /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
+        /// <param name='userUpn'>
+        /// The user upn.
+        /// </param>
+        /// <param name='overwriteExistingUserDisk'>
+        /// A flag denoting if the request is to overwrite the existing user
+        /// disk
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<GetOperationResultResponse> GetBackupOperationResultAsync(string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CopyAsync(string srcCollectionName, string dstCollectionName, string userUpn, bool overwriteExistingUserDisk, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the Delete Item Operation Result by URL
+        /// Deletes the given user disk.
         /// </summary>
-        /// <param name='operationResultLink'>
-        /// Location value returned by operation.
+        /// <param name='collectionName'>
+        /// The RemoteApp collection name.
         /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
+        /// <param name='userUpn'>
+        /// The user upn.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a GetOperationResultResponse.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<GetOperationResultResponse> GetBackupOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string collectionName, string userUpn, CancellationToken cancellationToken);
     }
 }

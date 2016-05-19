@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateRequest.
+    /// Parameters for the creation or updation of the protected item API call.
     /// </summary>
     public partial class ProtectedItemCreateOrUpdateRequest
     {
         private ProtectedItemResource _item;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Protected item resource.
         /// </summary>
         public ProtectedItemResource Item
         {

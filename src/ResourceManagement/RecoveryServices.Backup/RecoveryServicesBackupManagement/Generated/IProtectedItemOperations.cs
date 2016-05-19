@@ -45,19 +45,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Get Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
+        /// Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Container Name of protectionContainers
+        /// Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Name of ProtectedItem
+        /// Name of the protected item which has to be backed up.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -66,8 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         Task<BaseRecoveryServicesJobResponse> CreateOrUpdateProtectedItemAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, ProtectedItemCreateOrUpdateRequest request, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
@@ -80,19 +79,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Get Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
+        /// Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Container Name of protectionContainers
+        /// Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Name of ProtectedItem
+        /// Name of the protected item which has to be backed up.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -101,8 +100,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
         Task<BaseRecoveryServicesJobResponse> DeleteProtectedItemAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
@@ -116,10 +114,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -128,7 +126,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// A single instance of a protected item response.
         /// </returns>
         Task<ProtectedItemResponse> GetAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, GetProtectedItemQueryParam queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
@@ -137,10 +135,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// ID of operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -149,7 +147,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// A single instance of a protected item response.
         /// </returns>
         Task<ProtectedItemResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
@@ -168,7 +166,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// A single instance of a protected item response.
         /// </returns>
         Task<ProtectedItemResponse> GetProtectedItemOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
@@ -178,10 +176,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
+        /// Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
+        /// Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -190,7 +188,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemsListResponse.
+        /// List of protected items returned as a response by the list
+        /// protected item API.
         /// </returns>
         Task<ProtectedItemListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectedItemListQueryParam queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }

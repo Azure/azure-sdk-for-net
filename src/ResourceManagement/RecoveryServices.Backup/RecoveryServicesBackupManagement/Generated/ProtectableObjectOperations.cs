@@ -66,16 +66,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// according to the query filter and the pagination parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryFilter'>
         /// Optional.
         /// </param>
         /// <param name='paginationParams'>
-        /// Optional. Pagination parameter for skip token and top.
+        /// Optional. Pagination parameters for controlling the response.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -124,7 +124,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";

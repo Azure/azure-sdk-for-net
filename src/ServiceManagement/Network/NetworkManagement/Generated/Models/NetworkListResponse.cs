@@ -394,6 +394,21 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
                 set { this._location = value; }
             }
             
+            private string _migrationState;
+            
+            /// <summary>
+            /// Optional. Specifies the IaaS Classic to ARM migration state of
+            /// the Virtual Network Site. Possible values are: None,
+            /// Preparing, Prepared, PrepareFailed, Committing, Committed,
+            /// CommitFailed, Aborting, AbortFailed. None is treated as null
+            /// value and it is not be visible.
+            /// </summary>
+            public string MigrationState
+            {
+                get { return this._migrationState; }
+                set { this._migrationState = value; }
+            }
+            
             private string _name;
             
             /// <summary>

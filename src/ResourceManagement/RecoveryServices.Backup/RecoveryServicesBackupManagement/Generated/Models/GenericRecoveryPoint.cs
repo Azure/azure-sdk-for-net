@@ -26,14 +26,26 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a GenericRecoveryPoint object.
+    /// Generic recovery point.
     /// </summary>
     public partial class GenericRecoveryPoint : RecoveryPointBase
     {
+        private string _friendlyName;
+        
+        /// <summary>
+        /// Optional. FriendlyName of the recovery point.
+        /// </summary>
+        public string FriendlyName
+        {
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
         private string _recoveryPointAdditionalInfo;
         
         /// <summary>
-        /// Optional. Recovery Point Additional Information
+        /// Optional. Additional information associated with this recovery
+        /// point.
         /// </summary>
         public string RecoveryPointAdditionalInfo
         {
@@ -44,7 +56,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _recoveryPointTime;
         
         /// <summary>
-        /// Optional. Recovery Point Time
+        /// Optional. Time at which this recovery point was created.
         /// </summary>
         public string RecoveryPointTime
         {
@@ -55,7 +67,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _recoveryPointType;
         
         /// <summary>
-        /// Optional. Recovery Point Type
+        /// Optional. Type of the recovery point.
         /// </summary>
         public string RecoveryPointType
         {

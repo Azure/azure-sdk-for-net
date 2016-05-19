@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         IaasVMContainer = 0,
         
         /// <summary>
-        /// The Microsoft AzureBackup file folder container type.
+        /// The Microsoft Azure Backup file folder container type.
         /// </summary>
         MABWindowsContainer = 1,
     }

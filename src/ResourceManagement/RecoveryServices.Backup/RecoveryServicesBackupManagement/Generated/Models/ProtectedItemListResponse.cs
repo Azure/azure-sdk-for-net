@@ -27,14 +27,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemsListResponse.
+    /// List of protected items returned as a response by the list protected
+    /// item API.
     /// </summary>
     public partial class ProtectedItemListResponse : AzureOperationResponse
     {
         private ProtectedItemResourceList _itemList;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. List of protected item resources.
         /// </summary>
         public ProtectedItemResourceList ItemList
         {

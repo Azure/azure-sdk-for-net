@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition for ProtectionContainer class.
+    /// Base class for protection container. Workload-specific protection
+    /// containers are derived from this class.
     /// </summary>
     public partial class ProtectionContainer : ProtectionContainerBase
     {
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. Backup Management Type
+        /// Optional. Type of backup managmenent for the protection container.
         /// </summary>
         public string BackupManagementType
         {
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _containerType;
         
         /// <summary>
-        /// Optional. Container Type
+        /// Optional. Type of the protection container. Possible values are:
+        /// IaasVMContainer, Windows.
         /// </summary>
         public string ContainerType
         {
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. Friendly name of the managed item.
+        /// Optional. Friendly name of the protection container.
         /// </summary>
         public string FriendlyName
         {
@@ -66,7 +68,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _healthStatus;
         
         /// <summary>
-        /// Optional. Health Status
+        /// Optional. Status of health of the protection container.
         /// </summary>
         public string HealthStatus
         {
@@ -77,7 +79,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _protectableObjectType;
         
         /// <summary>
-        /// Optional. Protectable object Type
+        /// Optional. Type of the protectable object associated with this
+        /// protection container. Possible values: IaasVMContainer,
+        /// MABWindowsContainer, AzureSqlContainer.
         /// </summary>
         public string ProtectableObjectType
         {
@@ -88,7 +92,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _registrationStatus;
         
         /// <summary>
-        /// Optional. Registration Status
+        /// Optional. Status of registration of the protection container with
+        /// the Recovery Services Vault.
         /// </summary>
         public string RegistrationStatus
         {

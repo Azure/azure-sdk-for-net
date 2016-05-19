@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a WeeklyRetentionSchedule object.
+    /// Weekly retention schedule.
     /// </summary>
     public partial class WeeklyRetentionSchedule : RetentionScheduleBase
     {
         private IList<string> _daysOfTheWeek;
         
         /// <summary>
-        /// Optional. List of Days of Week for Weekly Retention policy.
+        /// Optional. List of days of week for weekly retention policy.
         /// </summary>
         public IList<string> DaysOfTheWeek
         {

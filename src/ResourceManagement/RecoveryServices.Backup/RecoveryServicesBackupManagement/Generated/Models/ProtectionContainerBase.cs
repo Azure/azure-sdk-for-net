@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of ProtectionContainerBase object.
+    /// Base class for protection container.
     /// </summary>
     public partial class ProtectionContainerBase
     {

@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a OperationStatusExtendedInfo object.
+    /// Base class for operation status extended info.
     /// </summary>
     public partial class OperationStatusExtendedInfo
     {

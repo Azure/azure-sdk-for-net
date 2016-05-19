@@ -26,15 +26,14 @@ using Microsoft.Azure;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a BaseRecoveryServicesJobResponse for Async
-    /// operations.
+    /// Base recovery job response for all the asynchronous operations.
     /// </summary>
     public partial class BaseRecoveryServicesJobResponse : AzureOperationResponse
     {
         private string _azureAsyncOperation;
         
         /// <summary>
-        /// Optional. Azure Async Operation Header for response.
+        /// Optional. Azure asynchronous operation header for response.
         /// </summary>
         public string AzureAsyncOperation
         {
@@ -45,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Location Header for response. This needs to be used to
+        /// Optional. Location header for response. This needs to be used to
         /// track the job.
         /// </summary>
         public string Location
@@ -57,8 +56,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _retryAfter;
         
         /// <summary>
-        /// Optional. Retry after Header for response which specifies the retry
-        /// time for the job.
+        /// Optional. Retry-after header for response which specifies the time
+        /// after which we can retry for status of the job / operation.
         /// </summary>
         public string RetryAfter
         {
@@ -69,7 +68,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private OperationStatus _status;
         
         /// <summary>
-        /// Optional. Status of the operation.
+        /// Optional. Status of the operation. Possible values: InProgress,
+        /// Succeeded, Failed.
         /// </summary>
         public OperationStatus Status
         {

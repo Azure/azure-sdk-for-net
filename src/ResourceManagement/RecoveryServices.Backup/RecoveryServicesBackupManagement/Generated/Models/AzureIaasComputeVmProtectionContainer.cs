@@ -26,7 +26,8 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a compute vm object.
+    /// IaaS VM workload-specific protected item representing a compute virtual
+    /// machine.
     /// </summary>
     public partial class AzureIaaSComputeVMProtectionContainer : AzureIaaSVMProtectionContainer
     {

@@ -25,7 +25,8 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a RestoreRequest object.
+    /// Base class for restore request. Workload-specific restore requests are
+    /// derived from this class.
     /// </summary>
     public partial class RestoreRequest
     {

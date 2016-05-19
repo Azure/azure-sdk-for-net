@@ -28,7 +28,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a OperationStatusJobsExtendedInfo object.
+    /// Operation status extended info for list of jobs.
     /// </summary>
     public partial class OperationStatusJobsExtendedInfo : OperationStatusExtendedInfo
     {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<string> _jobIds;
         
         /// <summary>
-        /// Optional. JobIds for the protected item
+        /// Optional. IDs of the jobs created for the protected item.
         /// </summary>
         public IList<string> JobIds
         {

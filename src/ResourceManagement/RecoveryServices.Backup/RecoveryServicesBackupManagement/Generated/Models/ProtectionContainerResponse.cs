@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionContainerResponse.
+    /// Protection container response.
     /// </summary>
     public partial class ProtectionContainerResponse : BaseRecoveryServicesJobResponse
     {
         private ProtectionContainerResource _item;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Protection container response.
         /// </summary>
         public ProtectionContainerResource Item
         {

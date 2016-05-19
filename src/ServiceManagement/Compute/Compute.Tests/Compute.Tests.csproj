@@ -123,6 +123,9 @@
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanCreateVMAndGetDeploymentWithMaxDate.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanCreateVMWithBYOL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanCreateVMWithDebugSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

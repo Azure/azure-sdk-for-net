@@ -40,16 +40,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IBackupEngineOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryParams'>
-        /// Required. Query params for backup engine.
+        /// Required. Query parameters for listing backup engines.
         /// </param>
         /// <param name='paginationParams'>
-        /// Optional. Pagination parameter for skip token and top.
+        /// Optional. Pagination parameters for controlling the response.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
@@ -76,16 +76,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IBackupEngineOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='queryParams'>
-        /// Required. Query params for backup engine.
+        /// Required. Query parameters for listing backup engines.
         /// </param>
         /// <param name='paginationParams'>
-        /// Optional. Pagination parameter for skip token and top.
+        /// Optional. Pagination parameters for controlling the response.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.

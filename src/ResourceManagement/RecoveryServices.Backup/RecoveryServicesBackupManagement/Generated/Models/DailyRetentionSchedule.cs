@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a DailyRetentionSchedule object.
+    /// Daily retention schedule.
     /// </summary>
     public partial class DailyRetentionSchedule : RetentionScheduleBase
     {

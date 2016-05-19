@@ -27,7 +27,13 @@
     <None Include="SessionRecords\HDInsightJob.Tests.ScenarioTests.JobsEnumerationTests\ListJobs.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\KillMapReduceJobTimeOut.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\KillMapReduceStreamingJob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\MapReduceJobTimeOut.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitHiveJobAndValidateOutput.json">
@@ -36,19 +42,16 @@
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitHiveJobError.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitMapReduceJob.json">
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitMapReduceJobAndValidateOutput.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitMapReduceStreamingJob.json">
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitMapReduceStreamingJobAndValidateOutput.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitMapReduceStreamingJobWithFilesParam.json">
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitPigJobAndValidateOutput.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitPigJob.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitSqoopJob.json">
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitSqoopJobAndValidateOutput.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -65,4 +68,5 @@
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
 </Project>

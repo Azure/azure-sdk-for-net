@@ -3205,59 +3205,35 @@ namespace Microsoft.Azure.Management.Resources
                             JToken errorValue = responseDoc["error"];
                             if (errorValue != null && errorValue.Type != JTokenType.Null)
                             {
-                                ResourceManagementErrorWithDetails errorInstance = new ResourceManagementErrorWithDetails();
+                                ResourceManagementError errorInstance = new ResourceManagementError();
                                 result.Error = errorInstance;
                                 
-                                JToken detailsArray = errorValue["details"];
-                                if (detailsArray != null && detailsArray.Type != JTokenType.Null)
+                                JToken codeValue = errorValue["code"];
+                                if (codeValue != null && codeValue.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken detailsValue in ((JArray)detailsArray))
-                                    {
-                                        ResourceManagementError resourceManagementErrorInstance = new ResourceManagementError();
-                                        errorInstance.Details.Add(resourceManagementErrorInstance);
-                                        
-                                        JToken codeValue = detailsValue["code"];
-                                        if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                        {
-                                            string codeInstance = ((string)codeValue);
-                                            resourceManagementErrorInstance.Code = codeInstance;
-                                        }
-                                        
-                                        JToken messageValue = detailsValue["message"];
-                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                        {
-                                            string messageInstance = ((string)messageValue);
-                                            resourceManagementErrorInstance.Message = messageInstance;
-                                        }
-                                        
-                                        JToken targetValue = detailsValue["target"];
-                                        if (targetValue != null && targetValue.Type != JTokenType.Null)
-                                        {
-                                            string targetInstance = ((string)targetValue);
-                                            resourceManagementErrorInstance.Target = targetInstance;
-                                        }
-                                    }
+                                    string codeInstance = ((string)codeValue);
+                                    errorInstance.Code = codeInstance;
                                 }
                                 
-                                JToken codeValue2 = errorValue["code"];
-                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
                                 {
-                                    string codeInstance2 = ((string)codeValue2);
-                                    errorInstance.Code = codeInstance2;
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
                                 }
                                 
-                                JToken messageValue2 = errorValue["message"];
-                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                JToken targetValue = errorValue["target"];
+                                if (targetValue != null && targetValue.Type != JTokenType.Null)
                                 {
-                                    string messageInstance2 = ((string)messageValue2);
-                                    errorInstance.Message = messageInstance2;
+                                    string targetInstance = ((string)targetValue);
+                                    errorInstance.Target = targetInstance;
                                 }
                                 
-                                JToken targetValue2 = errorValue["target"];
-                                if (targetValue2 != null && targetValue2.Type != JTokenType.Null)
+                                JToken detailsValue = errorValue["details"];
+                                if (detailsValue != null && detailsValue.Type != JTokenType.Null)
                                 {
-                                    string targetInstance2 = ((string)targetValue2);
-                                    errorInstance.Target = targetInstance2;
+                                    string detailsInstance = detailsValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                    errorInstance.Details = detailsInstance;
                                 }
                             }
                             

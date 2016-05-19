@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     public static partial class ContainerType
     {
         /// <summary>
-        /// The Azure IaasVM container type.
+        /// The Azure IaaS VM container type.
         /// </summary>
         public const string IaasVMContainer = "IaasVMContainer";
         
@@ -38,5 +38,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// The Windows container type.
         /// </summary>
         public const string Windows = "Windows";
+        
+        /// <summary>
+        /// The Windows container type.
+        /// </summary>
+        public const string AzureSqlContainer = "AzureSqlContainer";
     }
 }

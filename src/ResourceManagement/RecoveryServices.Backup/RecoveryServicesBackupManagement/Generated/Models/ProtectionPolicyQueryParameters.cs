@@ -25,14 +25,16 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyQueryParameters object.
+    /// The query filters that can be used with the list protection policies
+    /// API.
     /// </summary>
     public partial class ProtectionPolicyQueryParameters
     {
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. BackupManagement type query parameter
+        /// Optional. Backup management type for the protection policy.
+        /// Possible values: AzureIaasVM, MAB, DPM.
         /// </summary>
         public string BackupManagementType
         {

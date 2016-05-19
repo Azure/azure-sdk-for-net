@@ -25,14 +25,15 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a GetProtectedItemQueryParam object.
+    /// The query filters that can be used with the get protected item API.
     /// </summary>
     public partial class GetProtectedItemQueryParam
     {
         private string _expand;
         
         /// <summary>
-        /// Optional. expand query parameter
+        /// Optional. Specifies if the extended info should be returned for the
+        /// given item.
         /// </summary>
         public string Expand
         {

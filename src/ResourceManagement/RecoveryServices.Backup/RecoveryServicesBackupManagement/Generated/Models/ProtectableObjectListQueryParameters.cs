@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. BackupManagementType query parameter.
+        /// Optional. Backup management type for the backup engine. Possible
+        /// values: AzureIaasVM, MAB, DPM.
         /// </summary>
         public string BackupManagementType
         {

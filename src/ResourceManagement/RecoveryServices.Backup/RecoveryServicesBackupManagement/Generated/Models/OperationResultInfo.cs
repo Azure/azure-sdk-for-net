@@ -28,14 +28,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition for OperationResultInfo class.
+    /// Operation result info.
     /// </summary>
     public partial class OperationResultInfo : OperationResultInfoBase
     {
         private IList<string> _jobList;
         
         /// <summary>
-        /// Optional. List of jobs
+        /// Optional. List of jobs created by this operation.
         /// </summary>
         public IList<string> JobList
         {

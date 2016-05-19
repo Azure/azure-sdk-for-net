@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition for ProtectedItem class.
+    /// Base class for protected item. Workload-specific protected items are
+    /// derived from this class.
     /// </summary>
     public partial class ProtectedItem : ProtectedItemBase
     {
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. BackupManagementType for Protected Item
+        /// Optional. Type of backup managmenent for the protected item.
         /// </summary>
         public string BackupManagementType
         {
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private System.DateTime? _lastRecoveryPoint;
         
         /// <summary>
-        /// Optional. Last Recovery point date and time
+        /// Optional. Timestamp when the last (latest) recovery point was
+        /// created for this protected item.
         /// </summary>
         public System.DateTime? LastRecoveryPoint
         {
@@ -55,7 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _policyId;
         
         /// <summary>
-        /// Optional. Policy Id with which Object is protected
+        /// Optional. ID of the protection policy with which this protected
+        /// item is protected.
         /// </summary>
         public string PolicyId
         {
@@ -66,7 +69,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _workloadType;
         
         /// <summary>
-        /// Optional. WorkloadType for Protected Item
+        /// Optional. Type of workload this item represents. Possible values:
+        /// VM, FileFolder.
         /// </summary>
         public string WorkloadType
         {

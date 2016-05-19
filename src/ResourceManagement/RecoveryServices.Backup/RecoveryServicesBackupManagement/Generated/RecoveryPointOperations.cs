@@ -71,31 +71,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// request, call the Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Optional. Container Name for the backup item
+        /// Optional. Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Optional. Protected item name for the backup item
+        /// Optional. Name of the protected item whose recovery points are to
+        /// be fetched.
         /// </param>
         /// <param name='recoveryPointId'>
-        /// Optional. Recovery point id for the backup item
+        /// Optional. ID of the recovery point whose details are to be fetched.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a RecoveryPointResponse object.
+        /// A single instance of a recovery point response as returned by the
+        /// service in the list recovery points call.
         /// </returns>
         public async Task<RecoveryPointResponse> GetAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken)
         {
@@ -136,7 +138,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
@@ -289,6 +294,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         genericRecoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance2;
                                     }
                                     
+                                    JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                    if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance = ((string)friendlyNameValue);
+                                        genericRecoveryPointInstance.FriendlyName = friendlyNameInstance;
+                                    }
+                                    
                                     JToken recoveryPointTimeValue2 = propertiesValue["recoveryPointTime"];
                                     if (recoveryPointTimeValue2 != null && recoveryPointTimeValue2.Type != JTokenType.Null)
                                     {
@@ -413,31 +425,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// the arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// Required. Resource group name of your recovery services vault.
         /// </param>
         /// <param name='resourceName'>
-        /// Required. ResourceName for recoveryServices Vault.
+        /// Required. Name of your recovery services vault.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
+        /// Optional. Fabric name of the protected item.
         /// </param>
         /// <param name='containerName'>
-        /// Optional. Container Name for the backup item
+        /// Optional. Name of the container where the protected item belongs to.
         /// </param>
         /// <param name='protectedItemName'>
-        /// Optional. Protected item name for the backup item
+        /// Optional. Name of the protected item whose recovery points are to
+        /// be fetched.
         /// </param>
         /// <param name='queryFilter'>
-        /// Optional. Recovery point id for the backup item
+        /// Optional. Query parameters for listing recovery points.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a RecoveryPointListResponse object.
+        /// List of recovery points as returned by the service with the list
+        /// recovery points call.
         /// </returns>
         public async Task<RecoveryPointListResponse> ListAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, RecoveryPointQueryParameters queryFilter, CancellationToken cancellationToken)
         {
@@ -478,7 +492,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
@@ -646,6 +663,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string recoveryPointTypeInstance2 = ((string)recoveryPointTypeValue2);
                                                 genericRecoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance2;
+                                            }
+                                            
+                                            JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance = ((string)friendlyNameValue);
+                                                genericRecoveryPointInstance.FriendlyName = friendlyNameInstance;
                                             }
                                             
                                             JToken recoveryPointTimeValue2 = propertiesValue["recoveryPointTime"];

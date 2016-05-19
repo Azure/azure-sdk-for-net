@@ -37,6 +37,17 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._code = value; }
         }
         
+        private string _details;
+        
+        /// <summary>
+        /// Optional. Gets or sets the details of the error.
+        /// </summary>
+        public string Details
+        {
+            get { return this._details; }
+            set { this._details = value; }
+        }
+        
         private string _message;
         
         /// <summary>

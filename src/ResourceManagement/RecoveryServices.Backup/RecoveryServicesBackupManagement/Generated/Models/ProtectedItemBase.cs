@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemBase object.
+    /// Base class for protected item.
     /// </summary>
     public partial class ProtectedItemBase
     {

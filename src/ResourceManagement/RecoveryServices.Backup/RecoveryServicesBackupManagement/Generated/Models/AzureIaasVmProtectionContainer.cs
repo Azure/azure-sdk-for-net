@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectionContainer object.
+    /// IaaS VM workload-specific protection container.
     /// </summary>
     public partial class AzureIaaSVMProtectionContainer : ProtectionContainer
     {
         private string _resourceGroup;
         
         /// <summary>
-        /// Optional. Resource Group
+        /// Optional. Resource group name of recoveryServices Vault.
         /// </summary>
         public string ResourceGroup
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _virtualMachineId;
         
         /// <summary>
-        /// Optional. VirtualMachine Id
+        /// Optional. Fully qualified ARM url of the virtual machine
+        /// represented by this Azure IaaS VM container.
         /// </summary>
         public string VirtualMachineId
         {
@@ -55,7 +56,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional. Virtual Machine Version
+        /// Optional. Specifies whether the container represents a Classic or a
+        /// Compute VM.
         /// </summary>
         public string VirtualMachineVersion
         {

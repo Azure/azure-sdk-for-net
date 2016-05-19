@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a GetOperationResultResponse.
+    /// Response object returned by the get operation result APIs.
     /// </summary>
     public partial class GetOperationResultResponse : BaseRecoveryServicesJobResponse
     {
         private OperationResultInfoBase _operation;
         
         /// <summary>
-        /// Optional. Operation
+        /// Optional. Overloaded property representing the operation result
+        /// info.
         /// </summary>
         public OperationResultInfoBase Operation
         {

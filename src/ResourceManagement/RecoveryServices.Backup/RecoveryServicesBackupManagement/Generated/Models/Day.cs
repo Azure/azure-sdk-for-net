@@ -24,9 +24,6 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    /// <summary>
-    /// The definition of a Day object.
-    /// </summary>
     public partial class Day
     {
         private int _date;
@@ -43,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private bool _isLast;
         
         /// <summary>
-        /// Optional. IsLast.
+        /// Optional. Specifies if this is the last day.
         /// </summary>
         public bool IsLast
         {

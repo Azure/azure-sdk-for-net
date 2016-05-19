@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     public enum JobOperation
     {
         /// <summary>
-        /// Invalid operation type
+        /// Invalid operation type.
         /// </summary>
         Invalid = 0,
         

@@ -25,14 +25,17 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a RetentionDuration object.
+    /// Retention duration.
     /// </summary>
     public partial class RetentionDuration
     {
         private int _count;
         
         /// <summary>
-        /// Optional. Count.
+        /// Optional. Count of duration types. Retention duration is obtained
+        /// by the counting the duration type Count times. For example, when
+        /// Count = 3 and DurationType = Weeks, retention duration will be
+        /// three weeks.
         /// </summary>
         public int Count
         {
@@ -43,7 +46,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _durationType;
         
         /// <summary>
-        /// Optional. Retention duration type of retention policy.
+        /// Optional. Retention duration type of retention policy. Possible
+        /// values: Days, Weeks, Months, Years.
         /// </summary>
         public string DurationType
         {

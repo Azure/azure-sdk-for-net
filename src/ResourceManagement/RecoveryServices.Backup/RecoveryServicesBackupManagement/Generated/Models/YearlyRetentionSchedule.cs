@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a YearlyRetentionSchedule object.
+    /// Yearly retention schedule.
     /// </summary>
     public partial class YearlyRetentionSchedule : RetentionScheduleBase
     {
@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         
         /// <summary>
         /// Optional. List of months of year of yearly retention policy.
+        /// Possible Values: January, February, ..., December.
         /// </summary>
         public IList<string> MonthsOfYear
         {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private DailyRetentionFormat _retentionScheduleDaily;
         
         /// <summary>
-        /// Optional. Daily Retention Format for yearly retention policy.
+        /// Optional. Daily retention format for yearly retention policy.
         /// </summary>
         public DailyRetentionFormat RetentionScheduleDaily
         {
@@ -56,7 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _retentionScheduleFormatType;
         
         /// <summary>
-        /// Optional. Retention ScheduleFormat for yearly retention policy.
+        /// Optional. Retention schedule format for yearly retention policy.
+        /// Possible values: Daily, Weekly.
         /// </summary>
         public string RetentionScheduleFormatType
         {
@@ -67,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private WeeklyRetentionFormat _retentionScheduleWeekly;
         
         /// <summary>
-        /// Optional. Weekly Retention format for yearly retention policy.
+        /// Optional. Weekly retention format for yearly retention policy.
         /// </summary>
         public WeeklyRetentionFormat RetentionScheduleWeekly
         {

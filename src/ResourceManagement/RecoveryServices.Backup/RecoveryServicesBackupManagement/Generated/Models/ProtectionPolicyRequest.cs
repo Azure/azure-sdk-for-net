@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyRequest.
+    /// Parameters that can be used with the policy creation or update call.
     /// </summary>
     public partial class ProtectionPolicyRequest
     {
         private ProtectionPolicyResource _item;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Protection policy resource.
         /// </summary>
         public ProtectionPolicyResource Item
         {

@@ -179,6 +179,26 @@ namespace Microsoft.Azure.Management.ApiManagement
             get { return this._groupUsers; }
         }
         
+        private ILoggerOperations _loggers;
+        
+        /// <summary>
+        /// Operations for managing Loggers.
+        /// </summary>
+        public virtual ILoggerOperations Loggers
+        {
+            get { return this._loggers; }
+        }
+        
+        private IOpenIdConnectProvidersOperations _openIdConnectProviders;
+        
+        /// <summary>
+        /// Operations for managing OpenID Connect Providers.
+        /// </summary>
+        public virtual IOpenIdConnectProvidersOperations OpenIdConnectProviders
+        {
+            get { return this._openIdConnectProviders; }
+        }
+        
         private IPolicySnippetsOperations _policySnippents;
         
         /// <summary>
@@ -239,6 +259,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             get { return this._productSubscriptions; }
         }
         
+        private IPropertiesOperations _property;
+        
+        /// <summary>
+        /// Operations for managing Properties.
+        /// </summary>
+        public virtual IPropertiesOperations Property
+        {
+            get { return this._property; }
+        }
+        
         private IRegionsOperations _regions;
         
         /// <summary>
@@ -280,6 +310,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             get { return this._subscriptions; }
         }
         
+        private ITenantAccessGitOperations _tenantAccessGit;
+        
+        /// <summary>
+        /// Operations for managing Tenant Access Git Information.
+        /// </summary>
+        public virtual ITenantAccessGitOperations TenantAccessGit
+        {
+            get { return this._tenantAccessGit; }
+        }
+        
         private ITenantAccessInformationOperations _tenantAccess;
         
         /// <summary>
@@ -288,6 +328,28 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual ITenantAccessInformationOperations TenantAccess
         {
             get { return this._tenantAccess; }
+        }
+        
+        private ITenantConfigurationOperations _tenantConfiguration;
+        
+        /// <summary>
+        /// Operation to apply changes from specified Git branch to the
+        /// configuration database.
+        /// </summary>
+        public virtual ITenantConfigurationOperations TenantConfiguration
+        {
+            get { return this._tenantConfiguration; }
+        }
+        
+        private ITenantConfigurationSyncStateOperation _tenantConfigurationSyncState;
+        
+        /// <summary>
+        /// Operation to return the status of the most recent synchronization
+        /// between configuration database and the Git repository.
+        /// </summary>
+        public virtual ITenantConfigurationSyncStateOperation TenantConfigurationSyncState
+        {
+            get { return this._tenantConfigurationSyncState; }
         }
         
         private ITenantPolicyOperations _tenantPolicy;
@@ -365,17 +427,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._certificates = new CertificatesOperations(this);
             this._groups = new GroupsOperations(this);
             this._groupUsers = new GroupUsersOperations(this);
+            this._loggers = new LoggerOperations(this);
+            this._openIdConnectProviders = new OpenIdConnectProvidersOperations(this);
             this._policySnippents = new PolicySnippetsOperations(this);
             this._productApis = new ProductApisOperations(this);
             this._productGroups = new ProductGroupsOperations(this);
             this._productPolicy = new ProductPolicyOperations(this);
             this._products = new ProductsOperations(this);
             this._productSubscriptions = new ProductSubscriptionsOperations(this);
+            this._property = new PropertiesOperations(this);
             this._regions = new RegionsOperations(this);
             this._reports = new ReportsOperations(this);
             this._resourceProvider = new ResourceProviderOperations(this);
             this._subscriptions = new SubscriptionsOperations(this);
+            this._tenantAccessGit = new TenantAccessGitOperations(this);
             this._tenantAccess = new TenantAccessInformationOperations(this);
+            this._tenantConfiguration = new TenantConfigurationOperations(this);
+            this._tenantConfigurationSyncState = new TenantConfigurationSyncStateOperation(this);
             this._tenantPolicy = new TenantPolicyOperations(this);
             this._userApplications = new UserApplicationsOperations(this);
             this._userGroups = new UserGroupsOperations(this);
@@ -456,17 +524,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._certificates = new CertificatesOperations(this);
             this._groups = new GroupsOperations(this);
             this._groupUsers = new GroupUsersOperations(this);
+            this._loggers = new LoggerOperations(this);
+            this._openIdConnectProviders = new OpenIdConnectProvidersOperations(this);
             this._policySnippents = new PolicySnippetsOperations(this);
             this._productApis = new ProductApisOperations(this);
             this._productGroups = new ProductGroupsOperations(this);
             this._productPolicy = new ProductPolicyOperations(this);
             this._products = new ProductsOperations(this);
             this._productSubscriptions = new ProductSubscriptionsOperations(this);
+            this._property = new PropertiesOperations(this);
             this._regions = new RegionsOperations(this);
             this._reports = new ReportsOperations(this);
             this._resourceProvider = new ResourceProviderOperations(this);
             this._subscriptions = new SubscriptionsOperations(this);
+            this._tenantAccessGit = new TenantAccessGitOperations(this);
             this._tenantAccess = new TenantAccessInformationOperations(this);
+            this._tenantConfiguration = new TenantConfigurationOperations(this);
+            this._tenantConfigurationSyncState = new TenantConfigurationSyncStateOperation(this);
             this._tenantPolicy = new TenantPolicyOperations(this);
             this._userApplications = new UserApplicationsOperations(this);
             this._userGroups = new UserGroupsOperations(this);
@@ -558,6 +632,66 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type AsyncOperationState.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static AsyncOperationState ParseAsyncOperationState(string value)
+        {
+            if ("Started".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return AsyncOperationState.Started;
+            }
+            if ("InProgress".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return AsyncOperationState.InProgress;
+            }
+            if ("Succeeded".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return AsyncOperationState.Succeeded;
+            }
+            if ("Failed".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return AsyncOperationState.Failed;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type AsyncOperationState to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string AsyncOperationStateToString(AsyncOperationState value)
+        {
+            if (value == AsyncOperationState.Started)
+            {
+                return "Started";
+            }
+            if (value == AsyncOperationState.InProgress)
+            {
+                return "InProgress";
+            }
+            if (value == AsyncOperationState.Succeeded)
+            {
+                return "Succeeded";
+            }
+            if (value == AsyncOperationState.Failed)
+            {
+                return "Failed";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
         
         /// <summary>
