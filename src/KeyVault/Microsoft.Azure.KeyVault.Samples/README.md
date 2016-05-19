@@ -27,11 +27,23 @@ A console application that walks through the key scenarios supported by Key Vaul
 
 ###Setup steps
 Update the app configuration settings in HelloKeyVault\App.config with your vault URL, application principal ID and secret. The information can optionally be generated using *scripts\GetAppConfigSettings.ps1*. To use the sample script, follow these steps:
-
- 1. Update the values of mandatory variables in GetAppConfigSettings.ps1
- 2. Launch the Microsoft Azure PowerShell window
- 3. Run the GetAppConfigSettings.ps1 script within the Microsoft Azure PowerShell window
- 4. Copy the results of the script into the HelloKeyVault\App.config file
+ 1. Create a new X509 certificate or get an existing one to use as the Key Vault authentication certificate. To create a new X509 certificate, [makecert][8] or [openssl][3] can be used. For example, the following commands will generate a certificate file from a private key and a certificate signing request file:
+	- openssl [genrsa][4] -des3 -out keyvault.key 2048
+	- openssl [req][5] -new -key keyvault.key -out keyvault.csr
+		- *Note: It is OK to choose the default answer for each question*
+	- openssl [x509][6] -req -days 3000 -in keyvault.csr -signkey keyvault.key -out keyvault.cer
+		- *Note:  The keyvault.cer file is a required input to the GetServiceConfigSettings.ps1 script* 
+	- openssl [pkcs12][7] -export -out keyvault.pfx -inkey keyvault.key -in keyvault.cer
+	Or use [makecert][8] from Developer Command Prompt for Visual Studio:
+	- makecert -sv keyvault.pvk -n "CN=Key Vault Credentials" keyvault.cer -pe -len 2048 -a sha256
+	    - Follow prompts
+	- pvk2pfx -pvk keyvault.pvk -spc keyvault.cer -pfx keyvault.pfx -pi <pvk-password>
+          - From explorer, right-click on the pfx file and click 'Install PFX'
+          - Select 'Local Machine', accept all defaults. Confirm installed cert under Personal -> Certificates by running certlm.msc 
+ 2. Update the values of mandatory variables in GetAppConfigSettings.ps1
+ 3. Launch the Microsoft Azure PowerShell window
+ 4. Run the GetAppConfigSettings.ps1 script within the Microsoft Azure PowerShell window
+ 5. Copy the results of the script into the HelloKeyVault\App.config file
 
 ###Running the sample application
 Once the setup steps are completed, build and run the HelloKeyVault.exe program.  Observe the results printed out in the command line window.
@@ -53,6 +65,11 @@ The web app also demonstrates secret caching using a custom configuration manage
 	- openssl [x509][6] -req -days 3000 -in keyvault.csr -signkey keyvault.key -out keyvault.cer
 		- *Note:  The keyvault.cer file is a required input to the GetServiceConfigSettings.ps1 script* 
 	- openssl [pkcs12][7] -export -out keyvault.pfx -inkey keyvault.key -in keyvault.cer
+	Or use [makecert][8] from Developer Command Prompt for Visual Studio:
+	- makecert -sv keyvault.pvk -n "CN=Key Vault Credentials" keyvault.cer -pe -len 2048 -a sha256
+	    - Follow prompts
+	- pvk2pfx -pvk keyvault.pvk -spc keyvault.cer -pfx keyvault.pfx -pi <pvk-password>
+	
 1. Create a new Azure cloud service in the [Azure management portal][1].  Upload the PFX file for the certificate you just created into the certificate tab for the cloud service. For instructions see step 3 in [service certificate][9].
 1. Create a new Azure storage account in the [Azure management portal][1].  Remember the storage account name -- you'll need it as an input parameter for the GetServiceConfigSettings.ps1 script.
 1. Update the service configuration settings in ServiceConfiguration.Cloud.cscfg by providing:
