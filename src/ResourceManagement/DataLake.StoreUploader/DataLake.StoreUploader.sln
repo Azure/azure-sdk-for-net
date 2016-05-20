@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeStoreUploader.Tests", "DataLakeStoreUploader.Tests\DataLakeStoreUploader.Tests.csproj", "{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalTestChanges", "LocalTestChanges\LocalTestChanges.csproj", "{5E3A378E-206E-43D3-BA10-91B9DCA092F9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,22 +43,6 @@ Global
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Net40-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Net40-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Net40-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Net40-Release|Any CPU.Build.0 = Release|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Portable-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E3A378E-206E-43D3-BA10-91B9DCA092F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
