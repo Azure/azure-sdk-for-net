@@ -741,47 +741,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Removes the existing Access Control List (ACL) of the specified file or
-            /// directory.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='aclFilePath'>
-            /// The Data Lake Store path (starting with '/') of the file or directory with
-            /// the ACL being removed.
-            /// </param>
-            public static void RemoveAcl(this IFileSystemOperations operations, string accountName, string aclFilePath)
-            {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclAsync(accountName, aclFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Removes the existing Access Control List (ACL) of the specified file or
-            /// directory.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='aclFilePath'>
-            /// The Data Lake Store path (starting with '/') of the file or directory with
-            /// the ACL being removed.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RemoveAclAsync(this IFileSystemOperations operations, string accountName, string aclFilePath, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.RemoveAclWithHttpMessagesAsync(accountName, aclFilePath, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
             /// Gets Access Control List (ACL) entries for the specified file or directory.
             /// </summary>
             /// <param name='operations'>

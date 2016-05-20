@@ -44,9 +44,12 @@
     <Compile Include="DataLakeStoreUploader\SingleSegmentUploader.cs" />
     <Compile Include="DataLakeStoreUploader\StringExtensions.cs" />
     <Compile Include="DataLakeStoreUploader\UploadFailedException.cs" />
+    <Compile Include="DataLakeStoreUploader\UploadFolderMetadata.cs" />
     <Compile Include="DataLakeStoreUploader\UploadMetadata.cs" />
+    <Compile Include="DataLakeStoreUploader\UploadFolderMetadataGenerator.cs" />
     <Compile Include="DataLakeStoreUploader\UploadMetadataGenerator.cs" />
     <Compile Include="DataLakeStoreUploader\UploadParameters.cs" />
+    <Compile Include="DataLakeStoreUploader\UploadFolderProgress.cs" />
     <Compile Include="DataLakeStoreUploader\UploadProgress.cs" />
     <Compile Include="DataLakeStoreUploader\UploadSegmentMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

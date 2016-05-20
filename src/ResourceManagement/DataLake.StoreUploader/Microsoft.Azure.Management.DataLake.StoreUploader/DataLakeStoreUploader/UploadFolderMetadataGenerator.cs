@@ -20,7 +20,7 @@ using System.Text;
 
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
 {
-    internal class UploadMetadataGenerator
+    internal class UploadFolderMetadataGenerator
     {
 
         #region Private
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// Creates a new instance of the UploadMetadataGenerator with the given parameters and the given maximum append length.
         /// </summary>
         /// <param name="parameters"></param>
-        public UploadMetadataGenerator(UploadParameters parameters)
+        public UploadFolderMetadataGenerator(UploadParameters parameters)
         {
             _parameters = parameters;
         }
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="metadataFilePath">The metadata file path.</param>
         /// <returns></returns>
-        public UploadMetadata GetExistingMetadata(string metadataFilePath)
+        public UploadFolderMetadata GetExistingMetadata(string metadataFilePath)
         {
             //load from file (based on input parameters)
-            var metadata = UploadMetadata.LoadFrom(metadataFilePath);
+            var metadata = UploadFolderMetadata.LoadFrom(metadataFilePath);
             metadata.ValidateConsistency();
             return metadata;
         }    
@@ -61,10 +61,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// Creates a new metadata based on the given input parameters, and saves it to its canonical location.
         /// </summary>
         /// <returns></returns>
-        public UploadMetadata CreateNewMetadata(string metadataFilePath)
+        public UploadFolderMetadata CreateNewMetadata(string metadataFilePath)
         {
             //create metadata
-            var metadata = new UploadMetadata(metadataFilePath, _parameters);
+            var metadata = new UploadFolderMetadata(metadataFilePath, _parameters);
 
             //save the initial version
             metadata.Save();
