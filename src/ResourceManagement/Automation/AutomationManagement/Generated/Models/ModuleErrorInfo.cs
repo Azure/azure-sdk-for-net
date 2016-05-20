@@ -25,18 +25,37 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The frequency of schedule.
+    /// Definition of the module error info type.
     /// </summary>
-    public static partial class ScheduleFrequency
+    public partial class ModuleErrorInfo
     {
-        public const string OneTime = "OneTime";
+        private string _code;
         
-        public const string Day = "Day";
+        /// <summary>
+        /// Optional. Gets or sets the error code.
+        /// </summary>
+        public string Code
+        {
+            get { return this._code; }
+            set { this._code = value; }
+        }
         
-        public const string Hour = "Hour";
+        private string _message;
         
-        public const string Week = "Week";
+        /// <summary>
+        /// Optional. Gets or sets the error message.
+        /// </summary>
+        public string Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
+        }
         
-        public const string Month = "Month";
+        /// <summary>
+        /// Initializes a new instance of the ModuleErrorInfo class.
+        /// </summary>
+        public ModuleErrorInfo()
+        {
+        }
     }
 }

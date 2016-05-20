@@ -25,18 +25,44 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The frequency of schedule.
+    /// Must be one of monday, tuesday, wednesday, thursday, friday, saturday,
+    /// sunday.
     /// </summary>
-    public static partial class ScheduleFrequency
+    public static partial class ScheduleDay
     {
-        public const string OneTime = "OneTime";
+        /// <summary>
+        /// Monday.
+        /// </summary>
+        public const string Monday = "Monday";
         
-        public const string Day = "Day";
+        /// <summary>
+        /// Tuesday.
+        /// </summary>
+        public const string Tuesday = "Tuesday";
         
-        public const string Hour = "Hour";
+        /// <summary>
+        /// Wednsday.
+        /// </summary>
+        public const string Wednesday = "Wednesday";
         
-        public const string Week = "Week";
+        /// <summary>
+        /// Thursday.
+        /// </summary>
+        public const string Thursday = "Thursday";
         
-        public const string Month = "Month";
+        /// <summary>
+        /// Friday.
+        /// </summary>
+        public const string Friday = "Friday";
+        
+        /// <summary>
+        /// Saturday.
+        /// </summary>
+        public const string Saturday = "Saturday";
+        
+        /// <summary>
+        /// Sunday.
+        /// </summary>
+        public const string Sunday = "Sunday";
     }
 }
