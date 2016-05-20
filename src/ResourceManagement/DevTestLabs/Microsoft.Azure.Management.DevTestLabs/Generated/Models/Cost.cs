@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// A cost item.
     /// </summary>
     [JsonTransformation]
     public partial class Cost : IResource
@@ -30,11 +30,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Cost class.
         /// </summary>
-        public Cost(string currencyCode = default(string), IList<CostPerDayProperties> costs = default(IList<CostPerDayProperties>), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Cost(string currencyCode = default(string), IList<CostPerDayProperties> costs = default(IList<CostPerDayProperties>), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             CurrencyCode = currencyCode;
             Costs = costs;
-            ProvisioningState = provisioningState;
             Id = id;
             Name = name;
             Type = type;
@@ -53,12 +52,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.costs")]
         public IList<CostPerDayProperties> Costs { get; set; }
-
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// The identifier of the resource.

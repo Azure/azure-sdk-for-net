@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// A Policy.
     /// </summary>
     [JsonTransformation]
     public partial class Policy : IResource
@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Policy class.
         /// </summary>
-        public Policy(string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string policyEvaluatorType = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Policy(string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string evaluatorType = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Description = description;
             Status = status;
             FactName = factName;
             FactData = factData;
             Threshold = threshold;
-            PolicyEvaluatorType = policyEvaluatorType;
+            EvaluatorType = evaluatorType;
             ProvisioningState = provisioningState;
             Id = id;
             Name = name;
@@ -60,7 +60,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Status { get; set; }
 
         /// <summary>
-        /// The fact name of the policy.
+        /// The fact name of the policy. Possible values include:
+        /// 'UserOwnedLabVmCount', 'LabVmCount', 'LabVmSize', 'GalleryImage',
+        /// 'UserOwnedLabVmCountInSubnet'
         /// </summary>
         [JsonProperty(PropertyName = "properties.factName")]
         public string FactName { get; set; }
@@ -78,10 +80,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Threshold { get; set; }
 
         /// <summary>
-        /// The evaluator type of the policy.
+        /// The evaluator type of the policy. Possible values include:
+        /// 'AllowedValuesPolicy', 'MaxValuePolicy'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.policyEvaluatorType")]
-        public string PolicyEvaluatorType { get; set; }
+        [JsonProperty(PropertyName = "properties.evaluatorType")]
+        public string EvaluatorType { get; set; }
 
         /// <summary>
         /// The provisioning status of the resource.

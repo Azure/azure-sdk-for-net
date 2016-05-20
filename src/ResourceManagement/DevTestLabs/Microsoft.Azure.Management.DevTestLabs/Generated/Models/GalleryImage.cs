@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// A gallery image.
     /// </summary>
     [JsonTransformation]
     public partial class GalleryImage : IResource
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the GalleryImage class.
         /// </summary>
-        public GalleryImage(string author = default(string), DateTime? createdDate = default(DateTime?), string description = default(string), GalleryImageReference imageReference = default(GalleryImageReference), string icon = default(string), bool? enabled = default(bool?), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public GalleryImage(string author = default(string), DateTime? createdDate = default(DateTime?), string description = default(string), GalleryImageReference imageReference = default(GalleryImageReference), string icon = default(string), bool? enabled = default(bool?), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Author = author;
             CreatedDate = createdDate;
@@ -38,7 +38,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             ImageReference = imageReference;
             Icon = icon;
             Enabled = enabled;
-            ProvisioningState = provisioningState;
             Id = id;
             Name = name;
             Type = type;
@@ -81,12 +80,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
-
-        /// <summary>
-        /// The provisioning status of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// The identifier of the resource.

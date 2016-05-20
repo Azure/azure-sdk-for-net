@@ -13,11 +13,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for CostStartDayType.
+    /// Defines values for PolicyFactName.
     /// </summary>
-    public static class CostStartDayType
+    public static class PolicyFactName
     {
-        public const string CalendarDate = "CalendarDate";
-        public const string LabCreationDate = "LabCreationDate";
+        public const string UserOwnedLabVmCount = "UserOwnedLabVmCount";
+        public const string LabVmCount = "LabVmCount";
+        public const string LabVmSize = "LabVmSize";
+        public const string GalleryImage = "GalleryImage";
+        public const string UserOwnedLabVmCountInSubnet = "UserOwnedLabVmCountInSubnet";
     }
 }

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using Models;
 
     /// <summary>
-    /// The DevTest Labs Client.
+    /// The DevTest Labs client version 2015-05-21-preview.
     /// </summary>
     public partial class DevTestLabsClient : ServiceClient<DevTestLabsClient>, IDevTestLabsClient, IAzureClient
     {
@@ -93,14 +93,14 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public virtual IArtifactOperations Artifact { get; private set; }
 
         /// <summary>
+        /// Gets the ICostInsightOperations.
+        /// </summary>
+        public virtual ICostInsightOperations CostInsight { get; private set; }
+
+        /// <summary>
         /// Gets the ICostOperations.
         /// </summary>
         public virtual ICostOperations Cost { get; private set; }
-
-        /// <summary>
-        /// Gets the ICostSettingOperations.
-        /// </summary>
-        public virtual ICostSettingOperations CostSetting { get; private set; }
 
         /// <summary>
         /// Gets the ICustomImageOperations.
@@ -131,11 +131,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// Gets the IScheduleOperations.
         /// </summary>
         public virtual IScheduleOperations Schedule { get; private set; }
-
-        /// <summary>
-        /// Gets the IUnattendedTaskOperations.
-        /// </summary>
-        public virtual IUnattendedTaskOperations UnattendedTask { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineOperations.
@@ -329,15 +324,14 @@ namespace Microsoft.Azure.Management.DevTestLabs
             this.Lab = new LabOperations(this);
             this.ArtifactSource = new ArtifactSourceOperations(this);
             this.Artifact = new ArtifactOperations(this);
+            this.CostInsight = new CostInsightOperations(this);
             this.Cost = new CostOperations(this);
-            this.CostSetting = new CostSettingOperations(this);
             this.CustomImage = new CustomImageOperations(this);
             this.Formula = new FormulaOperations(this);
             this.GalleryImage = new GalleryImageOperations(this);
             this.PolicySet = new PolicySetOperations(this);
             this.Policy = new PolicyOperations(this);
             this.Schedule = new ScheduleOperations(this);
-            this.UnattendedTask = new UnattendedTaskOperations(this);
             this.VirtualMachine = new VirtualMachineOperations(this);
             this.VirtualNetwork = new VirtualNetworkOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");

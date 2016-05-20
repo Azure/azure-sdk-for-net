@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the policy set.
             /// </param>
-            /// <param name='listOfevaluatePoliciesProperties'>
+            /// <param name='evaluatePoliciesRequest'>
             /// </param>
-            public static IList<PolicySetResult> EvaluatePolicies(this IPolicySetOperations operations, string resourceGroupName, string labName, string name, IList<EvaluatePoliciesProperties> listOfevaluatePoliciesProperties)
+            public static EvaluatePoliciesResponse EvaluatePolicies(this IPolicySetOperations operations, string resourceGroupName, string labName, string name, EvaluatePoliciesRequest evaluatePoliciesRequest)
             {
-                return Task.Factory.StartNew(s => ((IPolicySetOperations)s).EvaluatePoliciesAsync(resourceGroupName, labName, name, listOfevaluatePoliciesProperties), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicySetOperations)s).EvaluatePoliciesAsync(resourceGroupName, labName, name, evaluatePoliciesRequest), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -59,14 +59,14 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the policy set.
             /// </param>
-            /// <param name='listOfevaluatePoliciesProperties'>
+            /// <param name='evaluatePoliciesRequest'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PolicySetResult>> EvaluatePoliciesAsync(this IPolicySetOperations operations, string resourceGroupName, string labName, string name, IList<EvaluatePoliciesProperties> listOfevaluatePoliciesProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EvaluatePoliciesResponse> EvaluatePoliciesAsync(this IPolicySetOperations operations, string resourceGroupName, string labName, string name, EvaluatePoliciesRequest evaluatePoliciesRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.EvaluatePoliciesWithHttpMessagesAsync(resourceGroupName, labName, name, listOfevaluatePoliciesProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.EvaluatePoliciesWithHttpMessagesAsync(resourceGroupName, labName, name, evaluatePoliciesRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

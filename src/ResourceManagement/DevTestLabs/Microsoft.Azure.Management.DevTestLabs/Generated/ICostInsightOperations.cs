@@ -14,16 +14,17 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
-    /// CostSettingOperations operations.
+    /// CostInsightOperations operations.
     /// </summary>
-    public partial interface ICostSettingOperations
+    public partial interface ICostInsightOperations
     {
         /// <summary>
-        /// Get cost setting.
+        /// List cost insights.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -31,8 +32,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='labName'>
         /// The name of the lab.
         /// </param>
-        /// <param name='name'>
-        /// The name of the cost setting.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -40,9 +41,9 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CostSetting>> GetResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<CostInsight>>> ListWithHttpMessagesAsync(string resourceGroupName, string labName, ODataQuery<CostInsight> odataQuery = default(ODataQuery<CostInsight>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace an existing cost setting.
+        /// Get cost insight.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -51,9 +52,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the lab.
         /// </param>
         /// <param name='name'>
-        /// The name of the cost setting.
-        /// </param>
-        /// <param name='costSetting'>
+        /// The name of the cost insight.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -61,9 +60,10 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CostSetting>> CreateOrUpdateResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string name, CostSetting costSetting, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CostInsight>> GetResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete cost setting.
+        /// Refresh Lab's Cost Insight Data. This operation can take a while
+        /// to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the lab.
         /// </param>
         /// <param name='name'>
-        /// The name of the cost setting.
+        /// The name of the cost insight.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,9 +80,10 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> DeleteResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> RefreshDataWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Modify properties of cost settings.
+        /// Refresh Lab's Cost Insight Data. This operation can take a while
+        /// to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -91,9 +92,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// The name of the lab.
         /// </param>
         /// <param name='name'>
-        /// The name of the cost setting.
-        /// </param>
-        /// <param name='costSetting'>
+        /// The name of the cost insight.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -101,6 +100,19 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CostSetting>> PatchResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string name, CostSetting costSetting, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginRefreshDataWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List cost insights.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CostInsight>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

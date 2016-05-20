@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the DayDetails class.
         /// </summary>
-        public DayDetails(Recurrence time = default(Recurrence))
+        public DayDetails(string time = default(string))
         {
             Time = time;
         }
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "time")]
-        public Recurrence Time { get; set; }
+        public string Time { get; set; }
 
     }
 }
