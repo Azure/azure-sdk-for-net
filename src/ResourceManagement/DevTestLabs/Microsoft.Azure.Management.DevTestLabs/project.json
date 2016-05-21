@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0-preview",
+    "version": "1.0.1-preview",
     "description": "Microsoft.Azure.Management.DevTestLabs",
     "authors": [ "Microsoft" ],
     "tags": [ "Microsoft AutoRest Management REST" ],

@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Properties of an hourly schedule.
+    /// Request body for applying artifacts to a virtual machine.
     /// </summary>
-    public partial class HourDetails
+    public partial class ApplyArtifactsRequest
     {
         /// <summary>
-        /// Initializes a new instance of the HourDetails class.
+        /// Initializes a new instance of the ApplyArtifactsRequest class.
         /// </summary>
-        public HourDetails() { }
+        public ApplyArtifactsRequest() { }
 
         /// <summary>
-        /// Initializes a new instance of the HourDetails class.
+        /// Initializes a new instance of the ApplyArtifactsRequest class.
         /// </summary>
-        public HourDetails(int? minute = default(int?))
+        public ApplyArtifactsRequest(IList<ArtifactInstallProperties> artifacts = default(IList<ArtifactInstallProperties>))
         {
-            Minute = minute;
+            Artifacts = artifacts;
         }
 
         /// <summary>
-        /// Minutes of the hour the schedule will run.
+        /// The list of artifacts to apply.
         /// </summary>
-        [JsonProperty(PropertyName = "minute")]
-        public int? Minute { get; set; }
+        [JsonProperty(PropertyName = "artifacts")]
+        public IList<ArtifactInstallProperties> Artifacts { get; set; }
 
     }
 }

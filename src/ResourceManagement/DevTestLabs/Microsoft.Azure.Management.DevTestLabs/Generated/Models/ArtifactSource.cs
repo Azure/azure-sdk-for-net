@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// Properties of an artifact source.
     /// </summary>
     [JsonTransformation]
     public partial class ArtifactSource : IResource

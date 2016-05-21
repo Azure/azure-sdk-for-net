@@ -356,6 +356,92 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
+            /// Execute a schedule. This operation can take a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the schedule.
+            /// </param>
+            public static void Execute(this IScheduleOperations operations, string resourceGroupName, string labName, string name)
+            {
+                Task.Factory.StartNew(s => ((IScheduleOperations)s).ExecuteAsync(resourceGroupName, labName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute a schedule. This operation can take a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the schedule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ExecuteAsync(this IScheduleOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.ExecuteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Execute a schedule. This operation can take a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the schedule.
+            /// </param>
+            public static void BeginExecute(this IScheduleOperations operations, string resourceGroupName, string labName, string name)
+            {
+                Task.Factory.StartNew(s => ((IScheduleOperations)s).BeginExecuteAsync(resourceGroupName, labName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute a schedule. This operation can take a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the schedule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginExecuteAsync(this IScheduleOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginExecuteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// List schedules.
             /// </summary>
             /// <param name='operations'>

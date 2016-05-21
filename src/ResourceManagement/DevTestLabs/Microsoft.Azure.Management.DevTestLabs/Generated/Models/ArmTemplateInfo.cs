@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Information about a generated ARM template.
+    /// </summary>
     public partial class ArmTemplateInfo
     {
         /// <summary>
@@ -26,21 +29,23 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the ArmTemplateInfo class.
         /// </summary>
-        public ArmTemplateInfo(string template = default(string), string parameters = default(string))
+        public ArmTemplateInfo(object template = default(object), object parameters = default(object))
         {
             Template = template;
             Parameters = parameters;
         }
 
         /// <summary>
+        /// The template's contents.
         /// </summary>
         [JsonProperty(PropertyName = "template")]
-        public string Template { get; set; }
+        public object Template { get; set; }
 
         /// <summary>
+        /// The parameters of the ARM template.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
-        public string Parameters { get; set; }
+        public object Parameters { get; set; }
 
     }
 }

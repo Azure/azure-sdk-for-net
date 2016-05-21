@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='name'>
         /// The name of the policy set.
         /// </param>
-        /// <param name='listOfevaluatePoliciesProperties'>
+        /// <param name='evaluatePoliciesRequest'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -42,6 +42,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IList<PolicySetResult>>> EvaluatePoliciesWithHttpMessagesAsync(string resourceGroupName, string labName, string name, IList<EvaluatePoliciesProperties> listOfevaluatePoliciesProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EvaluatePoliciesResponse>> EvaluatePoliciesWithHttpMessagesAsync(string resourceGroupName, string labName, string name, EvaluatePoliciesRequest evaluatePoliciesRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
