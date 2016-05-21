@@ -167,8 +167,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                     UploadFile(file, segmentProgressTracker);
                                 }
 
-                                // delete the temp metadata created if it exists.
-                                file.DeleteFile();
+                                // attempt to save the metadata
+                                try
+                                {
+                                    metadata.Save();
+                                    // delete the temp metadata created if it exists.
+                                    file.DeleteFile();
+                                }
+                                catch { } // if we can't save the metadata or delete a temp file we shouldn't fail out.
+
+                                
                             }
                         );
 
