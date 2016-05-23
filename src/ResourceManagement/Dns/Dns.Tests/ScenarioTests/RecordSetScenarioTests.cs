@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
             this.RecordSetCreateGet(RecordType.NS, setTestRecords);
         }
 
-        [Fact(Skip = "PTR is not yet supported in the service.")]
+        [Fact]
         public void CreateGetPtr()
         {
             Action<RecordSet> setTestRecords = createParams =>

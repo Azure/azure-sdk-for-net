@@ -155,6 +155,34 @@ namespace Microsoft.Azure.Management.Dns.Testing
         }
 
         [Fact]
+        public void ListZonesInSubscription()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var dnsHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient(context, dnsHandler);
+
+
+                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone.com"), TestUtilities.GenerateName("hydratestdnszone.com") };
+                var resourceManagementClient = ResourceGroupHelper.GetResourcesClient(context, resourcesHandler);
+                ResourceGroup resourceGroup = ResourceGroupHelper.CreateResourceGroup(resourceManagementClient);
+                ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames, resourceManagementClient);
+
+                var listresponse = dnsClient.Zones.ListInSubscription();
+
+                Assert.NotNull(listresponse);
+                Assert.True(listresponse.Count() > 2);
+                Assert.True(
+                    listresponse.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name))
+                    && listresponse.Any(zoneReturned => string.Equals(zoneNames[1], zoneReturned.Name)),
+                    "The response of the List request does not meet expectations.");
+
+                ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
+            }
+        }
+
+        [Fact]
         public void ListZonesWithTopParameter()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -233,6 +261,26 @@ namespace Microsoft.Azure.Management.Dns.Testing
             }
         }
 
+        [Fact]
+        public void GetNonExistingZoneFailsAsExpected()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var dnsHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient(context, dnsHandler);
+
+                string zoneName = TestUtilities.GenerateName("hydratestdnszone.com");
+                var resourceManagementClient = ResourceGroupHelper.GetResourcesClient(context, resourcesHandler);
+                string location = ResourceGroupHelper.GetResourceLocation(resourceManagementClient, "microsoft.network/dnszones");
+
+                ResourceGroup resourceGroup = ResourceGroupHelper.CreateResourceGroup(resourceManagementClient);
+
+                TestHelpers.AssertThrows<CloudException>(
+                    () => dnsClient.Zones.Get(resourceGroup.Name, zoneName),
+                    ex => ex.Body.Code == "ResourceNotFound");
+            }
+        }
 
         [Fact]
         public void CrudZoneSetsTheCurrentAndMaxRecordSetNumbersInResponse()
