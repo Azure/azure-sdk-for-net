@@ -32,22 +32,30 @@ namespace Microsoft.Azure.Management.Dns.Testing
         /// </summary>
         /// <param name="handler"></param>
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static ResourceManagementClient GetResourcesClient(MockContext context, RecordedDelegatingHandler handler)
+        public static ResourceManagementClient GetResourcesClient(
+            MockContext context,
+            RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
+            var client = context.GetServiceClient<ResourceManagementClient>(
+                handlers: handler);
             return client;
         }
 
         /// <summary>
-        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// Default constructor for management clients,
+        ///  using the TestSupport Infrastructure
         /// </summary>
         /// <param name="handler"></param>
-        /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static DnsManagementClient GetDnsClient(MockContext context, RecordedDelegatingHandler handler)
+        /// <returns>A resource management client, created from the current context
+        ///  (environment variables)</returns>
+        public static DnsManagementClient GetDnsClient(
+            MockContext context,
+            RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<DnsManagementClient>(handlers: handler);
+            var client = context.GetServiceClient<DnsManagementClient>(
+                handlers: handler);
             return client;
         }
 
@@ -57,7 +65,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
         /// <param name="client">The resource management client</param>
         /// <param name="resourceType">The type of resource to create</param>
         /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static string GetResourceLocation(ResourceManagementClient client, string resourceType)
+        public static string GetResourceLocation(
+            ResourceManagementClient client,
+            string resourceType)
         {
             string location = null;
             string[] parts = resourceType.Split('/');
@@ -65,25 +75,33 @@ namespace Microsoft.Azure.Management.Dns.Testing
             var provider = client.Providers.Get(providerName);
             foreach (var resource in provider.ResourceTypes)
             {
-                if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(
+                    resource.ResourceType, parts[1],
+                    StringComparison.OrdinalIgnoreCase))
                 {
-                    location = resource.Locations.FirstOrDefault(loca => !string.IsNullOrEmpty(loca));
+                    location = resource.Locations.FirstOrDefault(
+                        loca => !string.IsNullOrEmpty(loca));
                 }
             }
 
             return location;
         }
 
-        public static ResourceGroup CreateResourceGroup(ResourceManagementClient resourcesClient)
+        public static ResourceGroup CreateResourceGroup(
+            ResourceManagementClient resourcesClient)
         {
             string resourceGroupName = TestUtilities.GenerateName("hydratestdnsrg");
 
-            // DNS resources are in location "global" but resource groups can't be in that same location
+            // DNS resources are in location "global" but resource groups 
+            // can't be in that same location
             string location = "Central US";
 
-            Assert.False(string.IsNullOrEmpty(location), "CSM did not return any valid locations for DNS resources");
+            Assert.False(
+                string.IsNullOrEmpty(location),
+                "CSM did not return any valid locations for DNS resources");
 
-            var response = resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+            var response = resourcesClient.ResourceGroups.CreateOrUpdate(
+                resourceGroupName,
                 new ResourceGroup
                 {
                     Location = location
@@ -92,7 +110,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             return response;
         }
 
-        public static Zone CreateZone(DnsManagementClient dnsClient, string zoneName, string location, ResourceGroup resourceGroup)
+        public static Zone CreateZone(
+            DnsManagementClient dnsClient,
+            string zoneName,
+            string location,
+            ResourceGroup resourceGroup)
         {
             return dnsClient.Zones.CreateOrUpdate(
                 resourceGroup.Name,

@@ -56,7 +56,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
         private int counter;
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            System.Threading.CancellationToken cancellationToken)
         {
             counter++;
             // Save request
