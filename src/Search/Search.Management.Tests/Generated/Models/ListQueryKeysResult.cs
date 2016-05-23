@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Search.Models
         /// Gets the query keys for the Azure Search service.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<QueryKey> Value { get; set; }
+        public IList<QueryKey> Value { get; private set; }
 
     }
 }

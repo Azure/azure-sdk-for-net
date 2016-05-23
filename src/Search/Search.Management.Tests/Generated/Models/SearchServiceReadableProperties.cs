@@ -47,13 +47,13 @@ namespace Microsoft.Azure.Management.Search.Models
         /// 'error'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public SearchServiceStatus? Status { get; set; }
+        public SearchServiceStatus? Status { get; private set; }
 
         /// <summary>
         /// Gets the details of the Search service status.
         /// </summary>
         [JsonProperty(PropertyName = "statusDetails")]
-        public string StatusDetails { get; set; }
+        public string StatusDetails { get; private set; }
 
         /// <summary>
         /// Gets the state of the last provisioning operation performed on the
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Search.Models
         /// 'provisioning', 'failed'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public ProvisioningState? ProvisioningState { get; set; }
+        public ProvisioningState? ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Search Service, which determines price

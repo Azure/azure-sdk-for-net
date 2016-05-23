@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Search.Models
         /// Gets the Search services in the resource group.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<SearchServiceResource> Value { get; set; }
+        public IList<SearchServiceResource> Value { get; private set; }
 
     }
 }

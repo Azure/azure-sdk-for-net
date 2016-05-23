@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Search.Models
         /// Gets the name of the query API key; may be empty.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the value of the query API key.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
-        public string Key { get; set; }
+        public string Key { get; private set; }
 
     }
 }
