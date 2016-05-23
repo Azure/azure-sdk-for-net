@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Properties of an hourly schedule.
+    /// Reponse body for generating an upload URI.
     /// </summary>
-    public partial class HourDetails
+    public partial class GenerateUploadUriResponse
     {
         /// <summary>
-        /// Initializes a new instance of the HourDetails class.
+        /// Initializes a new instance of the GenerateUploadUriResponse class.
         /// </summary>
-        public HourDetails() { }
+        public GenerateUploadUriResponse() { }
 
         /// <summary>
-        /// Initializes a new instance of the HourDetails class.
+        /// Initializes a new instance of the GenerateUploadUriResponse class.
         /// </summary>
-        public HourDetails(int? minute = default(int?))
+        public GenerateUploadUriResponse(string uploadUri = default(string))
         {
-            Minute = minute;
+            UploadUri = uploadUri;
         }
 
         /// <summary>
-        /// Minutes of the hour the schedule will run.
+        /// The upload URI for the VHD.
         /// </summary>
-        [JsonProperty(PropertyName = "minute")]
-        public int? Minute { get; set; }
+        [JsonProperty(PropertyName = "uploadUri")]
+        public string UploadUri { get; set; }
 
     }
 }

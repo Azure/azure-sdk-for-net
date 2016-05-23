@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// A schedule.
     /// </summary>
     [JsonTransformation]
     public partial class Schedule : IResource
@@ -30,13 +30,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Schedule class.
         /// </summary>
-        public Schedule(string status = default(string), string taskType = default(string), WeekDetails weeklyRecurrence = default(WeekDetails), DayDetails dailyRecurrence = default(DayDetails), HourDetails hourlyRecurrence = default(HourDetails), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Schedule(string status = default(string), string taskType = default(string), WeekDetails weeklyRecurrence = default(WeekDetails), DayDetails dailyRecurrence = default(DayDetails), HourDetails hourlyRecurrence = default(HourDetails), string timeZoneId = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Status = status;
             TaskType = taskType;
             WeeklyRecurrence = weeklyRecurrence;
             DailyRecurrence = dailyRecurrence;
             HourlyRecurrence = hourlyRecurrence;
+            TimeZoneId = timeZoneId;
             ProvisioningState = provisioningState;
             Id = id;
             Name = name;
@@ -53,7 +54,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Status { get; set; }
 
         /// <summary>
-        /// The task type of the schedule.
+        /// The task type of the schedule. Possible values include:
+        /// 'LabVmsShutdownTask', 'LabVmsStartupTask', 'LabBillingTask'
         /// </summary>
         [JsonProperty(PropertyName = "properties.taskType")]
         public string TaskType { get; set; }
@@ -75,6 +77,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hourlyRecurrence")]
         public HourDetails HourlyRecurrence { get; set; }
+
+        /// <summary>
+        /// The time zone id.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.timeZoneId")]
+        public string TimeZoneId { get; set; }
 
         /// <summary>
         /// The provisioning status of the resource.

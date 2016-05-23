@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='name'>
         /// The name of the policy set.
         /// </param>
-        /// <param name='listOfevaluatePoliciesProperties'>
+        /// <param name='evaluatePoliciesRequest'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<PolicySetResult>>> EvaluatePoliciesWithHttpMessagesAsync(string resourceGroupName, string labName, string name, IList<EvaluatePoliciesProperties> listOfevaluatePoliciesProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EvaluatePoliciesResponse>> EvaluatePoliciesWithHttpMessagesAsync(string resourceGroupName, string labName, string name, EvaluatePoliciesRequest evaluatePoliciesRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.DevTestLabs
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (listOfevaluatePoliciesProperties == null)
+            if (evaluatePoliciesRequest == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "listOfevaluatePoliciesProperties");
+                throw new ValidationException(ValidationRules.CannotBeNull, "evaluatePoliciesRequest");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("labName", labName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("listOfevaluatePoliciesProperties", listOfevaluatePoliciesProperties);
+                tracingParameters.Add("evaluatePoliciesRequest", evaluatePoliciesRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "EvaluatePolicies", tracingParameters);
             }
@@ -160,9 +160,9 @@ namespace Microsoft.Azure.Management.DevTestLabs
 
             // Serialize Request
             string _requestContent = null;
-            if(listOfevaluatePoliciesProperties != null)
+            if(evaluatePoliciesRequest != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(listOfevaluatePoliciesProperties, this.Client.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(evaluatePoliciesRequest, this.Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IList<PolicySetResult>>();
+            var _result = new AzureOperationResponse<EvaluatePoliciesResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IList<PolicySetResult>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<EvaluatePoliciesResponse>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
