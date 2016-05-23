@@ -82,18 +82,20 @@ namespace Microsoft.Azure.Management.Dns.Testing
             ZoneCreateOrUpdateResponse response = dnsClient.Zones.CreateOrUpdate(
                 resourceGroup.Name,
                 zoneName,
-                new ZoneCreateOrUpdateParameters
-                {
-                    Zone = new Microsoft.Azure.Management.Dns.Models.Zone
+                ifMatch: null,
+                ifNoneMatch: null,
+                parameters: new ZoneCreateOrUpdateParameters
                     {
-                        Location = location,
-                        Name = zoneName,
-                        ETag = null,
-                        Properties = new Microsoft.Azure.Management.Dns.Models.ZoneProperties
+                        Zone = new Microsoft.Azure.Management.Dns.Models.Zone
                         {
+                            Location = location,
+                            Name = zoneName,
+                            ETag = null,
+                            Properties = new Microsoft.Azure.Management.Dns.Models.ZoneProperties
+                            {
+                            }
                         }
-                    }
-                });
+                    });
 
             return response;
         }

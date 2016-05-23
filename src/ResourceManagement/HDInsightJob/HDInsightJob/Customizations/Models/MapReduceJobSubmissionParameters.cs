@@ -31,37 +31,37 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     public partial class MapReduceJobSubmissionParameters
     {
         /// <summary>
-        /// Optional.
+        /// Optional. Gets the arguments for the jobDetails.
         /// </summary>
         public IList<string> Arguments { get; set; }
 
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets define parameter list.
         /// </summary>
         public IDictionary<string, string> Defines { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. List of files to be copied to the cluster.
         /// </summary>
         public IList<string> Files { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the class.
         /// </summary>
         public string JarClass { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the Jar file.
         /// </summary>
         public string JarFile { get; set; }
 
         /// <summary>
-        /// Optional.
+        /// Optional. List of files to include in the classpath.
         /// </summary>
         public IList<string> LibJars { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Status directory in the default storage account to store job files stderr, stdout and exit.
         /// </summary>
         public string StatusDir { get; set; }
         

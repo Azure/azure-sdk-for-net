@@ -11,6 +11,8 @@
     <Compile Include="Helpers\JsonExtensions.cs" />
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="InMemoryTests\Alerts.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\DiagnosticSettings.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\LogProfiles.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\MonitoringConfiguration.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\TestBase.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\EventData.InMemoryTests.cs" />

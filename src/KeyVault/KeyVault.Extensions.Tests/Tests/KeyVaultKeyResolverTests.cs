@@ -16,14 +16,13 @@
 // governing permissions and limitations under the License.
 
 using System;
-using System.Configuration;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.KeyVault.Core;
 using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -122,45 +121,7 @@ namespace KeyVault.Extensions.Tests
                 {
                     try
                     {
-                        // ctor with client
-                        var resolver = new KeyVaultKeyResolver( client );
-
-                        var baseKey    = resolver.ResolveKeyAsync( key.KeyIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                        var versionKey = resolver.ResolveKeyAsync( key.KeyIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                        Assert.Equal( baseKey.Kid, versionKey.Kid );
-
-                        // NOTE: ctor with authentication callback. We cannot test this ctor unless
-                        //       we are running in live mode as it will create a new KeyVaultClient.
-                        if ( HttpMockServer.Mode == HttpRecorderMode.Record )
-                        {
-                            resolver = new KeyVaultKeyResolver( GetAccessToken );
-
-                            baseKey = resolver.ResolveKeyAsync( key.KeyIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                            versionKey = resolver.ResolveKeyAsync( key.KeyIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                            Assert.Equal( baseKey.Kid, versionKey.Kid );
-                        }
-
-                        // ctor with vault name and client
-                        resolver = new KeyVaultKeyResolver( vault, client );
-
-                        baseKey = resolver.ResolveKeyAsync( key.KeyIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                        versionKey = resolver.ResolveKeyAsync( key.KeyIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                        Assert.Equal( baseKey.Kid, versionKey.Kid );
-
-                        // NOTE: ctor with authentication callback. We cannot test this ctor unless
-                        //       we are running in live mode as it will create a new KeyVaultClient.
-                        if ( HttpMockServer.Mode == HttpRecorderMode.Record )
-                        {
-                            resolver = new KeyVaultKeyResolver( vault, GetAccessToken );
-
-                            baseKey = resolver.ResolveKeyAsync( key.KeyIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                            versionKey = resolver.ResolveKeyAsync( key.KeyIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                            Assert.Equal( baseKey.Kid, versionKey.Kid );
-                        }
+                        VerifyResolver(client, vault, key.KeyIdentifier.BaseIdentifier, key.KeyIdentifier.Identifier);
                     }
                     finally
                     {
@@ -180,67 +141,7 @@ namespace KeyVault.Extensions.Tests
             using ( var undoContext = UndoContext.Current )
             {
                 undoContext.Start();
-
-                // Arrange
-                var client   = GetKeyVaultClient();
-                var vault    = _vaultAddress;
-
-                var keyBytes = new byte[128 >> 3];
-
-                new RNGCryptoServiceProvider().GetNonZeroBytes( keyBytes );
-
-                var secret   = client.SetSecretAsync( vault, "TestSecret", Convert.ToBase64String( keyBytes ), null, "application/octet-stream" ).GetAwaiter().GetResult();
-
-                if ( secret != null )
-                {
-                    try
-                    {
-                        // ctor with client
-                        var resolver = new KeyVaultKeyResolver( client );
-
-                        var baseKey    = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                        var versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                        Assert.Equal( baseKey.Kid, versionKey.Kid );
-
-                        // NOTE: ctor with authentication callback. We cannot test this ctor unless
-                        //       we are running in live mode as it will create a new KeyVaultClient.
-                        if ( HttpMockServer.Mode == HttpRecorderMode.Record )
-                        {
-                            resolver = new KeyVaultKeyResolver( GetAccessToken );
-
-                            baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                            versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                            Assert.Equal( baseKey.Kid, versionKey.Kid );
-                        }
-
-                        // ctor with vault name and client
-                        resolver = new KeyVaultKeyResolver( vault, client );
-
-                        baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                        versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                        Assert.Equal( baseKey.Kid, versionKey.Kid );
-
-                        // NOTE: ctor with authentication callback. We cannot test this ctor unless
-                        //       we are running in live mode as it will create a new KeyVaultClient.
-                        if ( HttpMockServer.Mode == HttpRecorderMode.Record )
-                        {
-                            resolver = new KeyVaultKeyResolver( vault, GetAccessToken );
-
-                            baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                            versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                            Assert.Equal( baseKey.Kid, versionKey.Kid );
-                        }
-                    }
-                    finally
-                    {
-                        // Delete the key
-                        client.DeleteSecretAsync( vault, "TestSecret" ).GetAwaiter().GetResult();
-                    }
-                }
+                VerifyResolveSecretBase64(128, VerifyResolver);
             }
         }
 
@@ -253,67 +154,7 @@ namespace KeyVault.Extensions.Tests
             using ( var undoContext = UndoContext.Current )
             {
                 undoContext.Start();
-
-                // Arrange
-                var client   = GetKeyVaultClient();
-                var vault    = _vaultAddress;
-
-                var keyBytes = new byte[192 >> 3];
-
-                new RNGCryptoServiceProvider().GetNonZeroBytes( keyBytes );
-
-                var secret   = client.SetSecretAsync( vault, "TestSecret", Convert.ToBase64String( keyBytes ), null, "application/octet-stream" ).GetAwaiter().GetResult();
-
-                if ( secret != null )
-                {
-                    try
-                    {
-                        // ctor with client
-                        var resolver = new KeyVaultKeyResolver( client );
-
-                        var baseKey    = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                        var versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                        Assert.Equal( baseKey.Kid, versionKey.Kid );
-
-                        // NOTE: ctor with authentication callback. We cannot test this ctor unless
-                        //       we are running in live mode as it will create a new KeyVaultClient.
-                        if ( HttpMockServer.Mode == HttpRecorderMode.Record )
-                        {
-                            resolver = new KeyVaultKeyResolver( GetAccessToken );
-
-                            baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                            versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                            Assert.Equal( baseKey.Kid, versionKey.Kid );
-                        }
-
-                        // ctor with vault name and client
-                        resolver = new KeyVaultKeyResolver( vault, client );
-
-                        baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                        versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                        Assert.Equal( baseKey.Kid, versionKey.Kid );
-
-                        // NOTE: ctor with authentication callback. We cannot test this ctor unless
-                        //       we are running in live mode as it will create a new KeyVaultClient.
-                        if ( HttpMockServer.Mode == HttpRecorderMode.Record )
-                        {
-                            resolver = new KeyVaultKeyResolver( vault, GetAccessToken );
-
-                            baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                            versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                            Assert.Equal( baseKey.Kid, versionKey.Kid );
-                        }
-                    }
-                    finally
-                    {
-                        // Delete the key
-                        client.DeleteSecretAsync( vault, "TestSecret" ).GetAwaiter().GetResult();
-                    }
-                }
+                VerifyResolveSecretBase64(192, VerifyResolver);
             }
         }
 
@@ -326,68 +167,84 @@ namespace KeyVault.Extensions.Tests
             using ( var undoContext = UndoContext.Current )
             {
                 undoContext.Start();
+                VerifyResolveSecretBase64(256, VerifyResolver);
+            }
+        }
 
-                // Arrange
-                var client   = GetKeyVaultClient();
-                var vault    = _vaultAddress;
+        private void VerifyResolveSecretBase64(int secretSize,
+            Action<KeyVaultClient, string, string, string> verifyResolverCallback)
+        {
+            // Arrange
+            var client = GetKeyVaultClient();
+            var vault = _vaultAddress;
 
-                var keyBytes = new byte[256 >> 3];
+            var keyBytes = new byte[secretSize >> 3];
 
-                new RNGCryptoServiceProvider().GetNonZeroBytes( keyBytes );
+            new RNGCryptoServiceProvider().GetNonZeroBytes(keyBytes);
 
-                var secret   = client.SetSecretAsync( vault, "TestSecret", Convert.ToBase64String( keyBytes ), null, "application/octet-stream" ).GetAwaiter().GetResult();
+            var secret =
+                client.SetSecretAsync(vault, "TestSecret", Convert.ToBase64String(keyBytes), null,
+                    "application/octet-stream").GetAwaiter().GetResult();
 
-                if ( secret != null )
+            if (secret != null)
+            {
+                try
                 {
-                    try
-                    {
-                        // ctor with client
-                        var resolver = new KeyVaultKeyResolver( client );
-
-                        var baseKey    = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                        var versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                        Assert.Equal( baseKey.Kid, versionKey.Kid );
-
-                        // NOTE: ctor with authentication callback. We cannot test this ctor unless
-                        //       we are running in live mode as it will create a new KeyVaultClient.
-                        if ( HttpMockServer.Mode == HttpRecorderMode.Record )
-                        {
-                            resolver = new KeyVaultKeyResolver( GetAccessToken );
-
-                            baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                            versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                            Assert.Equal( baseKey.Kid, versionKey.Kid );
-                        }
-
-                        // ctor with vault name and client
-                        resolver = new KeyVaultKeyResolver( vault, client );
-
-                        baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                        versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                        Assert.Equal( baseKey.Kid, versionKey.Kid );
-
-                        // NOTE: ctor with authentication callback. We cannot test this ctor unless
-                        //       we are running in live mode as it will create a new KeyVaultClient.
-                        if ( HttpMockServer.Mode == HttpRecorderMode.Record )
-                        {
-                            resolver = new KeyVaultKeyResolver( vault, GetAccessToken );
-
-                            baseKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.BaseIdentifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-                            versionKey = resolver.ResolveKeyAsync( secret.SecretIdentifier.Identifier, default( CancellationToken ) ).GetAwaiter().GetResult();
-
-                            Assert.Equal( baseKey.Kid, versionKey.Kid );
-                        }
-                    }
-                    finally
-                    {
-                        // Delete the key
-                        client.DeleteSecretAsync( vault, "TestSecret" ).GetAwaiter().GetResult();
-                    }
+                    verifyResolverCallback(client, vault, secret.SecretIdentifier.BaseIdentifier,
+                        secret.SecretIdentifier.Identifier);
+                }
+                finally
+                {
+                    // Delete the key
+                    client.DeleteSecretAsync(vault, "TestSecret").GetAwaiter().GetResult();
                 }
             }
+        }
+
+        private void VerifyResolver(KeyVaultClient client, string vault, string baseIdentifier, string identifier)
+        {
+            // ctor with client
+            var resolver = new KeyVaultKeyResolver(client);
+
+            var baseKey = resolver.ResolveKeyAsync(baseIdentifier, default(CancellationToken)).GetAwaiter().GetResult();
+            var versionKey = resolver.ResolveKeyAsync(identifier, default(CancellationToken)).GetAwaiter().GetResult();
+
+            Assert.Equal(baseKey.Kid, versionKey.Kid);
+
+            // NOTE: ctor with authentication callback. We cannot test this ctor unless
+            //       we are running in live mode as it will create a new KeyVaultClient.
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                resolver = new KeyVaultKeyResolver(GetAccessToken);
+
+                baseKey = resolver.ResolveKeyAsync(baseIdentifier, default(CancellationToken)).GetAwaiter().GetResult();
+                versionKey = resolver.ResolveKeyAsync(identifier, default(CancellationToken)).GetAwaiter().GetResult();
+
+                Assert.Equal(baseKey.Kid, versionKey.Kid);
+            }
+
+            // ctor with vault name and client
+            resolver = new KeyVaultKeyResolver(vault, client);
+
+            baseKey = resolver.ResolveKeyAsync(baseIdentifier, default(CancellationToken)).GetAwaiter().GetResult();
+            versionKey = resolver.ResolveKeyAsync(identifier, default(CancellationToken)).GetAwaiter().GetResult();
+
+            Assert.Equal(baseKey.Kid, versionKey.Kid);
+
+            // NOTE: ctor with authentication callback. We cannot test this ctor unless
+            //       we are running in live mode as it will create a new KeyVaultClient.
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                resolver = new KeyVaultKeyResolver(vault, GetAccessToken);
+
+                baseKey = resolver.ResolveKeyAsync(baseIdentifier, default(CancellationToken)).GetAwaiter().GetResult();
+                versionKey = resolver.ResolveKeyAsync(identifier, default(CancellationToken)).GetAwaiter().GetResult();
+
+                Assert.Equal(baseKey.Kid, versionKey.Kid);
+            }
+
+            baseKey.Dispose();
+            versionKey.Dispose();
         }
     }
 }

@@ -14,9 +14,13 @@
 //
 
 using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json;
 using System;
+using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
@@ -84,7 +88,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
 
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
 
-                if (request.Content != null && request.Method != HttpMethod.Post)
+                if (request.Content != null)
                 {
                     this.Json = request.Content.ReadAsStringAsync().Result;
                 }
@@ -101,6 +105,90 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             }
         }
 
+        private class MockHttpPostListWindowsDelegatingHandler : DelegatingHandler
+        {
+            private bool IsPassThrough { get; set; }
+
+            /// <summary>
+            /// Response body
+            /// </summary>
+            public string JsonResponse { get; set; }
+
+            /// <summary>
+            /// Request body
+            /// </summary>
+            public string JsonRequest { get; set; }
+
+            /// <summary>
+            /// A custom action to execute when a request is executed.
+            /// </summary>
+            public Action<HttpRequestMessage> OnRequestAction { get; set; }
+
+            protected override async Task<HttpResponseMessage> SendAsync(
+                HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                if (this.OnRequestAction != null)
+                {
+                    this.OnRequestAction(request);
+                }
+
+                if (this.IsPassThrough)
+                {
+                    return await base.SendAsync(request, cancellationToken);
+                }
+
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+
+                string jsonParameters = request.Content.ReadAsStringAsync().Result;
+
+                this.ValidateActivityWindowsParameters(jsonParameters);
+
+                if (!string.IsNullOrEmpty(this.JsonResponse))
+                {
+                    response.Content = new StringContent(this.JsonResponse);
+                }
+
+                string fakeRequestId = Guid.NewGuid().ToString();
+                response.Headers.Add("x-ms-request-id", fakeRequestId);
+                return response;
+            }
+
+            private void ValidateActivityWindowsParameters(string jsonActual)
+            {
+                ActivityWindowsByDataFactoryListParameters actual = JsonConvert.DeserializeObject<ActivityWindowsByDataFactoryListParameters>(jsonActual);
+                ActivityWindowsByDataFactoryListParameters expected = JsonConvert.DeserializeObject<ActivityWindowsByDataFactoryListParameters>(this.JsonRequest);
+
+                if (actual != null && expected != null)
+                {
+                    Type type = typeof(ActivityWindowsByDataFactoryListParameters);
+                    string[] notSerializedProperties = new[] { "ResourceGroupName", "DataFactoryName" };
+                    foreach (PropertyInfo pi in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                    {
+                        object actualValue = type.GetProperty(pi.Name).GetValue(actual, null);
+                        object expectedValue = type.GetProperty(pi.Name).GetValue(expected, null);
+
+                        if (notSerializedProperties.Contains(pi.Name))
+                        {
+                            if (actualValue != null || expectedValue == null)
+                            {
+                                throw new JsonSerializationException(string.Format(CultureInfo.InvariantCulture,
+                                    "Validation of ListActivityWindows failed for property {0} because unallowed properties are serialized. actualValue={1}, expectedValue={2}. actualJson={3}, expectedJson={4}",
+                                    pi.Name, actualValue, expectedValue, jsonActual, this.JsonRequest));
+                            }
+
+                            continue;
+                        }
+
+                        if (actualValue != expectedValue && (actualValue == null || !actualValue.Equals(expectedValue)))
+                        {
+                            throw new Exception(string.Format(CultureInfo.InvariantCulture,
+                                "Validation of ListActivityWindows failed because the actual parameter serialized does not match the expected for property {0}. actualValue={1}, expectedValue={2}. actualJson={3}, expectedJson={4}",
+                                pi.Name, actualValue, expectedValue, jsonActual, this.JsonRequest));
+                        }
+                    }
+                }
+            }
+        }
         #endregion DelegatingHandlers
 
         #region Operation response interceptors
@@ -434,20 +522,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// Deserializes the given json into an Hydra OM ActivityWindow instance, by mocking a get request to 
         /// exercise the client's deserialization logic.
         /// </summary>
-        /// <param name="json">The JSON string to deserialize.</param>
+        /// <param name="jsonResponse">The JSON response string to deserialize.</param>
+        /// <param name="jsonRequest">The JSON request string to deserialize.</param>
         /// <returns></returns>
-        internal static ActivityWindowListResponse DeserializeActivityWindow(string json)
+        internal static ActivityWindowListResponse DeserializeActivityWindow(string jsonRequest, string jsonResponse)
         {
-            var handler = new MockResourceProviderDelegatingHandler() { Json = json };
+            var handler = new MockHttpPostListWindowsDelegatingHandler() { JsonRequest = jsonRequest, JsonResponse = jsonResponse };
 
             var client = GetFakeClient(handler);
-            string resourceGroupName = Guid.NewGuid().ToString("D");
-            string dataFactoryName = Guid.NewGuid().ToString("D");
-            ActivityWindowsByDataFactoryListParameters listParameters = new ActivityWindowsByDataFactoryListParameters(
-                resourceGroupName,
-                dataFactoryName);
 
-            ActivityWindowListResponse listResponse = client.ActivityWindows.ListByDataFactory(listParameters);
+            ActivityWindowsByDataFactoryListParameters request = JsonConvert.DeserializeObject<ActivityWindowsByDataFactoryListParameters>(jsonRequest);
+
+            ActivityWindowListResponse listResponse = client.ActivityWindows.ListByDataFactory(request);
 
             return listResponse;
         }

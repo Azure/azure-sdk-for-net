@@ -24,6 +24,7 @@ namespace Microsoft.Hadoop.Client
     /// <summary>
     /// Represents the base interface of a Hadoop Client.
     /// </summary>
+    [Obsolete("NOTE: This library has been deprecated. Please use the Microsoft.Azure.Management.HDInsight or Microsoft.Azure.Management.HDInsight.Job packages instead. For more information, go to: http://go.microsoft.com/fwlink/p/?LinkID=785087", false)]
     public interface IHadoopClientBase : IDisposable, ILogProvider
     {
         /// <summary>

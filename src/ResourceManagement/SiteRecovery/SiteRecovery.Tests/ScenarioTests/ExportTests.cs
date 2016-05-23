@@ -26,54 +26,33 @@ namespace SiteRecovery.Tests
 {
     public class ExportTests : SiteRecoveryTestsBase
     {
+        [Fact]
         public void ExportJobTest()
         {
-            int timeToWaitInMins = 2;
-            int waitBeforeRetryInSec = 1;
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                DateTime from = DateTime.Now.ToUniversalTime() - (new TimeSpan(7, 0, 0, 0));
-                DateTime to = DateTime.Now.ToUniversalTime();
-
                 JobQueryParameter jqp = new JobQueryParameter();
-                jqp.StartTime = from.ToBinary().ToString();
-                jqp.EndTime = to.ToBinary().ToString();
-                jqp.AffectedObjectTypes = new List<string>();
-                jqp.AffectedObjectTypes.Add("Any");
-                jqp.JobStatus = new List<string>();
-                jqp.JobStatus.Add("Completed");
 
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
-                var exportResponse = client.Jobs.Export(jqp, RequestHeaders);
+                var exportJobResponse = (JobOperationResponse)client.Jobs.Export(jqp, RequestHeaders);
 
-                Assert.True(exportResponse != null, "Export Jobs did not return Job Object");
-                Assert.False(string.IsNullOrEmpty(exportResponse.Job.Name), "Job Id Absent");
+                Assert.True(exportJobResponse != null, "Export Jobs did not return Job Object");
+                Assert.False(string.IsNullOrEmpty(exportJobResponse.Job.Name), "Job Id Absent");
 
-                JobResponse getJobResponse = null;
-                while (stopWatch.Elapsed.Minutes < timeToWaitInMins)
-                {
-                    getJobResponse = client.Jobs.Get(exportResponse.Job.Name, RequestHeaders);
-                    Assert.True(getJobResponse != null, "Get call on export job returned null");
-                    if (getJobResponse.Job.Properties.State.Equals("Succeeded"))
-                    {
-                        break;
-                    }
-                    System.Threading.Thread.Sleep(waitBeforeRetryInSec * 1000);
-                }
                 stopWatch.Stop();
 
-                Assert.Equal<string>(getJobResponse.Job.Properties.State, "Succeeded");
-                Assert.Equal(HttpStatusCode.OK, getJobResponse.StatusCode);
-                Assert.True(getJobResponse.Job.Properties.CustomDetails.InstanceType.Equals(
+                Assert.Equal<string>(exportJobResponse.Job.Properties.State, "Succeeded");
+                Assert.Equal(HttpStatusCode.OK, exportJobResponse.StatusCode);
+                Assert.True(exportJobResponse.Job.Properties.CustomDetails.InstanceType.Equals(
                     "ExportJobDetails"));
                 Assert.False(string.IsNullOrEmpty(
-                    ((ExportJobDetails)getJobResponse.Job.Properties.CustomDetails).BlobUri));
+                    ((ExportJobDetails)exportJobResponse.Job.Properties.CustomDetails).BlobUri));
                 Assert.False(string.IsNullOrEmpty(
-                    ((ExportJobDetails)getJobResponse.Job.Properties.CustomDetails).SasToken));
+                    ((ExportJobDetails)exportJobResponse.Job.Properties.CustomDetails).SasToken));
             }
         }
     }

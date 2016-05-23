@@ -127,6 +127,16 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.Properties != null)
+            {
+                if (parameters.Properties.AutoStorage != null)
+                {
+                    if (parameters.Properties.AutoStorage.StorageAccountId == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.AutoStorage.StorageAccountId");
+                    }
+                }
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -157,7 +167,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -213,6 +223,20 @@ namespace Microsoft.Azure.Management.Batch
                             tagsDictionary[tagsKey] = tagsValue;
                         }
                         batchAccountCreateParametersValue["tags"] = tagsDictionary;
+                    }
+                }
+                
+                if (parameters.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    batchAccountCreateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Properties.AutoStorage != null)
+                    {
+                        JObject autoStorageValue = new JObject();
+                        propertiesValue["autoStorage"] = autoStorageValue;
+                        
+                        autoStorageValue["storageAccountId"] = parameters.Properties.AutoStorage.StorageAccountId;
                     }
                 }
                 
@@ -304,41 +328,62 @@ namespace Microsoft.Azure.Management.Batch
                                 }
                             }
                             
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
                                 AccountProperties propertiesInstance = new AccountProperties();
                                 resourceInstance.Properties = propertiesInstance;
                                 
-                                JToken accountEndpointValue = propertiesValue["accountEndpoint"];
+                                JToken accountEndpointValue = propertiesValue2["accountEndpoint"];
                                 if (accountEndpointValue != null && accountEndpointValue.Type != JTokenType.Null)
                                 {
                                     string accountEndpointInstance = ((string)accountEndpointValue);
                                     propertiesInstance.AccountEndpoint = accountEndpointInstance;
                                 }
                                 
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
                                 if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                 {
                                     AccountProvisioningState provisioningStateInstance = ((AccountProvisioningState)Enum.Parse(typeof(AccountProvisioningState), ((string)provisioningStateValue), true));
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
                                 
-                                JToken coreQuotaValue = propertiesValue["coreQuota"];
+                                JToken autoStorageValue2 = propertiesValue2["autoStorage"];
+                                if (autoStorageValue2 != null && autoStorageValue2.Type != JTokenType.Null)
+                                {
+                                    AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                    propertiesInstance.AutoStorage = autoStorageInstance;
+                                    
+                                    JToken storageAccountIdValue = autoStorageValue2["storageAccountId"];
+                                    if (storageAccountIdValue != null && storageAccountIdValue.Type != JTokenType.Null)
+                                    {
+                                        string storageAccountIdInstance = ((string)storageAccountIdValue);
+                                        autoStorageInstance.StorageAccountId = storageAccountIdInstance;
+                                    }
+                                    
+                                    JToken lastKeySyncValue = autoStorageValue2["lastKeySync"];
+                                    if (lastKeySyncValue != null && lastKeySyncValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastKeySyncInstance = ((DateTime)lastKeySyncValue);
+                                        autoStorageInstance.LastKeySync = lastKeySyncInstance;
+                                    }
+                                }
+                                
+                                JToken coreQuotaValue = propertiesValue2["coreQuota"];
                                 if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
                                 {
                                     int coreQuotaInstance = ((int)coreQuotaValue);
                                     propertiesInstance.CoreQuota = coreQuotaInstance;
                                 }
                                 
-                                JToken poolQuotaValue = propertiesValue["poolQuota"];
+                                JToken poolQuotaValue = propertiesValue2["poolQuota"];
                                 if (poolQuotaValue != null && poolQuotaValue.Type != JTokenType.Null)
                                 {
                                     int poolQuotaInstance = ((int)poolQuotaValue);
                                     propertiesInstance.PoolQuota = poolQuotaInstance;
                                 }
                                 
-                                JToken activeJobAndJobScheduleQuotaValue = propertiesValue["activeJobAndJobScheduleQuota"];
+                                JToken activeJobAndJobScheduleQuotaValue = propertiesValue2["activeJobAndJobScheduleQuota"];
                                 if (activeJobAndJobScheduleQuotaValue != null && activeJobAndJobScheduleQuotaValue.Type != JTokenType.Null)
                                 {
                                     int activeJobAndJobScheduleQuotaInstance = ((int)activeJobAndJobScheduleQuotaValue);
@@ -487,7 +532,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -562,11 +607,11 @@ namespace Microsoft.Azure.Management.Batch
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -823,7 +868,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -850,7 +895,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -960,6 +1005,27 @@ namespace Microsoft.Azure.Management.Batch
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
                                 
+                                JToken autoStorageValue = propertiesValue["autoStorage"];
+                                if (autoStorageValue != null && autoStorageValue.Type != JTokenType.Null)
+                                {
+                                    AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                    propertiesInstance.AutoStorage = autoStorageInstance;
+                                    
+                                    JToken storageAccountIdValue = autoStorageValue["storageAccountId"];
+                                    if (storageAccountIdValue != null && storageAccountIdValue.Type != JTokenType.Null)
+                                    {
+                                        string storageAccountIdInstance = ((string)storageAccountIdValue);
+                                        autoStorageInstance.StorageAccountId = storageAccountIdInstance;
+                                    }
+                                    
+                                    JToken lastKeySyncValue = autoStorageValue["lastKeySync"];
+                                    if (lastKeySyncValue != null && lastKeySyncValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastKeySyncInstance = ((DateTime)lastKeySyncValue);
+                                        autoStorageInstance.LastKeySync = lastKeySyncInstance;
+                                    }
+                                }
+                                
                                 JToken coreQuotaValue = propertiesValue["coreQuota"];
                                 if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
                                 {
@@ -1061,7 +1127,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + "batchAccounts";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1088,7 +1154,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1203,6 +1269,27 @@ namespace Microsoft.Azure.Management.Batch
                                             propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
                                         
+                                        JToken autoStorageValue = propertiesValue["autoStorage"];
+                                        if (autoStorageValue != null && autoStorageValue.Type != JTokenType.Null)
+                                        {
+                                            AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                            propertiesInstance.AutoStorage = autoStorageInstance;
+                                            
+                                            JToken storageAccountIdValue = autoStorageValue["storageAccountId"];
+                                            if (storageAccountIdValue != null && storageAccountIdValue.Type != JTokenType.Null)
+                                            {
+                                                string storageAccountIdInstance = ((string)storageAccountIdValue);
+                                                autoStorageInstance.StorageAccountId = storageAccountIdInstance;
+                                            }
+                                            
+                                            JToken lastKeySyncValue = autoStorageValue["lastKeySync"];
+                                            if (lastKeySyncValue != null && lastKeySyncValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastKeySyncInstance = ((DateTime)lastKeySyncValue);
+                                                autoStorageInstance.LastKeySync = lastKeySyncInstance;
+                                            }
+                                        }
+                                        
                                         JToken coreQuotaValue = propertiesValue["coreQuota"];
                                         if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
                                         {
@@ -1300,7 +1387,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "Microsoft.Batch";
             url = url + "/actions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1327,7 +1414,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1518,7 +1605,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/listKeys";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1545,7 +1632,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1799,6 +1886,27 @@ namespace Microsoft.Azure.Management.Batch
                                             propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
                                         
+                                        JToken autoStorageValue = propertiesValue["autoStorage"];
+                                        if (autoStorageValue != null && autoStorageValue.Type != JTokenType.Null)
+                                        {
+                                            AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                            propertiesInstance.AutoStorage = autoStorageInstance;
+                                            
+                                            JToken storageAccountIdValue = autoStorageValue["storageAccountId"];
+                                            if (storageAccountIdValue != null && storageAccountIdValue.Type != JTokenType.Null)
+                                            {
+                                                string storageAccountIdInstance = ((string)storageAccountIdValue);
+                                                autoStorageInstance.StorageAccountId = storageAccountIdInstance;
+                                            }
+                                            
+                                            JToken lastKeySyncValue = autoStorageValue["lastKeySync"];
+                                            if (lastKeySyncValue != null && lastKeySyncValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastKeySyncInstance = ((DateTime)lastKeySyncValue);
+                                                autoStorageInstance.LastKeySync = lastKeySyncInstance;
+                                            }
+                                        }
+                                        
                                         JToken coreQuotaValue = propertiesValue["coreQuota"];
                                         if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
                                         {
@@ -1943,7 +2051,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/regenerateKeys";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1970,7 +2078,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2077,6 +2185,173 @@ namespace Microsoft.Azure.Management.Batch
         }
         
         /// <summary>
+        /// The SyncAutoStorageKeys operation synchronizes access keys for the
+        /// auto storage account configured for the specified Batch account.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group that contains the Batch
+        /// account.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the Batch account.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> SyncAutoStorageKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                TracingAdapter.Enter(invocationId, this, "SyncAutoStorageKeysAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/";
+            url = url + "batchAccounts";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + "/syncAutoStorageKeys";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Update operation updates the properties of an existing Batch
         /// account in the specified resource group.
         /// </summary>
@@ -2127,6 +2402,16 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.Properties != null)
+            {
+                if (parameters.Properties.AutoStorage != null)
+                {
+                    if (parameters.Properties.AutoStorage.StorageAccountId == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.AutoStorage.StorageAccountId");
+                    }
+                }
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -2157,7 +2442,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2184,7 +2469,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2209,6 +2494,20 @@ namespace Microsoft.Azure.Management.Batch
                             tagsDictionary[tagsKey] = tagsValue;
                         }
                         batchAccountUpdateParametersValue["tags"] = tagsDictionary;
+                    }
+                }
+                
+                if (parameters.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    batchAccountUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Properties.AutoStorage != null)
+                    {
+                        JObject autoStorageValue = new JObject();
+                        propertiesValue["autoStorage"] = autoStorageValue;
+                        
+                        autoStorageValue["storageAccountId"] = parameters.Properties.AutoStorage.StorageAccountId;
                     }
                 }
                 
@@ -2300,41 +2599,62 @@ namespace Microsoft.Azure.Management.Batch
                                 }
                             }
                             
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
                                 AccountProperties propertiesInstance = new AccountProperties();
                                 resourceInstance.Properties = propertiesInstance;
                                 
-                                JToken accountEndpointValue = propertiesValue["accountEndpoint"];
+                                JToken accountEndpointValue = propertiesValue2["accountEndpoint"];
                                 if (accountEndpointValue != null && accountEndpointValue.Type != JTokenType.Null)
                                 {
                                     string accountEndpointInstance = ((string)accountEndpointValue);
                                     propertiesInstance.AccountEndpoint = accountEndpointInstance;
                                 }
                                 
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
                                 if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                 {
                                     AccountProvisioningState provisioningStateInstance = ((AccountProvisioningState)Enum.Parse(typeof(AccountProvisioningState), ((string)provisioningStateValue), true));
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
                                 
-                                JToken coreQuotaValue = propertiesValue["coreQuota"];
+                                JToken autoStorageValue2 = propertiesValue2["autoStorage"];
+                                if (autoStorageValue2 != null && autoStorageValue2.Type != JTokenType.Null)
+                                {
+                                    AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                    propertiesInstance.AutoStorage = autoStorageInstance;
+                                    
+                                    JToken storageAccountIdValue = autoStorageValue2["storageAccountId"];
+                                    if (storageAccountIdValue != null && storageAccountIdValue.Type != JTokenType.Null)
+                                    {
+                                        string storageAccountIdInstance = ((string)storageAccountIdValue);
+                                        autoStorageInstance.StorageAccountId = storageAccountIdInstance;
+                                    }
+                                    
+                                    JToken lastKeySyncValue = autoStorageValue2["lastKeySync"];
+                                    if (lastKeySyncValue != null && lastKeySyncValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastKeySyncInstance = ((DateTime)lastKeySyncValue);
+                                        autoStorageInstance.LastKeySync = lastKeySyncInstance;
+                                    }
+                                }
+                                
+                                JToken coreQuotaValue = propertiesValue2["coreQuota"];
                                 if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
                                 {
                                     int coreQuotaInstance = ((int)coreQuotaValue);
                                     propertiesInstance.CoreQuota = coreQuotaInstance;
                                 }
                                 
-                                JToken poolQuotaValue = propertiesValue["poolQuota"];
+                                JToken poolQuotaValue = propertiesValue2["poolQuota"];
                                 if (poolQuotaValue != null && poolQuotaValue.Type != JTokenType.Null)
                                 {
                                     int poolQuotaInstance = ((int)poolQuotaValue);
                                     propertiesInstance.PoolQuota = poolQuotaInstance;
                                 }
                                 
-                                JToken activeJobAndJobScheduleQuotaValue = propertiesValue["activeJobAndJobScheduleQuota"];
+                                JToken activeJobAndJobScheduleQuotaValue = propertiesValue2["activeJobAndJobScheduleQuota"];
                                 if (activeJobAndJobScheduleQuotaValue != null && activeJobAndJobScheduleQuotaValue.Type != JTokenType.Null)
                                 {
                                     int activeJobAndJobScheduleQuotaInstance = ((int)activeJobAndJobScheduleQuotaValue);

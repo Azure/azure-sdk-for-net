@@ -14,6 +14,7 @@
 //
 
 using Microsoft.Azure;
+using Microsoft.WindowsAzure.Testing;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Testing
 {
@@ -437,6 +438,136 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 deploymentResponse = fixture.ComputeClient.Deployments.GetByName(serviceName,
                     parameters.Name);
                 Assert.Null(deploymentResponse.DnsSettings);
+            }
+
+            TestUtilities.EndTest();
+        }
+
+        [Fact]
+        public void CanMigrateVirtualMachineDeployment()
+        {
+            TestUtilities.StartTest();
+            using (fixture.ComputeClient = fixture.GetComputeManagementClient())
+            {
+                var serviceName = TestUtilities.GenerateName();
+
+                var result = fixture.ComputeClient.HostedServices.Create(new HostedServiceCreateParameters
+                {
+                    Location = fixture.Location,
+                    Label = serviceName,
+                    ServiceName = serviceName
+                });
+
+                // assert that the call worked
+                Assert.Equal(result.StatusCode, HttpStatusCode.Created);
+
+                VirtualMachineOSImageListResponse imagesList = fixture.ComputeClient.VirtualMachineOSImages.List();
+
+                VirtualMachineOSImageListResponse.VirtualMachineOSImage imageToGet =
+                    imagesList.Images.FirstOrDefault(i => string.Equals(i.OperatingSystemType, "Windows", StringComparison.OrdinalIgnoreCase));
+
+                VirtualMachineOSImageGetResponse gottenImage = fixture.ComputeClient.VirtualMachineOSImages.Get(imageToGet.Name);
+
+                VirtualMachineCreateDeploymentParameters parameters = CreateVMParameters(gottenImage, serviceName);
+
+                parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
+                {
+                    AdminUserName = "testuser",
+                    AdminPassword = ComputeTestsUtilities.GenerateRandomPassword(),
+                    ConfigurationSetType = ConfigurationSetTypes.WindowsProvisioningConfiguration,
+                    ComputerName = serviceName,
+                    HostName = string.Format("{0}.cloudapp.net", serviceName),
+                    EnableAutomaticUpdates = false,
+                    TimeZone = "Pacific Standard Time"
+                });
+
+                OperationStatusResponse opResp =
+                    fixture.ComputeClient.VirtualMachines.CreateDeployment(serviceName, parameters);
+
+                Assert.Equal(opResp.Status, OperationStatus.Succeeded);
+
+                var prepareParameters = new PrepareDeploymentMigrationParameters
+                {
+                    DestinationVirtualNetwork = "New",
+                    ResourceGroupName = string.Empty,
+                    SubNetName = string.Empty,
+                    VirtualNetworkName = string.Empty
+                };
+
+                opResp = fixture.ComputeClient.Deployments.PrepareMigration(serviceName, parameters.Name, prepareParameters);
+                Assert.Equal(opResp.Status, OperationStatus.Succeeded);
+
+                var deploymentResponse = fixture.ComputeClient.Deployments.GetByName(serviceName, parameters.Name);
+                Assert.NotNull(deploymentResponse);
+                Assert.Equal(IaaSClassicToArmMigrationState.Prepared.ToString(), deploymentResponse.Roles.First().MigrationState);
+
+                opResp = fixture.ComputeClient.Deployments.CommitMigration(serviceName, parameters.Name);
+                Assert.Equal(opResp.Status, OperationStatus.Succeeded);
+            }
+
+            TestUtilities.EndTest();
+        }
+
+        [Fact]
+        public void CanAbortVirtualMachineDeployment()
+        {
+            TestUtilities.StartTest();
+            using (fixture.ComputeClient = fixture.GetComputeManagementClient())
+            {
+                var serviceName = TestUtilities.GenerateName();
+
+                var result = fixture.ComputeClient.HostedServices.Create(new HostedServiceCreateParameters
+                {
+                    Location = fixture.Location,
+                    Label = serviceName,
+                    ServiceName = serviceName
+                });
+
+                // assert that the call worked
+                Assert.Equal(result.StatusCode, HttpStatusCode.Created);
+
+                VirtualMachineOSImageListResponse imagesList = fixture.ComputeClient.VirtualMachineOSImages.List();
+
+                VirtualMachineOSImageListResponse.VirtualMachineOSImage imageToGet =
+                    imagesList.Images.FirstOrDefault(i => string.Equals(i.OperatingSystemType, "Windows", StringComparison.OrdinalIgnoreCase));
+
+                VirtualMachineOSImageGetResponse gottenImage = fixture.ComputeClient.VirtualMachineOSImages.Get(imageToGet.Name);
+
+                VirtualMachineCreateDeploymentParameters parameters = CreateVMParameters(gottenImage, serviceName);
+
+                parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
+                {
+                    AdminUserName = "testuser",
+                    AdminPassword = ComputeTestsUtilities.GenerateRandomPassword(),
+                    ConfigurationSetType = ConfigurationSetTypes.WindowsProvisioningConfiguration,
+                    ComputerName = serviceName,
+                    HostName = string.Format("{0}.cloudapp.net", serviceName),
+                    EnableAutomaticUpdates = false,
+                    TimeZone = "Pacific Standard Time"
+                });
+
+                OperationStatusResponse opResp =
+                    fixture.ComputeClient.VirtualMachines.CreateDeployment(serviceName, parameters);
+
+                Assert.Equal(opResp.Status, OperationStatus.Succeeded);
+
+                var prepareParameters = new PrepareDeploymentMigrationParameters
+                {
+                    DestinationVirtualNetwork = "New",
+                    ResourceGroupName = string.Empty,
+                    SubNetName = string.Empty,
+                    VirtualNetworkName = string.Empty
+                };
+
+                opResp = fixture.ComputeClient.Deployments.PrepareMigration(serviceName, parameters.Name, prepareParameters);
+                Assert.Equal(opResp.Status, OperationStatus.Succeeded);
+
+                var deploymentResponse = fixture.ComputeClient.Deployments.GetByName(serviceName, parameters.Name);
+                Assert.NotNull(deploymentResponse);
+                Assert.Equal(IaaSClassicToArmMigrationState.Prepared.ToString(), deploymentResponse.Roles.First().MigrationState);
+
+                opResp = fixture.ComputeClient.Deployments.AbortMigration(serviceName, parameters.Name);
+                Assert.Equal(opResp.Status, OperationStatus.Succeeded);
             }
 
             TestUtilities.EndTest();

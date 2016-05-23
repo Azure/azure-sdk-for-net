@@ -54,6 +54,15 @@ namespace Microsoft.Azure.Insights
         };
 
         /// <summary>
+        /// The number of calls that are made in parallel to get the metrics from blobs. It is defaulted for 24 calls.
+        /// </summary>
+        public static int NumberOfParallelCallsForMetricBlobs = 24;
+
+        /// The limit of metric entities to be retrieved.
+        /// </summary>
+        public static int MaxMetricEntities = 5000;
+
+        /// <summary>
         /// Check to see if the resourceId is backed by a legacy resouce provider
         /// </summary>
         /// <param name="resourceId">resource id</param>

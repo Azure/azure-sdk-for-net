@@ -49,6 +49,15 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
+        /// Gets or sets the SDK UserAgent text to be added to the user agent
+        /// header. This is used to further differentiate various SDK versions.
+        /// </summary>
+        string SdkUserAgent
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Gets or sets the additional UserAgent text to be added to the user
         /// agent header. This is used to further differentiate using
         /// applications.
@@ -56,6 +65,15 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         string UserAgentSuffix
         {
             get; set; 
+        }
+        
+        /// <summary>
+        /// The user name from Username of BasicAuthenticationCloudCredentials
+        /// in lower case used for running job.
+        /// </summary>
+        string UserName
+        {
+            get; 
         }
         
         /// <summary>

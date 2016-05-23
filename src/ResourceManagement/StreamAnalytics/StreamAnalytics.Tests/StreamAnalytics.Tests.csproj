@@ -43,6 +43,9 @@
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.FunctionOperationTest\Test_FunctionOperations_RetrieveDefaultDefinitionWithRawJsonContent.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.FunctionOperationTest\Test_FunctionOperations_Scalar_JavaScript.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.InputOperationsTest\Test_InputOperations_E2E.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -161,6 +161,37 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<StorageClassificationMappingListResponse> ListAsync(string fabricName, string storageClassificationName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets the replication storage mapping objects under a vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list storage mapping operation.
+        /// </returns>
+        Task<StorageClassificationMappingListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the replication storage mapping objects under a vault.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list storage mapping operation.
+        /// </returns>
+        Task<StorageClassificationMappingListResponse> ListNextAsync(string nextLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Pairs storage to a given storage.
         /// </summary>
         /// <param name='fabricName'>

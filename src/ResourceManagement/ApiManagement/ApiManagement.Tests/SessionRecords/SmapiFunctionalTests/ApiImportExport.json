@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/apis/aid8623?api-version=2014-02-14&path=wadlapi",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hcGlzL2FpZDg2MjM/YXBpLXZlcnNpb249MjAxNC0wMi0xNCZwYXRoPXdhZGxhcGk=",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/apis/aid6405?api-version=2014-02-14&path=wadlapi",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hcGlzL2FpZDY0MDU/YXBpLXZlcnNpb249MjAxNC0wMi0xNCZwYXRoPXdhZGxhcGk=",
       "RequestMethod": "PUT",
       "RequestBody": "<application xmlns=\"http://wadl.dev.java.net/2009/02\" xmlns:tns=\"urn:yahoo:yn\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:ya=\"urn:yahoo:api\" xmlns:yn=\"urn:yahoo:yn\" xsi:schemaLocation=\"http://wadl.dev.java.net/2009/02 wadl.xsd\">\r\n  <doc title=\"Yahoo News Search\">Yahoo News Search API</doc>\r\n  <grammars>\r\n    <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:yahoo:api\" targetNamespace=\"urn:yahoo:api\" elementFormDefault=\"qualified\">\r\n      <xs:element name=\"Error\" type=\"xs:string\" />\r\n    </xs:schema>\r\n    <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:yahoo:yn\" targetNamespace=\"urn:yahoo:yn\" elementFormDefault=\"qualified\">\r\n      <xs:element name=\"ResultSet\">\r\n        <xs:complexType>\r\n          <xs:sequence>\r\n            <xs:element name=\"Result\" type=\"ResultType\" minOccurs=\"0\" maxOccurs=\"50\" />\r\n          </xs:sequence>\r\n          <xs:attribute name=\"totalResultsAvailable\" type=\"xs:integer\" />\r\n          <xs:attribute name=\"totalResultsReturned\" type=\"xs:integer\" />\r\n          <xs:attribute name=\"firstResultPosition\" type=\"xs:integer\" />\r\n        </xs:complexType>\r\n      </xs:element>\r\n      <xs:complexType name=\"ResultType\">\r\n        <xs:sequence>\r\n          <xs:element name=\"Title\" type=\"xs:string\" />\r\n          <xs:element name=\"Summary\" type=\"xs:string\" />\r\n          <xs:element name=\"Url\" type=\"xs:string\" />\r\n          <xs:element name=\"ClickUrl\" type=\"xs:string\" />\r\n          <xs:element name=\"NewsSource\" type=\"xs:string\" />\r\n          <xs:element name=\"NewsSourceUrl\" type=\"xs:string\" />\r\n          <xs:element name=\"Language\" type=\"xs:string\" />\r\n          <xs:element name=\"PublishDate\" type=\"xs:string\" />\r\n          <xs:element name=\"ModificationDate\" type=\"xs:string\" minOccurs=\"0\" />\r\n          <xs:element name=\"Thumbnail\" type=\"ImageType\" minOccurs=\"0\" />\r\n        </xs:sequence>\r\n      </xs:complexType>\r\n      <xs:complexType name=\"ImageType\">\r\n        <xs:sequence>\r\n          <xs:element name=\"Url\" type=\"xs:string\" />\r\n          <xs:element name=\"Height\" type=\"xs:integer\" minOccurs=\"0\" />\r\n          <xs:element name=\"Width\" type=\"xs:integer\" minOccurs=\"0\" />\r\n        </xs:sequence>\r\n      </xs:complexType>\r\n    </xs:schema>\r\n  </grammars>\r\n  <resources base=\"http://api.search.yahoo.com/NewsSearchService/V1/\">\r\n    <resource path=\"newsSearch?willbeIgnored={willbeIgnored}\">\r\n      <method name=\"GET\" id=\"search\">\r\n        <request>\r\n          <param name=\"appid\" type=\"xsd:string\" style=\"query\" required=\"true\" />\r\n          <param name=\"query\" type=\"xsd:string\" style=\"query\" required=\"true\" />\r\n          <param name=\"type\" style=\"query\" default=\"all\">\r\n            <option value=\"all\" />\r\n            <option value=\"any\" />\r\n            <option value=\"phrase\" />\r\n          </param>\r\n          <param name=\"results\" style=\"query\" type=\"xsd:int\" default=\"\" />\r\n          <param name=\"start\" style=\"query\" type=\"xsd:int\" default=\"1\" />\r\n          <param name=\"sort\" style=\"query\" default=\"rank\">\r\n            <option value=\"rank\" />\r\n            <option value=\"date\" />\r\n          </param>\r\n          <param name=\"language\" style=\"query\" type=\"xsd:string\" />\r\n        </request>\r\n        <response status=\"200\">\r\n          <representation mediaType=\"application/xml\" element=\"yn:ResultSet\" />\r\n        </response>\r\n        <response status=\"400\">\r\n          <representation mediaType=\"application/xml\" element=\"ya:Error\" />\r\n        </response>\r\n      </method>\r\n    </resource>\r\n  </resources>\r\n</application>",
       "RequestHeaders": {
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b5021f4e-e30b-433b-a254-949b244583be"
+          "c2b8060d-e9d3-4f40-99e5-b8b3259dd51b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "4df4697c-f93e-4ac0-9e13-7fb2bd302862"
+          "a020b991-00db-4255-8479-7f76884e41fb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194759Z:4df4697c-f93e-4ac0-9e13-7fb2bd302862"
+          "CENTRALUS:20160419T015619Z:a020b991-00db-4255-8479-7f76884e41fb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:58 GMT"
+          "Tue, 19 Apr 2016 01:56:18 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -58,8 +58,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/apis/aid8623?api-version=2014-02-14&path=wadlapi",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hcGlzL2FpZDg2MjM/YXBpLXZlcnNpb249MjAxNC0wMi0xNCZwYXRoPXdhZGxhcGk=",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/apis/aid6405?api-version=2014-02-14&path=wadlapi",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hcGlzL2FpZDY0MDU/YXBpLXZlcnNpb249MjAxNC0wMi0xNCZwYXRoPXdhZGxhcGk=",
       "RequestMethod": "PUT",
       "RequestBody": "<application xmlns=\"http://wadl.dev.java.net/2009/02\" xmlns:tns=\"urn:yahoo:yn\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:ya=\"urn:yahoo:api\" xmlns:yn=\"urn:yahoo:yn\" xsi:schemaLocation=\"http://wadl.dev.java.net/2009/02 wadl.xsd\">\r\n  <doc title=\"Yahoo News Search\">Yahoo News Search API</doc>\r\n  <grammars>\r\n    <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:yahoo:api\" targetNamespace=\"urn:yahoo:api\" elementFormDefault=\"qualified\">\r\n      <xs:element name=\"Error\" type=\"xs:string\" />\r\n    </xs:schema>\r\n    <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:yahoo:yn\" targetNamespace=\"urn:yahoo:yn\" elementFormDefault=\"qualified\">\r\n      <xs:element name=\"ResultSet\">\r\n        <xs:complexType>\r\n          <xs:sequence>\r\n            <xs:element name=\"Result\" type=\"ResultType\" minOccurs=\"0\" maxOccurs=\"50\" />\r\n          </xs:sequence>\r\n          <xs:attribute name=\"totalResultsAvailable\" type=\"xs:integer\" />\r\n          <xs:attribute name=\"totalResultsReturned\" type=\"xs:integer\" />\r\n          <xs:attribute name=\"firstResultPosition\" type=\"xs:integer\" />\r\n        </xs:complexType>\r\n      </xs:element>\r\n      <xs:complexType name=\"ResultType\">\r\n        <xs:sequence>\r\n          <xs:element name=\"Title\" type=\"xs:string\" />\r\n          <xs:element name=\"Summary\" type=\"xs:string\" />\r\n          <xs:element name=\"Url\" type=\"xs:string\" />\r\n          <xs:element name=\"ClickUrl\" type=\"xs:string\" />\r\n          <xs:element name=\"NewsSource\" type=\"xs:string\" />\r\n          <xs:element name=\"NewsSourceUrl\" type=\"xs:string\" />\r\n          <xs:element name=\"Language\" type=\"xs:string\" />\r\n          <xs:element name=\"PublishDate\" type=\"xs:string\" />\r\n          <xs:element name=\"ModificationDate\" type=\"xs:string\" minOccurs=\"0\" />\r\n          <xs:element name=\"Thumbnail\" type=\"ImageType\" minOccurs=\"0\" />\r\n        </xs:sequence>\r\n      </xs:complexType>\r\n      <xs:complexType name=\"ImageType\">\r\n        <xs:sequence>\r\n          <xs:element name=\"Url\" type=\"xs:string\" />\r\n          <xs:element name=\"Height\" type=\"xs:integer\" minOccurs=\"0\" />\r\n          <xs:element name=\"Width\" type=\"xs:integer\" minOccurs=\"0\" />\r\n        </xs:sequence>\r\n      </xs:complexType>\r\n    </xs:schema>\r\n  </grammars>\r\n  <resources base=\"http://api.search.yahoo.com/NewsSearchService/V2/\">\r\n    <resource path=\"newsSearch?willbeIgnored={willbeIgnored}\">\r\n      <method name=\"GET\" id=\"search\">\r\n        <request>\r\n          <param name=\"appid\" type=\"xsd:string\" style=\"query\" required=\"true\" />\r\n          <param name=\"query\" type=\"xsd:string\" style=\"query\" required=\"true\" />\r\n          <param name=\"type\" style=\"query\" default=\"all\">\r\n            <option value=\"all\" />\r\n            <option value=\"any\" />\r\n            <option value=\"phrase\" />\r\n          </param>\r\n          <param name=\"results\" style=\"query\" type=\"xsd:int\" default=\"\" />\r\n          <param name=\"start\" style=\"query\" type=\"xsd:int\" default=\"1\" />\r\n          <param name=\"sort\" style=\"query\" default=\"rank\">\r\n            <option value=\"rank\" />\r\n            <option value=\"date\" />\r\n          </param>\r\n          <param name=\"language\" style=\"query\" type=\"xsd:string\" />\r\n        </request>\r\n        <response status=\"200\">\r\n          <representation mediaType=\"application/xml\" element=\"yn:ResultSet\" />\r\n        </response>\r\n        <response status=\"400\">\r\n          <representation mediaType=\"application/xml\" element=\"ya:Error\" />\r\n        </response>\r\n      </method>\r\n    </resource>\r\n  </resources>\r\n</application>",
       "RequestHeaders": {
@@ -88,16 +88,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "9aa50fa6-4b42-4373-b549-ffef6ede3414"
+          "01f92393-55c7-4e4c-89c6-cd28ff3a9dda"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "b93dccdb-ed67-4e27-9dae-2e4d5b7b3484"
+          "78fd61ce-93db-4f59-9c94-79294f5c83b5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194804Z:b93dccdb-ed67-4e27-9dae-2e4d5b7b3484"
+          "CENTRALUS:20160419T015624Z:78fd61ce-93db-4f59-9c94-79294f5c83b5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -106,7 +106,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:48:04 GMT"
+          "Tue, 19 Apr 2016 01:56:24 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -115,8 +115,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/apis/aid8623?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hcGlzL2FpZDg2MjM/YXBpLXZlcnNpb249MjAxNC0wMi0xNA==",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/apis/aid6405?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hcGlzL2FpZDY0MDU/YXBpLXZlcnNpb249MjAxNC0wMi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -127,10 +127,10 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/apis/aid8623\",\r\n  \"name\": \"Yahoo News Search\",\r\n  \"description\": \"Yahoo News Search API\",\r\n  \"serviceUrl\": \"http://api.search.yahoo.com/NewsSearchService/V1/\",\r\n  \"path\": \"wadlapi\",\r\n  \"protocols\": [\r\n    \"https\"\r\n  ],\r\n  \"authenticationSettings\": {\r\n    \"oAuth2\": null\r\n  },\r\n  \"subscriptionKeyParameterNames\": {\r\n    \"header\": \"Ocp-Apim-Subscription-Key\",\r\n    \"query\": \"subscription-key\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/apis/aid6405\",\r\n  \"name\": \"Yahoo News Search\",\r\n  \"description\": \"Yahoo News Search API\",\r\n  \"serviceUrl\": \"http://api.search.yahoo.com/NewsSearchService/V1/\",\r\n  \"path\": \"wadlapi\",\r\n  \"protocols\": [\r\n    \"https\"\r\n  ],\r\n  \"authenticationSettings\": {\r\n    \"oAuth2\": null,\r\n    \"openid\": null\r\n  },\r\n  \"subscriptionKeyParameterNames\": {\r\n    \"header\": \"Ocp-Apim-Subscription-Key\",\r\n    \"query\": \"subscription-key\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "330"
+          "344"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -142,16 +142,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "349d344f-1224-4910-ab75-44fd4884d874"
+          "d5ad75a1-f035-4758-865b-97eab614b1b5"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "578a1d2e-4419-4f43-a96e-cd3c628b7dc5"
+          "5898af58-6d60-4550-affd-19428ff98b90"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194800Z:578a1d2e-4419-4f43-a96e-cd3c628b7dc5"
+          "CENTRALUS:20160419T015619Z:5898af58-6d60-4550-affd-19428ff98b90"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -160,10 +160,10 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:59 GMT"
+          "Tue, 19 Apr 2016 01:56:18 GMT"
         ],
         "ETag": [
-          "\"AAAAAAAACFE=\""
+          "\"AAAAAAAACDo=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -172,8 +172,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/apis/aid8623?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hcGlzL2FpZDg2MjM/YXBpLXZlcnNpb249MjAxNC0wMi0xNA==",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/apis/aid6405?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hcGlzL2FpZDY0MDU/YXBpLXZlcnNpb249MjAxNC0wMi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -184,7 +184,7 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "<application xmlns:xml=\"http://www.w3.org/XML/1998/namespace\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://wadl.dev.java.net/2009/02 http://www.w3.org/Submission/wadl/wadl.xsd\" xmlns:tns=\"urn:yahoo:yn\" xmlns:ya=\"urn:yahoo:api\" xmlns:yn=\"urn:yahoo:yn\" xmlns=\"http://wadl.dev.java.net/2009/02\">\r\n  <doc title=\"Yahoo News Search\">Yahoo News Search API</doc>\r\n  <grammars>\r\n    <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:yahoo:api\" targetNamespace=\"urn:yahoo:api\" elementFormDefault=\"qualified\">\r\n      <xs:element name=\"Error\" type=\"xs:string\" />\r\n    </xs:schema>\r\n    <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:yahoo:yn\" targetNamespace=\"urn:yahoo:yn\" elementFormDefault=\"qualified\">\r\n      <xs:element name=\"ResultSet\">\r\n        <xs:complexType>\r\n          <xs:sequence>\r\n            <xs:element name=\"Result\" type=\"ResultType\" minOccurs=\"0\" maxOccurs=\"50\" />\r\n          </xs:sequence>\r\n          <xs:attribute name=\"totalResultsAvailable\" type=\"xs:integer\" />\r\n          <xs:attribute name=\"totalResultsReturned\" type=\"xs:integer\" />\r\n          <xs:attribute name=\"firstResultPosition\" type=\"xs:integer\" />\r\n        </xs:complexType>\r\n      </xs:element>\r\n      <xs:complexType name=\"ResultType\">\r\n        <xs:sequence>\r\n          <xs:element name=\"Title\" type=\"xs:string\" />\r\n          <xs:element name=\"Summary\" type=\"xs:string\" />\r\n          <xs:element name=\"Url\" type=\"xs:string\" />\r\n          <xs:element name=\"ClickUrl\" type=\"xs:string\" />\r\n          <xs:element name=\"NewsSource\" type=\"xs:string\" />\r\n          <xs:element name=\"NewsSourceUrl\" type=\"xs:string\" />\r\n          <xs:element name=\"Language\" type=\"xs:string\" />\r\n          <xs:element name=\"PublishDate\" type=\"xs:string\" />\r\n          <xs:element name=\"ModificationDate\" type=\"xs:string\" minOccurs=\"0\" />\r\n          <xs:element name=\"Thumbnail\" type=\"ImageType\" minOccurs=\"0\" />\r\n        </xs:sequence>\r\n      </xs:complexType>\r\n      <xs:complexType name=\"ImageType\">\r\n        <xs:sequence>\r\n          <xs:element name=\"Url\" type=\"xs:string\" />\r\n          <xs:element name=\"Height\" type=\"xs:integer\" minOccurs=\"0\" />\r\n          <xs:element name=\"Width\" type=\"xs:integer\" minOccurs=\"0\" />\r\n        </xs:sequence>\r\n      </xs:complexType>\r\n    </xs:schema>\r\n  </grammars>\r\n  <resources base=\"https://hydraapimservice3368.azure-api.net/wadlapi\">\r\n    <resource path=\"/newsSearch\">\r\n      <doc title=\"newsSearch?appid={appid}&amp;query={query} - GET\" />\r\n      <method name=\"GET\">\r\n        <request>\r\n          <param name=\"type\" style=\"query\" type=\"xs:string\" default=\"all\">\r\n            <option value=\"all\" />\r\n            <option value=\"any\" />\r\n            <option value=\"phrase\" />\r\n          </param>\r\n          <param name=\"results\" style=\"query\" type=\"xs:int\">\r\n            <option value=\"\" />\r\n          </param>\r\n          <param name=\"start\" style=\"query\" type=\"xs:int\" default=\"1\">\r\n            <option value=\"1\" />\r\n          </param>\r\n          <param name=\"sort\" style=\"query\" type=\"xs:string\" default=\"rank\">\r\n            <option value=\"rank\" />\r\n            <option value=\"date\" />\r\n          </param>\r\n          <param name=\"language\" style=\"query\" type=\"xs:string\" />\r\n          <param name=\"appid\" style=\"query\" type=\"xs:string\" required=\"true\" />\r\n          <param name=\"query\" style=\"query\" type=\"xs:string\" required=\"true\" />\r\n        </request>\r\n        <response status=\"200\">\r\n          <representation mediaType=\"application/xml\" element=\"yn:ResultSet\" />\r\n        </response>\r\n        <response status=\"400\">\r\n          <representation mediaType=\"application/xml\" element=\"ya:Error\" />\r\n        </response>\r\n      </method>\r\n    </resource>\r\n  </resources>\r\n</application>",
+      "ResponseBody": "<application xmlns:xml=\"http://www.w3.org/XML/1998/namespace\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://wadl.dev.java.net/2009/02 http://www.w3.org/Submission/wadl/wadl.xsd\" xmlns:tns=\"urn:yahoo:yn\" xmlns:ya=\"urn:yahoo:api\" xmlns:yn=\"urn:yahoo:yn\" xmlns=\"http://wadl.dev.java.net/2009/02\">\r\n  <doc title=\"Yahoo News Search\">Yahoo News Search API</doc>\r\n  <grammars>\r\n    <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:yahoo:api\" targetNamespace=\"urn:yahoo:api\" elementFormDefault=\"qualified\">\r\n      <xs:element name=\"Error\" type=\"xs:string\" />\r\n    </xs:schema>\r\n    <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:yahoo:yn\" targetNamespace=\"urn:yahoo:yn\" elementFormDefault=\"qualified\">\r\n      <xs:element name=\"ResultSet\">\r\n        <xs:complexType>\r\n          <xs:sequence>\r\n            <xs:element name=\"Result\" type=\"ResultType\" minOccurs=\"0\" maxOccurs=\"50\" />\r\n          </xs:sequence>\r\n          <xs:attribute name=\"totalResultsAvailable\" type=\"xs:integer\" />\r\n          <xs:attribute name=\"totalResultsReturned\" type=\"xs:integer\" />\r\n          <xs:attribute name=\"firstResultPosition\" type=\"xs:integer\" />\r\n        </xs:complexType>\r\n      </xs:element>\r\n      <xs:complexType name=\"ResultType\">\r\n        <xs:sequence>\r\n          <xs:element name=\"Title\" type=\"xs:string\" />\r\n          <xs:element name=\"Summary\" type=\"xs:string\" />\r\n          <xs:element name=\"Url\" type=\"xs:string\" />\r\n          <xs:element name=\"ClickUrl\" type=\"xs:string\" />\r\n          <xs:element name=\"NewsSource\" type=\"xs:string\" />\r\n          <xs:element name=\"NewsSourceUrl\" type=\"xs:string\" />\r\n          <xs:element name=\"Language\" type=\"xs:string\" />\r\n          <xs:element name=\"PublishDate\" type=\"xs:string\" />\r\n          <xs:element name=\"ModificationDate\" type=\"xs:string\" minOccurs=\"0\" />\r\n          <xs:element name=\"Thumbnail\" type=\"ImageType\" minOccurs=\"0\" />\r\n        </xs:sequence>\r\n      </xs:complexType>\r\n      <xs:complexType name=\"ImageType\">\r\n        <xs:sequence>\r\n          <xs:element name=\"Url\" type=\"xs:string\" />\r\n          <xs:element name=\"Height\" type=\"xs:integer\" minOccurs=\"0\" />\r\n          <xs:element name=\"Width\" type=\"xs:integer\" minOccurs=\"0\" />\r\n        </xs:sequence>\r\n      </xs:complexType>\r\n    </xs:schema>\r\n  </grammars>\r\n  <resources base=\"https://hydraapimservice7157.azure-api.net/wadlapi\">\r\n    <resource path=\"/newsSearch\">\r\n      <doc title=\"newsSearch?appid={appid}&amp;query={query} - GET\" />\r\n      <method name=\"GET\">\r\n        <request>\r\n          <param name=\"type\" style=\"query\" type=\"xs:string\" default=\"all\">\r\n            <option value=\"all\" />\r\n            <option value=\"any\" />\r\n            <option value=\"phrase\" />\r\n          </param>\r\n          <param name=\"results\" style=\"query\" type=\"xs:int\">\r\n            <option value=\"\" />\r\n          </param>\r\n          <param name=\"start\" style=\"query\" type=\"xs:int\" default=\"1\">\r\n            <option value=\"1\" />\r\n          </param>\r\n          <param name=\"sort\" style=\"query\" type=\"xs:string\" default=\"rank\">\r\n            <option value=\"rank\" />\r\n            <option value=\"date\" />\r\n          </param>\r\n          <param name=\"language\" style=\"query\" type=\"xs:string\" />\r\n          <param name=\"appid\" style=\"query\" type=\"xs:string\" required=\"true\" />\r\n          <param name=\"query\" style=\"query\" type=\"xs:string\" required=\"true\" />\r\n        </request>\r\n        <response status=\"200\">\r\n          <representation mediaType=\"application/xml\" element=\"yn:ResultSet\" />\r\n        </response>\r\n        <response status=\"400\">\r\n          <representation mediaType=\"application/xml\" element=\"ya:Error\" />\r\n        </response>\r\n      </method>\r\n    </resource>\r\n  </resources>\r\n</application>",
       "ResponseHeaders": {
         "Content-Length": [
           "3836"
@@ -199,16 +199,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "47566672-aea1-441c-a23c-11acf4c6a333"
+          "08693952-3ce4-430e-8751-9c396e95f840"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "f3f165ea-baef-441b-ab72-ae1e3737132b"
+          "49930bb5-e4e5-4502-bd17-7ad3f0f3288f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194800Z:f3f165ea-baef-441b-ab72-ae1e3737132b"
+          "CENTRALUS:20160419T015620Z:49930bb5-e4e5-4502-bd17-7ad3f0f3288f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -217,10 +217,10 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:59 GMT"
+          "Tue, 19 Apr 2016 01:56:19 GMT"
         ],
         "ETag": [
-          "\"AAAAAAAACFE=\""
+          "\"AAAAAAAACDo=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -229,8 +229,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/apis/aid8623?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hcGlzL2FpZDg2MjM/YXBpLXZlcnNpb249MjAxNC0wMi0xNA==",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/apis/aid6405?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hcGlzL2FpZDY0MDU/YXBpLXZlcnNpb249MjAxNC0wMi0xNA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -241,10 +241,10 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/apis/aid8623\",\r\n  \"name\": \"Yahoo News Search\",\r\n  \"description\": \"Yahoo News Search API\",\r\n  \"serviceUrl\": \"http://api.search.yahoo.com/NewsSearchService/V2/\",\r\n  \"path\": \"wadlapi\",\r\n  \"protocols\": [\r\n    \"https\"\r\n  ],\r\n  \"authenticationSettings\": {\r\n    \"oAuth2\": null\r\n  },\r\n  \"subscriptionKeyParameterNames\": {\r\n    \"header\": \"Ocp-Apim-Subscription-Key\",\r\n    \"query\": \"subscription-key\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/apis/aid6405\",\r\n  \"name\": \"Yahoo News Search\",\r\n  \"description\": \"Yahoo News Search API\",\r\n  \"serviceUrl\": \"http://api.search.yahoo.com/NewsSearchService/V2/\",\r\n  \"path\": \"wadlapi\",\r\n  \"protocols\": [\r\n    \"https\"\r\n  ],\r\n  \"authenticationSettings\": {\r\n    \"oAuth2\": null,\r\n    \"openid\": null\r\n  },\r\n  \"subscriptionKeyParameterNames\": {\r\n    \"header\": \"Ocp-Apim-Subscription-Key\",\r\n    \"query\": \"subscription-key\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "330"
+          "344"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -256,16 +256,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a1673152-cc1c-433a-9b77-614a34b6b325"
+          "133aecb6-8bce-4bd0-aa6b-4a52b888dd2f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
+          "14992"
         ],
         "x-ms-correlation-request-id": [
-          "685c8cb6-39ac-4654-bbc1-6fe336f4b6ed"
+          "54636d03-1a77-437c-84df-ff9142368a78"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194804Z:685c8cb6-39ac-4654-bbc1-6fe336f4b6ed"
+          "CENTRALUS:20160419T015624Z:54636d03-1a77-437c-84df-ff9142368a78"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -274,10 +274,10 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:48:04 GMT"
+          "Tue, 19 Apr 2016 01:56:24 GMT"
         ],
         "ETag": [
-          "\"AAAAAAAACFU=\""
+          "\"AAAAAAAACD4=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -286,8 +286,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/apis/aid8623?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hcGlzL2FpZDg2MjM/YXBpLXZlcnNpb249MjAxNC0wMi0xNA==",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/apis/aid6405?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hcGlzL2FpZDY0MDU/YXBpLXZlcnNpb249MjAxNC0wMi0xNA==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -310,16 +310,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7eaa1be8-e952-4682-aae8-63a559523438"
+          "ee4d55d9-377a-42d3-aa95-d44fac5827b8"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "79267996-0084-4fb6-9930-9a995c52d182"
+          "827a1c1a-19aa-499f-b64b-f7ecb15058f7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194805Z:79267996-0084-4fb6-9930-9a995c52d182"
+          "CENTRALUS:20160419T015625Z:827a1c1a-19aa-499f-b64b-f7ecb15058f7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -328,7 +328,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:48:04 GMT"
+          "Tue, 19 Apr 2016 01:56:25 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -339,10 +339,10 @@
   ],
   "Names": {
     "ApiImportExport": [
-      "aid8623"
+      "aid6405"
     ]
   },
   "Variables": {
-    "SubscriptionId": "0baef07a-330c-42f7-92a0-e80993f45d1d"
+    "SubscriptionId": "3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f"
   }
 }

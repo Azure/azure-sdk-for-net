@@ -31,32 +31,32 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     public partial class HiveJobSubmissionParameters
     {
         /// <summary>
-        /// Optional.
+        /// Optional. Gets the arguments for the jobDetails.
         /// </summary>
         public IList<string> Arguments { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the Hive parameters.
         /// </summary>
         public IDictionary<string, string> Defines { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the query file to use for a Hive job.
         /// </summary>
         public string File { get; set; }
 
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the files to be copied to the cluster.
         /// </summary>
         public IList<string> Files { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the query to use for a Hive job.
         /// </summary>
         public string Query { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Status directory in the default storage account to store job files stderr, stdout and exit.
         /// </summary>
         public string StatusDir { get; set; }
         

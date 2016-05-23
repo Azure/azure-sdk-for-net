@@ -18,6 +18,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Azure.Management.HDInsight.Job.Models;
 
 namespace Microsoft.Azure.Management.HDInsight.Job
 {
@@ -26,6 +27,61 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     /// </summary>
     public partial interface IJobOperations
     {
+        /// <summary>
+        /// Submits a Hive job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Hive job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitHiveJobAsync(HiveJobSubmissionParameters parameters);
+
+        /// <summary>
+        /// Submits a MapReduce job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitMapReduceJobAsync(MapReduceJobSubmissionParameters parameters);
+
+        /// <summary>
+        /// Submits a MapReduce streaming job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(MapReduceStreamingJobSubmissionParameters parameters);
+
+        /// <summary>
+        /// Submits a Pig job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Pig job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitPigJobAsync(PigJobSubmissionParameters parameters);
+
+        /// <summary>
+        /// Submits a Sqoop job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Sqoop job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitSqoopJobAsync(SqoopJobSubmissionParameters parameters);
+
         /// <summary>
         /// Gets the output from the execution of an individual jobDetails.
         /// </summary>

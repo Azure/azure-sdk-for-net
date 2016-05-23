@@ -19,7 +19,7 @@ using System.Reflection;
 [assembly: AssemblyDescription("Hydra specification for Recovery services Management")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+[assembly: AssemblyFileVersion("1.0.3.0")]
 
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Windows Azure")]

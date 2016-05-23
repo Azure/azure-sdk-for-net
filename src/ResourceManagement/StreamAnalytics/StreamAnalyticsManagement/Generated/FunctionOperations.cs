@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(functionName);
             url = url + "/test";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Function.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -548,6 +548,27 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             bindingValue["type"] = derived2.Type;
                                         }
                                     }
+                                    if (derived.Properties.Binding is JavaScriptFunctionBinding)
+                                    {
+                                        bindingValue["type"] = "Microsoft.StreamAnalytics/JavascriptUdf";
+                                        JavaScriptFunctionBinding derived3 = ((JavaScriptFunctionBinding)derived.Properties.Binding);
+                                        
+                                        if (derived3.Properties != null)
+                                        {
+                                            JObject propertiesValue4 = new JObject();
+                                            bindingValue["properties"] = propertiesValue4;
+                                            
+                                            if (derived3.Properties.Script != null)
+                                            {
+                                                propertiesValue4["script"] = derived3.Properties.Script;
+                                            }
+                                        }
+                                        
+                                        if (derived3.Type != null)
+                                        {
+                                            bindingValue["type"] = derived3.Type;
+                                        }
+                                    }
                                 }
                             }
                             
@@ -620,21 +641,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 functionInstance.Name = nameInstance;
                             }
                             
-                            JToken propertiesValue4 = responseDoc["properties"];
-                            if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                            JToken propertiesValue5 = responseDoc["properties"];
+                            if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue4["type"]);
+                                string typeName = ((string)propertiesValue5["type"]);
                                 if (typeName == "Scalar")
                                 {
                                     ScalarFunctionProperties scalarFunctionPropertiesInstance = new ScalarFunctionProperties();
                                     
-                                    JToken propertiesValue5 = propertiesValue4["properties"];
-                                    if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                    JToken propertiesValue6 = propertiesValue5["properties"];
+                                    if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                     {
                                         ScalarFunctionConfiguration propertiesInstance = new ScalarFunctionConfiguration();
                                         scalarFunctionPropertiesInstance.Properties = propertiesInstance;
                                         
-                                        JToken inputsArray2 = propertiesValue5["inputs"];
+                                        JToken inputsArray2 = propertiesValue6["inputs"];
                                         if (inputsArray2 != null && inputsArray2.Type != JTokenType.Null)
                                         {
                                             propertiesInstance.Inputs = new System.Collections.Generic.List<Microsoft.Azure.Management.StreamAnalytics.Models.FunctionInput>();
@@ -659,7 +680,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             }
                                         }
                                         
-                                        JToken outputValue2 = propertiesValue5["output"];
+                                        JToken outputValue2 = propertiesValue6["output"];
                                         if (outputValue2 != null && outputValue2.Type != JTokenType.Null)
                                         {
                                             FunctionOutput outputInstance = new FunctionOutput();
@@ -673,7 +694,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             }
                                         }
                                         
-                                        JToken bindingValue2 = propertiesValue5["binding"];
+                                        JToken bindingValue2 = propertiesValue6["binding"];
                                         if (bindingValue2 != null && bindingValue2.Type != JTokenType.Null)
                                         {
                                             string typeName2 = ((string)bindingValue2["type"]);
@@ -681,27 +702,27 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             {
                                                 AzureMachineLearningWebServiceFunctionBinding azureMachineLearningWebServiceFunctionBindingInstance = new AzureMachineLearningWebServiceFunctionBinding();
                                                 
-                                                JToken propertiesValue6 = bindingValue2["properties"];
-                                                if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                JToken propertiesValue7 = bindingValue2["properties"];
+                                                if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
                                                 {
                                                     AzureMachineLearningWebServiceFunctionBindingProperties propertiesInstance2 = new AzureMachineLearningWebServiceFunctionBindingProperties();
                                                     azureMachineLearningWebServiceFunctionBindingInstance.Properties = propertiesInstance2;
                                                     
-                                                    JToken endpointValue = propertiesValue6["endpoint"];
+                                                    JToken endpointValue = propertiesValue7["endpoint"];
                                                     if (endpointValue != null && endpointValue.Type != JTokenType.Null)
                                                     {
                                                         string endpointInstance = ((string)endpointValue);
                                                         propertiesInstance2.Endpoint = endpointInstance;
                                                     }
                                                     
-                                                    JToken apiKeyValue = propertiesValue6["apiKey"];
+                                                    JToken apiKeyValue = propertiesValue7["apiKey"];
                                                     if (apiKeyValue != null && apiKeyValue.Type != JTokenType.Null)
                                                     {
                                                         string apiKeyInstance = ((string)apiKeyValue);
                                                         propertiesInstance2.ApiKey = apiKeyInstance;
                                                     }
                                                     
-                                                    JToken inputsValue3 = propertiesValue6["inputs"];
+                                                    JToken inputsValue3 = propertiesValue7["inputs"];
                                                     if (inputsValue3 != null && inputsValue3.Type != JTokenType.Null)
                                                     {
                                                         AzureMachineLearningWebServiceInputs inputsInstance = new AzureMachineLearningWebServiceInputs();
@@ -747,7 +768,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         }
                                                     }
                                                     
-                                                    JToken outputsArray2 = propertiesValue6["outputs"];
+                                                    JToken outputsArray2 = propertiesValue7["outputs"];
                                                     if (outputsArray2 != null && outputsArray2.Type != JTokenType.Null)
                                                     {
                                                         propertiesInstance2.Outputs = new System.Collections.Generic.List<Microsoft.Azure.Management.StreamAnalytics.Models.AzureMachineLearningWebServiceOutputColumn>();
@@ -772,7 +793,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         }
                                                     }
                                                     
-                                                    JToken batchSizeValue = propertiesValue6["batchSize"];
+                                                    JToken batchSizeValue = propertiesValue7["batchSize"];
                                                     if (batchSizeValue != null && batchSizeValue.Type != JTokenType.Null)
                                                     {
                                                         int batchSizeInstance = ((int)batchSizeValue);
@@ -788,21 +809,47 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 }
                                                 propertiesInstance.Binding = azureMachineLearningWebServiceFunctionBindingInstance;
                                             }
+                                            if (typeName2 == "Microsoft.StreamAnalytics/JavascriptUdf")
+                                            {
+                                                JavaScriptFunctionBinding javaScriptFunctionBindingInstance = new JavaScriptFunctionBinding();
+                                                
+                                                JToken propertiesValue8 = bindingValue2["properties"];
+                                                if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                                                {
+                                                    JavaScriptFunctionBindingProperties propertiesInstance3 = new JavaScriptFunctionBindingProperties();
+                                                    javaScriptFunctionBindingInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken scriptValue = propertiesValue8["script"];
+                                                    if (scriptValue != null && scriptValue.Type != JTokenType.Null)
+                                                    {
+                                                        string scriptInstance = ((string)scriptValue);
+                                                        propertiesInstance3.Script = scriptInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken typeValue2 = bindingValue2["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    javaScriptFunctionBindingInstance.Type = typeInstance2;
+                                                }
+                                                propertiesInstance.Binding = javaScriptFunctionBindingInstance;
+                                            }
                                         }
                                     }
                                     
-                                    JToken etagValue = propertiesValue4["etag"];
+                                    JToken etagValue = propertiesValue5["etag"];
                                     if (etagValue != null && etagValue.Type != JTokenType.Null)
                                     {
                                         string etagInstance = ((string)etagValue);
                                         scalarFunctionPropertiesInstance.Etag = etagInstance;
                                     }
                                     
-                                    JToken typeValue2 = propertiesValue4["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue3 = propertiesValue5["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        scalarFunctionPropertiesInstance.Type = typeInstance2;
+                                        string typeInstance3 = ((string)typeValue3);
+                                        scalarFunctionPropertiesInstance.Type = typeInstance3;
                                     }
                                     functionInstance.Properties = scalarFunctionPropertiesInstance;
                                 }
@@ -922,7 +969,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/functions/";
             url = url + Uri.EscapeDataString(functionName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1180,6 +1227,32 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 }
                                                 propertiesInstance.Binding = azureMachineLearningWebServiceFunctionBindingInstance;
                                             }
+                                            if (typeName2 == "Microsoft.StreamAnalytics/JavascriptUdf")
+                                            {
+                                                JavaScriptFunctionBinding javaScriptFunctionBindingInstance = new JavaScriptFunctionBinding();
+                                                
+                                                JToken propertiesValue4 = bindingValue["properties"];
+                                                if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                {
+                                                    JavaScriptFunctionBindingProperties propertiesInstance3 = new JavaScriptFunctionBindingProperties();
+                                                    javaScriptFunctionBindingInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken scriptValue = propertiesValue4["script"];
+                                                    if (scriptValue != null && scriptValue.Type != JTokenType.Null)
+                                                    {
+                                                        string scriptInstance = ((string)scriptValue);
+                                                        propertiesInstance3.Script = scriptInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken typeValue2 = bindingValue["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    javaScriptFunctionBindingInstance.Type = typeInstance2;
+                                                }
+                                                propertiesInstance.Binding = javaScriptFunctionBindingInstance;
+                                            }
                                         }
                                     }
                                     
@@ -1190,11 +1263,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         scalarFunctionPropertiesInstance.Etag = etagInstance;
                                     }
                                     
-                                    JToken typeValue2 = propertiesValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue3 = propertiesValue["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        scalarFunctionPropertiesInstance.Type = typeInstance2;
+                                        string typeInstance3 = ((string)typeValue3);
+                                        scalarFunctionPropertiesInstance.Type = typeInstance3;
                                     }
                                     functionInstance.Properties = scalarFunctionPropertiesInstance;
                                 }
@@ -1300,7 +1373,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/functions/";
             url = url + Uri.EscapeDataString(functionName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1457,7 +1530,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/functions/";
             url = url + Uri.EscapeDataString(functionName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1710,6 +1783,32 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 }
                                                 propertiesInstance.Binding = azureMachineLearningWebServiceFunctionBindingInstance;
                                             }
+                                            if (typeName2 == "Microsoft.StreamAnalytics/JavascriptUdf")
+                                            {
+                                                JavaScriptFunctionBinding javaScriptFunctionBindingInstance = new JavaScriptFunctionBinding();
+                                                
+                                                JToken propertiesValue4 = bindingValue["properties"];
+                                                if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                {
+                                                    JavaScriptFunctionBindingProperties propertiesInstance3 = new JavaScriptFunctionBindingProperties();
+                                                    javaScriptFunctionBindingInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken scriptValue = propertiesValue4["script"];
+                                                    if (scriptValue != null && scriptValue.Type != JTokenType.Null)
+                                                    {
+                                                        string scriptInstance = ((string)scriptValue);
+                                                        propertiesInstance3.Script = scriptInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken typeValue2 = bindingValue["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    javaScriptFunctionBindingInstance.Type = typeInstance2;
+                                                }
+                                                propertiesInstance.Binding = javaScriptFunctionBindingInstance;
+                                            }
                                         }
                                     }
                                     
@@ -1720,11 +1819,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         scalarFunctionPropertiesInstance.Etag = etagInstance;
                                     }
                                     
-                                    JToken typeValue2 = propertiesValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue3 = propertiesValue["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        scalarFunctionPropertiesInstance.Type = typeInstance2;
+                                        string typeInstance3 = ((string)typeValue3);
+                                        scalarFunctionPropertiesInstance.Type = typeInstance3;
                                     }
                                     functionInstance.Properties = scalarFunctionPropertiesInstance;
                                 }
@@ -1821,7 +1920,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/functions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2079,6 +2178,32 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         }
                                                         propertiesInstance.Binding = azureMachineLearningWebServiceFunctionBindingInstance;
                                                     }
+                                                    if (typeName2 == "Microsoft.StreamAnalytics/JavascriptUdf")
+                                                    {
+                                                        JavaScriptFunctionBinding javaScriptFunctionBindingInstance = new JavaScriptFunctionBinding();
+                                                        
+                                                        JToken propertiesValue4 = bindingValue["properties"];
+                                                        if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                        {
+                                                            JavaScriptFunctionBindingProperties propertiesInstance3 = new JavaScriptFunctionBindingProperties();
+                                                            javaScriptFunctionBindingInstance.Properties = propertiesInstance3;
+                                                            
+                                                            JToken scriptValue = propertiesValue4["script"];
+                                                            if (scriptValue != null && scriptValue.Type != JTokenType.Null)
+                                                            {
+                                                                string scriptInstance = ((string)scriptValue);
+                                                                propertiesInstance3.Script = scriptInstance;
+                                                            }
+                                                        }
+                                                        
+                                                        JToken typeValue2 = bindingValue["type"];
+                                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string typeInstance2 = ((string)typeValue2);
+                                                            javaScriptFunctionBindingInstance.Type = typeInstance2;
+                                                        }
+                                                        propertiesInstance.Binding = javaScriptFunctionBindingInstance;
+                                                    }
                                                 }
                                             }
                                             
@@ -2089,11 +2214,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 scalarFunctionPropertiesInstance.Etag = etagInstance;
                                             }
                                             
-                                            JToken typeValue2 = propertiesValue["type"];
-                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            JToken typeValue3 = propertiesValue["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                             {
-                                                string typeInstance2 = ((string)typeValue2);
-                                                scalarFunctionPropertiesInstance.Type = typeInstance2;
+                                                string typeInstance3 = ((string)typeValue3);
+                                                scalarFunctionPropertiesInstance.Type = typeInstance3;
                                             }
                                             functionInstance.Properties = scalarFunctionPropertiesInstance;
                                         }
@@ -2217,7 +2342,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/functions/";
             url = url + Uri.EscapeDataString(functionName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2385,6 +2510,27 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     bindingValue["type"] = derived2.Type;
                                 }
                             }
+                            if (derived.Properties.Binding is JavaScriptFunctionBinding)
+                            {
+                                bindingValue["type"] = "Microsoft.StreamAnalytics/JavascriptUdf";
+                                JavaScriptFunctionBinding derived3 = ((JavaScriptFunctionBinding)derived.Properties.Binding);
+                                
+                                if (derived3.Properties != null)
+                                {
+                                    JObject propertiesValue4 = new JObject();
+                                    bindingValue["properties"] = propertiesValue4;
+                                    
+                                    if (derived3.Properties.Script != null)
+                                    {
+                                        propertiesValue4["script"] = derived3.Properties.Script;
+                                    }
+                                }
+                                
+                                if (derived3.Type != null)
+                                {
+                                    bindingValue["type"] = derived3.Type;
+                                }
+                            }
                         }
                     }
                     
@@ -2445,21 +2591,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken propertiesValue4 = responseDoc["properties"];
-                            if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                            JToken propertiesValue5 = responseDoc["properties"];
+                            if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue4["type"]);
+                                string typeName = ((string)propertiesValue5["type"]);
                                 if (typeName == "Scalar")
                                 {
                                     ScalarFunctionProperties scalarFunctionPropertiesInstance = new ScalarFunctionProperties();
                                     
-                                    JToken propertiesValue5 = propertiesValue4["properties"];
-                                    if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                    JToken propertiesValue6 = propertiesValue5["properties"];
+                                    if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                     {
                                         ScalarFunctionConfiguration propertiesInstance = new ScalarFunctionConfiguration();
                                         scalarFunctionPropertiesInstance.Properties = propertiesInstance;
                                         
-                                        JToken inputsArray2 = propertiesValue5["inputs"];
+                                        JToken inputsArray2 = propertiesValue6["inputs"];
                                         if (inputsArray2 != null && inputsArray2.Type != JTokenType.Null)
                                         {
                                             propertiesInstance.Inputs = new System.Collections.Generic.List<Microsoft.Azure.Management.StreamAnalytics.Models.FunctionInput>();
@@ -2484,7 +2630,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             }
                                         }
                                         
-                                        JToken outputValue2 = propertiesValue5["output"];
+                                        JToken outputValue2 = propertiesValue6["output"];
                                         if (outputValue2 != null && outputValue2.Type != JTokenType.Null)
                                         {
                                             FunctionOutput outputInstance = new FunctionOutput();
@@ -2498,7 +2644,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             }
                                         }
                                         
-                                        JToken bindingValue2 = propertiesValue5["binding"];
+                                        JToken bindingValue2 = propertiesValue6["binding"];
                                         if (bindingValue2 != null && bindingValue2.Type != JTokenType.Null)
                                         {
                                             string typeName2 = ((string)bindingValue2["type"]);
@@ -2506,27 +2652,27 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             {
                                                 AzureMachineLearningWebServiceFunctionBinding azureMachineLearningWebServiceFunctionBindingInstance = new AzureMachineLearningWebServiceFunctionBinding();
                                                 
-                                                JToken propertiesValue6 = bindingValue2["properties"];
-                                                if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                JToken propertiesValue7 = bindingValue2["properties"];
+                                                if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
                                                 {
                                                     AzureMachineLearningWebServiceFunctionBindingProperties propertiesInstance2 = new AzureMachineLearningWebServiceFunctionBindingProperties();
                                                     azureMachineLearningWebServiceFunctionBindingInstance.Properties = propertiesInstance2;
                                                     
-                                                    JToken endpointValue = propertiesValue6["endpoint"];
+                                                    JToken endpointValue = propertiesValue7["endpoint"];
                                                     if (endpointValue != null && endpointValue.Type != JTokenType.Null)
                                                     {
                                                         string endpointInstance = ((string)endpointValue);
                                                         propertiesInstance2.Endpoint = endpointInstance;
                                                     }
                                                     
-                                                    JToken apiKeyValue = propertiesValue6["apiKey"];
+                                                    JToken apiKeyValue = propertiesValue7["apiKey"];
                                                     if (apiKeyValue != null && apiKeyValue.Type != JTokenType.Null)
                                                     {
                                                         string apiKeyInstance = ((string)apiKeyValue);
                                                         propertiesInstance2.ApiKey = apiKeyInstance;
                                                     }
                                                     
-                                                    JToken inputsValue3 = propertiesValue6["inputs"];
+                                                    JToken inputsValue3 = propertiesValue7["inputs"];
                                                     if (inputsValue3 != null && inputsValue3.Type != JTokenType.Null)
                                                     {
                                                         AzureMachineLearningWebServiceInputs inputsInstance = new AzureMachineLearningWebServiceInputs();
@@ -2572,7 +2718,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         }
                                                     }
                                                     
-                                                    JToken outputsArray2 = propertiesValue6["outputs"];
+                                                    JToken outputsArray2 = propertiesValue7["outputs"];
                                                     if (outputsArray2 != null && outputsArray2.Type != JTokenType.Null)
                                                     {
                                                         propertiesInstance2.Outputs = new System.Collections.Generic.List<Microsoft.Azure.Management.StreamAnalytics.Models.AzureMachineLearningWebServiceOutputColumn>();
@@ -2597,7 +2743,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         }
                                                     }
                                                     
-                                                    JToken batchSizeValue = propertiesValue6["batchSize"];
+                                                    JToken batchSizeValue = propertiesValue7["batchSize"];
                                                     if (batchSizeValue != null && batchSizeValue.Type != JTokenType.Null)
                                                     {
                                                         int batchSizeInstance = ((int)batchSizeValue);
@@ -2613,21 +2759,47 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 }
                                                 propertiesInstance.Binding = azureMachineLearningWebServiceFunctionBindingInstance;
                                             }
+                                            if (typeName2 == "Microsoft.StreamAnalytics/JavascriptUdf")
+                                            {
+                                                JavaScriptFunctionBinding javaScriptFunctionBindingInstance = new JavaScriptFunctionBinding();
+                                                
+                                                JToken propertiesValue8 = bindingValue2["properties"];
+                                                if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                                                {
+                                                    JavaScriptFunctionBindingProperties propertiesInstance3 = new JavaScriptFunctionBindingProperties();
+                                                    javaScriptFunctionBindingInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken scriptValue = propertiesValue8["script"];
+                                                    if (scriptValue != null && scriptValue.Type != JTokenType.Null)
+                                                    {
+                                                        string scriptInstance = ((string)scriptValue);
+                                                        propertiesInstance3.Script = scriptInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken typeValue2 = bindingValue2["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    javaScriptFunctionBindingInstance.Type = typeInstance2;
+                                                }
+                                                propertiesInstance.Binding = javaScriptFunctionBindingInstance;
+                                            }
                                         }
                                     }
                                     
-                                    JToken etagValue = propertiesValue4["etag"];
+                                    JToken etagValue = propertiesValue5["etag"];
                                     if (etagValue != null && etagValue.Type != JTokenType.Null)
                                     {
                                         string etagInstance = ((string)etagValue);
                                         scalarFunctionPropertiesInstance.Etag = etagInstance;
                                     }
                                     
-                                    JToken typeValue2 = propertiesValue4["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue3 = propertiesValue5["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        scalarFunctionPropertiesInstance.Type = typeInstance2;
+                                        string typeInstance3 = ((string)typeValue3);
+                                        scalarFunctionPropertiesInstance.Type = typeInstance3;
                                     }
                                     result.Properties = scalarFunctionPropertiesInstance;
                                 }
@@ -2744,7 +2916,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(functionName);
             url = url + "/RetrieveDefaultDefinition";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2807,6 +2979,32 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     if (derived.BindingType != null)
                     {
                         functionRetrieveDefaultDefinitionParametersValue["bindingType"] = derived.BindingType;
+                    }
+                }
+                if (parameters is JavaScriptFunctionRetrieveDefaultDefinitionParameters)
+                {
+                    functionRetrieveDefaultDefinitionParametersValue["bindingType"] = "Microsoft.StreamAnalytics/JavascriptUdf";
+                    JavaScriptFunctionRetrieveDefaultDefinitionParameters derived2 = ((JavaScriptFunctionRetrieveDefaultDefinitionParameters)parameters);
+                    
+                    if (derived2.BindingRetrievalProperties != null)
+                    {
+                        JObject bindingRetrievalPropertiesValue2 = new JObject();
+                        functionRetrieveDefaultDefinitionParametersValue["bindingRetrievalProperties"] = bindingRetrievalPropertiesValue2;
+                        
+                        if (derived2.BindingRetrievalProperties.Script != null)
+                        {
+                            bindingRetrievalPropertiesValue2["script"] = derived2.BindingRetrievalProperties.Script;
+                        }
+                        
+                        if (derived2.BindingRetrievalProperties.UdfType != null)
+                        {
+                            bindingRetrievalPropertiesValue2["udfType"] = derived2.BindingRetrievalProperties.UdfType;
+                        }
+                    }
+                    
+                    if (derived2.BindingType != null)
+                    {
+                        functionRetrieveDefaultDefinitionParametersValue["bindingType"] = derived2.BindingType;
                     }
                 }
                 
@@ -3034,6 +3232,32 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 }
                                                 propertiesInstance.Binding = azureMachineLearningWebServiceFunctionBindingInstance;
                                             }
+                                            if (typeName2 == "Microsoft.StreamAnalytics/JavascriptUdf")
+                                            {
+                                                JavaScriptFunctionBinding javaScriptFunctionBindingInstance = new JavaScriptFunctionBinding();
+                                                
+                                                JToken propertiesValue4 = bindingValue["properties"];
+                                                if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                {
+                                                    JavaScriptFunctionBindingProperties propertiesInstance3 = new JavaScriptFunctionBindingProperties();
+                                                    javaScriptFunctionBindingInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken scriptValue = propertiesValue4["script"];
+                                                    if (scriptValue != null && scriptValue.Type != JTokenType.Null)
+                                                    {
+                                                        string scriptInstance = ((string)scriptValue);
+                                                        propertiesInstance3.Script = scriptInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken typeValue2 = bindingValue["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    javaScriptFunctionBindingInstance.Type = typeInstance2;
+                                                }
+                                                propertiesInstance.Binding = javaScriptFunctionBindingInstance;
+                                            }
                                         }
                                     }
                                     
@@ -3044,11 +3268,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         scalarFunctionPropertiesInstance.Etag = etagInstance;
                                     }
                                     
-                                    JToken typeValue2 = propertiesValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue3 = propertiesValue["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        scalarFunctionPropertiesInstance.Type = typeInstance2;
+                                        string typeInstance3 = ((string)typeValue3);
+                                        scalarFunctionPropertiesInstance.Type = typeInstance3;
                                     }
                                     functionInstance.Properties = scalarFunctionPropertiesInstance;
                                 }
@@ -3170,7 +3394,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(functionName);
             url = url + "/RetrieveDefaultDefinition";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3428,6 +3652,32 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 }
                                                 propertiesInstance.Binding = azureMachineLearningWebServiceFunctionBindingInstance;
                                             }
+                                            if (typeName2 == "Microsoft.StreamAnalytics/JavascriptUdf")
+                                            {
+                                                JavaScriptFunctionBinding javaScriptFunctionBindingInstance = new JavaScriptFunctionBinding();
+                                                
+                                                JToken propertiesValue4 = bindingValue["properties"];
+                                                if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                {
+                                                    JavaScriptFunctionBindingProperties propertiesInstance3 = new JavaScriptFunctionBindingProperties();
+                                                    javaScriptFunctionBindingInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken scriptValue = propertiesValue4["script"];
+                                                    if (scriptValue != null && scriptValue.Type != JTokenType.Null)
+                                                    {
+                                                        string scriptInstance = ((string)scriptValue);
+                                                        propertiesInstance3.Script = scriptInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken typeValue2 = bindingValue["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance2 = ((string)typeValue2);
+                                                    javaScriptFunctionBindingInstance.Type = typeInstance2;
+                                                }
+                                                propertiesInstance.Binding = javaScriptFunctionBindingInstance;
+                                            }
                                         }
                                     }
                                     
@@ -3438,11 +3688,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         scalarFunctionPropertiesInstance.Etag = etagInstance;
                                     }
                                     
-                                    JToken typeValue2 = propertiesValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue3 = propertiesValue["type"];
+                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        scalarFunctionPropertiesInstance.Type = typeInstance2;
+                                        string typeInstance3 = ((string)typeValue3);
+                                        scalarFunctionPropertiesInstance.Type = typeInstance3;
                                     }
                                     functionInstance.Properties = scalarFunctionPropertiesInstance;
                                 }

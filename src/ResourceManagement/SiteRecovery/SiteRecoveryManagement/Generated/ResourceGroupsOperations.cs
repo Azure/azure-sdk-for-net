@@ -27,17 +27,17 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Microsoft.Azure.Management.RecoveryServices;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
     /// <summary>
     /// Definition of cloud service operations for the Recovery services
     /// extension.
     /// </summary>
-    internal partial class ResourceGroupsOperations : IServiceOperations<RecoveryServicesManagementClient>, IResourceGroupsOperations
+    internal partial class ResourceGroupsOperations : IServiceOperations<SiteRecoveryVaultManagementClient>, IResourceGroupsOperations
     {
         /// <summary>
         /// Initializes a new instance of the ResourceGroupsOperations class.
@@ -45,18 +45,18 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ResourceGroupsOperations(RecoveryServicesManagementClient client)
+        internal ResourceGroupsOperations(SiteRecoveryVaultManagementClient client)
         {
             this._client = client;
         }
         
-        private RecoveryServicesManagementClient _client;
+        private SiteRecoveryVaultManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.RecoveryServicesManagementClient.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.SiteRecoveryVaultManagementClient.
         /// </summary>
-        public RecoveryServicesManagementClient Client
+        public SiteRecoveryVaultManagementClient Client
         {
             get { return this._client; }
         }

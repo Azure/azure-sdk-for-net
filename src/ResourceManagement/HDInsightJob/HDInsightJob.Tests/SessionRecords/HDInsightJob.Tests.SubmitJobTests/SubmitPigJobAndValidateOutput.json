@@ -1,0 +1,546 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/pig?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9waWc/dXNlci5uYW1lPWFkbWlu",
+      "RequestMethod": "POST",
+      "RequestBody": "execute=LOGS%20%3D%20LOAD%20%27wasb%3A%2F%2F%2Fexample%2Fdata%2Fsample.log%27%3BLEVELS%20%3D%20foreach%20LOGS%20generate%20REGEX_EXTRACT%28%240%2C%20%27%28TRACE%7CDEBUG%7CINFO%7CWARN%7CERROR%7CFATAL%29%27%2C%201%29%20%20as%20LOGLEVEL%3BFILTEREDLEVELS%20%3D%20FILTER%20LEVELS%20by%20LOGLEVEL%20is%20not%20null%3BGROUPEDLEVELS%20%3D%20GROUP%20FILTEREDLEVELS%20by%20LOGLEVEL%3BFREQUENCIES%20%3D%20foreach%20GROUPEDLEVELS%20generate%20group%20as%20LOGLEVEL%2C%20COUNT%28FILTEREDLEVELS.LOGLEVEL%29%20as%20COUNT%3BRESULT%20%3D%20order%20FREQUENCIES%20by%20COUNT%20desc%3BDUMP%20RESULT%3B&statusdir=2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "648"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1460573144061_0116\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1461141691224&s=kqyjRvlAG3qxqYKJSh9iB0waqpQ=\"; Path=/; Expires=Wed, 20-Apr-2016 08:41:31 GMT; HttpOnly"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:41:34 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1460573144061_0116?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwNTczMTQ0MDYxXzAxMTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1461105693959,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1460573144061_0116\",\r\n    \"state\": \"PREP\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1460573144061_0116\"\r\n  },\r\n  \"id\": \"job_1460573144061_0116\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4\",\r\n    \"files\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"LOGS = LOAD 'wasb:///example/data/sample.log';LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;RESULT = order FREQUENCIES by COUNT desc;DUMP RESULT;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1774"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:41:34 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1460573144061_0116?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwNTczMTQ0MDYxXzAxMTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1461105702141,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"username\": \"hdp\",\r\n    \"jobId\": \"job_1460573144061_0116\",\r\n    \"state\": \"RUNNING\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"hdp\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1460573144061_0116\"\r\n  },\r\n  \"id\": \"job_1460573144061_0116\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"0% complete\",\r\n  \"exitValue\": null,\r\n  \"user\": \"hdp\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4\",\r\n    \"files\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"LOGS = LOAD 'wasb:///example/data/sample.log';LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;RESULT = order FREQUENCIES by COUNT desc;DUMP RESULT;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1914"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:42:05 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1460573144061_0116?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwNTczMTQ0MDYxXzAxMTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1461105702141,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"username\": \"hdp\",\r\n    \"jobId\": \"job_1460573144061_0116\",\r\n    \"state\": \"RUNNING\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"hdp\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1460573144061_0116\"\r\n  },\r\n  \"id\": \"job_1460573144061_0116\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"33% complete\",\r\n  \"exitValue\": null,\r\n  \"user\": \"hdp\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4\",\r\n    \"files\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"LOGS = LOAD 'wasb:///example/data/sample.log';LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;RESULT = order FREQUENCIES by COUNT desc;DUMP RESULT;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1915"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:42:35 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1460573144061_0116?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwNTczMTQ0MDYxXzAxMTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1461105702141,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"username\": \"hdp\",\r\n    \"jobId\": \"job_1460573144061_0116\",\r\n    \"state\": \"RUNNING\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"hdp\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1460573144061_0116\"\r\n  },\r\n  \"id\": \"job_1460573144061_0116\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"66% complete\",\r\n  \"exitValue\": null,\r\n  \"user\": \"hdp\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4\",\r\n    \"files\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"LOGS = LOAD 'wasb:///example/data/sample.log';LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;RESULT = order FREQUENCIES by COUNT desc;DUMP RESULT;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1915"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:43:06 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1460573144061_0116?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwNTczMTQ0MDYxXzAxMTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 1.0,\r\n    \"runState\": 1,\r\n    \"startTime\": 1461105702141,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"username\": \"hdp\",\r\n    \"jobId\": \"job_1460573144061_0116\",\r\n    \"state\": \"RUNNING\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"hdp\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/user/admin/.staging/job_1460573144061_0116/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1460573144061_0116/\",\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1460573144061_0116\"\r\n  },\r\n  \"id\": \"job_1460573144061_0116\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"83% complete\",\r\n  \"exitValue\": null,\r\n  \"user\": \"hdp\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4\",\r\n    \"files\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"LOGS = LOAD 'wasb:///example/data/sample.log';LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;RESULT = order FREQUENCIES by COUNT desc;DUMP RESULT;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1915"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:43:36 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1460573144061_0116?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwNTczMTQ0MDYxXzAxMTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 1.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1461105702141,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/04/19/000000/job_1460573144061_0116_conf.xml\",\r\n    \"finishTime\": 1461105832775,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"headnode0.pattipakawin33.d6.internal.cloudapp.net:19888/jobhistory/job/job_1460573144061_0116\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1460573144061_0116\",\r\n    \"state\": \"SUCCEEDED\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/04/19/000000/job_1460573144061_0116_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1460573144061_0116\"\r\n  },\r\n  \"id\": \"job_1460573144061_0116\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"100% complete\",\r\n  \"exitValue\": 0,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4\",\r\n    \"files\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"LOGS = LOAD 'wasb:///example/data/sample.log';LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;RESULT = order FREQUENCIES by COUNT desc;DUMP RESULT;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1943"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:44:08 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1460573144061_0116?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwNTczMTQ0MDYxXzAxMTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 1.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1461105702141,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/04/19/000000/job_1460573144061_0116_conf.xml\",\r\n    \"finishTime\": 1461105832775,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"headnode0.pattipakawin33.d6.internal.cloudapp.net:19888/jobhistory/job/job_1460573144061_0116\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1460573144061_0116\",\r\n    \"state\": \"SUCCEEDED\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/04/19/000000/job_1460573144061_0116_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1460573144061_0116\"\r\n  },\r\n  \"id\": \"job_1460573144061_0116\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"100% complete\",\r\n  \"exitValue\": 0,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4\",\r\n    \"files\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"LOGS = LOAD 'wasb:///example/data/sample.log';LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;RESULT = order FREQUENCIES by COUNT desc;DUMP RESULT;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1943"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:44:08 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1460573144061_0116?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYwNTczMTQ0MDYxXzAxMTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.1.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 1.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1461105702141,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/04/19/000000/job_1460573144061_0116_conf.xml\",\r\n    \"finishTime\": 1461105832775,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"headnode0.pattipakawin33.d6.internal.cloudapp.net:19888/jobhistory/job/job_1460573144061_0116\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"username\": \"admin\",\r\n    \"jobId\": \"job_1460573144061_0116\",\r\n    \"state\": \"SUCCEEDED\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/04/19/000000/job_1460573144061_0116_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 116,\r\n      \"jtIdentifier\": \"1460573144061\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1460573144061_0116\"\r\n  },\r\n  \"id\": \"job_1460573144061_0116\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"100% complete\",\r\n  \"exitValue\": 0,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-04-19T22-41-32-510b47d8-5663-4db3-902d-ec5c928ed3b4\",\r\n    \"files\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"LOGS = LOAD 'wasb:///example/data/sample.log';LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;RESULT = order FREQUENCIES by COUNT desc;DUMP RESULT;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": null,\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1943"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Tue, 19 Apr 2016 22:44:08 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

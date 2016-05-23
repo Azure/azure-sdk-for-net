@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class RecoveryPlanProperties
     {
-        private IList<string> _allowedOperationsList;
+        private IList<string> _allowedOperations;
         
         /// <summary>
         /// Optional. Allowed operations on the recovery plan.
         /// </summary>
-        public IList<string> AllowedOperationsList
+        public IList<string> AllowedOperations
         {
-            get { return this._allowedOperationsList; }
-            set { this._allowedOperationsList = value; }
+            get { return this._allowedOperations; }
+            set { this._allowedOperations = value; }
         }
         
         private CurrentScenarioDetails _currentScenario;
@@ -52,6 +52,28 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._currentScenario; }
             set { this._currentScenario = value; }
+        }
+        
+        private string _currentScenarioStatus;
+        
+        /// <summary>
+        /// Optional. Current scenario status.
+        /// </summary>
+        public string CurrentScenarioStatus
+        {
+            get { return this._currentScenarioStatus; }
+            set { this._currentScenarioStatus = value; }
+        }
+        
+        private string _currentScenarioStatusDescription;
+        
+        /// <summary>
+        /// Optional. Current scenario status description.
+        /// </summary>
+        public string CurrentScenarioStatusDescription
+        {
+            get { return this._currentScenarioStatusDescription; }
+            set { this._currentScenarioStatusDescription = value; }
         }
         
         private string _failoverDeploymentModel;
@@ -68,7 +90,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Required. Friendly name of the recovery plan.
+        /// Optional. Friendly name of the recovery plan.
         /// </summary>
         public string FriendlyName
         {
@@ -87,17 +109,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._groups = value; }
         }
         
-        private string _lastPlannedFailoverStatus;
-        
-        /// <summary>
-        /// Optional. Last planned failover status.
-        /// </summary>
-        public string LastPlannedFailoverStatus
-        {
-            get { return this._lastPlannedFailoverStatus; }
-            set { this._lastPlannedFailoverStatus = value; }
-        }
-        
         private System.DateTime? _lastPlannedFailoverTime;
         
         /// <summary>
@@ -107,17 +118,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._lastPlannedFailoverTime; }
             set { this._lastPlannedFailoverTime = value; }
-        }
-        
-        private string _lastTestFailoverStatus;
-        
-        /// <summary>
-        /// Optional. Last test failover status.
-        /// </summary>
-        public string LastTestFailoverStatus
-        {
-            get { return this._lastTestFailoverStatus; }
-            set { this._lastTestFailoverStatus = value; }
         }
         
         private System.DateTime? _lastTestFailoverTime;
@@ -175,26 +175,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._recoveryFabricId = value; }
         }
         
-        private IList<string> _replicationProvidersList;
+        private IList<string> _replicationProviders;
         
         /// <summary>
         /// Optional. List of replication providers.
         /// </summary>
-        public IList<string> ReplicationProvidersList
+        public IList<string> ReplicationProviders
         {
-            get { return this._replicationProvidersList; }
-            set { this._replicationProvidersList = value; }
-        }
-        
-        private string _status;
-        
-        /// <summary>
-        /// Optional. Status of the recovery plan.
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._replicationProviders; }
+            set { this._replicationProviders = value; }
         }
         
         /// <summary>
@@ -202,22 +191,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public RecoveryPlanProperties()
         {
-            this.AllowedOperationsList = new LazyList<string>();
+            this.AllowedOperations = new LazyList<string>();
             this.Groups = new LazyList<RecoveryPlanGroup>();
-            this.ReplicationProvidersList = new LazyList<string>();
+            this.ReplicationProviders = new LazyList<string>();
         }
         
         /// <summary>
         /// Initializes a new instance of the RecoveryPlanProperties class with
         /// required arguments.
         /// </summary>
-        public RecoveryPlanProperties(string friendlyName, string primaryFabricId, string recoveryFabricId)
+        public RecoveryPlanProperties(string primaryFabricId, string recoveryFabricId)
             : this()
         {
-            if (friendlyName == null)
-            {
-                throw new ArgumentNullException("friendlyName");
-            }
             if (primaryFabricId == null)
             {
                 throw new ArgumentNullException("primaryFabricId");
@@ -226,7 +211,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             {
                 throw new ArgumentNullException("recoveryFabricId");
             }
-            this.FriendlyName = friendlyName;
             this.PrimaryFabricId = primaryFabricId;
             this.RecoveryFabricId = recoveryFabricId;
         }

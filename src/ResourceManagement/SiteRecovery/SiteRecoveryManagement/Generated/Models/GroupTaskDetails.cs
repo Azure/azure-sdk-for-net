@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The definition of group task details object.
     /// </summary>
-    public partial class GroupTaskDetails : TaskTypeDetails
+    public partial class GroupTaskDetails
     {
         private IList<AsrTaskBase> _childTasks;
         
@@ -41,6 +41,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._childTasks; }
             set { this._childTasks = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Required. The task type. Overriden in derived classes.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
@@ -55,19 +66,19 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the GroupTaskDetails class with
         /// required arguments.
         /// </summary>
-        public GroupTaskDetails(List<AsrTaskBase> childTasks, string type)
+        public GroupTaskDetails(string type, List<AsrTaskBase> childTasks)
             : this()
         {
-            if (childTasks == null)
-            {
-                throw new ArgumentNullException("childTasks");
-            }
             if (type == null)
             {
                 throw new ArgumentNullException("type");
             }
-            this.ChildTasks = childTasks;
+            if (childTasks == null)
+            {
+                throw new ArgumentNullException("childTasks");
+            }
             this.Type = type;
+            this.ChildTasks = childTasks;
         }
     }
 }

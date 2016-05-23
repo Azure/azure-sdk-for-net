@@ -130,6 +130,14 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         }
         
         /// <summary>
+        /// RemoteApp user disk operations.
+        /// </summary>
+        IUserDiskOperations UserDisks
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// RemoteApp virtual network operations.
         /// </summary>
         IVNetOperations VNet
