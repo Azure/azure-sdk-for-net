@@ -832,6 +832,7 @@ namespace Scheduler.Test.ScenarioTests
                                     Headers = header,
                                     Authentication = new OAuthAuthentication()
                                     {
+                                        // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                                         Secret = "ThisIsFakeSecret",
                                         Audience = "https://management.core.windows.net/",
                                         ClientId = "11111111-1111-1111-1111-111111111111",
@@ -1208,6 +1209,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
+                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                 var sasKey = "ThisIsFakeSasKey";
                 var sasKeyName = "RootManageSharedAccessKey";
                 var contentType = "Application/Json";
@@ -1381,6 +1383,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
+                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                 var sasKey = "ThisIsFakeSasKey";
                 var sasKeyName = "RootManageSharedAccessKey";
                 var contentType = "Application/Json";

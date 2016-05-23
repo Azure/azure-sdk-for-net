@@ -25,12 +25,6 @@ namespace WebSites.Tests.ScenarioTests
 {
     public class SourceControlsScenarioTests : TestBase
     {
-        static SourceControlsScenarioTests()
-        {
-            // Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=cfead826-670f-4c45-8f3f-cfee4217d76b;Environment=Dogfood;UserId=admin@aad182.ccsctp.net;Password=Pa$$w0rd");
-            // Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
-        }
-
         private static readonly SourceControl GitHubSourceControl = new SourceControl()
         {
             Location = "global",
