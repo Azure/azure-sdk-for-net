@@ -832,6 +832,7 @@ namespace Scheduler.Test.ScenarioTests
                                     Headers = header,
                                     Authentication = new OAuthAuthentication()
                                     {
+                                        // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                                         Secret = "G5t061r8Fjw3V4KRibnb+VK4+tX399hkHaj7LOyGuj4=",
                                         Audience = "https://management.core.windows.net/",
                                         ClientId = "dc23e663-9be6-4a32-8b8a-c46e36f0c137",
@@ -1208,6 +1209,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
+                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                 var sasKey = "rdF1YYZG4VJlOesAjSkF5nZZD0FtqYT8+3lhzNDqtx4=";
                 var sasKeyName = "RootManageSharedAccessKey";
                 var contentType = "Application/Json";
@@ -1381,6 +1383,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
+                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                 var sasKey = "rdF1YYZG4VJlOesAjSkF5nZZD0FtqYT8+3lhzNDqtx4=";
                 var sasKeyName = "RootManageSharedAccessKey";
                 var contentType = "Application/Json";
