@@ -16,24 +16,21 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// An Azure resource.
-    /// </summary>
     [JsonTransformation]
-    public partial class UnattendedTask : IResource
+    public partial class CostInsight : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the UnattendedTask class.
+        /// Initializes a new instance of the CostInsight class.
         /// </summary>
-        public UnattendedTask() { }
+        public CostInsight() { }
 
         /// <summary>
-        /// Initializes a new instance of the UnattendedTask class.
+        /// Initializes a new instance of the CostInsight class.
         /// </summary>
-        public UnattendedTask(string arguments = default(string), string taskType = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public CostInsight(string currencyCode = default(string), IList<VMCostProperties> vmCosts = default(IList<VMCostProperties>), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Arguments = arguments;
-            TaskType = taskType;
+            CurrencyCode = currencyCode;
+            VmCosts = vmCosts;
             ProvisioningState = provisioningState;
             Id = id;
             Name = name;
@@ -43,17 +40,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
-        /// The arguments of the unattended task.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.arguments")]
-        public string Arguments { get; set; }
+        [JsonProperty(PropertyName = "properties.currencyCode")]
+        public string CurrencyCode { get; set; }
 
         /// <summary>
-        /// The type of the unattended task. Possible values include:
-        /// 'LabVmsShutdownTask', 'LabVmsStartupTask', 'LabBillingTask'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.taskType")]
-        public string TaskType { get; set; }
+        [JsonProperty(PropertyName = "properties.vmCosts")]
+        public IList<VMCostProperties> VmCosts { get; set; }
 
         /// <summary>
         /// The provisioning status of the resource.

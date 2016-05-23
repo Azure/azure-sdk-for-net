@@ -370,11 +370,11 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual Machine.
             /// </param>
-            /// <param name='listOfartifactInstallProperties'>
+            /// <param name='applyArtifactsRequest'>
             /// </param>
-            public static void ApplyArtifacts(this IVirtualMachineOperations operations, string resourceGroupName, string labName, string name, IList<ArtifactInstallProperties> listOfartifactInstallProperties)
+            public static void ApplyArtifacts(this IVirtualMachineOperations operations, string resourceGroupName, string labName, string name, ApplyArtifactsRequest applyArtifactsRequest)
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineOperations)s).ApplyArtifactsAsync(resourceGroupName, labName, name, listOfartifactInstallProperties), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineOperations)s).ApplyArtifactsAsync(resourceGroupName, labName, name, applyArtifactsRequest), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -392,14 +392,14 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual Machine.
             /// </param>
-            /// <param name='listOfartifactInstallProperties'>
+            /// <param name='applyArtifactsRequest'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ApplyArtifactsAsync(this IVirtualMachineOperations operations, string resourceGroupName, string labName, string name, IList<ArtifactInstallProperties> listOfartifactInstallProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ApplyArtifactsAsync(this IVirtualMachineOperations operations, string resourceGroupName, string labName, string name, ApplyArtifactsRequest applyArtifactsRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.ApplyArtifactsWithHttpMessagesAsync(resourceGroupName, labName, name, listOfartifactInstallProperties, null, cancellationToken).ConfigureAwait(false);
+                await operations.ApplyArtifactsWithHttpMessagesAsync(resourceGroupName, labName, name, applyArtifactsRequest, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -417,11 +417,11 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual Machine.
             /// </param>
-            /// <param name='listOfartifactInstallProperties'>
+            /// <param name='applyArtifactsRequest'>
             /// </param>
-            public static void BeginApplyArtifacts(this IVirtualMachineOperations operations, string resourceGroupName, string labName, string name, IList<ArtifactInstallProperties> listOfartifactInstallProperties)
+            public static void BeginApplyArtifacts(this IVirtualMachineOperations operations, string resourceGroupName, string labName, string name, ApplyArtifactsRequest applyArtifactsRequest)
             {
-                Task.Factory.StartNew(s => ((IVirtualMachineOperations)s).BeginApplyArtifactsAsync(resourceGroupName, labName, name, listOfartifactInstallProperties), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualMachineOperations)s).BeginApplyArtifactsAsync(resourceGroupName, labName, name, applyArtifactsRequest), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -439,14 +439,14 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual Machine.
             /// </param>
-            /// <param name='listOfartifactInstallProperties'>
+            /// <param name='applyArtifactsRequest'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginApplyArtifactsAsync(this IVirtualMachineOperations operations, string resourceGroupName, string labName, string name, IList<ArtifactInstallProperties> listOfartifactInstallProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginApplyArtifactsAsync(this IVirtualMachineOperations operations, string resourceGroupName, string labName, string name, ApplyArtifactsRequest applyArtifactsRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginApplyArtifactsWithHttpMessagesAsync(resourceGroupName, labName, name, listOfartifactInstallProperties, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginApplyArtifactsWithHttpMessagesAsync(resourceGroupName, labName, name, applyArtifactsRequest, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<string>> GenerateUploadUriWithHttpMessagesAsync(string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GenerateUploadUriResponse>> GenerateUploadUriWithHttpMessagesAsync(string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List disk images available for custom image creation.
         /// </summary>

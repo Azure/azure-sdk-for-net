@@ -16,40 +16,37 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// Daily recurrence.
-    /// </summary>
-    public partial class Recurrence
+    public partial class VMCostProperties
     {
         /// <summary>
-        /// Initializes a new instance of the Recurrence class.
+        /// Initializes a new instance of the VMCostProperties class.
         /// </summary>
-        public Recurrence() { }
+        public VMCostProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the Recurrence class.
+        /// Initializes a new instance of the VMCostProperties class.
         /// </summary>
-        public Recurrence(string timeZone = default(string), int? hour = default(int?), int? minute = default(int?))
+        public VMCostProperties(string name = default(string), string resourceGroupName = default(string), double? cost = default(double?))
         {
-            TimeZone = timeZone;
-            Hour = hour;
-            Minute = minute;
+            Name = name;
+            ResourceGroupName = resourceGroupName;
+            Cost = cost;
         }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "timeZone")]
-        public string TimeZone { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "hour")]
-        public int? Hour { get; set; }
+        [JsonProperty(PropertyName = "resourceGroupName")]
+        public string ResourceGroupName { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "minute")]
-        public int? Minute { get; set; }
+        [JsonProperty(PropertyName = "cost")]
+        public double? Cost { get; set; }
 
     }
 }
