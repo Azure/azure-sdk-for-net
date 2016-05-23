@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Properties of an hourly schedule.
+    /// Response body for evaluating a policy set.
     /// </summary>
-    public partial class HourDetails
+    public partial class EvaluatePoliciesResponse
     {
         /// <summary>
-        /// Initializes a new instance of the HourDetails class.
+        /// Initializes a new instance of the EvaluatePoliciesResponse class.
         /// </summary>
-        public HourDetails() { }
+        public EvaluatePoliciesResponse() { }
 
         /// <summary>
-        /// Initializes a new instance of the HourDetails class.
+        /// Initializes a new instance of the EvaluatePoliciesResponse class.
         /// </summary>
-        public HourDetails(int? minute = default(int?))
+        public EvaluatePoliciesResponse(IList<PolicySetResult> results = default(IList<PolicySetResult>))
         {
-            Minute = minute;
+            Results = results;
         }
 
         /// <summary>
-        /// Minutes of the hour the schedule will run.
+        /// Results of evaluating a policy set.
         /// </summary>
-        [JsonProperty(PropertyName = "minute")]
-        public int? Minute { get; set; }
+        [JsonProperty(PropertyName = "results")]
+        public IList<PolicySetResult> Results { get; set; }
 
     }
 }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the WeekDetails class.
         /// </summary>
-        public WeekDetails(IList<string> weekdays = default(IList<string>), Recurrence time = default(Recurrence))
+        public WeekDetails(IList<string> weekdays = default(IList<string>), string time = default(string))
         {
             Weekdays = weekdays;
             Time = time;
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// The time of the day.
         /// </summary>
         [JsonProperty(PropertyName = "time")]
-        public Recurrence Time { get; set; }
+        public string Time { get; set; }
 
     }
 }

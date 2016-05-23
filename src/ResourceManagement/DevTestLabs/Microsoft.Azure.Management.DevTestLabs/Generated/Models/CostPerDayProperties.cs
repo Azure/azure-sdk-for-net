@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The per-day properties of a cost.
+    /// The per-day properties of a cost item.
     /// </summary>
     public partial class CostPerDayProperties
     {

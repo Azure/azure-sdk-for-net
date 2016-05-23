@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Parameters for generating an ARM template for deploying artifacts.
+    /// </summary>
     public partial class GenerateArmTemplateRequest
     {
         /// <summary>
@@ -34,17 +37,19 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
-        /// The resource name of the virtual machine
+        /// The resource name of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "virtualMachineName")]
         public string VirtualMachineName { get; set; }
 
         /// <summary>
+        /// The parameters of the ARM template.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IList<ParameterInfo> Parameters { get; set; }
 
         /// <summary>
+        /// The location of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

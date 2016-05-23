@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string ResourceId { get; set; }
 
         /// <summary>
-        /// The lab subnet name of the subnet.
+        /// The name given to the subnet within the lab.
         /// </summary>
         [JsonProperty(PropertyName = "labSubnetName")]
         public string LabSubnetName { get; set; }
 
         /// <summary>
-        /// Indicates whether this subnet can be during virtual machine
+        /// Indicates whether this subnet can be used during virtual machine
         /// creation. Possible values include: 'Default', 'Deny', 'Allow'
         /// </summary>
         [JsonProperty(PropertyName = "useInVmCreationPermission")]
