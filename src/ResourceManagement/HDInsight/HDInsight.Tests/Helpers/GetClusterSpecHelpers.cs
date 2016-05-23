@@ -217,7 +217,7 @@ namespace HDInsight.Tests.Helpers
             var clusterparams = new ClusterCreateParameters
             {
                 ClusterSizeInNodes = 3,
-                ClusterType = HDInsightClusterType.Hadoop,
+                ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
                 DefaultStorageAccountName = StorageAccountName,
                 DefaultStorageAccountKey = StorageAccountKey,
@@ -241,7 +241,7 @@ namespace HDInsight.Tests.Helpers
             var clusterparams = new ClusterCreateParameters
             {
                 ClusterSizeInNodes = 3,
-                ClusterType = HDInsightClusterType.Hadoop,
+                ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
                 DefaultStorageAccountName = StorageAccountName,
                 DefaultStorageAccountKey = StorageAccountKey,
@@ -262,7 +262,7 @@ namespace HDInsight.Tests.Helpers
             var clusterparams = new ClusterCreateParameters
             {
                 ClusterSizeInNodes = 1,
-                ClusterType = HDInsightClusterType.HBase,
+                ClusterType = "HBase",
                 WorkerNodeSize = "Large",
                 DefaultStorageAccountName = StorageAccountName,
                 DefaultStorageAccountKey = StorageAccountKey,

@@ -61,7 +61,7 @@ namespace Microsoft.Azure.KeyVault
         /// Constructor
         /// </summary>
         /// <param name="kid">The key identifier to use</param>
-        /// <param name="keySize">The key size</param>
+        /// <param name="keySize">The key size in bytes</param>
         public SymmetricKey( string kid, int keySize )
         {
             if ( string.IsNullOrWhiteSpace( kid ) )

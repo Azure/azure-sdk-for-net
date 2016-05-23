@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitHiveJob(this IJobOperations operations, HiveJobSubmissionParameters parameters)
+        internal static JobSubmissionResponse SubmitHiveJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitHiveJobAsync(this IJobOperations operations, HiveJobSubmissionParameters parameters)
+        internal static Task<JobSubmissionResponse> SubmitHiveJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitHiveJobAsync(parameters, CancellationToken.None);
         }
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitMapReduceJob(this IJobOperations operations, MapReduceJobSubmissionParameters parameters)
+        internal static JobSubmissionResponse SubmitMapReduceJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitMapReduceJobAsync(this IJobOperations operations, MapReduceJobSubmissionParameters parameters)
+        internal static Task<JobSubmissionResponse> SubmitMapReduceJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitMapReduceJobAsync(parameters, CancellationToken.None);
         }
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitMapReduceStreamingJob(this IJobOperations operations, MapReduceStreamingJobSubmissionParameters parameters)
+        internal static JobSubmissionResponse SubmitMapReduceStreamingJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(this IJobOperations operations, MapReduceStreamingJobSubmissionParameters parameters)
+        internal static Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitMapReduceStreamingJobAsync(parameters, CancellationToken.None);
         }
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitPigJob(this IJobOperations operations, PigJobSubmissionParameters parameters)
+        internal static JobSubmissionResponse SubmitPigJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -350,7 +350,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitPigJobAsync(this IJobOperations operations, PigJobSubmissionParameters parameters)
+        internal static Task<JobSubmissionResponse> SubmitPigJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitPigJobAsync(parameters, CancellationToken.None);
         }
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitSqoopJob(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
+        internal static JobSubmissionResponse SubmitSqoopJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -390,7 +390,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitSqoopJobAsync(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
+        internal static Task<JobSubmissionResponse> SubmitSqoopJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitSqoopJobAsync(parameters, CancellationToken.None);
         }

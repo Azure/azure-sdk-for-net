@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private ServerCommunicationLink _serverCommunicationLink;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Sql Database Server communication
-        /// link.
+        /// Optional. Gets or sets the Azure Sql Server communication link.
         /// </summary>
         public ServerCommunicationLink ServerCommunicationLink
         {

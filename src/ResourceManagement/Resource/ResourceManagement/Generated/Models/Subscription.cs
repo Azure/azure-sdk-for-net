@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Subscriptions.Models;
 
 namespace Microsoft.Azure.Subscriptions.Models
 {
@@ -72,6 +73,17 @@ namespace Microsoft.Azure.Subscriptions.Models
         {
             get { return this._subscriptionId; }
             set { this._subscriptionId = value; }
+        }
+        
+        private SubscriptionPolicies _subscriptionPolicies;
+        
+        /// <summary>
+        /// Optional. Gets or sets the subscription policies
+        /// </summary>
+        public SubscriptionPolicies SubscriptionPolicies
+        {
+            get { return this._subscriptionPolicies; }
+            set { this._subscriptionPolicies = value; }
         }
         
         /// <summary>
