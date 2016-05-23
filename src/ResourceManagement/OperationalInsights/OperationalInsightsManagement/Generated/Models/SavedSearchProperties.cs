@@ -62,12 +62,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._query = value; }
         }
         
-        private int? _version;
+        private long? _version;
         
         /// <summary>
         /// Optional. Gets or sets the version number.
         /// </summary>
-        public int? Version
+        public long? Version
         {
             get { return this._version; }
             set { this._version = value; }
