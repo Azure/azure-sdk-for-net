@@ -1,5 +1,5 @@
 {
-  "version": "0.11.2-preview",
+  "version": "0.11.3-preview",
   "description": "Provides Data Lake Analytics account, job and catalog management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure Data Lake Analytics management", "DataLakeAnalytics", "Data Lake Analytics management", "REST HTTP client", "windowsazureofficial" ],

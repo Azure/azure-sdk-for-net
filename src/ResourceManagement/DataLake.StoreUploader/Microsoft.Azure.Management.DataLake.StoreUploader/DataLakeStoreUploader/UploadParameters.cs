@@ -26,24 +26,28 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <summary>
         /// Creates a new set of parameters for the DataLake Uploader.
         /// </summary>
-        /// <param name="inputFilePath">The full path to the file to be uploaded.</param>
-        /// <param name="targetStreamPath">The full stream path where the file will be uploaded to.</param>
+        /// <param name="inputFilePath">The full path to the file or folder to be uploaded.</param>
+        /// <param name="targetStreamPath">The full stream path where the file or folder will be uploaded to.</param>
         /// <param name="accountName">Name of the account to upload to.</param>
-        /// <param name="threadCount">(Optional) The maximum number of parallel threads to use for the upload.</param>
+        /// <param name="fileThreadCount">The file thread count, indicating the number of file segments to upload in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
+        /// <param name="folderThreadCount">The folder thread count, indicating the number of files to upload in parallel during a folder upload. This parameter is ignored for single file uploads. Default is 5 for folder uploads</param>
         /// <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
         /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
         /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
+        /// <param name="isRecursive">(Optional) Indicates whether to upload the source folder recursively or not. If true, will upload the source directory and all sub directories, preserving directory structure.</param>
         /// <param name="maxSegmentLength">Maximum length of each segment. The default is 256mb, which gives optimal performance. Modify at your own risk.</param>
         /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
-        public UploadParameters(string inputFilePath, string targetStreamPath, string accountName, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null)
+        public UploadParameters(string inputFilePath, string targetStreamPath, string accountName, int fileThreadCount = 1, int folderThreadCount = 5, bool isOverwrite = false, bool isResume = false, bool isBinary = true, bool isRecursive = false, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null)
         {
             this.InputFilePath = inputFilePath;
             this.TargetStreamPath = targetStreamPath;
-            this.ThreadCount = threadCount;
+            this.FileThreadCount = fileThreadCount;
+            this.FolderThreadCount = folderThreadCount;
             this.AccountName = accountName;
             this.IsOverwrite = isOverwrite;
             this.IsResume = isResume;
             this.IsBinary = isBinary;
+            this.IsRecursive = isRecursive;
             this.MaxSegementLength = maxSegmentLength;
 
             if (string.IsNullOrWhiteSpace(localMetadataLocation))
@@ -62,17 +66,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <summary>
         /// Creates a new set of parameters for the DataLake Uploader.
         /// </summary>
-        /// <param name="inputFilePath">The full path to the file to be uploaded.</param>
-        /// <param name="targetStreamPath">The full stream path where the file will be uploaded to.</param>
+        /// <param name="inputFilePath">The full path to the file or folder to be uploaded.</param>
+        /// <param name="targetStreamPath">The full stream path where the file or folder will be uploaded to.</param>
         /// <param name="accountName">Name of the account to upload to.</param>
         /// <param name="useSegmentBlockBackOffRetryStrategy">if set to <c>true</c> [use segment block back off retry strategy].</param>
-        /// <param name="threadCount">(Optional) The maximum number of parallel threads to use for the upload.</param>
+        /// <param name="fileThreadCount">(Optional) The maximum number of parallel threads to use for the upload.</param>
+        /// <param name="folderThreadCount">The folder thread count.</param>
         /// <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
         /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
         /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
+        /// <param name="isRecursive">(Optional) Indicates whether to upload the source folder recursively or not. If true, will upload the source directory and all sub directories, preserving directory structure.</param>
+        /// <param name="maxSegmentLength">Maximum length of the segment.</param>
         /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
-        internal UploadParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null) :
-            this(inputFilePath, targetStreamPath, accountName, threadCount, isOverwrite, isResume, isBinary, maxSegmentLength, localMetadataLocation)
+        internal UploadParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int fileThreadCount = 1, int folderThreadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, bool isRecursive = false, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null) :
+            this(inputFilePath, targetStreamPath, accountName, fileThreadCount, folderThreadCount, isOverwrite, isResume, isBinary, isRecursive, maxSegmentLength, localMetadataLocation)
         {
             this.UseSegmentBlockBackOffRetryStrategy = useSegmentBlockBackOffRetryStrategy;
         }
@@ -83,15 +90,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// <c>true</c> if [to use segment block back off retry strategy]; otherwise, <c>false</c>.
         /// </value>
-        internal bool UseSegmentBlockBackOffRetryStrategy {get; private set; }
+        internal bool UseSegmentBlockBackOffRetryStrategy {get; set; }
 
         /// <summary>
-        /// Gets a value indicating the full path to the file to be uploaded.
+        /// Gets a value indicating the full path to the file or folder to be uploaded.
         /// </summary>
         /// <value>
         /// The input file path.
         /// </value>
-        public string InputFilePath { get; private set; }
+        public string InputFilePath { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the full stream path where the file will be uploaded to.
@@ -99,7 +106,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The target stream path.
         /// </value>
-        public string TargetStreamPath { get; private set; }
+        public string TargetStreamPath { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the name of the account to upload to.
@@ -107,15 +114,24 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The name of the account.
         /// </value>
-        public string AccountName { get; private set; }
+        public string AccountName { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the maximum number of parallel threads to use for the upload.
+        /// Gets a value indicating the maximum number of parallel threads to use for a single file upload.
         /// </summary>
         /// <value>
-        /// The thread count.
+        /// The file thread count.
         /// </value>
-        public int ThreadCount { get; internal set; }
+        public int FileThreadCount { get; internal set; }
+
+
+        /// <summary>
+        /// Gets the folder thread count, which indicates how many files in a folder will be uploaded in parallel
+        /// </summary>
+        /// <value>
+        /// The folder thread count.
+        /// </value>
+        public int FolderThreadCount { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether to overwrite the target stream if it already exists.
@@ -123,7 +139,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// <c>true</c> if this instance is overwrite; otherwise, <c>false</c>.
         /// </value>
-        public bool IsOverwrite { get; private set; }
+        public bool IsOverwrite { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether to resume a previously interrupted upload.
@@ -131,7 +147,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         ///   <c>true</c> if this instance is resume; otherwise, <c>false</c>.
         /// </value>
-        public bool IsResume { get; private set; }
+        public bool IsResume { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether the input file should be treated as a binary (true) or a delimited input (false).
@@ -139,7 +155,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         ///   <c>true</c> if this instance is binary; otherwise, <c>false</c>.
         /// </value>
-        public bool IsBinary { get; private set; }
+        public bool IsBinary { get; internal set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the folder upload should recursively upload the source folder. This is only valid for folder uploads and will be ignored for file uploads.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is recursive; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRecursive { get; internal set; }
 
         /// <summary>
         /// Gets the maximum length of each segement.
@@ -147,7 +171,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The maximum length of each segement.
         /// </value>
-        public long MaxSegementLength { get; private set; }
+        public long MaxSegementLength { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the directory path where to store the metadata for the upload.
@@ -155,7 +179,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The local metadata location.
         /// </value>
-        public string LocalMetadataLocation { get; private set; }
+        public string LocalMetadataLocation { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the encoding of the file being uploaded.
@@ -163,7 +187,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The file encoding.
         /// </value>
-        public System.Text.Encoding FileEncoding { get; private set; }
+        public System.Text.Encoding FileEncoding { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the record boundary delimiter for the file, if any.
@@ -171,6 +195,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The record boundary delimiter
         /// </value>
-        public string Delimiter { get; private set; }
+        public string Delimiter { get; internal set; }
     }
 }
