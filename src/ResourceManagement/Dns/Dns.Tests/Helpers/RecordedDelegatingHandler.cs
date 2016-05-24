@@ -94,7 +94,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     var statusCode = StatusCodeToReturn;
                     if (counter > 1)
                         statusCode = SubsequentStatusCodeToReturn;
-                    HttpResponseMessage response = new HttpResponseMessage(statusCode);
+                    HttpResponseMessage response =
+                        new HttpResponseMessage(statusCode);
                     response.Content = new StringContent("");
                     return response;
                 }

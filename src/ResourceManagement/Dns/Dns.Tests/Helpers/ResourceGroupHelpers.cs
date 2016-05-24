@@ -76,7 +76,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
             foreach (var resource in provider.ResourceTypes)
             {
                 if (string.Equals(
-                    resource.ResourceType, parts[1],
+                    resource.ResourceType,
+                    parts[1],
                     StringComparison.OrdinalIgnoreCase))
                 {
                     location = resource.Locations.FirstOrDefault(
@@ -90,7 +91,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public static ResourceGroup CreateResourceGroup(
             ResourceManagementClient resourcesClient)
         {
-            string resourceGroupName = TestUtilities.GenerateName("hydratestdnsrg");
+            string resourceGroupName =
+                TestUtilities.GenerateName("hydratestdnsrg");
 
             // DNS resources are in location "global" but resource groups 
             // can't be in that same location
