@@ -18,7 +18,13 @@
     <Compile Include="TestUtilities\UndoContextDiscoveryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Storage.Testing.StorageManagementOperationTests\CanAbortStorageAccountMigrationToSrp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Storage.Testing.StorageManagementOperationTests\CanCreateUpdateGetAndDeleteStorageAccounts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Storage.Testing.StorageManagementOperationTests\CanMigrateStorageAccountToSrp.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

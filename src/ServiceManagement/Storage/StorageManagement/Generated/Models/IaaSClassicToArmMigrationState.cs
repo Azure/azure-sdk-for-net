@@ -22,21 +22,29 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
     /// <summary>
-    /// The frequency of schedule.
+    /// Known values of IaaS Classic to ARM migration state.
     /// </summary>
-    public static partial class ScheduleFrequency
+    public static partial class IaaSClassicToArmMigrationState
     {
-        public const string OneTime = "OneTime";
+        public const string None = "None";
         
-        public const string Day = "Day";
+        public const string Preparing = "Preparing";
         
-        public const string Hour = "Hour";
+        public const string Prepared = "Prepared";
         
-        public const string Week = "Week";
+        public const string PrepareFailed = "PrepareFailed";
         
-        public const string Month = "Month";
+        public const string Committing = "Committing";
+        
+        public const string Committed = "Committed";
+        
+        public const string CommitFailed = "CommitFailed";
+        
+        public const string Aborting = "Aborting";
+        
+        public const string AbortFailed = "AbortFailed";
     }
 }
