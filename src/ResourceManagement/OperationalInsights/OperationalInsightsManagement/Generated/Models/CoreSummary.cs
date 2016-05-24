@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// </summary>
     public partial class CoreSummary
     {
-        private int _numberOfDocuments;
+        private long _numberOfDocuments;
         
         /// <summary>
         /// Optional. Gets or sets the number of documents of a core summary.
         /// </summary>
-        public int NumberOfDocuments
+        public long NumberOfDocuments
         {
             get { return this._numberOfDocuments; }
             set { this._numberOfDocuments = value; }

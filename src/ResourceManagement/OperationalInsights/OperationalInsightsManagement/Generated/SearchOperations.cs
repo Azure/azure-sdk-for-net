@@ -889,7 +889,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -1251,7 +1251,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -1703,7 +1703,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -2065,7 +2065,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -2496,7 +2496,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
