@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Additional parameters for the Search operations.
+    /// Additional parameters for a set of operations.
     /// </summary>
     public partial class SearchRequestOptions
     {
@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Tracking ID sent with the request to help with debugging.
+        /// Gets or sets the tracking ID sent with the request to help with
+        /// debugging.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public Guid? ClientRequestId { get; set; }
