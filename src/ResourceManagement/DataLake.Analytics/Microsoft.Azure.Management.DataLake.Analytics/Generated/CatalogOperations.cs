@@ -1170,28 +1170,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='databaseName'>
         /// The name of the database containing the external data sources.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -1207,7 +1191,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1232,14 +1216,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListExternalDataSources", tracingParameters);
@@ -1251,29 +1231,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -1606,28 +1574,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -1643,7 +1595,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1668,14 +1620,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListCredentials", tracingParameters);
@@ -1687,29 +1635,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -2054,28 +1990,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='schemaName'>
         /// The name of the schema containing the procedures.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -2091,7 +2011,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, ODataQuery<USqlProcedure> odataQuery = default(ODataQuery<USqlProcedure>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -2120,15 +2040,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListProcedures", tracingParameters);
@@ -2141,29 +2057,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -2508,28 +2412,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='schemaName'>
         /// The name of the schema containing the tables.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -2545,7 +2433,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, ODataQuery<USqlTable> odataQuery = default(ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -2574,15 +2462,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListTables", tracingParameters);
@@ -2595,29 +2479,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -2962,28 +2834,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='schemaName'>
         /// The name of the schema containing the views.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -2999,7 +2855,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, ODataQuery<USqlView> odataQuery = default(ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -3028,15 +2884,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListViews", tracingParameters);
@@ -3049,29 +2901,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -3430,28 +3270,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='tableName'>
         /// The name of the table containing the statistics.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -3467,7 +3291,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -3500,16 +3324,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("tableName", tableName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListTableStatistics", tracingParameters);
@@ -3523,29 +3343,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{tableName}", Uri.EscapeDataString(tableName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -3904,28 +3712,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='tableName'>
         /// The name of the table containing the partitions.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -3941,7 +3733,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlTablePartition>>> ListTablePartitionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTablePartition>>> ListTablePartitionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTablePartition> odataQuery = default(ODataQuery<USqlTablePartition>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -3974,16 +3766,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
                 tracingParameters.Add("tableName", tableName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListTablePartitions", tracingParameters);
@@ -3997,29 +3785,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             _url = _url.Replace("{tableName}", Uri.EscapeDataString(tableName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -4589,28 +4365,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='schemaName'>
         /// The name of the schema containing the table valued functions.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -4626,7 +4386,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, ODataQuery<USqlTableValuedFunction> odataQuery = default(ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -4655,15 +4415,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("schemaName", schemaName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListTableValuedFunctions", tracingParameters);
@@ -4676,29 +4432,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{schemaName}", Uri.EscapeDataString(schemaName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -5031,28 +4775,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -5068,7 +4796,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlAssembly> odataQuery = default(ODataQuery<USqlAssembly>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -5093,14 +4821,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAssemblies", tracingParameters);
@@ -5112,29 +4836,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -5467,28 +5179,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -5504,7 +5200,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlSchema> odataQuery = default(ODataQuery<USqlSchema>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -5529,14 +5225,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSchemas", tracingParameters);
@@ -5548,29 +5240,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
@@ -5891,28 +5571,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog operations on.
         /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
-        /// </param>
-        /// <param name='top'>
-        /// The number of items to return. Optional.
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning elements. Optional.
-        /// </param>
-        /// <param name='expand'>
-        /// OData expansion. Expand related resources in line with the retrieved
-        /// resources, e.g. Categories?$expand=Products would expand Product data in
-        /// line with each Category entry. Optional.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
         /// OData Select statement. Limits the properties on each entry to just those
         /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='orderby'>
-        /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order you'd like the
-        /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// The Boolean value of true or false to request a count of the matching
@@ -5928,7 +5592,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -5949,13 +5613,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("select", select);
-                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListDatabases", tracingParameters);
@@ -5966,29 +5626,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (skip != null)
-            {
-                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
             }
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (orderby != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             if (count != null)
             {
