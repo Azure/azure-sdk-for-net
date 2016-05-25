@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
@@ -29,6 +30,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// </summary>
     public partial class VirtualNetworkGatewayCreateParameters
     {
+        private BgpSettings _bgpSettings;
+        
+        /// <summary>
+        /// Optional. BGP settings for this virtual network gateway
+        /// </summary>
+        public BgpSettings BgpSettings
+        {
+            get { return this._bgpSettings; }
+            set { this._bgpSettings = value; }
+        }
+        
         private string _gatewayName;
         
         /// <summary>

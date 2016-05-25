@@ -44,7 +44,7 @@ namespace SiteRecovery.Tests
                     {
                         Properties = new UpdatePolicyProperties
                         {
-                            ReplicationProviderSettings = new VMwareAzureV2PolicyInput
+                            ReplicationProviderSettings = new InMageAzureV2PolicyInput
                             {
                                 AppConsistentFrequencyInMinutes = 30,
                                 CrashConsistentFrequencyInMinutes = 30,

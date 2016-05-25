@@ -357,6 +357,92 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Gets the replication storage mapping objects under a vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IStorageClassificationMappingOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list storage mapping operation.
+        /// </returns>
+        public static StorageClassificationMappingListResponse ListAll(this IStorageClassificationMappingOperations operations, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageClassificationMappingOperations)s).ListAllAsync(customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the replication storage mapping objects under a vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IStorageClassificationMappingOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list storage mapping operation.
+        /// </returns>
+        public static Task<StorageClassificationMappingListResponse> ListAllAsync(this IStorageClassificationMappingOperations operations, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListAllAsync(customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets the replication storage mapping objects under a vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IStorageClassificationMappingOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list storage mapping operation.
+        /// </returns>
+        public static StorageClassificationMappingListResponse ListNext(this IStorageClassificationMappingOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageClassificationMappingOperations)s).ListNextAsync(nextLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the replication storage mapping objects under a vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IStorageClassificationMappingOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list storage mapping operation.
+        /// </returns>
+        public static Task<StorageClassificationMappingListResponse> ListNextAsync(this IStorageClassificationMappingOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListNextAsync(nextLink, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Pairs storage to a given storage.
         /// </summary>
         /// <param name='operations'>

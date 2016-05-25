@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices
@@ -156,6 +157,26 @@ namespace Microsoft.Azure.Management.RecoveryServices
         Task<VaultResponse> GetAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Fetches resource storage config.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of resource group to which vault belongs
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the vault
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a get resource storage config response.
+        /// </returns>
+        Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Retrieve a list of Vaults.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -172,5 +193,23 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// The response model for Vault.
         /// </returns>
         Task<VaultListResponse> ListAsync(string resourceGroupName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates vault storage model type.
+        /// </summary>
+        /// <param name='updateVaultStorageTypeRequest'>
+        /// Update Vault Storage Type Request
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> UpdateStorageTypeAsync(string resourceGroupName, string resourceName, UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/csmtg6020?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVjMGFkNDYtYWUzZi00OTNlLTkxY2UtOTI5N2UwOTUzZmMxL3RhZ05hbWVzL2NzbXRnNjAyMD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg2933?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3RhZ05hbWVzL2NzbXRnMjkzMz9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,7 +10,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/csmtg6020\",\r\n  \"tagName\": \"csmtg6020\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg2933\",\r\n  \"tagName\": \"csmtg2933\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "148"
@@ -25,16 +25,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-request-id": [
-          "29ca05bb-ceed-4c4d-92b3-d3050a7a45ef"
+          "43fab70c-fff1-425b-9181-b025bd3eea76"
         ],
         "x-ms-correlation-request-id": [
-          "29ca05bb-ceed-4c4d-92b3-d3050a7a45ef"
+          "43fab70c-fff1-425b-9181-b025bd3eea76"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160124T000956Z:29ca05bb-ceed-4c4d-92b3-d3050a7a45ef"
+          "CENTRALUS:20160308T032033Z:43fab70c-fff1-425b-9181-b025bd3eea76"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -43,14 +43,14 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 24 Jan 2016 00:09:56 GMT"
+          "Tue, 08 Mar 2016 03:20:32 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/csmtg6020/tagValues/csmtgv1696?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVjMGFkNDYtYWUzZi00OTNlLTkxY2UtOTI5N2UwOTUzZmMxL3RhZ05hbWVzL2NzbXRnNjAyMC90YWdWYWx1ZXMvY3NtdGd2MTY5Nj9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg2933/tagValues/csmtgv3540?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3RhZ05hbWVzL2NzbXRnMjkzMy90YWdWYWx1ZXMvY3NtdGd2MzU0MD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
@@ -58,7 +58,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/csmtg6020/tagValues/csmtgv1696\",\r\n  \"tagValue\": \"csmtgv1696\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg2933/tagValues/csmtgv3540\",\r\n  \"tagValue\": \"csmtgv3540\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "159"
@@ -73,16 +73,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1197"
         ],
         "x-ms-request-id": [
-          "58de51c6-73d6-4957-98f1-a4d6cac4badc"
+          "a828efab-132c-402e-937a-ebb6414c9168"
         ],
         "x-ms-correlation-request-id": [
-          "58de51c6-73d6-4957-98f1-a4d6cac4badc"
+          "a828efab-132c-402e-937a-ebb6414c9168"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160124T000957Z:58de51c6-73d6-4957-98f1-a4d6cac4badc"
+          "CENTRALUS:20160308T032033Z:a828efab-132c-402e-937a-ebb6414c9168"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -91,14 +91,14 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 24 Jan 2016 00:09:57 GMT"
+          "Tue, 08 Mar 2016 03:20:33 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVjMGFkNDYtYWUzZi00OTNlLTkxY2UtOTI5N2UwOTUzZmMxL3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -106,10 +106,10 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/502f9887-4b99-4053-8f9a-fe6817de714c\",\r\n      \"tagName\": \"502f9887-4b99-4053-8f9a-fe6817de714c\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/502f9887-4b99-4053-8f9a-fe6817de714c/tagValues/5f58900b-5e9c-4f9b-a290-3abe5f77c97a\",\r\n          \"tagValue\": \"5f58900b-5e9c-4f9b-a290-3abe5f77c97a\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/csmtg6020\",\r\n      \"tagName\": \"csmtg6020\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/csmtg6020/tagValues/csmtgv1696\",\r\n          \"tagValue\": \"csmtgv1696\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/blah\",\r\n      \"tagName\": \"blah\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/blah/tagValues/sdfds\",\r\n          \"tagValue\": \"sdfds\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/blah/tagValues/sdfdssda\",\r\n          \"tagValue\": \"sdfdssda\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg2933\",\r\n      \"tagName\": \"csmtg2933\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg2933/tagValues/csmtgv3540\",\r\n          \"tagValue\": \"csmtgv3540\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/dsfsdf\",\r\n      \"tagName\": \"dsfsdf\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/dsfsdf/tagValues/sdaxfasd\",\r\n          \"tagValue\": \"sdaxfasd\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/xplatResourceGroupTag2976\",\r\n      \"tagName\": \"xplatResourceGroupTag2976\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/xplatResourceGroupTag2976/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/xplatResourceTag6005\",\r\n      \"tagName\": \"xplatResourceTag6005\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/xplatResourceTag6005/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/xplatResourceGroupTag5214\",\r\n      \"tagName\": \"xplatResourceGroupTag5214\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/xplatResourceTag4004\",\r\n      \"tagName\": \"xplatResourceTag4004\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "760"
+          "2089"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -121,16 +121,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14970"
+          "14989"
         ],
         "x-ms-request-id": [
-          "dcbfa45f-a535-402c-b2df-863fcca00884"
+          "06297cec-35b7-444f-be98-f7e10fed0e62"
         ],
         "x-ms-correlation-request-id": [
-          "dcbfa45f-a535-402c-b2df-863fcca00884"
+          "06297cec-35b7-444f-be98-f7e10fed0e62"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160124T000957Z:dcbfa45f-a535-402c-b2df-863fcca00884"
+          "CENTRALUS:20160308T032033Z:06297cec-35b7-444f-be98-f7e10fed0e62"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -139,59 +139,14 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 24 Jan 2016 00:09:57 GMT"
+          "Tue, 08 Mar 2016 03:20:33 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/csmtg6020/tagValues/csmtgv1696?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVjMGFkNDYtYWUzZi00OTNlLTkxY2UtOTI5N2UwOTUzZmMxL3RhZ05hbWVzL2NzbXRnNjAyMC90YWdWYWx1ZXMvY3NtdGd2MTY5Nj9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "x-ms-request-id": [
-          "c6741af3-7ee9-46f7-9a35-a1422f6e25e5"
-        ],
-        "x-ms-correlation-request-id": [
-          "c6741af3-7ee9-46f7-9a35-a1422f6e25e5"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160124T000957Z:c6741af3-7ee9-46f7-9a35-a1422f6e25e5"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 24 Jan 2016 00:09:57 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/tagNames/csmtg6020?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVjMGFkNDYtYWUzZi00OTNlLTkxY2UtOTI5N2UwOTUzZmMxL3RhZ05hbWVzL2NzbXRnNjAyMD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg2933/tagValues/csmtgv3540?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3RhZ05hbWVzL2NzbXRnMjkzMy90YWdWYWx1ZXMvY3NtdGd2MzU0MD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -214,13 +169,13 @@
           "1196"
         ],
         "x-ms-request-id": [
-          "9a1d0b8d-408d-4953-a26f-b257c4803808"
+          "d556254d-5db2-494b-9abc-99c689bb9b3d"
         ],
         "x-ms-correlation-request-id": [
-          "9a1d0b8d-408d-4953-a26f-b257c4803808"
+          "d556254d-5db2-494b-9abc-99c689bb9b3d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160124T000958Z:9a1d0b8d-408d-4953-a26f-b257c4803808"
+          "CENTRALUS:20160308T032034Z:d556254d-5db2-494b-9abc-99c689bb9b3d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -229,7 +184,52 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 24 Jan 2016 00:09:58 GMT"
+          "Tue, 08 Mar 2016 03:20:33 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg2933?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3RhZ05hbWVzL2NzbXRnMjkzMz9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-request-id": [
+          "39f8c982-6736-4515-adae-eac92f066b91"
+        ],
+        "x-ms-correlation-request-id": [
+          "39f8c982-6736-4515-adae-eac92f066b91"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160308T032034Z:39f8c982-6736-4515-adae-eac92f066b91"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 08 Mar 2016 03:20:34 GMT"
         ]
       },
       "StatusCode": 200
@@ -237,11 +237,11 @@
   ],
   "Names": {
     "CreateListAndDeleteSubscriptionTagValue": [
-      "csmtg6020",
-      "csmtgv1696"
+      "csmtg2933",
+      "csmtgv3540"
     ]
   },
   "Variables": {
-    "SubscriptionId": "45c0ad46-ae3f-493e-91ce-9297e0953fc1"
+    "SubscriptionId": "38b598fc-e57a-423f-b2e7-dc0ddb631f1f"
   }
 }

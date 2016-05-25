@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class AsrTask : AsrTaskBase
     {
-        private TaskTypeDetails _customDetails;
+        private GroupTaskDetails _groupTaskCustomDetails;
         
         /// <summary>
-        /// Required. The custom task details based on the task type.
+        /// Required. The custom task details for GroupTaskDetails task type.
         /// </summary>
-        public TaskTypeDetails CustomDetails
+        public GroupTaskDetails GroupTaskCustomDetails
         {
-            get { return this._customDetails; }
-            set { this._customDetails = value; }
+            get { return this._groupTaskCustomDetails; }
+            set { this._groupTaskCustomDetails = value; }
         }
         
         /// <summary>

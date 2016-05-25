@@ -26,8 +26,8 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The parameters needed to retrieve the default function definition for
-    /// an Azure Machine Learning web service function.
+    /// The parameters needed to retrieve the default Azure Stream Analytics
+    /// function definition for an Azure Machine Learning web service function.
     /// </summary>
     public partial class AzureMachineLearningWebServiceFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionParameters
     {

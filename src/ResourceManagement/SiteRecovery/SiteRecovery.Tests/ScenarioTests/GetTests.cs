@@ -99,7 +99,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetProtectedContainerTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -212,13 +211,58 @@ namespace SiteRecovery.Tests
                 var client = this.GetSiteRecoveryClient(CustomHttpHandler);
 
                 var response = client.ReplicationProtectedItem.Get(
-                    "Vmm;2e908a93-f69f-49fe-bdf8-8687a9f1db35",
+                    "52fcbc3c29d2b391598f1e98737138e54ae3597b04bef2a71df5143c16cf9a14",
                     "cloud_2e908a93-f69f-49fe-bdf8-8687a9f1db35",
-                    "6d1a20c4-7e4c-11e5-bbda-0050569e3855-Protected",
+                    "dee537e5-a9a0-11e5-af2b-0050569e66ab-Protected",
                     RequestHeaders);
 
                 Assert.NotNull(response);
                 Assert.NotNull(response.ReplicationProtectedItem);
+            }
+        }
+
+        public void GetVMwareAzureV2ReplicationProtectedItems()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = this.GetSiteRecoveryClient(CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics[1];
+                //var vmWareFabric = responseServers.Fabrics.First(
+                //    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                //Assert.NotNull(vmWareFabric);
+
+                var containersResponse = client.ProtectionContainer.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+                Assert.NotNull(containersResponse);
+                Assert.True(
+                    containersResponse.ProtectionContainers.Count > 0,
+                    "Containers count can't be less than 1.");
+
+                var response = client.ReplicationProtectedItem.List(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    RequestHeaders);
+                Assert.NotNull(response);
+
+                foreach(ReplicationProtectedItem replicatedItem in response.ReplicationProtectedItems)
+                {
+                    var response1 = client.ReplicationProtectedItem.Get(
+                        vmWareFabric.Name,
+                        containersResponse.ProtectionContainers[0].Name,
+                        replicatedItem.Name,
+                        RequestHeaders);
+
+                    Assert.NotNull(response1);
+                }
             }
         }
 
@@ -425,6 +469,19 @@ namespace SiteRecovery.Tests
 
                 Assert.NotNull(alertResponse);
                 Assert.Equal(alertResponse.StatusCode, HttpStatusCode.NotFound);
+            }
+        }
+
+        [Fact]
+        public void GetStorageClassificationAndPairingsUnderVault()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                client.StorageClassification.ListAll(RequestHeaders);
+                client.StorageClassificationMapping.ListAll(RequestHeaders);
             }
         }
     }

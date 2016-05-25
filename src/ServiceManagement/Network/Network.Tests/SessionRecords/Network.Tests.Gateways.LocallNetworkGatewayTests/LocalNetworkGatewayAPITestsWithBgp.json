@@ -1,0 +1,278 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/0113c7b2-a5e4-468d-ba23-03355d84410e/services/networking/localnetworkgateways?api-version=2016-03-01",
+      "EncodedRequestUri": "LzAxMTNjN2IyLWE1ZTQtNDY4ZC1iYTIzLTAzMzU1ZDg0NDEwZS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTYtMDMtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateLocalNetworkGatewayParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>200.168.0.0/16</a:string>\r\n  </AddressSpace>\r\n  <GatewayName>BgpLocalNetworkGateway</GatewayName>\r\n  <IpAddress>204.95.99.237</IpAddress>\r\n  <BgpSettings>\r\n    <Asn>1234</Asn>\r\n    <BgpPeeringAddress>192.168.1.2</BgpPeeringAddress>\r\n    <PeerWeight>5</PeerWeight>\r\n  </BgpSettings>\r\n</CreateLocalNetworkGatewayParameters>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "510"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseBody": "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">377fdd3b-7716-410a-b6bf-8c5548147491</string>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "113"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "978238c829667d11a5d17a8ca025b10d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 17 Feb 2016 00:08:59 GMT"
+        ],
+        "Server": [
+          "1.0.6198.316",
+          "(rd_rdfe_stable.160210-1016)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/0113c7b2-a5e4-468d-ba23-03355d84410e/services/networking/localnetworkgateways?api-version=2016-03-01",
+      "EncodedRequestUri": "LzAxMTNjN2IyLWE1ZTQtNDY4ZC1iYTIzLTAzMzU1ZDg0NDEwZS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTYtMDMtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseBody": "<LocalNetworkGateways xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <LocalNetworkGateway>\r\n    <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n      <a:string>200.168.0.0/16</a:string>\r\n    </AddressSpace>\r\n    <GatewayName>BgpLocalNetworkGateway</GatewayName>\r\n    <Id>377fdd3b-7716-410a-b6bf-8c5548147491</Id>\r\n    <IpAddress>204.95.99.237</IpAddress>\r\n    <Location i:nil=\"true\" />\r\n    <BgpSettings>\r\n      <Asn>1234</Asn>\r\n      <BgpPeeringAddress>192.168.1.2</BgpPeeringAddress>\r\n      <PeerWeight>5</PeerWeight>\r\n    </BgpSettings>\r\n  </LocalNetworkGateway>\r\n</LocalNetworkGateways>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "594"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "30f8237d621c7f05a8ac0d432cf48568"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 17 Feb 2016 00:09:00 GMT"
+        ],
+        "Server": [
+          "1.0.6198.316",
+          "(rd_rdfe_stable.160210-1016)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/0113c7b2-a5e4-468d-ba23-03355d84410e/services/networking/localnetworkgateways?api-version=2016-03-01",
+      "EncodedRequestUri": "LzAxMTNjN2IyLWE1ZTQtNDY4ZC1iYTIzLTAzMzU1ZDg0NDEwZS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTYtMDMtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseBody": "<LocalNetworkGateways xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" />",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "125"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "67bf31b935767ec4a747c3bb2f21c5c3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 17 Feb 2016 00:09:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.316",
+          "(rd_rdfe_stable.160210-1016)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/0113c7b2-a5e4-468d-ba23-03355d84410e/services/networking/localnetworkgateways/377fdd3b-7716-410a-b6bf-8c5548147491?api-version=2016-03-01",
+      "EncodedRequestUri": "LzAxMTNjN2IyLWE1ZTQtNDY4ZC1iYTIzLTAzMzU1ZDg0NDEwZS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzM3N2ZkZDNiLTc3MTYtNDEwYS1iNmJmLThjNTU0ODE0NzQ5MT9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestMethod": "PATCH",
+      "RequestBody": "<UpdateLocalNetworkGatewayParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>200.168.0.0/16</a:string>\r\n  </AddressSpace>\r\n  <BgpSettings>\r\n    <Asn>5678</Asn>\r\n    <BgpPeeringAddress>192.168.1.2</BgpPeeringAddress>\r\n    <PeerWeight>5</PeerWeight>\r\n  </BgpSettings>\r\n</UpdateLocalNetworkGatewayParameters>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "417"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "5633be39223576b68da9a4029eaa0768"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 17 Feb 2016 00:09:02 GMT"
+        ],
+        "Server": [
+          "1.0.6198.316",
+          "(rd_rdfe_stable.160210-1016)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/0113c7b2-a5e4-468d-ba23-03355d84410e/services/networking/localnetworkgateways/377fdd3b-7716-410a-b6bf-8c5548147491?api-version=2016-03-01",
+      "EncodedRequestUri": "LzAxMTNjN2IyLWE1ZTQtNDY4ZC1iYTIzLTAzMzU1ZDg0NDEwZS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzM3N2ZkZDNiLTc3MTYtNDEwYS1iNmJmLThjNTU0ODE0NzQ5MT9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseBody": "<LocalNetworkGateway xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>200.168.0.0/16</a:string>\r\n  </AddressSpace>\r\n  <GatewayName>BgpLocalNetworkGateway</GatewayName>\r\n  <Id>377fdd3b-7716-410a-b6bf-8c5548147491</Id>\r\n  <IpAddress>204.95.99.237</IpAddress>\r\n  <Location />\r\n  <BgpSettings>\r\n    <Asn>5678</Asn>\r\n    <BgpPeeringAddress>192.168.1.2</BgpPeeringAddress>\r\n    <PeerWeight>5</PeerWeight>\r\n  </BgpSettings>\r\n</LocalNetworkGateway>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "536"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6d235242d38f7fa69888889e336e5061"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 17 Feb 2016 00:09:02 GMT"
+        ],
+        "Server": [
+          "1.0.6198.316",
+          "(rd_rdfe_stable.160210-1016)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/0113c7b2-a5e4-468d-ba23-03355d84410e/services/networking/localnetworkgateways/377fdd3b-7716-410a-b6bf-8c5548147491?api-version=2016-03-01",
+      "EncodedRequestUri": "LzAxMTNjN2IyLWE1ZTQtNDY4ZC1iYTIzLTAzMzU1ZDg0NDEwZS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzM3N2ZkZDNiLTc3MTYtNDEwYS1iNmJmLThjNTU0ODE0NzQ5MT9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "00512e01e7d7701e9eaf32ca83f979c6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 17 Feb 2016 00:09:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.316",
+          "(rd_rdfe_stable.160210-1016)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0113c7b2-a5e4-468d-ba23-03355d84410e"
+  }
+}

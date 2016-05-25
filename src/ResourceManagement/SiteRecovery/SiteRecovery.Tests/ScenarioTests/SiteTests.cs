@@ -27,8 +27,9 @@ namespace SiteRecovery.Tests
     public class SiteTests : SiteRecoveryTestsBase
     {
         string siteName = "site3";
-	
-	public void CreateSite()
+
+        [Fact]
+        public void CreateSite()
         {
             using (UndoContext context = UndoContext.Current)
             {
@@ -46,14 +47,15 @@ namespace SiteRecovery.Tests
             }
         }
 
-	public void DeleteSite()
+        [Fact]
+        public void DeleteSite()
         {
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                var site = client.Fabrics.Delete(siteName, new FabricDeletionInput(), RequestHeaders);
+                var site = client.Fabrics.Delete(siteName, RequestHeaders);
                 Assert.True(site.StatusCode == HttpStatusCode.NoContent, "Site Name should have been deleted");
             }
         }

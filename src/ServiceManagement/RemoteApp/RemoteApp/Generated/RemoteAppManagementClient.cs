@@ -158,6 +158,16 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
             get { return this._templateImages; }
         }
         
+        private IUserDiskOperations _userDisks;
+        
+        /// <summary>
+        /// RemoteApp user disk operations.
+        /// </summary>
+        public virtual IUserDiskOperations UserDisks
+        {
+            get { return this._userDisks; }
+        }
+        
         private IVNetOperations _vNet;
         
         /// <summary>
@@ -180,6 +190,7 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
             this._principals = new PrincipalOperations(this);
             this._publishing = new PublishingOperations(this);
             this._templateImages = new TemplateImageOperations(this);
+            this._userDisks = new UserDiskOperations(this);
             this._vNet = new VNetOperations(this);
             this._rdfeNamespace = "remoteapp";
             this._apiVersion = "2014-09-01";
@@ -253,6 +264,7 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
             this._principals = new PrincipalOperations(this);
             this._publishing = new PublishingOperations(this);
             this._templateImages = new TemplateImageOperations(this);
+            this._userDisks = new UserDiskOperations(this);
             this._vNet = new VNetOperations(this);
             this._rdfeNamespace = "remoteapp";
             this._apiVersion = "2014-09-01";

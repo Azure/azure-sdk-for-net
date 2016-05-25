@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Export Azure SQL Database parameters.
+    /// Import/Export Azure SQL Database parameters.
     /// </summary>
     public partial class ImportExtensionProperties : ExportRequestParameters
     {

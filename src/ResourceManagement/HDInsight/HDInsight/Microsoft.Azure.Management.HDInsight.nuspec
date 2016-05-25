@@ -8,7 +8,7 @@
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>The new HDInsight Management NuGet package. This is the NuGet package for ARM based cluster management.</description>
+    <description>The generally available HDInsight Management NuGet package. This NuGet package allows you to create and manage Azure HDInsight clusters using Azure Resource Manager (ARM).</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure cloud management "resource management" REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
@@ -21,7 +21,6 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
-      <dependency id="Microsoft.Azure.Management.Resources" version="2.18.0-preview" />
     </dependencies>
   </metadata>
   <files>

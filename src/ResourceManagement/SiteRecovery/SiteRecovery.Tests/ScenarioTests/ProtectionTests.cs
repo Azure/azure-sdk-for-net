@@ -21,6 +21,7 @@ using System.Net;
 using Xunit;
 using System;
 using Microsoft.Azure;
+using System.Collections.Generic;
 
 
 namespace SiteRecovery.Tests
@@ -100,7 +101,7 @@ namespace SiteRecovery.Tests
                 string fabricName = "Vmm;b6d8b350-2ee5-40c0-b777-2158a87c2aee";
                 string containerName = "cloud_b6d8b350-2ee5-40c0-b777-2158a87c2aee";
 
-                Network vmNic = client.Network.List(fabricName, RequestHeaders).NetworksList[0];
+                // Network vmNic = client.Network.List(fabricName, RequestHeaders).NetworksList[0];
 
                 var protectedItem = client.ReplicationProtectedItem.Get(fabricName, containerName, replicationProtectedItemName, RequestHeaders);
 
@@ -121,6 +122,74 @@ namespace SiteRecovery.Tests
             }
         }
 
+        public void UpdateProtectionOfInMageAzureV2ProtectedItem()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                string vmId = "7192c867-b38e-11e5-af2b-0050569e66ab";
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics.First(
+                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                Assert.NotNull(vmWareFabric);
+
+                var containersResponse = client.ProtectionContainer.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+                Assert.NotNull(containersResponse);
+                Assert.True(
+                    containersResponse.ProtectionContainers.Count > 0,
+                    "Containers count can't be less than 1.");
+
+                var protectedItemResponse = client.ReplicationProtectedItem.Get(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    vmId + "-Protected",
+                    RequestHeaders);
+
+                var replicationProtectedItem = protectedItemResponse.ReplicationProtectedItem;
+                Assert.NotNull(replicationProtectedItem);
+
+                var nics = new List<VMNicInputDetails>();
+                nics.Add(
+                    new VMNicInputDetails
+                    {
+                        NicId = "00:50:56:9E:3E:F2",
+                        RecoveryVMSubnetName = "TenantSubnet",
+                        SelectionType = "SelectedByUser",
+                    });
+                UpdateReplicationProtectedItemInputProperties inputProps = new UpdateReplicationProtectedItemInputProperties()
+                {
+                    RecoveryAzureVMName = replicationProtectedItem.Properties.FriendlyName,
+                    VmNics = nics,
+                    SelectedRecoveryAzureNetworkId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/Default-Networking/providers/Microsoft.ClassicNetwork/virtualNetworks/ExpressRouteVNet-WUS-1"
+                };
+
+                UpdateReplicationProtectedItemInput input = new UpdateReplicationProtectedItemInput()
+                {
+                    Properties = inputProps
+                };
+
+                var updateResponse =
+                    client.ReplicationProtectedItem.UpdateProtection(
+                        vmWareFabric.Name,
+                        containersResponse.ProtectionContainers[0].Name,
+                        replicationProtectedItem.Name,
+                        input,
+                        RequestHeaders);
+
+                Assert.NotNull(updateResponse);
+                Assert.Equal(OperationStatus.Succeeded, updateResponse.Status);
+            }
+        }
+
         public void EnableProtectionForVMwareVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -128,7 +197,7 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = this.GetSiteRecoveryClient(this.CustomHttpHandler);
 
-                string vmId = "6d1a20c4-7e4c-11e5-bbda-0050569e3855";
+                string vmId = "7192c867-b38e-11e5-af2b-0050569e66ab";
                 string vmAccount = "vm";
 
                 var responseServers = client.Fabrics.List(RequestHeaders);
@@ -144,7 +213,6 @@ namespace SiteRecovery.Tests
                 var vmWareDetails =
                    vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
                 Assert.NotNull(vmWareDetails);
-                Assert.NotEmpty(vmWareDetails.VCenters);
 
                 var runAsAccount = vmWareDetails.RunAsAccounts.First(
                     account => account.AccountName.Equals(
@@ -180,13 +248,12 @@ namespace SiteRecovery.Tests
                 Assert.NotEmpty(policyResponse.Policies);
 
                 var policy = policyResponse.Policies.First(
-                    p => p.Properties.ProviderSpecificDetails.InstanceType == "VMwareAzureV2");
+                    p => p.Properties.ProviderSpecificDetails.InstanceType == "InMageAzureV2");
                 Assert.NotNull(policy);
 
                 Random random = new Random(100);
-                //string storageAccountName = "bvtstoragev2";
-                string storageAccountSubscriptionId = "e7c9ee80-fa3b-4d71-a0db-e8e46e0e6e3b";
-                string storageAccountId = "/subscriptions/e7c9ee80-fa3b-4d71-a0db-e8e46e0e6e3b/resourceGroups/Default-Storage-SoutheastAsia/providers/Microsoft.Storage/storageAccounts/bvtstoragev2";
+                string storageAccountSubscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+                string storageAccountId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/hikewalrstoragewestus";
                 var response = client.ReplicationProtectedItem.EnableProtection(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
@@ -197,7 +264,7 @@ namespace SiteRecovery.Tests
                         {
                             PolicyId = policy.Id,
                             ProtectableItemId = hikewalrProtectableItem.Id,
-                            ProviderSpecificDetails = new VMwareAzureV2EnableProtectionInput
+                            ProviderSpecificDetails = new InMageAzureV2EnableProtectionInput
                             {
                                 MultiVmGroupId = Guid.NewGuid().ToString(),
                                 MultiVmGroupName = policy.Name + random.Next().ToString(),
@@ -213,6 +280,146 @@ namespace SiteRecovery.Tests
 
                 Assert.NotNull(response);
                 Assert.Equal(OperationStatus.Succeeded, response.Status);
+
+                var enableResponse = response as ReplicationProtectedItemOperationResponse;
+                Assert.NotNull(enableResponse);
+                Assert.NotNull(enableResponse.ReplicationProtectedItem);
+                Assert.NotNull(enableResponse.ReplicationProtectedItem.Properties);
+                Assert.Equal(enableResponse.ReplicationProtectedItem.Name, hikewalrProtectableItem.Name + "-Protected");
+            }
+        }
+
+        public void EnableProtectionForVMwareVMUsingInMageProvider()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = this.GetSiteRecoveryClient(this.CustomHttpHandler);
+
+                string vmId = "1faecbb8-b47d-11e5-af2b-0050569e66ab";
+                string vmAccount = "vm";
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics.First(
+                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                Assert.NotNull(vmWareFabric);
+
+                var vmWareDetails =
+                   vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
+                Assert.NotNull(vmWareDetails);
+
+                var runAsAccount = vmWareDetails.RunAsAccounts.First(
+                    account => account.AccountName.Equals(
+                        vmAccount,
+                        StringComparison.InvariantCultureIgnoreCase));
+                Assert.NotNull(runAsAccount);
+
+                var processServer = vmWareDetails.ProcessServers.FirstOrDefault(
+                    ps => ps.FriendlyName.Equals("hikewalr-psjan6"));
+                Assert.NotNull(processServer);
+
+                var masterTargetServer = vmWareDetails.MasterTargetServers.FirstOrDefault();
+                Assert.NotNull(masterTargetServer);
+
+                var containersResponse = client.ProtectionContainer.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+                Assert.NotNull(containersResponse);
+                Assert.True(
+                    containersResponse.ProtectionContainers.Count > 0,
+                    "Containers count can't be less than 1.");
+
+                var protectableItemsResponse = client.ProtectableItem.Get(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    vmId,
+                    RequestHeaders);
+                Assert.NotNull(protectableItemsResponse);
+                Assert.NotNull(protectableItemsResponse.ProtectableItem);
+
+                var hikewalrProtectableItem =
+                    protectableItemsResponse.ProtectableItem;
+
+                var vmWareAzureV2Details = hikewalrProtectableItem.Properties.CustomDetails
+                    as VMwareVirtualMachineDetails;
+                Assert.NotNull(vmWareAzureV2Details);
+
+                var policyResponse = client.Policies.List(RequestHeaders);
+                Assert.NotNull(policyResponse);
+                Assert.NotEmpty(policyResponse.Policies);
+
+                var policy = policyResponse.Policies.First(
+                    p => p.Properties.ProviderSpecificDetails.InstanceType == "InMage");
+                Assert.NotNull(policy);
+
+                Random random = new Random(100);
+                string dataStoreName = "datastore-local (1)";
+                
+                var response = client.ReplicationProtectedItem.EnableProtection(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    hikewalrProtectableItem.Name + "-Protected",
+                    new EnableProtectionInput
+                    {
+                        Properties = new EnableProtectionInputProperties
+                        {
+                            PolicyId = policy.Id,
+                            ProtectableItemId = hikewalrProtectableItem.Id,
+                            ProviderSpecificDetails = new InMageEnableProtectionInput
+                            {
+                                DatastoreName = dataStoreName,
+                                DiskExclusionInput = new InMageDiskExclusionInput(),
+                                MasterTargetId = masterTargetServer.Id,
+                                MultiVmGroupId = Guid.NewGuid().ToString(),
+                                MultiVmGroupName = policy.Name + random.Next().ToString(),
+                                ProcessServerId = processServer.Id,
+                                RetentionDrive = masterTargetServer.RetentionVolumes[0].VolumeName,
+                                RunAsAccountId = runAsAccount.AccountId,
+                                VmFriendlyName = hikewalrProtectableItem.Properties.FriendlyName
+                            }
+                        }
+                    },
+                    RequestHeaders);
+
+                Assert.NotNull(response);
+                Assert.Equal(OperationStatus.Succeeded, response.Status);
+
+                var enableResponse = response as ReplicationProtectedItemOperationResponse;
+                Assert.NotNull(enableResponse);
+                Assert.NotNull(enableResponse.ReplicationProtectedItem);
+                Assert.NotNull(enableResponse.ReplicationProtectedItem.Properties);
+                Assert.Equal(enableResponse.ReplicationProtectedItem.Name, hikewalrProtectableItem.Name + "-Protected");
+            }
+        }
+
+        public void RefreshVMWareFabric()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = this.GetSiteRecoveryClient(this.CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics.First(
+                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                Assert.NotNull(vmWareFabric);
+
+                var response = client.RecoveryServicesProvider.Refresh(
+                    vmWareFabric.Name,
+                    vmWareFabric.Name,
+                    RequestHeaders);
+
+                Assert.NotNull(response);
             }
         }
 

@@ -79,14 +79,16 @@ namespace SiteRecovery.Tests
                     fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
                 Assert.NotNull(vmWareFabric);
 
-                var vmWareDetails =
-                   vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
-                Assert.NotNull(vmWareDetails);
-                Assert.NotEmpty(vmWareDetails.VCenters);
+                var vCentersListResponse = client.VCenters.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+
+                Assert.NotNull(vCentersListResponse);
+                Assert.NotEmpty(vCentersListResponse.VCenters);
 
                 var vCenterResponse = client.VCenters.Get(
                     vmWareFabric.Name,
-                    vmWareDetails.VCenters[0].Name,
+                    vCentersListResponse.VCenters[0].Name,
                     RequestHeaders);
 
                 Assert.NotNull(vCenterResponse.VCenter);
@@ -157,18 +159,20 @@ namespace SiteRecovery.Tests
                     responseServers.Fabrics.Count > 0,
                     "Servers count can't be less than 1");
 
-                var inMageFabric = responseServers.Fabrics.First(
+                var vmWareFabric = responseServers.Fabrics.First(
                     fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
-                Assert.NotNull(inMageFabric);
+                Assert.NotNull(vmWareFabric);
 
-                var vmWareDetails =
-                   inMageFabric.Properties.CustomDetails as VMwareFabricDetails;
-                Assert.NotNull(vmWareDetails);
-                Assert.NotEmpty(vmWareDetails.VCenters);
+                var vCentersListResponse = client.VCenters.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+
+                Assert.NotNull(vCentersListResponse);
+                Assert.NotEmpty(vCentersListResponse.VCenters);
 
                 var vCenterResponse = client.VCenters.Delete(
-                    inMageFabric.Name,
-                    vmWareDetails.VCenters[0].Name,
+                    vmWareFabric.Name,
+                    vCentersListResponse.VCenters[0].Name,
                     RequestHeaders);
 
                 Assert.Equal(OperationStatus.Succeeded, vCenterResponse.Status);
@@ -188,14 +192,20 @@ namespace SiteRecovery.Tests
                     responseServers.Fabrics.Count > 0,
                     "Servers count can't be less than 1");
 
-                var inMageFabric = responseServers.Fabrics.First(
+                var vmWareFabric = responseServers.Fabrics.First(
                     fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
-                Assert.NotNull(inMageFabric);
+                Assert.NotNull(vmWareFabric);
 
                 var vmWareDetails =
-                   inMageFabric.Properties.CustomDetails as VMwareFabricDetails;
+                   vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
                 Assert.NotNull(vmWareDetails);
-                Assert.NotEmpty(vmWareDetails.VCenters);
+
+                var vCentersListResponse = client.VCenters.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+
+                Assert.NotNull(vCentersListResponse);
+                Assert.NotEmpty(vCentersListResponse.VCenters);
 
                  var runAsAccount = vmWareDetails.RunAsAccounts.First(
                     account => account.AccountName.Equals(
@@ -204,16 +214,16 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(runAsAccount);
 
                 var response = client.VCenters.Update(
-                    inMageFabric.Name,
-                    vmWareDetails.VCenters[0].Name,
+                    vmWareFabric.Name,
+                    vCentersListResponse.VCenters[0].Name,
                     new UpdateVCenterInput
                     {
                         Properties = new UpdateVCenterProperties
                         {
                             FriendlyName = this.newVCenterName,
-                            IpAddress = vmWareDetails.VCenters[0].Properties.IpAddress,
-                            Port = vmWareDetails.VCenters[0].Properties.Port,
-                            ProcessServerId = vmWareDetails.VCenters[0].Properties.ProcessServerId,
+                            IpAddress = vCentersListResponse.VCenters[0].Properties.IpAddress,
+                            Port = vCentersListResponse.VCenters[0].Properties.Port,
+                            ProcessServerId = vCentersListResponse.VCenters[0].Properties.ProcessServerId,
                             RunAsAccountId = runAsAccount.AccountId
                         }
                     },

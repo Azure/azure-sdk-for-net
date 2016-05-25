@@ -30,18 +30,6 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// </summary>
     public partial class RecordSetCreateOrUpdateParameters
     {
-        private string _ifNoneMatch;
-        
-        /// <summary>
-        /// Optional. Gets or sets the If-None-Match precondition. Set to '*'
-        /// to force Create-If-Not-Exist. Other values will be ignored.
-        /// </summary>
-        public string IfNoneMatch
-        {
-            get { return this._ifNoneMatch; }
-            set { this._ifNoneMatch = value; }
-        }
-        
         private RecordSet _recordSet;
         
         /// <summary>

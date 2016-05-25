@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -750,7 +750,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -969,7 +969,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1412,7 +1412,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

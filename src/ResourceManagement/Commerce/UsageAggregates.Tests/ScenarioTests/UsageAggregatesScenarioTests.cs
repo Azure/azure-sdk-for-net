@@ -181,5 +181,28 @@ namespace UsageAggregatesTest.ScenarioTests
             string actualToken = result.ContinuationToken;
             Assert.True(expectedToken.Equals(actualToken, StringComparison.OrdinalIgnoreCase), "The continuation token didn't match up");
         }
+
+        [Fact]
+        public void MeterResourceIdHandlesBothStringAndGuid()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(HttpPayload.GetAggregateWithNonGuidResourceId)
+            };
+
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetUsageAggregationManagementClient(handler);
+
+            UsageAggregationGetResponse result = client.UsageAggregates.Get(startDate, endDate, AggregationGranularity.Daily,
+                false, null);
+
+            // Validate headers 
+            Assert.Equal(HttpMethod.Get, handler.Method);
+
+            UsageAggregation ua = result.UsageAggregations[0];
+
+            Assert.True("AzureSql" == ua.Properties.MeterId, "AzureSql == ua.Properties.MeterId");
+        }
     }
 }

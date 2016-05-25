@@ -24,6 +24,14 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
     internal class PipelineConverter :
         CoreTypeConverter<Core.Models.Pipeline, Pipeline, ActivityTypeProperties, GenericActivity>
     {
+
+        DatasetConverter dataSetConvertor;
+
+        public PipelineConverter()
+        {
+            dataSetConvertor = new DatasetConverter();
+        }
+
         /// <summary> 
         /// Convert <paramref name="pipeline"/> to a <see cref="Microsoft.Azure.Management.DataFactories.Core.Models.Pipeline"/> instance.
         /// This method should be called only after type is validated, otherwise type-specific logic will break.
@@ -44,6 +52,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             IList<Core.Models.Activity> internalActivities =
                 this.ConvertActivitiesToCoreActivities(pipeline.Properties.Activities);
 
+            IList<Core.Models.Dataset> internalDatasets = null;
+
+            if (pipeline.Properties.Datasets != null)
+            {
+                internalDatasets = this.ConvertDatasetsToCoreDatasets(pipeline.Properties.Datasets);
+            }
+
             Core.Models.Pipeline internalPipeline = new Core.Models.Pipeline()
             {
                 Name = pipeline.Name,
@@ -56,7 +71,10 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                     IsPaused = properties.IsPaused, 
                     ProvisioningState = properties.ProvisioningState,
                     RuntimeInfo = properties.RuntimeInfo, 
-                    Start = properties.Start
+                    Start = properties.Start,
+                    PipelineMode = properties.PipelineMode,
+                    ExpirationTime = properties.ExpirationTime,
+                    Datasets = internalDatasets
                 }
             };
 
@@ -81,6 +99,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             IList<Activity> activities =
                 this.ConvertCoreActivitiesToWrapperActivities(internalPipeline.Properties.Activities);
 
+            IList<Dataset> datasets = null;
+
+            if (internalPipeline.Properties.Datasets != null)
+            {
+                datasets = this.ConvertCoreDatasetsToWrapperDatasets(internalPipeline.Properties.Datasets);
+            }
+
             Pipeline pipeline = new Pipeline()
             {
                 Name = internalPipeline.Name,
@@ -93,7 +118,10 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                     IsPaused = properties.IsPaused,
                     ProvisioningState = properties.ProvisioningState,
                     RuntimeInfo = properties.RuntimeInfo,
-                    Start = properties.Start
+                    Start = properties.Start,
+                    ExpirationTime = properties.ExpirationTime,
+                    PipelineMode = properties.PipelineMode,
+                    Datasets = datasets
                 }
             };
 
@@ -114,6 +142,16 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             {
                 this.ValidateActivity(activity);
             }
+        }
+
+        private IList<Core.Models.Dataset> ConvertDatasetsToCoreDatasets(IList<Dataset> datasets)
+        {
+            return datasets.Select(dataSetConvertor.ToCoreType).ToList();
+        }
+
+        private IList<Dataset> ConvertCoreDatasetsToWrapperDatasets(IList<Core.Models.Dataset> internalDatasets)
+        {
+            return internalDatasets.Select(dataSetConvertor.ToWrapperType).ToList();
         }
 
         private IList<Core.Models.Activity> ConvertActivitiesToCoreActivities(IList<Activity> activities)

@@ -20,6 +20,7 @@
     <Compile Include="TestFixtureData.cs" />
     <Compile Include="HostedServiceOperationTests.cs" />
     <Compile Include="TestUtilities\ComputeManagementClientUndoHandlers.cs" />
+    <Compile Include="TestUtilities\ComputeTestsUtilities.cs" />
     <Compile Include="TestUtilities\ManagementTestUtilities.cs" />
     <Compile Include="TestUtilities\StorageTestUtilities.cs" />
     <Compile Include="TestUtilities\TestLogTracingInterceptor.cs" />
@@ -38,6 +39,9 @@
     <None Include="RemoteAccessPlugin.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.ComputeOperationsTests\CanAbortVirtualMachineDeployment.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.ComputeOperationsTests\CanCreateVirtualMachine.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -45,6 +49,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.ComputeOperationsTests\CanCreateVMWithPublicIPDnsName.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.ComputeOperationsTests\CanMigrateVirtualMachineDeployment.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.ComputeOperationsTests\DNSServerOperationsTest.json">
@@ -114,6 +121,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanCreateVMAndGetDeploymentWithMaxDate.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanCreateVMWithBYOL.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanCreateVMWithDebugSettings.json">

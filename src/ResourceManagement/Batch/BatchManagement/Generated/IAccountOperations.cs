@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch
@@ -224,6 +225,25 @@ namespace Microsoft.Azure.Management.Batch
         /// Values returned by the RegenerateKey operation.
         /// </returns>
         Task<BatchAccountRegenerateKeyResponse> RegenerateKeyAsync(string resourceGroupName, string accountName, BatchAccountRegenerateKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The SyncAutoStorageKeys operation synchronizes access keys for the
+        /// auto storage account configured for the specified Batch account.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the Batch account.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Batch account.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> SyncAutoStorageKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Update operation updates the properties of an existing Batch

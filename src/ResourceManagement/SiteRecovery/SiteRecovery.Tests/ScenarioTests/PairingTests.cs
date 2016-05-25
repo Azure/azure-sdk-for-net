@@ -131,7 +131,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void CreateHyperVAzureProfile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -165,7 +164,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void DeleteProfile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -265,7 +263,7 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
                 string policyName = "Hitesh-VMwareAzureV2-Profile";
-                VMwareAzureV2PolicyInput input = new VMwareAzureV2PolicyInput
+                var input = new InMageAzureV2PolicyInput
                 {
                     AppConsistentFrequencyInMinutes = 15,
                     CrashConsistentFrequencyInMinutes = 15,

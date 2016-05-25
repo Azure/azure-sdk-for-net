@@ -423,5 +423,22 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string WebLinkedService = @"
+{
+    name: ""Test-Web-linkedService"",
+    properties:
+    {
+        type: ""Web"",
+        typeProperties: {
+            url: ""http://myhost.com/"",
+            authenticationType: ""Basic"",
+            username: ""microsoft"",
+            password: ""fakepassword"",
+            apiKey: ""mykey""            
+        }
+    }
+}";
     }
 }

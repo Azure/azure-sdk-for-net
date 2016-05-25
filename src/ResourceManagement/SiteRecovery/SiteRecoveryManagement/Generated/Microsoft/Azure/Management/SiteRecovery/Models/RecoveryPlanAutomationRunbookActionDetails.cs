@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// RecoveryPlanAutomationRunbookActionDetails class with required
         /// arguments.
         /// </summary>
-        public RecoveryPlanAutomationRunbookActionDetails(string runbookId, string fabricLocation, string instanceType)
+        public RecoveryPlanAutomationRunbookActionDetails(string runbookId, string fabricLocation)
             : this()
         {
             if (runbookId == null)
@@ -87,13 +87,8 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             {
                 throw new ArgumentNullException("fabricLocation");
             }
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
             this.RunbookId = runbookId;
             this.FabricLocation = fabricLocation;
-            this.InstanceType = instanceType;
         }
     }
 }

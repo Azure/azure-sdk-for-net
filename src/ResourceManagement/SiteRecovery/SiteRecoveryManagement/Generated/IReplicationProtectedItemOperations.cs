@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<LongRunningOperationResponse> BeginPurgeProtectionAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Executes repair VM replication for the given Replication protected
+        /// Executes repair replication for the given Replication protected
         /// item.
         /// </summary>
         /// <param name='fabricName'>
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginRepairVMReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> BeginRepairReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Execute reprotect for the given Replication protected item.
@@ -578,7 +578,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// Service response for replication protected items operation.
         /// </returns>
-        Task<ReplicationProtectedItemOperationResponse> GetRepairVMReplicationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        Task<ReplicationProtectedItemOperationResponse> GetRepairReplicationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Operation Status operation returns the status of the
@@ -797,7 +797,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<LongRunningOperationResponse> PurgeProtectionAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Executes repair VM replication for the given Replication protected
+        /// Executes repair replication for the given Replication protected
         /// item.
         /// </summary>
         /// <param name='fabricName'>
@@ -818,7 +818,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> RepairVMReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> RepairReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Execute reprotect for the given Replication protected item.
