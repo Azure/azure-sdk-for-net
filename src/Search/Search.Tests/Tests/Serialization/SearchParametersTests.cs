@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search.Tests
                     QueryType = QueryType.Full,
                     ScoringParameters = new[] 
                     { 
-                        new ScoringParameter("name", "value"), 
+                        new ScoringParameter("name", new[] { "Hello, O'Brien", "Smith" }), 
                         new ScoringParameter("point", GeographyPoint.Create(48.5, -120.1))
                     },
                     ScoringProfile = "myprofile",
@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Search.Tests
             const string ExpectedQueryString =
                 "$count=true&facet=field%2Coption%3Avalue&$filter=field%20eq%20value&highlight=field1,field2&" +
                 "highlightPreTag=%3Cb%3E&highlightPostTag=%3C%2Fb%3E&minimumCoverage=66.67&" +
-                "$orderby=field1 asc,field2 desc&queryType=full&scoringParameter=name:value&" +
-                "scoringParameter=point:-120.1,48.5&scoringProfile=myprofile&searchFields=field1,field2&" +
+                "$orderby=field1 asc,field2 desc&queryType=full&scoringParameter=name-'Hello, O''Brien','Smith'&" +
+                "scoringParameter=point-'-120.1','48.5'&scoringProfile=myprofile&searchFields=field1,field2&" +
                 "searchMode=all&$select=field1,field2&$skip=10&$top=5";
 
             Assert.Equal(ExpectedQueryString, parameters.ToString());
@@ -64,12 +64,16 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     Facets = new[] { "field,option:value", "field2,option2:value2" },
-                    ScoringParameters = new[] { new ScoringParameter("name", "value"), new ScoringParameter("name2", "value2") }
+                    ScoringParameters = new[] 
+                    {
+                        new ScoringParameter("name", new[] { "value1", "value2" }),
+                        new ScoringParameter("name2", new[] { "value3", "value4" })
+                    }
                 };
 
             const string ExpectedQueryString =
                 "$count=false&facet=field%2Coption%3Avalue&facet=field2%2Coption2%3Avalue2&queryType=simple&" +
-                "scoringParameter=name:value&scoringParameter=name2:value2&searchMode=any";
+                "scoringParameter=name-'value1','value2'&scoringParameter=name2-'value3','value4'&searchMode=any";
 
             Assert.Equal(ExpectedQueryString, parameters.ToString());
         }
@@ -120,7 +124,7 @@ namespace Microsoft.Azure.Search.Tests
                     QueryType = QueryType.Full,
                     ScoringParameters = new[] 
                     { 
-                        new ScoringParameter("a", "b"), 
+                        new ScoringParameter("a", new[] { "b" }), 
                         new ScoringParameter("c", GeographyPoint.Create(-16, 55))
                     },
                     ScoringProfile = "xyz",
