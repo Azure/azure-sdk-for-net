@@ -31,6 +31,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ProtectionPolicy : ProtectionPolicyBase
     {
+        private string _backupManagementType;
+        
+        /// <summary>
+        /// Optional. Type of backup managmenent for the protection policy.
+        /// </summary>
+        public string BackupManagementType
+        {
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
+        }
+        
         private int _protectedItemsCount;
         
         /// <summary>
