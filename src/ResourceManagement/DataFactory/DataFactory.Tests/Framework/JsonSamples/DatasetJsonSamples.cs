@@ -527,6 +527,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
+        [JsonSample]
         public const string BlobOrcFormatTable = @"
 {
     name: ""MyDemoBlob"",
