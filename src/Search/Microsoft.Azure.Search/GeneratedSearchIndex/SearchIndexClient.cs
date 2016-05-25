@@ -255,6 +255,8 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Initializes client properties.
         /// </summary>
+        partial void CustomInitialize();
+
         private void Initialize()
         {
             this.Documents = new DocumentsOperations(this);
@@ -288,7 +290,8 @@ namespace Microsoft.Azure.Search
                         new Iso8601TimeSpanConverter()
                     }
             };
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
+            CustomInitialize(); 
         }    
     }
 }

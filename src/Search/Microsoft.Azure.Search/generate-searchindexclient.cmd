@@ -19,3 +19,9 @@ call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Search %auto
 
 :: Delete any extra files generated for types that are shared between SearchServiceClient and SearchIndexClient.
 del "%generateFolder%\Models\SearchRequestOptions.cs"
+
+:: Delete extra files we don't need.
+del "%generateFolder%\DocumentsProxyOperationsExtensions.cs"
+
+:: Make any necessary modifications
+powershell.exe .\Fix-GeneratedCode.ps1

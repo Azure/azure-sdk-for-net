@@ -25,17 +25,17 @@ namespace Microsoft.Azure.Search
     using Models;
 
     /// <summary>
-    /// DocumentsOperations operations.
+    /// DocumentsProxyOperations operations.
     /// </summary>
-    internal partial class DocumentsOperations : IServiceOperations<SearchIndexClient>, IDocumentsOperations
+    internal partial class DocumentsProxyOperations : IServiceOperations<SearchIndexClient>, IDocumentsProxyOperations
     {
         /// <summary>
-        /// Initializes a new instance of the DocumentsOperations class.
+        /// Initializes a new instance of the DocumentsProxyOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DocumentsOperations(SearchIndexClient client)
+        internal DocumentsProxyOperations(SearchIndexClient client)
         {
             if (client == null) 
             {
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<long>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<long?>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Search
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<long>();
+            var _result = new AzureOperationResponse<long?>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Search
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<long>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<long?>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

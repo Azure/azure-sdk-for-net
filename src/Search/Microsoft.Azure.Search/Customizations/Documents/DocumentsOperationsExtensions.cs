@@ -14,8 +14,47 @@ namespace Microsoft.Azure.Search
     /// Operations for querying an index and uploading, merging, and deleting documents.
     /// <see href="https://msdn.microsoft.com/library/azure/dn800962.aspx" />
     /// </summary>
-    public static partial class DocumentsOperationsExtensions
+    public static class DocumentsOperationsExtensions
     {
+        /// <summary>
+        /// Queries the number of documents in the Azure Search index.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static long Count(
+            this IDocumentsOperations operations,
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+        {
+            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).CountAsync(searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Queries the number of documents in the Azure Search index.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<long> CountAsync(
+            this IDocumentsOperations operations,
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.CountWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
         /// <summary>
         /// Retrieves the next page of search results from the Azure Search index. 
         /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>

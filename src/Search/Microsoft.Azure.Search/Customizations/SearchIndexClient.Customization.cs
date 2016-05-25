@@ -73,5 +73,12 @@ namespace Microsoft.Azure.Search
 
         /// <inheritdoc />
         public bool UseHttpGetForQueries { get; set; }
+
+        internal IDocumentsProxyOperations DocumentsProxy { get; private set; }
+
+        partial void CustomInitialize()
+        {
+            DocumentsProxy = new DocumentsProxyOperations(this);
+        }
     }
 }
