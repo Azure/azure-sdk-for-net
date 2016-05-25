@@ -186,6 +186,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._firewallRules; }
         }
         
+        private IImportExportOperations _importExport;
+        
+        /// <summary>
+        /// Represents all the operations for import/export on Azure SQL
+        /// Databases.  Contains operations to: Import, Export, Get
+        /// Import/Export status for a database.
+        /// </summary>
+        public virtual IImportExportOperations ImportExport
+        {
+            get { return this._importExport; }
+        }
+        
         private IRecommendedElasticPoolOperations _recommendedElasticPools;
         
         /// <summary>
@@ -274,8 +286,8 @@ namespace Microsoft.Azure.Management.Sql
         
         /// <summary>
         /// Represents all the operations for operating on Azure SQL Server
-        /// disaster recovery configurations.  Contains operations to: Create,
-        /// Retrieve, Update, and Delete.
+        /// disaster recovery configurations. Contains operations to: Create,
+        /// Retrieve, Update, Failover, and Delete.
         /// </summary>
         public virtual IServerDisasterRecoveryConfigurationOperations ServerDisasterRecoveryConfigurations
         {
@@ -353,6 +365,7 @@ namespace Microsoft.Azure.Management.Sql
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._importExport = new ImportExportOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
@@ -439,6 +452,7 @@ namespace Microsoft.Azure.Management.Sql
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._importExport = new ImportExportOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);

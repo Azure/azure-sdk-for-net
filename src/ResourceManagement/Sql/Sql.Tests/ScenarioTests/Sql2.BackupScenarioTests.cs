@@ -232,7 +232,7 @@ namespace Sql2.Tests.ScenarioTests
         }
 
         /// <summary>
-        /// Test for List Azure SQL Database Geo Backups operations.
+        /// Test for List Azure SQL Database deleted database operations.
         /// </summary>
         [Fact]
         public void ListDeletedDatabaseBackupTest()
@@ -321,6 +321,79 @@ namespace Sql2.Tests.ScenarioTests
                 });
 
                 TestUtilities.ValidateOperationResponse(restoreDroppedDbResponse, HttpStatusCode.Created);
+            }
+        }
+
+        /// <summary>
+        /// Test for Azure SQL Server Backup Long Term Retention Vault operations
+        /// </summary>
+        [Fact]
+        public void ServerLTRVaultTest()
+        {
+            var handler = new BasicDelegatingHandler();
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                // Management Clients
+                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+                var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
+
+                // Use a preconfigured runner server/db in order to test this
+                // Create a resource group/server/db/vault with the following details prior to running this test
+
+                string serverName = "hchung-testsvr";
+                string resGroupName = "hchung";
+
+                sqlClient.DatabaseBackup.CreateOrUpdateBackupLongTermRetentionVault(resGroupName, serverName, "RegisteredVault", new BackupLongTermRetentionVaultCreateOrUpdateParameters()
+                {
+                    Location = "North Europe",
+                    Properties = new BackupLongTermRetentionVaultProperties()
+                    {
+                        RecoveryServicesVaultResourceId = "/subscriptions/e5e8af86-2d93-4ebd-8eb5-3b0184daa9de/resourceGroups/hchung/providers/Microsoft.RecoveryServices/vaults/hchung-testvault",
+                    }
+                });
+
+                BackupLongTermRetentionVaultGetResponse resp = sqlClient.DatabaseBackup.GetBackupLongTermRetentionVault(resGroupName, serverName, "RegisteredVault");
+
+                Assert.NotNull(resp.BackupLongTermRetentionVault.Properties.RecoveryServicesVaultResourceId);
+            }
+        }
+
+        /// <summary>
+        /// Test for Azure SQL Database Backup Long Term Retention Policy operations
+        /// </summary>
+        [Fact]
+        public void DatabaseLTRPolicyTest()
+        {
+            var handler = new BasicDelegatingHandler();
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                // Management Clients
+                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+                var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
+
+                string serverName = "hchung-testsvr";
+                string resGroupName = "hchung";
+                string databaseName = "hchung-testdb";
+
+                sqlClient.DatabaseBackup.CreateOrUpdateDatabaseBackupLongTermRetentionPolicy(resGroupName, serverName, databaseName, "Default", new DatabaseBackupLongTermRetentionPolicyCreateOrUpdateParameters()
+                {
+                    Location = "North Europe",
+                    Properties = new DatabaseBackupLongTermRetentionPolicyProperties()
+                    {
+                        State = "Enabled",
+                        RecoveryServicesBackupPolicyResourceId = "/subscriptions/e5e8af86-2d93-4ebd-8eb5-3b0184daa9de/resourceGroups/hchung/providers/Microsoft.RecoveryServices/vaults/hchung-testvault/backupPolicies/hchung-testpolicy",
+                    }
+                });
+
+                DatabaseBackupLongTermRetentionPolicyGetResponse resp = sqlClient.DatabaseBackup.GetDatabaseBackupLongTermRetentionPolicy(resGroupName, serverName, databaseName, "Default");
+
+                Assert.NotNull(resp.DatabaseBackupLongTermRetentionPolicy.Properties.RecoveryServicesBackupPolicyResourceId);
             }
         }
 
