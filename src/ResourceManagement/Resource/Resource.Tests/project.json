@@ -24,7 +24,7 @@
   "dependencies": {
     "Microsoft.Azure.Test.HttpRecorder": "",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
-    "Microsoft.Azure.ResourceManager": "",
+    "Microsoft.Azure.Management.ResourceManager": "",
     "Microsoft.Rest.ClientRuntime.Azure": "[3.0.2,4.0)",
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build204"

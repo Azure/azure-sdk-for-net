@@ -3,7 +3,6 @@
 
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Microsoft.Azure.Management.Search;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -36,13 +35,4 @@ using Microsoft.Azure.Management.Search;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion(Consts.AssemblyFileVersion)]
-
-namespace Microsoft.Azure.Management.Search
-{
-    internal class Consts
-    {
-        // Making this a constant so we can use it to set the UserAgent header.
-        public const string AssemblyFileVersion = "1.0.0.0";
-    }
-}
+[assembly: AssemblyFileVersion("1.0.0.0")]

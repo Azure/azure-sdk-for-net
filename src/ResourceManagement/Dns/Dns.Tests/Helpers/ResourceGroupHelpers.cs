@@ -23,16 +23,40 @@ using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
+    using Rest.ClientRuntime.Azure.TestFramework;
+
     public static class ResourceGroupHelper
     {
-        public static DnsManagementClient GetDnsClient()
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <returns>A resource management client, created from the current context (environment variables)</returns>
+        public static ResourceManagementClient GetResourcesClient(
+            MockContext context,
+            RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<DnsManagementClient>(new CSMTestEnvironmentFactory());
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<ResourceManagementClient>(
+                handlers: handler);
+            return client;
         }
 
-        public static ResourceManagementClient GetResourcesClient()
+        /// <summary>
+        /// Default constructor for management clients,
+        ///  using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <returns>A resource management client, created from the current context
+        ///  (environment variables)</returns>
+        public static DnsManagementClient GetDnsClient(
+            MockContext context,
+            RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory());
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<DnsManagementClient>(
+                handlers: handler);
+            return client;
         }
 
         /// <summary>
@@ -41,61 +65,69 @@ namespace Microsoft.Azure.Management.Dns.Testing
         /// <param name="client">The resource management client</param>
         /// <param name="resourceType">The type of resource to create</param>
         /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static string GetResourceLocation(ResourceManagementClient client, string resourceType)
+        public static string GetResourceLocation(
+            ResourceManagementClient client,
+            string resourceType)
         {
             string location = null;
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
             var provider = client.Providers.Get(providerName);
-            foreach (var resource in provider.Provider.ResourceTypes)
+            foreach (var resource in provider.ResourceTypes)
             {
-                if (string.Equals(resource.Name, parts[1], StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(
+                    resource.ResourceType,
+                    parts[1],
+                    StringComparison.OrdinalIgnoreCase))
                 {
-                    location = resource.Locations.FirstOrDefault(loca => !string.IsNullOrEmpty(loca));
+                    location = resource.Locations.FirstOrDefault(
+                        loca => !string.IsNullOrEmpty(loca));
                 }
             }
 
             return location;
         }
 
-        public static ResourceGroupExtended CreateResourceGroup()
+        public static ResourceGroup CreateResourceGroup(
+            ResourceManagementClient resourcesClient)
         {
-            string resourceGroupName = TestUtilities.GenerateName("hydratestdnsrg");
-            ResourceManagementClient resourcesClient = GetResourcesClient();
+            string resourceGroupName =
+                TestUtilities.GenerateName("hydratestdnsrg");
 
-            // DNS resources are in location "global" but resource groups can't be in that same location
-            string location = "Central US"; //ResourceGroupHelper.GetResourceLocation(resourcesClient, "microsoft.compute/locations");
+            // DNS resources are in location "global" but resource groups 
+            // can't be in that same location
+            string location = "Central US";
 
-            Assert.False(string.IsNullOrEmpty(location), "CSM did not return any valid locations for DNS resources");
+            Assert.False(
+                string.IsNullOrEmpty(location),
+                "CSM did not return any valid locations for DNS resources");
 
-            var response = resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+            var response = resourcesClient.ResourceGroups.CreateOrUpdate(
+                resourceGroupName,
                 new ResourceGroup
                 {
                     Location = location
                 });
 
-            return response.ResourceGroup;
+            return response;
         }
 
-        public static ZoneCreateOrUpdateResponse CreateZone(DnsManagementClient dnsClient, string zoneName, string location, ResourceGroupExtended resourceGroup)
+        public static Zone CreateZone(
+            DnsManagementClient dnsClient,
+            string zoneName,
+            string location,
+            ResourceGroup resourceGroup)
         {
-            ZoneCreateOrUpdateResponse response = dnsClient.Zones.CreateOrUpdate(
+            return dnsClient.Zones.CreateOrUpdate(
                 resourceGroup.Name,
                 zoneName,
-                new ZoneCreateOrUpdateParameters
+                new Microsoft.Azure.Management.Dns.Models.Zone
                 {
-                    Zone = new Microsoft.Azure.Management.Dns.Models.Zone
-                    {
-                        Location = location,
-                        Name = zoneName,
-                        ETag = null,
-                        Properties = new Microsoft.Azure.Management.Dns.Models.ZoneProperties
-                        {
-                        }
-                    }
-                });
-
-            return response;
+                    Location = location,
+                    Etag = null
+                },
+                null,
+                null);
         }
     }
 }

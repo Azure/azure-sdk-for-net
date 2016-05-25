@@ -17,18 +17,17 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void ListKeys_Basic()
         {
-            string responseString = (@"
-            {
-	            ""primaryKey"": ""sJ+jruGKPHDKsEC8kmoybobH3TZx2njBR3ipEsquZFo="",
-	            ""secondaryKey"": ""LwizcpMV3wyVjXJEd/lxMhIlpM3rYx5UlB/aVSl3lUE=""
+            string responseString = (@"{
+	            ""primaryKey"": ""aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa="",
+	            ""secondaryKey"": ""bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=""
             }
             ");
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.OK);
             RedisListKeysResult response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
 
-            Assert.Equal("sJ+jruGKPHDKsEC8kmoybobH3TZx2njBR3ipEsquZFo=", response.PrimaryKey);
-            Assert.Equal("LwizcpMV3wyVjXJEd/lxMhIlpM3rYx5UlB/aVSl3lUE=", response.SecondaryKey);
+            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.PrimaryKey);
+            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.SecondaryKey);
         }
 
         [Fact]

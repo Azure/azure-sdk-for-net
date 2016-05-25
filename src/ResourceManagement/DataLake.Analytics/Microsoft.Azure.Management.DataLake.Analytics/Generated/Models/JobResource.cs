@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Data Lake Analytics U-SQL job resources.
+    /// The Data Lake Analytics job resources.
     /// </summary>
     public partial class JobResource
     {
@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets or sets the job resource type. Possible values include:
-        /// 'VertexResource', 'StatisticsResource'
+        /// 'VertexResource', 'JobManagerResource', 'StatisticsResource',
+        /// 'VertexResourceInUserFolder', 'JobManagerResourceInUserFolder',
+        /// 'StatisticsResourceInUserFolder'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public JobResourceType? Type { get; set; }

@@ -5,6 +5,7 @@
   "tags": [ "Microsoft Azure Storage management", "Storage", "Storage management", "REST HTTP client", "windowsazureofficial" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+  "xmlDoc": true,
 
   "compilationOptions": {
     "delaySign": true,

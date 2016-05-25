@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{circuitName}", Uri.EscapeDataString(circuitName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{circuitName}", Uri.EscapeDataString(circuitName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{circuitName}", Uri.EscapeDataString(circuitName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));

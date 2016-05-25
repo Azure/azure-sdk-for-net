@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the inner error of this specific job error message, if any.
         /// </summary>
-        [JsonProperty(PropertyName = "InnerError")]
+        [JsonProperty(PropertyName = "innerError")]
         public JobInnerError InnerError { get; private set; }
 
         /// <summary>

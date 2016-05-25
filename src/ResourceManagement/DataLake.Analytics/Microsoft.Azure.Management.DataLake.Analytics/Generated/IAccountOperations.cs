@@ -172,35 +172,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         Task<AzureOperationResponse<IPage<BlobContainer>>> ListStorageContainersWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the next page of Azure Storage containers, if any, within the
-        /// specified Azure Storage account. The response includes a link to
-        /// the next page of results, if any.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// The URL to the next Azure Storage Container page.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<BlobContainer>>> StorageContainersListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the next page of the SAS token objects within the specified
-        /// Azure Storage account and container, if any.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// The URL to the next Azure Storage Container SAS token page.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<SasTokenInfo>>> SasTokensListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets the SAS token associated with the specified Data Lake
         /// Analytics and Azure Storage account and container combination.
         /// </summary>
@@ -615,35 +586,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<BlobContainer>>> ListStorageContainersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the next page of Azure Storage containers, if any, within the
-        /// specified Azure Storage account. The response includes a link to
-        /// the next page of results, if any.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<BlobContainer>>> StorageContainersListNextNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the next page of the SAS token objects within the specified
-        /// Azure Storage account and container, if any.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<SasTokenInfo>>> SasTokensListNextNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the SAS token associated with the specified Data Lake
         /// Analytics and Azure Storage account and container combination.

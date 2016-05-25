@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Tests
                     client.Documents.CountWithHttpMessagesAsync(options).Result;
                 Assert.Equal(HttpStatusCode.OK, countResponse.Response.StatusCode);
 
-                Assert.Equal(options.RequestId.Value.ToString("D"), countResponse.RequestId);
+                Assert.Equal(options.ClientRequestId.Value.ToString("D"), countResponse.RequestId);
             });
         }
 
