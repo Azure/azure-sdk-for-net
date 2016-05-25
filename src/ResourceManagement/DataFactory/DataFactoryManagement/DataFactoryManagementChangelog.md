@@ -4,7 +4,7 @@ For additional details on features, see the full [Azure Data Factory Release Not
 _Release date: 2016.05.25_
 
 ### Feature Additions
-* The following optional properties have been added to CopyActivity to to enable tuning of copy performance: 
+* The following optional properties have been added to Copy activity type to enable tuning of copy performance: 
     * ParallelCopies
     * CloudDataMovementUnits
 
