@@ -11,7 +11,7 @@ using Microsoft.Azure.Search;
 [assembly: AssemblyDescription("Makes it easy to develop a .NET application that uses Azure Search.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion(Consts.AssemblyFileVersion)]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
@@ -28,8 +28,5 @@ namespace Microsoft.Azure.Search
     {
         // Putting this in AssemblyInfo.cs so we remember to change it when the major SDK version changes.
         public const string TargetApiVersion = "2015-02-28-Preview";
-
-        // Making this a constant so we can use it to set the UserAgent header.
-        public const string AssemblyFileVersion = "2.0.0.0";
     }
 }

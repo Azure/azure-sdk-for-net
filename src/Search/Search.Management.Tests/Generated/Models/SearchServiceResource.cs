@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Search.Models
         }
 
         /// <summary>
-        /// Resource Id
+        /// Gets the resource Id of the Azure Search service.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Search.Models
         /// Gets properties of the Search service.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public SearchServiceReadableProperties Properties { get; set; }
+        public SearchServiceReadableProperties Properties { get; private set; }
 
     }
 }

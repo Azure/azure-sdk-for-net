@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Search.Models
         /// Gets the primary API key of the Search service.
         /// </summary>
         [JsonProperty(PropertyName = "primaryKey")]
-        public string PrimaryKey { get; set; }
+        public string PrimaryKey { get; private set; }
 
         /// <summary>
         /// Gets the secondary API key of the Search service.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryKey")]
-        public string SecondaryKey { get; set; }
+        public string SecondaryKey { get; private set; }
 
     }
 }
