@@ -13,16 +13,55 @@ namespace Microsoft.Azure.Search
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Search.Models;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
+    using Models;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
-    using Rest.Serialization;
 
-    internal partial class DocumentsOperations
+    internal class DocumentsOperations : IServiceOperations<SearchIndexClient>, IDocumentsOperations
     {
         internal static readonly string[] SelectAll = new[] { "*" };
+
+        /// <summary>
+        /// Initializes a new instance of the DocumentsOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal DocumentsOperations(SearchIndexClient client)
+        {
+            if (client == null)
+            {
+                throw new ArgumentNullException("client");
+            }
+            this.Client = client;
+        }
+
+        /// <summary>
+        /// Gets a reference to the SearchIndexClient
+        /// </summary>
+        public SearchIndexClient Client { get; private set; }
+
+        public async Task<AzureOperationResponse<long>> CountWithHttpMessagesAsync(
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), 
+            Dictionary<string, List<string>> customHeaders = null, 
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            AzureOperationResponse<long?> response = 
+                await this.Client.DocumentsProxy.CountWithHttpMessagesAsync(
+                    searchRequestOptions, 
+                    customHeaders, 
+                    cancellationToken);
+
+            return new AzureOperationResponse<long>()
+            {
+                Body = response.Body.GetValueOrDefault(),
+                Request = response.Request,
+                RequestId = response.RequestId,
+                Response = response.Response
+            };
+        }
 
         public Task<AzureOperationResponse<DocumentSearchResult>> ContinueSearchWithHttpMessagesAsync(
             SearchContinuationToken continuationToken,
