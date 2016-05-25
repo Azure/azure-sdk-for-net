@@ -30,13 +30,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetwork class.
         /// </summary>
-        public VirtualNetwork(IList<Subnet> allowedSubnets = default(IList<Subnet>), string description = default(string), string externalProviderResourceId = default(string), IList<SubnetOverride> subnetOverrides = default(IList<SubnetOverride>), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public VirtualNetwork(IList<Subnet> allowedSubnets = default(IList<Subnet>), string description = default(string), string externalProviderResourceId = default(string), IList<SubnetOverride> subnetOverrides = default(IList<SubnetOverride>), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             AllowedSubnets = allowedSubnets;
             Description = description;
             ExternalProviderResourceId = externalProviderResourceId;
             SubnetOverrides = subnetOverrides;
             ProvisioningState = provisioningState;
+            UniqueIdentifier = uniqueIdentifier;
             Id = id;
             Name = name;
             Type = type;
@@ -73,6 +74,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// The unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        public string UniqueIdentifier { get; set; }
 
         /// <summary>
         /// The identifier of the resource.
