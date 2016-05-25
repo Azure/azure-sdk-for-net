@@ -20,6 +20,7 @@
   "frameworks": {
     "net45": {
       "dependencies": {
+        "Microsoft.Rest.ClientRuntime": "2.0"
       }
     },
     "netstandard1.5": {

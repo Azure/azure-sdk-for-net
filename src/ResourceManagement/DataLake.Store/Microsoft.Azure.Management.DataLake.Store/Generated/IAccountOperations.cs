@@ -86,21 +86,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         Task<AzureOperationResponse<IPage<FirewallRule>>> ListFirewallRulesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the next page of Data Lake Store firewall rules, if any, for
-        /// the specified account. The response includes a link to the next
-        /// page of results, if any.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// The URL to the next page of the firewall rules list.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<FirewallRule>>> FirewallRulesListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Creates or updates the specified firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -342,21 +327,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<FirewallRule>>> ListFirewallRulesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the next page of Data Lake Store firewall rules, if any, for
-        /// the specified account. The response includes a link to the next
-        /// page of results, if any.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<FirewallRule>>> FirewallRulesListNextNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the Data Lake Store accounts within a specific resource
         /// group. The response includes a link to the next page of results,

@@ -363,25 +363,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         Task<AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string accountName, string removeAclFilePath, string aclspec, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Removes the existing Access Control List (ACL) of the specified
-        /// file or directory.
-        /// </summary>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations
-        /// on.
-        /// </param>
-        /// <param name='aclFilePath'>
-        /// The Data Lake Store path (starting with '/') of the file or
-        /// directory with the ACL being removed.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> RemoveAclWithHttpMessagesAsync(string accountName, string aclFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets Access Control List (ACL) entries for the specified file or
         /// directory.
         /// </summary>

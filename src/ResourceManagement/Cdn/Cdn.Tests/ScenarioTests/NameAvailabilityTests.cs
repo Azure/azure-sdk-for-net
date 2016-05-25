@@ -55,7 +55,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},

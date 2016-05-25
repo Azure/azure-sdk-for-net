@@ -613,7 +613,7 @@ namespace Microsoft.Azure.Search.Tests
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
 
-            RestException e = Assert.Throws<RestException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
+            SerializationException e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
             Assert.Contains("Error converting value {null} to type 'System.Int32'. Path 'IntValue'.", e.ToString());
         }
 

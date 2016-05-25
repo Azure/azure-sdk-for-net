@@ -46,6 +46,18 @@ namespace DataLakeStore.Tests
         private CommonTestFixture commonData;
 
         #region SDK Tests
+        [Fact]
+        public void DataLakeStoreFileSystemValidateDefaultTimeout()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    Assert.Equal(TimeSpan.FromMinutes(5), commonData.DataLakeStoreFileSystemClient.HttpClient.Timeout);
+                }
+            }
+        }
 
         [Fact]
         public void DataLakeStoreFileSystemFolderCreate()
@@ -126,11 +138,11 @@ namespace DataLakeStore.Tests
 
                     // set the expiration time as an absolute value that is less than the creation time
                     var toSetAbsolute = ToUnixTimeStampMs(HttpMockServer.GetVariable("absoluteNegativeTime", DateTime.Now.AddSeconds(-120).ToString()));
-                    Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute));
+                    Assert.Throws<AdlsErrorException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute));
 
                     // set the expiration time as an absolute value that is greater than max allowed time
                     toSetAbsolute = ToUnixTimeStampMs(DateTime.MaxValue.ToString()) + 1000;
-                    Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute));
+                    Assert.Throws<AdlsErrorException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute));
 
                     // reset expiration time to never with a value and confirm the value is not honored
                     commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.NeverExpire, commonData.DataLakeStoreFileSystemAccountName, 400);
@@ -164,6 +176,48 @@ namespace DataLakeStore.Tests
                     // We know that this directory is brand new, so the contents should only be the one file.
                     Assert.Equal(1, listFolderResponse.FileStatuses.FileStatus.Count);
                     Assert.Equal(FileType.FILE, listFolderResponse.FileStatuses.FileStatus[0].Type);
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemGetNonExistentFile()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    try
+                    {
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(commonData.DataLakeStoreFileSystemAccountName, "/nonexistentfile001.txt");
+                    }
+                    catch (AdlsErrorException e)
+                    {
+                        Assert.Equal(typeof(AdlsFileNotFoundException), e.Body.RemoteException.GetType());
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemTestAccessDenied()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    try
+                    {
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(commonData.NoPermissionDataLakeStoreAccountName, "/");
+                    }
+                    catch (AdlsErrorException e)
+                    {
+                        Assert.Equal(typeof(AdlsAccessControlException), e.Body.RemoteException.GetType());
+                    }
                 }
             }
         }
@@ -223,6 +277,49 @@ namespace DataLakeStore.Tests
             }
         }
 
+        //[Fact]
+        public void DataLakeStoreFileSystemConcurrentAppendToFile()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
+
+                    // Append to the file that we created
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.ConcurrentAppend(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)));
+
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
+                        fileContentsToAppend.Length);
+                }
+            }
+        }
+
+        //[Fact]
+        public void DataLakeStoreFileSystemConcurrentAppendCreateFile()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = TestUtilities.GenerateName(string.Format("{0}/{1}", folderToCreate, fileToCreate));
+
+                    // Concurrent append to the file that we will create during the concurrent append call.
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.ConcurrentAppend(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)), AppendModeType.Autocreate);
+
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
+                        fileContentsToAppend.Length);
+                }
+            }
+        }
+
         [Fact]
         public void DataLakeStoreFileSystemConcatenateFiles()
         {
@@ -253,12 +350,12 @@ namespace DataLakeStore.Tests
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath1));
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
@@ -297,12 +394,12 @@ namespace DataLakeStore.Tests
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath1));
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
@@ -346,19 +443,19 @@ namespace DataLakeStore.Tests
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath1));
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath2));
 
                     // Attempt to get the folder that was created for concat, which should fail and be deleted.
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
@@ -395,7 +492,7 @@ namespace DataLakeStore.Tests
                         fileContentsToAdd.Length);
 
                     // Ensure the old file is gone
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
@@ -421,7 +518,7 @@ namespace DataLakeStore.Tests
                     Assert.Equal(1, listFolderResponse.FileStatuses.FileStatus.Count);
                     Assert.Equal(FileType.FILE, listFolderResponse.FileStatuses.FileStatus[0].Type);
 
-                    Assert.Throws(typeof (CloudException),
+                    Assert.Throws(typeof (AdlsErrorException),
                         () =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
@@ -610,7 +707,7 @@ namespace DataLakeStore.Tests
                     // TODO: Symlink creation is explicitly not supported, but when it is this should be enabled.
                     /*
                     var symLinkName = TestUtilities.GenerateName("testPath/symlinktest1");
-                    Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.CreateSymLink(filePath,
+                    Assert.Throws<AdlsErrorException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.CreateSymLink(filePath,
                         commonData.DataLakeStoreFileSystemAccountName, symLinkName, true));
                     */
 
@@ -801,7 +898,7 @@ namespace DataLakeStore.Tests
                 }
                 catch (Exception e)
                 {
-                    Assert.Equal(typeof(CloudException), e.GetType());
+                    Assert.Equal(typeof(AdlsErrorException), e.GetType());
                 }
             }
             else
@@ -824,7 +921,7 @@ namespace DataLakeStore.Tests
                 }
                 catch (Exception e)
                 {
-                    Assert.Equal(typeof(CloudException), e.GetType());
+                    Assert.Equal(typeof(AdlsErrorException), e.GetType());
                 }
             }
             else

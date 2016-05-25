@@ -110,6 +110,19 @@ namespace DataLakeAnalytics.Tests
                 var compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToSubmit);
                 Assert.NotNull(compileResponse);
 
+                // now compile a broken job and verify diagnostics report an error
+                jobToSubmit.Properties.Script = "DROP DATABASE IF EXIST FOO; CREATE DATABASE FOO;";
+                compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToSubmit);
+                Assert.NotNull(compileResponse);
+
+                Assert.Equal(1, ((USqlJobProperties)compileResponse.Properties).Diagnostics.Count);
+                Assert.Equal(SeverityTypes.Error, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].Severity);
+                Assert.Equal(18, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].ColumnNumber);
+                Assert.Equal(22, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].End);
+                Assert.Equal(17, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].Start);
+                Assert.Equal(1, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].LineNumber);
+                Assert.Contains("E_CSC_USER_SYNTAXERROR", ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].Message);
+
                 // list the jobs both with a hand crafted query string and using the parameters
                 listJobResponse = clientToUse.Job.List(commonData.SecondDataLakeAnalyticsAccountName, select:  "jobId" );
                 Assert.NotNull(listJobResponse);

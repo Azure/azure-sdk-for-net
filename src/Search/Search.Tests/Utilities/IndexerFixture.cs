@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         // The connection string we use here, as well as table name and target index schema, use the USGS database
         // that we set up to support our code samples.
         private const string AzureSqlReadOnlyConnectionString =
-            "Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+            "Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;"; // [SuppressMessage("Microsoft.Security", "CS001:SecretInline")]
 
         public string TargetIndexName { get; private set; }
 

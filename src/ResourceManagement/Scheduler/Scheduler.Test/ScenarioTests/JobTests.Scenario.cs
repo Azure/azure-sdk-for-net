@@ -826,16 +826,17 @@ namespace Scheduler.Test.ScenarioTests
                                 Type = JobActionType.Http,
                                 Request = new HttpRequest()
                                 {
-                                    Uri = "https://management.azure.com/subscriptions/9d4e2ad0-e20b-4464-9219-353bded52513/",
+                                    Uri = "https://management.azure.com/subscriptions/11111111-1111-1111-1111-111111111111/",
                                     Method = "GET",
                                     Body = "some body message!",
                                     Headers = header,
                                     Authentication = new OAuthAuthentication()
                                     {
-                                        Secret = "G5t061r8Fjw3V4KRibnb+VK4+tX399hkHaj7LOyGuj4=",
+                                        // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
+                                        Secret = "ThisIsFakeSecret",
                                         Audience = "https://management.core.windows.net/",
-                                        ClientId = "dc23e663-9be6-4a32-8b8a-c46e36f0c137",
-                                        Tenant = "microsoft.onmicrosoft.com",
+                                        ClientId = "11111111-1111-1111-1111-111111111111",
+                                        Tenant = "fake.tenant.com",
                                         Type = HttpAuthenticationType.ActiveDirectoryOAuth,
                                     }
                                 },
@@ -970,8 +971,8 @@ namespace Scheduler.Test.ScenarioTests
                                     Headers = header,
                                     Authentication = new ClientCertAuthentication()
                                     {
-                                        Password = "pass@word1",
-                                        Pfx = "MIIKBAIBAzCCCcQGCSqGSIb3DQEHAaCCCbUEggmxMIIJrTCCBf4GCSqGSIb3DQEHAaCCBe8EggXrMIIF5zCCBeMGCyqGSIb3DQEMCgECoIIE/jCCBPowHAYKKoZIhvcNAQwBAzAOBAg5+ wBdJgT4jAICB9AEggTY60fCpGtmKaLqOrU/AlMU+Hlhcll61Wa/Xe9xcfgM6trRsuFHPyQWRs3rG5Z+aly0Xq9ZejcHx5p8s1firsEa+Q3E6zHJkr8dNED8z10r0k7zWlVPzBELDrfM5NWswUCkLc6Dl0Q2Mi+ neBDrpXybm2VTy3t2DIx6iYqHpeoRlbxjAzqgUxqjrWCvl6lrT3xnbLRXB6f9IIEiMaY1GDT+TU3G0+iHj3eKYMRFgGu1JSrfM8fKfqqMGfFbmFNLGiIAMKyqM+f6Vw27KG7gEVBpiY76QCGg0fMMMpGDbFFVgT wy584zrXouUvyuL36lBbTkyxA+o95MfLa8fKIYhvDnZGrxOZDvK02UiHBPZ36eD9E0qVdAE0bjerrCC+SvsiKZc6ey76Msc1xQwmcrRfIYe+BW5WIn2gQTZs6WG++87LWTdBx6Qg0Lfmbm3z3ULK8S97T3NfSTN2 jfAtLipelWLHWqHO0sDhvskHU0s+I6ozkvVvyB40/M06nIaKRDOxSxkq7DYqayNMVINaYppToSwuL3YYr34sATCVNtp2U6wciEh35K3TBicpl35kyYUPq7QGIRnx2+AUf/M4p6a+Uyk+/A616hBziSqbJfZUSjrr GyXP9PRYKrV9IoTCQlgyxpukXg24L95xe1JnnGpCeF2pXcKHAY7akfWBn/kvaklfmma1sTtCwRYU4Fs6Ldt6kBX3x3bfc/Oe+a4UoQ/ljzaPV9VeLAkTRzp25fcmTvww0afLnFcBKuX6iDBGgSNp5zBQQ4un+OvYZ GenD6wD8mLRxk8GaZ0189BGM4vWHvjqIiohMrFXz6q7KiWglNZWgi3DvmOAiKsMUGOQADBOrhdgfiKthUHoY8X6V7Mm1ryUZs5kL0wgXhGBGiivseGnWfb7edgaWojhqTgY2O4sLZiB6DLddhpYfOAKUcS6rKkGkke P74ftMS6mmCUNgUHvz5uB5ppnsq3j6WilLc9SU2Ap5LIRVN3BSu/K8fSSY1VbgvIGjEx+1wcv7yNoSBuIGzQn2Pd5/DawmZYKbZQP2eXMDJEEUnVDf39cze9tb4GasSzdHmGVYCgrbAPx9rzubFTrgjTcAWVq1bQ0r/ F9m26f0i454AWYk65vezQh0ML9CstDxgEorYxFJ7KJ7tdanAD8K/V8BkMnd05w5Nd0yy5+QphayZdlALNo1vz0YE4iR+G4cZThW3MuQH0yD0o7c/wO4GABh1kM1ofzYqpveQAsNqqFvXdsIiOmXqLSBZ1tRwj+8czd+ NpF3rdaKHSqSO8QFdXWPVvF9e3egWbEjrAxssvMRxkhZ/OQ868qMkKXJi/prYDpLZew6TCS1RiivjfqNRISlhRghMxojzeOUKIb8yxV0ggU3wH+b2niB7Erj1q+NhZup5foD0tCqKxSNRmFwYcyXrUGWPFhZmu5/+wQJ BqO+YZ1NGqUunnCYhfqU3+YnleV3QxAj4qC62OP+6lizJZiEFHzflWeU7ainIr3wtoET6qLI9MDhFHsQh+TK6inkJ4C6s86IY7saHZinS+0AOxMYBWeXRlsp4Li2Gh4oLaDjj2QZ1Ak1vZjXMmwhdtRVTMoRqPOlnnieJZ /KX50z8kMoBbA7YSXdlq+BxRRSpsH6DBCiCIAhgnMoGXoTyxMBaxDELfzGB0TATBgkqhkiG9w0BCRUxBgQEAQAAADBbBgkqhkiG9w0BCRQxTh5MAHsAMgBBADgAQQA1AEMAMQA2AC0ANQA5ADUANAAtADQANQA2ADEALQB CADEAMQA3AC0AMgA2ADEARQAwADAAQwAzADEAOABBAEUAfTBdBgkrBgEEAYI3EQExUB5OAE0AaQBjAHIAbwBzAG8AZgB0ACAAUwB0AHIAbwBuAGcAIABDAHIAeQBwAHQAbwBnAHIAYQBwAGgAaQBjACAAUAByAG8AdgBpA GQAZQByMIIDpwYJKoZIhvcNAQcGoIIDmDCCA5QCAQAwggONBgkqhkiG9w0BBwEwHAYKKoZIhvcNAQwBBjAOBAj+kA4nchP9ewICB9CAggNgOQHSr0ncuw4W8U7cY1EGa7pdyFnsDidtZ4LSetkeMpvQtjck+VOwI77hRmr4 UlngSzK/3ta2V6712pcnYp+BoA581wHyEHEGLM6wI8X628uAAse3QWNx2RYvS55YvCKWvsvRmEDXyAOrj6Byc/PxzUfqXIhRBfNMpGq2b4gAqpQLH9oWSR97AhR0EySr4p/zHejv5h8DGCOMRbQ6+2mXByI9KznD/IH0bJHAw K/dauSrwI5Yhkv5zjRHGyFQPu/65mgFiC79KafH/KLlCn3qgprRCFl+uglMeSPAjDzOWy8fCFSKJDhlV8ahug6Kdk4tVCRe71b+ilrm9oobuUIu6wQ2vi2oOxocU1KAL54HhNfVq1MF9KucaI4qGoFN0HxAyvry7/gQTDpX9lt d/DrFg+0qog7De+y+t4UTeBpWodRHav6AqePrpmO7LGpNwOi8y7mbzXwmdgi5KR2lAMYEVxFNYNtCWvuAwgAI2bfHW/eituMc7KoK6+1Sis/ckx3OsR9/UVVVhAZUiRu+FkcD25Lvuy2AAh+mQ54nm542xNdL5Ay0kJ9bYGn1R hQEU+0xbVM8T4h8GkcY1oMe96wPWBKwj3fpLIhHYrs6SEvPZleiyf+GLg0e1Uy0VR32fY7gwBvk4dcu03m+r6qFH7CgnHMIEXBe08emQh6urOOrNe9sR86pyN9WufFU6Yu22vrx8y5HCV/gwzs84tL3LUV1Gjio7nyfcUmjWt CtDS6UJqgBq3J0wfgkpqXDcmOpbkVk0SwSDDPGrYK5N3WX6Bb7JaTWhu23p7vVgPnIvep70z22tDnKSr0UrDObG1mkZHmR4WVpVP88ZrLw/KzRtxj2BCL0qHxvIPoTEMVe9UGv4V5m25n4SUffbg1DfD5AqsTM4zsgHDigN5dO oc3s42U7PMMapFCqrJz+Hvbhuz1OQ+H2nsSXJr6diTNJbXDlsjzlGmR2fyfD54k13gR0coID/qiaun8jFEcE8WIyr94l3ni4TzABhzUAsXETiJgRfQ+AGxJtsuKGeV/vXgYtPI1kPsi20Ijmn3S9xjCL5RCPmRZlHCTOMc+pbTY 2qFFNNrO9Y6ZAd3sxaafPeIq4DSdFjN4awLRUeuzXWrIQJ6OfM/vuRTRPnDN1d3Xo3Q20iUOgMDcwHzAHBgUrDgMCGgQUoHgqHp6+HQBTRmrQE6W0nV6TjqUEFLIdhIYDocPfeXgYfH9CRCWJ1EIe",
+                                        Password = "FakePassword",
+                                        Pfx = "ThisIsfakePfx",
                                         Type = HttpAuthenticationType.ClientCertificate,
                                     }
                                 },
@@ -1208,7 +1209,8 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var sasKey = "rdF1YYZG4VJlOesAjSkF5nZZD0FtqYT8+3lhzNDqtx4=";
+                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
+                var sasKey = "ThisIsFakeSasKey";
                 var sasKeyName = "RootManageSharedAccessKey";
                 var contentType = "Application/Json";
                 var brokerMessageProperties = new ServiceBusBrokeredMessageProperties()
@@ -1381,7 +1383,8 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var sasKey = "rdF1YYZG4VJlOesAjSkF5nZZD0FtqYT8+3lhzNDqtx4=";
+                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
+                var sasKey = "ThisIsFakeSasKey";
                 var sasKeyName = "RootManageSharedAccessKey";
                 var contentType = "Application/Json";
                 var brokerMessageProperties = new ServiceBusBrokeredMessageProperties()

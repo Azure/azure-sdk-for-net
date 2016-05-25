@@ -31,12 +31,17 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// </summary>
         /// <param name="contents">The array to write random data to (the length of this array will be the size of the file).</param>
         /// <param name="filePath">This will contain the path of the file that will be created.</param>
-        internal static void GenerateFileData(byte[] contents, out string filePath)
+        internal static void GenerateFileData(byte[] contents, string runDirectory, out string filePath)
         {
-            filePath = Path.GetTempFileName();
+            var dirPath = string.Format(@"{0}\{1}", Path.GetTempPath(), runDirectory);
+            filePath = string.Format(@"{0}\{1}.txt", dirPath, Guid.NewGuid());
 
             var rnd = new Random(0);
             rnd.NextBytes(contents);
+            if(!Directory.Exists(Path.GetDirectoryName(filePath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            }
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);

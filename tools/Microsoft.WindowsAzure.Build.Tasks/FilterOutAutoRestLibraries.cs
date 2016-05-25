@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     {
                         throw new System.InvalidOperationException("We are not able to handle more than 1 nuget projects from the same library");
                     }
-                    if (nugetProjects.Length == 0)
+                    if (nugetProjects.Length == 1)
                     {
                         solution.SetMetadata("NugetProj", nugetProjects[0]);
                         solution.SetMetadata("PackageName", Path.GetFileNameWithoutExtension(nugetProjects[0]));

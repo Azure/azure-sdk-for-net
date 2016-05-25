@@ -60,7 +60,7 @@ namespace DataLakeAnalytics.Tests
                     // Get the table list
                     var tableListResponse = clientToUse.Catalog.ListTables(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, CommonTestFixture.SchemaName);
 
                     Assert.True(tableListResponse.Count() >= 1);
 
@@ -70,14 +70,14 @@ namespace DataLakeAnalytics.Tests
                     // Get the specific table as well
                     var tableGetResponse = clientToUse.Catalog.GetTable(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo", commonData.TableName);
+                        commonData.DatabaseName, CommonTestFixture.SchemaName, commonData.TableName);
 
                     Assert.Equal(commonData.TableName, tableGetResponse.Name);
 
                     // Get the TVF list
                     var tvfListResponse = clientToUse.Catalog.ListTableValuedFunctions(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, CommonTestFixture.SchemaName);
 
                     Assert.True(tvfListResponse.Count() >= 1);
 
@@ -87,14 +87,14 @@ namespace DataLakeAnalytics.Tests
                     // Get the specific TVF as well
                     var tvfGetResponse = clientToUse.Catalog.GetTableValuedFunction(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo", commonData.TvfName);
+                        commonData.DatabaseName, CommonTestFixture.SchemaName, commonData.TvfName);
 
                     Assert.Equal(commonData.TvfName, tvfGetResponse.Name);
 
                     // Get the View list
                     var viewListResponse = clientToUse.Catalog.ListViews(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, CommonTestFixture.SchemaName);
 
                     Assert.True(viewListResponse.Count() >= 1);
 
@@ -104,14 +104,14 @@ namespace DataLakeAnalytics.Tests
                     // Get the specific view as well
                     var viewGetResponse = clientToUse.Catalog.GetView(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo", commonData.ViewName);
+                        commonData.DatabaseName, CommonTestFixture.SchemaName, commonData.ViewName);
 
                     Assert.Equal(commonData.ViewName, viewGetResponse.Name);
 
                     // Get the Procedure list
                     var procListResponse = clientToUse.Catalog.ListProcedures(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, CommonTestFixture.SchemaName);
 
                     Assert.True(procListResponse.Count() >= 1);
 
@@ -121,14 +121,29 @@ namespace DataLakeAnalytics.Tests
                     // Get the specific procedure as well
                     var procGetResponse = clientToUse.Catalog.GetProcedure(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo", commonData.ProcName);
+                        commonData.DatabaseName, CommonTestFixture.SchemaName, commonData.ProcName);
 
                     Assert.Equal(commonData.ProcName, procGetResponse.Name);
+
+                    // Get the Partition list
+                    var partitionList = clientToUse.Catalog.ListTablePartitions(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, CommonTestFixture.SchemaName, commonData.TableName);
+
+                    Assert.True(partitionList.Count() >= 1);
+
+                    var specificPartition = partitionList.First();
+                    // Get the specific procedure as well
+                    var partitionGetResponse = clientToUse.Catalog.GetTablePartition(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, CommonTestFixture.SchemaName, commonData.TableName, specificPartition.Name);
+
+                    Assert.Equal(specificPartition.Name, partitionGetResponse.Name);
 
                     // Get all the types
                     var typeGetResponse = clientToUse.Catalog.ListTypes(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, CommonTestFixture.SchemaName);
 
 
                     Assert.NotNull(typeGetResponse);
@@ -137,7 +152,7 @@ namespace DataLakeAnalytics.Tests
                     // Get all the types that are not complex
                     typeGetResponse = clientToUse.Catalog.ListTypes(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, "dbo", new Microsoft.Rest.Azure.OData.ODataQuery<USqlType>{Filter = "isComplexType eq false"});
+                        commonData.DatabaseName, CommonTestFixture.SchemaName, new Microsoft.Rest.Azure.OData.ODataQuery<USqlType>{Filter = "isComplexType eq false"});
 
 
                     Assert.NotNull(typeGetResponse);
@@ -173,8 +188,6 @@ namespace DataLakeAnalytics.Tests
                                 Uri = "https://adlasecrettest.contoso.com:443"
                             });
 
-
-                        // * TODO: Enable once confirmed that we throw 409s when a secret already exists
                         // Attempt to create the secret again, which should throw
                         Assert.Throws<CloudException>(
                             () => clientToUse.Catalog.CreateSecret(
@@ -185,7 +198,17 @@ namespace DataLakeAnalytics.Tests
                                         Password = commonData.SecretPwd,
                                         Uri = "https://adlasecrettest.contoso.com:443"
                                     }));
-                        
+
+                        // create another secret
+                        var secondSecretName = commonData.SecretName + "dup";
+                        clientToUse.Catalog.CreateSecret(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, secondSecretName,
+                        new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
+                        {
+                            Password = commonData.SecretPwd,
+                            Uri = "https://adlasecrettest.contoso.com:443"
+                        });
                         // Get the secret and ensure the response contains a date.
                         var secretGetResponse = clientToUse.Catalog.GetSecret(
                             commonData.SecondDataLakeAnalyticsAccountName,
@@ -235,6 +258,17 @@ namespace DataLakeAnalytics.Tests
                         Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(
                             commonData.SecondDataLakeAnalyticsAccountName,
                             commonData.DatabaseName, commonData.SecretName));
+
+                        // Delete all secrets
+                        clientToUse.Catalog.DeleteAllSecrets(
+                            commonData.SecondDataLakeAnalyticsAccountName,
+                            commonData.DatabaseName);
+
+                        // Try to get the second secret, which should throw.
+                        // Try to get the secret which should throw
+                        Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(
+                            commonData.SecondDataLakeAnalyticsAccountName,
+                            commonData.DatabaseName, secondSecretName));
                     }
 
                 }

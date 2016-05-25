@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the U-SQL job debug data information specified by the job ID.
+        /// Gets the job debug data information specified by the job ID.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute job operations on.

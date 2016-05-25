@@ -1,0 +1,5 @@
+﻿How to run the BatchClient unit tests:
+
+1. Use sn.exe to trust the public key associated with Microsoft.Azure.Batch.dll.  This is required because at the time
+   the tests are run, the dll is delay-signed and thus is not trusted.  Run 
+   sn -Vr *,31bf3856ad364e35 in order to bypass strong name signing and allow the tests to run.

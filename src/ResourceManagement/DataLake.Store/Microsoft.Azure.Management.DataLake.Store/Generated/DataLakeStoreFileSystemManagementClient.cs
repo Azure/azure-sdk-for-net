@@ -191,6 +191,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdlsRemoteException>("exception"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdlsRemoteException>("exception"));
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }

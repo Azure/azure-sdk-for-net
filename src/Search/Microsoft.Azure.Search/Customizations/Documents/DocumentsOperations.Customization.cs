@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Rest.Serialization;
+
     internal partial class DocumentsOperations
     {
         internal static readonly string[] SelectAll = new[] { "*" };
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken = default(CancellationToken))
         {
             string invocationId;
-            string clientRequestId;
+            Guid? clientRequestId;
             bool shouldTrace =
                 ValidateAndTraceContinueSearch(
                     continuationToken,
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             string invocationId;
-            string clientRequestId;
+            Guid? clientRequestId;
             bool shouldTrace =
                 ValidateAndTraceContinueSearch(
                     continuationToken,
@@ -250,7 +251,7 @@ namespace Microsoft.Azure.Search
         private async Task<AzureOperationResponse<TSearchResult>> DoContinueSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
             string url,
             SearchParametersPayload searchParameters,
-            string clientRequestId,
+            Guid? clientRequestId,
             Dictionary<string, List<string>> customHeaders,
             bool useGet,
             bool shouldTrace,
@@ -263,6 +264,7 @@ namespace Microsoft.Azure.Search
         {
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
+            HttpResponseMessage httpResponse = null;
             httpRequest.Method = useGet ? new HttpMethod("GET") : new HttpMethod("POST");
             httpRequest.RequestUri = new Uri(url);
 
@@ -281,7 +283,7 @@ namespace Microsoft.Azure.Search
                 {
                     httpRequest.Headers.Remove("client-request-id");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (customHeaders != null)
             {
@@ -304,11 +306,15 @@ namespace Microsoft.Azure.Search
             }
 
             // Serialize Request for POST only
+            string requestContent = null;
             if (!useGet)
             {
-                string requestContent = SafeJsonConvert.SerializeObject(searchParameters, this.Client.SerializationSettings);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                if (searchParameters != null)
+                {
+                    requestContent = SafeJsonConvert.SerializeObject(searchParameters, this.Client.SerializationSettings);
+                    httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                    httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                }
             }
 
             // Send Request
@@ -317,19 +323,20 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.SendRequest(invocationId, httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             if (shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string responseContent = null;
             if (statusCode != HttpStatusCode.OK)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                     if (errorBody != null)
                     {
@@ -341,11 +348,20 @@ namespace Microsoft.Azure.Search
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
+                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
+                if (httpResponse.Headers.Contains("request-id"))
+                {
+                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+                }
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
+                }
+                httpRequest.Dispose();
+                if (httpResponse != null)
+                {
+                    httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -362,28 +378,35 @@ namespace Microsoft.Azure.Search
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                try
+                responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = new TSearchResult();
+                if (string.IsNullOrEmpty(responseContent) == false)
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = new TSearchResult();
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    DocumentSearchResponsePayload<TDocResult, TDoc> deserializedResult;
+                    try
                     {
-                        DocumentSearchResponsePayload<TDocResult, TDoc> deserializedResult = deserialize(responseContent);
-                        result.Body.Count = deserializedResult.Count;
-                        result.Body.Coverage = deserializedResult.Coverage;
-                        result.Body.Facets = deserializedResult.Facets;
-                        result.Body.Results = deserializedResult.Documents;
-                        result.Body.ContinuationToken =
-                            deserializedResult.NextLink != null ?
-                                new SearchContinuationToken(
-                                    deserializedResult.NextLink,
-                                    deserializedResult.NextPageParameters) :
-                                null;
+                        deserializedResult = deserialize(responseContent);
                     }
-                }
-                catch (JsonException ex)
-                {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    catch (JsonException ex)
+                    {
+                        httpRequest.Dispose();
+                        if (httpResponse != null)
+                        {
+                            httpResponse.Dispose();
+                        }
+                        throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
+                    }
+
+                    result.Body.Count = deserializedResult.Count;
+                    result.Body.Coverage = deserializedResult.Coverage;
+                    result.Body.Facets = deserializedResult.Facets;
+                    result.Body.Results = deserializedResult.Documents;
+                    result.Body.ContinuationToken =
+                        deserializedResult.NextLink != null ?
+                            new SearchContinuationToken(
+                                deserializedResult.NextLink,
+                                deserializedResult.NextPageParameters) :
+                            null;
                 }
             }
             if (shouldTrace)
@@ -417,7 +440,7 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("selectedFields");
             }
 
-            string clientRequestId = null;
+            Guid? clientRequestId = default(Guid?);
             if (searchRequestOptions != null)
             {
                 clientRequestId = searchRequestOptions.ClientRequestId;
@@ -460,6 +483,7 @@ namespace Microsoft.Azure.Search
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
+            HttpResponseMessage httpResponse = null;
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
 
@@ -478,7 +502,7 @@ namespace Microsoft.Azure.Search
                 {
                     httpRequest.Headers.Remove("client-request-id");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (customHeaders != null)
             {
@@ -493,6 +517,8 @@ namespace Microsoft.Azure.Search
             }
             httpRequest.Headers.TryAddWithoutValidation("Accept", "application/json;odata.metadata=none");
 
+            // Serialize Request
+            string requestContent = null;
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -506,19 +532,20 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.SendRequest(invocationId, httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             if (shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string responseContent = null;
             if (statusCode != HttpStatusCode.OK)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                     if (errorBody != null)
                     {
@@ -530,11 +557,20 @@ namespace Microsoft.Azure.Search
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
+                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
+                if (httpResponse.Headers.Contains("request-id"))
+                {
+                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+                }
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
+                }
+                httpRequest.Dispose();
+                if (httpResponse != null)
+                {
+                    httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -551,14 +587,19 @@ namespace Microsoft.Azure.Search
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
+                responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result.Body = SafeJsonConvert.DeserializeObject<T>(responseContent, jsonSerializerSettings);
                 }
                 catch (JsonException ex)
                 {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    httpRequest.Dispose();
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
                 }
             }
             if (shouldTrace)
@@ -583,7 +624,7 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("payload");
             }
 
-            string clientRequestId = null;
+            Guid? clientRequestId = default(Guid?);
             if (searchRequestOptions != null)
             {
                 clientRequestId = searchRequestOptions.ClientRequestId;
@@ -618,6 +659,7 @@ namespace Microsoft.Azure.Search
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
+            HttpResponseMessage httpResponse = null;
             httpRequest.Method = new HttpMethod("POST");
             httpRequest.RequestUri = new Uri(url);
 
@@ -636,7 +678,7 @@ namespace Microsoft.Azure.Search
                 {
                     httpRequest.Headers.Remove("client-request-id");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (customHeaders != null)
             {
@@ -659,9 +701,13 @@ namespace Microsoft.Azure.Search
             }
 
             // Serialize Request
-            string requestContent = payload;
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            string requestContent = null;
+            if (payload != null)
+            {
+                requestContent = payload;
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
 
             // Send Request
             if (shouldTrace)
@@ -669,19 +715,20 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.SendRequest(invocationId, httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             if (shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string responseContent = null;
             if (statusCode != HttpStatusCode.OK && statusCode != (HttpStatusCode)207)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                     if (errorBody != null)
                     {
@@ -693,11 +740,20 @@ namespace Microsoft.Azure.Search
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
+                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
+                if (httpResponse.Headers.Contains("request-id"))
+                {
+                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+                }
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
+                }
+                httpRequest.Dispose();
+                if (httpResponse != null)
+                {
+                    httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -714,14 +770,19 @@ namespace Microsoft.Azure.Search
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK || statusCode == (HttpStatusCode)207)
             {
+                responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result.Body = SafeJsonConvert.DeserializeObject<DocumentIndexResult>(responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    httpRequest.Dispose();
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
                 }
             }
             if (shouldTrace)
@@ -733,11 +794,20 @@ namespace Microsoft.Azure.Search
             if (statusCode == (HttpStatusCode)207)
             {
                 CloudException ex = new IndexBatchException(result.Body);
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
+                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
+                if (httpResponse.Headers.Contains("request-id"))
+                {
+                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+                }
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
+                }
+                httpRequest.Dispose();
+                if (httpResponse != null)
+                {
+                    httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -769,7 +839,7 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("searchParameters");
             }
 
-            string clientRequestId = null;
+            Guid? clientRequestId = default(Guid?);
             if (searchRequestOptions != null)
             {
                 clientRequestId = searchRequestOptions.ClientRequestId;
@@ -856,7 +926,7 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("suggestParameters");
             }
 
-            string clientRequestId = null;
+            Guid? clientRequestId = default(Guid?);
             if (searchRequestOptions != null)
             {
                 clientRequestId = searchRequestOptions.ClientRequestId;
@@ -902,6 +972,7 @@ namespace Microsoft.Azure.Search
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
+            HttpResponseMessage httpResponse = null;
             httpRequest.Method = useGet ? new HttpMethod("GET") : new HttpMethod("POST");
             httpRequest.RequestUri = new Uri(url);
 
@@ -920,7 +991,7 @@ namespace Microsoft.Azure.Search
                 {
                     httpRequest.Headers.Remove("client-request-id");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (customHeaders != null)
             {
@@ -943,12 +1014,16 @@ namespace Microsoft.Azure.Search
             }
 
             // Serialize Request for POST only
+            string requestContent = null;
             if (!useGet)
             {
                 SuggestParametersPayload payload = suggestParameters.ToPayload(searchText, suggesterName);
-                string requestContent = SafeJsonConvert.SerializeObject(payload, this.Client.SerializationSettings);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                if (payload != null)
+                {
+                    requestContent = SafeJsonConvert.SerializeObject(payload, this.Client.SerializationSettings);
+                    httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                    httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                }
             }
 
             // Send Request
@@ -957,19 +1032,20 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.SendRequest(invocationId, httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             if (shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string responseContent = null;
             if (statusCode != HttpStatusCode.OK)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                     if (errorBody != null)
                     {
@@ -981,11 +1057,20 @@ namespace Microsoft.Azure.Search
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
+                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
+                if (httpResponse.Headers.Contains("request-id"))
+                {
+                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+                }
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
+                }
+                httpRequest.Dispose();
+                if (httpResponse != null)
+                {
+                    httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -1002,20 +1087,27 @@ namespace Microsoft.Azure.Search
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                try
+                responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = new TSuggestResult();
+                if (string.IsNullOrEmpty(responseContent) == false)
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = new TSuggestResult();
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    DocumentSuggestResponsePayload<TDocResult, TDoc> deserializedResult;
+                    try
                     {
-                        DocumentSuggestResponsePayload<TDocResult, TDoc> deserializedResult = deserialize(responseContent);
-                        result.Body.Coverage = deserializedResult.Coverage;
-                        result.Body.Results = deserializedResult.Documents;
+                        deserializedResult = deserialize(responseContent);
                     }
-                }
-                catch (JsonException ex)
-                {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    catch (JsonException ex)
+                    {
+                        httpRequest.Dispose();
+                        if (httpResponse != null)
+                        {
+                            httpResponse.Dispose();
+                        }
+                        throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
+                    }
+
+                    result.Body.Coverage = deserializedResult.Coverage;
+                    result.Body.Results = deserializedResult.Documents;
                 }
             }
             if (shouldTrace)
@@ -1031,7 +1123,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions,
             CancellationToken cancellationToken,
             out string invocationId,
-            out string clientRequestId)
+            out Guid? clientRequestId)
         {
             // Validate
             if (this.Client.ApiVersion == null)
@@ -1043,7 +1135,7 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("continuationToken");
             }
 
-            clientRequestId = null;
+            clientRequestId = default(Guid?);
             if (searchRequestOptions != null)
             {
                 clientRequestId = searchRequestOptions.ClientRequestId;

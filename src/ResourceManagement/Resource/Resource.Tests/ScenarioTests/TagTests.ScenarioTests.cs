@@ -16,7 +16,7 @@
 using System.Linq;
 using System.Net;
 using Microsoft.Rest.Azure;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Test;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A Data Lake Analytics U-SQL job data path item.
+    /// A Data Lake Analytics job data path item.
     /// </summary>
     public partial class JobDataPath
     {

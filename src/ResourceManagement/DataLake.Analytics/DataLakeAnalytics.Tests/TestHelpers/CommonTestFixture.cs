@@ -20,6 +20,8 @@ namespace DataLakeAnalytics.Tests
 {
     public class CommonTestFixture : TestBase
     {
+        internal const string SchemaName = "dbo";
+
         public string ResourceGroupName { set; get; }
         public string SecondDataLakeAnalyticsAccountName { get; set; }
         public string DataLakeAnalyticsAccountName { get; set; }
