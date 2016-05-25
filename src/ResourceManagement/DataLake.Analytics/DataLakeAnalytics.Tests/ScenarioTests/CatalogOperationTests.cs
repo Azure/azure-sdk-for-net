@@ -133,7 +133,8 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(partitionList.Count() >= 1);
 
                     var specificPartition = partitionList.First();
-                    // Get the specific procedure as well
+                    
+                    // Get the specific partition as well
                     var partitionGetResponse = clientToUse.Catalog.GetTablePartition(
                         commonData.SecondDataLakeAnalyticsAccountName,
                         commonData.DatabaseName, CommonTestFixture.SchemaName, commonData.TableName, specificPartition.Name);
