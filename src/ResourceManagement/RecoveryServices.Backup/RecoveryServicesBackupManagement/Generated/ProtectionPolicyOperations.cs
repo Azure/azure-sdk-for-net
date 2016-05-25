@@ -200,6 +200,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             propertiesValue["backupManagementType"] = "ProtectionPolicy";
                             ProtectionPolicy derived = ((ProtectionPolicy)request.Item.Properties);
                             
+                            if (derived.BackupManagementType != null)
+                            {
+                                propertiesValue["backupManagementType"] = derived.BackupManagementType;
+                            }
+                            
                             propertiesValue["protectedItemsCount"] = derived.ProtectedItemsCount;
                         }
                         if (request.Item.Properties is AzureIaaSVMProtectionPolicy)
@@ -504,6 +509,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 }
                             }
                             
+                            if (derived2.BackupManagementType != null)
+                            {
+                                propertiesValue["backupManagementType"] = derived2.BackupManagementType;
+                            }
+                            
                             propertiesValue["protectedItemsCount"] = derived2.ProtectedItemsCount;
                         }
                     }
@@ -602,6 +612,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "ProtectionPolicy")
                                 {
                                     ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                    
+                                    JToken backupManagementTypeValue = propertiesValue2["backupManagementType"];
+                                    if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                        protectionPolicyInstance.BackupManagementType = backupManagementTypeInstance;
+                                    }
                                     
                                     JToken protectedItemsCountValue = propertiesValue2["protectedItemsCount"];
                                     if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
@@ -962,6 +979,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue2 = propertiesValue2["backupManagementType"];
+                                    if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                        azureIaaSVMProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
                                     
                                     JToken protectedItemsCountValue2 = propertiesValue2["protectedItemsCount"];
@@ -1416,6 +1440,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
                                     
+                                    JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                        protectionPolicyInstance.BackupManagementType = backupManagementTypeInstance;
+                                    }
+                                    
                                     JToken protectedItemsCountValue = propertiesValue["protectedItemsCount"];
                                     if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
                                     {
@@ -1775,6 +1806,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                        azureIaaSVMProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
                                     
                                     JToken protectedItemsCountValue2 = propertiesValue["protectedItemsCount"];
@@ -2058,6 +2096,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
                                     
+                                    JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                        protectionPolicyInstance.BackupManagementType = backupManagementTypeInstance;
+                                    }
+                                    
                                     JToken protectedItemsCountValue = propertiesValue["protectedItemsCount"];
                                     if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
                                     {
@@ -2417,6 +2462,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                        azureIaaSVMProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
                                     
                                     JToken protectedItemsCountValue2 = propertiesValue["protectedItemsCount"];
@@ -2653,6 +2705,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
                                     
+                                    JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                        protectionPolicyInstance.BackupManagementType = backupManagementTypeInstance;
+                                    }
+                                    
                                     JToken protectedItemsCountValue = propertiesValue["protectedItemsCount"];
                                     if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
                                     {
@@ -3012,6 +3071,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                        azureIaaSVMProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
                                     
                                     JToken protectedItemsCountValue2 = propertiesValue["protectedItemsCount"];
@@ -3310,6 +3376,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         if (typeName == "ProtectionPolicy")
                                         {
                                             ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                            
+                                            JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                                protectionPolicyInstance.BackupManagementType = backupManagementTypeInstance;
+                                            }
                                             
                                             JToken protectedItemsCountValue = propertiesValue["protectedItemsCount"];
                                             if (protectedItemsCountValue != null && protectedItemsCountValue.Type != JTokenType.Null)
@@ -3670,6 +3743,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                     azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                                 }
+                                            }
+                                            
+                                            JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                                azureIaaSVMProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance2;
                                             }
                                             
                                             JToken protectedItemsCountValue2 = propertiesValue["protectedItemsCount"];
