@@ -157,6 +157,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for import/export on Azure SQL
+        /// Databases.  Contains operations to: Import, Export, Get
+        /// Import/Export status for a database.
+        /// </summary>
+        IImportExportOperations ImportExport
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL
         /// Recommended Elastic Pools.  Contains operations to: Retrieve.
         /// </summary>

@@ -82,6 +82,14 @@ namespace Microsoft.Azure.Management.Batch
         }
         
         /// <summary>
+        /// Operations for managing applications.
+        /// </summary>
+        IApplicationOperations Applications
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing Batch service properties at the
         /// subscription level.
         /// </summary>

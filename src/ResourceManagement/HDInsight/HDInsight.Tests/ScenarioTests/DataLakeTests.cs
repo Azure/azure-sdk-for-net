@@ -33,8 +33,7 @@ namespace HDInsight.Tests
         private byte[] CertificateFileBytes = { };
         private string CertificatePassword = "";
         private string ResourceUri = "";
-
-
+        
         [Fact]
         public void TestCreateDataLakeClusterUsingClusterCreateParametersExtended()
         {
@@ -79,6 +78,7 @@ namespace HDInsight.Tests
             };
 
             var spec = GetClusterSpecHelpers.AddConfigurations(cluster, ConfigurationKey.ClusterIdentity, dataLakeConfigs);
+            spec.Properties.ClusterVersion = "3.2";
             return spec;
         }
 

@@ -268,6 +268,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
                             JToken recoveryPlanCountValue = responseDoc["recoveryPlanCount"];
                             if (recoveryPlanCountValue != null && recoveryPlanCountValue.Type != JTokenType.Null)
                             {
+                                int recoveryPlanCountInstance = ((int)recoveryPlanCountValue);
+                                replicationUsagesInstance.RecoveryPlanCount = recoveryPlanCountInstance;
                             }
                         }
                         

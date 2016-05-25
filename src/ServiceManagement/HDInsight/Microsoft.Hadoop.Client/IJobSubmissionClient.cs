@@ -12,10 +12,11 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
+using System;
+
 namespace Microsoft.Hadoop.Client
 {
-    using Microsoft.WindowsAzure.Management.HDInsight.Logging;
-
     /// <summary>
     /// Represents an instance of Hadoop against which jobs can be submitted.
     /// </summary>

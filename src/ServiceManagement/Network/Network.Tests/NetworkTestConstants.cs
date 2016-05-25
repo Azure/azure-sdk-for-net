@@ -29,6 +29,7 @@ namespace Network.Tests
         public const string PointToSiteNetworkConfigurationFilePath = @"TestData\PointToSiteNetworkConfiguration.xml";
         public const string WideVNetNetworkConfigurationFilePath = @"TestData\WideVNetNetworkConfiguration.xml";
         public const string SimpleNetworkConfigurationFilePath = @"TestData\SimpleNetworkConfiguration.xml";
+        public const string SimpleMigrationNetworkConfigurationFilePath = @"TestData\SimpleMigrationNetworkConfiguration.xml";
         public const string DeleteNetworkConfigurationFilePath = @"TestData\DeleteNetworkConfiguration.xml";
         public const string CoexistenceFeatureNetworkConfigurationFilePath = @"TestData\CoexistenceFeatureNetworkConfiguration.xml";
         public const string GatewayNetworkConfigurationFilePath = @"TestData\GatewayNetworkConfiguration.xml";
@@ -46,6 +47,8 @@ namespace Network.Tests
             CreateSetConfigurationParametersFromFile(WideVNetNetworkConfigurationFilePath);
         public static readonly NetworkSetConfigurationParameters SimpleNetworkConfigurationParameters =
             CreateSetConfigurationParametersFromFile(SimpleNetworkConfigurationFilePath);
+        public static readonly NetworkSetConfigurationParameters SimpleMigrationNetworkConfigurationParameters =
+    CreateSetConfigurationParametersFromFile(SimpleMigrationNetworkConfigurationFilePath);
         public static readonly NetworkSetConfigurationParameters DeleteNetworkConfigurationParameters =
             CreateSetConfigurationParametersFromFile(DeleteNetworkConfigurationFilePath);
         public static readonly NetworkSetConfigurationParameters CoexistenceFeatureNetworkConfigurationParameters =

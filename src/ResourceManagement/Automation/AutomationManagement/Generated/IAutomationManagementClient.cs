@@ -253,6 +253,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation object data types.  (see
+        /// http://aka.ms/azureautomationsdk/objectdatatypeoperations for more
+        /// information)
+        /// </summary>
+        IObjectDataTypeOperations ObjectDataTypes
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation runbook draft.  (see
         /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
         /// information)

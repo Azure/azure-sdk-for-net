@@ -12,12 +12,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\AlertsTests.cs" />
     <Compile Include="ScenarioTests\DeletionTests.cs" />
-    <Compile Include="ScenarioTests\E2E\SingleVM\EndToEndTests.cs" />
+    <Compile Include="ScenarioTests\EndtoEnd\SingleVM\EndToEndTests.cs" />
+    <Compile Include="ScenarioTests\EndtoEnd\Helpers.cs" />
     <Compile Include="ScenarioTests\EnumerationTests.cs" />
     <Compile Include="ScenarioTests\ExportTests.cs" />
     <Compile Include="ScenarioTests\FailoverTests.cs" />
     <Compile Include="ScenarioTests\GetTests.cs" />
     <Compile Include="ScenarioTests\ProcessServerTests.cs" />
+    <Compile Include="ScenarioTests\RecoveryPlanTests.cs" />
     <Compile Include="ScenarioTests\SiteTests.cs" />
     <Compile Include="ScenarioTests\PairingTests.cs" />
     <Compile Include="ScenarioTests\ProtectionTests.cs" />
@@ -47,7 +49,16 @@
     <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateProtectedContainerTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateProtectedItemsUnderFabric.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateProtectedItemsUnderVault.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateServersTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.ExportTests\ExportJobTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetProtectedContainerTest.json">
@@ -59,10 +70,25 @@
     <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetServerTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetStorageClassificationAndPairingsUnderVault.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SiteRecovery.Tests.PairingTests\CreateHyperVAzureProfile.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.PairingTests\DeleteProfile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.ScenarioTests.RecoveryPlanTests\RecoveryPlan_ValidateGetProtectedItemsInRecoveryPlan.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.ScenarioTests.RecoveryPlanTests\RecoveryPlan_ValidateNames.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.SiteTests\CreateSite.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.SiteTests\DeleteSite.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.VaultTests\CreateAndRetrieveVaultExtendedInfo.json">

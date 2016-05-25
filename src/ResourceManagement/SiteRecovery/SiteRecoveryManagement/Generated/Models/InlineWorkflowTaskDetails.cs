@@ -55,24 +55,24 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the InlineWorkflowTaskDetails class
         /// with required arguments.
         /// </summary>
-        public InlineWorkflowTaskDetails(List<string> workflowIds, List<AsrTaskBase> childTasks, string type)
+        public InlineWorkflowTaskDetails(List<string> workflowIds, string type, List<AsrTaskBase> childTasks)
             : this()
         {
             if (workflowIds == null)
             {
                 throw new ArgumentNullException("workflowIds");
             }
-            if (childTasks == null)
-            {
-                throw new ArgumentNullException("childTasks");
-            }
             if (type == null)
             {
                 throw new ArgumentNullException("type");
             }
+            if (childTasks == null)
+            {
+                throw new ArgumentNullException("childTasks");
+            }
             this.WorkflowIds = workflowIds;
-            this.ChildTasks = childTasks;
             this.Type = type;
+            this.ChildTasks = childTasks;
         }
     }
 }

@@ -148,9 +148,10 @@ namespace OperationalInsights.Tests.OperationTests
                 SearchCreateOrUpdateSavedSearchParameters parameters = new SearchCreateOrUpdateSavedSearchParameters();
                 parameters.Properties = new SavedSearchProperties();
                 parameters.Properties.Version = 1;
-                parameters.Properties.Query = "* | measure Count() by Type";
+                parameters.Properties.Query = "* | measure Count() by Computer";
                 parameters.Properties.DisplayName = "Create or Update Saved Search Test";
                 parameters.Properties.Category = " Saved Search Test Category";
+                parameters.Properties.Tags = new List<Tag>() { new Tag() { Name = "Group", Value = "Computer" } };
 
                 var result = client.Search.ListSavedSearches(resourceGroupName, workspaceName);
 
@@ -175,7 +176,9 @@ namespace OperationalInsights.Tests.OperationTests
                     if (properties.Category.Equals(parameters.Properties.Category)
                         && properties.Version == parameters.Properties.Version
                         && properties.Query.Equals(parameters.Properties.Query)
-                        && properties.DisplayName.Equals(parameters.Properties.DisplayName))
+                        && properties.DisplayName.Equals(parameters.Properties.DisplayName)
+                        && properties.Tags[0].Name.Equals(parameters.Properties.Tags[0].Name)
+                        && properties.Tags[0].Value.Equals(parameters.Properties.Tags[0].Value))
                     {
                         foundSavedSearch = true;
                         parameters.ETag = savedSearchesResult.Value[i].ETag;
@@ -185,6 +188,7 @@ namespace OperationalInsights.Tests.OperationTests
 
                 // Test updating a saved search
                 parameters.Properties.Query = "*";
+                parameters.Properties.Tags = new List<Tag>() { new Tag() { Name = "Source", Value = "Test2" } };
                 var updateSavedSearchResults = client.Search.CreateOrUpdateSavedSearch(
                     resourceGroupName,
                     workspaceName,
@@ -205,7 +209,9 @@ namespace OperationalInsights.Tests.OperationTests
                     if (properties.Category.Equals(parameters.Properties.Category)
                         && properties.Version == parameters.Properties.Version
                         && properties.Query.Equals(parameters.Properties.Query)
-                        && properties.DisplayName.Equals(parameters.Properties.DisplayName))
+                        && properties.DisplayName.Equals(parameters.Properties.DisplayName)
+                        && properties.Tags[0].Name.Equals(parameters.Properties.Tags[0].Name)
+                        && properties.Tags[0].Value.Equals(parameters.Properties.Tags[0].Value))
                     {
                         foundSavedSearch = true;
                     }

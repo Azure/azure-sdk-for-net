@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
@@ -38,6 +39,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._bandwidth; }
             set { this._bandwidth = value; }
+        }
+        
+        private BillingType _billingType;
+        
+        /// <summary>
+        /// Optional. Sku to be used for the new dedicated circuit.
+        /// </summary>
+        public BillingType BillingType
+        {
+            get { return this._billingType; }
+            set { this._billingType = value; }
         }
         
         private string _sku;

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private DisableProtectionProviderSpecificInput _providerSettings;
         
         /// <summary>
-        /// Optional. Gets or sets the ProviderSettings.
+        /// Optional. The ProviderSettings.
         /// </summary>
         public DisableProtectionProviderSpecificInput ProviderSettings
         {

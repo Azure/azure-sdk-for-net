@@ -259,7 +259,7 @@ namespace Microsoft.Azure.KeyVault
                 algorithm = DefaultKeyWrapAlgorithm;
 
             if ( encryptedKey == null || encryptedKey.Length == 0 )
-                throw new ArgumentNullException( "wrappedKey" );
+                throw new ArgumentNullException( "encryptedKey" );
 
             if ( _csp.PublicOnly )
                 throw new NotSupportedException( "UnwrapKey is not supported because no private key is available" );

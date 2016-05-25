@@ -34,5 +34,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         public const string Day = "Day";
         
         public const string Hour = "Hour";
+        
+        public const string Week = "Week";
+        
+        public const string Month = "Month";
     }
 }

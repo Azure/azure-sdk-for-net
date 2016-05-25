@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Models
+namespace Microsoft.Azure.Management.SiteRecoveryVault.Models
 {
     /// <summary>
     /// The status of the asynchronous request.

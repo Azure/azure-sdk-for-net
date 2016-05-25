@@ -467,7 +467,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Executes repair VM replication for the given Replication protected
+        /// Executes repair replication for the given Replication protected
         /// item.
         /// </summary>
         /// <param name='operations'>
@@ -489,17 +489,17 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static LongRunningOperationResponse BeginRepairVMReplication(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse BeginRepairReplication(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IReplicationProtectedItemOperations)s).BeginRepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders);
+                return ((IReplicationProtectedItemOperations)s).BeginRepairReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Executes repair VM replication for the given Replication protected
+        /// Executes repair replication for the given Replication protected
         /// item.
         /// </summary>
         /// <param name='operations'>
@@ -521,9 +521,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginRepairVMReplicationAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> BeginRepairReplicationAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.BeginRepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
+            return operations.BeginRepairReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -1382,11 +1382,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// Service response for replication protected items operation.
         /// </returns>
-        public static ReplicationProtectedItemOperationResponse GetRepairVMReplicationStatus(this IReplicationProtectedItemOperations operations, string operationStatusLink)
+        public static ReplicationProtectedItemOperationResponse GetRepairReplicationStatus(this IReplicationProtectedItemOperations operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IReplicationProtectedItemOperations)s).GetRepairVMReplicationStatusAsync(operationStatusLink);
+                return ((IReplicationProtectedItemOperations)s).GetRepairReplicationStatusAsync(operationStatusLink);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -1407,9 +1407,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// Service response for replication protected items operation.
         /// </returns>
-        public static Task<ReplicationProtectedItemOperationResponse> GetRepairVMReplicationStatusAsync(this IReplicationProtectedItemOperations operations, string operationStatusLink)
+        public static Task<ReplicationProtectedItemOperationResponse> GetRepairReplicationStatusAsync(this IReplicationProtectedItemOperations operations, string operationStatusLink)
         {
-            return operations.GetRepairVMReplicationStatusAsync(operationStatusLink, CancellationToken.None);
+            return operations.GetRepairReplicationStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -1977,7 +1977,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Executes repair VM replication for the given Replication protected
+        /// Executes repair replication for the given Replication protected
         /// item.
         /// </summary>
         /// <param name='operations'>
@@ -1999,17 +1999,17 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static LongRunningOperationResponse RepairVMReplication(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse RepairReplication(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IReplicationProtectedItemOperations)s).RepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders);
+                return ((IReplicationProtectedItemOperations)s).RepairReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Executes repair VM replication for the given Replication protected
+        /// Executes repair replication for the given Replication protected
         /// item.
         /// </summary>
         /// <param name='operations'>
@@ -2031,9 +2031,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static Task<LongRunningOperationResponse> RepairVMReplicationAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> RepairReplicationAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.RepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
+            return operations.RepairReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

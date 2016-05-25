@@ -17,6 +17,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 using Microsoft.Azure.Management.HDInsight.Job.Models;
 
 namespace Microsoft.Azure.Management.HDInsight.Job
@@ -27,86 +28,88 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     public partial interface IJobOperations
     {
         /// <summary>
-        /// Gets the task log summary from execution of a jobDetails.
+        /// Submits a Hive job to an HDInsight cluster.
         /// </summary>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="targetDirectory">
-        /// Required. The directory in which to download the logs to.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// The name of the storage account
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer"></param>
-        /// <param name="cancellationToken">
-        /// Cancellation token.
+        /// <param name='parameters'>
+        /// Required. Hive job parameters.
         /// </param>
         /// <returns>
-        /// 
+        /// The Create Job operation response.
         /// </returns>
-        Task DownloadJobTaskLogsAsync(string jobId, string targetDirectory, string storageAccountName,
-            string storageAccountKey, string defaultContainer, CancellationToken cancellationToken);
+        Task<JobSubmissionResponse> SubmitHiveJobAsync(HiveJobSubmissionParameters parameters);
+
+        /// <summary>
+        /// Submits a MapReduce job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitMapReduceJobAsync(MapReduceJobSubmissionParameters parameters);
+
+        /// <summary>
+        /// Submits a MapReduce streaming job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(MapReduceStreamingJobSubmissionParameters parameters);
+
+        /// <summary>
+        /// Submits a Pig job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Pig job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitPigJobAsync(PigJobSubmissionParameters parameters);
+
+        /// <summary>
+        /// Submits a Sqoop job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Sqoop job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        Task<JobSubmissionResponse> SubmitSqoopJobAsync(SqoopJobSubmissionParameters parameters);
 
         /// <summary>
         /// Gets the output from the execution of an individual jobDetails.
         /// </summary>
         /// <param name="jobId">
-        ///     Required. The id of the job.
+        /// Required. The id of the job.
         /// </param>
-        /// <param name="storageAccountName">
-        ///     Required. The storage account the container lives on.
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer">
-        ///     Required. The default container.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns>
         /// The output of an individual jobDetails by jobId.
         /// </returns>
-        Task<Stream> GetJobOutputAsync(string jobId, string storageAccountName, string storageAccountKey,
-            string defaultContainer, CancellationToken cancellationToken);
+        Task<Stream> GetJobOutputAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets the error logs from the execution of an individual jobDetails.
         /// </summary>
         /// <param name="jobId">
-        ///     Required. The id of the job.
+        /// Required. The id of the job.
         /// </param>
-        /// <param name="storageAccountName">
-        ///     Required. The storage account the container lives on.
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer">
-        ///     Required. The default container.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns>
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
-        Task<Stream> GetJobErrorLogsAsync(string jobId, string storageAccountName, string storageAccountKey,
-            string defaultContainer, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Gets the task logs from the execution of an individual jobDetails.
-        /// </summary>
-        /// <param name="jobId">
-        ///     Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccountName">
-        ///     Required. The storage account the container lives on.
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer">
-        ///     Required. The default container.
-        /// </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>
-        /// The task logs of an individual jobDetails by jobId.
-        /// </returns>
-        Task<Stream> GetJobTaskLogSummaryAsync(string jobId, string storageAccountName, string storageAccountKey,
-            string defaultContainer, CancellationToken cancellationToken);
+        Task<Stream> GetJobErrorLogsAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
     }
 }

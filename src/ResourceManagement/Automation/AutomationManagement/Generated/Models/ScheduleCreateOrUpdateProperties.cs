@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
@@ -29,6 +30,17 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class ScheduleCreateOrUpdateProperties
     {
+        private AdvancedSchedule _advancedSchedule;
+        
+        /// <summary>
+        /// Optional. Gets or sets the AdvancedSchedule.
+        /// </summary>
+        public AdvancedSchedule AdvancedSchedule
+        {
+            get { return this._advancedSchedule; }
+            set { this._advancedSchedule = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -82,6 +94,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._startTime; }
             set { this._startTime = value; }
+        }
+        
+        private string _timeZone;
+        
+        /// <summary>
+        /// Optional. Gets or sets the time zone of the schedule.
+        /// </summary>
+        public string TimeZone
+        {
+            get { return this._timeZone; }
+            set { this._timeZone = value; }
         }
         
         /// <summary>

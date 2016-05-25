@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Justification =
             "DisposableObject implements IDisposable correctly, the implementation of IDisposable in the interfaces is necessary for the design.")]
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This complexity is needed to handle all the operations.")]
-    public sealed class HDInsightClient : ClientBase, IHDInsightClient
+     public sealed class HDInsightClient : ClientBase, IHDInsightClient
     {
         private readonly Lazy<bool> canUseClustersContract;
         private Lazy<List<string>> capabilities;

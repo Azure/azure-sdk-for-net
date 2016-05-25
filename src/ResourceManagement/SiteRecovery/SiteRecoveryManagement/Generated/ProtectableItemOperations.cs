@@ -408,13 +408,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareVirtualMachineDetailsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = customDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            vMwareVirtualMachineDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken ipAddressValue = customDetailsValue["ipAddress"];
                                         if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                         {
@@ -441,28 +434,66 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken diskDetailsValue2 in ((JArray)diskDetailsArray2))
                                             {
-                                                DiskDiscoveryDetails diskDiscoveryDetailsInstance = new DiskDiscoveryDetails();
-                                                vMwareVirtualMachineDetailsInstance.DiskDetails.Add(diskDiscoveryDetailsInstance);
+                                                InMageDiskDetails inMageDiskDetailsInstance = new InMageDiskDetails();
+                                                vMwareVirtualMachineDetailsInstance.DiskDetails.Add(inMageDiskDetailsInstance);
                                                 
                                                 JToken diskIdValue = diskDetailsValue2["diskId"];
                                                 if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
                                                     string diskIdInstance = ((string)diskIdValue);
-                                                    diskDiscoveryDetailsInstance.DiskId = diskIdInstance;
+                                                    inMageDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
                                                 JToken diskNameValue = diskDetailsValue2["diskName"];
                                                 if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
                                                 {
                                                     string diskNameInstance = ((string)diskNameValue);
-                                                    diskDiscoveryDetailsInstance.DiskName = diskNameInstance;
+                                                    inMageDiskDetailsInstance.DiskName = diskNameInstance;
                                                 }
                                                 
-                                                JToken capacityValue = diskDetailsValue2["capacity"];
-                                                if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                                JToken diskSizeInMBValue = diskDetailsValue2["diskSizeInMB"];
+                                                if (diskSizeInMBValue != null && diskSizeInMBValue.Type != JTokenType.Null)
                                                 {
-                                                    string capacityInstance = ((string)capacityValue);
-                                                    diskDiscoveryDetailsInstance.Capacity = capacityInstance;
+                                                    string diskSizeInMBInstance = ((string)diskSizeInMBValue);
+                                                    inMageDiskDetailsInstance.DiskSizeInMB = diskSizeInMBInstance;
+                                                }
+                                                
+                                                JToken diskTypeValue = diskDetailsValue2["diskType"];
+                                                if (diskTypeValue != null && diskTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskTypeInstance = ((string)diskTypeValue);
+                                                    inMageDiskDetailsInstance.DiskType = diskTypeInstance;
+                                                }
+                                                
+                                                JToken diskConfigurationValue = diskDetailsValue2["diskConfiguration"];
+                                                if (diskConfigurationValue != null && diskConfigurationValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskConfigurationInstance = ((string)diskConfigurationValue);
+                                                    inMageDiskDetailsInstance.DiskConfiguration = diskConfigurationInstance;
+                                                }
+                                                
+                                                JToken volumeListArray = diskDetailsValue2["volumeList"];
+                                                if (volumeListArray != null && volumeListArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken volumeListValue in ((JArray)volumeListArray))
+                                                    {
+                                                        DiskVolumeDetails diskVolumeDetailsInstance = new DiskVolumeDetails();
+                                                        inMageDiskDetailsInstance.VolumeList.Add(diskVolumeDetailsInstance);
+                                                        
+                                                        JToken labelValue = volumeListValue["label"];
+                                                        if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                                        {
+                                                            string labelInstance = ((string)labelValue);
+                                                            diskVolumeDetailsInstance.Label = labelInstance;
+                                                        }
+                                                        
+                                                        JToken nameValue = volumeListValue["name"];
+                                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string nameInstance = ((string)nameValue);
+                                                            diskVolumeDetailsInstance.Name = nameInstance;
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -504,11 +535,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 protectableItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
-                                string nameInstance = ((string)nameValue);
-                                protectableItemInstance.Name = nameInstance;
+                                string nameInstance2 = ((string)nameValue2);
+                                protectableItemInstance.Name = nameInstance2;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -985,13 +1016,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareVirtualMachineDetailsInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = customDetailsValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    vMwareVirtualMachineDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken ipAddressValue = customDetailsValue["ipAddress"];
                                                 if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                 {
@@ -1018,28 +1042,66 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     foreach (JToken diskDetailsValue2 in ((JArray)diskDetailsArray2))
                                                     {
-                                                        DiskDiscoveryDetails diskDiscoveryDetailsInstance = new DiskDiscoveryDetails();
-                                                        vMwareVirtualMachineDetailsInstance.DiskDetails.Add(diskDiscoveryDetailsInstance);
+                                                        InMageDiskDetails inMageDiskDetailsInstance = new InMageDiskDetails();
+                                                        vMwareVirtualMachineDetailsInstance.DiskDetails.Add(inMageDiskDetailsInstance);
                                                         
                                                         JToken diskIdValue = diskDetailsValue2["diskId"];
                                                         if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                         {
                                                             string diskIdInstance = ((string)diskIdValue);
-                                                            diskDiscoveryDetailsInstance.DiskId = diskIdInstance;
+                                                            inMageDiskDetailsInstance.DiskId = diskIdInstance;
                                                         }
                                                         
                                                         JToken diskNameValue = diskDetailsValue2["diskName"];
                                                         if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
                                                         {
                                                             string diskNameInstance = ((string)diskNameValue);
-                                                            diskDiscoveryDetailsInstance.DiskName = diskNameInstance;
+                                                            inMageDiskDetailsInstance.DiskName = diskNameInstance;
                                                         }
                                                         
-                                                        JToken capacityValue = diskDetailsValue2["capacity"];
-                                                        if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                                        JToken diskSizeInMBValue = diskDetailsValue2["diskSizeInMB"];
+                                                        if (diskSizeInMBValue != null && diskSizeInMBValue.Type != JTokenType.Null)
                                                         {
-                                                            string capacityInstance = ((string)capacityValue);
-                                                            diskDiscoveryDetailsInstance.Capacity = capacityInstance;
+                                                            string diskSizeInMBInstance = ((string)diskSizeInMBValue);
+                                                            inMageDiskDetailsInstance.DiskSizeInMB = diskSizeInMBInstance;
+                                                        }
+                                                        
+                                                        JToken diskTypeValue = diskDetailsValue2["diskType"];
+                                                        if (diskTypeValue != null && diskTypeValue.Type != JTokenType.Null)
+                                                        {
+                                                            string diskTypeInstance = ((string)diskTypeValue);
+                                                            inMageDiskDetailsInstance.DiskType = diskTypeInstance;
+                                                        }
+                                                        
+                                                        JToken diskConfigurationValue = diskDetailsValue2["diskConfiguration"];
+                                                        if (diskConfigurationValue != null && diskConfigurationValue.Type != JTokenType.Null)
+                                                        {
+                                                            string diskConfigurationInstance = ((string)diskConfigurationValue);
+                                                            inMageDiskDetailsInstance.DiskConfiguration = diskConfigurationInstance;
+                                                        }
+                                                        
+                                                        JToken volumeListArray = diskDetailsValue2["volumeList"];
+                                                        if (volumeListArray != null && volumeListArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken volumeListValue in ((JArray)volumeListArray))
+                                                            {
+                                                                DiskVolumeDetails diskVolumeDetailsInstance = new DiskVolumeDetails();
+                                                                inMageDiskDetailsInstance.VolumeList.Add(diskVolumeDetailsInstance);
+                                                                
+                                                                JToken labelValue = volumeListValue["label"];
+                                                                if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string labelInstance = ((string)labelValue);
+                                                                    diskVolumeDetailsInstance.Label = labelInstance;
+                                                                }
+                                                                
+                                                                JToken nameValue = volumeListValue["name"];
+                                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance = ((string)nameValue);
+                                                                    diskVolumeDetailsInstance.Name = nameInstance;
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -1081,11 +1143,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         protectableItemInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        string nameInstance = ((string)nameValue);
-                                        protectableItemInstance.Name = nameInstance;
+                                        string nameInstance2 = ((string)nameValue2);
+                                        protectableItemInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -1498,13 +1560,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareVirtualMachineDetailsInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = customDetailsValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    vMwareVirtualMachineDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken ipAddressValue = customDetailsValue["ipAddress"];
                                                 if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                 {
@@ -1531,28 +1586,66 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     foreach (JToken diskDetailsValue2 in ((JArray)diskDetailsArray2))
                                                     {
-                                                        DiskDiscoveryDetails diskDiscoveryDetailsInstance = new DiskDiscoveryDetails();
-                                                        vMwareVirtualMachineDetailsInstance.DiskDetails.Add(diskDiscoveryDetailsInstance);
+                                                        InMageDiskDetails inMageDiskDetailsInstance = new InMageDiskDetails();
+                                                        vMwareVirtualMachineDetailsInstance.DiskDetails.Add(inMageDiskDetailsInstance);
                                                         
                                                         JToken diskIdValue = diskDetailsValue2["diskId"];
                                                         if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                         {
                                                             string diskIdInstance = ((string)diskIdValue);
-                                                            diskDiscoveryDetailsInstance.DiskId = diskIdInstance;
+                                                            inMageDiskDetailsInstance.DiskId = diskIdInstance;
                                                         }
                                                         
                                                         JToken diskNameValue = diskDetailsValue2["diskName"];
                                                         if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
                                                         {
                                                             string diskNameInstance = ((string)diskNameValue);
-                                                            diskDiscoveryDetailsInstance.DiskName = diskNameInstance;
+                                                            inMageDiskDetailsInstance.DiskName = diskNameInstance;
                                                         }
                                                         
-                                                        JToken capacityValue = diskDetailsValue2["capacity"];
-                                                        if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                                        JToken diskSizeInMBValue = diskDetailsValue2["diskSizeInMB"];
+                                                        if (diskSizeInMBValue != null && diskSizeInMBValue.Type != JTokenType.Null)
                                                         {
-                                                            string capacityInstance = ((string)capacityValue);
-                                                            diskDiscoveryDetailsInstance.Capacity = capacityInstance;
+                                                            string diskSizeInMBInstance = ((string)diskSizeInMBValue);
+                                                            inMageDiskDetailsInstance.DiskSizeInMB = diskSizeInMBInstance;
+                                                        }
+                                                        
+                                                        JToken diskTypeValue = diskDetailsValue2["diskType"];
+                                                        if (diskTypeValue != null && diskTypeValue.Type != JTokenType.Null)
+                                                        {
+                                                            string diskTypeInstance = ((string)diskTypeValue);
+                                                            inMageDiskDetailsInstance.DiskType = diskTypeInstance;
+                                                        }
+                                                        
+                                                        JToken diskConfigurationValue = diskDetailsValue2["diskConfiguration"];
+                                                        if (diskConfigurationValue != null && diskConfigurationValue.Type != JTokenType.Null)
+                                                        {
+                                                            string diskConfigurationInstance = ((string)diskConfigurationValue);
+                                                            inMageDiskDetailsInstance.DiskConfiguration = diskConfigurationInstance;
+                                                        }
+                                                        
+                                                        JToken volumeListArray = diskDetailsValue2["volumeList"];
+                                                        if (volumeListArray != null && volumeListArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken volumeListValue in ((JArray)volumeListArray))
+                                                            {
+                                                                DiskVolumeDetails diskVolumeDetailsInstance = new DiskVolumeDetails();
+                                                                inMageDiskDetailsInstance.VolumeList.Add(diskVolumeDetailsInstance);
+                                                                
+                                                                JToken labelValue = volumeListValue["label"];
+                                                                if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string labelInstance = ((string)labelValue);
+                                                                    diskVolumeDetailsInstance.Label = labelInstance;
+                                                                }
+                                                                
+                                                                JToken nameValue = volumeListValue["name"];
+                                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance = ((string)nameValue);
+                                                                    diskVolumeDetailsInstance.Name = nameInstance;
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -1594,11 +1687,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         protectableItemInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        string nameInstance = ((string)nameValue);
-                                        protectableItemInstance.Name = nameInstance;
+                                        string nameInstance2 = ((string)nameValue2);
+                                        protectableItemInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];

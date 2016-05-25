@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns
@@ -33,6 +32,33 @@ namespace Microsoft.Azure.Management.Dns
     /// </summary>
     public partial interface IZoneOperations
     {
+        /// <summary>
+        /// Removes a DNS zone from a resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='zoneName'>
+        /// The name of the zone without a terminating dot.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// Defines the If-Match condition. The delete operation will be
+        /// performed only if the ETag of the zone on the server matches this
+        /// value.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Defines the If-None-Match condition. The delete operation will be
+        /// performed only if the ETag of the zone on the server does not
+        /// match this value.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a Zone Delete operation.
+        /// </returns>
+        Task<ZoneDeleteResponse> BeginDeletingAsync(string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Creates a DNS zone within a resource group.
         /// </summary>
@@ -45,34 +71,44 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='parameters'>
         /// Parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='ifMatch'>
+        /// The etag of Zone.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response to a Zone CreateOrUpdate operation.
         /// </returns>
-        Task<ZoneCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string zoneName, ZoneCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<ZoneCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string zoneName, ZoneCreateOrUpdateParameters parameters, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
         
-        /// <summary>
-        /// Removes a DNS zone from a resource group.
-        /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='zoneName'>
         /// The name of the zone without a terminating dot.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to delete a zone
+        /// <param name='ifMatch'>
+        /// Defines the If-Match condition. The delete operation will be
+        /// performed only if the ETag of the zone on the server matches this
+        /// value.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Defines the If-None-Match condition. The delete operation will be
+        /// performed only if the ETag of the zone on the server does not
+        /// match this value.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response to a Zone Delete operation.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string zoneName, ZoneDeleteParameters parameters, CancellationToken cancellationToken);
+        Task<ZoneDeleteResponse> DeleteAsync(string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets a DNS zone.
@@ -94,6 +130,20 @@ namespace Microsoft.Azure.Management.Dns
         /// <summary>
         /// Lists the DNS zones within a resource group.
         /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a Zone List or ListAll operation.
+        /// </returns>
+        Task<ZoneListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Lists the DNS zones within a resource group.
+        /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -107,13 +157,14 @@ namespace Microsoft.Azure.Management.Dns
         /// <returns>
         /// The response to a Zone List or ListAll operation.
         /// </returns>
-        Task<ZoneListResponse> ListAsync(string resourceGroupName, ZoneListParameters parameters, CancellationToken cancellationToken);
+        Task<ZoneListResponse> ListZonesInResourceGroupAsync(string resourceGroupName, ZoneListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Lists the DNS zones within a resource group.
         /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to List operation.
+        /// <param name='parameters'>
+        /// Query parameters. If null is passed returns the default number of
+        /// zones.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -121,6 +172,33 @@ namespace Microsoft.Azure.Management.Dns
         /// <returns>
         /// The response to a Zone List or ListAll operation.
         /// </returns>
-        Task<ZoneListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
+        Task<ZoneListResponse> ListZonesInSubscriptionAsync(ZoneListParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Creates a DNS zone within a resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='zoneName'>
+        /// The name of the zone without a terminating dot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the CreateOrUpdate operation.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// The etag of Zone.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a Zone Update operation.
+        /// </returns>
+        Task<ZoneUpdateResponse> UpdateAsync(string resourceGroupName, string zoneName, ZoneUpdateParameters parameters, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
     }
 }

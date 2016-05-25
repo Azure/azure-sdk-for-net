@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationNetworks?api-version=2015-11-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvY2ZlYWQ4MjYtNjcwZi00YzQ1LThmM2YtY2ZlZTQyMTdkNzZiL3Jlc291cmNlR3JvdXBzL1M5MS0xL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlc0JWVEQyL3ZhdWx0cy9TOTEtMS0yLTMtNC01L3JlcGxpY2F0aW9uTmV0d29ya3M/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
+      "RequestUri": "/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationNetworks?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvN2I1NjQ0YTgtMjA4NC00OWE3LTk2ZjItNjQxZjJjNmY4Yzk3L3Jlc291cmNlR3JvdXBzL1JlY292ZXJ5U2VydmljZXMtV0hOT1dGNkxJNk5NNEI1NVFESVlSM1lHM1lBRVpOVERVT1dIUFFYN05KQjJMSERHVFhKQS1XZXN0LVVTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2l0ZVJlY292ZXJ5QlZURDIvU2l0ZVJlY292ZXJ5VmF1bHQvaHlkcmF0ZXN0L3JlcGxpY2F0aW9uTmV0d29ya3M/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,7 +10,7 @@
           "en"
         ],
         "x-ms-client-request-id": [
-          "9d837041-507d-463a-b325-3f95df63d692"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c"
         ],
         "x-ms-version": [
           "2015-01-01"
@@ -19,10 +19,10 @@
           "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationNetworks/15e39ce3-df76-4ed3-95d6-9b7f39f15b06\",\r\n      \"name\": \"15e39ce3-df76-4ed3-95d6-9b7f39f15b06\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"VSwitch_NoIso\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationNetworks/3325736a-1f2a-42a9-a9b2-0878e5eca701\",\r\n      \"name\": \"3325736a-1f2a-42a9-a9b2-0878e5eca701\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"VSwitch_Wnv\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationNetworks/5537b353-9433-4192-b6ca-fa44aa6068e2\",\r\n      \"name\": \"5537b353-9433-4192-b6ca-fa44aa6068e2\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"VSwitch_VLan\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationNetworks/76af4d2d-c905-412d-84b7-4cc423170580\",\r\n      \"name\": \"76af4d2d-c905-412d-84b7-4cc423170580\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"corp\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/d8b0fb79beebbc725294be75216531ed62eb4d29f1019b701baed3044576f5a0/replicationNetworks/3e46f91f-2eca-407d-97fc-1b9d9bf993cf\",\r\n      \"name\": \"3e46f91f-2eca-407d-97fc-1b9d9bf993cf\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"VSwitch_VLan\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/d8b0fb79beebbc725294be75216531ed62eb4d29f1019b701baed3044576f5a0/replicationNetworks/7d4d35bf-c550-44d9-98a1-60d0267e680d\",\r\n      \"name\": \"7d4d35bf-c550-44d9-98a1-60d0267e680d\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"corp\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/d8b0fb79beebbc725294be75216531ed62eb4d29f1019b701baed3044576f5a0/replicationNetworks/9d5675bb-94ae-4256-9690-476e70bbf871\",\r\n      \"name\": \"9d5675bb-94ae-4256-9690-476e70bbf871\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"VSwitch_Wnv\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/d8b0fb79beebbc725294be75216531ed62eb4d29f1019b701baed3044576f5a0/replicationNetworks/db4a439f-592d-4960-bcbe-163fdfa053e5\",\r\n      \"name\": \"db4a439f-592d-4960-bcbe-163fdfa053e5\",\r\n      \"properties\": {\r\n        \"fabricType\": \"VMM\",\r\n        \"subnets\": [],\r\n        \"friendlyName\": \"VSwitch_NoIso\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationFabrics/d1c6436f69e9f30593938429bb639dbaf7a207e8ff21faa29a3feb4ef1ebc4e1/replicationNetworks/SFJNRXh0ZXJuYWxOZXR3b3Jr\",\r\n      \"name\": \"SFJNRXh0ZXJuYWxOZXR3b3Jr\",\r\n      \"properties\": {\r\n        \"fabricType\": \"HyperVSite\",\r\n        \"subnets\": [\r\n          {\r\n            \"name\": \"3af182c9-31c7-4684-8f58-d793ef07def7\",\r\n            \"friendlyName\": \"HRMExternalNetwork\",\r\n            \"addressList\": []\r\n          }\r\n        ],\r\n        \"friendlyName\": \"HRMExternalNetwork\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationFabrics/d1c6436f69e9f30593938429bb639dbaf7a207e8ff21faa29a3feb4ef1ebc4e1/replicationNetworks/VlN3aXRjaF9Ob0lzbw==\",\r\n      \"name\": \"VlN3aXRjaF9Ob0lzbw==\",\r\n      \"properties\": {\r\n        \"fabricType\": \"HyperVSite\",\r\n        \"subnets\": [\r\n          {\r\n            \"name\": \"3af182c9-31c7-4684-8f58-d793ef07def7\",\r\n            \"friendlyName\": \"VSwitch_NoIso\",\r\n            \"addressList\": []\r\n          }\r\n        ],\r\n        \"friendlyName\": \"VSwitch_NoIso\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationFabrics/d1c6436f69e9f30593938429bb639dbaf7a207e8ff21faa29a3feb4ef1ebc4e1/replicationNetworks/VlN3aXRjaF9WTGFu\",\r\n      \"name\": \"VlN3aXRjaF9WTGFu\",\r\n      \"properties\": {\r\n        \"fabricType\": \"HyperVSite\",\r\n        \"subnets\": [\r\n          {\r\n            \"name\": \"3af182c9-31c7-4684-8f58-d793ef07def7\",\r\n            \"friendlyName\": \"VSwitch_VLan\",\r\n            \"addressList\": []\r\n          }\r\n        ],\r\n        \"friendlyName\": \"VSwitch_VLan\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/replicationFabrics/replicationNetworks\",\r\n      \"id\": \"/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationFabrics/d1c6436f69e9f30593938429bb639dbaf7a207e8ff21faa29a3feb4ef1ebc4e1/replicationNetworks/VlN3aXRjaF9XbnY=\",\r\n      \"name\": \"VlN3aXRjaF9XbnY=\",\r\n      \"properties\": {\r\n        \"fabricType\": \"HyperVSite\",\r\n        \"subnets\": [\r\n          {\r\n            \"name\": \"3af182c9-31c7-4684-8f58-d793ef07def7\",\r\n            \"friendlyName\": \"VSwitch_Wnv\",\r\n            \"addressList\": []\r\n          }\r\n        ],\r\n        \"friendlyName\": \"VSwitch_Wnv\",\r\n        \"networkType\": \"NoIsolation\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "4203"
+          "2731"
         ],
         "Content-Type": [
           "application/json"
@@ -34,7 +34,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "9d837041-507d-463a-b325-3f95df63d692 12/21/2015 11:32:12 AM"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c 3/17/2016 7:29:47 PM"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -53,19 +53,19 @@
           "ASP.NET"
         ],
         "x-ms-client-request-id": [
-          "9d837041-507d-463a-b325-3f95df63d692"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14963"
+          "14952"
         ],
         "x-ms-correlation-request-id": [
-          "cf136be0-922a-41f0-8352-cd6501acbbfa"
+          "81414408-0289-439b-9e23-90d8b61330ed"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151221T113212Z:cf136be0-922a-41f0-8352-cd6501acbbfa"
+          "CENTRALUS:20160317T192948Z:81414408-0289-439b-9e23-90d8b61330ed"
         ],
         "Date": [
-          "Mon, 21 Dec 2015 11:32:11 GMT"
+          "Thu, 17 Mar 2016 19:29:47 GMT"
         ]
       },
       "StatusCode": 200
@@ -73,6 +73,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "cfead826-670f-4c45-8f3f-cfee4217d76b"
+    "SubscriptionId": "7b5644a8-2084-49a7-96f2-641f2c6f8c97"
   }
 }

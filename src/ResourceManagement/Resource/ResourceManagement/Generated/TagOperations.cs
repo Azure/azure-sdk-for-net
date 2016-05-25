@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/tagNames/";
             url = url + Uri.EscapeDataString(tagName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/tagValues/";
             url = url + Uri.EscapeDataString(tagValue);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -526,7 +526,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/tagNames/";
             url = url + Uri.EscapeDataString(tagName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -669,7 +669,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/tagValues/";
             url = url + Uri.EscapeDataString(tagValue);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -792,7 +792,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             url = url + "/tagNames";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
