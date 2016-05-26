@@ -23,22 +23,22 @@ namespace HDInsightJob.Tests
 {
     public static class TestUtils
     {
-        public static string ClusterName = "pattipakalinuxg5.azurehdinsight.net";
+        public static string ClusterName = "pattipakalinux330.azurehdinsight.net";
         public static string UserName = "admin";
-        public static string Password = "H@d00pcluster";
-        public static string StorageAccountName = "pattipakalinuxg5";
-        public static string StorageAccountKey = "cHm4gCGsfAFgc24XMPWFXHL8kN6syYwXQEJctPBaJQU1psnCcb1Pox99kpTkaiL1B86pSb9IQNpyFRTUacXEGg==";
-        public static string DefaultContainer = "pattipakalinuxg5";
+        public static string Password = "";
+        public static string StorageAccountName = "pattipakalinux";
+        public static string StorageAccountKey = "";
+        public static string DefaultContainer = "pattipakalinux330";
 
         public static string WinClusterName = "pattipakawin33.azurehdinsight.net";
         public static string WinStorageAccountName = "pattipakastorageaccount";
-        public static string WinStorageAccountKey = "dFFtQ1ynNUYyo7kkyB7nkVqmegrHbtPQJXesInPnThzYqA7t1MSSfdDUQgQrm5C2BZLGpzV3hiIBHuEEZk6IHQ==";
+        public static string WinStorageAccountKey = "";
         public static string WinDefaultContainer = "pattipakawin33";
         public static string WinUserName = "admin";
-        public static string WinPassword = "H@d00pcluster";
+        public static string WinPassword = "";
 
-        public static string SQLServerUserName = "jobtest@hdinsightjobtest";
-        public static string SQLServerPassword = "Password@1";
+        public static string SQLServerUserName = "";
+        public static string SQLServerPassword = "";
         public static string SQLServerConnectionString = "jdbc:sqlserver://hdinsightjobtest.database.windows.net:1433;database=HdInsightJobTest;user=" + SQLServerUserName + ";password=" + SQLServerPassword + ";";
         public static string SQLServerTableName = "dept";
 
@@ -76,16 +76,16 @@ namespace HDInsightJob.Tests
                 HttpMockServer.Initialize("TestEnvironment", "InitialCreation");
                 server = HttpMockServer.CreateInstance();
             }
-            
+
             var method = typeof(T).GetMethod("WithHandler", new Type[] { typeof(DelegatingHandler) });
             client = method.Invoke(client, new object[] { server }) as T;
-            
+
             if (HttpMockServer.Mode != HttpRecorderMode.Playback) return client;
-            
+
             var initialTimeout = typeof(T).GetProperty("LongRunningOperationInitialTimeout", typeof(int));
             var retryTimeout = typeof(T).GetProperty("LongRunningOperationRetryTimeout", typeof(int));
             if (initialTimeout == null || retryTimeout == null) return client;
-            
+
             initialTimeout.SetValue(client, 0);
             retryTimeout.SetValue(client, 0);
             return client;
