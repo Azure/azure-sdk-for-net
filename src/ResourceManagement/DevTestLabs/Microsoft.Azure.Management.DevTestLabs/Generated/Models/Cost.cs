@@ -30,10 +30,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Cost class.
         /// </summary>
-        public Cost(string currencyCode = default(string), IList<CostPerDayProperties> costs = default(IList<CostPerDayProperties>), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Cost(string currencyCode = default(string), IList<CostPerDayProperties> costs = default(IList<CostPerDayProperties>), IList<ResourceCostProperties> resourceCosts = default(IList<ResourceCostProperties>), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             CurrencyCode = currencyCode;
             Costs = costs;
+            ResourceCosts = resourceCosts;
             Id = id;
             Name = name;
             Type = type;
@@ -48,10 +49,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string CurrencyCode { get; set; }
 
         /// <summary>
-        /// The per-day costs items of the cost.
+        /// The lab cost component of the cost data.
         /// </summary>
         [JsonProperty(PropertyName = "properties.costs")]
         public IList<CostPerDayProperties> Costs { get; set; }
+
+        /// <summary>
+        /// The resource cost component of the cost data.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceCosts")]
+        public IList<ResourceCostProperties> ResourceCosts { get; set; }
 
         /// <summary>
         /// The identifier of the resource.

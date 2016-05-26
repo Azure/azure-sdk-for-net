@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class FormulaOperationsExtensions
     {
             /// <summary>
-            /// List formulas.
+            /// List formulas in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List formulas.
+            /// List formulas in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List formulas.
+            /// List formulas in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List formulas.
+            /// List formulas in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

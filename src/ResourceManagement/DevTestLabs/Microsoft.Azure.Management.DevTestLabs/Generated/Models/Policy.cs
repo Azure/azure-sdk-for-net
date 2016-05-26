@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Policy class.
         /// </summary>
-        public Policy(string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string evaluatorType = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Policy(string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string evaluatorType = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Description = description;
             Status = status;
@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             Threshold = threshold;
             EvaluatorType = evaluatorType;
             ProvisioningState = provisioningState;
+            UniqueIdentifier = uniqueIdentifier;
             Id = id;
             Name = name;
             Type = type;
@@ -91,6 +92,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// The unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        public string UniqueIdentifier { get; set; }
 
         /// <summary>
         /// The identifier of the resource.

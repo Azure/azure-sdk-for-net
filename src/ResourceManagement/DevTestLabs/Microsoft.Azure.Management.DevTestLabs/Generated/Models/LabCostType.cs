@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for CostPropertyType.
+    /// Defines values for LabCostType.
     /// </summary>
-    public static class CostPropertyType
+    public static class LabCostType
     {
         public const string Unavailable = "Unavailable";
         public const string Reported = "Reported";

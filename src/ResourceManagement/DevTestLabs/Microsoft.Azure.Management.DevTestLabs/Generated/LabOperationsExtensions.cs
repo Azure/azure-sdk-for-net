@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class LabOperationsExtensions
     {
             /// <summary>
-            /// List labs.
+            /// List labs in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -518,7 +518,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -566,7 +566,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

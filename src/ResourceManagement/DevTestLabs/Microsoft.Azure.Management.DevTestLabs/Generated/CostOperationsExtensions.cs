@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -23,52 +22,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
     /// </summary>
     public static partial class CostOperationsExtensions
     {
-            /// <summary>
-            /// List costs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<Cost> List(this ICostOperations operations, string resourceGroupName, string labName, ODataQuery<Cost> odataQuery = default(ODataQuery<Cost>))
-            {
-                return Task.Factory.StartNew(s => ((ICostOperations)s).ListAsync(resourceGroupName, labName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List costs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Cost>> ListAsync(this ICostOperations operations, string resourceGroupName, string labName, ODataQuery<Cost> odataQuery = default(ODataQuery<Cost>), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, labName, odataQuery, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
             /// <summary>
             /// Get cost.
             /// </summary>
@@ -110,126 +63,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
             public static async Task<Cost> GetResourceAsync(this ICostOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetResourceWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Refresh Lab's Cost Data. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the cost.
-            /// </param>
-            public static void RefreshData(this ICostOperations operations, string resourceGroupName, string labName, string name)
-            {
-                Task.Factory.StartNew(s => ((ICostOperations)s).RefreshDataAsync(resourceGroupName, labName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Refresh Lab's Cost Data. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the cost.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RefreshDataAsync(this ICostOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.RefreshDataWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Refresh Lab's Cost Data. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the cost.
-            /// </param>
-            public static void BeginRefreshData(this ICostOperations operations, string resourceGroupName, string labName, string name)
-            {
-                Task.Factory.StartNew(s => ((ICostOperations)s).BeginRefreshDataAsync(resourceGroupName, labName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Refresh Lab's Cost Data. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the cost.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginRefreshDataAsync(this ICostOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.BeginRefreshDataWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// List costs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Cost> ListNext(this ICostOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((ICostOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List costs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Cost>> ListNextAsync(this ICostOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
