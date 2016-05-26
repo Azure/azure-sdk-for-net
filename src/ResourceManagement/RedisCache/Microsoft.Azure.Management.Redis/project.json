@@ -1,5 +1,5 @@
 {
-  "version": "2.1.1-preview",
+  "version": "3.0.0-preview",
   "description": "Provides redis cache management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure Redis Cache management", "redis management", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
