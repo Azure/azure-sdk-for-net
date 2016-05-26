@@ -63,6 +63,139 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
+        /// Gets application state from the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='appId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Gets or sets the State of the application.
+        /// </returns>
+        internal async Task<AppState> GetAppStateAsync(string appId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (appId == null)
+            {
+                throw new ArgumentNullException("appId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("appId", appId);
+                TracingAdapter.Enter(invocationId, this, "GetAppStateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "https://";
+            url = url + Uri.EscapeDataString(this.Client.ClusterDnsName);
+            url = url + "/ws/v1/cluster/apps/";
+            url = url + Uri.EscapeDataString(appId);
+            url = url + "/state";
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("accept", "application/json");
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AppState result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AppState();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken stateValue = responseDoc["state"];
+                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                            {
+                                string stateInstance = ((string)stateValue);
+                                result.State = stateInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Gets job details from the specified HDInsight cluster.
         /// </summary>
         /// <param name='jobId'>
