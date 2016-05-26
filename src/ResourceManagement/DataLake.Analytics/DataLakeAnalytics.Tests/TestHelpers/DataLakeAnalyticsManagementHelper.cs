@@ -233,7 +233,7 @@ namespace DataLakeAnalytics.Tests
             return datalakeStoreEndpoint;
         }
 
-        public void CreateCatalog(string resourceGroupName, string dataLakeAnalyticsAccountName, string dbName,
+        public Guid CreateCatalog(string resourceGroupName, string dataLakeAnalyticsAccountName, string dbName,
             string tableName, string tvfName, string viewName, string procName)
         {
             // build a simple catalog that can be used to retrieve items.
@@ -331,10 +331,10 @@ AS BEGIN
   T(a, b);
 END;", dbName, tableName, tvfName, viewName, procName);
 
-            RunJobToCompletion(dataLakeAnalyticsJobManagementClient, dataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(), scriptToRun);
+            return RunJobToCompletion(dataLakeAnalyticsJobManagementClient, dataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(), scriptToRun);
         }
 
-        internal void RunJobToCompletion(DataLakeAnalyticsJobManagementClient jobClient, string dataLakeAnalyticsAccountName, Guid jobIdToUse, string scriptToRun)
+        internal Guid RunJobToCompletion(DataLakeAnalyticsJobManagementClient jobClient, string dataLakeAnalyticsAccountName, Guid jobIdToUse, string scriptToRun)
         { 
             var createOrBuildParams = new JobInformation
             {
@@ -375,6 +375,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     getJobResponse.JobId, getJobResponse.State, getJobResponse.Result,
                     getJobResponse.ErrorMessage != null && getJobResponse.ErrorMessage.Count > 0 ? getJobResponse.ErrorMessage[0].Details : "no error information returned"));
+            return getJobResponse.JobId.GetValueOrDefault();
         }
     }
 }
