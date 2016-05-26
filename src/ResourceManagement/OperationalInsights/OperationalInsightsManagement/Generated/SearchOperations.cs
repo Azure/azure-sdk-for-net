@@ -626,7 +626,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken versionValue = propertiesValue["Version"];
                                 if (versionValue != null && versionValue.Type != JTokenType.Null)
                                 {
-                                    int versionInstance = ((int)versionValue);
+                                    long versionInstance = ((long)versionValue);
                                     propertiesInstance.Version = versionInstance;
                                 }
                                 
@@ -853,14 +853,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken totalValue = metadataValue["total"];
                                 if (totalValue != null && totalValue.Type != JTokenType.Null)
                                 {
-                                    int totalInstance = ((int)totalValue);
+                                    long totalInstance = ((long)totalValue);
                                     metadataInstance.Total = totalInstance;
                                 }
                                 
                                 JToken topValue = metadataValue["top"];
                                 if (topValue != null && topValue.Type != JTokenType.Null)
                                 {
-                                    int topInstance = ((int)topValue);
+                                    long topInstance = ((long)topValue);
                                     metadataInstance.Top = topInstance;
                                 }
                                 
@@ -889,7 +889,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -950,7 +950,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken requestTimeValue = metadataValue["requestTime"];
                                 if (requestTimeValue != null && requestTimeValue.Type != JTokenType.Null)
                                 {
-                                    int requestTimeInstance = ((int)requestTimeValue);
+                                    long requestTimeInstance = ((long)requestTimeValue);
                                     metadataInstance.RequestTime = requestTimeInstance;
                                 }
                                 
@@ -971,14 +971,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken sumValue = metadataValue["sum"];
                                 if (sumValue != null && sumValue.Type != JTokenType.Null)
                                 {
-                                    int sumInstance = ((int)sumValue);
+                                    long sumInstance = ((long)sumValue);
                                     metadataInstance.Sum = sumInstance;
                                 }
                                 
                                 JToken maxValue = metadataValue["max"];
                                 if (maxValue != null && maxValue.Type != JTokenType.Null)
                                 {
-                                    int maxInstance = ((int)maxValue);
+                                    long maxInstance = ((long)maxValue);
                                     metadataInstance.Max = maxInstance;
                                 }
                                 
@@ -1215,14 +1215,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken totalValue = metadataValue["total"];
                                 if (totalValue != null && totalValue.Type != JTokenType.Null)
                                 {
-                                    int totalInstance = ((int)totalValue);
+                                    long totalInstance = ((long)totalValue);
                                     metadataInstance.Total = totalInstance;
                                 }
                                 
                                 JToken topValue = metadataValue["top"];
                                 if (topValue != null && topValue.Type != JTokenType.Null)
                                 {
-                                    int topInstance = ((int)topValue);
+                                    long topInstance = ((long)topValue);
                                     metadataInstance.Top = topInstance;
                                 }
                                 
@@ -1251,7 +1251,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -1312,7 +1312,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken requestTimeValue = metadataValue["requestTime"];
                                 if (requestTimeValue != null && requestTimeValue.Type != JTokenType.Null)
                                 {
-                                    int requestTimeInstance = ((int)requestTimeValue);
+                                    long requestTimeInstance = ((long)requestTimeValue);
                                     metadataInstance.RequestTime = requestTimeInstance;
                                 }
                                 
@@ -1333,14 +1333,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken sumValue = metadataValue["sum"];
                                 if (sumValue != null && sumValue.Type != JTokenType.Null)
                                 {
-                                    int sumInstance = ((int)sumValue);
+                                    long sumInstance = ((long)sumValue);
                                     metadataInstance.Sum = sumInstance;
                                 }
                                 
                                 JToken maxValue = metadataValue["max"];
                                 if (maxValue != null && maxValue.Type != JTokenType.Null)
                                 {
-                                    int maxInstance = ((int)maxValue);
+                                    long maxInstance = ((long)maxValue);
                                     metadataInstance.Max = maxInstance;
                                 }
                                 
@@ -1667,14 +1667,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken totalValue = metadataValue["total"];
                                 if (totalValue != null && totalValue.Type != JTokenType.Null)
                                 {
-                                    int totalInstance = ((int)totalValue);
+                                    long totalInstance = ((long)totalValue);
                                     metadataInstance.Total = totalInstance;
                                 }
                                 
                                 JToken topValue = metadataValue["top"];
                                 if (topValue != null && topValue.Type != JTokenType.Null)
                                 {
-                                    int topInstance = ((int)topValue);
+                                    long topInstance = ((long)topValue);
                                     metadataInstance.Top = topInstance;
                                 }
                                 
@@ -1703,7 +1703,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -1764,7 +1764,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken requestTimeValue = metadataValue["requestTime"];
                                 if (requestTimeValue != null && requestTimeValue.Type != JTokenType.Null)
                                 {
-                                    int requestTimeInstance = ((int)requestTimeValue);
+                                    long requestTimeInstance = ((long)requestTimeValue);
                                     metadataInstance.RequestTime = requestTimeInstance;
                                 }
                                 
@@ -1785,14 +1785,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken sumValue = metadataValue["sum"];
                                 if (sumValue != null && sumValue.Type != JTokenType.Null)
                                 {
-                                    int sumInstance = ((int)sumValue);
+                                    long sumInstance = ((long)sumValue);
                                     metadataInstance.Sum = sumInstance;
                                 }
                                 
                                 JToken maxValue = metadataValue["max"];
                                 if (maxValue != null && maxValue.Type != JTokenType.Null)
                                 {
-                                    int maxInstance = ((int)maxValue);
+                                    long maxInstance = ((long)maxValue);
                                     metadataInstance.Max = maxInstance;
                                 }
                                 
@@ -2029,14 +2029,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken totalValue = metadataValue["total"];
                                 if (totalValue != null && totalValue.Type != JTokenType.Null)
                                 {
-                                    int totalInstance = ((int)totalValue);
+                                    long totalInstance = ((long)totalValue);
                                     metadataInstance.Total = totalInstance;
                                 }
                                 
                                 JToken topValue = metadataValue["top"];
                                 if (topValue != null && topValue.Type != JTokenType.Null)
                                 {
-                                    int topInstance = ((int)topValue);
+                                    long topInstance = ((long)topValue);
                                     metadataInstance.Top = topInstance;
                                 }
                                 
@@ -2065,7 +2065,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -2126,7 +2126,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken requestTimeValue = metadataValue["requestTime"];
                                 if (requestTimeValue != null && requestTimeValue.Type != JTokenType.Null)
                                 {
-                                    int requestTimeInstance = ((int)requestTimeValue);
+                                    long requestTimeInstance = ((long)requestTimeValue);
                                     metadataInstance.RequestTime = requestTimeInstance;
                                 }
                                 
@@ -2147,14 +2147,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken sumValue = metadataValue["sum"];
                                 if (sumValue != null && sumValue.Type != JTokenType.Null)
                                 {
-                                    int sumInstance = ((int)sumValue);
+                                    long sumInstance = ((long)sumValue);
                                     metadataInstance.Sum = sumInstance;
                                 }
                                 
                                 JToken maxValue = metadataValue["max"];
                                 if (maxValue != null && maxValue.Type != JTokenType.Null)
                                 {
-                                    int maxInstance = ((int)maxValue);
+                                    long maxInstance = ((long)maxValue);
                                     metadataInstance.Max = maxInstance;
                                 }
                                 
@@ -2232,7 +2232,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken versionValue2 = propertiesValue["Version"];
                                         if (versionValue2 != null && versionValue2.Type != JTokenType.Null)
                                         {
-                                            int versionInstance2 = ((int)versionValue2);
+                                            long versionInstance2 = ((long)versionValue2);
                                             propertiesInstance.Version = versionInstance2;
                                         }
                                         
@@ -2460,14 +2460,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken totalValue = metadataValue["total"];
                                 if (totalValue != null && totalValue.Type != JTokenType.Null)
                                 {
-                                    int totalInstance = ((int)totalValue);
+                                    long totalInstance = ((long)totalValue);
                                     metadataInstance.Total = totalInstance;
                                 }
                                 
                                 JToken topValue = metadataValue["top"];
                                 if (topValue != null && topValue.Type != JTokenType.Null)
                                 {
-                                    int topInstance = ((int)topValue);
+                                    long topInstance = ((long)topValue);
                                     metadataInstance.Top = topInstance;
                                 }
                                 
@@ -2496,7 +2496,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                         JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
                                         if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
                                         {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            long numberOfDocumentsInstance = ((long)numberOfDocumentsValue);
                                             coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
                                         }
                                     }
@@ -2557,7 +2557,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken requestTimeValue = metadataValue["requestTime"];
                                 if (requestTimeValue != null && requestTimeValue.Type != JTokenType.Null)
                                 {
-                                    int requestTimeInstance = ((int)requestTimeValue);
+                                    long requestTimeInstance = ((long)requestTimeValue);
                                     metadataInstance.RequestTime = requestTimeInstance;
                                 }
                                 
@@ -2578,14 +2578,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 JToken sumValue = metadataValue["sum"];
                                 if (sumValue != null && sumValue.Type != JTokenType.Null)
                                 {
-                                    int sumInstance = ((int)sumValue);
+                                    long sumInstance = ((long)sumValue);
                                     metadataInstance.Sum = sumInstance;
                                 }
                                 
                                 JToken maxValue = metadataValue["max"];
                                 if (maxValue != null && maxValue.Type != JTokenType.Null)
                                 {
-                                    int maxInstance = ((int)maxValue);
+                                    long maxInstance = ((long)maxValue);
                                     metadataInstance.Max = maxInstance;
                                 }
                                 
