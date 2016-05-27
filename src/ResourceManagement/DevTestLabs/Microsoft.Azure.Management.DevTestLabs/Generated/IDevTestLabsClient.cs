@@ -92,11 +92,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         ICostOperations Cost { get; }
 
         /// <summary>
-        /// Gets the ICostSettingOperations.
-        /// </summary>
-        ICostSettingOperations CostSetting { get; }
-
-        /// <summary>
         /// Gets the ICustomImageOperations.
         /// </summary>
         ICustomImageOperations CustomImage { get; }
@@ -125,11 +120,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// Gets the IScheduleOperations.
         /// </summary>
         IScheduleOperations Schedule { get; }
-
-        /// <summary>
-        /// Gets the IUnattendedTaskOperations.
-        /// </summary>
-        IUnattendedTaskOperations UnattendedTask { get; }
 
         /// <summary>
         /// Gets the IVirtualMachineOperations.

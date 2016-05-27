@@ -49,22 +49,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
         public SingleSegmentUploaderTests()
         {
-            TestHelpers.GenerateFileData(_smallFileContents, out _smallFilePath);
-            TestHelpers.GenerateFileData(_largeFileContents, out _largeFilePath);
+            var runFolder = Guid.NewGuid();
+            TestHelpers.GenerateFileData(_smallFileContents, runFolder.ToString(), out _smallFilePath);
+            TestHelpers.GenerateFileData(_largeFileContents, runFolder.ToString(), out _largeFilePath);
             TestHelpers.GenerateTextFileData(_textFileContents, 1, SingleSegmentUploader.BufferLength, out _textFilePath);
             TestHelpers.GenerateTextFileData(_badTextFileContents, SingleSegmentUploader.BufferLength + 1, SingleSegmentUploader.BufferLength + 2, out _badTextFilePath);
         }
 
         public void Dispose()
         {
-            if (File.Exists(_largeFilePath))
+            var tempDir = Path.GetDirectoryName(_largeFilePath);
+            if (Directory.Exists(tempDir))
             {
-                File.Delete(_largeFilePath);
-            }
-
-            if (File.Exists(_smallFilePath))
-            {
-                File.Delete(_smallFilePath);
+                Directory.Delete(tempDir, true);
             }
 
             if (File.Exists(_textFilePath))

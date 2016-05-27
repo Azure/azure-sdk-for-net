@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// A virtual machine.
     /// </summary>
     [JsonTransformation]
     public partial class LabVirtualMachine : IResource
@@ -30,10 +30,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the LabVirtualMachine class.
         /// </summary>
-        public LabVirtualMachine(string notes = default(string), string ownerObjectId = default(string), string computeId = default(string), string customImageId = default(string), string osType = default(string), string size = default(string), string userName = default(string), string password = default(string), string sshKey = default(string), bool? isAuthenticationWithSshKey = default(bool?), string fqdn = default(string), string labSubnetName = default(string), string labVirtualNetworkId = default(string), bool? disallowPublicIpAddress = default(bool?), string builtInPassword = default(string), IList<ArtifactInstallProperties> artifacts = default(IList<ArtifactInstallProperties>), ArtifactDeploymentStatusProperties artifactDeploymentStatus = default(ArtifactDeploymentStatusProperties), GalleryImageReference galleryImageReference = default(GalleryImageReference), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public LabVirtualMachine(string notes = default(string), string ownerObjectId = default(string), string createdByUserId = default(string), string createdByUser = default(string), string computeId = default(string), string customImageId = default(string), string osType = default(string), string size = default(string), string userName = default(string), string password = default(string), string sshKey = default(string), bool? isAuthenticationWithSshKey = default(bool?), string fqdn = default(string), string labSubnetName = default(string), string labVirtualNetworkId = default(string), bool? disallowPublicIpAddress = default(bool?), IList<ArtifactInstallProperties> artifacts = default(IList<ArtifactInstallProperties>), ArtifactDeploymentStatusProperties artifactDeploymentStatus = default(ArtifactDeploymentStatusProperties), GalleryImageReference galleryImageReference = default(GalleryImageReference), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Notes = notes;
             OwnerObjectId = ownerObjectId;
+            CreatedByUserId = createdByUserId;
+            CreatedByUser = createdByUser;
             ComputeId = computeId;
             CustomImageId = customImageId;
             OsType = osType;
@@ -46,11 +48,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             LabSubnetName = labSubnetName;
             LabVirtualNetworkId = labVirtualNetworkId;
             DisallowPublicIpAddress = disallowPublicIpAddress;
-            BuiltInPassword = builtInPassword;
             Artifacts = artifacts;
             ArtifactDeploymentStatus = artifactDeploymentStatus;
             GalleryImageReference = galleryImageReference;
             ProvisioningState = provisioningState;
+            UniqueIdentifier = uniqueIdentifier;
             Id = id;
             Name = name;
             Type = type;
@@ -71,7 +73,19 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string OwnerObjectId { get; set; }
 
         /// <summary>
-        /// The resource identifier (Microsof.Compute) of the virtual machine.
+        /// The object identifier of the creator of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdByUserId")]
+        public string CreatedByUserId { get; set; }
+
+        /// <summary>
+        /// The email address of creator of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdByUser")]
+        public string CreatedByUser { get; set; }
+
+        /// <summary>
+        /// The resource identifier (Microsoft.Compute) of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.computeId")]
         public string ComputeId { get; set; }
@@ -145,12 +159,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public bool? DisallowPublicIpAddress { get; set; }
 
         /// <summary>
-        /// The built-in admin password of the virtual machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.builtInPassword")]
-        public string BuiltInPassword { get; set; }
-
-        /// <summary>
         /// The artifacts to be installed on the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.artifacts")]
@@ -174,6 +182,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// The unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        public string UniqueIdentifier { get; set; }
 
         /// <summary>
         /// The identifier of the resource.

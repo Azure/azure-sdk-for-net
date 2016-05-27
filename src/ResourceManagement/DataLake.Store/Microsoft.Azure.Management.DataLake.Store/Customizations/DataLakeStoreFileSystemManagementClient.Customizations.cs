@@ -36,13 +36,26 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
         /// </param>
+        /// <param name='userAgentAssemblyVersion'>
+        /// Optional. The version string that should be sent in the user-agent header for all requests. The default is the current version of the SDK.
+        /// </param>
+        /// <param name='adlsFileSystemDnsSuffix'>
+        /// Optional. The dns suffix to use for all requests for this client instance. The default is 'azuredatalakestore.net'.
+        /// </param>
+        /// <param name='clientTimeoutInMinutes'>
+        /// Optional. The maximum amount of time the client will wait for the server to respond to a request. The default is five minutes.
+        /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", string adlsFileSystemDnsSuffix = DataLakeStoreCustomizationHelper.DefaultAdlsFileSystemDnsSuffix, params DelegatingHandler[] handlers) : this(credentials, handlers)
+        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", string adlsFileSystemDnsSuffix = DataLakeStoreCustomizationHelper.DefaultAdlsFileSystemDnsSuffix, int clientTimeoutInMinutes = 5, params DelegatingHandler[] handlers) : this(credentials, handlers)
         {
             this.AdlsFileSystemDnsSuffix = adlsFileSystemDnsSuffix;
             DataLakeStoreCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
+
+            // for filesystem operations, it is up to the caller to utilize cancellation tokens to enforce granular
+            // timeouts. Otherwise the client will overall timeout after the specified number of minutes (default is five).
+            this.HttpClient.Timeout = TimeSpan.FromMinutes(clientTimeoutInMinutes);
         }
 
         /// <summary>
@@ -54,13 +67,26 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
         /// </param>
+        /// <param name='userAgentAssemblyVersion'>
+        /// Optional. The version string that should be sent in the user-agent header for all requests. The default is the current version of the SDK.
+        /// </param>
+        /// <param name='adlsFileSystemDnsSuffix'>
+        /// Optional. The dns suffix to use for all requests for this client instance. The default is 'azuredatalakestore.net'.
+        /// </param>
+        /// <param name='clientTimeoutInMinutes'>
+        /// Optional. The maximum amount of time the client will wait for the server to respond to a request. The default is five minutes.
+        /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", string adlsFileSystemDnsSuffix = DataLakeStoreCustomizationHelper.DefaultAdlsFileSystemDnsSuffix, params DelegatingHandler[] handlers) : this(credentials, rootHandler, handlers)
+        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", string adlsFileSystemDnsSuffix = DataLakeStoreCustomizationHelper.DefaultAdlsFileSystemDnsSuffix, int clientTimeoutInMinutes = 5, params DelegatingHandler[] handlers) : this(credentials, rootHandler, handlers)
         {
             this.AdlsFileSystemDnsSuffix = adlsFileSystemDnsSuffix;
             DataLakeStoreCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
+
+            // for filesystem operations, it is up to the caller to utilize cancellation tokens to enforce granular
+            // timeouts. Otherwise the client will overall timeout after the specified number of minutes (default is five).
+            this.HttpClient.Timeout = TimeSpan.FromMinutes(clientTimeoutInMinutes);
         }
     }
 }

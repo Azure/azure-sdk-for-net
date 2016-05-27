@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public DevTestLabsClient Client { get; private set; }
 
         /// <summary>
-        /// List labs.
+        /// List labs in a subscription.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         }
 
         /// <summary>
-        /// List labs.
+        /// List labs in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1441,7 +1441,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<string>> GenerateUploadUriWithHttpMessagesAsync(string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GenerateUploadUriResponse>> GenerateUploadUriWithHttpMessagesAsync(string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -1584,7 +1584,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<string>();
+            var _result = new AzureOperationResponse<GenerateUploadUriResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1597,7 +1597,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<string>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<GenerateUploadUriResponse>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1799,7 +1799,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         }
 
         /// <summary>
-        /// List labs.
+        /// List labs in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1958,7 +1958,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         }
 
         /// <summary>
-        /// List labs.
+        /// List labs in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

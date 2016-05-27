@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The per-day properties of a cost.
+    /// The properties of a lab cost item.
     /// </summary>
     public partial class CostPerDayProperties
     {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public DateTime? Date { get; set; }
 
         /// <summary>
-        /// The cost of the cost item.
+        /// The cost component of the cost item.
         /// </summary>
         [JsonProperty(PropertyName = "cost")]
         public double? Cost { get; set; }

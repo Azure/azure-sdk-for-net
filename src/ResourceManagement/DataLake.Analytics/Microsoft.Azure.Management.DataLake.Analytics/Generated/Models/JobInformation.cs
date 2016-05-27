@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobInformation class.
         /// </summary>
-        public JobInformation(string name, JobType type, JobProperties properties, Guid? jobId = default(Guid?), string submitter = default(string), IList<JobErrorDetails> errorMessage = default(IList<JobErrorDetails>), int? degreeOfParallelism = default(int?), int? priority = default(int?), DateTimeOffset? submitTime = default(DateTimeOffset?), DateTimeOffset? startTime = default(DateTimeOffset?), DateTimeOffset? endTime = default(DateTimeOffset?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), IList<JobStateAuditRecord> stateAuditRecords = default(IList<JobStateAuditRecord>))
+        public JobInformation(string name, JobType type, JobProperties properties, Guid? jobId = default(Guid?), string submitter = default(string), IList<JobErrorDetails> errorMessage = default(IList<JobErrorDetails>), int? degreeOfParallelism = default(int?), int? priority = default(int?), DateTimeOffset? submitTime = default(DateTimeOffset?), DateTimeOffset? startTime = default(DateTimeOffset?), DateTimeOffset? endTime = default(DateTimeOffset?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), string logFolder = default(string), IList<string> logFilePatterns = default(IList<string>), IList<JobStateAuditRecord> stateAuditRecords = default(IList<JobStateAuditRecord>))
         {
             JobId = jobId;
             Name = name;
@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             EndTime = endTime;
             State = state;
             Result = result;
+            LogFolder = logFolder;
+            LogFilePatterns = logFilePatterns;
             StateAuditRecords = stateAuditRecords;
             Properties = properties;
         }
@@ -127,6 +129,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "result")]
         public JobResult? Result { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the log folder path to use in the following format:
+        /// adl://&lt;accountName&gt;.azuredatalakestore.net/system/jobservice/jobs/Usql/2016/03/13/17/18/5fe51957-93bc-4de0-8ddc-c5a4753b068b/logs/.
+        /// </summary>
+        [JsonProperty(PropertyName = "logFolder")]
+        public string LogFolder { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the list of log file name patterns to find in the
+        /// logFolder. '*' is the only matching character allowed. Example
+        /// format: jobExecution*.log or *mylog*.txt
+        /// </summary>
+        [JsonProperty(PropertyName = "logFilePatterns")]
+        public IList<string> LogFilePatterns { get; set; }
 
         /// <summary>
         /// Gets the job state audit records, indicating when various

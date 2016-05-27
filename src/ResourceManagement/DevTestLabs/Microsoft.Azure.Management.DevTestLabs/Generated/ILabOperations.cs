@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface ILabOperations
     {
         /// <summary>
-        /// List labs.
+        /// List labs in a subscription.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse<IPage<Lab>>> ListBySubscriptionWithHttpMessagesAsync(ODataQuery<Lab> odataQuery = default(ODataQuery<Lab>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List labs.
+        /// List labs in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<string>> GenerateUploadUriWithHttpMessagesAsync(string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GenerateUploadUriResponse>> GenerateUploadUriWithHttpMessagesAsync(string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List disk images available for custom image creation.
         /// </summary>
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse<IPage<LabVhd>>> ListVhdsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List labs.
+        /// List labs in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse<IPage<Lab>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List labs.
+        /// List labs in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

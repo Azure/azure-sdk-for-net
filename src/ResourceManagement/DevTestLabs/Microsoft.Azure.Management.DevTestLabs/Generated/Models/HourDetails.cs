@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
+        /// Minutes of the hour the schedule will run.
         /// </summary>
         [JsonProperty(PropertyName = "minute")]
         public int? Minute { get; set; }

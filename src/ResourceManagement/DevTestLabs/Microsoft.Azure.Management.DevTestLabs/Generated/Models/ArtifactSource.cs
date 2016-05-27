@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// Properties of an artifact source.
     /// </summary>
     [JsonTransformation]
     public partial class ArtifactSource : IResource
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the ArtifactSource class.
         /// </summary>
-        public ArtifactSource(string displayName = default(string), string uri = default(string), string sourceType = default(string), string folderPath = default(string), string branchRef = default(string), string securityToken = default(string), string status = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ArtifactSource(string displayName = default(string), string uri = default(string), string sourceType = default(string), string folderPath = default(string), string branchRef = default(string), string securityToken = default(string), string status = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             DisplayName = displayName;
             Uri = uri;
@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             SecurityToken = securityToken;
             Status = status;
             ProvisioningState = provisioningState;
+            UniqueIdentifier = uniqueIdentifier;
             Id = id;
             Name = name;
             Type = type;
@@ -96,6 +97,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// The unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        public string UniqueIdentifier { get; set; }
 
         /// <summary>
         /// The identifier of the resource.

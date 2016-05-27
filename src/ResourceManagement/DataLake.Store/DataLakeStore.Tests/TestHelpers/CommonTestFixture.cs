@@ -23,6 +23,7 @@ namespace DataLakeStore.Tests
     {
         public string ResourceGroupName { set; get; }
         public string DataLakeStoreAccountName { get; set; }
+        public string NoPermissionDataLakeStoreAccountName { get; set; }
         public string DataLakeStoreFileSystemAccountName { get; set; }
         public string HostUrl { get; set; }
         public string Location = "East US 2";
@@ -46,6 +47,14 @@ namespace DataLakeStore.Tests
                 this.HostUrl =
                     dataLakeStoreAndFileSystemManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName,
                         this.Location, this.DataLakeStoreFileSystemAccountName);
+                if(this.HostUrl.ToUpperInvariant().Contains("CABOACCOUNTDOGFOOD.NET"))
+                {
+                    NoPermissionDataLakeStoreAccountName = "adlsaccesstest01";
+                }
+                else
+                {
+                    NoPermissionDataLakeStoreAccountName = "fluffykittens";
+                }
             }
             catch
             {

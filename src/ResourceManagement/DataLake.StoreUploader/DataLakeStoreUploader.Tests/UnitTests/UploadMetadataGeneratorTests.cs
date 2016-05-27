@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
                     var up = new UploadParameters(filePath, filePath, null, isBinary: false,
                         maxSegmentLength: 4*1024*1024);
-                    var mg = new UploadMetadataGenerator(up, MaxAppendLength);
+                    var mg = new UploadMetadataGenerator(up);
                     var metadata = mg.CreateNewMetadata(metadataFilePath);
 
                     VerifySegmentsAreOnRecordBoundaries(metadata, filePath);
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
                     var up = new UploadParameters(filePath, filePath, null, isBinary: false,
                         maxSegmentLength: 4*1024*1024);
-                    var mg = new UploadMetadataGenerator(up, MaxAppendLength);
+                    var mg = new UploadMetadataGenerator(up);
 
                     Assert.Throws<Exception>(() => mg.CreateNewMetadata(metadataFilePath));
                 }

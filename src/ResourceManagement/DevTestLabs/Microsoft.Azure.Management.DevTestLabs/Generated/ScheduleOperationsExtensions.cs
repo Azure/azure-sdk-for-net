@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class ScheduleOperationsExtensions
     {
             /// <summary>
-            /// List schedules.
+            /// List schedules in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List schedules.
+            /// List schedules in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -116,8 +116,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing schedule. This operation can take a while to
-            /// complete.
+            /// Create or replace an existing schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -139,8 +138,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing schedule. This operation can take a while to
-            /// complete.
+            /// Create or replace an existing schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,59 +166,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Create or replace an existing schedule. This operation can take a while to
-            /// complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            /// <param name='schedule'>
-            /// </param>
-            public static Schedule BeginCreateOrUpdateResource(this IScheduleOperations operations, string resourceGroupName, string labName, string name, Schedule schedule)
-            {
-                return Task.Factory.StartNew(s => ((IScheduleOperations)s).BeginCreateOrUpdateResourceAsync(resourceGroupName, labName, name, schedule), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing schedule. This operation can take a while to
-            /// complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            /// <param name='schedule'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Schedule> BeginCreateOrUpdateResourceAsync(this IScheduleOperations operations, string resourceGroupName, string labName, string name, Schedule schedule, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginCreateOrUpdateResourceWithHttpMessagesAsync(resourceGroupName, labName, name, schedule, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Delete schedule. This operation can take a while to complete.
+            /// Delete schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -240,7 +186,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Delete schedule. This operation can take a while to complete.
+            /// Delete schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -260,49 +206,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
             public static async Task DeleteResourceAsync(this IScheduleOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteResourceWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Delete schedule. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            public static void BeginDeleteResource(this IScheduleOperations operations, string resourceGroupName, string labName, string name)
-            {
-                Task.Factory.StartNew(s => ((IScheduleOperations)s).BeginDeleteResourceAsync(resourceGroupName, labName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete schedule. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginDeleteResourceAsync(this IScheduleOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.BeginDeleteResourceWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -356,7 +259,93 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List schedules.
+            /// Execute a schedule. This operation can take a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the schedule.
+            /// </param>
+            public static void Execute(this IScheduleOperations operations, string resourceGroupName, string labName, string name)
+            {
+                Task.Factory.StartNew(s => ((IScheduleOperations)s).ExecuteAsync(resourceGroupName, labName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute a schedule. This operation can take a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the schedule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ExecuteAsync(this IScheduleOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.ExecuteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Execute a schedule. This operation can take a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the schedule.
+            /// </param>
+            public static void BeginExecute(this IScheduleOperations operations, string resourceGroupName, string labName, string name)
+            {
+                Task.Factory.StartNew(s => ((IScheduleOperations)s).BeginExecuteAsync(resourceGroupName, labName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute a schedule. This operation can take a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the schedule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginExecuteAsync(this IScheduleOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginExecuteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// List schedules in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -370,7 +359,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List schedules.
+            /// List schedules in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

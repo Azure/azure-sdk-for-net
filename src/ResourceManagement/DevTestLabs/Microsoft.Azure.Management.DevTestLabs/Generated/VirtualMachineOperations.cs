@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public DevTestLabsClient Client { get; private set; }
 
         /// <summary>
-        /// List virtual machines.
+        /// List virtual machines in a given lab.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1104,7 +1104,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='name'>
         /// The name of the virtual Machine.
         /// </param>
-        /// <param name='listOfartifactInstallProperties'>
+        /// <param name='applyArtifactsRequest'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1112,11 +1112,11 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ApplyArtifactsWithHttpMessagesAsync(string resourceGroupName, string labName, string name, IList<ArtifactInstallProperties> listOfartifactInstallProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ApplyArtifactsWithHttpMessagesAsync(string resourceGroupName, string labName, string name, ApplyArtifactsRequest applyArtifactsRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse _response = await BeginApplyArtifactsWithHttpMessagesAsync(
-                resourceGroupName, labName, name, listOfartifactInstallProperties, customHeaders, cancellationToken);
+                resourceGroupName, labName, name, applyArtifactsRequest, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
@@ -1132,7 +1132,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='name'>
         /// The name of the virtual Machine.
         /// </param>
-        /// <param name='listOfartifactInstallProperties'>
+        /// <param name='applyArtifactsRequest'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1143,7 +1143,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginApplyArtifactsWithHttpMessagesAsync(string resourceGroupName, string labName, string name, IList<ArtifactInstallProperties> listOfartifactInstallProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginApplyArtifactsWithHttpMessagesAsync(string resourceGroupName, string labName, string name, ApplyArtifactsRequest applyArtifactsRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -1161,9 +1161,9 @@ namespace Microsoft.Azure.Management.DevTestLabs
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (listOfartifactInstallProperties == null)
+            if (applyArtifactsRequest == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "listOfartifactInstallProperties");
+                throw new ValidationException(ValidationRules.CannotBeNull, "applyArtifactsRequest");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1179,7 +1179,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("labName", labName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("listOfartifactInstallProperties", listOfartifactInstallProperties);
+                tracingParameters.Add("applyArtifactsRequest", applyArtifactsRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginApplyArtifacts", tracingParameters);
             }
@@ -1231,9 +1231,9 @@ namespace Microsoft.Azure.Management.DevTestLabs
 
             // Serialize Request
             string _requestContent = null;
-            if(listOfartifactInstallProperties != null)
+            if(applyArtifactsRequest != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(listOfartifactInstallProperties, this.Client.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(applyArtifactsRequest, this.Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1705,7 +1705,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         }
 
         /// <summary>
-        /// List virtual machines.
+        /// List virtual machines in a given lab.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

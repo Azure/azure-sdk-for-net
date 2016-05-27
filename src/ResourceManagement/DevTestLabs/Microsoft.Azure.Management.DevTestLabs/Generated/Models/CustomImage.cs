@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// A custom image.
     /// </summary>
     [JsonTransformation]
     public partial class CustomImage : IResource
@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the CustomImage class.
         /// </summary>
-        public CustomImage(CustomImagePropertiesFromVm vm = default(CustomImagePropertiesFromVm), CustomImagePropertiesCustom vhd = default(CustomImagePropertiesCustom), string description = default(string), string osType = default(string), string author = default(string), DateTime? creationDate = default(DateTime?), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public CustomImage(CustomImagePropertiesFromVm vm = default(CustomImagePropertiesFromVm), CustomImagePropertiesCustom vhd = default(CustomImagePropertiesCustom), string description = default(string), string author = default(string), DateTime? creationDate = default(DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Vm = vm;
             Vhd = vhd;
             Description = description;
-            OsType = osType;
             Author = author;
             CreationDate = creationDate;
             ProvisioningState = provisioningState;
+            UniqueIdentifier = uniqueIdentifier;
             Id = id;
             Name = name;
             Type = type;
@@ -64,13 +64,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// The OS type of the custom image. Possible values include:
-        /// 'Windows', 'Linux', 'None'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.osType")]
-        public string OsType { get; set; }
-
-        /// <summary>
         /// The author of the custom image.
         /// </summary>
         [JsonProperty(PropertyName = "properties.author")]
@@ -87,6 +80,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// The unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        public string UniqueIdentifier { get; set; }
 
         /// <summary>
         /// The identifier of the resource.

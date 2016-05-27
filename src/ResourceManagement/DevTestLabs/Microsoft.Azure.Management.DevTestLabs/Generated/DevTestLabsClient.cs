@@ -98,11 +98,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public virtual ICostOperations Cost { get; private set; }
 
         /// <summary>
-        /// Gets the ICostSettingOperations.
-        /// </summary>
-        public virtual ICostSettingOperations CostSetting { get; private set; }
-
-        /// <summary>
         /// Gets the ICustomImageOperations.
         /// </summary>
         public virtual ICustomImageOperations CustomImage { get; private set; }
@@ -131,11 +126,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// Gets the IScheduleOperations.
         /// </summary>
         public virtual IScheduleOperations Schedule { get; private set; }
-
-        /// <summary>
-        /// Gets the IUnattendedTaskOperations.
-        /// </summary>
-        public virtual IUnattendedTaskOperations UnattendedTask { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineOperations.
@@ -330,18 +320,16 @@ namespace Microsoft.Azure.Management.DevTestLabs
             this.ArtifactSource = new ArtifactSourceOperations(this);
             this.Artifact = new ArtifactOperations(this);
             this.Cost = new CostOperations(this);
-            this.CostSetting = new CostSettingOperations(this);
             this.CustomImage = new CustomImageOperations(this);
             this.Formula = new FormulaOperations(this);
             this.GalleryImage = new GalleryImageOperations(this);
             this.PolicySet = new PolicySetOperations(this);
             this.Policy = new PolicyOperations(this);
             this.Schedule = new ScheduleOperations(this);
-            this.UnattendedTask = new UnattendedTaskOperations(this);
             this.VirtualMachine = new VirtualMachineOperations(this);
             this.VirtualNetwork = new VirtualNetworkOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-05-21-preview";
+            this.ApiVersion = "2016-05-15";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface IVirtualMachineOperations
     {
         /// <summary>
-        /// List virtual machines.
+        /// List virtual machines in a given lab.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='name'>
         /// The name of the virtual Machine.
         /// </param>
-        /// <param name='listOfartifactInstallProperties'>
+        /// <param name='applyArtifactsRequest'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> ApplyArtifactsWithHttpMessagesAsync(string resourceGroupName, string labName, string name, IList<ArtifactInstallProperties> listOfartifactInstallProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ApplyArtifactsWithHttpMessagesAsync(string resourceGroupName, string labName, string name, ApplyArtifactsRequest applyArtifactsRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Apply artifacts to Lab VM. This operation can take a while to
         /// complete.
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='name'>
         /// The name of the virtual Machine.
         /// </param>
-        /// <param name='listOfartifactInstallProperties'>
+        /// <param name='applyArtifactsRequest'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> BeginApplyArtifactsWithHttpMessagesAsync(string resourceGroupName, string labName, string name, IList<ArtifactInstallProperties> listOfartifactInstallProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginApplyArtifactsWithHttpMessagesAsync(string resourceGroupName, string labName, string name, ApplyArtifactsRequest applyArtifactsRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Start a Lab VM. This operation can take a while to complete.
         /// </summary>
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse> BeginStopWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List virtual machines.
+        /// List virtual machines in a given lab.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

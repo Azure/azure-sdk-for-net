@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -24,7 +23,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface ICostOperations
     {
         /// <summary>
-        /// List costs.
+        /// Get cost.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -32,8 +31,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='labName'>
         /// The name of the lab.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='name'>
+        /// The name of the cost.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,19 +40,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<Cost>>> ListWithHttpMessagesAsync(string resourceGroupName, string labName, ODataQuery<Cost> odataQuery = default(ODataQuery<Cost>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List costs.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<Cost>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cost>> GetResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

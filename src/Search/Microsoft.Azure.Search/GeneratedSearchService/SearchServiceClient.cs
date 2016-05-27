@@ -306,9 +306,7 @@ namespace Microsoft.Azure.Search
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataDeletionDetectionPolicy>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ScoringFunction>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ScoringFunction>("type"));
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
-
-            UserAgentHelper.SetUserAgent(HttpClient, this.GetType());
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }
 }

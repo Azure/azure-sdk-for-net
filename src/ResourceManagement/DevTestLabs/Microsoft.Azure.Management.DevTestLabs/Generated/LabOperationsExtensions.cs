@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class LabOperationsExtensions
     {
             /// <summary>
-            /// List labs.
+            /// List labs in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// </param>
             /// <param name='generateUploadUriParameter'>
             /// </param>
-            public static string GenerateUploadUri(this ILabOperations operations, string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter)
+            public static GenerateUploadUriResponse GenerateUploadUri(this ILabOperations operations, string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter)
             {
                 return Task.Factory.StartNew(s => ((ILabOperations)s).GenerateUploadUriAsync(resourceGroupName, name, generateUploadUriParameter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -469,7 +469,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> GenerateUploadUriAsync(this ILabOperations operations, string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GenerateUploadUriResponse> GenerateUploadUriAsync(this ILabOperations operations, string resourceGroupName, string name, GenerateUploadUriParameter generateUploadUriParameter, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GenerateUploadUriWithHttpMessagesAsync(resourceGroupName, name, generateUploadUriParameter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -518,7 +518,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -566,7 +566,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List labs.
+            /// List labs in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

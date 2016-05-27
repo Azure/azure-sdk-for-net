@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An Azure resource.
+    /// A lab.
     /// </summary>
     [JsonTransformation]
     public partial class Lab : IResource
@@ -30,16 +30,15 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Lab class.
         /// </summary>
-        public Lab(string defaultStorageAccount = default(string), string artifactsStorageAccount = default(string), IList<string> storageAccounts = default(IList<string>), string vaultName = default(string), string labStorageType = default(string), string defaultVirtualNetworkId = default(string), DateTime? createdDate = default(DateTime?), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Lab(string defaultStorageAccount = default(string), string artifactsStorageAccount = default(string), string vaultName = default(string), string labStorageType = default(string), DateTime? createdDate = default(DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             DefaultStorageAccount = defaultStorageAccount;
             ArtifactsStorageAccount = artifactsStorageAccount;
-            StorageAccounts = storageAccounts;
             VaultName = vaultName;
             LabStorageType = labStorageType;
-            DefaultVirtualNetworkId = defaultVirtualNetworkId;
             CreatedDate = createdDate;
             ProvisioningState = provisioningState;
+            UniqueIdentifier = uniqueIdentifier;
             Id = id;
             Name = name;
             Type = type;
@@ -60,12 +59,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string ArtifactsStorageAccount { get; set; }
 
         /// <summary>
-        /// The storage accounts of the lab.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccounts")]
-        public IList<string> StorageAccounts { get; set; }
-
-        /// <summary>
         /// The name of the key vault of the lab.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vaultName")]
@@ -79,12 +72,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string LabStorageType { get; set; }
 
         /// <summary>
-        /// The default virtual network identifier of the lab.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.defaultVirtualNetworkId")]
-        public string DefaultVirtualNetworkId { get; set; }
-
-        /// <summary>
         /// The creation date of the lab.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDate")]
@@ -95,6 +82,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// The unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        public string UniqueIdentifier { get; set; }
 
         /// <summary>
         /// The identifier of the resource.
