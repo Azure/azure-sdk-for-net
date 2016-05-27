@@ -273,31 +273,55 @@ namespace Microsoft.AzureStack.Management
                         propertiesValue["extensionUri"] = parameters.ProviderRegistration.Properties.ExtensionUri;
                     }
                     
+                    if (parameters.ProviderRegistration.Properties.Extensions != null)
+                    {
+                        if (parameters.ProviderRegistration.Properties.Extensions is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.Extensions).IsInitialized)
+                        {
+                            JArray resourceTypesArray = new JArray();
+                            foreach (Extension resourceTypesItem in parameters.ProviderRegistration.Properties.Extensions)
+                            {
+                                JObject extensionValue = new JObject();
+                                resourceTypesArray.Add(extensionValue);
+                                
+                                if (resourceTypesItem.Name != null)
+                                {
+                                    extensionValue["name"] = resourceTypesItem.Name;
+                                }
+                                
+                                if (resourceTypesItem.Uri != null)
+                                {
+                                    extensionValue["uri"] = resourceTypesItem.Uri;
+                                }
+                            }
+                            propertiesValue["resourceTypes"] = resourceTypesArray;
+                        }
+                    }
+                    
                     if (parameters.ProviderRegistration.Properties.ResourceTypes != null)
                     {
                         if (parameters.ProviderRegistration.Properties.ResourceTypes is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.ResourceTypes).IsInitialized)
                         {
-                            JArray resourceTypesArray = new JArray();
-                            foreach (ResourceType resourceTypesItem in parameters.ProviderRegistration.Properties.ResourceTypes)
+                            JArray resourceTypesArray2 = new JArray();
+                            foreach (ResourceType resourceTypesItem2 in parameters.ProviderRegistration.Properties.ResourceTypes)
                             {
                                 JObject resourceTypeValue = new JObject();
-                                resourceTypesArray.Add(resourceTypeValue);
+                                resourceTypesArray2.Add(resourceTypeValue);
                                 
-                                if (resourceTypesItem.Name != null)
+                                if (resourceTypesItem2.Name != null)
                                 {
-                                    resourceTypeValue["name"] = resourceTypesItem.Name;
+                                    resourceTypeValue["name"] = resourceTypesItem2.Name;
                                 }
                                 
-                                resourceTypeValue["routingType"] = resourceTypesItem.RoutingType.ToString();
+                                resourceTypeValue["routingType"] = resourceTypesItem2.RoutingType.ToString();
                                 
-                                resourceTypeValue["resourceDeletionPolicy"] = resourceTypesItem.ResourceDeletionPolicy.ToString();
+                                resourceTypeValue["resourceDeletionPolicy"] = resourceTypesItem2.ResourceDeletionPolicy.ToString();
                                 
-                                if (resourceTypesItem.AllowedUnauthorizedActions != null)
+                                if (resourceTypesItem2.AllowedUnauthorizedActions != null)
                                 {
-                                    if (resourceTypesItem.AllowedUnauthorizedActions is ILazyCollection == false || ((ILazyCollection)resourceTypesItem.AllowedUnauthorizedActions).IsInitialized)
+                                    if (resourceTypesItem2.AllowedUnauthorizedActions is ILazyCollection == false || ((ILazyCollection)resourceTypesItem2.AllowedUnauthorizedActions).IsInitialized)
                                     {
                                         JArray allowedUnauthorizedActionsArray = new JArray();
-                                        foreach (string allowedUnauthorizedActionsItem in resourceTypesItem.AllowedUnauthorizedActions)
+                                        foreach (string allowedUnauthorizedActionsItem in resourceTypesItem2.AllowedUnauthorizedActions)
                                         {
                                             allowedUnauthorizedActionsArray.Add(allowedUnauthorizedActionsItem);
                                         }
@@ -305,12 +329,12 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
-                                if (resourceTypesItem.MeteredResourceIds != null)
+                                if (resourceTypesItem2.MeteredResourceIds != null)
                                 {
-                                    if (resourceTypesItem.MeteredResourceIds is ILazyCollection == false || ((ILazyCollection)resourceTypesItem.MeteredResourceIds).IsInitialized)
+                                    if (resourceTypesItem2.MeteredResourceIds is ILazyCollection == false || ((ILazyCollection)resourceTypesItem2.MeteredResourceIds).IsInitialized)
                                     {
                                         JArray meteredResourceIdsArray = new JArray();
-                                        foreach (string meteredResourceIdsItem in resourceTypesItem.MeteredResourceIds)
+                                        foreach (string meteredResourceIdsItem in resourceTypesItem2.MeteredResourceIds)
                                         {
                                             meteredResourceIdsArray.Add(meteredResourceIdsItem);
                                         }
@@ -318,14 +342,14 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
-                                resourceTypeValue["marketplaceType"] = resourceTypesItem.MarketplaceType.ToString();
+                                resourceTypeValue["marketplaceType"] = resourceTypesItem2.MarketplaceType.ToString();
                                 
-                                if (resourceTypesItem.Endpoints != null)
+                                if (resourceTypesItem2.Endpoints != null)
                                 {
-                                    if (resourceTypesItem.Endpoints is ILazyCollection == false || ((ILazyCollection)resourceTypesItem.Endpoints).IsInitialized)
+                                    if (resourceTypesItem2.Endpoints is ILazyCollection == false || ((ILazyCollection)resourceTypesItem2.Endpoints).IsInitialized)
                                     {
                                         JArray endpointsArray = new JArray();
-                                        foreach (ResourceProviderEndpoint endpointsItem in resourceTypesItem.Endpoints)
+                                        foreach (ResourceProviderEndpoint endpointsItem in resourceTypesItem2.Endpoints)
                                         {
                                             JObject resourceProviderEndpointValue = new JObject();
                                             endpointsArray.Add(resourceProviderEndpointValue);
@@ -374,7 +398,7 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                             }
-                            propertiesValue["resourceTypes"] = resourceTypesArray;
+                            propertiesValue["resourceTypes"] = resourceTypesArray2;
                         }
                     }
                     
@@ -592,36 +616,60 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.ExtensionUri = extensionUriInstance;
                                 }
                                 
-                                JToken resourceTypesArray2 = propertiesValue2["resourceTypes"];
-                                if (resourceTypesArray2 != null && resourceTypesArray2.Type != JTokenType.Null)
+                                JToken resourceTypesArray3 = propertiesValue2["resourceTypes"];
+                                if (resourceTypesArray3 != null && resourceTypesArray3.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray2))
+                                    foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray3))
                                     {
-                                        ResourceType resourceTypeInstance = new ResourceType();
-                                        propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                        Extension extensionInstance = new Extension();
+                                        propertiesInstance.Extensions.Add(extensionInstance);
                                         
                                         JToken nameValue = resourceTypesValue["name"];
                                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
                                             string nameInstance = ((string)nameValue);
-                                            resourceTypeInstance.Name = nameInstance;
+                                            extensionInstance.Name = nameInstance;
                                         }
                                         
-                                        JToken routingTypeValue = resourceTypesValue["routingType"];
+                                        JToken uriValue = resourceTypesValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            string uriInstance = ((string)uriValue);
+                                            extensionInstance.Uri = uriInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken resourceTypesArray4 = propertiesValue2["resourceTypes"];
+                                if (resourceTypesArray4 != null && resourceTypesArray4.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken resourceTypesValue2 in ((JArray)resourceTypesArray4))
+                                    {
+                                        ResourceType resourceTypeInstance = new ResourceType();
+                                        propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                        
+                                        JToken nameValue2 = resourceTypesValue2["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            resourceTypeInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken routingTypeValue = resourceTypesValue2["routingType"];
                                         if (routingTypeValue != null && routingTypeValue.Type != JTokenType.Null)
                                         {
                                             RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
                                             resourceTypeInstance.RoutingType = routingTypeInstance;
                                         }
                                         
-                                        JToken resourceDeletionPolicyValue = resourceTypesValue["resourceDeletionPolicy"];
+                                        JToken resourceDeletionPolicyValue = resourceTypesValue2["resourceDeletionPolicy"];
                                         if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
                                         {
                                             ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
                                             resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
                                         }
                                         
-                                        JToken allowedUnauthorizedActionsArray2 = resourceTypesValue["allowedUnauthorizedActions"];
+                                        JToken allowedUnauthorizedActionsArray2 = resourceTypesValue2["allowedUnauthorizedActions"];
                                         if (allowedUnauthorizedActionsArray2 != null && allowedUnauthorizedActionsArray2.Type != JTokenType.Null)
                                         {
                                             foreach (JToken allowedUnauthorizedActionsValue in ((JArray)allowedUnauthorizedActionsArray2))
@@ -630,7 +678,7 @@ namespace Microsoft.AzureStack.Management
                                             }
                                         }
                                         
-                                        JToken meteredResourceIdsArray2 = resourceTypesValue["meteredResourceIds"];
+                                        JToken meteredResourceIdsArray2 = resourceTypesValue2["meteredResourceIds"];
                                         if (meteredResourceIdsArray2 != null && meteredResourceIdsArray2.Type != JTokenType.Null)
                                         {
                                             foreach (JToken meteredResourceIdsValue in ((JArray)meteredResourceIdsArray2))
@@ -639,14 +687,14 @@ namespace Microsoft.AzureStack.Management
                                             }
                                         }
                                         
-                                        JToken marketplaceTypeValue = resourceTypesValue["marketplaceType"];
+                                        JToken marketplaceTypeValue = resourceTypesValue2["marketplaceType"];
                                         if (marketplaceTypeValue != null && marketplaceTypeValue.Type != JTokenType.Null)
                                         {
                                             MarketplaceType marketplaceTypeInstance = ((MarketplaceType)Enum.Parse(typeof(MarketplaceType), ((string)marketplaceTypeValue), true));
                                             resourceTypeInstance.MarketplaceType = marketplaceTypeInstance;
                                         }
                                         
-                                        JToken endpointsArray2 = resourceTypesValue["endpoints"];
+                                        JToken endpointsArray2 = resourceTypesValue2["endpoints"];
                                         if (endpointsArray2 != null && endpointsArray2.Type != JTokenType.Null)
                                         {
                                             foreach (JToken endpointsValue in ((JArray)endpointsArray2))
@@ -724,11 +772,11 @@ namespace Microsoft.AzureStack.Management
                                 providerRegistrationInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                providerRegistrationInstance.Name = nameInstance2;
+                                string nameInstance3 = ((string)nameValue3);
+                                providerRegistrationInstance.Name = nameInstance3;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -1202,31 +1250,55 @@ namespace Microsoft.AzureStack.Management
                                 {
                                     foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                     {
-                                        ResourceType resourceTypeInstance = new ResourceType();
-                                        propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                        Extension extensionInstance = new Extension();
+                                        propertiesInstance.Extensions.Add(extensionInstance);
                                         
                                         JToken nameValue = resourceTypesValue["name"];
                                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
                                             string nameInstance = ((string)nameValue);
-                                            resourceTypeInstance.Name = nameInstance;
+                                            extensionInstance.Name = nameInstance;
                                         }
                                         
-                                        JToken routingTypeValue = resourceTypesValue["routingType"];
+                                        JToken uriValue = resourceTypesValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            string uriInstance = ((string)uriValue);
+                                            extensionInstance.Uri = uriInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken resourceTypesArray2 = propertiesValue["resourceTypes"];
+                                if (resourceTypesArray2 != null && resourceTypesArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken resourceTypesValue2 in ((JArray)resourceTypesArray2))
+                                    {
+                                        ResourceType resourceTypeInstance = new ResourceType();
+                                        propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                        
+                                        JToken nameValue2 = resourceTypesValue2["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            resourceTypeInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken routingTypeValue = resourceTypesValue2["routingType"];
                                         if (routingTypeValue != null && routingTypeValue.Type != JTokenType.Null)
                                         {
                                             RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
                                             resourceTypeInstance.RoutingType = routingTypeInstance;
                                         }
                                         
-                                        JToken resourceDeletionPolicyValue = resourceTypesValue["resourceDeletionPolicy"];
+                                        JToken resourceDeletionPolicyValue = resourceTypesValue2["resourceDeletionPolicy"];
                                         if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
                                         {
                                             ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
                                             resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
                                         }
                                         
-                                        JToken allowedUnauthorizedActionsArray = resourceTypesValue["allowedUnauthorizedActions"];
+                                        JToken allowedUnauthorizedActionsArray = resourceTypesValue2["allowedUnauthorizedActions"];
                                         if (allowedUnauthorizedActionsArray != null && allowedUnauthorizedActionsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken allowedUnauthorizedActionsValue in ((JArray)allowedUnauthorizedActionsArray))
@@ -1235,7 +1307,7 @@ namespace Microsoft.AzureStack.Management
                                             }
                                         }
                                         
-                                        JToken meteredResourceIdsArray = resourceTypesValue["meteredResourceIds"];
+                                        JToken meteredResourceIdsArray = resourceTypesValue2["meteredResourceIds"];
                                         if (meteredResourceIdsArray != null && meteredResourceIdsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken meteredResourceIdsValue in ((JArray)meteredResourceIdsArray))
@@ -1244,14 +1316,14 @@ namespace Microsoft.AzureStack.Management
                                             }
                                         }
                                         
-                                        JToken marketplaceTypeValue = resourceTypesValue["marketplaceType"];
+                                        JToken marketplaceTypeValue = resourceTypesValue2["marketplaceType"];
                                         if (marketplaceTypeValue != null && marketplaceTypeValue.Type != JTokenType.Null)
                                         {
                                             MarketplaceType marketplaceTypeInstance = ((MarketplaceType)Enum.Parse(typeof(MarketplaceType), ((string)marketplaceTypeValue), true));
                                             resourceTypeInstance.MarketplaceType = marketplaceTypeInstance;
                                         }
                                         
-                                        JToken endpointsArray = resourceTypesValue["endpoints"];
+                                        JToken endpointsArray = resourceTypesValue2["endpoints"];
                                         if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken endpointsValue in ((JArray)endpointsArray))
@@ -1329,11 +1401,11 @@ namespace Microsoft.AzureStack.Management
                                 providerRegistrationInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                providerRegistrationInstance.Name = nameInstance2;
+                                string nameInstance3 = ((string)nameValue3);
+                                providerRegistrationInstance.Name = nameInstance3;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -1654,31 +1726,55 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                             {
-                                                ResourceType resourceTypeInstance = new ResourceType();
-                                                propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                                Extension extensionInstance = new Extension();
+                                                propertiesInstance.Extensions.Add(extensionInstance);
                                                 
                                                 JToken nameValue = resourceTypesValue["name"];
                                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance = ((string)nameValue);
-                                                    resourceTypeInstance.Name = nameInstance;
+                                                    extensionInstance.Name = nameInstance;
                                                 }
                                                 
-                                                JToken routingTypeValue = resourceTypesValue["routingType"];
+                                                JToken uriValue = resourceTypesValue["uri"];
+                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                                {
+                                                    string uriInstance = ((string)uriValue);
+                                                    extensionInstance.Uri = uriInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken resourceTypesArray2 = propertiesValue["resourceTypes"];
+                                        if (resourceTypesArray2 != null && resourceTypesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken resourceTypesValue2 in ((JArray)resourceTypesArray2))
+                                            {
+                                                ResourceType resourceTypeInstance = new ResourceType();
+                                                propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                                
+                                                JToken nameValue2 = resourceTypesValue2["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    resourceTypeInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken routingTypeValue = resourceTypesValue2["routingType"];
                                                 if (routingTypeValue != null && routingTypeValue.Type != JTokenType.Null)
                                                 {
                                                     RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
                                                     resourceTypeInstance.RoutingType = routingTypeInstance;
                                                 }
                                                 
-                                                JToken resourceDeletionPolicyValue = resourceTypesValue["resourceDeletionPolicy"];
+                                                JToken resourceDeletionPolicyValue = resourceTypesValue2["resourceDeletionPolicy"];
                                                 if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
                                                 {
                                                     ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
                                                     resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
                                                 }
                                                 
-                                                JToken allowedUnauthorizedActionsArray = resourceTypesValue["allowedUnauthorizedActions"];
+                                                JToken allowedUnauthorizedActionsArray = resourceTypesValue2["allowedUnauthorizedActions"];
                                                 if (allowedUnauthorizedActionsArray != null && allowedUnauthorizedActionsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken allowedUnauthorizedActionsValue in ((JArray)allowedUnauthorizedActionsArray))
@@ -1687,7 +1783,7 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
-                                                JToken meteredResourceIdsArray = resourceTypesValue["meteredResourceIds"];
+                                                JToken meteredResourceIdsArray = resourceTypesValue2["meteredResourceIds"];
                                                 if (meteredResourceIdsArray != null && meteredResourceIdsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken meteredResourceIdsValue in ((JArray)meteredResourceIdsArray))
@@ -1696,14 +1792,14 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
-                                                JToken marketplaceTypeValue = resourceTypesValue["marketplaceType"];
+                                                JToken marketplaceTypeValue = resourceTypesValue2["marketplaceType"];
                                                 if (marketplaceTypeValue != null && marketplaceTypeValue.Type != JTokenType.Null)
                                                 {
                                                     MarketplaceType marketplaceTypeInstance = ((MarketplaceType)Enum.Parse(typeof(MarketplaceType), ((string)marketplaceTypeValue), true));
                                                     resourceTypeInstance.MarketplaceType = marketplaceTypeInstance;
                                                 }
                                                 
-                                                JToken endpointsArray = resourceTypesValue["endpoints"];
+                                                JToken endpointsArray = resourceTypesValue2["endpoints"];
                                                 if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken endpointsValue in ((JArray)endpointsArray))
@@ -1781,11 +1877,11 @@ namespace Microsoft.AzureStack.Management
                                         providerRegistrationModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue3 = valueValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        providerRegistrationModelInstance.Name = nameInstance2;
+                                        string nameInstance3 = ((string)nameValue3);
+                                        providerRegistrationModelInstance.Name = nameInstance3;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -2085,31 +2181,55 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                             {
-                                                ResourceType resourceTypeInstance = new ResourceType();
-                                                propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                                Extension extensionInstance = new Extension();
+                                                propertiesInstance.Extensions.Add(extensionInstance);
                                                 
                                                 JToken nameValue = resourceTypesValue["name"];
                                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance = ((string)nameValue);
-                                                    resourceTypeInstance.Name = nameInstance;
+                                                    extensionInstance.Name = nameInstance;
                                                 }
                                                 
-                                                JToken routingTypeValue = resourceTypesValue["routingType"];
+                                                JToken uriValue = resourceTypesValue["uri"];
+                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                                {
+                                                    string uriInstance = ((string)uriValue);
+                                                    extensionInstance.Uri = uriInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken resourceTypesArray2 = propertiesValue["resourceTypes"];
+                                        if (resourceTypesArray2 != null && resourceTypesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken resourceTypesValue2 in ((JArray)resourceTypesArray2))
+                                            {
+                                                ResourceType resourceTypeInstance = new ResourceType();
+                                                propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                                
+                                                JToken nameValue2 = resourceTypesValue2["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    resourceTypeInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken routingTypeValue = resourceTypesValue2["routingType"];
                                                 if (routingTypeValue != null && routingTypeValue.Type != JTokenType.Null)
                                                 {
                                                     RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
                                                     resourceTypeInstance.RoutingType = routingTypeInstance;
                                                 }
                                                 
-                                                JToken resourceDeletionPolicyValue = resourceTypesValue["resourceDeletionPolicy"];
+                                                JToken resourceDeletionPolicyValue = resourceTypesValue2["resourceDeletionPolicy"];
                                                 if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
                                                 {
                                                     ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
                                                     resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
                                                 }
                                                 
-                                                JToken allowedUnauthorizedActionsArray = resourceTypesValue["allowedUnauthorizedActions"];
+                                                JToken allowedUnauthorizedActionsArray = resourceTypesValue2["allowedUnauthorizedActions"];
                                                 if (allowedUnauthorizedActionsArray != null && allowedUnauthorizedActionsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken allowedUnauthorizedActionsValue in ((JArray)allowedUnauthorizedActionsArray))
@@ -2118,7 +2238,7 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
-                                                JToken meteredResourceIdsArray = resourceTypesValue["meteredResourceIds"];
+                                                JToken meteredResourceIdsArray = resourceTypesValue2["meteredResourceIds"];
                                                 if (meteredResourceIdsArray != null && meteredResourceIdsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken meteredResourceIdsValue in ((JArray)meteredResourceIdsArray))
@@ -2127,14 +2247,14 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
-                                                JToken marketplaceTypeValue = resourceTypesValue["marketplaceType"];
+                                                JToken marketplaceTypeValue = resourceTypesValue2["marketplaceType"];
                                                 if (marketplaceTypeValue != null && marketplaceTypeValue.Type != JTokenType.Null)
                                                 {
                                                     MarketplaceType marketplaceTypeInstance = ((MarketplaceType)Enum.Parse(typeof(MarketplaceType), ((string)marketplaceTypeValue), true));
                                                     resourceTypeInstance.MarketplaceType = marketplaceTypeInstance;
                                                 }
                                                 
-                                                JToken endpointsArray = resourceTypesValue["endpoints"];
+                                                JToken endpointsArray = resourceTypesValue2["endpoints"];
                                                 if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken endpointsValue in ((JArray)endpointsArray))
@@ -2212,11 +2332,11 @@ namespace Microsoft.AzureStack.Management
                                         providerRegistrationModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue3 = valueValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        providerRegistrationModelInstance.Name = nameInstance2;
+                                        string nameInstance3 = ((string)nameValue3);
+                                        providerRegistrationModelInstance.Name = nameInstance3;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -2528,31 +2648,55 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                             {
-                                                ResourceType resourceTypeInstance = new ResourceType();
-                                                propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                                Extension extensionInstance = new Extension();
+                                                propertiesInstance.Extensions.Add(extensionInstance);
                                                 
                                                 JToken nameValue = resourceTypesValue["name"];
                                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance = ((string)nameValue);
-                                                    resourceTypeInstance.Name = nameInstance;
+                                                    extensionInstance.Name = nameInstance;
                                                 }
                                                 
-                                                JToken routingTypeValue = resourceTypesValue["routingType"];
+                                                JToken uriValue = resourceTypesValue["uri"];
+                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                                {
+                                                    string uriInstance = ((string)uriValue);
+                                                    extensionInstance.Uri = uriInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken resourceTypesArray2 = propertiesValue["resourceTypes"];
+                                        if (resourceTypesArray2 != null && resourceTypesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken resourceTypesValue2 in ((JArray)resourceTypesArray2))
+                                            {
+                                                ResourceType resourceTypeInstance = new ResourceType();
+                                                propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                                
+                                                JToken nameValue2 = resourceTypesValue2["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    resourceTypeInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken routingTypeValue = resourceTypesValue2["routingType"];
                                                 if (routingTypeValue != null && routingTypeValue.Type != JTokenType.Null)
                                                 {
                                                     RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
                                                     resourceTypeInstance.RoutingType = routingTypeInstance;
                                                 }
                                                 
-                                                JToken resourceDeletionPolicyValue = resourceTypesValue["resourceDeletionPolicy"];
+                                                JToken resourceDeletionPolicyValue = resourceTypesValue2["resourceDeletionPolicy"];
                                                 if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
                                                 {
                                                     ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
                                                     resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
                                                 }
                                                 
-                                                JToken allowedUnauthorizedActionsArray = resourceTypesValue["allowedUnauthorizedActions"];
+                                                JToken allowedUnauthorizedActionsArray = resourceTypesValue2["allowedUnauthorizedActions"];
                                                 if (allowedUnauthorizedActionsArray != null && allowedUnauthorizedActionsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken allowedUnauthorizedActionsValue in ((JArray)allowedUnauthorizedActionsArray))
@@ -2561,7 +2705,7 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
-                                                JToken meteredResourceIdsArray = resourceTypesValue["meteredResourceIds"];
+                                                JToken meteredResourceIdsArray = resourceTypesValue2["meteredResourceIds"];
                                                 if (meteredResourceIdsArray != null && meteredResourceIdsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken meteredResourceIdsValue in ((JArray)meteredResourceIdsArray))
@@ -2570,14 +2714,14 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
-                                                JToken marketplaceTypeValue = resourceTypesValue["marketplaceType"];
+                                                JToken marketplaceTypeValue = resourceTypesValue2["marketplaceType"];
                                                 if (marketplaceTypeValue != null && marketplaceTypeValue.Type != JTokenType.Null)
                                                 {
                                                     MarketplaceType marketplaceTypeInstance = ((MarketplaceType)Enum.Parse(typeof(MarketplaceType), ((string)marketplaceTypeValue), true));
                                                     resourceTypeInstance.MarketplaceType = marketplaceTypeInstance;
                                                 }
                                                 
-                                                JToken endpointsArray = resourceTypesValue["endpoints"];
+                                                JToken endpointsArray = resourceTypesValue2["endpoints"];
                                                 if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                                 {
                                                     foreach (JToken endpointsValue in ((JArray)endpointsArray))
@@ -2655,11 +2799,11 @@ namespace Microsoft.AzureStack.Management
                                         providerRegistrationModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue3 = valueValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        providerRegistrationModelInstance.Name = nameInstance2;
+                                        string nameInstance3 = ((string)nameValue3);
+                                        providerRegistrationModelInstance.Name = nameInstance3;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];

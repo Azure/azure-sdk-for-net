@@ -66,6 +66,17 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._extensionName = value; }
         }
         
+        private IList<Extension> _extensions;
+        
+        /// <summary>
+        /// Optional. Gets or sets the extensions.
+        /// </summary>
+        public IList<Extension> Extensions
+        {
+            get { return this._extensions; }
+            set { this._extensions = value; }
+        }
+        
         private string _extensionUri;
         
         /// <summary>
@@ -151,6 +162,7 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public ManifestPropertiesDefinition()
         {
+            this.Extensions = new LazyList<Extension>();
             this.ResourceTypes = new LazyList<ResourceType>();
         }
     }
