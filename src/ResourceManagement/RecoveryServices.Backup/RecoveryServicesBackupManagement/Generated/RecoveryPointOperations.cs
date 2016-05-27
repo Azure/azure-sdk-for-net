@@ -309,11 +309,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             keyAndSecretInstance.KeyUrl = keyUrlInstance;
                                         }
                                         
-                                        JToken keyVersionValue = keyAndSecretValue["keyVersion"];
-                                        if (keyVersionValue != null && keyVersionValue.Type != JTokenType.Null)
+                                        JToken keyVaultIdValue = keyAndSecretValue["keyVaultId"];
+                                        if (keyVaultIdValue != null && keyVaultIdValue.Type != JTokenType.Null)
                                         {
-                                            string keyVersionInstance = ((string)keyVersionValue);
-                                            keyAndSecretInstance.KeyVersion = keyVersionInstance;
+                                            string keyVaultIdInstance = ((string)keyVaultIdValue);
+                                            keyAndSecretInstance.KeyVaultId = keyVaultIdInstance;
+                                        }
+                                        
+                                        JToken secretVaultIdValue = keyAndSecretValue["secretVaultId"];
+                                        if (secretVaultIdValue != null && secretVaultIdValue.Type != JTokenType.Null)
+                                        {
+                                            string secretVaultIdInstance = ((string)secretVaultIdValue);
+                                            keyAndSecretInstance.SecretVaultId = secretVaultIdInstance;
                                         }
                                         
                                         JToken secretDataValue = keyAndSecretValue["secretData"];
@@ -722,11 +729,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     keyAndSecretInstance.KeyUrl = keyUrlInstance;
                                                 }
                                                 
-                                                JToken keyVersionValue = keyAndSecretValue["keyVersion"];
-                                                if (keyVersionValue != null && keyVersionValue.Type != JTokenType.Null)
+                                                JToken keyVaultIdValue = keyAndSecretValue["keyVaultId"];
+                                                if (keyVaultIdValue != null && keyVaultIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string keyVersionInstance = ((string)keyVersionValue);
-                                                    keyAndSecretInstance.KeyVersion = keyVersionInstance;
+                                                    string keyVaultIdInstance = ((string)keyVaultIdValue);
+                                                    keyAndSecretInstance.KeyVaultId = keyVaultIdInstance;
+                                                }
+                                                
+                                                JToken secretVaultIdValue = keyAndSecretValue["secretVaultId"];
+                                                if (secretVaultIdValue != null && secretVaultIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretVaultIdInstance = ((string)secretVaultIdValue);
+                                                    keyAndSecretInstance.SecretVaultId = secretVaultIdInstance;
                                                 }
                                                 
                                                 JToken secretDataValue = keyAndSecretValue["secretData"];
