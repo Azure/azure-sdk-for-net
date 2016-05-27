@@ -111,6 +111,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// The Resource Manager API includes operations for triggering and
+        /// managing actions of the file / folder recovery of items protected
+        /// by your Recovery Services Vault.
+        /// </summary>
+        IFileFolderRestoreOperations FileFolderRestores
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Resource Manager API includes operations for managing the jobs
         /// created by various operations on a given item protected by your
         /// Recovery Services Vault.

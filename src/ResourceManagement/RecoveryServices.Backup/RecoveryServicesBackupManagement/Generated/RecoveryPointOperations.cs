@@ -281,6 +281,55 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string sourceVMStorageTypeInstance = ((string)sourceVMStorageTypeValue);
                                         recoveryPointInstance.SourceVMStorageType = sourceVMStorageTypeInstance;
                                     }
+                                    
+                                    JToken isSourceVMEncryptedValue = propertiesValue["isSourceVMEncrypted"];
+                                    if (isSourceVMEncryptedValue != null && isSourceVMEncryptedValue.Type != JTokenType.Null)
+                                    {
+                                        bool isSourceVMEncryptedInstance = ((bool)isSourceVMEncryptedValue);
+                                        recoveryPointInstance.IsSourceVMEncrypted = isSourceVMEncryptedInstance;
+                                    }
+                                    
+                                    JToken keyAndSecretValue = propertiesValue["keyAndSecret"];
+                                    if (keyAndSecretValue != null && keyAndSecretValue.Type != JTokenType.Null)
+                                    {
+                                        KeyAndSecretDetails keyAndSecretInstance = new KeyAndSecretDetails();
+                                        recoveryPointInstance.KeyAndSecret = keyAndSecretInstance;
+                                        
+                                        JToken secretUrlValue = keyAndSecretValue["secretUrl"];
+                                        if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                        {
+                                            string secretUrlInstance = ((string)secretUrlValue);
+                                            keyAndSecretInstance.SecretUrl = secretUrlInstance;
+                                        }
+                                        
+                                        JToken keyUrlValue = keyAndSecretValue["keyUrl"];
+                                        if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                        {
+                                            string keyUrlInstance = ((string)keyUrlValue);
+                                            keyAndSecretInstance.KeyUrl = keyUrlInstance;
+                                        }
+                                        
+                                        JToken keyVersionValue = keyAndSecretValue["keyVersion"];
+                                        if (keyVersionValue != null && keyVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string keyVersionInstance = ((string)keyVersionValue);
+                                            keyAndSecretInstance.KeyVersion = keyVersionInstance;
+                                        }
+                                        
+                                        JToken secretDataValue = keyAndSecretValue["secretData"];
+                                        if (secretDataValue != null && secretDataValue.Type != JTokenType.Null)
+                                        {
+                                            string secretDataInstance = ((string)secretDataValue);
+                                            keyAndSecretInstance.SecretData = secretDataInstance;
+                                        }
+                                        
+                                        JToken keyBackupDataValue = keyAndSecretValue["keyBackupData"];
+                                        if (keyBackupDataValue != null && keyBackupDataValue.Type != JTokenType.Null)
+                                        {
+                                            string keyBackupDataInstance = ((string)keyBackupDataValue);
+                                            keyAndSecretInstance.KeyBackupData = keyBackupDataInstance;
+                                        }
+                                    }
                                     recPointInstance.Properties = recoveryPointInstance;
                                 }
                                 if (typeName == "GenericRecoveryPoint")
@@ -644,6 +693,55 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string sourceVMStorageTypeInstance = ((string)sourceVMStorageTypeValue);
                                                 recoveryPointInstance.SourceVMStorageType = sourceVMStorageTypeInstance;
+                                            }
+                                            
+                                            JToken isSourceVMEncryptedValue = propertiesValue["isSourceVMEncrypted"];
+                                            if (isSourceVMEncryptedValue != null && isSourceVMEncryptedValue.Type != JTokenType.Null)
+                                            {
+                                                bool isSourceVMEncryptedInstance = ((bool)isSourceVMEncryptedValue);
+                                                recoveryPointInstance.IsSourceVMEncrypted = isSourceVMEncryptedInstance;
+                                            }
+                                            
+                                            JToken keyAndSecretValue = propertiesValue["keyAndSecret"];
+                                            if (keyAndSecretValue != null && keyAndSecretValue.Type != JTokenType.Null)
+                                            {
+                                                KeyAndSecretDetails keyAndSecretInstance = new KeyAndSecretDetails();
+                                                recoveryPointInstance.KeyAndSecret = keyAndSecretInstance;
+                                                
+                                                JToken secretUrlValue = keyAndSecretValue["secretUrl"];
+                                                if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretUrlInstance = ((string)secretUrlValue);
+                                                    keyAndSecretInstance.SecretUrl = secretUrlInstance;
+                                                }
+                                                
+                                                JToken keyUrlValue = keyAndSecretValue["keyUrl"];
+                                                if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string keyUrlInstance = ((string)keyUrlValue);
+                                                    keyAndSecretInstance.KeyUrl = keyUrlInstance;
+                                                }
+                                                
+                                                JToken keyVersionValue = keyAndSecretValue["keyVersion"];
+                                                if (keyVersionValue != null && keyVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string keyVersionInstance = ((string)keyVersionValue);
+                                                    keyAndSecretInstance.KeyVersion = keyVersionInstance;
+                                                }
+                                                
+                                                JToken secretDataValue = keyAndSecretValue["secretData"];
+                                                if (secretDataValue != null && secretDataValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretDataInstance = ((string)secretDataValue);
+                                                    keyAndSecretInstance.SecretData = secretDataInstance;
+                                                }
+                                                
+                                                JToken keyBackupDataValue = keyAndSecretValue["keyBackupData"];
+                                                if (keyBackupDataValue != null && keyBackupDataValue.Type != JTokenType.Null)
+                                                {
+                                                    string keyBackupDataInstance = ((string)keyBackupDataValue);
+                                                    keyAndSecretInstance.KeyBackupData = keyBackupDataInstance;
+                                                }
                                             }
                                             recoveryPointResourceInstance.Properties = recoveryPointInstance;
                                         }
