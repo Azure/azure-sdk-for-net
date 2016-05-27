@@ -6,16 +6,14 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SkuTier.
+    /// Defines values for KeyName.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum SkuTier
+    public enum KeyName
     {
-        [EnumMember(Value = "Free")]
-        Free,
-        [EnumMember(Value = "Standard")]
-        Standard,
-        [EnumMember(Value = "Premium")]
-        Premium
+        [EnumMember(Value = "Key1")]
+        Key1,
+        [EnumMember(Value = "Key2")]
+        Key2
     }
 }
