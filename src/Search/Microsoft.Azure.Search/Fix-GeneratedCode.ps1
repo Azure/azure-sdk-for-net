@@ -14,5 +14,5 @@ Replace-InFile $generatedFolder\ISearchIndexClient.cs "DocumentsProxy" "Document
 Replace-InFile $generatedFolder\SearchIndexClient.cs "DocumentsProxy" "Documents"
 
 # Inject initialization method into SearchIndexClient. This is a workaround for this issue in AutoRest: https://github.com/Azure/autorest/issues/1087
-Replace-InFile $generatedFolder\SearchIndexClient.cs "private void Initialize()" "partial void CustomInitialize();`n`n        private void Initialize()"
-Replace-InFile $generatedFolder\SearchIndexClient.cs "DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());" "DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());`n            CustomInitialize();"
+Replace-InFile $generatedFolder\SearchIndexClient.cs "private void Initialize()" "partial void CustomInitialize();`r`n`r`n        private void Initialize()"
+Replace-InFile $generatedFolder\SearchIndexClient.cs "DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());" "DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());`r`n            CustomInitialize();"
