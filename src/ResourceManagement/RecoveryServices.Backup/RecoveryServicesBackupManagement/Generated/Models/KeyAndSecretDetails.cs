@@ -53,17 +53,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._keyUrl = value; }
         }
         
-        private string _keyVersion;
+        private string _keyVaultId;
         
         /// <summary>
-        /// Optional. KEK can have multiple versions. This is needed for the
-        /// callers to check whether the version that service has in recovery
-        /// point is still active or not.
+        /// Optional. ID of the Key Vault where this Key is stored
         /// </summary>
-        public string KeyVersion
+        public string KeyVaultId
         {
-            get { return this._keyVersion; }
-            set { this._keyVersion = value; }
+            get { return this._keyVaultId; }
+            set { this._keyVaultId = value; }
         }
         
         private string _secretData;
@@ -86,6 +84,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._secretUrl; }
             set { this._secretUrl = value; }
+        }
+        
+        private string _secretVaultId;
+        
+        /// <summary>
+        /// Optional. ID of the Key Vault where this Secret is stored
+        /// </summary>
+        public string SecretVaultId
+        {
+            get { return this._secretVaultId; }
+            set { this._secretVaultId = value; }
         }
         
         /// <summary>

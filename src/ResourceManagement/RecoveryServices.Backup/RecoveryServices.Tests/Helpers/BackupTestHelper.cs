@@ -47,7 +47,7 @@ namespace RecoveryServices.Tests.Helpers
             TriggerBackupRequest backupRequest = new TriggerBackupRequest();
             backupRequest.Item = new BackupRequestResource();
             IaaSVMBackupRequest iaasVmBackupRequest = new IaaSVMBackupRequest();
-            iaasVmBackupRequest.RecoveryPointExpiryTimeInUTC = DateTime.UtcNow.AddDays(1).ToString();
+            iaasVmBackupRequest.RecoveryPointExpiryTimeInUTC = DateTime.UtcNow.AddDays(1);
             backupRequest.Item.Properties = iaasVmBackupRequest;
 
             var response = Client.Backups.TriggerBackup(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(),

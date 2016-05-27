@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             
                             if (derived.RecoveryPointExpiryTimeInUTC != null)
                             {
-                                propertiesValue["recoveryPointExpiryTimeInUTC"] = derived.RecoveryPointExpiryTimeInUTC;
+                                propertiesValue["recoveryPointExpiryTimeInUTC"] = derived.RecoveryPointExpiryTimeInUTC.Value;
                             }
                         }
                     }

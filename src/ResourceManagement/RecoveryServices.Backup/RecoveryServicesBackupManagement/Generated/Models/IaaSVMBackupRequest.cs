@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class IaaSVMBackupRequest : BackupRequest
     {
-        private string _recoveryPointExpiryTimeInUTC;
+        private System.DateTime? _recoveryPointExpiryTimeInUTC;
         
         /// <summary>
         /// Optional. Time specified in UTC after which the recovery points
         /// taken by this backup will expire.
         /// </summary>
-        public string RecoveryPointExpiryTimeInUTC
+        public System.DateTime? RecoveryPointExpiryTimeInUTC
         {
             get { return this._recoveryPointExpiryTimeInUTC; }
             set { this._recoveryPointExpiryTimeInUTC = value; }
