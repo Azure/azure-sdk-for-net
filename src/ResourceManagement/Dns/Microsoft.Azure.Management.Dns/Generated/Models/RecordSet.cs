@@ -24,13 +24,12 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <summary>
         /// Initializes a new instance of the RecordSet class.
         /// </summary>
-        public RecordSet(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string location = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), long? tTL = default(long?), IList<ARecord> aRecords = default(IList<ARecord>), IList<AaaaRecord> aaaaRecords = default(IList<AaaaRecord>), IList<MxRecord> mxRecords = default(IList<MxRecord>), IList<NsRecord> nsRecords = default(IList<NsRecord>), IList<PtrRecord> ptrRecords = default(IList<PtrRecord>), IList<SrvRecord> srvRecords = default(IList<SrvRecord>), IList<TxtRecord> txtRecords = default(IList<TxtRecord>), CnameRecord cnameRecord = default(CnameRecord), SoaRecord soaRecord = default(SoaRecord))
+        public RecordSet(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), long? tTL = default(long?), IList<ARecord> aRecords = default(IList<ARecord>), IList<AaaaRecord> aaaaRecords = default(IList<AaaaRecord>), IList<MxRecord> mxRecords = default(IList<MxRecord>), IList<NsRecord> nsRecords = default(IList<NsRecord>), IList<PtrRecord> ptrRecords = default(IList<PtrRecord>), IList<SrvRecord> srvRecords = default(IList<SrvRecord>), IList<TxtRecord> txtRecords = default(IList<TxtRecord>), CnameRecord cnameRecord = default(CnameRecord), SoaRecord soaRecord = default(SoaRecord))
         {
             Id = id;
             Name = name;
             Type = type;
             Etag = etag;
-            Location = location;
             Metadata = metadata;
             TTL = tTL;
             ARecords = aRecords;
@@ -67,12 +66,6 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the metadata attached to the resource.
