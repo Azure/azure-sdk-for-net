@@ -17,37 +17,45 @@ namespace Microsoft.Azure.Management.Redis.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Specifies which redis access keys to reset.
+    /// Parameters for redis import operation.
     /// </summary>
-    public partial class RedisRegenerateKeyParameters
+    public partial class ImportRDBParameters
     {
         /// <summary>
-        /// Initializes a new instance of the RedisRegenerateKeyParameters
-        /// class.
+        /// Initializes a new instance of the ImportRDBParameters class.
         /// </summary>
-        public RedisRegenerateKeyParameters() { }
+        public ImportRDBParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the RedisRegenerateKeyParameters
-        /// class.
+        /// Initializes a new instance of the ImportRDBParameters class.
         /// </summary>
-        public RedisRegenerateKeyParameters(RedisKeyType keyType)
+        public ImportRDBParameters(IList<string> files, string format = default(string))
         {
-            KeyType = keyType;
+            Format = format;
+            Files = files;
         }
 
         /// <summary>
-        /// Gets or sets which redis access key to reset. Possible values
-        /// include: 'Primary', 'Secondary'
+        /// Gets or sets file format.
         /// </summary>
-        [JsonProperty(PropertyName = "keyType")]
-        public RedisKeyType KeyType { get; set; }
+        [JsonProperty(PropertyName = "format")]
+        public string Format { get; set; }
+
+        /// <summary>
+        /// Gets or sets files to import
+        /// </summary>
+        [JsonProperty(PropertyName = "files")]
+        public IList<string> Files { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
+            if (Files == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Files");
+            }
         }
     }
 }

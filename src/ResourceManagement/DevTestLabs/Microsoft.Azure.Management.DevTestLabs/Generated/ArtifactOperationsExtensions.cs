@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class ArtifactOperationsExtensions
     {
             /// <summary>
-            /// List artifacts.
+            /// List artifacts in a given artifact source.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List artifacts.
+            /// List artifacts in a given artifact source.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List artifacts.
+            /// List artifacts in a given artifact source.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List artifacts.
+            /// List artifacts in a given artifact source.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

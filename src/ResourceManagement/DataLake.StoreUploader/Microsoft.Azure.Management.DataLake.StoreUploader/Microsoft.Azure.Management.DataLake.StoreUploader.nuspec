@@ -22,7 +22,7 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Azure.Management.DataLake.Store" version="[0.11.0-preview,3.0)" />
+      <dependency id="Microsoft.Azure.Management.DataLake.Store" version="[0.12.0-preview,3.0)" />
     </dependencies>
   </metadata>
   <files>

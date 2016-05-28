@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/MyResourceGroup/providers/Microsoft.Cache/Redis/sunnyprimary?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL015UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL1JlZGlzL3N1bm55cHJpbWFyeT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/MyResourceGroup/providers/Microsoft.Cache/Redis/sunnyprimary?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL015UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL1JlZGlzL3N1bm55cHJpbWFyeT9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4db94b63-50a9-4108-a19d-8ac171494589"
+          "df483ecf-f43f-417b-adf2-14355770c283"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/MyResourceGroup/providers/Microsoft.Cache/Redis/sunnyprimary\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"sunnyprimary\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"3.0\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"sunnyprimary.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Apr 2016 22:20:41 GMT"
+          "Wed, 18 May 2016 22:11:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,31 +43,31 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "45d95783-aec4-4f27-aaaa-ef1edd388ede"
+          "9d29c058-a8d1-49d2-a3d6-28b07908ad5c"
         ],
         "x-rp-server-mvid": [
-          "e9b8065a-9cf7-4e65-bdc2-8c50d8baf0a8"
+          "bd1e4ace-5dbd-4224-976a-99df2f0c997c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14846"
+          "14890"
         ],
         "x-ms-correlation-request-id": [
-          "7d4acebb-8fd9-479f-bdd1-c4ee2973eb12"
+          "8cc47735-276b-46be-9f49-775bc65f5541"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160420T222042Z:7d4acebb-8fd9-479f-bdd1-c4ee2973eb12"
+          "NORTHEUROPE:20160518T221120Z:8cc47735-276b-46be-9f49-775bc65f5541"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/MyResourceGroup/providers/Microsoft.Cache/Redis/sunnyprimary/forceReboot?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL015UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL1JlZGlzL3N1bm55cHJpbWFyeS9mb3JjZVJlYm9vdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/MyResourceGroup/providers/Microsoft.Cache/Redis/sunnyprimary/forceReboot?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL015UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL1JlZGlzL3N1bm55cHJpbWFyeS9mb3JjZVJlYm9vdD9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"RebootType\": \"AllNodes\"\r\n}",
+      "RequestBody": "{\r\n  \"rebootType\": \"AllNodes\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -76,13 +76,13 @@
           "32"
         ],
         "x-ms-client-request-id": [
-          "f6a6bff4-bbe9-4079-bf63-abc7c9f47b09"
+          "d0b3b2fd-784d-4d04-a4c9-ea04fb86dd0a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"Message\": \"The requested reboot operation for 'AllNodes' has been successfully scheduled and should be executed shortly.\"\r\n}",
@@ -97,7 +97,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Apr 2016 22:20:48 GMT"
+          "Wed, 18 May 2016 22:11:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -112,22 +112,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "8f6546b1-7830-4cb5-b323-eb2a5c374552"
+          "89fb3470-d826-428c-a464-78d29ba33a2b"
         ],
         "x-rp-server-mvid": [
-          "e9b8065a-9cf7-4e65-bdc2-8c50d8baf0a8"
+          "bd1e4ace-5dbd-4224-976a-99df2f0c997c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "a4cbdc0b-b1fe-4d62-8901-9b7d11a90bd8"
+          "66f6f953-eed8-4705-8234-e1371ccc51c8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160420T222048Z:a4cbdc0b-b1fe-4d62-8901-9b7d11a90bd8"
+          "NORTHEUROPE:20160518T221124Z:66f6f953-eed8-4705-8234-e1371ccc51c8"
         ]
       },
       "StatusCode": 200

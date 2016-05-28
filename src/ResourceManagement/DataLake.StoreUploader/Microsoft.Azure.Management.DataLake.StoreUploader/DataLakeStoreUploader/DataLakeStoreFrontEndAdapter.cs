@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.DataLake.Store.Models;
 
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
 {
@@ -160,17 +161,17 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 if (ex.InnerExceptions.Count != 1) throw;
 
-                var cloudEx = ex.InnerExceptions[0] as CloudException;
-                if (cloudEx != null && cloudEx.Response.StatusCode == HttpStatusCode.NotFound)
+                var cloudEx = ex.InnerExceptions[0] as AdlsErrorException;
+                if (cloudEx != null && (cloudEx.Response.StatusCode == HttpStatusCode.NotFound || cloudEx.Body.RemoteException is AdlsFileNotFoundException))
                 {
                     return false;
                 }
 
                 throw;
             }
-            catch (CloudException cloudEx)
+            catch (AdlsErrorException cloudEx)
             {
-                if(cloudEx.Response.StatusCode == HttpStatusCode.NotFound)
+                if(cloudEx.Response.StatusCode == HttpStatusCode.NotFound || cloudEx.Body.RemoteException is AdlsFileNotFoundException)
                 {
                     return false;
                 }

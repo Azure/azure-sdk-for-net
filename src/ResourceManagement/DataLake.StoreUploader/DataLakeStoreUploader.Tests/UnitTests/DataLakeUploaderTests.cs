@@ -466,9 +466,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <summary>
         /// Verifies the file was successfully uploaded.
         /// </summary>
-        /// <param name="up">The upload parameters.</param>
-        /// <param name="frontEnd">The front end.</param>
-        /// <param name="fileContents">The file contents.</param>
+        /// <param name="targetPathsAndData">The target paths and data for each path.</param>
+        /// <param name="frontEnd">The front end to use.</param>
         private void VerifyFileUploadedSuccessfully(Dictionary<string, byte[]> targetPathsAndData, InMemoryFrontEnd frontEnd)
         {
             var streamCount = targetPathsAndData.Keys.Count;
@@ -510,8 +509,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <summary>
         /// Verifies the progress status.
         /// </summary>
-        /// <param name="progress">The upload progress.</param>
-        /// <param name="fileLength">The file length.</param>
+        /// <param name="progress">The progress.</param>
+        /// <param name="totalFileLength">Total length of the file.</param>
+        /// <param name="totalFiles">The total files.</param>
         private void VerifyFolderProgressStatus(UploadFolderProgress progress, long totalFileLength, int totalFiles)
         {
             Assert.Equal(totalFileLength, progress.TotalFileLength);
