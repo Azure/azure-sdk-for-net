@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface ICustomImageOperations
     {
         /// <summary>
-        /// List custom images.
+        /// List custom images in a given lab.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse> BeginDeleteResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List custom images.
+        /// List custom images in a given lab.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

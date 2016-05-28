@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class GalleryImageOperationsExtensions
     {
             /// <summary>
-            /// List gallery images.
+            /// List gallery images in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List gallery images.
+            /// List gallery images in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List gallery images.
+            /// List gallery images in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List gallery images.
+            /// List gallery images in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

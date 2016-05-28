@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface IPolicyOperations
     {
         /// <summary>
-        /// List policies.
+        /// List policies in a given policy set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse<Policy>> PatchResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string policySetName, string name, Policy policy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List policies.
+        /// List policies in a given policy set.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

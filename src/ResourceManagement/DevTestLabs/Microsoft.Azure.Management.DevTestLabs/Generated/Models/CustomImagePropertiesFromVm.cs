@@ -31,10 +31,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// Initializes a new instance of the CustomImagePropertiesFromVm
         /// class.
         /// </summary>
-        public CustomImagePropertiesFromVm(string sourceVmId = default(string), bool? sysPrep = default(bool?), WindowsOsInfo windowsOsInfo = default(WindowsOsInfo), LinuxOsInfo linuxOsInfo = default(LinuxOsInfo))
+        public CustomImagePropertiesFromVm(string sourceVmId = default(string), WindowsOsInfo windowsOsInfo = default(WindowsOsInfo), LinuxOsInfo linuxOsInfo = default(LinuxOsInfo))
         {
             SourceVmId = sourceVmId;
-            SysPrep = sysPrep;
             WindowsOsInfo = windowsOsInfo;
             LinuxOsInfo = linuxOsInfo;
         }
@@ -44,12 +43,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceVmId")]
         public string SourceVmId { get; set; }
-
-        /// <summary>
-        /// Indicates whether sysprep has been run on the VHD.
-        /// </summary>
-        [JsonProperty(PropertyName = "sysPrep")]
-        public bool? SysPrep { get; set; }
 
         /// <summary>
         /// The Windows OS information of the VM.
