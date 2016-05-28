@@ -4,6 +4,10 @@
     <id>Microsoft.Azure.Management.HDInsight.Job</id>
     <title>Microsoft Azure HDInsight Job Management Library</title>
     <releaseNotes><![CDATA[
+2.0.3
+
+  * Added new API WaitForJobCompletion(string jobId, TimeSpan duration, TimeSpan waitInterval) to wait for completion of a job.
+
 2.0.2
   * This package is now generally available.
   
@@ -13,7 +17,7 @@
 
   * If empty job id is passed for Kill job operation then ArgumentException is raised instead of making a kill job request call.
   
-  * Added missing Async APIs for submitting Jobs.
+  * Added Async APIs for submitting Jobs.
 
 2.0.0-preview:
 
