@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// letters only.
         /// </param>
         /// <param name='keyName'>
-        /// key name to generate (key1|key2). Possible values include: 'Key1',
+        /// key name to generate (Key1|Key2). Possible values include: 'Key1',
         /// 'Key2'
         /// </param>
         /// <param name='customHeaders'>
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CognitiveServicesAccountKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, KeyNameEnum? keyName = default(KeyNameEnum?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CognitiveServicesAccountKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, KeyName? keyName = default(KeyName?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List available SKUs for the requested Cognitive Services account
         /// </summary>

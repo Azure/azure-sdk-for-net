@@ -16,34 +16,46 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    public partial class Error
+    public partial class ErrorBody
     {
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the ErrorBody class.
         /// </summary>
-        public Error() { }
+        public ErrorBody() { }
 
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the ErrorBody class.
         /// </summary>
-        public Error(ErrorBody errorProperty = default(ErrorBody))
+        public ErrorBody(string code, string message)
         {
-            ErrorProperty = errorProperty;
+            Code = code;
+            Message = message;
         }
 
         /// <summary>
+        /// error code
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorBody ErrorProperty { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// error message
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (this.ErrorProperty != null)
+            if (Code == null)
             {
-                this.ErrorProperty.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
+            }
+            if (Message == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Message");
             }
         }
     }
