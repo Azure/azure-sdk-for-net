@@ -7,11 +7,32 @@ namespace Microsoft.Azure.Search
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.Azure;
+    using Models;
 
-    public partial interface IDocumentsOperations
+    /// <summary>
+    /// Defines operations for querying an index and uploading, merging, and deleting documents.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn800962.aspx" />
+    /// </summary>
+    public interface IDocumentsOperations
     {
+        /// <summary>
+        /// Queries the number of documents in the Azure Search index.
+        /// </summary>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<long>> CountWithHttpMessagesAsync(
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), 
+            Dictionary<string, List<string>> customHeaders = null, 
+            CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Retrieves the next page of search results from the Azure Search index.
         /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>

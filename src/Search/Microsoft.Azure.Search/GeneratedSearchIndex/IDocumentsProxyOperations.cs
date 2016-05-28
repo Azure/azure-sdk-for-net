@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Search
     using Models;
 
     /// <summary>
-    /// DocumentsOperations operations.
+    /// DocumentsProxyOperations operations.
     /// </summary>
-    public partial interface IDocumentsOperations
+    internal partial interface IDocumentsProxyOperations
     {
         /// <summary>
         /// Queries the number of documents in the Azure Search index.
@@ -34,6 +34,6 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<long>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<long?>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
