@@ -34,6 +34,192 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IDatabaseBackupOperations
     {
         /// <summary>
+        /// Begins creating or updating an Azure SQL Server backup
+        /// LongTermRetention vault. To determine the status of the operation
+        /// call GetBackupLongTermRetentionVaultOperationStatus.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the Azure SQL Server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server on which the database is hosted.
+        /// </param>
+        /// <param name='backupLongTermRetentionVaultName'>
+        /// The name of the Azure SQL Server backup LongTermRetention vault.
+        /// </param>
+        /// <param name='parameters'>
+        /// The required parameters for creating or updating a backup
+        /// LongTermRetention vault.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        Task<BackupLongTermRetentionVaultCreateOrUpdateResponse> BeginCreateOrUpdateBackupLongTermRetentionVaultAsync(string resourceGroupName, string serverName, string backupLongTermRetentionVaultName, BackupLongTermRetentionVaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Begins creating or updating an Azure SQL Server backup
+        /// LongTermRetention policy. To determine the status of the operation
+        /// call GetDatabaseBackupLongTermRetentionPolicyOperationStatus.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the Azure SQL Server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server on which the database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database to be operated on.
+        /// </param>
+        /// <param name='backupLongTermRetentionPolicyName'>
+        /// The name of the Azure SQL Database backup LongTermRetention policy.
+        /// </param>
+        /// <param name='parameters'>
+        /// The required parameters for creating or updating a database backup
+        /// LongTermRetention policy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        Task<DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse> BeginCreateOrUpdateDatabaseBackupLongTermRetentionPolicyAsync(string resourceGroupName, string serverName, string databaseName, string backupLongTermRetentionPolicyName, DatabaseBackupLongTermRetentionPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Creates or updates an Azure SQL Server backup LongTermRetention
+        /// vault.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server on which the database is hosted.
+        /// </param>
+        /// <param name='backupLongTermRetentionVaultName'>
+        /// The name of the Azure SQL Server backup LongTermRetention vault.
+        /// </param>
+        /// <param name='parameters'>
+        /// The required parameters for creating or updating a backup
+        /// LongTermRetention vault.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        Task<BackupLongTermRetentionVaultCreateOrUpdateResponse> CreateOrUpdateBackupLongTermRetentionVaultAsync(string resourceGroupName, string serverName, string backupLongTermRetentionVaultName, BackupLongTermRetentionVaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Creates or updates an Azure SQL Database backup LongTermRetention
+        /// policy.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server on which the database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database to be operated on (Updated or
+        /// created).
+        /// </param>
+        /// <param name='backupLongTermRetentionPolicyName'>
+        /// The name of the Azure SQL Database backup LongTermRetention policy.
+        /// </param>
+        /// <param name='parameters'>
+        /// The required parameters for creating or updating a database backup
+        /// LongTermRetention policy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        Task<DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse> CreateOrUpdateDatabaseBackupLongTermRetentionPolicyAsync(string resourceGroupName, string serverName, string databaseName, string backupLongTermRetentionPolicyName, DatabaseBackupLongTermRetentionPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns an Azure SQL Server backup LongTermRetention vault
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server.
+        /// </param>
+        /// <param name='backupLongTermRetentionVaultName'>
+        /// The name of the Azure SQL Database backup LongTermRetention vault.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Server backup
+        /// LongTermRetention vault request.
+        /// </returns>
+        Task<BackupLongTermRetentionVaultGetResponse> GetBackupLongTermRetentionVaultAsync(string resourceGroupName, string serverName, string backupLongTermRetentionVaultName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Server backup LongTermRetention
+        /// vault create or update operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        Task<BackupLongTermRetentionVaultCreateOrUpdateResponse> GetBackupLongTermRetentionVaultOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns an Azure SQL Database backup LongTermRetention policy
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database.
+        /// </param>
+        /// <param name='backupLongTermRetentionPolicyName'>
+        /// The name of the Azure SQL Database backup LongTermRetention policy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database backup
+        /// LongTermRetention policy request.
+        /// </returns>
+        Task<DatabaseBackupLongTermRetentionPolicyGetResponse> GetDatabaseBackupLongTermRetentionPolicyAsync(string resourceGroupName, string serverName, string databaseName, string backupLongTermRetentionPolicyName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Database backup LongTermRetention
+        /// policy create or update operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        Task<DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse> GetDatabaseBackupLongTermRetentionPolicyOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Returns an Azure SQL deleted database backup (a resource
         /// representing a deleted database that can be restored).
         /// </summary>
@@ -45,8 +231,8 @@ namespace Microsoft.Azure.Management.Sql
         /// databases for.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Database Database to retrieve deleted
-        /// databases for.
+        /// The name of the Azure SQL Database to retrieve deleted databases
+        /// for.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -78,6 +264,49 @@ namespace Microsoft.Azure.Management.Sql
         /// request.
         /// </returns>
         Task<GeoBackupGetResponse> GetGeoBackupAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Server backup LongTermRetention vaults
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Server backup
+        /// LongTermRetention vault request.
+        /// </returns>
+        Task<BackupLongTermRetentionVaultListResponse> ListBackupLongTermRetentionVaultsAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Database backup LongTermRetention
+        /// policies
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database backup
+        /// LongTermRetention policy request.
+        /// </returns>
+        Task<DatabaseBackupLongTermRetentionPolicyListResponse> ListDatabaseBackupLongTermRetentionPoliciesAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns a list of Azure SQL deleted database backups (a resource
