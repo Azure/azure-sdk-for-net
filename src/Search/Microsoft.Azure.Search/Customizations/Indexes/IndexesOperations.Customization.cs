@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <inheritdoc />
-        public SearchIndexClient GetClient(string indexName)
+        public ISearchIndexClient GetClient(string indexName)
         {
             // Argument checking is done by the SearchIndexClient constructor. Note that HttpClient can't be shared in
             // case it has already been used (SearchIndexClient will attempt to set the Timeout property on it).

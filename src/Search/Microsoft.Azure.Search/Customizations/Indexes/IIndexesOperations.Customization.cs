@@ -60,6 +60,6 @@ namespace Microsoft.Azure.Search
         /// client for query operations, we recommend directly creating a 
         /// <c cref="Microsoft.Azure.Search.SearchIndexClient">SearchIndexClient</c> instance instead.
         /// </remarks>
-        SearchIndexClient GetClient(string indexName);
+        ISearchIndexClient GetClient(string indexName);
     }
 }
