@@ -347,9 +347,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// characters in length and use numbers and lower-case letters only.
             /// </param>
             /// <param name='keyName'>
-            /// key name to generate (key1|key2). Possible values include: 'Key1', 'Key2'
+            /// key name to generate (Key1|Key2). Possible values include: 'Key1', 'Key2'
             /// </param>
-            public static CognitiveServicesAccountKeys RegenerateKey(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, KeyNameEnum? keyName = default(KeyNameEnum?))
+            public static CognitiveServicesAccountKeys RegenerateKey(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, KeyName? keyName = default(KeyName?))
             {
                 return Task.Factory.StartNew(s => ((ICognitiveServicesAccountsOperations)s).RegenerateKeyAsync(resourceGroupName, accountName, keyName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -370,12 +370,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// characters in length and use numbers and lower-case letters only.
             /// </param>
             /// <param name='keyName'>
-            /// key name to generate (key1|key2). Possible values include: 'Key1', 'Key2'
+            /// key name to generate (Key1|Key2). Possible values include: 'Key1', 'Key2'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccountKeys> RegenerateKeyAsync(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, KeyNameEnum? keyName = default(KeyNameEnum?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CognitiveServicesAccountKeys> RegenerateKeyAsync(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, KeyName? keyName = default(KeyName?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyName, null, cancellationToken).ConfigureAwait(false))
                 {

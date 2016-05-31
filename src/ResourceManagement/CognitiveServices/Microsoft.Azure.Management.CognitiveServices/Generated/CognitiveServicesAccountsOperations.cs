@@ -347,11 +347,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 sku.Validate();
             }
-            CognitiveServicesAccountUpdateParameters parameters = new CognitiveServicesAccountUpdateParameters();
+            CognitiveServicesAccountUpdateParameters body = new CognitiveServicesAccountUpdateParameters();
             if (sku != null || tags != null)
             {
-                parameters.Sku = sku;
-                parameters.Tags = tags;
+                body.Sku = sku;
+                body.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -362,7 +362,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -413,9 +413,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
+            if(body != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(body, this.Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -439,7 +439,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -633,7 +633,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 204 && (int)_statusCode != 404 && (int)_statusCode != 412)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -809,7 +809,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -978,7 +978,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1137,7 +1137,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1406,7 +1406,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// characters in length and use numbers and lower-case letters only.
         /// </param>
         /// <param name='keyName'>
-        /// key name to generate (key1|key2). Possible values include: 'Key1', 'Key2'
+        /// key name to generate (Key1|Key2). Possible values include: 'Key1', 'Key2'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1417,7 +1417,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CognitiveServicesAccountKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, KeyNameEnum? keyName = default(KeyNameEnum?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CognitiveServicesAccountKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, KeyName? keyName = default(KeyName?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1450,8 +1450,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            RegenerateKeyParameters parameters = new RegenerateKeyParameters();
-            parameters.KeyName = keyName;
+            RegenerateKeyParameters body = new RegenerateKeyParameters();
+            body.KeyName = keyName;
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1461,7 +1461,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RegenerateKey", tracingParameters);
             }
@@ -1512,9 +1512,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
+            if(body != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(body, this.Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1732,7 +1732,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

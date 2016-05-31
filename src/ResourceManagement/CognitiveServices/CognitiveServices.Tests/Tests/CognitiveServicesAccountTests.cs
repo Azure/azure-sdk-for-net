@@ -33,6 +33,7 @@ namespace CognitiveServices.Tests
         private const string c_apiVersion = "2016-02-01-preview";
         private const string c_resourceNamespace = "Microsoft.CognitiveServices";
 
+       
         [Fact]
         public void CognitiveServicesAccountCreateTest()
         {
@@ -58,19 +59,13 @@ namespace CognitiveServices.Tests
                 account = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, accountName, parameters);
                 CognitiveServicesManagementTestUtilities.VerifyAccountProperties(account, true);
 
-                // Create account with only required params, for each sku
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.F0);
+                // Create account with only required params, for each sku (but free, since we can't have two free accounts in the same subscription)
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1);
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S2);
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S3);
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S4);
             }
         }
-
-
-        // TODO: don't have an async create method. is that okay? 
-        //public void CognitiveServicesAccountBeginCreateTest()
-
 
         [Fact]
         public void CognitiveServicesAccountDeleteTest()
@@ -98,7 +93,6 @@ namespace CognitiveServices.Tests
                 cognitiveServicesMgmtClient.CognitiveServicesAccounts.Delete(rgname, accountName);
             }
         }
-
 
         [Fact]
         public void CognitiveServicesAccountCreateAndGetDifferentSkusTest()
@@ -155,7 +149,6 @@ namespace CognitiveServices.Tests
                 CognitiveServicesManagementTestUtilities.VerifyAccountProperties(accounts.Skip(1).First(), true);
             }
         }
-
 
         [Fact]
         public void CognitiveServicesAccountListBySubscriptionTest()
@@ -217,7 +210,6 @@ namespace CognitiveServices.Tests
             }
         }
 
-
         [Fact]
         public void CognitiveServicesAccountRegenerateKeyTest()
         {
@@ -241,7 +233,7 @@ namespace CognitiveServices.Tests
                 Assert.NotNull(key2);
 
                 // Regenerate keys and verify that keys change
-                var regenKeys = cognitiveServicesMgmtClient.CognitiveServicesAccounts.RegenerateKey(rgname, accountName, KeyNameEnum.Key2);
+                var regenKeys = cognitiveServicesMgmtClient.CognitiveServicesAccounts.RegenerateKey(rgname, accountName, KeyName.Key2);
                 var key2Regen = regenKeys.Key2;
                 Assert.NotNull(key2Regen);
 
@@ -264,7 +256,7 @@ namespace CognitiveServices.Tests
                 var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Create cognitive services account
-                var createdAccount = CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.F0, Kind.Recommendations);
+                var createdAccount = CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S2, Kind.Recommendations);
                 var accountName = createdAccount.Name;
 
                 // Update SKU 
@@ -311,7 +303,7 @@ namespace CognitiveServices.Tests
                 var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Create cognitive services account
-                var createdAccount = CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.F0, Kind.Recommendations);
+                var createdAccount = CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S3, Kind.Recommendations);
                 var accountName = createdAccount.Name;
 
                 // Enumerate SKUs
@@ -329,6 +321,166 @@ namespace CognitiveServices.Tests
                     (sku) => { Assert.Equal(SkuName.S3, sku.Name); Assert.Equal(SkuTier.Standard, sku.Tier); },
                     (sku) => { Assert.Equal(SkuName.S4, sku.Name); Assert.Equal(SkuTier.Standard, sku.Tier); }
                 );
+            }
+        }
+
+        //   Negative Scenarios Tests
+        [Fact]
+        public void CognitiveServicesCreateAccountErrorTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                var accountName = TestUtilities.GenerateName("csa");
+                var parameters = new CognitiveServicesAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.F0 },
+                    Kind = Kind.ComputerVision,
+                    Location = CognitiveServicesManagementTestUtilities.DefaultLocation,
+                    Properties = new object(),
+                };
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create("NotExistedRG", accountName, parameters),
+                    "ResourceGroupNotFound");
+
+                parameters.Location = "BLA";
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, accountName, parameters),
+                    "LocationNotAvailableForResourceType");
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesGetAccountErrorTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.GetProperties("NotExistedRG", "nonExistedAccountName"),
+                    "ResourceGroupNotFound");
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.GetProperties(rgname, "nonExistedAccountName"),
+                    "ResourceNotFound");
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListByResourceGroup("NotExistedRG"),
+                    "ResourceGroupNotFound");
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesUpdateAccountErrorTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create cognitive services account
+                var createdAccount = CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S2, Kind.Recommendations);
+                var accountName = createdAccount.Name;
+
+                // try to update non-existent account
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Update("NotExistedRG", "nonExistedAccountName"),
+                    "ResourceGroupNotFound");
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Update(rgname, "nonExistedAccountName"),
+                    "ResourceNotFound");
+
+                // Update with a SKU which doesn't exist
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Update(rgname, accountName, new Sku(SkuName.S0)),
+                    "InvalidSkuId");
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesDeleteAccountErrorTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // try to delete non-existent account
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Delete("NotExistedRG", "nonExistedAccountName"),
+                    "ResourceGroupNotFound");
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesAccountKeysErrorTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListKeys("NotExistedRG", "nonExistedAccountName"),
+                    "ResourceGroupNotFound");
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListKeys(rgname, "nonExistedAccountName"),
+                    "ResourceNotFound");
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesEnumerateSkusErrorTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListSkus("NotExistedRG", "nonExistedAccountName"),
+                    "ResourceGroupNotFound");
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListSkus(rgname, "nonExistedAccountName"),
+                    "ResourceNotFound");
             }
         }
     }
