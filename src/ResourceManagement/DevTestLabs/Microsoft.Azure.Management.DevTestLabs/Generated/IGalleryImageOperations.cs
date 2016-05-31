@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface IGalleryImageOperations
     {
         /// <summary>
-        /// List gallery images.
+        /// List gallery images in a given lab.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse<IPage<GalleryImage>>> ListWithHttpMessagesAsync(string resourceGroupName, string labName, ODataQuery<GalleryImage> odataQuery = default(ODataQuery<GalleryImage>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List gallery images.
+        /// List gallery images in a given lab.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

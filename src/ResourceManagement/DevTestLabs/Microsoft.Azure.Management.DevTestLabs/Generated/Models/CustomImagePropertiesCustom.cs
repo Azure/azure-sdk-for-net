@@ -31,10 +31,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// Initializes a new instance of the CustomImagePropertiesCustom
         /// class.
         /// </summary>
-        public CustomImagePropertiesCustom(string imageName = default(string), bool? sysPrep = default(bool?))
+        public CustomImagePropertiesCustom(string imageName = default(string), bool? sysPrep = default(bool?), string osType = default(string))
         {
             ImageName = imageName;
             SysPrep = sysPrep;
+            OsType = osType;
         }
 
         /// <summary>
@@ -48,6 +49,13 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "sysPrep")]
         public bool? SysPrep { get; set; }
+
+        /// <summary>
+        /// The OS type of the custom image. Possible values include:
+        /// 'Windows', 'Linux', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "osType")]
+        public string OsType { get; set; }
 
     }
 }
