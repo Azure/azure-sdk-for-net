@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// script which when run opens the file explorer displaying all
         /// recoverable files and folders. This is an asynchronous operation.
         /// To determine whether the backend service has finished processing
-        /// the request, call --- API.
+        /// the request, call Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource group name of your recovery services vault.
@@ -102,9 +102,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Target details for file / folder restore.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public async Task<IaaSVMILRTarget> ProvisionAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request, CancellationToken cancellationToken)
+        public async Task<BaseRecoveryServicesJobResponse> ProvisionAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -285,13 +285,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     }
                     
                     // Create Result
-                    IaaSVMILRTarget result = null;
+                    BaseRecoveryServicesJobResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new IaaSVMILRTarget();
+                        result = new BaseRecoveryServicesJobResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -300,28 +300,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken clientScriptsArray = responseDoc["clientScripts"];
-                            if (clientScriptsArray != null && clientScriptsArray.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                foreach (JToken clientScriptsValue in ((JArray)clientScriptsArray))
-                                {
-                                    ClientScriptForConnection clientScriptForConnectionInstance = new ClientScriptForConnection();
-                                    result.ClientScripts.Add(clientScriptForConnectionInstance);
-                                    
-                                    JToken scriptContentValue = clientScriptsValue["scriptContent"];
-                                    if (scriptContentValue != null && scriptContentValue.Type != JTokenType.Null)
-                                    {
-                                        string scriptContentInstance = ((string)scriptContentValue);
-                                        clientScriptForConnectionInstance.ScriptContent = scriptContentInstance;
-                                    }
-                                    
-                                    JToken scriptExtensionValue = clientScriptsValue["scriptExtension"];
-                                    if (scriptExtensionValue != null && scriptExtensionValue.Type != JTokenType.Null)
-                                    {
-                                        string scriptExtensionInstance = ((string)scriptExtensionValue);
-                                        clientScriptForConnectionInstance.ScriptExtension = scriptExtensionInstance;
-                                    }
-                                }
+                                string locationInstance = ((string)locationValue);
+                                result.Location = locationInstance;
+                            }
+                            
+                            JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
+                            if (azureAsyncOperationValue != null && azureAsyncOperationValue.Type != JTokenType.Null)
+                            {
+                                string azureAsyncOperationInstance = ((string)azureAsyncOperationValue);
+                                result.AzureAsyncOperation = azureAsyncOperationInstance;
+                            }
+                            
+                            JToken retryAfterValue = responseDoc["retryAfter"];
+                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                            {
+                                string retryAfterInstance = ((string)retryAfterValue);
+                                result.RetryAfter = retryAfterInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
                             }
                         }
                         

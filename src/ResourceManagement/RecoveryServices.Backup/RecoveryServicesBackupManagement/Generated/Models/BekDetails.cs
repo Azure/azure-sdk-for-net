@@ -21,43 +21,51 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// BEK is bitlocker encrpytion key.KEK is encryption key for BEKIf the VM
-    /// was encrypted following details are stored:1. Secret(BEK) - Url +
-    /// Backup Data.2. Key(KEK) - Url + Backup Data.
+    /// BEK is bitlocker encrpytion key.
     /// </summary>
-    public partial class KeyAndSecretDetails
+    public partial class BekDetails
     {
-        private BekDetails _bekDetails;
+        private string _secretData;
         
         /// <summary>
-        /// Optional. BEK is bitlocker encrpytion key.
+        /// Optional. BEK data
         /// </summary>
-        public BekDetails BekDetails
+        public string SecretData
         {
-            get { return this._bekDetails; }
-            set { this._bekDetails = value; }
+            get { return this._secretData; }
+            set { this._secretData = value; }
         }
         
-        private KekDetails _kekDetails;
+        private string _secretUrl;
         
         /// <summary>
-        /// Optional. KEK is encryption key for BEK.
+        /// Optional. Secret is BEK
         /// </summary>
-        public KekDetails KekDetails
+        public string SecretUrl
         {
-            get { return this._kekDetails; }
-            set { this._kekDetails = value; }
+            get { return this._secretUrl; }
+            set { this._secretUrl = value; }
+        }
+        
+        private string _secretVaultId;
+        
+        /// <summary>
+        /// Optional. ID of the Key Vault where this Secret is stored
+        /// </summary>
+        public string SecretVaultId
+        {
+            get { return this._secretVaultId; }
+            set { this._secretVaultId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the KeyAndSecretDetails class.
+        /// Initializes a new instance of the BekDetails class.
         /// </summary>
-        public KeyAndSecretDetails()
+        public BekDetails()
         {
         }
     }

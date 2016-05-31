@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// script which when run opens the file explorer displaying all
         /// recoverable files and folders. This is an asynchronous operation.
         /// To determine whether the backend service has finished processing
-        /// the request, call --- API.
+        /// the request, call Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -69,9 +69,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. File / folder restore request for the backup item.
         /// </param>
         /// <returns>
-        /// Target details for file / folder restore.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public static IaaSVMILRTarget Provision(this IFileFolderRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request)
+        public static BaseRecoveryServicesJobResponse Provision(this IFileFolderRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// script which when run opens the file explorer displaying all
         /// recoverable files and folders. This is an asynchronous operation.
         /// To determine whether the backend service has finished processing
-        /// the request, call --- API.
+        /// the request, call Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. File / folder restore request for the backup item.
         /// </param>
         /// <returns>
-        /// Target details for file / folder restore.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public static Task<IaaSVMILRTarget> ProvisionAsync(this IFileFolderRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request)
+        public static Task<BaseRecoveryServicesJobResponse> ProvisionAsync(this IFileFolderRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request)
         {
             return operations.ProvisionAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId, request, CancellationToken.None);
         }

@@ -21,43 +21,51 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// BEK is bitlocker encrpytion key.KEK is encryption key for BEKIf the VM
-    /// was encrypted following details are stored:1. Secret(BEK) - Url +
-    /// Backup Data.2. Key(KEK) - Url + Backup Data.
+    /// KEK is encryption key for BEK
     /// </summary>
-    public partial class KeyAndSecretDetails
+    public partial class KekDetails
     {
-        private BekDetails _bekDetails;
+        private string _keyBackupData;
         
         /// <summary>
-        /// Optional. BEK is bitlocker encrpytion key.
+        /// Optional. KEK data
         /// </summary>
-        public BekDetails BekDetails
+        public string KeyBackupData
         {
-            get { return this._bekDetails; }
-            set { this._bekDetails = value; }
+            get { return this._keyBackupData; }
+            set { this._keyBackupData = value; }
         }
         
-        private KekDetails _kekDetails;
+        private string _keyUrl;
         
         /// <summary>
-        /// Optional. KEK is encryption key for BEK.
+        /// Optional. Key is KEK
         /// </summary>
-        public KekDetails KekDetails
+        public string KeyUrl
         {
-            get { return this._kekDetails; }
-            set { this._kekDetails = value; }
+            get { return this._keyUrl; }
+            set { this._keyUrl = value; }
+        }
+        
+        private string _keyVaultId;
+        
+        /// <summary>
+        /// Optional. ID of the Key Vault where this Key is stored
+        /// </summary>
+        public string KeyVaultId
+        {
+            get { return this._keyVaultId; }
+            set { this._keyVaultId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the KeyAndSecretDetails class.
+        /// Initializes a new instance of the KekDetails class.
         /// </summary>
-        public KeyAndSecretDetails()
+        public KekDetails()
         {
         }
     }

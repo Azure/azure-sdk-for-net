@@ -26,38 +26,26 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// BEK is bitlocker encrpytion key.KEK is encryption key for BEKIf the VM
-    /// was encrypted following details are stored:1. Secret(BEK) - Url +
-    /// Backup Data.2. Key(KEK) - Url + Backup Data.
+    /// Operation status extended info for ILR provision action.
     /// </summary>
-    public partial class KeyAndSecretDetails
+    public partial class OperationStatusProvisionILRExtendedInfo : OperationStatusExtendedInfo
     {
-        private BekDetails _bekDetails;
+        private InstanceItemRecoveryTarget _recoveryTarget;
         
         /// <summary>
-        /// Optional. BEK is bitlocker encrpytion key.
+        /// Optional. Target details for file / folder restore.
         /// </summary>
-        public BekDetails BekDetails
+        public InstanceItemRecoveryTarget RecoveryTarget
         {
-            get { return this._bekDetails; }
-            set { this._bekDetails = value; }
-        }
-        
-        private KekDetails _kekDetails;
-        
-        /// <summary>
-        /// Optional. KEK is encryption key for BEK.
-        /// </summary>
-        public KekDetails KekDetails
-        {
-            get { return this._kekDetails; }
-            set { this._kekDetails = value; }
+            get { return this._recoveryTarget; }
+            set { this._recoveryTarget = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the KeyAndSecretDetails class.
+        /// Initializes a new instance of the
+        /// OperationStatusProvisionILRExtendedInfo class.
         /// </summary>
-        public KeyAndSecretDetails()
+        public OperationStatusProvisionILRExtendedInfo()
         {
         }
     }

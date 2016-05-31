@@ -31,6 +31,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class RecoveryPoint : RecoveryPointBase
     {
+        private bool _isInstantILRSessionActive;
+        
+        /// <summary>
+        /// Optional. Identifies whether the instant ILR session associated
+        /// with this recovery point is still active.
+        /// </summary>
+        public bool IsInstantILRSessionActive
+        {
+            get { return this._isInstantILRSessionActive; }
+            set { this._isInstantILRSessionActive = value; }
+        }
+        
         private bool? _isSourceVMEncrypted;
         
         /// <summary>

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// script which when run opens the file explorer displaying all
         /// recoverable files and folders. This is an asynchronous operation.
         /// To determine whether the backend service has finished processing
-        /// the request, call --- API.
+        /// the request, call Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name of your recovery services vault.
@@ -70,9 +70,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Target details for file / folder restore.
+        /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        Task<IaaSVMILRTarget> ProvisionAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> ProvisionAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request, CancellationToken cancellationToken);
         
         /// <summary>
         /// Revokes an iSCSI connection which can be used to download a script

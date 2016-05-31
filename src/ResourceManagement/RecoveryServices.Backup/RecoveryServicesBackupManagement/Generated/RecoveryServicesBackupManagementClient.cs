@@ -1080,6 +1080,42 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     }
                                     operationStatusInstance.Properties = operationStatusJobsExtendedInfoInstance;
                                 }
+                                if (typeName == "OperationStatusProvisionILRExtendedInfo")
+                                {
+                                    OperationStatusProvisionILRExtendedInfo operationStatusProvisionILRExtendedInfoInstance = new OperationStatusProvisionILRExtendedInfo();
+                                    
+                                    JToken recoveryTargetValue = propertiesValue["recoveryTarget"];
+                                    if (recoveryTargetValue != null && recoveryTargetValue.Type != JTokenType.Null)
+                                    {
+                                        InstanceItemRecoveryTarget recoveryTargetInstance = new InstanceItemRecoveryTarget();
+                                        operationStatusProvisionILRExtendedInfoInstance.RecoveryTarget = recoveryTargetInstance;
+                                        
+                                        JToken clientScriptsArray = recoveryTargetValue["clientScripts"];
+                                        if (clientScriptsArray != null && clientScriptsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken clientScriptsValue in ((JArray)clientScriptsArray))
+                                            {
+                                                ClientScriptForConnection clientScriptForConnectionInstance = new ClientScriptForConnection();
+                                                recoveryTargetInstance.ClientScripts.Add(clientScriptForConnectionInstance);
+                                                
+                                                JToken scriptContentValue = clientScriptsValue["scriptContent"];
+                                                if (scriptContentValue != null && scriptContentValue.Type != JTokenType.Null)
+                                                {
+                                                    string scriptContentInstance = ((string)scriptContentValue);
+                                                    clientScriptForConnectionInstance.ScriptContent = scriptContentInstance;
+                                                }
+                                                
+                                                JToken scriptExtensionValue = clientScriptsValue["scriptExtension"];
+                                                if (scriptExtensionValue != null && scriptExtensionValue.Type != JTokenType.Null)
+                                                {
+                                                    string scriptExtensionInstance = ((string)scriptExtensionValue);
+                                                    clientScriptForConnectionInstance.ScriptExtension = scriptExtensionInstance;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    operationStatusInstance.Properties = operationStatusProvisionILRExtendedInfoInstance;
+                                }
                             }
                         }
                         

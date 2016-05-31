@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Target details for file / folder restore.
     /// </summary>
-    public partial class IaaSVMILRTarget : AzureOperationResponse
+    public partial class InstanceItemRecoveryTarget : AzureOperationResponse
     {
         private IList<ClientScriptForConnection> _clientScripts;
         
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMILRTarget class.
+        /// Initializes a new instance of the InstanceItemRecoveryTarget class.
         /// </summary>
-        public IaaSVMILRTarget()
+        public InstanceItemRecoveryTarget()
         {
             this.ClientScripts = new LazyList<ClientScriptForConnection>();
         }
