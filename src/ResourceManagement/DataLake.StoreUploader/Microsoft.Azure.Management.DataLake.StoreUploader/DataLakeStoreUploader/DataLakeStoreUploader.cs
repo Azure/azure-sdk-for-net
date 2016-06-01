@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <returns></returns>
         private UploadFolderMetadata GetFolderMetadata()
         {
-            var metadataGenerator = new UploadFolderMetadataGenerator(this.Parameters);
+            var metadataGenerator = new UploadFolderMetadataGenerator(this.Parameters, _frontEnd);
             if (this.Parameters.IsResume)
             {
                 return metadataGenerator.GetExistingMetadata(_metadataFilePath);
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <returns></returns>
         private UploadMetadata GetMetadata()
         {
-            var metadataGenerator = new UploadMetadataGenerator(this.Parameters);
+            var metadataGenerator = new UploadMetadataGenerator(this.Parameters, _frontEnd);
             if (this.Parameters.IsResume)
             {
                 return metadataGenerator.GetExistingMetadata(_metadataFilePath);
@@ -316,20 +316,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     try
                     {
                         //verify that the stream exists and that the length is as expected
-                        if (!_frontEnd.StreamExists(metadata.TargetStreamPath))
+                        if (!_frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
                         {
                             // this file was marked as completed, but no target stream exists; it needs to be reuploaded
                             metadata.Status = SegmentUploadStatus.Pending;
                         }
                         else
                         {
-                            var remoteLength = _frontEnd.GetStreamLength(metadata.TargetStreamPath);
+                            var remoteLength = _frontEnd.GetStreamLength(metadata.TargetStreamPath, this.Parameters.IsDownload);
                             if (remoteLength != metadata.FileLength)
                             {
                                 //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be reuploaded
                                 //in this case it is considered safe to delete the file on the server,
                                 //since it is in an inconsistent state and we will be re-uploading it anyway
-                                _frontEnd.DeleteStream(metadata.TargetStreamPath);
+                                _frontEnd.DeleteStream(metadata.TargetStreamPath, this.Parameters.IsDownload);
                                 metadata.Status = SegmentUploadStatus.Pending;
                             }
                         }
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
             
             //verify that the target stream does not already exist and hasn't completed (in case we don't want to overwrite)
-            if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(metadata.TargetStreamPath))
+            if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
             {
                 throw new InvalidOperationException(string.Format("Stream at path: {0} already exists. Please set overwrite to true to overwrite streams that exist.", metadata.TargetStreamPath));
             }
@@ -384,14 +384,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         try
                         {
                             //verify that the stream exists and that the length is as expected
-                            if (!_frontEnd.StreamExists(segment.Path))
+                            if (!_frontEnd.StreamExists(segment.Path, this.Parameters.IsDownload))
                             {
                                 // this segment was marked as completed, but no target stream exists; it needs to be reuploaded
                                 segment.Status = SegmentUploadStatus.Pending;
                             }
                             else
                             {
-                                var remoteLength = _frontEnd.GetStreamLength(segment.Path);
+                                var remoteLength = _frontEnd.GetStreamLength(segment.Path, this.Parameters.IsDownload);
                                 if (remoteLength != segment.Length)
                                 {
                                     //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be reuploaded
@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             ValidateMetadataMatchesLocalFile(metadata);
 
             //verify that the target stream does not already exist (in case we don't want to overwrite)
-            if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(metadata.TargetStreamPath))
+            if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
             {
                 throw new InvalidOperationException(string.Format("Target Stream: {0} already exists", metadata.TargetStreamPath));
             }
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             Parallel.ForEach(metadata.Files, file =>
             {
                 //verify that the target stream does not already exist (in case we don't want to overwrite)
-                if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(file.TargetStreamPath))
+                if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(file.TargetStreamPath, this.Parameters.IsDownload))
                 {
                     exceptions.Enqueue(new InvalidOperationException(string.Format("Stream at path: {0} already exists. Please set overwrite to true to overwrite streams that exist.", file.TargetStreamPath)));
                 }
@@ -609,7 +609,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (metadata.SegmentCount == 0)
                 {
                     // simply create the target stream, overwriting existing streams if they exist
-                    _frontEnd.CreateStream(metadata.TargetStreamPath, true, null, 0);
+                    _frontEnd.CreateStream(metadata.TargetStreamPath, true, null, 0, this.Parameters.IsDownload);
                 }
                 else if (metadata.SegmentCount > 1)
                 {
@@ -709,11 +709,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             string[] inputPaths = new string[metadata.SegmentCount];
             
             //verify if target stream exists
-            if (_frontEnd.StreamExists(metadata.TargetStreamPath))
+            if (_frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
             {
                 if (this.Parameters.IsOverwrite)
                 {
-                    _frontEnd.DeleteStream(metadata.TargetStreamPath);
+                    _frontEnd.DeleteStream(metadata.TargetStreamPath, this.Parameters.IsDownload);
                 }
                 else
                 {
@@ -747,7 +747,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             retryCount++;
                             try
                             {
-                                remoteLength = _frontEnd.GetStreamLength(remoteStreamPath);
+                                remoteLength = _frontEnd.GetStreamLength(remoteStreamPath, this.Parameters.IsDownload);
                                 break;
                             }
                             catch (Exception e)
@@ -786,7 +786,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
 
             //issue the command
-            _frontEnd.Concatenate(metadata.TargetStreamPath, inputPaths);            
+            _frontEnd.Concatenate(metadata.TargetStreamPath, inputPaths, this.Parameters.IsDownload);            
         }
         
         #endregion

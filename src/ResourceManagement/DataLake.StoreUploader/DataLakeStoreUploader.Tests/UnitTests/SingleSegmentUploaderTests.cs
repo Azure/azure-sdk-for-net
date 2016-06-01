@@ -170,12 +170,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         public void SingleSegmentUploader_VerifyUploadStreamFails()
         {
             //create a mock front end which doesn't do anything
-            var fe = new MockableFrontEnd();
-            fe.CreateStreamImplementation = (streamPath, overwrite, data, byteCount) => { };
-            fe.DeleteStreamImplementation = (streamPath, recurse) => { };
-            fe.StreamExistsImplementation = (streamPath) => { return true; };
-            fe.AppendToStreamImplementation = (streamPath, data, offset, byteCount) => { };
-            fe.GetStreamLengthImplementation = (streamPath) => { return 0; };
+            var workingFrontEnd = new InMemoryFrontEnd();
+            var fe = new MockableFrontEnd(workingFrontEnd);
+            
+            fe.CreateStreamImplementation = (streamPath, overwrite, data, byteCount, isDownload) => { };
+            fe.DeleteStreamImplementation = (streamPath, recurse, isDownload) => { };
+            fe.StreamExistsImplementation = (streamPath, isDownload) => { return true; };
+            fe.AppendToStreamImplementation = (streamPath, data, offset, byteCount, isDownload) => { };
+            fe.GetStreamLengthImplementation = (streamPath, isDownload) => { return 0; };
 
             //upload some data
             var metadata = CreateMetadata(_smallFilePath, _smallFileContents.Length);
@@ -259,7 +261,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var workingFrontEnd = new InMemoryFrontEnd();
             var fe = new MockableFrontEnd(workingFrontEnd);
             fe.CreateStreamImplementation =
-                (streamPath, overwrite, data, byteCount) =>
+                (streamPath, overwrite, data, byteCount, isDownload) =>
                 {
                     callCount++;
                     if (callCount <= failCount)
@@ -270,7 +272,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 };
 
             fe.AppendToStreamImplementation =
-                (streamPath, data, offset, byteCount) =>
+                (streamPath, data, offset, byteCount, isDownload) =>
                 {
                     callCount++;
                     if (callCount <= failCount)

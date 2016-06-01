@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
         private readonly Dictionary<string, StreamData> _streams = new Dictionary<string, StreamData>();
 
-        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
+        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount, bool isDownload = false)
         {
             if (overwrite)
             {
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
         }
 
-        public void DeleteStream(string streamPath, bool recurse = false)
+        public void DeleteStream(string streamPath, bool recurse = false, bool isDownload = false)
         {
             if (!StreamExists(streamPath))
             {
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             _streams.Remove(streamPath);
         }
 
-        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
+        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount, bool isDownload = false)
         {
             if (!StreamExists(streamPath))
             {
@@ -101,13 +101,18 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             stream.Append(toAppend);
         }
 
-        public bool StreamExists(string streamPath)
+        public bool StreamExists(string streamPath, bool isDownload = false)
         {
             return _streams.ContainsKey(streamPath);
         }
 
-        public long GetStreamLength(string streamPath)
+        public long GetStreamLength(string streamPath, bool isDownload = false)
         {
+            if(isDownload)
+            {
+                return new FileInfo(streamPath).Length;
+            }
+
             if (!StreamExists(streamPath))
             {
                 throw new Exception("stream does not exist");
@@ -116,7 +121,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             return _streams[streamPath].Length;            
         }
 
-        public void Concatenate(string targetStreamPath, string[] inputStreamPaths)
+        public void Concatenate(string targetStreamPath, string[] inputStreamPaths, bool isDownload = false)
         {
             if (StreamExists(targetStreamPath))
             {
@@ -160,7 +165,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
         }
 
-        public IEnumerable<byte[]> GetAppendBlocks(string streamPath)
+        public IEnumerable<byte[]> GetAppendBlocks(string streamPath, bool isDownload = false)
         {
             if (!StreamExists(streamPath))
             {
@@ -171,7 +176,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             return sd.GetDataChunks();
         }
 
-        public byte[] GetStreamContents(string streamPath)
+        public byte[] GetStreamContents(string streamPath, bool isDownload = false)
         {
             if (!StreamExists(streamPath))
             {
@@ -194,6 +199,25 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
 
             return result;
+        }
+
+        public Stream ReadStream(string streamPath, long offset, long length, bool isDownload = false)
+        {
+            if(!isDownload)
+            {
+                // note that length is not used here since we will automatically stop reading once we reach the end of the stream.
+                var stream = new FileStream(streamPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+                if (offset >= stream.Length)
+                {
+                    throw new ArgumentException("StartOffset is beyond the end of the input file", "StartOffset");
+                }
+
+                stream.Seek(offset, SeekOrigin.Begin);
+                return stream;
+            }
+
+            throw new NotImplementedException();
         }
 
         public int StreamCount

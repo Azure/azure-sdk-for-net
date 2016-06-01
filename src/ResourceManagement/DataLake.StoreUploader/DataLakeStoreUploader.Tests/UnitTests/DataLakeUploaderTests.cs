@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             
             var backingFrontEnd1 = new InMemoryFrontEnd();
             var frontEnd1 = new MockableFrontEnd(backingFrontEnd1);
-            frontEnd1.ConcatenateImplementation = (target, inputs) => { throw new IntentionalException(); }; //fail the concatenation
+            frontEnd1.ConcatenateImplementation = (target, inputs, isDownload) => { throw new IntentionalException(); }; //fail the concatenation
             
             //attempt full upload
             var up = CreateParameters(isResume: false);
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var frontEnd = new MockableFrontEnd(backingFrontEnd);
 
             int createStreamCount = 0;
-            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount) =>
+            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount, isDownload) =>
             {
                 createStreamCount++;
                 if (createStreamCount > 1)
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                     //we only allow 1 file to be created
                     throw new IntentionalException();
                 }
-                backingFrontEnd.CreateStream(path, overwrite, data, byteCount);
+                backingFrontEnd.CreateStream(path, overwrite, data, byteCount, isDownload);
             };
             var up = CreateParameters(isResume: false, isRecursive: true);
             var uploader = new DataLakeStoreUploader(up, frontEnd);
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var frontEnd = new MockableFrontEnd(backingFrontEnd);
 
             int createStreamCount = 0;
-            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount) =>
+            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount, isDownload) =>
             {
                 createStreamCount++;
                 if (createStreamCount > 1)
@@ -340,6 +340,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 }
                 backingFrontEnd.CreateStream(path, overwrite, data, byteCount);
             };
+
             var up = CreateParameters(isResume: false);
             var uploader = new DataLakeStoreUploader(up, frontEnd);
             uploader.DeleteMetadataFile();

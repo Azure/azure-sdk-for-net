@@ -28,14 +28,18 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
         /// <param name="overwrite">Whether to overwrite an existing stream.</param>
-        void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount);
+        /// <param name="data">The data.</param>
+        /// <param name="byteCount">The byte count.</param>
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will create a stream on the local machine instead of on the server.</param>
+        void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount, bool isDownload = false);
 
         /// <summary>
         /// Deletes an existing stream at the given path.
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
         /// <param name="recurse">if set to <c>true</c> [recurse]. This is used for folder streams only.</param>
-        void DeleteStream(string streamPath, bool recurse = false);
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will delete a stream on the local machine instead of on the server.</param>
+        void DeleteStream(string streamPath, bool recurse = false, bool isDownload = false);
 
         /// <summary>
         /// Appends the given byte array to the end of a given stream.
@@ -44,22 +48,36 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="data">An array of bytes to be appended to the stream.</param>
         /// <param name="offset">The offset at which to append to the stream.</param>
         /// <param name="length">The number of bytes to append (starting at 0).</param>
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will append to a stream on the local machine instead of on the server.</param>
         /// <exception cref="System.ArgumentNullException">If the data to be appended is null or empty.</exception>
-        void AppendToStream(string streamPath, byte[] data, long offset, int length);
-        
+        void AppendToStream(string streamPath, byte[] data, long offset, int length, bool isDownload = false);
+
+        /// <summary>
+        /// Opens a stream for reading given the speficied stream path
+        /// </summary>
+        /// <param name="streamPath">The relative path to the stream.</param>
+        /// <param name="offset">The offset at which to append to the stream.</param>
+        /// <param name="length">The number of bytes to append (starting at 0).</param>
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will open a stream on the server to read from, instead of the local machine.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">If the data to be appended is null or empty.</exception>
+        Stream ReadStream(string streamPath, long offset, long length, bool isDownload = false);
+
         /// <summary>
         /// Determines if the stream with given path exists.
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will test if the stream exists on the local machine instead of on the server.</param>
         /// <returns>True if the stream exists, false otherwise.</returns>
-        bool StreamExists(string streamPath);
+        bool StreamExists(string streamPath, bool isDownload = false);
 
         /// <summary>
         /// Gets a value indicating the length of a stream, in bytes.
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will get the stream length on the local machine instead of on the server.</param>
         /// <returns>The length of the stream, in bytes.</returns>
-        long GetStreamLength(string streamPath);
+        long GetStreamLength(string streamPath, bool isDownload = false);
 
         /// <summary>
         /// Concatenates the given input streams (in order) into the given target stream.
@@ -67,6 +85,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="targetStreamPath">The relative path to the target stream.</param>
         /// <param name="inputStreamPaths">An ordered array of paths to the input streams.</param>
-        void Concatenate(string targetStreamPath, string[] inputStreamPaths);
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will concatenate the streams on the local machine instead of on the server.</param>
+        void Concatenate(string targetStreamPath, string[] inputStreamPaths, bool isDownload = false);
     }
 }
