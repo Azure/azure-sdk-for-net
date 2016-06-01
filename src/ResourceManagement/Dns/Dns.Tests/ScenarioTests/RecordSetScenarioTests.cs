@@ -59,7 +59,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return new RecordSet
                 {
                     Name = recordSetName,
-                    Location = this.Location,
                     Etag = null,
                     TTL = ttl,
                 };
