@@ -74,6 +74,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Must exist in the request. Must not be null.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }
