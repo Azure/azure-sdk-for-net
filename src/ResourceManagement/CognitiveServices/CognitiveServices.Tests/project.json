@@ -21,9 +21,6 @@
     "netcoreapp1.0": {
       "buildOptions": { "define": [ "PORTABLE" ] },
       "imports": ["dnxcore50", "portable-net45+win8"]
-    },
-    "dnx451": {
-      "frameworkAssemblies": {"System.Net.Http.WebRequest": "" }
     }
   },
   "dependencies": {

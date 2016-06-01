@@ -14,7 +14,8 @@
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../tools/DisableTestRunParallel.cs"
   },
 
   "testRunner": "xunit",
@@ -31,6 +32,5 @@
     }, 
     "Search.Management.Tests": "1.0.0",
     "Microsoft.Azure.Search": "3.0.0-preview",
-  },
-  "compileFiles": "../../../tools/DisableTestRunParallel.cs"
+  }
 }

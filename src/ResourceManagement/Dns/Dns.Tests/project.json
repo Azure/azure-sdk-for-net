@@ -12,7 +12,8 @@
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../../tools/DisableTestRunParallel.cs"
   },
 
   "testRunner": "xunit",
@@ -32,7 +33,8 @@
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[2.0.0-preview,3.0.0)",
     "Microsoft.Azure.Management.Dns": "2.0.0-preview",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.1.0,5.0)"
-  },
-  "compileFiles": "../../../../tools/DisableTestRunParallel.cs"
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.1.0,5.0)",
+    "xunit": "2.1.0",
+    "dotnet-test-xunit": "1.0.0-rc2-build10015"
+  }
 }

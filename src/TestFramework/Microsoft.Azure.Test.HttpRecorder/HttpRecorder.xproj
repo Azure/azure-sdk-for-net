@@ -8,7 +8,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>5d12d45a-e55f-410e-b8af-9dc90e81b237</ProjectGuid>
     <RootNamespace>HttpRecorder</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>

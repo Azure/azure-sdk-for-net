@@ -2,7 +2,6 @@
   "version": "6.0.0-preview",
   "description": "Microsoft Azure Management Storage Library",
   "authors": [ "Microsoft" ],
-  "xmlDoc": true,
 
   "packOptions": {
     "summary": "Microsoft Azure Management Storage Library",
@@ -14,6 +13,10 @@
   },
 
   "buildOptions": {
+    "nowarn": [
+        "CS1591"
+      ],
+    "xmlDoc": true,
     "delaySign": true,
     "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"

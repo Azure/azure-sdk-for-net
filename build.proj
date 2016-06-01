@@ -128,15 +128,15 @@
     
     <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
     <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
-    <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '%(Dnx_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
 
     <CallTarget Targets="BuildNetCoreLibraries" Condition=" @(NetCore_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
   <Target Name="BuildNetCoreLibraries">
-    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" '%(Dnx_AutoRestLibraries.Library)'!= '' "/>
-    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(Dnx_AutoRestLibraries.Test)' != '' "/>
+    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" '%(NetCore_AutoRestLibraries.Library)'!= '' "/>
+    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
@@ -171,7 +171,7 @@
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
     <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(NetCore_AutoRestLibraries.Filename).xml&quot;" 
           WorkingDirectory="%(NetCore_AutoRestLibraries.Test)"
-          Condition=" @(NetCore_AutoRestLibraries) != '' and '%(Dnx_AutoRestLibraries.Test)' != '' "/>
+          Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
   </Target>
   
   <PropertyGroup>
