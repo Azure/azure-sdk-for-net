@@ -27,7 +27,7 @@
     },
     "netstandard1.5": {
       "imports": ["dnxcore50"],
-      "compilationOptions": { "define": [ "DNXCORE50" ] },
+      "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027",
         "Microsoft.NETCore.Runtime": "1.0.2-rc2-24027",
@@ -38,7 +38,8 @@
       }
     },
     "netstandard1.1": {
-      "imports": ["dnxcore50"],
+      "imports": [ "dnxcore50" ],
+      "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
         "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027"
       }

@@ -14,7 +14,7 @@
     "requireLicenseAcceptance":  true,
   },
 
-  "compilationOptions": {
+  "buildOptions": {
     "delaySign": true,
     "publicSign": false,
     "keyFile": "../../../tools/MSSharedLibKey.snk"
