@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for KeyNameEnum.
+    /// Defines values for KeyName.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum KeyNameEnum
+    public enum KeyName
     {
         [EnumMember(Value = "Key1")]
         Key1,

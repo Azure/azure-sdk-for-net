@@ -29,17 +29,17 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the RegenerateKeyParameters class.
         /// </summary>
-        public RegenerateKeyParameters(KeyNameEnum? keyName = default(KeyNameEnum?))
+        public RegenerateKeyParameters(KeyName? keyName = default(KeyName?))
         {
             KeyName = keyName;
         }
 
         /// <summary>
-        /// key name to generate (key1|key2). Possible values include: 'Key1',
+        /// key name to generate (Key1|Key2). Possible values include: 'Key1',
         /// 'Key2'
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
-        public KeyNameEnum? KeyName { get; set; }
+        public KeyName? KeyName { get; set; }
 
     }
 }
