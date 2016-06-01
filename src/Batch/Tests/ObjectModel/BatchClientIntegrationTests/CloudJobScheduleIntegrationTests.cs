@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using BatchTestCommon;
     using Fixtures;
     using Microsoft.Azure.Batch;
@@ -197,6 +198,69 @@
         public IntegrationCloudJobScheduleTestsWithoutSharedPool(ITestOutputHelper testOutputHelper)
         {
             this.testOutputHelper = testOutputHelper;
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task JobSchedulePatch()
+        {
+            Func<Task> test = async () =>
+            {
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                {
+                    string jobScheduleId = "TestPatchJobSchedule-" + TestUtilities.GetMyName();
+                    const string newJobManagerCommandLine = "cmd /c dir";
+                    const string metadataKey = "Foo";
+                    const string metadataValue = "Bar";
+                    TimeSpan newRecurrenceInterval = TimeSpan.FromDays(2);
+                    try
+                    {
+                        CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(
+                            jobScheduleId,
+                            new Schedule()
+                                {
+                                    RecurrenceInterval = TimeSpan.FromDays(1)
+                                },
+                            new JobSpecification()
+                                {
+                                    JobManagerTask = new JobManagerTask()
+                                        {
+                                            Id = "Foo",
+                                            CommandLine = "Foo"
+                                        },
+                                    PoolInformation = new PoolInformation()
+                                        {
+                                            PoolId = "DummyPool"
+                                        }
+                                });
+
+                        await jobSchedule.CommitAsync().ConfigureAwait(false);
+                        await jobSchedule.RefreshAsync().ConfigureAwait(false);
+
+                        jobSchedule.JobSpecification.JobManagerTask.CommandLine = newJobManagerCommandLine;
+                        jobSchedule.Metadata = new List<MetadataItem>()
+                            {
+                                new MetadataItem(metadataKey, metadataValue)
+                            };
+                        jobSchedule.Schedule.RecurrenceInterval = newRecurrenceInterval;
+
+                        await jobSchedule.CommitChangesAsync().ConfigureAwait(false);
+
+                        await jobSchedule.RefreshAsync().ConfigureAwait(false);
+
+                        Assert.Equal(newRecurrenceInterval, jobSchedule.Schedule.RecurrenceInterval);
+                        Assert.Equal(newJobManagerCommandLine, jobSchedule.JobSpecification.JobManagerTask.CommandLine);
+                        Assert.Equal(metadataKey, jobSchedule.Metadata.Single().Name);
+                        Assert.Equal(metadataValue, jobSchedule.Metadata.Single().Value);
+                    }
+                    finally
+                    {
+                        await TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).ConfigureAwait(false);
+                    }
+                }
+            };
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         [Fact]

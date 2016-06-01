@@ -206,7 +206,7 @@
             var accessor = new PropertyAccessor<DummyComplexProperty>(property, controller, string.Empty, BindingAccess.Read | BindingAccess.Write);
 
             //Set readonly
-            accessor.IsReadOnly = true;         
+            accessor.IsReadOnly = true;
 
             //Un-set readonly
             accessor.IsReadOnly = false;
@@ -231,6 +231,19 @@
             accessor.SetValue(1, overrideReadOnly: true);
             Assert.True(accessor.HasBeenModified);
             Assert.Equal(1, accessor.Value);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void SetPropertyToExistingValueMarksItAsChanged()
+        {
+            var controller = new PropertyAccessController(BindingState.Bound);
+            var accessor = new PropertyAccessor<int>(controller, string.Empty, BindingAccess.Read | BindingAccess.Write);
+
+            var existingValue = accessor.Value;
+
+            accessor.SetValue(existingValue);
+            Assert.True(accessor.HasBeenModified);
         }
 
     }

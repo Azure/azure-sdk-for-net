@@ -6,7 +6,7 @@
     using BatchTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using TestUtilities;
     using Xunit;
     using Xunit.Abstractions;
     using Protocol = Microsoft.Azure.Batch.Protocol;
@@ -34,16 +34,15 @@
                     id: id,
                     displayName: displayName,
                     jobPreparationTask: prepTask);
-                batchClient.CustomBehaviors.Add(this.CreateJobRequestInterceptor(protoJob));
 
                 CloudJob job = batchClient.JobOperations.CreateJob(id, new PoolInformation()
                     {
                         PoolId = "Foo"
                     });
 
-                await job.CommitAsync();
+                await job.CommitAsync(additionalBehaviors: new[] { InterceptorFactory.CreateAddJobRequestInterceptor() });
 
-                await job.RefreshAsync();
+                await job.RefreshAsync(additionalBehaviors: new[] { InterceptorFactory.CreateGetJobRequestInterceptor(protoJob) });
 
                 Assert.Equal(id, job.Id);
                 Assert.Equal(displayName, job.DisplayName);
@@ -66,13 +65,12 @@
                     id: id,
                     displayName: displayName,
                     startTask: startTask);
-                batchClient.CustomBehaviors.Add(this.CreatePoolRequestInterceptor(protoPool));
 
                 CloudPool pool = batchClient.PoolOperations.CreatePool(id, "Woo", new CloudServiceConfiguration("4"));
 
-                await pool.CommitAsync();
+                await pool.CommitAsync(additionalBehaviors: new[] { InterceptorFactory.CreateAddPoolRequestInterceptor() });
 
-                await pool.RefreshAsync();
+                await pool.RefreshAsync(additionalBehaviors: new[] { InterceptorFactory.CreateGetPoolRequestInterceptor(protoPool) });
 
                 Assert.Equal(id, pool.Id);
                 Assert.Equal(displayName, pool.DisplayName);
@@ -95,13 +93,12 @@
                     id: id,
                     displayName: displayName,
                     jobSpecification: jobSpecification);
-                batchClient.CustomBehaviors.Add(this.CreateJobScheduleRequestInterceptor(protoJobSchedule));
 
                 CloudJobSchedule jobSchedule = batchClient.JobScheduleOperations.CreateJobSchedule(id, new Schedule(), null);
 
-                await jobSchedule.CommitAsync();
+                await jobSchedule.CommitAsync(additionalBehaviors: new[] { InterceptorFactory.CreateAddJobScheduleRequestInterceptor() });
 
-                await jobSchedule.RefreshAsync();
+                await jobSchedule.RefreshAsync(additionalBehaviors: new[] { InterceptorFactory.CreateGetJobScheduleRequestInterceptor(protoJobSchedule) });
 
                 Assert.Equal(id, jobSchedule.Id);
                 Assert.Equal(displayName, jobSchedule.DisplayName);
@@ -124,18 +121,15 @@
 
                     const string expectedThumbprint = "ABC";
                     var protoCertificate = new Protocol.Models.Certificate(thumbprint: expectedThumbprint);
-
-                    batchClient.CustomBehaviors.Add(this.CreateCertificateRequestInterceptor(protoCertificate));
-
                     Certificate certificate = batchClient.CertificateOperations.CreateCertificate(
                         pfxFilePath,
                         CommonResources.CertificatePassword);
 
                     Assert.NotNull(certificate.ThumbprintAlgorithm);
 
-                    await certificate.CommitAsync();
+                    await certificate.CommitAsync(additionalBehaviors: new [] { InterceptorFactory.CreateAddCertificateRequestInterceptor() });
 
-                    await certificate.RefreshAsync();
+                    await certificate.RefreshAsync(additionalBehaviors: new[] { InterceptorFactory.CreateGetCertificateRequestInterceptor(protoCertificate) });
 
                     Assert.Equal(expectedThumbprint, certificate.Thumbprint);
                     Assert.Null(certificate.ThumbprintAlgorithm);
@@ -205,119 +199,6 @@
                 ValidationException e = await Assert.ThrowsAsync<ValidationException>(async () => await certificate.RefreshAsync());
                 Assert.Contains("'thumbprintAlgorithm' cannot be null", e.Message);
             }
-        }
-
-
-        private Protocol.RequestInterceptor CreateJobRequestInterceptor(Protocol.Models.CloudJob jobToReturn)
-        {
-            return new Protocol.RequestInterceptor(req =>
-                {
-                    var getJobRequest = req as Protocol.BatchRequests.JobGetBatchRequest;
-                    var addJobRequest = req as Protocol.BatchRequests.JobAddBatchRequest;
-
-                    if (getJobRequest != null)
-                    {
-                        getJobRequest.ServiceRequestFunc = ct =>
-                            {
-                                return Task.FromResult(new AzureOperationResponse<Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>()
-                                    {
-                                        Body = jobToReturn
-                                    });
-                            };
-                    }
-
-                    if (addJobRequest != null)
-                    {
-                        addJobRequest.ServiceRequestFunc = ct =>
-                            {
-                                return Task.FromResult(new AzureOperationHeaderResponse<Protocol.Models.JobAddHeaders>());
-                            };
-                    }
-                });
-        }
-
-        private Protocol.RequestInterceptor CreatePoolRequestInterceptor(Protocol.Models.CloudPool poolToReturn)
-        {
-            return new Protocol.RequestInterceptor(req =>
-            {
-                var getPoolRequest = req as Protocol.BatchRequests.PoolGetBatchRequest;
-                var addPoolRequest = req as Protocol.BatchRequests.PoolAddBatchRequest;
-
-                if (getPoolRequest != null)
-                {
-                    getPoolRequest.ServiceRequestFunc = ct =>
-                    {
-                        return Task.FromResult(new AzureOperationResponse<Protocol.Models.CloudPool, Protocol.Models.PoolGetHeaders>()
-                        {
-                            Body = poolToReturn
-                        });
-                    };
-                }
-
-                if (addPoolRequest != null)
-                {
-                    addPoolRequest.ServiceRequestFunc = ct =>
-                    {
-                        return Task.FromResult(new AzureOperationHeaderResponse<Protocol.Models.PoolAddHeaders>());
-                    };
-                }
-            });
-        }
-
-        private Protocol.RequestInterceptor CreateJobScheduleRequestInterceptor(Protocol.Models.CloudJobSchedule jobScheduleToReturn)
-        {
-            return new Protocol.RequestInterceptor(req =>
-            {
-                var getJobScheduleRequest = req as Protocol.BatchRequests.JobScheduleGetBatchRequest;
-                var addJobScheduleRequest = req as Protocol.BatchRequests.JobScheduleAddBatchRequest;
-
-                if (getJobScheduleRequest != null)
-                {
-                    getJobScheduleRequest.ServiceRequestFunc = ct =>
-                    {
-                        return Task.FromResult(new AzureOperationResponse<Protocol.Models.CloudJobSchedule, Protocol.Models.JobScheduleGetHeaders>()
-                        {
-                            Body = jobScheduleToReturn
-                        });
-                    };
-                }
-
-                if (addJobScheduleRequest != null)
-                {
-                    addJobScheduleRequest.ServiceRequestFunc = ct =>
-                    {
-                        return Task.FromResult(new AzureOperationHeaderResponse<Protocol.Models.JobScheduleAddHeaders>());
-                    };
-                }
-            });
-        }
-
-        private Protocol.RequestInterceptor CreateCertificateRequestInterceptor(Protocol.Models.Certificate certificateToReturn)
-        {
-            return new Protocol.RequestInterceptor(req =>
-            {
-                var getCertificateRequest = req as Protocol.BatchRequests.CertificateGetBatchRequest;
-                var addCertificateRequest = req as Protocol.BatchRequests.CertificateAddBatchRequest;
-
-                if (getCertificateRequest != null)
-                {
-                    getCertificateRequest.ServiceRequestFunc = ct =>
-                    {
-                        return Task.FromResult(new AzureOperationResponse<Protocol.Models.Certificate, Protocol.Models.CertificateGetHeaders>()
-                        {
-                            Body = certificateToReturn
-                        });
-                    };
-                }
-
-                if (addCertificateRequest != null)
-                {
-                    addCertificateRequest.ServiceRequestFunc = ct =>
-                    {
-                        return Task.FromResult(new AzureOperationHeaderResponse<Protocol.Models.CertificateAddHeaders>());
-                    };
-                }
-            });
         }
     }
 }

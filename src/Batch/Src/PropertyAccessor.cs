@@ -51,7 +51,7 @@
 
             this.value = value; //This bypasses change tracking and locking - but it's okay since we're in the constructor
         }
-        
+
         /// <summary>
         /// Gets or sets the value of the underlying property.
         /// </summary>
@@ -133,11 +133,10 @@
             access,
             this.propertyName);
 
-            //Don't mark this object dirty unless it has actually changed
-            if ((originalValue == null && value != null) || (originalValue != null && !originalValue.Equals(value)))
-            {
-                this.valueHasChanged = true;
-            }
+            //It makes sense to set this to true even if the value didn't change because in some cases the current client state of the property
+            //doesn't actually match the real server state (for example in cases where a select clause is used). In cases like this, the client has made
+            //a property assignment, and they want their property assignment to propagate to the server.
+            this.valueHasChanged = true;
         }
 
         /// <summary>

@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using System.Threading;
     using Common;
+    using Utils;
 
     internal static class UtilitiesInternal
     {
@@ -375,6 +376,71 @@
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the object if the property has been changed, otherwise returns null.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">When the property was changed to null, since the patch REST verb does not support that today in Batch.</exception>
+        internal static T? GetIfChangedOrNull<T>(this PropertyAccessor<T?> property)
+            where T : struct
+        {
+            if (property.HasBeenModified)
+            {
+                if (property.Value == null)
+                {
+                    throw new InvalidOperationException(BatchErrorMessages.CannotPatchNullValue);
+                }
+                return property.Value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the transport object if the property has been changed, otherwise returns null.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">When the property was changed to null, since the patch REST verb does not support that today in Batch.</exception>
+        internal static TProtocol GetTransportObjectIfChanged<TObjectModel, TProtocol>(this PropertyAccessor<TObjectModel> property)
+            where TObjectModel : class, ITransportObjectProvider<TProtocol>
+            where TProtocol : class
+        {
+            if (property.HasBeenModified)
+            {
+                if (property.Value == null)
+                {
+                    throw new InvalidOperationException(BatchErrorMessages.CannotPatchNullValue);
+                }
+                return CreateObjectWithNullCheck(property.Value, item => item.GetTransportObject());
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the transport object if the property has been changed, otherwise returns null.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">When the property was changed to null, since the patch REST verb does not support that today in Batch.</exception>
+        internal static TProtocol[] GetTransportObjectIfChanged<TObjectModel, TProtocol>(this PropertyAccessor<IList<TObjectModel>> property)
+            where TObjectModel : class, ITransportObjectProvider<TProtocol>
+            where TProtocol : class
+        {
+            if (property.HasBeenModified)
+            {
+                if (property.Value == null)
+                {
+                    throw new InvalidOperationException(BatchErrorMessages.CannotPatchNullValue);
+                }
+                return ConvertToProtocolArray(property.Value);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 

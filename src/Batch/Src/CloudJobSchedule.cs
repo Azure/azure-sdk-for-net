@@ -14,7 +14,7 @@
 #region // CloudJobSchedule
         
         /// <summary>
-        /// Commits all pending changes to this <see cref="CloudJobSchedule" /> to the Azure Batch service.
+        /// Commits this <see cref="CloudJobSchedule" /> to the Azure Batch service.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -64,7 +64,7 @@
         }
 
         /// <summary>
-        /// Commits all pending changes to this <see cref="CloudJobSchedule" /> to the Azure Batch service.
+        /// Commits this <see cref="CloudJobSchedule" /> to the Azure Batch service.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
@@ -77,6 +77,75 @@
                 asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }
         }
+
+        /// <summary>
+        /// Commits all pending changes to this <see cref="CloudJobSchedule" /> to the Azure Batch service.
+        /// </summary>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <remarks>
+        /// <para>
+        /// Updates an existing <see cref="CloudJobSchedule"/> on the Batch service by replacing its properties with the properties of this <see cref="CloudJobSchedule"/> which have been changed.
+        /// Unchanged properties are ignored.
+        /// All changes since the last time this entity was retrieved from the Batch service (either via <see cref="Refresh"/>, <see cref="JobScheduleOperations.GetJobSchedule"/>,
+        /// or <see cref="JobScheduleOperations.ListJobSchedules"/>) are applied.
+        /// Properties which are explicitly set to null will cause an exception because the Batch service does not support partial updates which set a property to null.
+        /// If you need to set a property to null, use <see cref="Commit"/>.
+        /// </para>
+        /// <para>This operation runs asynchronously.</para>
+        /// </remarks>
+        public async System.Threading.Tasks.Task CommitChangesAsync(
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
+
+            // after this no prop access is allowed
+            this.propertyContainer.IsReadOnly = true;
+
+            // craft the bahavior manager for this call
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            Models.JobSpecification jobSpecification = this.propertyContainer.JobSpecificationProperty.GetTransportObjectIfChanged<JobSpecification, Models.JobSpecification>();
+            Models.Schedule schedule = this.propertyContainer.ScheduleProperty.GetTransportObjectIfChanged<Schedule, Models.Schedule>();
+            Models.MetadataItem[] metadata = this.propertyContainer.MetadataProperty.GetTransportObjectIfChanged<MetadataItem, Models.MetadataItem>();
+
+            System.Threading.Tasks.Task asyncJobScheduleUpdate =
+                this.parentBatchClient.ProtocolLayer.PatchJobSchedule(
+                    this.Id,
+                    jobSpecification,
+                    metadata,
+                    schedule,
+                    bhMgr,
+                    cancellationToken);
+
+            await asyncJobScheduleUpdate.ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        /// <summary>
+        /// Commits all pending changes to this <see cref="CloudJobSchedule" /> to the Azure Batch service.
+        /// </summary>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <remarks>
+        /// <para>
+        /// Updates an existing <see cref="CloudJobSchedule"/> on the Batch service by replacing its properties with the properties of this <see cref="CloudJobSchedule"/> which have been changed.
+        /// Unchanged properties are ignored.
+        /// All changes since the last time this entity was retrieved from the Batch service (either via <see cref="Refresh"/>, <see cref="JobScheduleOperations.GetJobSchedule"/>,
+        /// or <see cref="JobScheduleOperations.ListJobSchedules"/>) are applied.
+        /// Properties which are explicitly set to null will cause an exception because the Batch service does not support partial updates which set a property to null.
+        /// If you need to set a property to null, use <see cref="Commit"/>.
+        /// </para>
+        /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="CommitChangesAsync"/>.</para>
+        /// </remarks>
+        public void CommitChanges(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            using (System.Threading.Tasks.Task asyncTask = this.CommitChangesAsync(additionalBehaviors))
+            {
+                asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            }
+        }
+
 
         /// <summary>
         /// Enables this <see cref="CloudJobSchedule" />, allowing jobs to be created according to the <see cref="Schedule"/>.

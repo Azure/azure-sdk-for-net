@@ -827,6 +827,30 @@
             return asyncTask;
         }
 
+        public Task<AzureOperationHeaderResponse<Models.PoolPatchHeaders>> PatchPool(
+            string poolId,
+            Models.StartTask startTask,
+            Models.CertificateReference[] certificateReferences,
+            Models.ApplicationPackageReference[] applicationPackageReferences,
+            Models.MetadataItem[] metadata,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken)
+        {
+            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata);
+            var request = new PoolPatchBatchRequest(this._client, parameters, cancellationToken);
+
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.PatchWithHttpMessagesAsync(
+                    poolId,
+                    request.Parameters,
+                    request.Options,
+                    request.CustomHeaders,
+                    lambdaCancelToken);
+
+            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
         public Task<AzureOperationHeaderResponse<Models.PoolDeleteHeaders>> DeletePool(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new PoolDeleteBatchRequest(this._client, cancellationToken);

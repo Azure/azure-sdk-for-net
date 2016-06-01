@@ -84,6 +84,7 @@
     <Compile Include="CommitAndRefreshUnitTests.cs" />
     <Compile Include="ODataUnitTests.cs" />
     <Compile Include="OptionsUnitTests.cs" />
+    <Compile Include="PatchUnitTests.cs" />
     <Compile Include="SynchronousMethodExceptionBehaviorUnitTests.cs" />
     <Compile Include="ExceptionUnitTests.cs" />
     <Compile Include="FakeClient.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="TaskDependenciesUnitTests.cs" />
     <Compile Include="EnumUnitTests.cs" />
     <Compile Include="StreamUnitTests.cs" />
+    <Compile Include="TestUtilities\InterceptorFactory.cs" />
     <Compile Include="TestUtilities\ReflectionHelpers.cs" />
     <Compile Include="BatchRequestUnitTests.cs" />
     <Compile Include="ClientUnitTestCommon.cs" />

@@ -129,6 +129,9 @@
   <data name="BatchRequestCannotBeModified" xml:space="preserve">
     <value>This BatchRequest has started executing and can no longer be modified.</value>
   </data>
+  <data name="CannotPatchNullValue" xml:space="preserve">
+    <value>A value of null cannot be specified when invoking the CommitChanges operation.</value>
+  </data>
   <data name="CanOnlyBeRunOnceFailure" xml:space="preserve">
     <value>{0} can only be run once.</value>
   </data>

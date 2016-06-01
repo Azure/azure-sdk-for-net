@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest.Azure;
+    using Utils;
     using Models = Microsoft.Azure.Batch.Protocol.Models;
 
     /// <summary>
@@ -14,16 +15,17 @@
     public partial class CloudJob : IRefreshable
     {
 
-#region // CloudJob
-        
+        #region // CloudJob
+
 
         /// <summary>
-        /// Commits all pending changes to this <see cref="CloudJob" /> to the Azure Batch service.
+        /// Commits this <see cref="CloudJob" /> to the Azure Batch service.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
+        /// <para>If the <see cref="CloudJob"/> already exists on the Batch service, its properties are replaced by the properties of this <see cref="CloudJob"/>.</para>
         /// <para>The commit operation runs asynchronously.</para>
         /// </remarks>
         public async System.Threading.Tasks.Task CommitAsync(
@@ -66,15 +68,88 @@
         }
 
         /// <summary>
-        /// Commits all pending changes to this <see cref="CloudJob" /> to the Azure Batch service.
+        /// Commits this <see cref="CloudJob" /> to the Azure Batch service.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
+        /// <para>If the <see cref="CloudJob"/> already exists on the Batch service, its properties are replaced by the properties of this <see cref="CloudJob"/>.</para>
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="CommitAsync"/>.</para>
         /// </remarks>
         public void Commit(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             using (System.Threading.Tasks.Task asyncTask = CommitAsync(additionalBehaviors))
+            {
+                asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            }
+        }
+
+        /// <summary>
+        /// Commits all pending changes to this <see cref="CloudJob" /> to the Azure Batch service.
+        /// </summary>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <remarks>
+        /// <para>
+        /// Updates an existing <see cref="CloudJob"/> on the Batch service by replacing its properties with the properties of this <see cref="CloudJob"/> which have been changed.
+        /// Unchanged properties are ignored.
+        /// All changes since the last time this entity was retrieved from the Batch service (either via <see cref="Refresh"/>, <see cref="JobOperations.GetJob"/>,
+        /// or <see cref="JobOperations.ListJobs"/>) are applied.
+        /// Properties which are explicitly set to null will cause an exception because the Batch service does not support partial updates which set a property to null.
+        /// If you need to set a property to null, use <see cref="Commit"/>.
+        /// </para>
+        /// <para>This operation runs asynchronously.</para>
+        /// </remarks>
+        public async Task CommitChangesAsync(
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
+
+            // first forbid actions during patch
+            this.propertyContainer.IsReadOnly = true;
+
+            // craft the behavior manager for this call
+            BehaviorManager behaveMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            Models.MetadataItem[] modelMetadata = this.propertyContainer.MetadataProperty.
+                GetTransportObjectIfChanged<MetadataItem, Models.MetadataItem>();
+            Models.JobConstraints modelJobConstraints = this.propertyContainer.ConstraintsProperty.
+                GetTransportObjectIfChanged<JobConstraints, Models.JobConstraints>();
+            Models.PoolInformation modelPoolInformation = this.propertyContainer.PoolInformationProperty.
+                GetTransportObjectIfChanged<PoolInformation, Models.PoolInformation>();
+            int? priority = this.propertyContainer.PriorityProperty.GetIfChangedOrNull();
+
+            Task asyncTask = this.parentBatchClient.ProtocolLayer.PatchJob(
+                this.Id,
+                priority,
+                modelPoolInformation,
+                modelJobConstraints,
+                modelMetadata,
+                behaveMgr,
+                cancellationToken);
+
+            await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        /// <summary>
+        /// Commits all pending changes to this <see cref="CloudJob" /> to the Azure Batch service.
+        /// </summary>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <remarks>
+        /// <para>
+        /// Updates an existing <see cref="CloudJob"/> on the Batch service by replacing its properties with the properties of this <see cref="CloudJob"/> which have been changed.
+        /// Unchanged properties are ignored.
+        /// All changes since the last time this entity was retrieved from the Batch service (either via <see cref="Refresh"/>, <see cref="JobOperations.GetJob"/>,
+        /// or <see cref="JobOperations.ListJobs"/>) are applied.
+        /// Properties which are explicitly set to null will cause an exception because the Batch service does not support partial updates which set a property to null.
+        /// If you need to set a property to null, use <see cref="Commit"/>.
+        /// </para>
+        /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="CommitChangesAsync"/>.</para>
+        /// </remarks>
+        public void CommitChanges(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            using (Task asyncTask = this.CommitChangesAsync(additionalBehaviors))
             {
                 asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }

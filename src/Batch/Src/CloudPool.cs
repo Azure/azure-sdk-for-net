@@ -57,7 +57,7 @@
         }
         
         /// <summary>
-        /// Commits all pending changes to this <see cref="CloudPool" /> to the Azure Batch service.
+        /// Commits this <see cref="CloudPool" /> to the Azure Batch service.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -109,7 +109,7 @@
         }
 
         /// <summary>
-        /// Commits all pending changes to this <see cref="CloudPool" /> to the Azure Batch service.
+        /// Commits this <see cref="CloudPool" /> to the Azure Batch service.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
@@ -118,6 +118,78 @@
         public void Commit(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             using (System.Threading.Tasks.Task asyncTask = CommitAsync(additionalBehaviors))
+            {
+                asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            }
+        }
+
+        /// <summary>
+        /// Commits all pending changes to this <see cref="CloudPool" /> to the Azure Batch service.
+        /// </summary>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <remarks>
+        /// <para>
+        /// Updates an existing <see cref="CloudPool"/> on the Batch service by replacing its properties with the properties of this <see cref="CloudPool"/> which have been changed.
+        /// Unchanged properties are ignored.
+        /// All changes since the last time this entity was retrieved from the Batch service (either via <see cref="Refresh"/>, <see cref="PoolOperations.GetPool"/>,
+        /// or <see cref="PoolOperations.ListPools"/>) are applied.
+        /// Properties which are explicitly set to null will cause an exception because the Batch service does not support partial updates which set a property to null.
+        /// If you need to set a property to null, use <see cref="Commit"/>.
+        /// </para>
+        /// <para>This operation runs asynchronously.</para>
+        /// </remarks>
+        public async System.Threading.Tasks.Task CommitChangesAsync(
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
+
+            // mark this object readonly
+            this.propertyContainer.IsReadOnly = true;
+
+            // craft the bahavior manager for this call
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            // hold the tpl task for the server call
+            Models.CertificateReference[] certRefArray =
+                this.propertyContainer.CertificateReferencesProperty.GetTransportObjectIfChanged<CertificateReference, Models.CertificateReference>();
+            Models.MetadataItem[] mdiArray = this.propertyContainer.MetadataProperty.GetTransportObjectIfChanged<MetadataItem, Models.MetadataItem>();
+            Models.ApplicationPackageReference[] applicationPackageArray =
+                this.propertyContainer.ApplicationPackageReferencesProperty.GetTransportObjectIfChanged<ApplicationPackageReference, Models.ApplicationPackageReference>();
+            Models.StartTask modelStartTask = this.propertyContainer.StartTaskProperty.GetTransportObjectIfChanged<StartTask, Models.StartTask>();
+
+            System.Threading.Tasks.Task asyncTask = this.parentBatchClient.ProtocolLayer.PatchPool(
+                    this.Id,
+                    modelStartTask,
+                    certRefArray,
+                    applicationPackageArray,
+                    mdiArray,
+                    bhMgr,
+                    cancellationToken);
+
+            await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        /// <summary>
+        /// Commits all pending changes to this <see cref="CloudPool" /> to the Azure Batch service.
+        /// </summary>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <remarks>
+        /// <para>
+        /// Updates an existing <see cref="CloudPool"/> on the Batch service by replacing its properties with the properties of this <see cref="CloudPool"/> which have been changed.
+        /// Unchanged properties are ignored.
+        /// All changes since the last time this entity was retrieved from the Batch service (either via <see cref="Refresh"/>, <see cref="PoolOperations.GetPool"/>,
+        /// or <see cref="PoolOperations.ListPools"/>) are applied.
+        /// Properties which are explicitly set to null will cause an exception because the Batch service does not support partial updates which set a property to null.
+        /// If you need to set a property to null, use the <see cref="Commit"/> method.
+        /// </para>
+        /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="CommitChangesAsync"/>.</para>
+        /// </remarks>
+        public void CommitChanges(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            using (System.Threading.Tasks.Task asyncTask = this.CommitChangesAsync(additionalBehaviors))
             {
                 asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }

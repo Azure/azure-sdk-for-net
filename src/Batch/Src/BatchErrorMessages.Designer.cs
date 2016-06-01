@@ -97,6 +97,15 @@ namespace Microsoft.Azure.Batch {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A value of null cannot be specified when invoking the CommitChanges operation..
+        /// </summary>
+        internal static string CannotPatchNullValue {
+            get {
+                return ResourceManager.GetString("CannotPatchNullValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} can only be run once..
         /// </summary>
         internal static string CanOnlyBeRunOnceFailure {

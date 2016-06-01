@@ -31,6 +31,57 @@
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task PoolPatch()
+        {
+            Func<Task> test = async () =>
+            {
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                {
+                    string poolId = "TestPatchPool-" + TestUtilities.GetMyName();
+                    const string metadataKey = "Foo";
+                    const string metadataValue = "Bar";
+                    const string startTaskCommandLine = "cmd /c dir";
+
+                    try
+                    {
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new CloudServiceConfiguration(PoolFixture.OSFamily),
+                            targetDedicated: 0);
+
+                        await pool.CommitAsync().ConfigureAwait(false);
+                        await pool.RefreshAsync().ConfigureAwait(false);
+
+                        pool.StartTask = new StartTask()
+                            {
+                                CommandLine = startTaskCommandLine
+                            };
+                        pool.Metadata = new List<MetadataItem>()
+                            {
+                                new MetadataItem(metadataKey, metadataValue)
+                            };
+
+                        await pool.CommitChangesAsync().ConfigureAwait(false);
+
+                        await pool.RefreshAsync().ConfigureAwait(false);
+
+                        Assert.Equal(startTaskCommandLine, pool.StartTask.CommandLine);
+                        Assert.Equal(metadataKey, pool.Metadata.Single().Name);
+                        Assert.Equal(metadataValue, pool.Metadata.Single().Value);
+                    }
+                    finally
+                    {
+                        await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                    }
+                }
+            };
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1505248SupportMultipleTasksPerComputeNodeOnPoolAndPoolUserSpec()
         {
             Action test = () =>

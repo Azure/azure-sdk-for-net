@@ -129,12 +129,21 @@ namespace Microsoft.Azure.Batch
         Task<AzureOperationHeaderResponse<Models.PoolAddHeaders>> AddPool(Models.PoolAddParameter pool, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationHeaderResponse<Models.PoolUpdatePropertiesHeaders>> UpdatePool(
-            string poolId, 
+            string poolId,
             Models.StartTask startTask,
             Models.CertificateReference[] certRefs,
             Models.ApplicationPackageReference[] applicationPackageReferences,
-            Models.MetadataItem[] metaData, 
-            BehaviorManager bhMgr, 
+            Models.MetadataItem[] metaData,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken);
+
+        Task<AzureOperationHeaderResponse<Models.PoolPatchHeaders>> PatchPool(
+            string poolId,
+            Models.StartTask startTask,
+            Models.CertificateReference[] certificateReferences,
+            Models.ApplicationPackageReference[] applicationPackageReferences,
+            Models.MetadataItem[] metadata,
+            BehaviorManager bhMgr,
             CancellationToken cancellationToken);
 
         Task<AzureOperationHeaderResponse<Models.PoolDeleteHeaders>> DeletePool(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken);
