@@ -58,6 +58,28 @@ namespace Microsoft.Azure.Management.Automation
         Task<ScheduleCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, ScheduleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Create a schedule.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters supplied to the create or update schedule operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the create or update schedule operation.
+        /// </returns>
+        Task<ScheduleCreateOrUpdateResponse> CreateOrUpdateWithTimeConversionAsync(string resourceGroupName, string automationAccount, ScheduleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Delete the schedule identified by schedule name.  (see
         /// http://aka.ms/azureautomationsdk/scheduleoperations for more
         /// information)
