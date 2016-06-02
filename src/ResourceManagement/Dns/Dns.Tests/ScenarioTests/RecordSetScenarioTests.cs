@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     context,
                     testContext.ResourcesHandler);
             testContext.ZoneName =
-                TestUtilities.GenerateName("hydratestdnszone.com");
+                TestUtilities.GenerateName("hydratest.dnszone.com");
             testContext.RecordSetName =
                 TestUtilities.GenerateName("hydratestdnsrec");
             testContext.Location =
