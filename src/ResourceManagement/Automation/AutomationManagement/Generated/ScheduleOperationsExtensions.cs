@@ -90,6 +90,64 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Create a schedule.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters supplied to the create or update schedule
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response model for the create or update schedule operation.
+        /// </returns>
+        public static ScheduleCreateOrUpdateResponse CreateOrUpdateAndConvertTimes(this IScheduleOperations operations, string resourceGroupName, string automationAccount, ScheduleCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IScheduleOperations)s).CreateOrUpdateAndConvertTimesAsync(resourceGroupName, automationAccount, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Create a schedule.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters supplied to the create or update schedule
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response model for the create or update schedule operation.
+        /// </returns>
+        public static Task<ScheduleCreateOrUpdateResponse> CreateOrUpdateAndConvertTimesAsync(this IScheduleOperations operations, string resourceGroupName, string automationAccount, ScheduleCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateAndConvertTimesAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Delete the schedule identified by schedule name.  (see
         /// http://aka.ms/azureautomationsdk/scheduleoperations for more
         /// information)
