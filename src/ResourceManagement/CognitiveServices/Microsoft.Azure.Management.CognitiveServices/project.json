@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-preview",
+  "version": "0.1.1-preview",
   "description": "Microsoft Azure Management Cognitive Services Library",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure Cognitive Services management", "Cognitive Services", "Cognitive Services management", "REST HTTP client", "windowsazureofficial" ],
