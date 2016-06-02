@@ -21,12 +21,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Newtonsoft.Json.Linq;
@@ -62,6 +66,1741 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Begins creating or updating an Azure SQL Server backup
+        /// LongTermRetention vault. To determine the status of the operation
+        /// call GetBackupLongTermRetentionVaultOperationStatus.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server on which the database is
+        /// hosted.
+        /// </param>
+        /// <param name='backupLongTermRetentionVaultName'>
+        /// Required. The name of the Azure SQL Server backup LongTermRetention
+        /// vault.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a backup
+        /// LongTermRetention vault.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        public async Task<BackupLongTermRetentionVaultCreateOrUpdateResponse> BeginCreateOrUpdateBackupLongTermRetentionVaultAsync(string resourceGroupName, string serverName, string backupLongTermRetentionVaultName, BackupLongTermRetentionVaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (backupLongTermRetentionVaultName == null)
+            {
+                throw new ArgumentNullException("backupLongTermRetentionVaultName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("backupLongTermRetentionVaultName", backupLongTermRetentionVaultName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreateOrUpdateBackupLongTermRetentionVaultAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/backupLongTermRetentionVaults/";
+            url = url + Uri.EscapeDataString(backupLongTermRetentionVaultName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject backupLongTermRetentionVaultCreateOrUpdateParametersValue = new JObject();
+                requestDoc = backupLongTermRetentionVaultCreateOrUpdateParametersValue;
+                
+                JObject propertiesValue = new JObject();
+                backupLongTermRetentionVaultCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.RecoveryServicesVaultResourceId != null)
+                {
+                    propertiesValue["recoveryServicesVaultResourceId"] = parameters.Properties.RecoveryServicesVaultResourceId;
+                }
+                
+                backupLongTermRetentionVaultCreateOrUpdateParametersValue["location"] = parameters.Location;
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    backupLongTermRetentionVaultCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    BackupLongTermRetentionVaultCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new BackupLongTermRetentionVaultCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken targetValue = responseDoc["target"];
+                            if (targetValue != null && targetValue.Type != JTokenType.Null)
+                            {
+                                string targetInstance = ((string)targetValue);
+                                errorInstance.Target = targetInstance;
+                            }
+                            
+                            BackupLongTermRetentionVault backupLongTermRetentionVaultInstance = new BackupLongTermRetentionVault();
+                            result.BackupLongTermRetentionVault = backupLongTermRetentionVaultInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                BackupLongTermRetentionVaultProperties propertiesInstance = new BackupLongTermRetentionVaultProperties();
+                                backupLongTermRetentionVaultInstance.Properties = propertiesInstance;
+                                
+                                JToken recoveryServicesVaultResourceIdValue = propertiesValue2["recoveryServicesVaultResourceId"];
+                                if (recoveryServicesVaultResourceIdValue != null && recoveryServicesVaultResourceIdValue.Type != JTokenType.Null)
+                                {
+                                    string recoveryServicesVaultResourceIdInstance = ((string)recoveryServicesVaultResourceIdValue);
+                                    propertiesInstance.RecoveryServicesVaultResourceId = recoveryServicesVaultResourceIdInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                backupLongTermRetentionVaultInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                backupLongTermRetentionVaultInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                backupLongTermRetentionVaultInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                backupLongTermRetentionVaultInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    backupLongTermRetentionVaultInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.Created)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Begins creating or updating an Azure SQL Server backup
+        /// LongTermRetention policy. To determine the status of the operation
+        /// call GetDatabaseBackupLongTermRetentionPolicyOperationStatus.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server on which the database is
+        /// hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to be operated on.
+        /// </param>
+        /// <param name='backupLongTermRetentionPolicyName'>
+        /// Required. The name of the Azure SQL Database backup
+        /// LongTermRetention policy.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a
+        /// database backup LongTermRetention policy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        public async Task<DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse> BeginCreateOrUpdateDatabaseBackupLongTermRetentionPolicyAsync(string resourceGroupName, string serverName, string databaseName, string backupLongTermRetentionPolicyName, DatabaseBackupLongTermRetentionPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (backupLongTermRetentionPolicyName == null)
+            {
+                throw new ArgumentNullException("backupLongTermRetentionPolicyName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("backupLongTermRetentionPolicyName", backupLongTermRetentionPolicyName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreateOrUpdateDatabaseBackupLongTermRetentionPolicyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/backupLongTermRetentionPolicies/";
+            url = url + Uri.EscapeDataString(backupLongTermRetentionPolicyName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject databaseBackupLongTermRetentionPolicyCreateOrUpdateParametersValue = new JObject();
+                requestDoc = databaseBackupLongTermRetentionPolicyCreateOrUpdateParametersValue;
+                
+                JObject propertiesValue = new JObject();
+                databaseBackupLongTermRetentionPolicyCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.State != null)
+                {
+                    propertiesValue["state"] = parameters.Properties.State;
+                }
+                
+                if (parameters.Properties.RecoveryServicesBackupPolicyResourceId != null)
+                {
+                    propertiesValue["recoveryServicesBackupPolicyResourceId"] = parameters.Properties.RecoveryServicesBackupPolicyResourceId;
+                }
+                
+                databaseBackupLongTermRetentionPolicyCreateOrUpdateParametersValue["location"] = parameters.Location;
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    databaseBackupLongTermRetentionPolicyCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken targetValue = responseDoc["target"];
+                            if (targetValue != null && targetValue.Type != JTokenType.Null)
+                            {
+                                string targetInstance = ((string)targetValue);
+                                errorInstance.Target = targetInstance;
+                            }
+                            
+                            DatabaseBackupLongTermRetentionPolicy databaseBackupLongTermRetentionPolicyInstance = new DatabaseBackupLongTermRetentionPolicy();
+                            result.DatabaseBackupLongTermRetentionPolicy = databaseBackupLongTermRetentionPolicyInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                DatabaseBackupLongTermRetentionPolicyProperties propertiesInstance = new DatabaseBackupLongTermRetentionPolicyProperties();
+                                databaseBackupLongTermRetentionPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken stateValue = propertiesValue2["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
+                                JToken recoveryServicesBackupPolicyResourceIdValue = propertiesValue2["recoveryServicesBackupPolicyResourceId"];
+                                if (recoveryServicesBackupPolicyResourceIdValue != null && recoveryServicesBackupPolicyResourceIdValue.Type != JTokenType.Null)
+                                {
+                                    string recoveryServicesBackupPolicyResourceIdInstance = ((string)recoveryServicesBackupPolicyResourceIdValue);
+                                    propertiesInstance.RecoveryServicesBackupPolicyResourceId = recoveryServicesBackupPolicyResourceIdInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    databaseBackupLongTermRetentionPolicyInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.Created)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Creates or updates an Azure SQL Server backup LongTermRetention
+        /// vault.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server on which the database is
+        /// hosted.
+        /// </param>
+        /// <param name='backupLongTermRetentionVaultName'>
+        /// Required. The name of the Azure SQL Server backup LongTermRetention
+        /// vault.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a backup
+        /// LongTermRetention vault.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        public async Task<BackupLongTermRetentionVaultCreateOrUpdateResponse> CreateOrUpdateBackupLongTermRetentionVaultAsync(string resourceGroupName, string serverName, string backupLongTermRetentionVaultName, BackupLongTermRetentionVaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            SqlManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("backupLongTermRetentionVaultName", backupLongTermRetentionVaultName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateBackupLongTermRetentionVaultAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            BackupLongTermRetentionVaultCreateOrUpdateResponse response = await client.DatabaseBackup.BeginCreateOrUpdateBackupLongTermRetentionVaultAsync(resourceGroupName, serverName, backupLongTermRetentionVaultName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            BackupLongTermRetentionVaultCreateOrUpdateResponse result = await client.DatabaseBackup.GetBackupLongTermRetentionVaultOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 30;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == OperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.DatabaseBackup.GetBackupLongTermRetentionVaultOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
+                {
+                    delayInSeconds = 15;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Creates or updates an Azure SQL Database backup LongTermRetention
+        /// policy.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server on which the database is
+        /// hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to be operated on
+        /// (Updated or created).
+        /// </param>
+        /// <param name='backupLongTermRetentionPolicyName'>
+        /// Required. The name of the Azure SQL Database backup
+        /// LongTermRetention policy.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a
+        /// database backup LongTermRetention policy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        public async Task<DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse> CreateOrUpdateDatabaseBackupLongTermRetentionPolicyAsync(string resourceGroupName, string serverName, string databaseName, string backupLongTermRetentionPolicyName, DatabaseBackupLongTermRetentionPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            SqlManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("backupLongTermRetentionPolicyName", backupLongTermRetentionPolicyName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateDatabaseBackupLongTermRetentionPolicyAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse response = await client.DatabaseBackup.BeginCreateOrUpdateDatabaseBackupLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, backupLongTermRetentionPolicyName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse result = await client.DatabaseBackup.GetDatabaseBackupLongTermRetentionPolicyOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 30;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.Status == OperationStatus.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.DatabaseBackup.GetDatabaseBackupLongTermRetentionPolicyOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
+                {
+                    delayInSeconds = 15;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Server backup LongTermRetention vault
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the resource
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server.
+        /// </param>
+        /// <param name='backupLongTermRetentionVaultName'>
+        /// Required. The name of the Azure SQL Database backup
+        /// LongTermRetention vault.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Server backup
+        /// LongTermRetention vault request.
+        /// </returns>
+        public async Task<BackupLongTermRetentionVaultGetResponse> GetBackupLongTermRetentionVaultAsync(string resourceGroupName, string serverName, string backupLongTermRetentionVaultName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (backupLongTermRetentionVaultName == null)
+            {
+                throw new ArgumentNullException("backupLongTermRetentionVaultName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("backupLongTermRetentionVaultName", backupLongTermRetentionVaultName);
+                TracingAdapter.Enter(invocationId, this, "GetBackupLongTermRetentionVaultAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/backupLongTermRetentionVaults/";
+            url = url + Uri.EscapeDataString(backupLongTermRetentionVaultName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    BackupLongTermRetentionVaultGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new BackupLongTermRetentionVaultGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            BackupLongTermRetentionVault backupLongTermRetentionVaultInstance = new BackupLongTermRetentionVault();
+                            result.BackupLongTermRetentionVault = backupLongTermRetentionVaultInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                BackupLongTermRetentionVaultProperties propertiesInstance = new BackupLongTermRetentionVaultProperties();
+                                backupLongTermRetentionVaultInstance.Properties = propertiesInstance;
+                                
+                                JToken recoveryServicesVaultResourceIdValue = propertiesValue["recoveryServicesVaultResourceId"];
+                                if (recoveryServicesVaultResourceIdValue != null && recoveryServicesVaultResourceIdValue.Type != JTokenType.Null)
+                                {
+                                    string recoveryServicesVaultResourceIdInstance = ((string)recoveryServicesVaultResourceIdValue);
+                                    propertiesInstance.RecoveryServicesVaultResourceId = recoveryServicesVaultResourceIdInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                backupLongTermRetentionVaultInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                backupLongTermRetentionVaultInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                backupLongTermRetentionVaultInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                backupLongTermRetentionVaultInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    backupLongTermRetentionVaultInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Server backup LongTermRetention
+        /// vault create or update operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        public async Task<BackupLongTermRetentionVaultCreateOrUpdateResponse> GetBackupLongTermRetentionVaultOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationStatusLink == null)
+            {
+                throw new ArgumentNullException("operationStatusLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                TracingAdapter.Enter(invocationId, this, "GetBackupLongTermRetentionVaultOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    BackupLongTermRetentionVaultCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new BackupLongTermRetentionVaultCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken targetValue = responseDoc["target"];
+                            if (targetValue != null && targetValue.Type != JTokenType.Null)
+                            {
+                                string targetInstance = ((string)targetValue);
+                                errorInstance.Target = targetInstance;
+                            }
+                            
+                            BackupLongTermRetentionVault backupLongTermRetentionVaultInstance = new BackupLongTermRetentionVault();
+                            result.BackupLongTermRetentionVault = backupLongTermRetentionVaultInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                BackupLongTermRetentionVaultProperties propertiesInstance = new BackupLongTermRetentionVaultProperties();
+                                backupLongTermRetentionVaultInstance.Properties = propertiesInstance;
+                                
+                                JToken recoveryServicesVaultResourceIdValue = propertiesValue["recoveryServicesVaultResourceId"];
+                                if (recoveryServicesVaultResourceIdValue != null && recoveryServicesVaultResourceIdValue.Type != JTokenType.Null)
+                                {
+                                    string recoveryServicesVaultResourceIdInstance = ((string)recoveryServicesVaultResourceIdValue);
+                                    propertiesInstance.RecoveryServicesVaultResourceId = recoveryServicesVaultResourceIdInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                backupLongTermRetentionVaultInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                backupLongTermRetentionVaultInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                backupLongTermRetentionVaultInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                backupLongTermRetentionVaultInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    backupLongTermRetentionVaultInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.Created)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database backup LongTermRetention policy
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the resource
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database.
+        /// </param>
+        /// <param name='backupLongTermRetentionPolicyName'>
+        /// Required. The name of the Azure SQL Database backup
+        /// LongTermRetention policy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database backup
+        /// LongTermRetention policy request.
+        /// </returns>
+        public async Task<DatabaseBackupLongTermRetentionPolicyGetResponse> GetDatabaseBackupLongTermRetentionPolicyAsync(string resourceGroupName, string serverName, string databaseName, string backupLongTermRetentionPolicyName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (backupLongTermRetentionPolicyName == null)
+            {
+                throw new ArgumentNullException("backupLongTermRetentionPolicyName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("backupLongTermRetentionPolicyName", backupLongTermRetentionPolicyName);
+                TracingAdapter.Enter(invocationId, this, "GetDatabaseBackupLongTermRetentionPolicyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/backupLongTermRetentionPolicies/";
+            url = url + Uri.EscapeDataString(backupLongTermRetentionPolicyName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DatabaseBackupLongTermRetentionPolicyGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseBackupLongTermRetentionPolicyGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            DatabaseBackupLongTermRetentionPolicy databaseBackupLongTermRetentionPolicyInstance = new DatabaseBackupLongTermRetentionPolicy();
+                            result.DatabaseBackupLongTermRetentionPolicy = databaseBackupLongTermRetentionPolicyInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                DatabaseBackupLongTermRetentionPolicyProperties propertiesInstance = new DatabaseBackupLongTermRetentionPolicyProperties();
+                                databaseBackupLongTermRetentionPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
+                                JToken recoveryServicesBackupPolicyResourceIdValue = propertiesValue["recoveryServicesBackupPolicyResourceId"];
+                                if (recoveryServicesBackupPolicyResourceIdValue != null && recoveryServicesBackupPolicyResourceIdValue.Type != JTokenType.Null)
+                                {
+                                    string recoveryServicesBackupPolicyResourceIdInstance = ((string)recoveryServicesBackupPolicyResourceIdValue);
+                                    propertiesInstance.RecoveryServicesBackupPolicyResourceId = recoveryServicesBackupPolicyResourceIdInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    databaseBackupLongTermRetentionPolicyInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Database backup LongTermRetention
+        /// policy create or update operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure operations.
+        /// </returns>
+        public async Task<DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse> GetDatabaseBackupLongTermRetentionPolicyOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationStatusLink == null)
+            {
+                throw new ArgumentNullException("operationStatusLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                TracingAdapter.Enter(invocationId, this, "GetDatabaseBackupLongTermRetentionPolicyOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseBackupLongTermRetentionPolicyCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken targetValue = responseDoc["target"];
+                            if (targetValue != null && targetValue.Type != JTokenType.Null)
+                            {
+                                string targetInstance = ((string)targetValue);
+                                errorInstance.Target = targetInstance;
+                            }
+                            
+                            DatabaseBackupLongTermRetentionPolicy databaseBackupLongTermRetentionPolicyInstance = new DatabaseBackupLongTermRetentionPolicy();
+                            result.DatabaseBackupLongTermRetentionPolicy = databaseBackupLongTermRetentionPolicyInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                DatabaseBackupLongTermRetentionPolicyProperties propertiesInstance = new DatabaseBackupLongTermRetentionPolicyProperties();
+                                databaseBackupLongTermRetentionPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
+                                JToken recoveryServicesBackupPolicyResourceIdValue = propertiesValue["recoveryServicesBackupPolicyResourceId"];
+                                if (recoveryServicesBackupPolicyResourceIdValue != null && recoveryServicesBackupPolicyResourceIdValue.Type != JTokenType.Null)
+                                {
+                                    string recoveryServicesBackupPolicyResourceIdInstance = ((string)recoveryServicesBackupPolicyResourceIdValue);
+                                    propertiesInstance.RecoveryServicesBackupPolicyResourceId = recoveryServicesBackupPolicyResourceIdInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                databaseBackupLongTermRetentionPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    databaseBackupLongTermRetentionPolicyInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.Created)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Returns an Azure SQL deleted database backup (a resource
         /// representing a deleted database that can be restored).
         /// </summary>
@@ -74,8 +1813,8 @@ namespace Microsoft.Azure.Management.Sql
         /// deleted databases for.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Azure SQL Database Database to retrieve
-        /// deleted databases for.
+        /// Required. The name of the Azure SQL Database to retrieve deleted
+        /// databases for.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -554,6 +2293,480 @@ namespace Microsoft.Azure.Management.Sql
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
                                     geoBackupInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Server backup LongTermRetention vaults
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the resource
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Server backup
+        /// LongTermRetention vault request.
+        /// </returns>
+        public async Task<BackupLongTermRetentionVaultListResponse> ListBackupLongTermRetentionVaultsAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "ListBackupLongTermRetentionVaultsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/backupLongTermRetentionVaults";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    BackupLongTermRetentionVaultListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new BackupLongTermRetentionVaultListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    BackupLongTermRetentionVault backupLongTermRetentionVaultInstance = new BackupLongTermRetentionVault();
+                                    result.BackupLongTermRetentionVaults.Add(backupLongTermRetentionVaultInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        BackupLongTermRetentionVaultProperties propertiesInstance = new BackupLongTermRetentionVaultProperties();
+                                        backupLongTermRetentionVaultInstance.Properties = propertiesInstance;
+                                        
+                                        JToken recoveryServicesVaultResourceIdValue = propertiesValue["recoveryServicesVaultResourceId"];
+                                        if (recoveryServicesVaultResourceIdValue != null && recoveryServicesVaultResourceIdValue.Type != JTokenType.Null)
+                                        {
+                                            string recoveryServicesVaultResourceIdInstance = ((string)recoveryServicesVaultResourceIdValue);
+                                            propertiesInstance.RecoveryServicesVaultResourceId = recoveryServicesVaultResourceIdInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        backupLongTermRetentionVaultInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        backupLongTermRetentionVaultInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        backupLongTermRetentionVaultInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        backupLongTermRetentionVaultInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            backupLongTermRetentionVaultInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Database backup LongTermRetention
+        /// policies
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the resource
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database backup
+        /// LongTermRetention policy request.
+        /// </returns>
+        public async Task<DatabaseBackupLongTermRetentionPolicyListResponse> ListDatabaseBackupLongTermRetentionPoliciesAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "ListDatabaseBackupLongTermRetentionPoliciesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/backupLongTermRetentionPolicies";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DatabaseBackupLongTermRetentionPolicyListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseBackupLongTermRetentionPolicyListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    DatabaseBackupLongTermRetentionPolicy databaseBackupLongTermRetentionPolicyInstance = new DatabaseBackupLongTermRetentionPolicy();
+                                    result.DatabaseBackupLongTermRetentionPolicies.Add(databaseBackupLongTermRetentionPolicyInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        DatabaseBackupLongTermRetentionPolicyProperties propertiesInstance = new DatabaseBackupLongTermRetentionPolicyProperties();
+                                        databaseBackupLongTermRetentionPolicyInstance.Properties = propertiesInstance;
+                                        
+                                        JToken stateValue = propertiesValue["state"];
+                                        if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                        {
+                                            string stateInstance = ((string)stateValue);
+                                            propertiesInstance.State = stateInstance;
+                                        }
+                                        
+                                        JToken recoveryServicesBackupPolicyResourceIdValue = propertiesValue["recoveryServicesBackupPolicyResourceId"];
+                                        if (recoveryServicesBackupPolicyResourceIdValue != null && recoveryServicesBackupPolicyResourceIdValue.Type != JTokenType.Null)
+                                        {
+                                            string recoveryServicesBackupPolicyResourceIdInstance = ((string)recoveryServicesBackupPolicyResourceIdValue);
+                                            propertiesInstance.RecoveryServicesBackupPolicyResourceId = recoveryServicesBackupPolicyResourceIdInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        databaseBackupLongTermRetentionPolicyInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        databaseBackupLongTermRetentionPolicyInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        databaseBackupLongTermRetentionPolicyInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        databaseBackupLongTermRetentionPolicyInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            databaseBackupLongTermRetentionPolicyInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
                                 }
                             }
                         }

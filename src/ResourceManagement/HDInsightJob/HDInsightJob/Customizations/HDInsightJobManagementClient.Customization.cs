@@ -34,15 +34,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     /// </summary>
     public partial class HDInsightJobManagementClient : ServiceClient<HDInsightJobManagementClient>, IHDInsightJobManagementClient
     {
-        private static readonly TimeSpan MinBackOff = TimeSpan.FromMinutes(0);
-        private static readonly TimeSpan MaxBackOff = TimeSpan.FromMinutes(8);
-        private const int RetryCount = 5;
-        private static readonly TimeSpan DeltaBackOff = TimeSpan.FromMinutes(1);
-
-        private static string SdkVersion = ".Net " + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
-
         /// <summary>
-        /// Gets the recommended Retry Policy for the HDInsight Management Client.
+        /// Gets the recommended Retry Policy for the HDInsight Job Management Client.
         /// </summary>
         public static RetryPolicy HDInsightRetryPolicy
         {

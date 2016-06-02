@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/openidProviders/";
+            url = url + "/openidConnectProviders/";
             url = url + Uri.EscapeDataString(opid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/openidProviders/";
+            url = url + "/openidConnectProviders/";
             url = url + Uri.EscapeDataString(opid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/openidProviders/";
+            url = url + "/openidConnectProviders/";
             url = url + Uri.EscapeDataString(opid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
@@ -708,7 +708,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/openidProviders";
+            url = url + "/openidConnectProviders";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
             List<string> odataFilter = new List<string>();
@@ -1175,7 +1175,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/openidProviders/";
+            url = url + "/openidConnectProviders/";
             url = url + Uri.EscapeDataString(opid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");

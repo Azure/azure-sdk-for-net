@@ -98,23 +98,23 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._lastUpdated = value; }
         }
         
-        private int? _max;
+        private long? _max;
         
         /// <summary>
         /// Optional. Gets or sets the max.
         /// </summary>
-        public int? Max
+        public long? Max
         {
             get { return this._max; }
             set { this._max = value; }
         }
         
-        private int? _requestTime;
+        private long? _requestTime;
         
         /// <summary>
         /// Optional. Gets or sets the request time.
         /// </summary>
-        public int? RequestTime
+        public long? RequestTime
         {
             get { return this._requestTime; }
             set { this._requestTime = value; }
@@ -186,34 +186,34 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._status = value; }
         }
         
-        private int? _sum;
+        private long? _sum;
         
         /// <summary>
         /// Optional. Gets or sets the sum.
         /// </summary>
-        public int? Sum
+        public long? Sum
         {
             get { return this._sum; }
             set { this._sum = value; }
         }
         
-        private int? _top;
+        private long? _top;
         
         /// <summary>
         /// Optional. Gets or sets the number of top search results.
         /// </summary>
-        public int? Top
+        public long? Top
         {
             get { return this._top; }
             set { this._top = value; }
         }
         
-        private int? _total;
+        private long? _total;
         
         /// <summary>
         /// Optional. Gets or sets the total search results.
         /// </summary>
-        public int? Total
+        public long? Total
         {
             get { return this._total; }
             set { this._total = value; }
