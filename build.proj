@@ -92,11 +92,11 @@
 
   <Target Name="PrepareForAutoRestLibraries">
     <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects">
-      <Output TaskParameter="Non_Dnx_AutoRestLibraries" ItemName="Non_Dnx_AutoRestLibraries" />
-      <Output TaskParameter="Dnx_AutoRestLibraries" ItemName="Dnx_AutoRestLibraries" />
+      <Output TaskParameter="Non_NetCore_AutoRestLibraries" ItemName="Non_NetCore_AutoRestLibraries" />
+      <Output TaskParameter="NetCore_AutoRestLibraries" ItemName="NetCore_AutoRestLibraries" />
     </FilterOutAutoRestLibraries>
-    <Message Text="Non Dnx based AutoRest Libraries: @(Non_Dnx_AutoRestLibraries)" />
-    <Message Text="Dnx AutoRest Libraries: @(Dnx_AutoRestLibraries)" />
+    <Message Text="Non NetCore based AutoRest Libraries: @(Non_NetCore_AutoRestLibraries)" />
+    <Message Text="NetCore AutoRest Libraries: @(NetCore_AutoRestLibraries)" />
     
     <!--Do not build old libraries except Authentication, which Azure PowerShell still uses-->
     <ItemGroup>
@@ -114,7 +114,7 @@
   <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
     <PropertyGroup>
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
-      <_TemporaryDnxFeeds>-s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/xunit/api/v2 -s https://www.myget.org/F/aspnetrc1/api/v2</_TemporaryDnxFeeds>
+      <_TemporaryNetCoreFeeds>-s https://api.nuget.org/v3/index.json -s https://dotnet.myget.org/F/cli-deps/api/v3/index.json</_TemporaryNetCoreFeeds>
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
@@ -122,27 +122,21 @@
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
 
-    <MSBuild Projects="@(Non_Dnx_AutoRestLibraries)"
+    <MSBuild Projects="@(Non_NetCore_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
-
-    <Exec Command="dnvm use 1.0.0-rc1-final -r coreclr -a x64" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
     
-    <!--workaround for https://github.com/aspnet/dnx/issues/2216. do a full restore across-->
-    <!--
-      <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
-    -->
     <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
-    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
-    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" @(Dnx_AutoRestLibraries) != '' and '%(Dnx_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
+    <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
 
-    <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
+    <CallTarget Targets="BuildNetCoreLibraries" Condition=" @(NetCore_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
-  <Target Name="BuildDnxLibraries">
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" '%(Dnx_AutoRestLibraries.Library)'!= '' "/>
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(Dnx_AutoRestLibraries.Test)' != '' "/>
+  <Target Name="BuildNetCoreLibraries">
+    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" '%(NetCore_AutoRestLibraries.Library)'!= '' "/>
+    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
@@ -150,7 +144,7 @@
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
              Targets="Clean" />-->
     
-    <MSBuild Projects="@(Non_Dnx_AutoRestLibraries)"
+    <MSBuild Projects="@(Non_NetCore_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Clean" />
     <RemoveDir Directories="$(BinariesFolder)" />
@@ -175,9 +169,9 @@
       ContinueOnError="false"/>
 
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
-    <Exec Command="dnx test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(Dnx_AutoRestLibraries.Filename).xml&quot;" 
-          WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"
-          Condition=" @(Dnx_AutoRestLibraries) != '' and '%(Dnx_AutoRestLibraries.Test)' != '' "/>
+    <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(NetCore_AutoRestLibraries.Filename).xml&quot;" 
+          WorkingDirectory="%(NetCore_AutoRestLibraries.Test)"
+          Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
   </Target>
   
   <PropertyGroup>
@@ -265,7 +259,7 @@
     <PropertyGroup>
       <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
     </PropertyGroup>
-    <Exec Command="$(NuGetCommand) restore %(Non_Dnx_AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(Non_Dnx_AutoRestLibraries) != '' "/>
+    <Exec Command="$(NuGetCommand) restore %(Non_NetCore_AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(Non_NetCore_AutoRestLibraries) != '' "/>
     <Exec Command="$(NuGetCommand) restore %(NonAutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(NonAutoRestLibraries) != '' "/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
@@ -296,26 +290,26 @@
 
   <Import Project="$(LibraryToolsFolder)\nuget.targets" />
 
-  <Target Name="SignAssembliesInDnxPackages">
+  <Target Name="SignAssembliesInNetCorePackages">
     <ItemGroup>
-      <_DnxPackages Include="$(PackageOutputDir)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
+      <_NetCorePackages Include="$(PackageOutputDir)\%(NetCore_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
     <PropertyGroup>
       <_UnsignedFolder>$(PackageOutputDir)\unsigned</_UnsignedFolder>
       <_SignedFolder>$(PackageOutputDir)\signed</_SignedFolder>
     </PropertyGroup>    
     
-    <Message Text="%(_DnxPackages.Identity)" Importance="low" />
+    <Message Text="%(_NetCorePackages.Identity)" Importance="low" />
     
     <RemoveDir Directories="$(_UnsignedFolder);$(_SignedFolder)" ContinueOnError="false" />
-    <RemoveDir Directories="@(_DnxPackages->'$(PackageOutputDir)\%(Filename)')" ContinueOnError="false" />
+    <RemoveDir Directories="@(_NetCorePackages->'$(PackageOutputDir)\%(Filename)')" ContinueOnError="false" />
 
     <MakeDir Directories="$(_UnsignedFolder);$(_SignedFolder)" />
     
-    <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(_DnxPackages->'$(PackageOutputDir)\%(Filename)') %(_DnxPackages.Identity)" />
+    <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(_NetCorePackages->'$(PackageOutputDir)\%(Filename)') %(_NetCorePackages.Identity)" />
 
-    <RemoveDir Directories="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
-    <Delete Files="@(_DnxPackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
+    <RemoveDir Directories="@(_NetCorePackages->'%(RootDir)%(Directory)\%(Filename)\_rels')" />
+    <Delete Files="@(_NetCorePackages->'%(RootDir)%(Directory)\%(Filename)\[Content_Types].xml')" />
 
     <ItemGroup>
       <_TempBinaries Include="$(PackageOutputDir)\**\*.dll"/>
@@ -352,7 +346,7 @@
         Condition="!$(DelaySign)"/>
 
     <Copy SourceFiles="@(_PackageBinaries->'%(SignedFlatFileName)')" DestinationFiles="@(_PackageBinaries->'%(FullPath)')"></Copy>
-    <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(_DnxPackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_DnxPackages.Filename)" />
+    <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(_NetCorePackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(_NetCorePackages.Filename)" />
   </Target>
   
 </Project>

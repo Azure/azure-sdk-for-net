@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System;
     using System.Net.Http;
     using System.Runtime.Serialization;
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
     using System.Security.Permissions;
 #endif
 
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// Exception thrown for an invalid response with ErrorResponse
     /// information.
     /// </summary>
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
     [Serializable]
 #endif
     public class ErrorResponseException : RestException
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         {
         }
 
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
         /// <summary>
         /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
