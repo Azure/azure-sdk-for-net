@@ -31,7 +31,7 @@
     }, 
     "Microsoft.Azure.Test.HttpRecorder": "[2.0.0-preview,3.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[2.0.0-preview,3.0.0)",
-    "Microsoft.Azure.Management.NotificationHubs": "1.0.0-preview",
+    "Microsoft.Azure.Management.NotificationHubs": "2.0.0-preview",
     "Microsoft.Rest.ClientRuntime.Azure": "[4.1.0,45.0)",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
     "xunit": "2.1.0",
