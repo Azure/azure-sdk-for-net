@@ -14,7 +14,6 @@ $pathToCertFile      = 'C:\path\Certificate.cer'
 # **********************************************************************************************
 # You MAY set the following values before running this script
 # **********************************************************************************************
-# $applicationPassword = '' # If not specified, script will generate a random password during app creation
 $location            = 'East US'                          # Get-AzureLocation
 
 # **********************************************************************************************

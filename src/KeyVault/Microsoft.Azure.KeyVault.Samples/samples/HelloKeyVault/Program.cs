@@ -698,6 +698,12 @@ namespace Sample.Microsoft.HelloKeyVault
         {
             return (HttpClientFactory.Create(new InjectHostHeaderHttpMessageHandler()));
         }
+
+        /// <summary>
+        /// Helper function to load an X509 certificate
+        /// </summary>
+        /// <param name="certificateThumbprint">Thumbprint of the certificate to be loaded</param>
+        /// <returns>X509 Certificate</returns>
         public static X509Certificate2 FindCertificateByThumbprint(string certificateThumbprint)
         {
             if (certificateThumbprint == null)
