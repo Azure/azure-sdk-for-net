@@ -251,22 +251,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["storageAccountId"] = derived.StorageAccountId;
                             }
                             
-                            if (derived.VirtualMachineName != null)
-                            {
-                                propertiesValue["virtualMachineName"] = derived.VirtualMachineName;
-                            }
-                            
                             propertiesValue["createNewCloudService"] = derived.CreateNewCloudService;
-                            
-                            if (derived.CloudServiceOrResourceGroup != null)
-                            {
-                                propertiesValue["cloudServiceOrResourceGroup"] = derived.CloudServiceOrResourceGroup;
-                            }
-                            
-                            if (derived.CloudServiceOrResourceGroupId != null)
-                            {
-                                propertiesValue["cloudServiceOrResourceGroupId"] = derived.CloudServiceOrResourceGroupId;
-                            }
                             
                             if (derived.VirtualNetworkId != null)
                             {
@@ -286,6 +271,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived.SubnetId != null)
                             {
                                 propertiesValue["subnetId"] = derived.SubnetId;
+                            }
+                            
+                            if (derived.SourceResourceId != null)
+                            {
+                                propertiesValue["sourceResourceId"] = derived.SourceResourceId;
+                            }
+                            
+                            if (derived.TargetVirtualMachineId != null)
+                            {
+                                propertiesValue["targetVirtualMachineId"] = derived.TargetVirtualMachineId;
+                            }
+                            
+                            if (derived.TargetResourceGroupId != null)
+                            {
+                                propertiesValue["targetResourceGroupId"] = derived.TargetResourceGroupId;
+                            }
+                            
+                            if (derived.TargetDomainNameId != null)
+                            {
+                                propertiesValue["targetDomainNameId"] = derived.TargetDomainNameId;
                             }
                         }
                     }
