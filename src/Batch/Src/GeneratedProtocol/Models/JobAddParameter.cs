@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool on which the Batch service runs the job’s
+        /// Gets or sets the pool on which the Batch service runs the job's
         /// tasks.
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
@@ -133,8 +133,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? UsesTaskDependencies { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Id == null)

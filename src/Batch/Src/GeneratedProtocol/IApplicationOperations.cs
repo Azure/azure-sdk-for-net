@@ -44,6 +44,15 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<IPage<ApplicationSummary>,ApplicationListHeaders>> ListWithHttpMessagesAsync(ApplicationListOptions applicationListOptions = default(ApplicationListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the specified application.
@@ -60,6 +69,15 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<ApplicationSummary,ApplicationGetHeaders>> GetWithHttpMessagesAsync(string applicationId, ApplicationGetOptions applicationGetOptions = default(ApplicationGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the applications available in the specified account.
@@ -76,6 +94,15 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<IPage<ApplicationSummary>,ApplicationListHeaders>> ListNextWithHttpMessagesAsync(string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

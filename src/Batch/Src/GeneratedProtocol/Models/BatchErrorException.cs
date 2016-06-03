@@ -74,7 +74,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             : base(message, innerException)
         {
         }
-
 #if !PORTABLE
         /// <summary>
         /// Initializes a new instance of the BatchErrorException class.
@@ -91,6 +90,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="info">Serialization info.</param>
         /// <param name="context">Streaming context.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {

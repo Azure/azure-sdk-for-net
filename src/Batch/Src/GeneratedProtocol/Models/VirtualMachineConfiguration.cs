@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the VirtualMachineConfiguration
         /// class.
         /// </summary>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
+        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
         {
             ImageReference = imageReference;
             NodeAgentSKUId = nodeAgentSKUId;
@@ -76,13 +76,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public WindowsConfiguration WindowsConfiguration { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (ImageReference == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ImageReference");
+            }
+            if (NodeAgentSKUId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "NodeAgentSKUId");
             }
             if (this.ImageReference != null)
             {
