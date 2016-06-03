@@ -800,7 +800,7 @@
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             var asyncTask = this.ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(

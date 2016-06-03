@@ -35,7 +35,7 @@
             // first forbid actions during commit
             this.propertyContainer.IsReadOnly = true;
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager behaveMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             // hold the tpl task for the server call
@@ -181,9 +181,7 @@
         {
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // BUGBUG: formalize threading during commit_commitGateKeeper.NotDuringCommitThrows();
-        
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager behaveMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             System.Threading.Tasks.Task asyncTask = this.parentBatchClient.JobOperations.AddTaskAsyncImpl(this.Id, taskToAdd, behaveMgr, cancellationToken, allFileStagingArtifacts);
@@ -262,7 +260,7 @@
         {
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager behaveMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = this.parentBatchClient.JobOperations.AddTaskAsyncImpl(this.Id, tasksToAdd, parallelOptions, fileStagingArtifacts, timeout, behaveMgr);
@@ -329,7 +327,7 @@
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager behaveMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             IPagedEnumerable<CloudTask> ienumAsync = this.parentBatchClient.JobOperations.ListTasksImpl(this.Id, behaveMgr, detailLevel);

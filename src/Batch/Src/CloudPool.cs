@@ -72,7 +72,7 @@
             // mark this object readonly
             this.propertyContainer.IsReadOnly = true;
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             // hold the tpl task for the server call
@@ -357,7 +357,7 @@
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
 
             System.Threading.Tasks.Task<ComputeNode> asyncTask = this.parentBatchClient.PoolOperations.GetComputeNodeAsyncImpl(this.Id, computeNodeId, bhMgr, cancellationToken);

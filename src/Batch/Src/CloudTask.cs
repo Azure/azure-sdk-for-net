@@ -110,7 +110,7 @@
         {
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             IPagedEnumerable<NodeFile> enumerator = this.parentBatchClient.JobOperations.ListNodeFilesImpl(this.parentJobId, this.Id, recursive, bhMgr, detailLevel);
@@ -130,7 +130,7 @@
         {
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             IPagedEnumerable<SubtaskInformation> enumerator = this.parentBatchClient.JobOperations.ListSubtasksImpl(this.parentJobId, this.Id, bhMgr, detailLevel);

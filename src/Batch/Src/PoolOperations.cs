@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Batch
         /// Retrieval is non-atomic; pools are retrieved in pages during enumeration of the collection.</remarks>
         public IPagedEnumerable<CloudPool> ListPools(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<CloudPool> enumerable = new PagedEnumerable<CloudPool>( // the lamda will be the enumerator factory
@@ -1721,7 +1721,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>The get statistics operation runs asynchronously.</remarks>
         public async System.Threading.Tasks.Task<PoolStatistics> GetAllPoolsLifetimeStatisticsAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             System.Threading.Tasks.Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllPoolsLifetimeStatisticsHeaders>> asyncTask = 
@@ -1763,7 +1763,7 @@ namespace Microsoft.Azure.Batch
         /// Retrieval is non-atomic; metrics data is retrieved in pages during enumeration of the collection.</remarks>
         public IPagedEnumerable<PoolUsageMetrics> ListPoolUsageMetrics(DateTime? startTime = null, DateTime? endTime = null, DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<PoolUsageMetrics> enumerable = new PagedEnumerable<PoolUsageMetrics>( // the lamda will be the enumerator factory
@@ -1789,7 +1789,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>An <see cref="IPagedEnumerable{NodeAgentSku}"/> that can be used to enumerate node agent sku values asynchronously or synchronously.</returns>
         public IPagedEnumerable<NodeAgentSku> ListNodeAgentSkus(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<NodeAgentSku> enumerable = new PagedEnumerable<NodeAgentSku>( // the lamda will be the enumerator factory

@@ -127,8 +127,6 @@ namespace Microsoft.Azure.Batch
         // IDisposable
         public void Dispose()
         {
-            //BUGBUG: this would be the only way to stop a ForEachAsync()
-            //        since we don't have CancelationToken
         }
     }
 

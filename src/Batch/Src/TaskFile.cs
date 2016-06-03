@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(base.CustomBehaviors, additionalBehaviors);
 
             System.Threading.Tasks.Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> asyncTask = 
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Batch
 
         public override async System.Threading.Tasks.Task DeleteAsync(bool? recursive = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(base.CustomBehaviors, additionalBehaviors);
 
             var asyncTask = this._jobOperations.ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(_jobId, _taskId, base.Name, recursive, bhMgr, cancellationToken);

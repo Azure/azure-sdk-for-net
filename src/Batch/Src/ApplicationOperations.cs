@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Batch
         /// Retrieval is non-atomic; applications are retrieved in pages during enumeration of the collection.</remarks>
         public IPagedEnumerable<ApplicationSummary> ListApplicationSummaries(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<ApplicationSummary> enumerable = new PagedEnumerable<ApplicationSummary>(

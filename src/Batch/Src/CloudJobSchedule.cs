@@ -29,7 +29,7 @@
             // after this no prop access is allowed
             this.propertyContainer.IsReadOnly = true;
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             // fetch props with admin rights so we can make calls, etc.
@@ -161,7 +161,7 @@
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
             
             // start call
@@ -201,7 +201,7 @@
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
             
             // start call
@@ -242,7 +242,7 @@
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             System.Threading.Tasks.Task asyncTask = this.parentBatchClient.ProtocolLayer.DeleteJobSchedule(this.Id, bhMgr, cancellationToken);
@@ -286,7 +286,7 @@
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             System.Threading.Tasks.Task asyncTask = this.parentBatchClient.ProtocolLayer.TerminateJobSchedule(this.Id, bhMgr, cancellationToken);
@@ -325,7 +325,7 @@
             // throw if if this object is unbound
             UtilitiesInternal.ThrowOnUnbound(this.propertyContainer.BindingState);
 
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             IPagedEnumerable<CloudJob> jobs = this.parentBatchClient.JobScheduleOperations.ListJobsImpl(this.Id, bhMgr, detailLevel);
@@ -350,7 +350,7 @@
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
 
             // start call

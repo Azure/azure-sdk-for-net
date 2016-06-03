@@ -317,7 +317,7 @@
         /// <returns>An instance of IPagedEnumerable that can be used to enumerate objects using either synchronous or asynchronous patterns.</returns>
         public IPagedEnumerable<NodeFile> ListNodeFiles(bool? recursive = null, DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            // craft the bahavior manager for this call
+            // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             IPagedEnumerable<NodeFile> enumerator = this.parentBatchClient.PoolOperations.ListNodeFilesImpl(this.parentPoolId, this.Id, recursive, bhMgr, detailLevel);
