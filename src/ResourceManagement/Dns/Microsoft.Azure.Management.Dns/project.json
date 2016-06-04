@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-preview",
+  "version": "1.7.1-preview",
   "description": "Provides management capabilities for Azure Dns.",
   "authors": [ "Microsoft" ],
 
@@ -19,7 +19,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.1.0,5.0)"  },
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.1,5.0)"  },
 
   "frameworks": {
     "net45": {

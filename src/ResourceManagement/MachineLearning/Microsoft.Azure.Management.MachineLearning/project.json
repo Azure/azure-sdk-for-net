@@ -1,5 +1,5 @@
 {
-  "version": "0.10.0-preview",
+  "version": "0.9.1-preview",
   "title": "SDK Library for Microsoft Azure Management Machine Learning",
   "description": "Provides Machine Learning WebServices management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
@@ -20,7 +20,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.1.0,5.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.1,5.0)"
   },
 
   "frameworks": {
