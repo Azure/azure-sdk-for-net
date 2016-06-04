@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0-preview",
+  "version": "2.0.0-preview",
   "title": "Microsoft Azure Search Library",
   "description": "Makes it easy to develop a .NET application that uses Azure Search.",
   "authors": [ "Microsoft" ],
@@ -20,7 +20,7 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.1.0,5.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.1,5.0)",
     "Microsoft.Spatial": "[6.15.0,7.0)"
   },
 

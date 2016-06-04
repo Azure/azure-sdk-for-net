@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-preview",
+  "version": "1.1.2-preview",
   "description": "Provides resource group and resource management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -19,7 +19,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.1.0,5.0)" 
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.1,5.0)" 
   },
 
   "frameworks": {
