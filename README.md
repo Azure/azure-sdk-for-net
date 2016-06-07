@@ -6,11 +6,11 @@ that take advantage of scalable cloud computing resources.
 ### Target Frameworks:
 
     * .NET Framework 4.5
-    * netstandard1.5, based on the NetCore framework 
-    * .NET Portable Framework/netstandard1.1 for NetCore, using profile 111
+    * Netstandard1.5, based on the NetCore framework 
+    * .NET Portable Framework(Netstandard1.1 for NetCore), using profile 111
 
 ### Prerequisites:
-  Install CoreCLR RC2 using [these steps](https://www.microsoft.com/net/core#windows).
+  Install CoreCLR RC2 using [these steps](https://www.microsoft.com/net/core).
 
 ### Known issue and workaround:
    
