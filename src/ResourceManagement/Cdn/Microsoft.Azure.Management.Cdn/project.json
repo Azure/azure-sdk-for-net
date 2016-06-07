@@ -19,8 +19,8 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.1,5.0)",
-    "Microsoft.Rest.ClientRuntime": "[3.0.1,4.0)" 
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)",
+    "Microsoft.Rest.ClientRuntime": "[3.0.2,4.0.0)" 
   },
 
   "frameworks": {

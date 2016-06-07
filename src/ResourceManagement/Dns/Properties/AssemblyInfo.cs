@@ -15,16 +15,14 @@
 
 using System.Reflection;
 using System.Resources;
-using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure CDN Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure CDN.")]
-
-[assembly: AssemblyVersion("1.1.1.0")]
-[assembly: AssemblyFileVersion("1.1.1.0")]
+[assembly: AssemblyTitle("Microsoft Azure DNS Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure DNS Resources.")]
+[assembly: AssemblyVersion("1.7.1.0")]
+[assembly: AssemblyFileVersion("1.7.1.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Azure .NET SDK")]
+[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

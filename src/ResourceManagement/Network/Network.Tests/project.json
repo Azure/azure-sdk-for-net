@@ -31,7 +31,7 @@
     }, 
     "Microsoft.Azure.Test.HttpRecorder": "[1.6.1-preview,2.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.2-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.1,5.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
     "Microsoft.Azure.Management.Network": "[4.5.1-preview,5.0)",
     "xunit": "2.1.0",
