@@ -29,9 +29,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the AssetItem class.
         /// </summary>
-        public AssetItem(string name, string type, AssetLocation locationInfo, IDictionary<string, InputPort> inputPorts = default(IDictionary<string, InputPort>), IDictionary<string, OutputPort> outputPorts = default(IDictionary<string, OutputPort>), IDictionary<string, string> metadata = default(IDictionary<string, string>), IList<ModuleAssetParameter> parameters = default(IList<ModuleAssetParameter>))
+        public AssetItem(string name, string type, AssetLocation locationInfo, string id = default(string), IDictionary<string, InputPort> inputPorts = default(IDictionary<string, InputPort>), IDictionary<string, OutputPort> outputPorts = default(IDictionary<string, OutputPort>), IDictionary<string, string> metadata = default(IDictionary<string, string>), IList<ModuleAssetParameter> parameters = default(IList<ModuleAssetParameter>))
         {
             Name = name;
+            Id = id;
             Type = type;
             LocationInfo = locationInfo;
             InputPorts = inputPorts;
@@ -45,6 +46,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Asset's Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Asset's type. Possible values include: 'Module', 'Resource'
