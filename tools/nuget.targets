@@ -121,6 +121,12 @@
                              Exclude="$(PackageOutputDir)\$(NetCorePackageName)*.symbols.nupkg">
       </_NetCorePackagesToPublish>
     </ItemGroup>
+
+    <PropertyGroup>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "></ActualSource>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
+    </PropertyGroup>
+    
     <Exec Command="$(NuGetCommand) push &quot;%(_NetCorePackagesToPublish.Identity)&quot; $(NuGetKey)$(ActualSource)"
           IgnoreExitCode="true" />
   </Target>
