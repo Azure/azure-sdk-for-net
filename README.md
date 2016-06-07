@@ -44,10 +44,10 @@ Using the command line:
         *msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute*
 
 ### To on-board new libraries
-Follow existing library and create a new folder under "ResourceManagement". 2 notes
-  - To simplify test discovery, the test folder must be named with ".test" or ".tests"
+Follow existing library and create a new folder under "ResourceManagement".
+  - Note: To simplify test discovery, the test folder must be named with ".test" or ".tests"
   
-If for platform reasons that your library won't use NetCore project system, 2 notes
+If for platform reasons that your library won't use NetCore project system, 3 notes
   - In your library csproject file, set the msbuild property "AutoRestProjects" to "true"
   - In your test project files, set both "AutoRestProjects" and "SDKTestProject" to "true"
   - To simplify test discovery, the test folder must be named with ".tests"
