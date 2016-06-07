@@ -47,9 +47,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="data">An array of bytes to be appended to the stream.</param>
         /// <param name="offset">The offset at which to append to the stream.</param>
         /// <param name="length">The number of bytes to append (starting at 0).</param>
-        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will append to a stream on the local machine instead of on the server.</param>
         /// <exception cref="System.ArgumentNullException">If the data to be appended is null or empty.</exception>
-        void AppendToStream(string streamPath, byte[] data, long offset, int length, bool isDownload = false);
+        void AppendToStream(string streamPath, byte[] data, long offset, int length);
 
         /// <summary>
         /// Opens a stream for reading given the speficied stream path

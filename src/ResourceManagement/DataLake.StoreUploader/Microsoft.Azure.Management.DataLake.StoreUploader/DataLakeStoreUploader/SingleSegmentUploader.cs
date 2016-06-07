@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     }
                     else
                     {
-                        _frontEnd.AppendToStream(_segmentMetadata.Path, buffer, targetStreamOffset, bytesToCopy, _metadata.IsDownload);
+                        _frontEnd.AppendToStream(_segmentMetadata.Path, buffer, targetStreamOffset, bytesToCopy);
                         
                     }
                     

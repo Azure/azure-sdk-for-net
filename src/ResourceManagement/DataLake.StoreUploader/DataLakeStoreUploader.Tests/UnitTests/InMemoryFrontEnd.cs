@@ -83,39 +83,29 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
         }
 
-        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount, bool isDownload = false)
+        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
         {
-            if (isDownload)
+            if (!StreamExists(streamPath))
             {
-                using (var fileStream = new FileStream(streamPath, FileMode.Append))
-                {
-                    fileStream.Write(data, 0, byteCount);
-                }
+                throw new Exception("stream does not exist");
             }
-            else
+
+            if (byteCount > data.Length)
             {
-                if (!StreamExists(streamPath))
-                {
-                    throw new Exception("stream does not exist");
-                }
-
-                if (byteCount > data.Length)
-                {
-                    throw new Exception("invalid byteCount");
-                }
-
-                var stream = _streams[streamPath];
-                if (stream.Length != offset)
-                {
-                    throw new InvalidOperationException("offset != stream.length");
-                }
-
-                //always make a copy of the original buffer since it is reused
-                byte[] toAppend = new byte[byteCount];
-                Array.Copy(data, toAppend, byteCount);
-
-                stream.Append(toAppend);
+                throw new Exception("invalid byteCount");
             }
+
+            var stream = _streams[streamPath];
+            if (stream.Length != offset)
+            {
+                throw new InvalidOperationException("offset != stream.length");
+            }
+
+            //always make a copy of the original buffer since it is reused
+            byte[] toAppend = new byte[byteCount];
+            Array.Copy(data, toAppend, byteCount);
+
+            stream.Append(toAppend);
         }
 
         public bool StreamExists(string streamPath, bool isDownload = false)

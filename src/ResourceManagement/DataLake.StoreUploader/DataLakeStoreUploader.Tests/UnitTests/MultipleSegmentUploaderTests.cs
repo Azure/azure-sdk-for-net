@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 };
 
             fe.AppendToStreamImplementation =
-                (streamPath, data, offset, byteCount, isDownload) =>
+                (streamPath, data, offset, byteCount) =>
                 {
                     callCount++;
                     if (callCount <= actualfailCount)

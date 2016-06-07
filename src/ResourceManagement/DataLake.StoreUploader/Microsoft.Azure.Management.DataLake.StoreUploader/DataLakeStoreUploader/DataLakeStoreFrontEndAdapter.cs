@@ -138,30 +138,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="data">The data.</param>
         /// <param name="offset">The offset.</param>
         /// <param name="byteCount">The byte count.</param>
-        /// <param name = "isDownload" >if set to<c>true</c> [is download], meaning we will append to a stream on the local machine instead of on the server.</param>
         /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
-        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount, bool isDownload = false)
+        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
         {
-            if (isDownload)
+            using (var stream = new MemoryStream(data, 0, byteCount))
             {
-                using (var fileStream = new FileStream(streamPath, FileMode.Append))
-                {
-                    fileStream.Write(data, 0, byteCount);
-                }
-            }
-            else
-            {
-                using (var stream = new MemoryStream(data, 0, byteCount))
-                {
-                    var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, cancellationToken: _token);
+                var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, cancellationToken: _token);
 
-                    if (!task.Wait(PerRequestTimeoutMs))
-                    {
-                        throw new TaskCanceledException(string.Format("Append to stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
-                    }
-
-                    task.GetAwaiter().GetResult();
+                if (!task.Wait(PerRequestTimeoutMs))
+                {
+                    throw new TaskCanceledException(string.Format("Append to stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
                 }
+
+                task.GetAwaiter().GetResult();
             }
         }
 
