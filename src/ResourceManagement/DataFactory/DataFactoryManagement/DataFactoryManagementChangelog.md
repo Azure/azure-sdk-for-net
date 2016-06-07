@@ -1,5 +1,10 @@
 For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.10.0
+_Release date: 2016.06.03_
+
+### Bug fix
+* Introduce an overload of ActivityWindowOperationExtensions.List() which takes an ActivityWindowsByActivityListParameters instance. 
 
 ## Version 4.9.0
 _Release date: 2016.06.03_ 
