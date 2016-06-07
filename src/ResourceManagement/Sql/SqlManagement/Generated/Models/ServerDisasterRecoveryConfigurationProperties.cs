@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private string _partnerServerId;
         
         /// <summary>
-        /// Optional. Gets the id of the partner server.
+        /// Optional. Gets the id path the partner server.
         /// </summary>
         public string PartnerServerId
         {

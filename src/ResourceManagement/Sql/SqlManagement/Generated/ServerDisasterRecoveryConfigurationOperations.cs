@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
     /// Represents all the operations for operating on Azure SQL Server
-    /// disaster recovery configurations.  Contains operations to: Create,
-    /// Retrieve, Update, and Delete.
+    /// disaster recovery configurations. Contains operations to: Create,
+    /// Retrieve, Update, Failover, and Delete.
     /// </summary>
     internal partial class ServerDisasterRecoveryConfigurationOperations : IServiceOperations<SqlManagementClient>, IServerDisasterRecoveryConfigurationOperations
     {
@@ -1224,11 +1224,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

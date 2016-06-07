@@ -239,6 +239,11 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["restorePointInTime"] = parameters.Properties.RestorePointInTime.Value;
                 }
                 
+                if (parameters.Properties.RecoveryServicesRecoveryPointResourceId != null)
+                {
+                    propertiesValue["recoveryServicesRecoveryPointResourceId"] = parameters.Properties.RecoveryServicesRecoveryPointResourceId;
+                }
+                
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
                 if (parameters.Tags != null)
