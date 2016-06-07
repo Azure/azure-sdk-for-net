@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var workingFrontEnd = new InMemoryFrontEnd();
             var fe = new MockableFrontEnd(workingFrontEnd);
             fe.CreateStreamImplementation =
-                (streamPath, overwrite, data, byteCount, isDownload) =>
+                (streamPath, overwrite, data, byteCount) =>
                 {
                     callCount++;
                     if (callCount <= actualfailCount)

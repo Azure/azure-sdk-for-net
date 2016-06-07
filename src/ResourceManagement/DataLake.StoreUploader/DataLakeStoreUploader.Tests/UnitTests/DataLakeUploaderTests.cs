@@ -189,6 +189,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             VerifyProgressStatus(progress, _largeFileData.Length);
 
             // now download
+            progress = null;
             up = CreateParameters(isResume: false, isDownload: true, targetStreamPath: _downloadFilePath, isOverwrite: true, filePath: TargetStreamPath);
             uploader = new DataLakeStoreUploader(up, frontEnd, progressTracker);
 
@@ -274,7 +275,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// Tests the resume upload when the metadata indicates all files are uploaded but no files exist on the server.
         /// </summary>
         [Fact]
-        public void DataLakeUploader_ResumeUploadWithAllMissingFiles()
+        public void DataLakeUploader_ResumeUploadDownloadWithAllMissingFiles()
         {
             //this scenario is achieved by refusing to execute the concat command on the front end for the initial upload (which will interrupt it)
             //and then resuming the upload against a fresh front-end (which obviously has no files there)
@@ -308,6 +309,30 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
 
             VerifyFileUploadedSuccessfully(up, frontEnd2);
+
+            // now download the same way.
+            var frontEnd3 = new MockableFrontEnd(frontEnd2); // need to have data from the successful upload available.
+            frontEnd3.ConcatenateImplementation = (target, inputs, isDownload) => { throw new IntentionalException(); }; //fail the concatenation
+            up = CreateParameters(isResume: false, isDownload: true, targetStreamPath: _downloadFilePath, isOverwrite: true, filePath: up.TargetStreamPath);
+            uploader = new DataLakeStoreUploader(up, frontEnd3);
+
+            Assert.Throws<IntentionalException>(() => uploader.Execute());
+            Assert.False(frontEnd1.StreamExists(up.TargetStreamPath, true), "Target stream should not have been created");
+
+            // now use the good front end
+            up = CreateParameters(isResume: true, isDownload: true, targetStreamPath: _downloadFilePath, isOverwrite: true, filePath: up.InputFilePath);
+            uploader = new DataLakeStoreUploader(up, frontEnd2);
+            //at this point the metadata exists locally but there are no target files in frontEnd2
+            try
+            {
+                uploader.Execute();
+            }
+            finally
+            {
+                uploader.DeleteMetadataFile();
+            }
+
+            VerifyFileUploadedSuccessfully(up, frontEnd2);
         }
 
         /// <summary>
@@ -321,7 +346,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var frontEnd = new MockableFrontEnd(backingFrontEnd);
 
             int createStreamCount = 0;
-            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount, isDownload) =>
+            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount) =>
             {
                 createStreamCount++;
                 if (createStreamCount > 1)
@@ -329,7 +354,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                     //we only allow 1 file to be created
                     throw new IntentionalException();
                 }
-                backingFrontEnd.CreateStream(path, overwrite, data, byteCount, isDownload);
+                backingFrontEnd.CreateStream(path, overwrite, data, byteCount);
             };
             var up = CreateParameters(isResume: false, isRecursive: true);
             var uploader = new DataLakeStoreUploader(up, frontEnd);
@@ -359,14 +384,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// Tests the resume upload when only some segments were uploaded previously
         /// </summary>
         [Fact]
-        public void DataLakeUploader_ResumePartialUpload()
+        public void DataLakeUploader_ResumePartialUploadDownload()
         {
             //attempt to load the file fully, but only allow creating 1 target stream
             var backingFrontEnd = new InMemoryFrontEnd();
             var frontEnd = new MockableFrontEnd(backingFrontEnd);
 
             int createStreamCount = 0;
-            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount, isDownload) =>
+            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount) =>
             {
                 createStreamCount++;
                 if (createStreamCount > 1)
@@ -399,18 +424,51 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
 
             VerifyFileUploadedSuccessfully(up, backingFrontEnd);
+
+            // now download the same way.
+            var frontEnd2 = new MockableFrontEnd(backingFrontEnd); // need to have data from the successful upload available.
+            createStreamCount = 0;
+            frontEnd2.ReadStreamImplementation = (path, data, byteCount, isDownload) =>
+            {
+                createStreamCount++;
+                if (createStreamCount > 1)
+                {
+                    //we only allow 1 file to be created
+                    throw new IntentionalException();
+                }
+                return backingFrontEnd.ReadStream(path, data, byteCount, isDownload);
+            };
+
+            up = CreateParameters(isResume: false, isDownload: true, targetStreamPath: _downloadFilePath, isOverwrite: true, filePath: up.TargetStreamPath);
+            uploader = new DataLakeStoreUploader(up, frontEnd2);
+
+            Assert.Throws<AggregateException>(() => uploader.Execute());
+            Assert.False(frontEnd2.StreamExists(up.TargetStreamPath), "Target stream should not have been created");
+
+            // now use the good front end
+            up = CreateParameters(isResume: true, isDownload: true, targetStreamPath: _downloadFilePath, isOverwrite: true, filePath: up.InputFilePath);
+            uploader = new DataLakeStoreUploader(up, backingFrontEnd);
+            
+            //resume the download but point it to the real back-end, which doesn't throw exceptions
+            try
+            {
+                uploader.Execute();
+            }
+            finally
+            {
+                uploader.DeleteMetadataFile();
+            }
+
+            VerifyFileUploadedSuccessfully(up, backingFrontEnd);
         }
 
         /// <summary>
         /// Tests the upload case with only 1 segment (since that is an optimization of the broader case).
         /// </summary>
         [Fact]
-        public void DataLakeUploader_UploadSingleSegment()
+        public void DataLakeUploader_UploadDownloadSingleSegment()
         {
             var frontEnd = new InMemoryFrontEnd();
-            // var mockFrontEnd = new MockableFrontEnd(frontEnd);
-            // mockFrontEnd.ConcatenateImplementation = (target, inputs) => { Assert.True(false, "Concatenate should not be called when using 1 segment"); };
-
             var up = new UploadParameters(
                 inputFilePath: _smallFilePath,
                 targetStreamPath: "1",
@@ -426,6 +484,22 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             uploader.Execute();
 
             VerifyFileUploadedSuccessfully(up, frontEnd, _smallFileData);
+            up = new UploadParameters(
+                inputFilePath: "1",
+                targetStreamPath: _downloadFilePath,
+                fileThreadCount: ThreadCount,
+                accountName: "foo",
+                isResume: false,
+                isOverwrite: true,
+                isDownload: true,
+                maxSegmentLength: 4 * 1024 * 1024,
+                localMetadataLocation: Path.GetTempPath());
+            
+            // now download
+            uploader = new DataLakeStoreUploader(up, frontEnd);
+            uploader.Execute();
+            VerifyFileUploadedSuccessfully(up, frontEnd, _smallFileData);
+
         }
 
         #endregion

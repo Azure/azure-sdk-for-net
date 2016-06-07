@@ -30,8 +30,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="overwrite">Whether to overwrite an existing stream.</param>
         /// <param name="data">The data.</param>
         /// <param name="byteCount">The byte count.</param>
-        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will create a stream on the local machine instead of on the server.</param>
-        void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount, bool isDownload = false);
+        void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount);
 
         /// <summary>
         /// Deletes an existing stream at the given path.

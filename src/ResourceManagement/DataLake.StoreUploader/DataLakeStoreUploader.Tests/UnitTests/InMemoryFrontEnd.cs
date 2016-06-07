@@ -34,47 +34,36 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
         private readonly Dictionary<string, StreamData> _streams = new Dictionary<string, StreamData>();
 
-        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount, bool isDownload = false)
+        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
         {
-            if (isDownload)
+            if (overwrite)
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(streamPath));
-                using (var localStream = new FileStream(streamPath, overwrite ? FileMode.Create : FileMode.CreateNew))
-                {
-                    localStream.Write(data, 0, byteCount);
-                }
+                _streams[streamPath] = new StreamData(streamPath);
             }
             else
             {
-                if (overwrite)
+                if (StreamExists(streamPath))
                 {
-                    _streams[streamPath] = new StreamData(streamPath);
+                    throw new Exception("stream exists");
                 }
-                else
+                _streams.Add(streamPath, new StreamData(streamPath));
+            }
+
+            // if there is data passed in, we should do the same operation as in append
+            if (data != null)
+            {
+                if (byteCount > data.Length)
                 {
-                    if (StreamExists(streamPath))
-                    {
-                        throw new Exception("stream exists");
-                    }
-                    _streams.Add(streamPath, new StreamData(streamPath));
+                    throw new Exception("invalid byteCount");
                 }
 
-                // if there is data passed in, we should do the same operation as in append
-                if (data != null)
-                {
-                    if (byteCount > data.Length)
-                    {
-                        throw new Exception("invalid byteCount");
-                    }
+                var stream = _streams[streamPath];
 
-                    var stream = _streams[streamPath];
+                //always make a copy of the original buffer since it is reused
+                byte[] toAppend = new byte[byteCount];
+                Array.Copy(data, toAppend, byteCount);
 
-                    //always make a copy of the original buffer since it is reused
-                    byte[] toAppend = new byte[byteCount];
-                    Array.Copy(data, toAppend, byteCount);
-
-                    stream.Append(toAppend);
-                }
+                stream.Append(toAppend);
             }
         }
 

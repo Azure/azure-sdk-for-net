@@ -50,12 +50,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             this.ReadStreamImplementation = baseAdapter.ReadStream;
         }
 
-        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount, bool isDownload = false)
+        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
         {
-            this.CreateStreamImplementation(streamPath, overwrite, data, byteCount, isDownload);
+            this.CreateStreamImplementation(streamPath, overwrite, data, byteCount);
         }
 
-        public Action<string, bool, byte[], int, bool> CreateStreamImplementation { get; set; }
+        public Action<string, bool, byte[], int> CreateStreamImplementation { get; set; }
 
 
         public void DeleteStream(string streamPath, bool recurse = false, bool isDownload = false)

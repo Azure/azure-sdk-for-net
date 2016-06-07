@@ -83,32 +83,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="overwrite">Whether to overwrite an existing stream.</param>
         /// <param name="data">The data.</param>
         /// <param name="byteCount">The byte count.</param>
-        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will create a stream on the local machine instead of on the server.</param>
         /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
-        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount, bool isDownload = false)
+        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
         {
-            if (isDownload)
+            using (var toAppend = data != null ? new MemoryStream(data, 0, byteCount) : new MemoryStream())
             {
-                // create the full directory to the stream if it doesn't exist
-                Directory.CreateDirectory(Path.GetDirectoryName(streamPath));
-                using (var localStream = new FileStream(streamPath, overwrite ? FileMode.Create : FileMode.CreateNew))
-                {
-                    localStream.Write(data, 0, byteCount);
-                }
-            }
-            else
-            {
-                using (var toAppend = data != null ? new MemoryStream(data, 0, byteCount) : new MemoryStream())
-                {
-                    var task = _client.FileSystem.CreateAsync(_accountName, streamPath, toAppend, overwrite: overwrite, cancellationToken: _token);
+                var task = _client.FileSystem.CreateAsync(_accountName, streamPath, toAppend, overwrite: overwrite, cancellationToken: _token);
 
-                    if (!task.Wait(PerRequestTimeoutMs))
-                    {
-                        throw new TaskCanceledException(string.Format("Create stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
-                    }
-
-                    task.GetAwaiter().GetResult();
+                if (!task.Wait(PerRequestTimeoutMs))
+                {
+                    throw new TaskCanceledException(string.Format("Create stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
                 }
+
+                task.GetAwaiter().GetResult();
             }
         }
 

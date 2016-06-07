@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var workingFrontEnd = new InMemoryFrontEnd();
             var fe = new MockableFrontEnd(workingFrontEnd);
             
-            fe.CreateStreamImplementation = (streamPath, overwrite, data, byteCount, isDownload) => { };
+            fe.CreateStreamImplementation = (streamPath, overwrite, data, byteCount) => { };
             fe.DeleteStreamImplementation = (streamPath, recurse, isDownload) => { };
             fe.StreamExistsImplementation = (streamPath, isDownload) => { return true; };
             fe.AppendToStreamImplementation = (streamPath, data, offset, byteCount, isDownload) => { };
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var workingFrontEnd = new InMemoryFrontEnd();
             var fe = new MockableFrontEnd(workingFrontEnd);
             fe.CreateStreamImplementation =
-                (streamPath, overwrite, data, byteCount, isDownload) =>
+                (streamPath, overwrite, data, byteCount) =>
                 {
                     callCount++;
                     if (callCount <= failCount)

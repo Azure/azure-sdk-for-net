@@ -180,6 +180,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 while (!downloadCompleted && attemptCount < MaxBufferDownloadAttemptCount)
                 {
                     _token.ThrowIfCancellationRequested();
+                    attemptCount++;
                     try
                     {
                         // test to make sure that the remaining length is larger than the max size, otherwise just download the remaining length

@@ -637,7 +637,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (metadata.SegmentCount == 0)
                 {
                     // simply create the target stream, overwriting existing streams if they exist
-                    _frontEnd.CreateStream(metadata.TargetStreamPath, true, null, 0, this.Parameters.IsDownload);
+                    _frontEnd.CreateStream(metadata.TargetStreamPath, true, null, 0);
                 }
                 else if (metadata.SegmentCount > 1)
                 {
@@ -687,7 +687,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (metadata.SegmentCount == 0)
                 {
                     // simply create the target stream, overwriting existing streams if they exist
-                    _frontEnd.CreateStream(metadata.TargetStreamPath, true, null, 0, this.Parameters.IsDownload);
+                    _frontEnd.CreateStream(metadata.TargetStreamPath, true, null, 0);
                 }
                 else if (metadata.SegmentCount > 1)
                 {
