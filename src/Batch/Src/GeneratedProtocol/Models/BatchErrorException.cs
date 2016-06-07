@@ -22,14 +22,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System;
     using System.Net.Http;
     using System.Runtime.Serialization;
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
     using System.Security.Permissions;
 #endif
 
     /// <summary>
     /// Exception thrown for an invalid response with BatchError information.
     /// </summary>
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
     [Serializable]
 #endif
     public class BatchErrorException : RestException
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
         }
 
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
         /// <summary>
         /// Initializes a new instance of the BatchErrorException class.
         /// </summary>

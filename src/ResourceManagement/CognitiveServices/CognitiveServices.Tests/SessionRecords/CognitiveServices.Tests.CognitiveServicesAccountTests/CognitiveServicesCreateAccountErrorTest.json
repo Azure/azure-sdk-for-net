@@ -1,0 +1,195 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/a064e0b9-e6c9-4a0d-b993-22efebefe2af/resourcegroups/res2161?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTA2NGUwYjktZTZjOS00YTBkLWI5OTMtMjJlZmViZWZlMmFmL3Jlc291cmNlZ3JvdXBzL3JlczIxNjE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "0d282400-bd7a-40ac-b743-ebb83d68acb5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a064e0b9-e6c9-4a0d-b993-22efebefe2af/resourceGroups/res2161\",\r\n  \"name\": \"res2161\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "167"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "512cdff2-0ea0-4ad3-8a9e-cc6e1a523e26"
+        ],
+        "x-ms-correlation-request-id": [
+          "512cdff2-0ea0-4ad3-8a9e-cc6e1a523e26"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160523T171004Z:512cdff2-0ea0-4ad3-8a9e-cc6e1a523e26"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 23 May 2016 17:10:03 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/a064e0b9-e6c9-4a0d-b993-22efebefe2af/resourceGroups/NotExistedRG/providers/Microsoft.CognitiveServices/accounts/csa2440?api-version=2016-02-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTA2NGUwYjktZTZjOS00YTBkLWI5OTMtMjJlZmViZWZlMmFmL3Jlc291cmNlR3JvdXBzL05vdEV4aXN0ZWRSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvZ25pdGl2ZVNlcnZpY2VzL2FjY291bnRzL2NzYTI0NDA/YXBpLXZlcnNpb249MjAxNi0wMi0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"ComputerVision\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "114"
+        ],
+        "x-ms-client-request-id": [
+          "49b7cb6c-ee08-43f2-81d6-2db35f89990a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'NotExistedRG' could not be found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "104"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "a6649b00-4a3d-4fab-9e0d-886830a1463d"
+        ],
+        "x-ms-correlation-request-id": [
+          "a6649b00-4a3d-4fab-9e0d-886830a1463d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160523T171004Z:a6649b00-4a3d-4fab-9e0d-886830a1463d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 23 May 2016 17:10:04 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/a064e0b9-e6c9-4a0d-b993-22efebefe2af/resourceGroups/res2161/providers/Microsoft.CognitiveServices/accounts/csa2440?api-version=2016-02-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTA2NGUwYjktZTZjOS00YTBkLWI5OTMtMjJlZmViZWZlMmFmL3Jlc291cmNlR3JvdXBzL3JlczIxNjEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2EyNDQwP2FwaS12ZXJzaW9uPTIwMTYtMDItMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"ComputerVision\",\r\n  \"location\": \"BLA\",\r\n  \"properties\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "x-ms-client-request-id": [
+          "6c0b06c2-0ddb-42bc-b87d-824d1caae605"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationNotAvailableForResourceType\",\r\n    \"message\": \"The provided location 'BLA' is not available for resource type 'Microsoft.CognitiveServices/accounts'. List of available regions for the resource type is 'westus'.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "0c24c8de-662a-4cdd-91ad-aed33a81dd65"
+        ],
+        "x-ms-correlation-request-id": [
+          "0c24c8de-662a-4cdd-91ad-aed33a81dd65"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160523T171004Z:0c24c8de-662a-4cdd-91ad-aed33a81dd65"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 23 May 2016 17:10:04 GMT"
+        ]
+      },
+      "StatusCode": 400
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "res2161"
+    ],
+    "CognitiveServicesCreateAccountErrorTest": [
+      "csa2440"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "a064e0b9-e6c9-4a0d-b993-22efebefe2af"
+  }
+}

@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra15483/providers/Microsoft.Cache/Redis/hydracache1?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL2h5ZHJhMTU0ODMvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra11029/providers/Microsoft.Cache/Redis/hydracache1?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL2h5ZHJhMTEwMjkvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMT9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "874ee43a-e947-4cff-9e48-3babae4a205a"
+          "578bc755-1cc0-44f5-94c2-0e4986627782"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra15483/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"3.0\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra11029/providers/Microsoft.Cache/Redis/hydracache1\",\r\n  \"location\": \"North Central US\",\r\n  \"name\": \"hydracache1\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"3.0\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 22 Mar 2016 22:38:06 GMT"
+          "Wed, 18 May 2016 22:57:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,22 +43,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "f1a2b1eb-7ed2-4a4f-8ec9-95047fa7be0c"
+          "e1b92c35-dcd3-4519-9bc8-42c34fb99dd6"
         ],
         "x-rp-server-mvid": [
-          "dff20dfc-37d1-4691-adc5-29065fb74e50"
+          "bd1e4ace-5dbd-4224-976a-99df2f0c997c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14862"
+          "14699"
         ],
         "x-ms-correlation-request-id": [
-          "7d4b7388-fabd-42d9-bee8-16fe576c16e5"
+          "1750389b-c976-4949-bc98-6fb14675cc99"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160322T223807Z:7d4b7388-fabd-42d9-bee8-16fe576c16e5"
+          "NORTHEUROPE:20160518T225716Z:1750389b-c976-4949-bc98-6fb14675cc99"
         ]
       },
       "StatusCode": 200
