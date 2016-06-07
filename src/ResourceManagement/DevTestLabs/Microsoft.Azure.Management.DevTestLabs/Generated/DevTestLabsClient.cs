@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using Models;
 
     /// <summary>
-    /// The DevTest Labs client version 2015-05-21-preview.
+    /// The DevTest Labs Client.
     /// </summary>
     public partial class DevTestLabsClient : ServiceClient<DevTestLabsClient>, IDevTestLabsClient, IAzureClient
     {
@@ -91,11 +91,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// Gets the IArtifactOperations.
         /// </summary>
         public virtual IArtifactOperations Artifact { get; private set; }
-
-        /// <summary>
-        /// Gets the ICostInsightOperations.
-        /// </summary>
-        public virtual ICostInsightOperations CostInsight { get; private set; }
 
         /// <summary>
         /// Gets the ICostOperations.
@@ -324,7 +319,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
             this.Lab = new LabOperations(this);
             this.ArtifactSource = new ArtifactSourceOperations(this);
             this.Artifact = new ArtifactOperations(this);
-            this.CostInsight = new CostInsightOperations(this);
             this.Cost = new CostOperations(this);
             this.CustomImage = new CustomImageOperations(this);
             this.Formula = new FormulaOperations(this);
@@ -335,7 +329,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             this.VirtualMachine = new VirtualMachineOperations(this);
             this.VirtualNetwork = new VirtualNetworkOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-05-21-preview";
+            this.ApiVersion = "2016-05-15";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

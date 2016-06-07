@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class VirtualNetworkOperationsExtensions
     {
             /// <summary>
-            /// List virtual networks.
+            /// List virtual networks in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List virtual networks.
+            /// List virtual networks in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List virtual networks.
+            /// List virtual networks in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List virtual networks.
+            /// List virtual networks in a given lab.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -12,14 +12,14 @@ namespace Microsoft.Azure.Management.Intune.Models
     using System;
     using System.Net.Http;
     using System.Runtime.Serialization;
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
     using System.Security.Permissions;
 #endif
 
     /// <summary>
     /// Exception thrown for an invalid response with Error information.
     /// </summary>
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
     [Serializable]
 #endif
     public class ErrorException : RestException
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Intune.Models
         {
         }
 
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
         /// <summary>
         /// Initializes a new instance of the ErrorException class.
         /// </summary>

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public DevTestLabsClient Client { get; private set; }
 
         /// <summary>
-        /// List policies.
+        /// List policies in a given policy set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1080,7 +1080,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         }
 
         /// <summary>
-        /// List policies.
+        /// List policies in a given policy set.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

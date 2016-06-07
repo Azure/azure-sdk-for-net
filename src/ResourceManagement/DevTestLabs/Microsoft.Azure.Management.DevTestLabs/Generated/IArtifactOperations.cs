@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface IArtifactOperations
     {
         /// <summary>
-        /// List artifacts.
+        /// List artifacts in a given artifact source.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse<ArmTemplateInfo>> GenerateArmTemplateWithHttpMessagesAsync(string resourceGroupName, string labName, string artifactSourceName, string name, GenerateArmTemplateRequest generateArmTemplateRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List artifacts.
+        /// List artifacts in a given artifact source.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
