@@ -5511,6 +5511,12 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Models
         StandardLRS = 0,
         
         StandardGRS = 1,
+        
+        StandardZrs = 2,
+        
+        StandardRagrs = 3,
+        
+        PremiumLrs = 4,
     }
     
     /// <summary>
@@ -7563,6 +7569,18 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             {
                 return StorageAccountType.StandardGRS;
             }
+            if ("Standard_ZRS".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return StorageAccountType.StandardZrs;
+            }
+            if ("Standard_RAGRS".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return StorageAccountType.StandardRagrs;
+            }
+            if ("Premium_LRS".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return StorageAccountType.PremiumLrs;
+            }
             throw new ArgumentOutOfRangeException("value");
         }
         
@@ -7584,6 +7602,18 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             if (value == StorageAccountType.StandardGRS)
             {
                 return "Standard_GRS";
+            }
+            if (value == StorageAccountType.StandardZrs)
+            {
+                return "Standard_ZRS";
+            }
+            if (value == StorageAccountType.StandardRagrs)
+            {
+                return "Standard_RAGRS";
+            }
+            if (value == StorageAccountType.PremiumLrs)
+            {
+                return "Premium_LRS";
             }
             throw new ArgumentOutOfRangeException("value");
         }
