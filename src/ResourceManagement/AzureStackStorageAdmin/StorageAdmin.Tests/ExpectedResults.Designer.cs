@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.AzureStack.Management.StorageAdmin.Tests.ExpectedResults", typeof(ExpectedResults).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.AzureStack.AzureConsistentStorage.Tests.ExpectedResults", typeof(ExpectedResults).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,39 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;id&quot;: &quot;/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/default_shanghai/acquisitions/D6AE96E1-62B1-4F43-91F6-680E3990D76D&quot;,
+        ///  &quot;name&quot;: &quot;default_shanghai/D6AE96E1-62B1-4F43-91F6-680E3990D76D&quot;,
+        ///  &quot;type&quot;: &quot;Microsoft.Storage.Admin/farms/acquisitions&quot;,
+        ///  &quot;location&quot;: &quot;Shanghai&quot;,
+        ///  &quot;properties&quot;: {
+        ///    &quot;filePath&quot;: &quot;\\\\JUSTISUN-BLOB2\\blob\\mystorageaccount1\\blob1\\c9c61ccf-9db4-4543-bb9f-39510f1c4591.pageblob&quot;,
+        ///    &quot;maximumblobsize&quot;: 0,
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AcquisitionGetResponse {
+            get {
+                return ResourceManager.GetString("AcquisitionGetResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [ {
+        ///    &quot;id&quot;: &quot;/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/default_shanghai/acquisitions/D6AE96E1-62B1-4F43-91F6-680E3990D76D&quot;,
+        ///    &quot;name&quot;: &quot;default_shanghai/D6AE96E1-62B1-4F43-91F6-680E3990D76D&quot;,
+        ///    &quot;type&quot;: &quot;Microsoft.Storage.Admin/farms/acquisitions&quot;,
+        ///    &quot;location&quot;: &quot;Shanghai&quot;,
+        ///    &quot;properties&quot;: {
+        ///      &quot;filePath&quot;: &quot;\\\\JUSTISUN-BLOB2\\blob\\mystorageaccount1\\blob1\\c9c61ccf-9db4-4543-bb9f-39510f1c4591.pageblob&quot;,
+        ///      &quot;maximu [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AcquisitionListResponse {
+            get {
+                return ResourceManager.GetString("AcquisitionListResponse", resourceCulture);
             }
         }
         
@@ -83,14 +116,15 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
-        ///    &quot;id&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a2452&quot;,
-        ///    &quot;name&quot;: &quot;WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a2452&quot;,
+        ///    &quot;id&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
+        ///    &quot;name&quot;: &quot;WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
         ///    &quot;type&quot;: &quot;Microsoft.Storage.Admin/farms/faults&quot;,
         ///    &quot;location&quot;: &quot;West_US&quot;,
         ///    &quot;properties&quot;: {
+        ///      &quot;faultId&quot;: &quot;c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
         ///      &quot;faultRuleName&quot;: &quot;faultRule1&quot;,
         ///      &quot;description&quot;: &quot;TBD&quot;,
-        ///      &quot;resourceUri&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/ta [rest of string was truncated]&quot;;.
+        ///      &quot;resourceUri&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/sys [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CurrentActiveFaultListResponse {
             get {
@@ -106,11 +140,12 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         ///        &quot;startTime&quot;:&quot;2015-05-15T18:02:00Z&quot;,
         ///        &quot;endTime&quot;:&quot;2015-05-25T18:02:00Z&quot;,
         ///        &quot;tableName&quot;:&quot;WDEvent20150515&quot;,
-        ///        &quot;sasToken&quot;:&quot;sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r&quot;
+        ///        &quot;sasToken&quot;:&quot;sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r&quot;
         ///    },
         ///    {
         ///        &quot;startTime&quot;:&quot;2015-05-25T18:02:00Z&quot;,
-        ///        &quot;endTime&quot;:&quot;2 [rest of string was truncated]&quot;;.
+        ///        &quot;endTime&quot;:&quot;2015-06-05T18:02:00Z&quot;,
+        ///        &quot;tableName&quot;:&quot;WDEvent20 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EventQueryResponse {
             get {
@@ -162,14 +197,15 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///  &quot;id&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a2452&quot;,
-        ///  &quot;name&quot;: &quot;WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a2452&quot;,
+        ///  &quot;id&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
+        ///  &quot;name&quot;: &quot;WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
         ///  &quot;type&quot;: &quot;Microsoft.Storage.Admin/farms/faults&quot;,
         ///  &quot;location&quot;: &quot;West_US&quot;,
         ///  &quot;properties&quot;: {
+        ///      &quot;faultId&quot;: &quot;c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
         ///      &quot;faultRuleName&quot;: &quot;faultRule1&quot;,
         ///      &quot;description&quot;: &quot;TBD&quot;,
-        ///      &quot;resourceUri&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstan [rest of string was truncated]&quot;;.
+        ///      &quot;resourceUri&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/M [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string FaultGetResponse {
             get {
@@ -180,15 +216,15 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
-        ///    &quot;id&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a2452&quot;,
-        ///    &quot;name&quot;: &quot;WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a2452&quot;,
+        ///    &quot;id&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
+        ///    &quot;name&quot;: &quot;WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
         ///    &quot;type&quot;: &quot;Microsoft.Storage.Admin/farms/faults&quot;,
         ///    &quot;location&quot;: &quot;West_US&quot;,
         ///    &quot;properties&quot;: {
-        ///      &quot;id&quot;: &quot;c8e6bfe487b4b8eceb5dc36ff6a2452&quot;,
+        ///      &quot;faultId&quot;: &quot;c8e6bfe487b4b8eceb5dc36ff6a24521&quot;,
         ///      &quot;faultRuleName&quot;: &quot;faultRule1&quot;,
         ///      &quot;description&quot;: &quot;TBD&quot;,
-        ///      &quot;resourceUri&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/system/prov [rest of string was truncated]&quot;;.
+        ///      &quot;resourceUri&quot;: &quot;/subscriptions/serviceAdmin/resourceGroups/sys [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HistoryActiveFaultListResponse {
             get {
@@ -244,11 +280,10 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         ///    &quot;codeVersion&quot;: &quot;3.0.1414.9492&quot;,
         ///    &quot;configVersion&quot;: &quot;1.0&quot;,
         ///    &quot;faultDomain&quot;: &quot;fd:/woss-node-1&quot;,
-        ///    &quot;healthState&quot;: &quot;Ok&quot;,
+        ///     &quot;healthStatus&quot;: &quot;Healthy&quot;,
         ///    &quot;ipAddressOrFqdn&quot;: &quot;woss-node-1&quot;,
         ///    &quot;isSeedNode&quot;: true,
-        ///    &quot;nodeId&quot;: &quot;c8e6bfe487b4b8eceb5dc36ff6a2452&quot;,
-        ///    [rest of string was truncated]&quot;;.
+        ///    &quot;nodeId&quot;: &quot;c8e6bfe487b4b8eceb5dc36ff6a2452 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NodeGetResponse {
             get {
@@ -267,14 +302,76 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         ///      &quot;codeVersion&quot;: &quot;3.0.1414.9492&quot;,
         ///      &quot;configVersion&quot;: &quot;1.0&quot;,
         ///      &quot;faultDomain&quot;: &quot;fd:/woss-node-1&quot;,
-        ///      &quot;healthState&quot;: &quot;Ok&quot;,
+        ///      &quot;healthStatus&quot;: &quot;Healthy&quot;,
         ///      &quot;ipAddressOrFqdn&quot;: &quot;woss-node-1&quot;,
         ///      &quot;isSeedNode&quot;: true,
-        ///      &quot;nodeId&quot;: &quot;c8e6bfe48 [rest of string was truncated]&quot;;.
+        ///      &quot;nodeId&quot;: &quot;c8e [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NodeListResponse {
             get {
                 return ResourceManager.GetString("NodeListResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;id&quot;: &quot;/subscriptions/dummyServiceAdmin/resourceGroups/dummyResourceGroup/providers/Microsoft.Storage.Admin/farms/WEST_US_1/queueservices/default&quot;,
+        ///  &quot;name&quot;: &quot;WEST_US_1/default&quot;,
+        ///  &quot;type&quot;: &quot;Microsoft.Storage.Admin/farms/queueservices&quot;,
+        ///  &quot;location&quot;: &quot;West_US&quot;,
+        ///  &quot;properties&quot;: {
+        ///    &quot;settings&quot;: {
+        ///      &quot;frontEndHttpListenPort&quot;: 11001,
+        ///      &quot;frontEndHttpsListenPort&quot;: 11101,
+        ///      &quot;frontEndCallbackThreadsCount&quot;: 1,
+        ///      &quot;frontEndCpuBasedKeepAliveThrottlingEnabled&quot;: true,
+        ///      &quot;frontEndCpuBase [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string QueueServiceGetResponse {
+            get {
+                return ResourceManager.GetString("QueueServiceGetResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;id&quot;: &quot;/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/SRP_DefaultQuota&quot;,
+        ///  &quot;name&quot;: &quot;redmond/SRP_DefaultQuota&quot;,
+        ///  &quot;type&quot;: &quot;Microsoft.Storage.Admin/locations/quotas&quot;,
+        ///  &quot;location&quot;: &quot;redmond&quot;,
+        ///  &quot;properties&quot;: {
+        ///    &quot;numberOfStorageAccounts&quot;: 10,
+        ///    &quot;capacityInGb&quot;: 100
+        ///  }
+        ///}.
+        /// </summary>
+        internal static string QuotaGetResponse {
+            get {
+                return ResourceManager.GetString("QuotaGetResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;value&quot;: [
+        ///    {
+        ///  &quot;id&quot;: &quot;/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/SRP_DefaultQuota&quot;,
+        ///  &quot;name&quot;: &quot;redmond/SRP_DefaultQuota&quot;,
+        ///  &quot;type&quot;: &quot;Microsoft.Storage.Admin/locations/quotas&quot;,
+        ///  &quot;location&quot;: &quot;redmond&quot;,
+        ///  &quot;properties&quot;: {
+        ///    &quot;numberOfStorageAccounts&quot;: 10,
+        ///    &quot;capacityInGb&quot;: 100
+        ///  }
+        ///},
+        ///    {
+        ///  &quot;id&quot;: &quot;/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/dummyName2&quot;,
+        ///  &quot;name&quot;: &quot;redmond/dummyName2&quot;,
+        ///  &quot;type&quot;: &quot;Microsoft. [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string QuotaListResponse {
+            get {
+                return ResourceManager.GetString("QuotaListResponse", resourceCulture);
             }
         }
         
@@ -297,7 +394,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;id&quot;:&quot;/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/smb1&quot;,&quot;type&quot;:&quot;Microsoft.Storage.Admin/farms/shares&quot;,&quot;location&quot;:&quot;west us&quot;,&quot;name&quot;:&quot;defaultFarm/||localhost|smb1&quot;,&quot;properties&quot;:{&quot;shareName&quot;:&quot;smb1&quot;,&quot;uncPath&quot;:&quot;\\\\localhost\\smb1&quot;,&quot;healthStatus&quot;:&quot;Warning&quot;,&quot;totalCapacity&quot;:500,&quot;freeCapacity&quot;:460,&quot;usedCapacity&quot;:40}}.
+        ///   Looks up a localized string similar to {&quot;id&quot;:&quot;/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/||localhost|smb1&quot;,&quot;type&quot;:&quot;Microsoft.Storage.Admin/farms/shares&quot;,&quot;location&quot;:&quot;west us&quot;,&quot;name&quot;:&quot;defaultFarm/||localhost|smb1&quot;,&quot;properties&quot;:{&quot;shareName&quot;:&quot;||localhost|smb1&quot;,&quot;uncPath&quot;:&quot;\\\\localhost\\smb1&quot;,&quot;healthStatus&quot;:&quot;Warning&quot;,&quot;totalCapacity&quot;:500,&quot;freeCapacity&quot;:460,&quot;usedCapacity&quot;:40}}.
         /// </summary>
         internal static string ShareGetResponse {
             get {
@@ -306,7 +403,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [{&quot;id&quot;:&quot;/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/smb1&quot;,&quot;type&quot;:&quot;Microsoft.Storage.Admin/farms&quot;,&quot;location&quot;:&quot;west us&quot;,&quot;name&quot;:&quot;defaultFarm&quot;,&quot;properties&quot;:{&quot;shareName&quot;:&quot;smb1&quot;,&quot;uncPath&quot;:&quot;\\\\localhost\\smb1&quot;,&quot;healthStatus&quot;:&quot;Warning&quot;,&quot;totalCapacity&quot;:500,&quot;freeCapacity&quot;:460,&quot;usedCapacity&quot;:40}},{&quot;id&quot;:&quot;/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/smb2&quot;,&quot;type&quot;:&quot;Micro [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to [{&quot;id&quot;:&quot;/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/||localhost|smb1&quot;,&quot;type&quot;:&quot;Microsoft.Storage.Admin/farms&quot;,&quot;location&quot;:&quot;west us&quot;,&quot;name&quot;:&quot;defaultFarm&quot;,&quot;properties&quot;:{&quot;shareName&quot;:&quot;||localhost|smb1&quot;,&quot;uncPath&quot;:&quot;\\\\localhost\\smb1&quot;,&quot;healthStatus&quot;:&quot;Warning&quot;,&quot;totalCapacity&quot;:500,&quot;freeCapacity&quot;:460,&quot;usedCapacity&quot;:40}},{&quot;id&quot;:&quot;/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/sh [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ShareListResponse {
             get {

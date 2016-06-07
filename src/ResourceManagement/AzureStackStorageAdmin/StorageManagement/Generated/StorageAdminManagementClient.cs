@@ -34,11 +34,151 @@ using System.Xml;
 using Hyak.Common;
 using Hyak.Common.Internals;
 using Microsoft.Azure;
-using Microsoft.AzureStack.Management.StorageAdmin;
-using Microsoft.AzureStack.Management.StorageAdmin.Models;
+using Microsoft.AzureStack.AzureConsistentStorage;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Models
+namespace Microsoft.AzureStack.AzureConsistentStorage
+{
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class Acquisition
+    {
+        private string _acquisitionId;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public string AcquisitionId
+        {
+            get { return this._acquisitionId; }
+            set { this._acquisitionId = value; }
+        }
+        
+        private string _blob;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public string Blob
+        {
+            get { return this._blob; }
+            set { this._blob = value; }
+        }
+        
+        private string _container;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public string Container
+        {
+            get { return this._container; }
+            set { this._container = value; }
+        }
+        
+        private string _filePath;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public string FilePath
+        {
+            get { return this._filePath; }
+            set { this._filePath = value; }
+        }
+        
+        private long _maximumBlobSize;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public long MaximumBlobSize
+        {
+            get { return this._maximumBlobSize; }
+            set { this._maximumBlobSize = value; }
+        }
+        
+        private AcquisitionStatus _status;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public AcquisitionStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        private string _storageAccountName;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public string StorageAccountName
+        {
+            get { return this._storageAccountName; }
+            set { this._storageAccountName = value; }
+        }
+        
+        private Guid _tenantSubscriptionId;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public Guid TenantSubscriptionId
+        {
+            get { return this._tenantSubscriptionId; }
+            set { this._tenantSubscriptionId = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Acquisition class.
+        /// </summary>
+        public Acquisition()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class AcquisitionModel : Microsoft.AzureStack.AzureConsistentStorage.Models.ResourceBase
+    {
+        private Acquisition _properties;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public Acquisition Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AcquisitionModel class.
+        /// </summary>
+        public AcquisitionModel()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public enum AcquisitionStatus
+    {
+        InProgress = 0,
+        
+        Success = 1,
+        
+        Failed = 2,
+    }
+}
+
+namespace Microsoft.AzureStack.AzureConsistentStorage.Models
 {
     /// <summary>
     /// Your documentation here.
@@ -245,6 +385,71 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
         /// </summary>
         public AccountContainerRoleInstanceModel()
         {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class AcquisitionGetResponse : AzureOperationResponse
+    {
+        private AcquisitionModel _acquisition;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public AcquisitionModel Acquisition
+        {
+            get { return this._acquisition; }
+            set { this._acquisition = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AcquisitionGetResponse class.
+        /// </summary>
+        public AcquisitionGetResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class AcquisitionListResponse : AzureOperationResponse, IEnumerable<AcquisitionModel>
+    {
+        private IList<AcquisitionModel> _acquisitions;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public IList<AcquisitionModel> Acquisitions
+        {
+            get { return this._acquisitions; }
+            set { this._acquisitions = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AcquisitionListResponse class.
+        /// </summary>
+        public AcquisitionListResponse()
+        {
+            this.Acquisitions = new LazyList<AcquisitionModel>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Acquisitions.
+        /// </summary>
+        public IEnumerator<AcquisitionModel> GetEnumerator()
+        {
+            return this.Acquisitions.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Acquisitions.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
     
@@ -1331,6 +1536,17 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
     /// </summary>
     public partial class FarmSettings
     {
+        private bool? _bandwidthThrottleIsEnabled;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public bool? BandwidthThrottleIsEnabled
+        {
+            get { return this._bandwidthThrottleIsEnabled; }
+            set { this._bandwidthThrottleIsEnabled = value; }
+        }
+        
         private string _corsAllowedOriginsList;
         
         /// <summary>
@@ -1351,6 +1567,127 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
         {
             get { return this._dataCenterUriHostSuffixes; }
             set { this._dataCenterUriHostSuffixes = value; }
+        }
+        
+        private double? _defaultEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? DefaultEgressThresholdInGbps
+        {
+            get { return this._defaultEgressThresholdInGbps; }
+            set { this._defaultEgressThresholdInGbps = value; }
+        }
+        
+        private double? _defaultIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? DefaultIngressThresholdInGbps
+        {
+            get { return this._defaultIngressThresholdInGbps; }
+            set { this._defaultIngressThresholdInGbps = value; }
+        }
+        
+        private double? _defaultIntranetEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? DefaultIntranetEgressThresholdInGbps
+        {
+            get { return this._defaultIntranetEgressThresholdInGbps; }
+            set { this._defaultIntranetEgressThresholdInGbps = value; }
+        }
+        
+        private double? _defaultIntranetIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? DefaultIntranetIngressThresholdInGbps
+        {
+            get { return this._defaultIntranetIngressThresholdInGbps; }
+            set { this._defaultIntranetIngressThresholdInGbps = value; }
+        }
+        
+        private double? _defaultRequestThresholdInTps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? DefaultRequestThresholdInTps
+        {
+            get { return this._defaultRequestThresholdInTps; }
+            set { this._defaultRequestThresholdInTps = value; }
+        }
+        
+        private int? _defaultThrottleProbabilityDecayIntervalInSeconds;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? DefaultThrottleProbabilityDecayIntervalInSeconds
+        {
+            get { return this._defaultThrottleProbabilityDecayIntervalInSeconds; }
+            set { this._defaultThrottleProbabilityDecayIntervalInSeconds = value; }
+        }
+        
+        private double? _defaultTotalEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? DefaultTotalEgressThresholdInGbps
+        {
+            get { return this._defaultTotalEgressThresholdInGbps; }
+            set { this._defaultTotalEgressThresholdInGbps = value; }
+        }
+        
+        private double? _defaultTotalIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? DefaultTotalIngressThresholdInGbps
+        {
+            get { return this._defaultTotalIngressThresholdInGbps; }
+            set { this._defaultTotalIngressThresholdInGbps = value; }
+        }
+        
+        private int? _feedbackRefreshIntervalInSeconds;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FeedbackRefreshIntervalInSeconds
+        {
+            get { return this._feedbackRefreshIntervalInSeconds; }
+            set { this._feedbackRefreshIntervalInSeconds = value; }
+        }
+        
+        private int? _gracePeriodForFullThrottlingInRefreshIntervals;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? GracePeriodForFullThrottlingInRefreshIntervals
+        {
+            get { return this._gracePeriodForFullThrottlingInRefreshIntervals; }
+            set { this._gracePeriodForFullThrottlingInRefreshIntervals = value; }
+        }
+        
+        private double? _gracePeriodMaxThrottleProbability;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? GracePeriodMaxThrottleProbability
+        {
+            get { return this._gracePeriodMaxThrottleProbability; }
+            set { this._gracePeriodMaxThrottleProbability = value; }
         }
         
         private int? _hostStyleHttpPort;
@@ -1375,6 +1712,183 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
             set { this._hostStyleHttpsPort = value; }
         }
         
+        private double? _minimumEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? MinimumEgressThresholdInGbps
+        {
+            get { return this._minimumEgressThresholdInGbps; }
+            set { this._minimumEgressThresholdInGbps = value; }
+        }
+        
+        private double? _minimumIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? MinimumIngressThresholdInGbps
+        {
+            get { return this._minimumIngressThresholdInGbps; }
+            set { this._minimumIngressThresholdInGbps = value; }
+        }
+        
+        private double? _minimumIntranetEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? MinimumIntranetEgressThresholdInGbps
+        {
+            get { return this._minimumIntranetEgressThresholdInGbps; }
+            set { this._minimumIntranetEgressThresholdInGbps = value; }
+        }
+        
+        private double? _minimumIntranetIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? MinimumIntranetIngressThresholdInGbps
+        {
+            get { return this._minimumIntranetIngressThresholdInGbps; }
+            set { this._minimumIntranetIngressThresholdInGbps = value; }
+        }
+        
+        private double? _minimumRequestThresholdInTps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? MinimumRequestThresholdInTps
+        {
+            get { return this._minimumRequestThresholdInTps; }
+            set { this._minimumRequestThresholdInTps = value; }
+        }
+        
+        private double? _minimumTotalEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? MinimumTotalEgressThresholdInGbps
+        {
+            get { return this._minimumTotalEgressThresholdInGbps; }
+            set { this._minimumTotalEgressThresholdInGbps = value; }
+        }
+        
+        private double? _minimumTotalIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? MinimumTotalIngressThresholdInGbps
+        {
+            get { return this._minimumTotalIngressThresholdInGbps; }
+            set { this._minimumTotalIngressThresholdInGbps = value; }
+        }
+        
+        private int? _numberOfAccountsToSync;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? NumberOfAccountsToSync
+        {
+            get { return this._numberOfAccountsToSync; }
+            set { this._numberOfAccountsToSync = value; }
+        }
+        
+        private double? _overallEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? OverallEgressThresholdInGbps
+        {
+            get { return this._overallEgressThresholdInGbps; }
+            set { this._overallEgressThresholdInGbps = value; }
+        }
+        
+        private double? _overallIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? OverallIngressThresholdInGbps
+        {
+            get { return this._overallIngressThresholdInGbps; }
+            set { this._overallIngressThresholdInGbps = value; }
+        }
+        
+        private double? _overallIntranetEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? OverallIntranetEgressThresholdInGbps
+        {
+            get { return this._overallIntranetEgressThresholdInGbps; }
+            set { this._overallIntranetEgressThresholdInGbps = value; }
+        }
+        
+        private double? _overallIntranetIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? OverallIntranetIngressThresholdInGbps
+        {
+            get { return this._overallIntranetIngressThresholdInGbps; }
+            set { this._overallIntranetIngressThresholdInGbps = value; }
+        }
+        
+        private double? _overallRequestThresholdInTps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? OverallRequestThresholdInTps
+        {
+            get { return this._overallRequestThresholdInTps; }
+            set { this._overallRequestThresholdInTps = value; }
+        }
+        
+        private double? _overallTotalEgressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? OverallTotalEgressThresholdInGbps
+        {
+            get { return this._overallTotalEgressThresholdInGbps; }
+            set { this._overallTotalEgressThresholdInGbps = value; }
+        }
+        
+        private double? _overallTotalIngressThresholdInGbps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? OverallTotalIngressThresholdInGbps
+        {
+            get { return this._overallTotalIngressThresholdInGbps; }
+            set { this._overallTotalIngressThresholdInGbps = value; }
+        }
+        
+        private int? _retentionPeriodForDeletedStorageAccountsInDays;
+        
+        /// <summary>
+        /// Optional. Duration within which a storage account can be recovered,
+        /// beyond which the account would be garbage collected.
+        /// </summary>
+        public int? RetentionPeriodForDeletedStorageAccountsInDays
+        {
+            get { return this._retentionPeriodForDeletedStorageAccountsInDays; }
+            set { this._retentionPeriodForDeletedStorageAccountsInDays = value; }
+        }
+        
         private int? _settingsPollingIntervalInSecond;
         
         /// <summary>
@@ -1384,6 +1898,94 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
         {
             get { return this._settingsPollingIntervalInSecond; }
             set { this._settingsPollingIntervalInSecond = value; }
+        }
+        
+        private double? _toleranceFactorForEgress;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? ToleranceFactorForEgress
+        {
+            get { return this._toleranceFactorForEgress; }
+            set { this._toleranceFactorForEgress = value; }
+        }
+        
+        private double? _toleranceFactorForIngress;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? ToleranceFactorForIngress
+        {
+            get { return this._toleranceFactorForIngress; }
+            set { this._toleranceFactorForIngress = value; }
+        }
+        
+        private double? _toleranceFactorForIntranetEgress;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? ToleranceFactorForIntranetEgress
+        {
+            get { return this._toleranceFactorForIntranetEgress; }
+            set { this._toleranceFactorForIntranetEgress = value; }
+        }
+        
+        private double? _toleranceFactorForIntranetIngress;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? ToleranceFactorForIntranetIngress
+        {
+            get { return this._toleranceFactorForIntranetIngress; }
+            set { this._toleranceFactorForIntranetIngress = value; }
+        }
+        
+        private double? _toleranceFactorForTotalEgress;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? ToleranceFactorForTotalEgress
+        {
+            get { return this._toleranceFactorForTotalEgress; }
+            set { this._toleranceFactorForTotalEgress = value; }
+        }
+        
+        private double? _toleranceFactorForTotalIngress;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? ToleranceFactorForTotalIngress
+        {
+            get { return this._toleranceFactorForTotalIngress; }
+            set { this._toleranceFactorForTotalIngress = value; }
+        }
+        
+        private double? _toleranceFactorForTps;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? ToleranceFactorForTps
+        {
+            get { return this._toleranceFactorForTps; }
+            set { this._toleranceFactorForTps = value; }
+        }
+        
+        private int? _usageCollectionIntervalInSeconds;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? UsageCollectionIntervalInSeconds
+        {
+            get { return this._usageCollectionIntervalInSeconds; }
+            set { this._usageCollectionIntervalInSeconds = value; }
         }
         
         /// <summary>
@@ -1478,12 +2080,12 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
             set { this._description = value; }
         }
         
-        private string _faultId;
+        private Guid _faultId;
         
         /// <summary>
         /// Optional. Your documentation here.
         /// </summary>
-        public string FaultId
+        public Guid FaultId
         {
             get { return this._faultId; }
             set { this._faultId = value; }
@@ -3162,6 +3764,785 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
     /// <summary>
     /// Your documentation here.
     /// </summary>
+    public partial class QueueFrontEndRoleInstance : RoleInstanceBase
+    {
+        private QueueFrontEndRoleInstanceEffectiveSettings _settings;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QueueFrontEndRoleInstanceEffectiveSettings Settings
+        {
+            get { return this._settings; }
+            set { this._settings = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueFrontEndRoleInstance class.
+        /// </summary>
+        public QueueFrontEndRoleInstance()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class QueueFrontEndRoleInstanceEffectiveSettings : RoleInstanceEffectiveSettingsBase
+    {
+        private int? _frontEndCallbackThreadsCount;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndCallbackThreadsCount
+        {
+            get { return this._frontEndCallbackThreadsCount; }
+            set { this._frontEndCallbackThreadsCount = value; }
+        }
+        
+        private int? _frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds
+        {
+            get { return this._frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds; }
+            set { this._frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds = value; }
+        }
+        
+        private bool? _frontEndCpuBasedKeepAliveThrottlingEnabled;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public bool? FrontEndCpuBasedKeepAliveThrottlingEnabled
+        {
+            get { return this._frontEndCpuBasedKeepAliveThrottlingEnabled; }
+            set { this._frontEndCpuBasedKeepAliveThrottlingEnabled = value; }
+        }
+        
+        private double? _frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold
+        {
+            get { return this._frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold; }
+            set { this._frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold = value; }
+        }
+        
+        private double? _frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle
+        {
+            get { return this._frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle; }
+            set { this._frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle = value; }
+        }
+        
+        private int? _frontEndHttpListenPort;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndHttpListenPort
+        {
+            get { return this._frontEndHttpListenPort; }
+            set { this._frontEndHttpListenPort = value; }
+        }
+        
+        private int? _frontEndHttpsListenPort;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndHttpsListenPort
+        {
+            get { return this._frontEndHttpsListenPort; }
+            set { this._frontEndHttpsListenPort = value; }
+        }
+        
+        private int? _frontEndMaxMillisecondsBetweenMemorySamples;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndMaxMillisecondsBetweenMemorySamples
+        {
+            get { return this._frontEndMaxMillisecondsBetweenMemorySamples; }
+            set { this._frontEndMaxMillisecondsBetweenMemorySamples = value; }
+        }
+        
+        private string _frontEndMemoryThrottleThresholdSettings;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public string FrontEndMemoryThrottleThresholdSettings
+        {
+            get { return this._frontEndMemoryThrottleThresholdSettings; }
+            set { this._frontEndMemoryThrottleThresholdSettings = value; }
+        }
+        
+        private bool? _frontEndMemoryThrottlingEnabled;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public bool? FrontEndMemoryThrottlingEnabled
+        {
+            get { return this._frontEndMemoryThrottlingEnabled; }
+            set { this._frontEndMemoryThrottlingEnabled = value; }
+        }
+        
+        private int? _frontEndMinimumThreadPoolThreads;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndMinimumThreadPoolThreads
+        {
+            get { return this._frontEndMinimumThreadPoolThreads; }
+            set { this._frontEndMinimumThreadPoolThreads = value; }
+        }
+        
+        private int? _frontEndThreadPoolBasedKeepAliveIOCompletionThreshold;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold
+        {
+            get { return this._frontEndThreadPoolBasedKeepAliveIOCompletionThreshold; }
+            set { this._frontEndThreadPoolBasedKeepAliveIOCompletionThreshold = value; }
+        }
+        
+        private int? _frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds
+        {
+            get { return this._frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds; }
+            set { this._frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds = value; }
+        }
+        
+        private double? _frontEndThreadPoolBasedKeepAlivePercentage;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? FrontEndThreadPoolBasedKeepAlivePercentage
+        {
+            get { return this._frontEndThreadPoolBasedKeepAlivePercentage; }
+            set { this._frontEndThreadPoolBasedKeepAlivePercentage = value; }
+        }
+        
+        private int? _frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold
+        {
+            get { return this._frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold; }
+            set { this._frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold = value; }
+        }
+        
+        private bool? _frontEndUseSlaTimeInAvailability;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public bool? FrontEndUseSlaTimeInAvailability
+        {
+            get { return this._frontEndUseSlaTimeInAvailability; }
+            set { this._frontEndUseSlaTimeInAvailability = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// QueueFrontEndRoleInstanceEffectiveSettings class.
+        /// </summary>
+        public QueueFrontEndRoleInstanceEffectiveSettings()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class QueueFrontEndRoleInstanceListResponse : AzureOperationResponse, IEnumerable<QueueFrontEndRoleInstanceModel>
+    {
+        private IList<QueueFrontEndRoleInstanceModel> _roleInstances;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public IList<QueueFrontEndRoleInstanceModel> RoleInstances
+        {
+            get { return this._roleInstances; }
+            set { this._roleInstances = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// QueueFrontEndRoleInstanceListResponse class.
+        /// </summary>
+        public QueueFrontEndRoleInstanceListResponse()
+        {
+            this.RoleInstances = new LazyList<QueueFrontEndRoleInstanceModel>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of RoleInstances.
+        /// </summary>
+        public IEnumerator<QueueFrontEndRoleInstanceModel> GetEnumerator()
+        {
+            return this.RoleInstances.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of RoleInstances.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class QueueFrontEndRoleInstanceModel : ResourceBase
+    {
+        private QueueFrontEndRoleInstance _properties;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QueueFrontEndRoleInstance Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueFrontEndRoleInstanceModel
+        /// class.
+        /// </summary>
+        public QueueFrontEndRoleInstanceModel()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class QueueFrontRoleInstanceGetResponse : AzureOperationResponse
+    {
+        private QueueFrontEndRoleInstanceModel _roleInstance;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QueueFrontEndRoleInstanceModel RoleInstance
+        {
+            get { return this._roleInstance; }
+            set { this._roleInstance = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueFrontRoleInstanceGetResponse
+        /// class.
+        /// </summary>
+        public QueueFrontRoleInstanceGetResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class QueueServiceGetResponse : AzureOperationResponse
+    {
+        private QueueServiceResponseResource _resource;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QueueServiceResponseResource Resource
+        {
+            get { return this._resource; }
+            set { this._resource = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueServiceGetResponse class.
+        /// </summary>
+        public QueueServiceGetResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class QueueServicePatchParameters : ResourceBase
+    {
+        private QueueServiceRequest _queueService;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QueueServiceRequest QueueService
+        {
+            get { return this._queueService; }
+            set { this._queueService = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueServicePatchParameters class.
+        /// </summary>
+        public QueueServicePatchParameters()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class QueueServiceRequest
+    {
+        private QueueServiceWritableSettings _settings;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QueueServiceWritableSettings Settings
+        {
+            get { return this._settings; }
+            set { this._settings = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueServiceRequest class.
+        /// </summary>
+        public QueueServiceRequest()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class QueueServiceResponse : ServiceResponse
+    {
+        private QueueServiceSettings _settings;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QueueServiceSettings Settings
+        {
+            get { return this._settings; }
+            set { this._settings = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueServiceResponse class.
+        /// </summary>
+        public QueueServiceResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class QueueServiceResponseResource : ResourceBase
+    {
+        private QueueServiceResponse _queueService;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QueueServiceResponse QueueService
+        {
+            get { return this._queueService; }
+            set { this._queueService = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueServiceResponseResource
+        /// class.
+        /// </summary>
+        public QueueServiceResponseResource()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class QueueServiceSettings : QueueServiceWritableSettings
+    {
+        private int? _frontEndHttpListenPort;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndHttpListenPort
+        {
+            get { return this._frontEndHttpListenPort; }
+            set { this._frontEndHttpListenPort = value; }
+        }
+        
+        private int? _frontEndHttpsListenPort;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndHttpsListenPort
+        {
+            get { return this._frontEndHttpsListenPort; }
+            set { this._frontEndHttpsListenPort = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueServiceSettings class.
+        /// </summary>
+        public QueueServiceSettings()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class QueueServiceWritableSettings
+    {
+        private int? _frontEndCallbackThreadsCount;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndCallbackThreadsCount
+        {
+            get { return this._frontEndCallbackThreadsCount; }
+            set { this._frontEndCallbackThreadsCount = value; }
+        }
+        
+        private int? _frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds
+        {
+            get { return this._frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds; }
+            set { this._frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds = value; }
+        }
+        
+        private bool? _frontEndCpuBasedKeepAliveThrottlingEnabled;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public bool? FrontEndCpuBasedKeepAliveThrottlingEnabled
+        {
+            get { return this._frontEndCpuBasedKeepAliveThrottlingEnabled; }
+            set { this._frontEndCpuBasedKeepAliveThrottlingEnabled = value; }
+        }
+        
+        private double? _frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold
+        {
+            get { return this._frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold; }
+            set { this._frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold = value; }
+        }
+        
+        private double? _frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle
+        {
+            get { return this._frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle; }
+            set { this._frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle = value; }
+        }
+        
+        private int? _frontEndMaxMillisecondsBetweenMemorySamples;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndMaxMillisecondsBetweenMemorySamples
+        {
+            get { return this._frontEndMaxMillisecondsBetweenMemorySamples; }
+            set { this._frontEndMaxMillisecondsBetweenMemorySamples = value; }
+        }
+        
+        private string _frontEndMemoryThrottleThresholdSettings;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public string FrontEndMemoryThrottleThresholdSettings
+        {
+            get { return this._frontEndMemoryThrottleThresholdSettings; }
+            set { this._frontEndMemoryThrottleThresholdSettings = value; }
+        }
+        
+        private bool? _frontEndMemoryThrottlingEnabled;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public bool? FrontEndMemoryThrottlingEnabled
+        {
+            get { return this._frontEndMemoryThrottlingEnabled; }
+            set { this._frontEndMemoryThrottlingEnabled = value; }
+        }
+        
+        private int? _frontEndMinimumThreadPoolThreads;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndMinimumThreadPoolThreads
+        {
+            get { return this._frontEndMinimumThreadPoolThreads; }
+            set { this._frontEndMinimumThreadPoolThreads = value; }
+        }
+        
+        private int? _frontEndThreadPoolBasedKeepAliveIOCompletionThreshold;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold
+        {
+            get { return this._frontEndThreadPoolBasedKeepAliveIOCompletionThreshold; }
+            set { this._frontEndThreadPoolBasedKeepAliveIOCompletionThreshold = value; }
+        }
+        
+        private int? _frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds
+        {
+            get { return this._frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds; }
+            set { this._frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds = value; }
+        }
+        
+        private double? _frontEndThreadPoolBasedKeepAlivePercentage;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public double? FrontEndThreadPoolBasedKeepAlivePercentage
+        {
+            get { return this._frontEndThreadPoolBasedKeepAlivePercentage; }
+            set { this._frontEndThreadPoolBasedKeepAlivePercentage = value; }
+        }
+        
+        private int? _frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public int? FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold
+        {
+            get { return this._frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold; }
+            set { this._frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold = value; }
+        }
+        
+        private bool? _frontEndUseSlaTimeInAvailability;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public bool? FrontEndUseSlaTimeInAvailability
+        {
+            get { return this._frontEndUseSlaTimeInAvailability; }
+            set { this._frontEndUseSlaTimeInAvailability = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QueueServiceWritableSettings
+        /// class.
+        /// </summary>
+        public QueueServiceWritableSettings()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class Quota
+    {
+        private int _capacityInGB;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public int CapacityInGB
+        {
+            get { return this._capacityInGB; }
+            set { this._capacityInGB = value; }
+        }
+        
+        private int _numberOfStorageAccounts;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public int NumberOfStorageAccounts
+        {
+            get { return this._numberOfStorageAccounts; }
+            set { this._numberOfStorageAccounts = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Quota class.
+        /// </summary>
+        public Quota()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class QuotaCreateOrUpdateParameters : ResourceBase
+    {
+        private Quota _properties;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public Quota Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QuotaCreateOrUpdateParameters
+        /// class.
+        /// </summary>
+        public QuotaCreateOrUpdateParameters()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class QuotaGetResponse : AzureOperationResponse
+    {
+        private QuotaModel _quota;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public QuotaModel Quota
+        {
+            get { return this._quota; }
+            set { this._quota = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QuotaGetResponse class.
+        /// </summary>
+        public QuotaGetResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class QuotaListResponse : AzureOperationResponse, IEnumerable<QuotaModel>
+    {
+        private IList<QuotaModel> _quotas;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public IList<QuotaModel> Quotas
+        {
+            get { return this._quotas; }
+            set { this._quotas = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QuotaListResponse class.
+        /// </summary>
+        public QuotaListResponse()
+        {
+            this.Quotas = new LazyList<QuotaModel>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Quotas.
+        /// </summary>
+        public IEnumerator<QuotaModel> GetEnumerator()
+        {
+            return this.Quotas.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Quotas.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here
+    /// </summary>
+    public partial class QuotaModel : ResourceBase
+    {
+        private Quota _properties;
+        
+        /// <summary>
+        /// Optional. Your documentation here
+        /// </summary>
+        public Quota Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the QuotaModel class.
+        /// </summary>
+        public QuotaModel()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
     public enum RegionStatus
     {
         Available = 0,
@@ -3710,17 +5091,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
     /// </summary>
     public partial class StorageAccountModel : ResourceBase
     {
-        private Microsoft.AzureStack.Management.StorageAdmin.Models.StorageAccountStatusSearchFilter? _accountStatusFilter;
-        
-        /// <summary>
-        /// Optional. Your documentation here
-        /// </summary>
-        public Microsoft.AzureStack.Management.StorageAdmin.Models.StorageAccountStatusSearchFilter? AccountStatusFilter
-        {
-            get { return this._accountStatusFilter; }
-            set { this._accountStatusFilter = value; }
-        }
-        
         private StorageAccountPropertiesModel _properties;
         
         /// <summary>
@@ -3730,28 +5100,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
         {
             get { return this._properties; }
             set { this._properties = value; }
-        }
-        
-        private string _resourceType;
-        
-        /// <summary>
-        /// Optional. Your documentation here
-        /// </summary>
-        public string ResourceType
-        {
-            get { return this._resourceType; }
-            set { this._resourceType = value; }
-        }
-        
-        private System.Guid? _tenantSubscriptionId;
-        
-        /// <summary>
-        /// Optional. Your documentation here
-        /// </summary>
-        public System.Guid? TenantSubscriptionId
-        {
-            get { return this._tenantSubscriptionId; }
-            set { this._tenantSubscriptionId = value; }
         }
         
         /// <summary>
@@ -3884,12 +5232,12 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
             set { this._deletedTime = value; }
         }
         
-        private Microsoft.AzureStack.Management.StorageAdmin.Models.WacAccountPermissions? _permissions;
+        private Microsoft.AzureStack.AzureConsistentStorage.Models.WacAccountPermissions? _permissions;
         
         /// <summary>
         /// Optional. Your documentation here
         /// </summary>
-        public Microsoft.AzureStack.Management.StorageAdmin.Models.WacAccountPermissions? Permissions
+        public Microsoft.AzureStack.AzureConsistentStorage.Models.WacAccountPermissions? Permissions
         {
             get { return this._permissions; }
             set { this._permissions = value; }
@@ -4005,12 +5353,12 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
             set { this._tenantViewId = value; }
         }
         
-        private Microsoft.AzureStack.Management.StorageAdmin.Models.WacAccountStates? _wacInternalState;
+        private Microsoft.AzureStack.AzureConsistentStorage.Models.WacAccountStates? _wacInternalState;
         
         /// <summary>
         /// Optional. Your documentation here
         /// </summary>
-        public Microsoft.AzureStack.Management.StorageAdmin.Models.WacAccountStates? WacInternalState
+        public Microsoft.AzureStack.AzureConsistentStorage.Models.WacAccountStates? WacInternalState
         {
             get { return this._wacInternalState; }
             set { this._wacInternalState = value; }
@@ -4050,22 +5398,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
         OutOfRetentionPeriod = 2,
         
         Recycled = 3,
-    }
-    
-    /// <summary>
-    /// Your documentation here.
-    /// </summary>
-    public enum StorageAccountStatusSearchFilter
-    {
-        All = 0,
-        
-        Acitve = 1,
-        
-        Deleted = 2,
-        
-        OutOfRetentionPeriod = 3,
-        
-        Recycled = 4,
     }
     
     /// <summary>
@@ -4179,6 +5511,12 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
         StandardLRS = 0,
         
         StandardGRS = 1,
+        
+        StandardZrs = 2,
+        
+        StandardRagrs = 3,
+        
+        PremiumLrs = 4,
     }
     
     /// <summary>
@@ -5314,9 +6652,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
         }
     }
     
-    /// <summary>
-    /// Your documentation here.
-    /// </summary>
     [Flags]
     public enum WacAccountPermissions
     {
@@ -5333,9 +6668,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
         Full = 2147483644,
     }
     
-    /// <summary>
-    /// Your documentation here.
-    /// </summary>
     [Flags]
     public enum WacAccountStates
     {
@@ -5353,7 +6685,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Models
     }
 }
 
-namespace Microsoft.AzureStack.Management.StorageAdmin
+namespace Microsoft.AzureStack.AzureConsistentStorage
 {
     public static partial class StorageAdminManagementClientExtensions
     {
@@ -5365,7 +6697,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAdminManagementClient.
         /// </param>
         /// <param name='operationStatusLink'>
         /// Required. Location value returned by the Begin operation.
@@ -5390,7 +6722,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAdminManagementClient.
         /// </param>
         /// <param name='operationStatusLink'>
         /// Required. Location value returned by the Begin operation.
@@ -5454,6 +6786,16 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// more information)
         /// </summary>
         IAccountContainerServerInstanceOperations AccountContainerServerInstances
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        IAcquisitionOperations Acquisitions
         {
             get; 
         }
@@ -5544,6 +6886,36 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// more information)
         /// </summary>
         INodeOperations Nodes
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        IQueueFrontendInstanceOperations QueueFrontendInstances
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        IQueueServiceOperations QueueService
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        IQuotaOperations Quotas
         {
             get; 
         }
@@ -5694,6 +7066,18 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             get { return this._accountContainerServerInstances; }
         }
         
+        private IAcquisitionOperations _acquisitions;
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        public virtual IAcquisitionOperations Acquisitions
+        {
+            get { return this._acquisitions; }
+        }
+        
         private IBlobFrontendInstanceOperations _blobFrontendInstances;
         
         /// <summary>
@@ -5802,6 +7186,42 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             get { return this._nodes; }
         }
         
+        private IQueueFrontendInstanceOperations _queueFrontendInstances;
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        public virtual IQueueFrontendInstanceOperations QueueFrontendInstances
+        {
+            get { return this._queueFrontendInstances; }
+        }
+        
+        private IQueueServiceOperations _queueService;
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        public virtual IQueueServiceOperations QueueService
+        {
+            get { return this._queueService; }
+        }
+        
+        private IQuotaOperations _quotas;
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        public virtual IQuotaOperations Quotas
+        {
+            get { return this._quotas; }
+        }
+        
         private IShareOperations _shares;
         
         /// <summary>
@@ -5882,6 +7302,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             : base()
         {
             this._accountContainerServerInstances = new AccountContainerServerInstanceOperations(this);
+            this._acquisitions = new AcquisitionOperations(this);
             this._blobFrontendInstances = new BlobFrontendInstanceOperations(this);
             this._blobServerInstances = new BlobServerInstanceOperations(this);
             this._blobService = new BlobServiceOperations(this);
@@ -5891,6 +7312,9 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             this._managementService = new ManagementServiceOperations(this);
             this._metricsServerInstances = new MetricsServerInstanceOperations(this);
             this._nodes = new NodeOperations(this);
+            this._queueFrontendInstances = new QueueFrontendInstanceOperations(this);
+            this._queueService = new QueueServiceOperations(this);
+            this._quotas = new QuotaOperations(this);
             this._shares = new ShareOperations(this);
             this._storageAccounts = new StorageAccountOperations(this);
             this._tableFrontendInstances = new TableFrontendInstanceOperations(this);
@@ -5966,6 +7390,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             : base(httpClient)
         {
             this._accountContainerServerInstances = new AccountContainerServerInstanceOperations(this);
+            this._acquisitions = new AcquisitionOperations(this);
             this._blobFrontendInstances = new BlobFrontendInstanceOperations(this);
             this._blobServerInstances = new BlobServerInstanceOperations(this);
             this._blobService = new BlobServiceOperations(this);
@@ -5975,6 +7400,9 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             this._managementService = new ManagementServiceOperations(this);
             this._metricsServerInstances = new MetricsServerInstanceOperations(this);
             this._nodes = new NodeOperations(this);
+            this._queueFrontendInstances = new QueueFrontendInstanceOperations(this);
+            this._queueService = new QueueServiceOperations(this);
+            this._quotas = new QuotaOperations(this);
             this._shares = new ShareOperations(this);
             this._storageAccounts = new StorageAccountOperations(this);
             this._tableFrontendInstances = new TableFrontendInstanceOperations(this);
@@ -6141,6 +7569,18 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 return StorageAccountType.StandardGRS;
             }
+            if ("Standard_ZRS".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return StorageAccountType.StandardZrs;
+            }
+            if ("Standard_RAGRS".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return StorageAccountType.StandardRagrs;
+            }
+            if ("Premium_LRS".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return StorageAccountType.PremiumLrs;
+            }
             throw new ArgumentOutOfRangeException("value");
         }
         
@@ -6162,6 +7602,18 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             if (value == StorageAccountType.StandardGRS)
             {
                 return "Standard_GRS";
+            }
+            if (value == StorageAccountType.StandardZrs)
+            {
+                return "Standard_ZRS";
+            }
+            if (value == StorageAccountType.StandardRagrs)
+            {
+                return "Standard_RAGRS";
+            }
+            if (value == StorageAccountType.PremiumLrs)
+            {
+                return "Premium_LRS";
             }
             throw new ArgumentOutOfRangeException("value");
         }
@@ -6449,7 +7901,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6479,7 +7931,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6505,7 +7957,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6535,7 +7987,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6561,7 +8013,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6594,7 +8046,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6623,7 +8075,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6656,7 +8108,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6685,7 +8137,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6712,7 +8164,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6735,7 +8187,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6766,7 +8218,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6793,7 +8245,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -6824,7 +8276,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IAccountContainerServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAccountContainerServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -7035,7 +8487,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -8578,7 +10030,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -8769,6 +10221,1024 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         }
     }
     
+    public static partial class AcquisitionOperationsExtensions
+    {
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='acquisitionId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse Delete(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string acquisitionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAcquisitionOperations)s).DeleteAsync(resourceGroupName, farmId, acquisitionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='acquisitionId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> DeleteAsync(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string acquisitionId)
+        {
+            return operations.DeleteAsync(resourceGroupName, farmId, acquisitionId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='acquisitionId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static AcquisitionGetResponse Get(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string acquisitionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAcquisitionOperations)s).GetAsync(resourceGroupName, farmId, acquisitionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='acquisitionId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<AcquisitionGetResponse> GetAsync(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string acquisitionId)
+        {
+            return operations.GetAsync(resourceGroupName, farmId, acquisitionId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static AcquisitionListResponse List(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string filter)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAcquisitionOperations)s).ListAsync(resourceGroupName, farmId, filter);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<AcquisitionListResponse> ListAsync(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string filter)
+        {
+            return operations.ListAsync(resourceGroupName, farmId, filter, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+    /// more information)
+    /// </summary>
+    public partial interface IAcquisitionOperations
+    {
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='acquisitionId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string farmId, string acquisitionId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='acquisitionId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<AcquisitionGetResponse> GetAsync(string resourceGroupName, string farmId, string acquisitionId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<AcquisitionListResponse> ListAsync(string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken);
+    }
+    
+    /// <summary>
+    /// Your documentation here.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+    /// more information)
+    /// </summary>
+    internal partial class AcquisitionOperations : IServiceOperations<StorageAdminManagementClient>, IAcquisitionOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the AcquisitionOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal AcquisitionOperations(StorageAdminManagementClient client)
+        {
+            this._client = client;
+        }
+        
+        private StorageAdminManagementClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
+        /// </summary>
+        public StorageAdminManagementClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='acquisitionId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string farmId, string acquisitionId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (acquisitionId == null)
+            {
+                throw new ArgumentNullException("acquisitionId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("acquisitionId", acquisitionId);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/acquisitions/";
+            url = url + Uri.EscapeDataString(acquisitionId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='acquisitionId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<AcquisitionGetResponse> GetAsync(string resourceGroupName, string farmId, string acquisitionId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (acquisitionId == null)
+            {
+                throw new ArgumentNullException("acquisitionId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("acquisitionId", acquisitionId);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/acquisitions/";
+            url = url + Uri.EscapeDataString(acquisitionId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AcquisitionGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AcquisitionGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            AcquisitionModel acquisitionInstance = new AcquisitionModel();
+                            result.Acquisition = acquisitionInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                Acquisition propertiesInstance = new Acquisition();
+                                acquisitionInstance.Properties = propertiesInstance;
+                                
+                                JToken filePathValue = propertiesValue["filePath"];
+                                if (filePathValue != null && filePathValue.Type != JTokenType.Null)
+                                {
+                                    string filePathInstance = ((string)filePathValue);
+                                    propertiesInstance.FilePath = filePathInstance;
+                                }
+                                
+                                JToken maximumblobsizeValue = propertiesValue["maximumblobsize"];
+                                if (maximumblobsizeValue != null && maximumblobsizeValue.Type != JTokenType.Null)
+                                {
+                                    long maximumblobsizeInstance = ((long)maximumblobsizeValue);
+                                    propertiesInstance.MaximumBlobSize = maximumblobsizeInstance;
+                                }
+                                
+                                JToken statusValue = propertiesValue["status"];
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                {
+                                    AcquisitionStatus statusInstance = ((AcquisitionStatus)Enum.Parse(typeof(AcquisitionStatus), ((string)statusValue), true));
+                                    propertiesInstance.Status = statusInstance;
+                                }
+                                
+                                JToken susbcriptionidValue = propertiesValue["susbcriptionid"];
+                                if (susbcriptionidValue != null && susbcriptionidValue.Type != JTokenType.Null)
+                                {
+                                    Guid susbcriptionidInstance = Guid.Parse(((string)susbcriptionidValue));
+                                    propertiesInstance.TenantSubscriptionId = susbcriptionidInstance;
+                                }
+                                
+                                JToken storageaccountValue = propertiesValue["storageaccount"];
+                                if (storageaccountValue != null && storageaccountValue.Type != JTokenType.Null)
+                                {
+                                    string storageaccountInstance = ((string)storageaccountValue);
+                                    propertiesInstance.StorageAccountName = storageaccountInstance;
+                                }
+                                
+                                JToken containerValue = propertiesValue["container"];
+                                if (containerValue != null && containerValue.Type != JTokenType.Null)
+                                {
+                                    string containerInstance = ((string)containerValue);
+                                    propertiesInstance.Container = containerInstance;
+                                }
+                                
+                                JToken blobValue = propertiesValue["blob"];
+                                if (blobValue != null && blobValue.Type != JTokenType.Null)
+                                {
+                                    string blobInstance = ((string)blobValue);
+                                    propertiesInstance.Blob = blobInstance;
+                                }
+                                
+                                JToken acquisitionidValue = propertiesValue["acquisitionid"];
+                                if (acquisitionidValue != null && acquisitionidValue.Type != JTokenType.Null)
+                                {
+                                    string acquisitionidInstance = ((string)acquisitionidValue);
+                                    propertiesInstance.AcquisitionId = acquisitionidInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                acquisitionInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                acquisitionInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                acquisitionInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                acquisitionInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    acquisitionInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<AcquisitionListResponse> ListAsync(string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException("filter");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("filter", filter);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/acquisitions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filter));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AcquisitionListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AcquisitionListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken acquisitionsArray = responseDoc;
+                            if (acquisitionsArray != null && acquisitionsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken acquisitionsValue in ((JArray)acquisitionsArray))
+                                {
+                                    AcquisitionModel acquisitionModelInstance = new AcquisitionModel();
+                                    result.Acquisitions.Add(acquisitionModelInstance);
+                                    
+                                    JToken propertiesValue = acquisitionsValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        Acquisition propertiesInstance = new Acquisition();
+                                        acquisitionModelInstance.Properties = propertiesInstance;
+                                        
+                                        JToken filePathValue = propertiesValue["filePath"];
+                                        if (filePathValue != null && filePathValue.Type != JTokenType.Null)
+                                        {
+                                            string filePathInstance = ((string)filePathValue);
+                                            propertiesInstance.FilePath = filePathInstance;
+                                        }
+                                        
+                                        JToken maximumblobsizeValue = propertiesValue["maximumblobsize"];
+                                        if (maximumblobsizeValue != null && maximumblobsizeValue.Type != JTokenType.Null)
+                                        {
+                                            long maximumblobsizeInstance = ((long)maximumblobsizeValue);
+                                            propertiesInstance.MaximumBlobSize = maximumblobsizeInstance;
+                                        }
+                                        
+                                        JToken statusValue = propertiesValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            AcquisitionStatus statusInstance = ((AcquisitionStatus)Enum.Parse(typeof(AcquisitionStatus), ((string)statusValue), true));
+                                            propertiesInstance.Status = statusInstance;
+                                        }
+                                        
+                                        JToken susbcriptionidValue = propertiesValue["susbcriptionid"];
+                                        if (susbcriptionidValue != null && susbcriptionidValue.Type != JTokenType.Null)
+                                        {
+                                            Guid susbcriptionidInstance = Guid.Parse(((string)susbcriptionidValue));
+                                            propertiesInstance.TenantSubscriptionId = susbcriptionidInstance;
+                                        }
+                                        
+                                        JToken storageaccountValue = propertiesValue["storageaccount"];
+                                        if (storageaccountValue != null && storageaccountValue.Type != JTokenType.Null)
+                                        {
+                                            string storageaccountInstance = ((string)storageaccountValue);
+                                            propertiesInstance.StorageAccountName = storageaccountInstance;
+                                        }
+                                        
+                                        JToken containerValue = propertiesValue["container"];
+                                        if (containerValue != null && containerValue.Type != JTokenType.Null)
+                                        {
+                                            string containerInstance = ((string)containerValue);
+                                            propertiesInstance.Container = containerInstance;
+                                        }
+                                        
+                                        JToken blobValue = propertiesValue["blob"];
+                                        if (blobValue != null && blobValue.Type != JTokenType.Null)
+                                        {
+                                            string blobInstance = ((string)blobValue);
+                                            propertiesInstance.Blob = blobInstance;
+                                        }
+                                        
+                                        JToken acquisitionidValue = propertiesValue["acquisitionid"];
+                                        if (acquisitionidValue != null && acquisitionidValue.Type != JTokenType.Null)
+                                        {
+                                            string acquisitionidInstance = ((string)acquisitionidValue);
+                                            propertiesInstance.AcquisitionId = acquisitionidInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = acquisitionsValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        acquisitionModelInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = acquisitionsValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        acquisitionModelInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = acquisitionsValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        acquisitionModelInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = acquisitionsValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        acquisitionModelInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)acquisitionsValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            acquisitionModelInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
     public static partial class BlobFrontendInstanceOperationsExtensions
     {
         /// <summary>
@@ -8778,7 +11248,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -8808,7 +11278,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -8834,7 +11304,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -8864,7 +11334,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -8890,7 +11360,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -8923,7 +11393,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -8952,7 +11422,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -8985,7 +11455,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -9014,7 +11484,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -9041,7 +11511,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -9064,7 +11534,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -9095,7 +11565,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -9122,7 +11592,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -9153,7 +11623,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -9364,7 +11834,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -11033,7 +13503,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11233,7 +13703,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11263,7 +13733,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11289,7 +13759,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11319,7 +13789,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11345,7 +13815,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11375,7 +13845,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11401,7 +13871,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11431,7 +13901,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11457,7 +13927,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11490,7 +13960,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11519,7 +13989,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11552,7 +14022,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11581,7 +14051,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11608,7 +14078,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11631,7 +14101,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11662,7 +14132,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11689,7 +14159,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11720,7 +14190,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11747,7 +14217,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11778,7 +14248,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11805,7 +14275,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -11836,7 +14306,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -12137,7 +14607,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -13984,7 +16454,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -14223,7 +16693,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -14297,7 +16767,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -14332,7 +16802,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -14359,7 +16829,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -14382,7 +16852,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -14412,7 +16882,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -14438,7 +16908,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -14468,7 +16938,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -14494,7 +16964,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -14524,7 +16994,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IBlobServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IBlobServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -14659,7 +17129,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -16117,7 +18587,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16147,7 +18617,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16173,7 +18643,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16203,7 +18673,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16229,7 +18699,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16259,7 +18729,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16285,7 +18755,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16312,7 +18782,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16335,7 +18805,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16365,7 +18835,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16392,7 +18862,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='operationStatusLink'>
         /// Required. Location value returned by the Begin operation.
@@ -16417,7 +18887,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='operationStatusLink'>
         /// Required. Location value returned by the Begin operation.
@@ -16437,7 +18907,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16467,7 +18937,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16493,7 +18963,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16523,7 +18993,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16549,7 +19019,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16573,7 +19043,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16593,7 +19063,59 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse OnDemandGc(this IFarmOperations operations, string resourceGroupName, string farmId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFarmOperations)s).OnDemandGcAsync(resourceGroupName, farmId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> OnDemandGcAsync(this IFarmOperations operations, string resourceGroupName, string farmId)
+        {
+            return operations.OnDemandGcAsync(resourceGroupName, farmId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16623,7 +19145,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -16845,6 +19367,26 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Your documentation here.
         /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> OnDemandGcAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
         /// <param name='parameters'>
         /// Your documentation here.
         /// </param>
@@ -16879,7 +19421,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -17203,7 +19745,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -17462,6 +20004,13 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                         settingsInstance.SettingsPollingIntervalInSecond = settingsPollingIntervalInSecondInstance;
                                     }
                                     
+                                    JToken retentionPeriodForDeletedStorageAccountsInDaysValue = settingsValue["retentionPeriodForDeletedStorageAccountsInDays"];
+                                    if (retentionPeriodForDeletedStorageAccountsInDaysValue != null && retentionPeriodForDeletedStorageAccountsInDaysValue.Type != JTokenType.Null)
+                                    {
+                                        int retentionPeriodForDeletedStorageAccountsInDaysInstance = ((int)retentionPeriodForDeletedStorageAccountsInDaysValue);
+                                        settingsInstance.RetentionPeriodForDeletedStorageAccountsInDays = retentionPeriodForDeletedStorageAccountsInDaysInstance;
+                                    }
+                                    
                                     JToken hostStyleHttpPortValue = settingsValue["hostStyleHttpPort"];
                                     if (hostStyleHttpPortValue != null && hostStyleHttpPortValue.Type != JTokenType.Null)
                                     {
@@ -17488,6 +20037,251 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                     {
                                         string dataCenterUriHostSuffixesInstance = ((string)dataCenterUriHostSuffixesValue);
                                         settingsInstance.DataCenterUriHostSuffixes = dataCenterUriHostSuffixesInstance;
+                                    }
+                                    
+                                    JToken bandwidthThrottleIsEnabledValue = settingsValue["bandwidthThrottleIsEnabled"];
+                                    if (bandwidthThrottleIsEnabledValue != null && bandwidthThrottleIsEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool bandwidthThrottleIsEnabledInstance = ((bool)bandwidthThrottleIsEnabledValue);
+                                        settingsInstance.BandwidthThrottleIsEnabled = bandwidthThrottleIsEnabledInstance;
+                                    }
+                                    
+                                    JToken usageCollectionIntervalInSecondsValue = settingsValue["usageCollectionIntervalInSeconds"];
+                                    if (usageCollectionIntervalInSecondsValue != null && usageCollectionIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int usageCollectionIntervalInSecondsInstance = ((int)usageCollectionIntervalInSecondsValue);
+                                        settingsInstance.UsageCollectionIntervalInSeconds = usageCollectionIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken feedbackRefreshIntervalInSecondsValue = settingsValue["feedbackRefreshIntervalInSeconds"];
+                                    if (feedbackRefreshIntervalInSecondsValue != null && feedbackRefreshIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int feedbackRefreshIntervalInSecondsInstance = ((int)feedbackRefreshIntervalInSecondsValue);
+                                        settingsInstance.FeedbackRefreshIntervalInSeconds = feedbackRefreshIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken numberOfAccountsToSyncValue = settingsValue["numberOfAccountsToSync"];
+                                    if (numberOfAccountsToSyncValue != null && numberOfAccountsToSyncValue.Type != JTokenType.Null)
+                                    {
+                                        int numberOfAccountsToSyncInstance = ((int)numberOfAccountsToSyncValue);
+                                        settingsInstance.NumberOfAccountsToSync = numberOfAccountsToSyncInstance;
+                                    }
+                                    
+                                    JToken defaultThrottleProbabilityDecayIntervalInSecondsValue = settingsValue["defaultThrottleProbabilityDecayIntervalInSeconds"];
+                                    if (defaultThrottleProbabilityDecayIntervalInSecondsValue != null && defaultThrottleProbabilityDecayIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int defaultThrottleProbabilityDecayIntervalInSecondsInstance = ((int)defaultThrottleProbabilityDecayIntervalInSecondsValue);
+                                        settingsInstance.DefaultThrottleProbabilityDecayIntervalInSeconds = defaultThrottleProbabilityDecayIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken gracePeriodForFullThrottlingInRefreshIntervalsValue = settingsValue["gracePeriodForFullThrottlingInRefreshIntervals"];
+                                    if (gracePeriodForFullThrottlingInRefreshIntervalsValue != null && gracePeriodForFullThrottlingInRefreshIntervalsValue.Type != JTokenType.Null)
+                                    {
+                                        int gracePeriodForFullThrottlingInRefreshIntervalsInstance = ((int)gracePeriodForFullThrottlingInRefreshIntervalsValue);
+                                        settingsInstance.GracePeriodForFullThrottlingInRefreshIntervals = gracePeriodForFullThrottlingInRefreshIntervalsInstance;
+                                    }
+                                    
+                                    JToken gracePeriodMaxThrottleProbabilityValue = settingsValue["gracePeriodMaxThrottleProbability"];
+                                    if (gracePeriodMaxThrottleProbabilityValue != null && gracePeriodMaxThrottleProbabilityValue.Type != JTokenType.Null)
+                                    {
+                                        double gracePeriodMaxThrottleProbabilityInstance = ((double)gracePeriodMaxThrottleProbabilityValue);
+                                        settingsInstance.GracePeriodMaxThrottleProbability = gracePeriodMaxThrottleProbabilityInstance;
+                                    }
+                                    
+                                    JToken overallRequestThresholdInTpsValue = settingsValue["overallRequestThresholdInTps"];
+                                    if (overallRequestThresholdInTpsValue != null && overallRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallRequestThresholdInTpsInstance = ((double)overallRequestThresholdInTpsValue);
+                                        settingsInstance.OverallRequestThresholdInTps = overallRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken defaultRequestThresholdInTpsValue = settingsValue["defaultRequestThresholdInTps"];
+                                    if (defaultRequestThresholdInTpsValue != null && defaultRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultRequestThresholdInTpsInstance = ((double)defaultRequestThresholdInTpsValue);
+                                        settingsInstance.DefaultRequestThresholdInTps = defaultRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken minimumRequestThresholdInTpsValue = settingsValue["minimumRequestThresholdInTps"];
+                                    if (minimumRequestThresholdInTpsValue != null && minimumRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumRequestThresholdInTpsInstance = ((double)minimumRequestThresholdInTpsValue);
+                                        settingsInstance.MinimumRequestThresholdInTps = minimumRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTpsValue = settingsValue["toleranceFactorForTps"];
+                                    if (toleranceFactorForTpsValue != null && toleranceFactorForTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTpsInstance = ((double)toleranceFactorForTpsValue);
+                                        settingsInstance.ToleranceFactorForTps = toleranceFactorForTpsInstance;
+                                    }
+                                    
+                                    JToken overallIngressThresholdInGbpsValue = settingsValue["overallIngressThresholdInGbps"];
+                                    if (overallIngressThresholdInGbpsValue != null && overallIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIngressThresholdInGbpsInstance = ((double)overallIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallIngressThresholdInGbps = overallIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIngressThresholdInGbpsValue = settingsValue["defaultIngressThresholdInGbps"];
+                                    if (defaultIngressThresholdInGbpsValue != null && defaultIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIngressThresholdInGbpsInstance = ((double)defaultIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIngressThresholdInGbps = defaultIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIngressThresholdInGbpsValue = settingsValue["minimumIngressThresholdInGbps"];
+                                    if (minimumIngressThresholdInGbpsValue != null && minimumIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIngressThresholdInGbpsInstance = ((double)minimumIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIngressThresholdInGbps = minimumIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIngressValue = settingsValue["toleranceFactorForIngress"];
+                                    if (toleranceFactorForIngressValue != null && toleranceFactorForIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIngressInstance = ((double)toleranceFactorForIngressValue);
+                                        settingsInstance.ToleranceFactorForIngress = toleranceFactorForIngressInstance;
+                                    }
+                                    
+                                    JToken overallIntranetIngressThresholdInGbpsValue = settingsValue["overallIntranetIngressThresholdInGbps"];
+                                    if (overallIntranetIngressThresholdInGbpsValue != null && overallIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIntranetIngressThresholdInGbpsInstance = ((double)overallIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallIntranetIngressThresholdInGbps = overallIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIntranetIngressThresholdInGbpsValue = settingsValue["defaultIntranetIngressThresholdInGbps"];
+                                    if (defaultIntranetIngressThresholdInGbpsValue != null && defaultIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIntranetIngressThresholdInGbpsInstance = ((double)defaultIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIntranetIngressThresholdInGbps = defaultIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIntranetIngressThresholdInGbpsValue = settingsValue["minimumIntranetIngressThresholdInGbps"];
+                                    if (minimumIntranetIngressThresholdInGbpsValue != null && minimumIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIntranetIngressThresholdInGbpsInstance = ((double)minimumIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIntranetIngressThresholdInGbps = minimumIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIntranetIngressValue = settingsValue["toleranceFactorForIntranetIngress"];
+                                    if (toleranceFactorForIntranetIngressValue != null && toleranceFactorForIntranetIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIntranetIngressInstance = ((double)toleranceFactorForIntranetIngressValue);
+                                        settingsInstance.ToleranceFactorForIntranetIngress = toleranceFactorForIntranetIngressInstance;
+                                    }
+                                    
+                                    JToken overallEgressThresholdInGbpsValue = settingsValue["overallEgressThresholdInGbps"];
+                                    if (overallEgressThresholdInGbpsValue != null && overallEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallEgressThresholdInGbpsInstance = ((double)overallEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallEgressThresholdInGbps = overallEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultEgressThresholdInGbpsValue = settingsValue["defaultEgressThresholdInGbps"];
+                                    if (defaultEgressThresholdInGbpsValue != null && defaultEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultEgressThresholdInGbpsInstance = ((double)defaultEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultEgressThresholdInGbps = defaultEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumEgressThresholdInGbpsValue = settingsValue["minimumEgressThresholdInGbps"];
+                                    if (minimumEgressThresholdInGbpsValue != null && minimumEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumEgressThresholdInGbpsInstance = ((double)minimumEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumEgressThresholdInGbps = minimumEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForEgressValue = settingsValue["toleranceFactorForEgress"];
+                                    if (toleranceFactorForEgressValue != null && toleranceFactorForEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForEgressInstance = ((double)toleranceFactorForEgressValue);
+                                        settingsInstance.ToleranceFactorForEgress = toleranceFactorForEgressInstance;
+                                    }
+                                    
+                                    JToken overallIntranetEgressThresholdInGbpsValue = settingsValue["overallIntranetEgressThresholdInGbps"];
+                                    if (overallIntranetEgressThresholdInGbpsValue != null && overallIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIntranetEgressThresholdInGbpsInstance = ((double)overallIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallIntranetEgressThresholdInGbps = overallIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIntranetEgressThresholdInGbpsValue = settingsValue["defaultIntranetEgressThresholdInGbps"];
+                                    if (defaultIntranetEgressThresholdInGbpsValue != null && defaultIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIntranetEgressThresholdInGbpsInstance = ((double)defaultIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIntranetEgressThresholdInGbps = defaultIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIntranetEgressThresholdInGbpsValue = settingsValue["minimumIntranetEgressThresholdInGbps"];
+                                    if (minimumIntranetEgressThresholdInGbpsValue != null && minimumIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIntranetEgressThresholdInGbpsInstance = ((double)minimumIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIntranetEgressThresholdInGbps = minimumIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIntranetEgressValue = settingsValue["toleranceFactorForIntranetEgress"];
+                                    if (toleranceFactorForIntranetEgressValue != null && toleranceFactorForIntranetEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIntranetEgressInstance = ((double)toleranceFactorForIntranetEgressValue);
+                                        settingsInstance.ToleranceFactorForIntranetEgress = toleranceFactorForIntranetEgressInstance;
+                                    }
+                                    
+                                    JToken overallTotalIngressThresholdInGbpsValue = settingsValue["overallTotalIngressThresholdInGbps"];
+                                    if (overallTotalIngressThresholdInGbpsValue != null && overallTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallTotalIngressThresholdInGbpsInstance = ((double)overallTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallTotalIngressThresholdInGbps = overallTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultTotalIngressThresholdInGbpsValue = settingsValue["defaultTotalIngressThresholdInGbps"];
+                                    if (defaultTotalIngressThresholdInGbpsValue != null && defaultTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultTotalIngressThresholdInGbpsInstance = ((double)defaultTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultTotalIngressThresholdInGbps = defaultTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumTotalIngressThresholdInGbpsValue = settingsValue["minimumTotalIngressThresholdInGbps"];
+                                    if (minimumTotalIngressThresholdInGbpsValue != null && minimumTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumTotalIngressThresholdInGbpsInstance = ((double)minimumTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumTotalIngressThresholdInGbps = minimumTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTotalIngressValue = settingsValue["toleranceFactorForTotalIngress"];
+                                    if (toleranceFactorForTotalIngressValue != null && toleranceFactorForTotalIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTotalIngressInstance = ((double)toleranceFactorForTotalIngressValue);
+                                        settingsInstance.ToleranceFactorForTotalIngress = toleranceFactorForTotalIngressInstance;
+                                    }
+                                    
+                                    JToken overallTotalEgressThresholdInGbpsValue = settingsValue["overallTotalEgressThresholdInGbps"];
+                                    if (overallTotalEgressThresholdInGbpsValue != null && overallTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallTotalEgressThresholdInGbpsInstance = ((double)overallTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallTotalEgressThresholdInGbps = overallTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultTotalEgressThresholdInGbpsValue = settingsValue["defaultTotalEgressThresholdInGbps"];
+                                    if (defaultTotalEgressThresholdInGbpsValue != null && defaultTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultTotalEgressThresholdInGbpsInstance = ((double)defaultTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultTotalEgressThresholdInGbps = defaultTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumTotalEgressThresholdInGbpsValue = settingsValue["minimumTotalEgressThresholdInGbps"];
+                                    if (minimumTotalEgressThresholdInGbpsValue != null && minimumTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumTotalEgressThresholdInGbpsInstance = ((double)minimumTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumTotalEgressThresholdInGbps = minimumTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTotalEgressValue = settingsValue["toleranceFactorForTotalEgress"];
+                                    if (toleranceFactorForTotalEgressValue != null && toleranceFactorForTotalEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTotalEgressInstance = ((double)toleranceFactorForTotalEgressValue);
+                                        settingsInstance.ToleranceFactorForTotalEgress = toleranceFactorForTotalEgressInstance;
                                     }
                                 }
                             }
@@ -17734,6 +20528,13 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                         settingsInstance.SettingsPollingIntervalInSecond = settingsPollingIntervalInSecondInstance;
                                     }
                                     
+                                    JToken retentionPeriodForDeletedStorageAccountsInDaysValue = settingsValue["retentionPeriodForDeletedStorageAccountsInDays"];
+                                    if (retentionPeriodForDeletedStorageAccountsInDaysValue != null && retentionPeriodForDeletedStorageAccountsInDaysValue.Type != JTokenType.Null)
+                                    {
+                                        int retentionPeriodForDeletedStorageAccountsInDaysInstance = ((int)retentionPeriodForDeletedStorageAccountsInDaysValue);
+                                        settingsInstance.RetentionPeriodForDeletedStorageAccountsInDays = retentionPeriodForDeletedStorageAccountsInDaysInstance;
+                                    }
+                                    
                                     JToken hostStyleHttpPortValue = settingsValue["hostStyleHttpPort"];
                                     if (hostStyleHttpPortValue != null && hostStyleHttpPortValue.Type != JTokenType.Null)
                                     {
@@ -17760,6 +20561,251 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                     {
                                         string dataCenterUriHostSuffixesInstance = ((string)dataCenterUriHostSuffixesValue);
                                         settingsInstance.DataCenterUriHostSuffixes = dataCenterUriHostSuffixesInstance;
+                                    }
+                                    
+                                    JToken bandwidthThrottleIsEnabledValue = settingsValue["bandwidthThrottleIsEnabled"];
+                                    if (bandwidthThrottleIsEnabledValue != null && bandwidthThrottleIsEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool bandwidthThrottleIsEnabledInstance = ((bool)bandwidthThrottleIsEnabledValue);
+                                        settingsInstance.BandwidthThrottleIsEnabled = bandwidthThrottleIsEnabledInstance;
+                                    }
+                                    
+                                    JToken usageCollectionIntervalInSecondsValue = settingsValue["usageCollectionIntervalInSeconds"];
+                                    if (usageCollectionIntervalInSecondsValue != null && usageCollectionIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int usageCollectionIntervalInSecondsInstance = ((int)usageCollectionIntervalInSecondsValue);
+                                        settingsInstance.UsageCollectionIntervalInSeconds = usageCollectionIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken feedbackRefreshIntervalInSecondsValue = settingsValue["feedbackRefreshIntervalInSeconds"];
+                                    if (feedbackRefreshIntervalInSecondsValue != null && feedbackRefreshIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int feedbackRefreshIntervalInSecondsInstance = ((int)feedbackRefreshIntervalInSecondsValue);
+                                        settingsInstance.FeedbackRefreshIntervalInSeconds = feedbackRefreshIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken numberOfAccountsToSyncValue = settingsValue["numberOfAccountsToSync"];
+                                    if (numberOfAccountsToSyncValue != null && numberOfAccountsToSyncValue.Type != JTokenType.Null)
+                                    {
+                                        int numberOfAccountsToSyncInstance = ((int)numberOfAccountsToSyncValue);
+                                        settingsInstance.NumberOfAccountsToSync = numberOfAccountsToSyncInstance;
+                                    }
+                                    
+                                    JToken defaultThrottleProbabilityDecayIntervalInSecondsValue = settingsValue["defaultThrottleProbabilityDecayIntervalInSeconds"];
+                                    if (defaultThrottleProbabilityDecayIntervalInSecondsValue != null && defaultThrottleProbabilityDecayIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int defaultThrottleProbabilityDecayIntervalInSecondsInstance = ((int)defaultThrottleProbabilityDecayIntervalInSecondsValue);
+                                        settingsInstance.DefaultThrottleProbabilityDecayIntervalInSeconds = defaultThrottleProbabilityDecayIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken gracePeriodForFullThrottlingInRefreshIntervalsValue = settingsValue["gracePeriodForFullThrottlingInRefreshIntervals"];
+                                    if (gracePeriodForFullThrottlingInRefreshIntervalsValue != null && gracePeriodForFullThrottlingInRefreshIntervalsValue.Type != JTokenType.Null)
+                                    {
+                                        int gracePeriodForFullThrottlingInRefreshIntervalsInstance = ((int)gracePeriodForFullThrottlingInRefreshIntervalsValue);
+                                        settingsInstance.GracePeriodForFullThrottlingInRefreshIntervals = gracePeriodForFullThrottlingInRefreshIntervalsInstance;
+                                    }
+                                    
+                                    JToken gracePeriodMaxThrottleProbabilityValue = settingsValue["gracePeriodMaxThrottleProbability"];
+                                    if (gracePeriodMaxThrottleProbabilityValue != null && gracePeriodMaxThrottleProbabilityValue.Type != JTokenType.Null)
+                                    {
+                                        double gracePeriodMaxThrottleProbabilityInstance = ((double)gracePeriodMaxThrottleProbabilityValue);
+                                        settingsInstance.GracePeriodMaxThrottleProbability = gracePeriodMaxThrottleProbabilityInstance;
+                                    }
+                                    
+                                    JToken overallRequestThresholdInTpsValue = settingsValue["overallRequestThresholdInTps"];
+                                    if (overallRequestThresholdInTpsValue != null && overallRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallRequestThresholdInTpsInstance = ((double)overallRequestThresholdInTpsValue);
+                                        settingsInstance.OverallRequestThresholdInTps = overallRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken defaultRequestThresholdInTpsValue = settingsValue["defaultRequestThresholdInTps"];
+                                    if (defaultRequestThresholdInTpsValue != null && defaultRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultRequestThresholdInTpsInstance = ((double)defaultRequestThresholdInTpsValue);
+                                        settingsInstance.DefaultRequestThresholdInTps = defaultRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken minimumRequestThresholdInTpsValue = settingsValue["minimumRequestThresholdInTps"];
+                                    if (minimumRequestThresholdInTpsValue != null && minimumRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumRequestThresholdInTpsInstance = ((double)minimumRequestThresholdInTpsValue);
+                                        settingsInstance.MinimumRequestThresholdInTps = minimumRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTpsValue = settingsValue["toleranceFactorForTps"];
+                                    if (toleranceFactorForTpsValue != null && toleranceFactorForTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTpsInstance = ((double)toleranceFactorForTpsValue);
+                                        settingsInstance.ToleranceFactorForTps = toleranceFactorForTpsInstance;
+                                    }
+                                    
+                                    JToken overallIngressThresholdInGbpsValue = settingsValue["overallIngressThresholdInGbps"];
+                                    if (overallIngressThresholdInGbpsValue != null && overallIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIngressThresholdInGbpsInstance = ((double)overallIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallIngressThresholdInGbps = overallIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIngressThresholdInGbpsValue = settingsValue["defaultIngressThresholdInGbps"];
+                                    if (defaultIngressThresholdInGbpsValue != null && defaultIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIngressThresholdInGbpsInstance = ((double)defaultIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIngressThresholdInGbps = defaultIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIngressThresholdInGbpsValue = settingsValue["minimumIngressThresholdInGbps"];
+                                    if (minimumIngressThresholdInGbpsValue != null && minimumIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIngressThresholdInGbpsInstance = ((double)minimumIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIngressThresholdInGbps = minimumIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIngressValue = settingsValue["toleranceFactorForIngress"];
+                                    if (toleranceFactorForIngressValue != null && toleranceFactorForIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIngressInstance = ((double)toleranceFactorForIngressValue);
+                                        settingsInstance.ToleranceFactorForIngress = toleranceFactorForIngressInstance;
+                                    }
+                                    
+                                    JToken overallIntranetIngressThresholdInGbpsValue = settingsValue["overallIntranetIngressThresholdInGbps"];
+                                    if (overallIntranetIngressThresholdInGbpsValue != null && overallIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIntranetIngressThresholdInGbpsInstance = ((double)overallIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallIntranetIngressThresholdInGbps = overallIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIntranetIngressThresholdInGbpsValue = settingsValue["defaultIntranetIngressThresholdInGbps"];
+                                    if (defaultIntranetIngressThresholdInGbpsValue != null && defaultIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIntranetIngressThresholdInGbpsInstance = ((double)defaultIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIntranetIngressThresholdInGbps = defaultIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIntranetIngressThresholdInGbpsValue = settingsValue["minimumIntranetIngressThresholdInGbps"];
+                                    if (minimumIntranetIngressThresholdInGbpsValue != null && minimumIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIntranetIngressThresholdInGbpsInstance = ((double)minimumIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIntranetIngressThresholdInGbps = minimumIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIntranetIngressValue = settingsValue["toleranceFactorForIntranetIngress"];
+                                    if (toleranceFactorForIntranetIngressValue != null && toleranceFactorForIntranetIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIntranetIngressInstance = ((double)toleranceFactorForIntranetIngressValue);
+                                        settingsInstance.ToleranceFactorForIntranetIngress = toleranceFactorForIntranetIngressInstance;
+                                    }
+                                    
+                                    JToken overallEgressThresholdInGbpsValue = settingsValue["overallEgressThresholdInGbps"];
+                                    if (overallEgressThresholdInGbpsValue != null && overallEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallEgressThresholdInGbpsInstance = ((double)overallEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallEgressThresholdInGbps = overallEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultEgressThresholdInGbpsValue = settingsValue["defaultEgressThresholdInGbps"];
+                                    if (defaultEgressThresholdInGbpsValue != null && defaultEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultEgressThresholdInGbpsInstance = ((double)defaultEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultEgressThresholdInGbps = defaultEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumEgressThresholdInGbpsValue = settingsValue["minimumEgressThresholdInGbps"];
+                                    if (minimumEgressThresholdInGbpsValue != null && minimumEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumEgressThresholdInGbpsInstance = ((double)minimumEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumEgressThresholdInGbps = minimumEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForEgressValue = settingsValue["toleranceFactorForEgress"];
+                                    if (toleranceFactorForEgressValue != null && toleranceFactorForEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForEgressInstance = ((double)toleranceFactorForEgressValue);
+                                        settingsInstance.ToleranceFactorForEgress = toleranceFactorForEgressInstance;
+                                    }
+                                    
+                                    JToken overallIntranetEgressThresholdInGbpsValue = settingsValue["overallIntranetEgressThresholdInGbps"];
+                                    if (overallIntranetEgressThresholdInGbpsValue != null && overallIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIntranetEgressThresholdInGbpsInstance = ((double)overallIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallIntranetEgressThresholdInGbps = overallIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIntranetEgressThresholdInGbpsValue = settingsValue["defaultIntranetEgressThresholdInGbps"];
+                                    if (defaultIntranetEgressThresholdInGbpsValue != null && defaultIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIntranetEgressThresholdInGbpsInstance = ((double)defaultIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIntranetEgressThresholdInGbps = defaultIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIntranetEgressThresholdInGbpsValue = settingsValue["minimumIntranetEgressThresholdInGbps"];
+                                    if (minimumIntranetEgressThresholdInGbpsValue != null && minimumIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIntranetEgressThresholdInGbpsInstance = ((double)minimumIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIntranetEgressThresholdInGbps = minimumIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIntranetEgressValue = settingsValue["toleranceFactorForIntranetEgress"];
+                                    if (toleranceFactorForIntranetEgressValue != null && toleranceFactorForIntranetEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIntranetEgressInstance = ((double)toleranceFactorForIntranetEgressValue);
+                                        settingsInstance.ToleranceFactorForIntranetEgress = toleranceFactorForIntranetEgressInstance;
+                                    }
+                                    
+                                    JToken overallTotalIngressThresholdInGbpsValue = settingsValue["overallTotalIngressThresholdInGbps"];
+                                    if (overallTotalIngressThresholdInGbpsValue != null && overallTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallTotalIngressThresholdInGbpsInstance = ((double)overallTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallTotalIngressThresholdInGbps = overallTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultTotalIngressThresholdInGbpsValue = settingsValue["defaultTotalIngressThresholdInGbps"];
+                                    if (defaultTotalIngressThresholdInGbpsValue != null && defaultTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultTotalIngressThresholdInGbpsInstance = ((double)defaultTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultTotalIngressThresholdInGbps = defaultTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumTotalIngressThresholdInGbpsValue = settingsValue["minimumTotalIngressThresholdInGbps"];
+                                    if (minimumTotalIngressThresholdInGbpsValue != null && minimumTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumTotalIngressThresholdInGbpsInstance = ((double)minimumTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumTotalIngressThresholdInGbps = minimumTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTotalIngressValue = settingsValue["toleranceFactorForTotalIngress"];
+                                    if (toleranceFactorForTotalIngressValue != null && toleranceFactorForTotalIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTotalIngressInstance = ((double)toleranceFactorForTotalIngressValue);
+                                        settingsInstance.ToleranceFactorForTotalIngress = toleranceFactorForTotalIngressInstance;
+                                    }
+                                    
+                                    JToken overallTotalEgressThresholdInGbpsValue = settingsValue["overallTotalEgressThresholdInGbps"];
+                                    if (overallTotalEgressThresholdInGbpsValue != null && overallTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallTotalEgressThresholdInGbpsInstance = ((double)overallTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallTotalEgressThresholdInGbps = overallTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultTotalEgressThresholdInGbpsValue = settingsValue["defaultTotalEgressThresholdInGbps"];
+                                    if (defaultTotalEgressThresholdInGbpsValue != null && defaultTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultTotalEgressThresholdInGbpsInstance = ((double)defaultTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultTotalEgressThresholdInGbps = defaultTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumTotalEgressThresholdInGbpsValue = settingsValue["minimumTotalEgressThresholdInGbps"];
+                                    if (minimumTotalEgressThresholdInGbpsValue != null && minimumTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumTotalEgressThresholdInGbpsInstance = ((double)minimumTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumTotalEgressThresholdInGbps = minimumTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTotalEgressValue = settingsValue["toleranceFactorForTotalEgress"];
+                                    if (toleranceFactorForTotalEgressValue != null && toleranceFactorForTotalEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTotalEgressInstance = ((double)toleranceFactorForTotalEgressValue);
+                                        settingsInstance.ToleranceFactorForTotalEgress = toleranceFactorForTotalEgressInstance;
                                     }
                                 }
                             }
@@ -18974,6 +22020,13 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                                 settingsInstance.SettingsPollingIntervalInSecond = settingsPollingIntervalInSecondInstance;
                                             }
                                             
+                                            JToken retentionPeriodForDeletedStorageAccountsInDaysValue = settingsValue["retentionPeriodForDeletedStorageAccountsInDays"];
+                                            if (retentionPeriodForDeletedStorageAccountsInDaysValue != null && retentionPeriodForDeletedStorageAccountsInDaysValue.Type != JTokenType.Null)
+                                            {
+                                                int retentionPeriodForDeletedStorageAccountsInDaysInstance = ((int)retentionPeriodForDeletedStorageAccountsInDaysValue);
+                                                settingsInstance.RetentionPeriodForDeletedStorageAccountsInDays = retentionPeriodForDeletedStorageAccountsInDaysInstance;
+                                            }
+                                            
                                             JToken hostStyleHttpPortValue = settingsValue["hostStyleHttpPort"];
                                             if (hostStyleHttpPortValue != null && hostStyleHttpPortValue.Type != JTokenType.Null)
                                             {
@@ -19000,6 +22053,251 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                             {
                                                 string dataCenterUriHostSuffixesInstance = ((string)dataCenterUriHostSuffixesValue);
                                                 settingsInstance.DataCenterUriHostSuffixes = dataCenterUriHostSuffixesInstance;
+                                            }
+                                            
+                                            JToken bandwidthThrottleIsEnabledValue = settingsValue["bandwidthThrottleIsEnabled"];
+                                            if (bandwidthThrottleIsEnabledValue != null && bandwidthThrottleIsEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool bandwidthThrottleIsEnabledInstance = ((bool)bandwidthThrottleIsEnabledValue);
+                                                settingsInstance.BandwidthThrottleIsEnabled = bandwidthThrottleIsEnabledInstance;
+                                            }
+                                            
+                                            JToken usageCollectionIntervalInSecondsValue = settingsValue["usageCollectionIntervalInSeconds"];
+                                            if (usageCollectionIntervalInSecondsValue != null && usageCollectionIntervalInSecondsValue.Type != JTokenType.Null)
+                                            {
+                                                int usageCollectionIntervalInSecondsInstance = ((int)usageCollectionIntervalInSecondsValue);
+                                                settingsInstance.UsageCollectionIntervalInSeconds = usageCollectionIntervalInSecondsInstance;
+                                            }
+                                            
+                                            JToken feedbackRefreshIntervalInSecondsValue = settingsValue["feedbackRefreshIntervalInSeconds"];
+                                            if (feedbackRefreshIntervalInSecondsValue != null && feedbackRefreshIntervalInSecondsValue.Type != JTokenType.Null)
+                                            {
+                                                int feedbackRefreshIntervalInSecondsInstance = ((int)feedbackRefreshIntervalInSecondsValue);
+                                                settingsInstance.FeedbackRefreshIntervalInSeconds = feedbackRefreshIntervalInSecondsInstance;
+                                            }
+                                            
+                                            JToken numberOfAccountsToSyncValue = settingsValue["numberOfAccountsToSync"];
+                                            if (numberOfAccountsToSyncValue != null && numberOfAccountsToSyncValue.Type != JTokenType.Null)
+                                            {
+                                                int numberOfAccountsToSyncInstance = ((int)numberOfAccountsToSyncValue);
+                                                settingsInstance.NumberOfAccountsToSync = numberOfAccountsToSyncInstance;
+                                            }
+                                            
+                                            JToken defaultThrottleProbabilityDecayIntervalInSecondsValue = settingsValue["defaultThrottleProbabilityDecayIntervalInSeconds"];
+                                            if (defaultThrottleProbabilityDecayIntervalInSecondsValue != null && defaultThrottleProbabilityDecayIntervalInSecondsValue.Type != JTokenType.Null)
+                                            {
+                                                int defaultThrottleProbabilityDecayIntervalInSecondsInstance = ((int)defaultThrottleProbabilityDecayIntervalInSecondsValue);
+                                                settingsInstance.DefaultThrottleProbabilityDecayIntervalInSeconds = defaultThrottleProbabilityDecayIntervalInSecondsInstance;
+                                            }
+                                            
+                                            JToken gracePeriodForFullThrottlingInRefreshIntervalsValue = settingsValue["gracePeriodForFullThrottlingInRefreshIntervals"];
+                                            if (gracePeriodForFullThrottlingInRefreshIntervalsValue != null && gracePeriodForFullThrottlingInRefreshIntervalsValue.Type != JTokenType.Null)
+                                            {
+                                                int gracePeriodForFullThrottlingInRefreshIntervalsInstance = ((int)gracePeriodForFullThrottlingInRefreshIntervalsValue);
+                                                settingsInstance.GracePeriodForFullThrottlingInRefreshIntervals = gracePeriodForFullThrottlingInRefreshIntervalsInstance;
+                                            }
+                                            
+                                            JToken gracePeriodMaxThrottleProbabilityValue = settingsValue["gracePeriodMaxThrottleProbability"];
+                                            if (gracePeriodMaxThrottleProbabilityValue != null && gracePeriodMaxThrottleProbabilityValue.Type != JTokenType.Null)
+                                            {
+                                                double gracePeriodMaxThrottleProbabilityInstance = ((double)gracePeriodMaxThrottleProbabilityValue);
+                                                settingsInstance.GracePeriodMaxThrottleProbability = gracePeriodMaxThrottleProbabilityInstance;
+                                            }
+                                            
+                                            JToken overallRequestThresholdInTpsValue = settingsValue["overallRequestThresholdInTps"];
+                                            if (overallRequestThresholdInTpsValue != null && overallRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                            {
+                                                double overallRequestThresholdInTpsInstance = ((double)overallRequestThresholdInTpsValue);
+                                                settingsInstance.OverallRequestThresholdInTps = overallRequestThresholdInTpsInstance;
+                                            }
+                                            
+                                            JToken defaultRequestThresholdInTpsValue = settingsValue["defaultRequestThresholdInTps"];
+                                            if (defaultRequestThresholdInTpsValue != null && defaultRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                            {
+                                                double defaultRequestThresholdInTpsInstance = ((double)defaultRequestThresholdInTpsValue);
+                                                settingsInstance.DefaultRequestThresholdInTps = defaultRequestThresholdInTpsInstance;
+                                            }
+                                            
+                                            JToken minimumRequestThresholdInTpsValue = settingsValue["minimumRequestThresholdInTps"];
+                                            if (minimumRequestThresholdInTpsValue != null && minimumRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumRequestThresholdInTpsInstance = ((double)minimumRequestThresholdInTpsValue);
+                                                settingsInstance.MinimumRequestThresholdInTps = minimumRequestThresholdInTpsInstance;
+                                            }
+                                            
+                                            JToken toleranceFactorForTpsValue = settingsValue["toleranceFactorForTps"];
+                                            if (toleranceFactorForTpsValue != null && toleranceFactorForTpsValue.Type != JTokenType.Null)
+                                            {
+                                                double toleranceFactorForTpsInstance = ((double)toleranceFactorForTpsValue);
+                                                settingsInstance.ToleranceFactorForTps = toleranceFactorForTpsInstance;
+                                            }
+                                            
+                                            JToken overallIngressThresholdInGbpsValue = settingsValue["overallIngressThresholdInGbps"];
+                                            if (overallIngressThresholdInGbpsValue != null && overallIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double overallIngressThresholdInGbpsInstance = ((double)overallIngressThresholdInGbpsValue);
+                                                settingsInstance.OverallIngressThresholdInGbps = overallIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken defaultIngressThresholdInGbpsValue = settingsValue["defaultIngressThresholdInGbps"];
+                                            if (defaultIngressThresholdInGbpsValue != null && defaultIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double defaultIngressThresholdInGbpsInstance = ((double)defaultIngressThresholdInGbpsValue);
+                                                settingsInstance.DefaultIngressThresholdInGbps = defaultIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken minimumIngressThresholdInGbpsValue = settingsValue["minimumIngressThresholdInGbps"];
+                                            if (minimumIngressThresholdInGbpsValue != null && minimumIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumIngressThresholdInGbpsInstance = ((double)minimumIngressThresholdInGbpsValue);
+                                                settingsInstance.MinimumIngressThresholdInGbps = minimumIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken toleranceFactorForIngressValue = settingsValue["toleranceFactorForIngress"];
+                                            if (toleranceFactorForIngressValue != null && toleranceFactorForIngressValue.Type != JTokenType.Null)
+                                            {
+                                                double toleranceFactorForIngressInstance = ((double)toleranceFactorForIngressValue);
+                                                settingsInstance.ToleranceFactorForIngress = toleranceFactorForIngressInstance;
+                                            }
+                                            
+                                            JToken overallIntranetIngressThresholdInGbpsValue = settingsValue["overallIntranetIngressThresholdInGbps"];
+                                            if (overallIntranetIngressThresholdInGbpsValue != null && overallIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double overallIntranetIngressThresholdInGbpsInstance = ((double)overallIntranetIngressThresholdInGbpsValue);
+                                                settingsInstance.OverallIntranetIngressThresholdInGbps = overallIntranetIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken defaultIntranetIngressThresholdInGbpsValue = settingsValue["defaultIntranetIngressThresholdInGbps"];
+                                            if (defaultIntranetIngressThresholdInGbpsValue != null && defaultIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double defaultIntranetIngressThresholdInGbpsInstance = ((double)defaultIntranetIngressThresholdInGbpsValue);
+                                                settingsInstance.DefaultIntranetIngressThresholdInGbps = defaultIntranetIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken minimumIntranetIngressThresholdInGbpsValue = settingsValue["minimumIntranetIngressThresholdInGbps"];
+                                            if (minimumIntranetIngressThresholdInGbpsValue != null && minimumIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumIntranetIngressThresholdInGbpsInstance = ((double)minimumIntranetIngressThresholdInGbpsValue);
+                                                settingsInstance.MinimumIntranetIngressThresholdInGbps = minimumIntranetIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken toleranceFactorForIntranetIngressValue = settingsValue["toleranceFactorForIntranetIngress"];
+                                            if (toleranceFactorForIntranetIngressValue != null && toleranceFactorForIntranetIngressValue.Type != JTokenType.Null)
+                                            {
+                                                double toleranceFactorForIntranetIngressInstance = ((double)toleranceFactorForIntranetIngressValue);
+                                                settingsInstance.ToleranceFactorForIntranetIngress = toleranceFactorForIntranetIngressInstance;
+                                            }
+                                            
+                                            JToken overallEgressThresholdInGbpsValue = settingsValue["overallEgressThresholdInGbps"];
+                                            if (overallEgressThresholdInGbpsValue != null && overallEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double overallEgressThresholdInGbpsInstance = ((double)overallEgressThresholdInGbpsValue);
+                                                settingsInstance.OverallEgressThresholdInGbps = overallEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken defaultEgressThresholdInGbpsValue = settingsValue["defaultEgressThresholdInGbps"];
+                                            if (defaultEgressThresholdInGbpsValue != null && defaultEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double defaultEgressThresholdInGbpsInstance = ((double)defaultEgressThresholdInGbpsValue);
+                                                settingsInstance.DefaultEgressThresholdInGbps = defaultEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken minimumEgressThresholdInGbpsValue = settingsValue["minimumEgressThresholdInGbps"];
+                                            if (minimumEgressThresholdInGbpsValue != null && minimumEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumEgressThresholdInGbpsInstance = ((double)minimumEgressThresholdInGbpsValue);
+                                                settingsInstance.MinimumEgressThresholdInGbps = minimumEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken toleranceFactorForEgressValue = settingsValue["toleranceFactorForEgress"];
+                                            if (toleranceFactorForEgressValue != null && toleranceFactorForEgressValue.Type != JTokenType.Null)
+                                            {
+                                                double toleranceFactorForEgressInstance = ((double)toleranceFactorForEgressValue);
+                                                settingsInstance.ToleranceFactorForEgress = toleranceFactorForEgressInstance;
+                                            }
+                                            
+                                            JToken overallIntranetEgressThresholdInGbpsValue = settingsValue["overallIntranetEgressThresholdInGbps"];
+                                            if (overallIntranetEgressThresholdInGbpsValue != null && overallIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double overallIntranetEgressThresholdInGbpsInstance = ((double)overallIntranetEgressThresholdInGbpsValue);
+                                                settingsInstance.OverallIntranetEgressThresholdInGbps = overallIntranetEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken defaultIntranetEgressThresholdInGbpsValue = settingsValue["defaultIntranetEgressThresholdInGbps"];
+                                            if (defaultIntranetEgressThresholdInGbpsValue != null && defaultIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double defaultIntranetEgressThresholdInGbpsInstance = ((double)defaultIntranetEgressThresholdInGbpsValue);
+                                                settingsInstance.DefaultIntranetEgressThresholdInGbps = defaultIntranetEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken minimumIntranetEgressThresholdInGbpsValue = settingsValue["minimumIntranetEgressThresholdInGbps"];
+                                            if (minimumIntranetEgressThresholdInGbpsValue != null && minimumIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumIntranetEgressThresholdInGbpsInstance = ((double)minimumIntranetEgressThresholdInGbpsValue);
+                                                settingsInstance.MinimumIntranetEgressThresholdInGbps = minimumIntranetEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken toleranceFactorForIntranetEgressValue = settingsValue["toleranceFactorForIntranetEgress"];
+                                            if (toleranceFactorForIntranetEgressValue != null && toleranceFactorForIntranetEgressValue.Type != JTokenType.Null)
+                                            {
+                                                double toleranceFactorForIntranetEgressInstance = ((double)toleranceFactorForIntranetEgressValue);
+                                                settingsInstance.ToleranceFactorForIntranetEgress = toleranceFactorForIntranetEgressInstance;
+                                            }
+                                            
+                                            JToken overallTotalIngressThresholdInGbpsValue = settingsValue["overallTotalIngressThresholdInGbps"];
+                                            if (overallTotalIngressThresholdInGbpsValue != null && overallTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double overallTotalIngressThresholdInGbpsInstance = ((double)overallTotalIngressThresholdInGbpsValue);
+                                                settingsInstance.OverallTotalIngressThresholdInGbps = overallTotalIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken defaultTotalIngressThresholdInGbpsValue = settingsValue["defaultTotalIngressThresholdInGbps"];
+                                            if (defaultTotalIngressThresholdInGbpsValue != null && defaultTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double defaultTotalIngressThresholdInGbpsInstance = ((double)defaultTotalIngressThresholdInGbpsValue);
+                                                settingsInstance.DefaultTotalIngressThresholdInGbps = defaultTotalIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken minimumTotalIngressThresholdInGbpsValue = settingsValue["minimumTotalIngressThresholdInGbps"];
+                                            if (minimumTotalIngressThresholdInGbpsValue != null && minimumTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumTotalIngressThresholdInGbpsInstance = ((double)minimumTotalIngressThresholdInGbpsValue);
+                                                settingsInstance.MinimumTotalIngressThresholdInGbps = minimumTotalIngressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken toleranceFactorForTotalIngressValue = settingsValue["toleranceFactorForTotalIngress"];
+                                            if (toleranceFactorForTotalIngressValue != null && toleranceFactorForTotalIngressValue.Type != JTokenType.Null)
+                                            {
+                                                double toleranceFactorForTotalIngressInstance = ((double)toleranceFactorForTotalIngressValue);
+                                                settingsInstance.ToleranceFactorForTotalIngress = toleranceFactorForTotalIngressInstance;
+                                            }
+                                            
+                                            JToken overallTotalEgressThresholdInGbpsValue = settingsValue["overallTotalEgressThresholdInGbps"];
+                                            if (overallTotalEgressThresholdInGbpsValue != null && overallTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double overallTotalEgressThresholdInGbpsInstance = ((double)overallTotalEgressThresholdInGbpsValue);
+                                                settingsInstance.OverallTotalEgressThresholdInGbps = overallTotalEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken defaultTotalEgressThresholdInGbpsValue = settingsValue["defaultTotalEgressThresholdInGbps"];
+                                            if (defaultTotalEgressThresholdInGbpsValue != null && defaultTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double defaultTotalEgressThresholdInGbpsInstance = ((double)defaultTotalEgressThresholdInGbpsValue);
+                                                settingsInstance.DefaultTotalEgressThresholdInGbps = defaultTotalEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken minimumTotalEgressThresholdInGbpsValue = settingsValue["minimumTotalEgressThresholdInGbps"];
+                                            if (minimumTotalEgressThresholdInGbpsValue != null && minimumTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumTotalEgressThresholdInGbpsInstance = ((double)minimumTotalEgressThresholdInGbpsValue);
+                                                settingsInstance.MinimumTotalEgressThresholdInGbps = minimumTotalEgressThresholdInGbpsInstance;
+                                            }
+                                            
+                                            JToken toleranceFactorForTotalEgressValue = settingsValue["toleranceFactorForTotalEgress"];
+                                            if (toleranceFactorForTotalEgressValue != null && toleranceFactorForTotalEgressValue.Type != JTokenType.Null)
+                                            {
+                                                double toleranceFactorForTotalEgressInstance = ((double)toleranceFactorForTotalEgressValue);
+                                                settingsInstance.ToleranceFactorForTotalEgress = toleranceFactorForTotalEgressInstance;
                                             }
                                         }
                                     }
@@ -19047,6 +22345,161 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                         }
                         
                     }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> OnDemandGcAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                TracingAdapter.Enter(invocationId, this, "OnDemandGcAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/ondemandgc";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -19200,6 +22653,11 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                             settingsValue["settingsPollingIntervalInSecond"] = parameters.Farm.Settings.SettingsPollingIntervalInSecond.Value;
                         }
                         
+                        if (parameters.Farm.Settings.RetentionPeriodForDeletedStorageAccountsInDays != null)
+                        {
+                            settingsValue["retentionPeriodForDeletedStorageAccountsInDays"] = parameters.Farm.Settings.RetentionPeriodForDeletedStorageAccountsInDays.Value;
+                        }
+                        
                         if (parameters.Farm.Settings.HostStyleHttpPort != null)
                         {
                             settingsValue["hostStyleHttpPort"] = parameters.Farm.Settings.HostStyleHttpPort.Value;
@@ -19218,6 +22676,181 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                         if (parameters.Farm.Settings.DataCenterUriHostSuffixes != null)
                         {
                             settingsValue["dataCenterUriHostSuffixes"] = parameters.Farm.Settings.DataCenterUriHostSuffixes;
+                        }
+                        
+                        if (parameters.Farm.Settings.BandwidthThrottleIsEnabled != null)
+                        {
+                            settingsValue["bandwidthThrottleIsEnabled"] = parameters.Farm.Settings.BandwidthThrottleIsEnabled.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.UsageCollectionIntervalInSeconds != null)
+                        {
+                            settingsValue["usageCollectionIntervalInSeconds"] = parameters.Farm.Settings.UsageCollectionIntervalInSeconds.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.FeedbackRefreshIntervalInSeconds != null)
+                        {
+                            settingsValue["feedbackRefreshIntervalInSeconds"] = parameters.Farm.Settings.FeedbackRefreshIntervalInSeconds.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.NumberOfAccountsToSync != null)
+                        {
+                            settingsValue["numberOfAccountsToSync"] = parameters.Farm.Settings.NumberOfAccountsToSync.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.DefaultThrottleProbabilityDecayIntervalInSeconds != null)
+                        {
+                            settingsValue["defaultThrottleProbabilityDecayIntervalInSeconds"] = parameters.Farm.Settings.DefaultThrottleProbabilityDecayIntervalInSeconds.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.GracePeriodForFullThrottlingInRefreshIntervals != null)
+                        {
+                            settingsValue["gracePeriodForFullThrottlingInRefreshIntervals"] = parameters.Farm.Settings.GracePeriodForFullThrottlingInRefreshIntervals.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.GracePeriodMaxThrottleProbability != null)
+                        {
+                            settingsValue["gracePeriodMaxThrottleProbability"] = parameters.Farm.Settings.GracePeriodMaxThrottleProbability.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.OverallRequestThresholdInTps != null)
+                        {
+                            settingsValue["overallRequestThresholdInTps"] = parameters.Farm.Settings.OverallRequestThresholdInTps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.DefaultRequestThresholdInTps != null)
+                        {
+                            settingsValue["defaultRequestThresholdInTps"] = parameters.Farm.Settings.DefaultRequestThresholdInTps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.MinimumRequestThresholdInTps != null)
+                        {
+                            settingsValue["minimumRequestThresholdInTps"] = parameters.Farm.Settings.MinimumRequestThresholdInTps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.ToleranceFactorForTps != null)
+                        {
+                            settingsValue["toleranceFactorForTps"] = parameters.Farm.Settings.ToleranceFactorForTps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.OverallIngressThresholdInGbps != null)
+                        {
+                            settingsValue["overallIngressThresholdInGbps"] = parameters.Farm.Settings.OverallIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.DefaultIngressThresholdInGbps != null)
+                        {
+                            settingsValue["defaultIngressThresholdInGbps"] = parameters.Farm.Settings.DefaultIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.MinimumIngressThresholdInGbps != null)
+                        {
+                            settingsValue["minimumIngressThresholdInGbps"] = parameters.Farm.Settings.MinimumIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.ToleranceFactorForIngress != null)
+                        {
+                            settingsValue["toleranceFactorForIngress"] = parameters.Farm.Settings.ToleranceFactorForIngress.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.OverallIntranetIngressThresholdInGbps != null)
+                        {
+                            settingsValue["overallIntranetIngressThresholdInGbps"] = parameters.Farm.Settings.OverallIntranetIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.DefaultIntranetIngressThresholdInGbps != null)
+                        {
+                            settingsValue["defaultIntranetIngressThresholdInGbps"] = parameters.Farm.Settings.DefaultIntranetIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.MinimumIntranetIngressThresholdInGbps != null)
+                        {
+                            settingsValue["minimumIntranetIngressThresholdInGbps"] = parameters.Farm.Settings.MinimumIntranetIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.ToleranceFactorForIntranetIngress != null)
+                        {
+                            settingsValue["toleranceFactorForIntranetIngress"] = parameters.Farm.Settings.ToleranceFactorForIntranetIngress.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.OverallEgressThresholdInGbps != null)
+                        {
+                            settingsValue["overallEgressThresholdInGbps"] = parameters.Farm.Settings.OverallEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.DefaultEgressThresholdInGbps != null)
+                        {
+                            settingsValue["defaultEgressThresholdInGbps"] = parameters.Farm.Settings.DefaultEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.MinimumEgressThresholdInGbps != null)
+                        {
+                            settingsValue["minimumEgressThresholdInGbps"] = parameters.Farm.Settings.MinimumEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.ToleranceFactorForEgress != null)
+                        {
+                            settingsValue["toleranceFactorForEgress"] = parameters.Farm.Settings.ToleranceFactorForEgress.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.OverallIntranetEgressThresholdInGbps != null)
+                        {
+                            settingsValue["overallIntranetEgressThresholdInGbps"] = parameters.Farm.Settings.OverallIntranetEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.DefaultIntranetEgressThresholdInGbps != null)
+                        {
+                            settingsValue["defaultIntranetEgressThresholdInGbps"] = parameters.Farm.Settings.DefaultIntranetEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.MinimumIntranetEgressThresholdInGbps != null)
+                        {
+                            settingsValue["minimumIntranetEgressThresholdInGbps"] = parameters.Farm.Settings.MinimumIntranetEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.ToleranceFactorForIntranetEgress != null)
+                        {
+                            settingsValue["toleranceFactorForIntranetEgress"] = parameters.Farm.Settings.ToleranceFactorForIntranetEgress.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.OverallTotalIngressThresholdInGbps != null)
+                        {
+                            settingsValue["overallTotalIngressThresholdInGbps"] = parameters.Farm.Settings.OverallTotalIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.DefaultTotalIngressThresholdInGbps != null)
+                        {
+                            settingsValue["defaultTotalIngressThresholdInGbps"] = parameters.Farm.Settings.DefaultTotalIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.MinimumTotalIngressThresholdInGbps != null)
+                        {
+                            settingsValue["minimumTotalIngressThresholdInGbps"] = parameters.Farm.Settings.MinimumTotalIngressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.ToleranceFactorForTotalIngress != null)
+                        {
+                            settingsValue["toleranceFactorForTotalIngress"] = parameters.Farm.Settings.ToleranceFactorForTotalIngress.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.OverallTotalEgressThresholdInGbps != null)
+                        {
+                            settingsValue["overallTotalEgressThresholdInGbps"] = parameters.Farm.Settings.OverallTotalEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.DefaultTotalEgressThresholdInGbps != null)
+                        {
+                            settingsValue["defaultTotalEgressThresholdInGbps"] = parameters.Farm.Settings.DefaultTotalEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.MinimumTotalEgressThresholdInGbps != null)
+                        {
+                            settingsValue["minimumTotalEgressThresholdInGbps"] = parameters.Farm.Settings.MinimumTotalEgressThresholdInGbps.Value;
+                        }
+                        
+                        if (parameters.Farm.Settings.ToleranceFactorForTotalEgress != null)
+                        {
+                            settingsValue["toleranceFactorForTotalEgress"] = parameters.Farm.Settings.ToleranceFactorForTotalEgress.Value;
                         }
                     }
                 }
@@ -19336,6 +22969,13 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                         settingsInstance.SettingsPollingIntervalInSecond = settingsPollingIntervalInSecondInstance;
                                     }
                                     
+                                    JToken retentionPeriodForDeletedStorageAccountsInDaysValue = settingsValue2["retentionPeriodForDeletedStorageAccountsInDays"];
+                                    if (retentionPeriodForDeletedStorageAccountsInDaysValue != null && retentionPeriodForDeletedStorageAccountsInDaysValue.Type != JTokenType.Null)
+                                    {
+                                        int retentionPeriodForDeletedStorageAccountsInDaysInstance = ((int)retentionPeriodForDeletedStorageAccountsInDaysValue);
+                                        settingsInstance.RetentionPeriodForDeletedStorageAccountsInDays = retentionPeriodForDeletedStorageAccountsInDaysInstance;
+                                    }
+                                    
                                     JToken hostStyleHttpPortValue = settingsValue2["hostStyleHttpPort"];
                                     if (hostStyleHttpPortValue != null && hostStyleHttpPortValue.Type != JTokenType.Null)
                                     {
@@ -19362,6 +23002,251 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                     {
                                         string dataCenterUriHostSuffixesInstance = ((string)dataCenterUriHostSuffixesValue);
                                         settingsInstance.DataCenterUriHostSuffixes = dataCenterUriHostSuffixesInstance;
+                                    }
+                                    
+                                    JToken bandwidthThrottleIsEnabledValue = settingsValue2["bandwidthThrottleIsEnabled"];
+                                    if (bandwidthThrottleIsEnabledValue != null && bandwidthThrottleIsEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool bandwidthThrottleIsEnabledInstance = ((bool)bandwidthThrottleIsEnabledValue);
+                                        settingsInstance.BandwidthThrottleIsEnabled = bandwidthThrottleIsEnabledInstance;
+                                    }
+                                    
+                                    JToken usageCollectionIntervalInSecondsValue = settingsValue2["usageCollectionIntervalInSeconds"];
+                                    if (usageCollectionIntervalInSecondsValue != null && usageCollectionIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int usageCollectionIntervalInSecondsInstance = ((int)usageCollectionIntervalInSecondsValue);
+                                        settingsInstance.UsageCollectionIntervalInSeconds = usageCollectionIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken feedbackRefreshIntervalInSecondsValue = settingsValue2["feedbackRefreshIntervalInSeconds"];
+                                    if (feedbackRefreshIntervalInSecondsValue != null && feedbackRefreshIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int feedbackRefreshIntervalInSecondsInstance = ((int)feedbackRefreshIntervalInSecondsValue);
+                                        settingsInstance.FeedbackRefreshIntervalInSeconds = feedbackRefreshIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken numberOfAccountsToSyncValue = settingsValue2["numberOfAccountsToSync"];
+                                    if (numberOfAccountsToSyncValue != null && numberOfAccountsToSyncValue.Type != JTokenType.Null)
+                                    {
+                                        int numberOfAccountsToSyncInstance = ((int)numberOfAccountsToSyncValue);
+                                        settingsInstance.NumberOfAccountsToSync = numberOfAccountsToSyncInstance;
+                                    }
+                                    
+                                    JToken defaultThrottleProbabilityDecayIntervalInSecondsValue = settingsValue2["defaultThrottleProbabilityDecayIntervalInSeconds"];
+                                    if (defaultThrottleProbabilityDecayIntervalInSecondsValue != null && defaultThrottleProbabilityDecayIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int defaultThrottleProbabilityDecayIntervalInSecondsInstance = ((int)defaultThrottleProbabilityDecayIntervalInSecondsValue);
+                                        settingsInstance.DefaultThrottleProbabilityDecayIntervalInSeconds = defaultThrottleProbabilityDecayIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken gracePeriodForFullThrottlingInRefreshIntervalsValue = settingsValue2["gracePeriodForFullThrottlingInRefreshIntervals"];
+                                    if (gracePeriodForFullThrottlingInRefreshIntervalsValue != null && gracePeriodForFullThrottlingInRefreshIntervalsValue.Type != JTokenType.Null)
+                                    {
+                                        int gracePeriodForFullThrottlingInRefreshIntervalsInstance = ((int)gracePeriodForFullThrottlingInRefreshIntervalsValue);
+                                        settingsInstance.GracePeriodForFullThrottlingInRefreshIntervals = gracePeriodForFullThrottlingInRefreshIntervalsInstance;
+                                    }
+                                    
+                                    JToken gracePeriodMaxThrottleProbabilityValue = settingsValue2["gracePeriodMaxThrottleProbability"];
+                                    if (gracePeriodMaxThrottleProbabilityValue != null && gracePeriodMaxThrottleProbabilityValue.Type != JTokenType.Null)
+                                    {
+                                        double gracePeriodMaxThrottleProbabilityInstance = ((double)gracePeriodMaxThrottleProbabilityValue);
+                                        settingsInstance.GracePeriodMaxThrottleProbability = gracePeriodMaxThrottleProbabilityInstance;
+                                    }
+                                    
+                                    JToken overallRequestThresholdInTpsValue = settingsValue2["overallRequestThresholdInTps"];
+                                    if (overallRequestThresholdInTpsValue != null && overallRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallRequestThresholdInTpsInstance = ((double)overallRequestThresholdInTpsValue);
+                                        settingsInstance.OverallRequestThresholdInTps = overallRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken defaultRequestThresholdInTpsValue = settingsValue2["defaultRequestThresholdInTps"];
+                                    if (defaultRequestThresholdInTpsValue != null && defaultRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultRequestThresholdInTpsInstance = ((double)defaultRequestThresholdInTpsValue);
+                                        settingsInstance.DefaultRequestThresholdInTps = defaultRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken minimumRequestThresholdInTpsValue = settingsValue2["minimumRequestThresholdInTps"];
+                                    if (minimumRequestThresholdInTpsValue != null && minimumRequestThresholdInTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumRequestThresholdInTpsInstance = ((double)minimumRequestThresholdInTpsValue);
+                                        settingsInstance.MinimumRequestThresholdInTps = minimumRequestThresholdInTpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTpsValue = settingsValue2["toleranceFactorForTps"];
+                                    if (toleranceFactorForTpsValue != null && toleranceFactorForTpsValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTpsInstance = ((double)toleranceFactorForTpsValue);
+                                        settingsInstance.ToleranceFactorForTps = toleranceFactorForTpsInstance;
+                                    }
+                                    
+                                    JToken overallIngressThresholdInGbpsValue = settingsValue2["overallIngressThresholdInGbps"];
+                                    if (overallIngressThresholdInGbpsValue != null && overallIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIngressThresholdInGbpsInstance = ((double)overallIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallIngressThresholdInGbps = overallIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIngressThresholdInGbpsValue = settingsValue2["defaultIngressThresholdInGbps"];
+                                    if (defaultIngressThresholdInGbpsValue != null && defaultIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIngressThresholdInGbpsInstance = ((double)defaultIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIngressThresholdInGbps = defaultIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIngressThresholdInGbpsValue = settingsValue2["minimumIngressThresholdInGbps"];
+                                    if (minimumIngressThresholdInGbpsValue != null && minimumIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIngressThresholdInGbpsInstance = ((double)minimumIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIngressThresholdInGbps = minimumIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIngressValue = settingsValue2["toleranceFactorForIngress"];
+                                    if (toleranceFactorForIngressValue != null && toleranceFactorForIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIngressInstance = ((double)toleranceFactorForIngressValue);
+                                        settingsInstance.ToleranceFactorForIngress = toleranceFactorForIngressInstance;
+                                    }
+                                    
+                                    JToken overallIntranetIngressThresholdInGbpsValue = settingsValue2["overallIntranetIngressThresholdInGbps"];
+                                    if (overallIntranetIngressThresholdInGbpsValue != null && overallIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIntranetIngressThresholdInGbpsInstance = ((double)overallIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallIntranetIngressThresholdInGbps = overallIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIntranetIngressThresholdInGbpsValue = settingsValue2["defaultIntranetIngressThresholdInGbps"];
+                                    if (defaultIntranetIngressThresholdInGbpsValue != null && defaultIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIntranetIngressThresholdInGbpsInstance = ((double)defaultIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIntranetIngressThresholdInGbps = defaultIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIntranetIngressThresholdInGbpsValue = settingsValue2["minimumIntranetIngressThresholdInGbps"];
+                                    if (minimumIntranetIngressThresholdInGbpsValue != null && minimumIntranetIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIntranetIngressThresholdInGbpsInstance = ((double)minimumIntranetIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIntranetIngressThresholdInGbps = minimumIntranetIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIntranetIngressValue = settingsValue2["toleranceFactorForIntranetIngress"];
+                                    if (toleranceFactorForIntranetIngressValue != null && toleranceFactorForIntranetIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIntranetIngressInstance = ((double)toleranceFactorForIntranetIngressValue);
+                                        settingsInstance.ToleranceFactorForIntranetIngress = toleranceFactorForIntranetIngressInstance;
+                                    }
+                                    
+                                    JToken overallEgressThresholdInGbpsValue = settingsValue2["overallEgressThresholdInGbps"];
+                                    if (overallEgressThresholdInGbpsValue != null && overallEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallEgressThresholdInGbpsInstance = ((double)overallEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallEgressThresholdInGbps = overallEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultEgressThresholdInGbpsValue = settingsValue2["defaultEgressThresholdInGbps"];
+                                    if (defaultEgressThresholdInGbpsValue != null && defaultEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultEgressThresholdInGbpsInstance = ((double)defaultEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultEgressThresholdInGbps = defaultEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumEgressThresholdInGbpsValue = settingsValue2["minimumEgressThresholdInGbps"];
+                                    if (minimumEgressThresholdInGbpsValue != null && minimumEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumEgressThresholdInGbpsInstance = ((double)minimumEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumEgressThresholdInGbps = minimumEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForEgressValue = settingsValue2["toleranceFactorForEgress"];
+                                    if (toleranceFactorForEgressValue != null && toleranceFactorForEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForEgressInstance = ((double)toleranceFactorForEgressValue);
+                                        settingsInstance.ToleranceFactorForEgress = toleranceFactorForEgressInstance;
+                                    }
+                                    
+                                    JToken overallIntranetEgressThresholdInGbpsValue = settingsValue2["overallIntranetEgressThresholdInGbps"];
+                                    if (overallIntranetEgressThresholdInGbpsValue != null && overallIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallIntranetEgressThresholdInGbpsInstance = ((double)overallIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallIntranetEgressThresholdInGbps = overallIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultIntranetEgressThresholdInGbpsValue = settingsValue2["defaultIntranetEgressThresholdInGbps"];
+                                    if (defaultIntranetEgressThresholdInGbpsValue != null && defaultIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultIntranetEgressThresholdInGbpsInstance = ((double)defaultIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultIntranetEgressThresholdInGbps = defaultIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumIntranetEgressThresholdInGbpsValue = settingsValue2["minimumIntranetEgressThresholdInGbps"];
+                                    if (minimumIntranetEgressThresholdInGbpsValue != null && minimumIntranetEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumIntranetEgressThresholdInGbpsInstance = ((double)minimumIntranetEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumIntranetEgressThresholdInGbps = minimumIntranetEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForIntranetEgressValue = settingsValue2["toleranceFactorForIntranetEgress"];
+                                    if (toleranceFactorForIntranetEgressValue != null && toleranceFactorForIntranetEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForIntranetEgressInstance = ((double)toleranceFactorForIntranetEgressValue);
+                                        settingsInstance.ToleranceFactorForIntranetEgress = toleranceFactorForIntranetEgressInstance;
+                                    }
+                                    
+                                    JToken overallTotalIngressThresholdInGbpsValue = settingsValue2["overallTotalIngressThresholdInGbps"];
+                                    if (overallTotalIngressThresholdInGbpsValue != null && overallTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallTotalIngressThresholdInGbpsInstance = ((double)overallTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.OverallTotalIngressThresholdInGbps = overallTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultTotalIngressThresholdInGbpsValue = settingsValue2["defaultTotalIngressThresholdInGbps"];
+                                    if (defaultTotalIngressThresholdInGbpsValue != null && defaultTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultTotalIngressThresholdInGbpsInstance = ((double)defaultTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.DefaultTotalIngressThresholdInGbps = defaultTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumTotalIngressThresholdInGbpsValue = settingsValue2["minimumTotalIngressThresholdInGbps"];
+                                    if (minimumTotalIngressThresholdInGbpsValue != null && minimumTotalIngressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumTotalIngressThresholdInGbpsInstance = ((double)minimumTotalIngressThresholdInGbpsValue);
+                                        settingsInstance.MinimumTotalIngressThresholdInGbps = minimumTotalIngressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTotalIngressValue = settingsValue2["toleranceFactorForTotalIngress"];
+                                    if (toleranceFactorForTotalIngressValue != null && toleranceFactorForTotalIngressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTotalIngressInstance = ((double)toleranceFactorForTotalIngressValue);
+                                        settingsInstance.ToleranceFactorForTotalIngress = toleranceFactorForTotalIngressInstance;
+                                    }
+                                    
+                                    JToken overallTotalEgressThresholdInGbpsValue = settingsValue2["overallTotalEgressThresholdInGbps"];
+                                    if (overallTotalEgressThresholdInGbpsValue != null && overallTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double overallTotalEgressThresholdInGbpsInstance = ((double)overallTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.OverallTotalEgressThresholdInGbps = overallTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken defaultTotalEgressThresholdInGbpsValue = settingsValue2["defaultTotalEgressThresholdInGbps"];
+                                    if (defaultTotalEgressThresholdInGbpsValue != null && defaultTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double defaultTotalEgressThresholdInGbpsInstance = ((double)defaultTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.DefaultTotalEgressThresholdInGbps = defaultTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken minimumTotalEgressThresholdInGbpsValue = settingsValue2["minimumTotalEgressThresholdInGbps"];
+                                    if (minimumTotalEgressThresholdInGbpsValue != null && minimumTotalEgressThresholdInGbpsValue.Type != JTokenType.Null)
+                                    {
+                                        double minimumTotalEgressThresholdInGbpsInstance = ((double)minimumTotalEgressThresholdInGbpsValue);
+                                        settingsInstance.MinimumTotalEgressThresholdInGbps = minimumTotalEgressThresholdInGbpsInstance;
+                                    }
+                                    
+                                    JToken toleranceFactorForTotalEgressValue = settingsValue2["toleranceFactorForTotalEgress"];
+                                    if (toleranceFactorForTotalEgressValue != null && toleranceFactorForTotalEgressValue.Type != JTokenType.Null)
+                                    {
+                                        double toleranceFactorForTotalEgressInstance = ((double)toleranceFactorForTotalEgressValue);
+                                        settingsInstance.ToleranceFactorForTotalEgress = toleranceFactorForTotalEgressInstance;
                                     }
                                 }
                             }
@@ -19446,7 +23331,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFaultOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -19460,7 +23345,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static FaultGetResponse Dismiss(this IFaultOperations operations, string resourceGroupName, string farmId, string faultId)
+        public static FaultGetResponse Dismiss(this IFaultOperations operations, string resourceGroupName, string farmId, Guid faultId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -19476,7 +23361,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFaultOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -19490,7 +23375,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static Task<FaultGetResponse> DismissAsync(this IFaultOperations operations, string resourceGroupName, string farmId, string faultId)
+        public static Task<FaultGetResponse> DismissAsync(this IFaultOperations operations, string resourceGroupName, string farmId, Guid faultId)
         {
             return operations.DismissAsync(resourceGroupName, farmId, faultId, CancellationToken.None);
         }
@@ -19502,7 +23387,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFaultOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -19516,7 +23401,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static FaultGetResponse Get(this IFaultOperations operations, string resourceGroupName, string farmId, string faultId)
+        public static FaultGetResponse Get(this IFaultOperations operations, string resourceGroupName, string farmId, Guid faultId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -19532,7 +23417,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFaultOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -19546,7 +23431,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static Task<FaultGetResponse> GetAsync(this IFaultOperations operations, string resourceGroupName, string farmId, string faultId)
+        public static Task<FaultGetResponse> GetAsync(this IFaultOperations operations, string resourceGroupName, string farmId, Guid faultId)
         {
             return operations.GetAsync(resourceGroupName, farmId, faultId, CancellationToken.None);
         }
@@ -19558,7 +23443,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFaultOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -19588,7 +23473,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFaultOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -19614,7 +23499,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFaultOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -19628,14 +23513,17 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='endTime'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='resourceUri'>
+        /// Optional. Your documentation here.
+        /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static FaultListResponse ListHistoryFaults(this IFaultOperations operations, string resourceGroupName, string farmId, string startTime, string endTime)
+        public static FaultListResponse ListHistoryFaults(this IFaultOperations operations, string resourceGroupName, string farmId, string startTime, string endTime, string resourceUri)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IFaultOperations)s).ListHistoryFaultsAsync(resourceGroupName, farmId, startTime, endTime);
+                return ((IFaultOperations)s).ListHistoryFaultsAsync(resourceGroupName, farmId, startTime, endTime, resourceUri);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -19647,7 +23535,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFaultOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -19661,12 +23549,15 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='endTime'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='resourceUri'>
+        /// Optional. Your documentation here.
+        /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static Task<FaultListResponse> ListHistoryFaultsAsync(this IFaultOperations operations, string resourceGroupName, string farmId, string startTime, string endTime)
+        public static Task<FaultListResponse> ListHistoryFaultsAsync(this IFaultOperations operations, string resourceGroupName, string farmId, string startTime, string endTime, string resourceUri)
         {
-            return operations.ListHistoryFaultsAsync(resourceGroupName, farmId, startTime, endTime, CancellationToken.None);
+            return operations.ListHistoryFaultsAsync(resourceGroupName, farmId, startTime, endTime, resourceUri, CancellationToken.None);
         }
     }
     
@@ -19697,7 +23588,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        Task<FaultGetResponse> DismissAsync(string resourceGroupName, string farmId, string faultId, CancellationToken cancellationToken);
+        Task<FaultGetResponse> DismissAsync(string resourceGroupName, string farmId, Guid faultId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Your documentation here.  (see
@@ -19719,7 +23610,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        Task<FaultGetResponse> GetAsync(string resourceGroupName, string farmId, string faultId, CancellationToken cancellationToken);
+        Task<FaultGetResponse> GetAsync(string resourceGroupName, string farmId, Guid faultId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Your documentation here.  (see
@@ -19760,13 +23651,16 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='endTime'>
         /// Your documentation here.
         /// </param>
+        /// <param name='resourceUri'>
+        /// Your documentation here.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        Task<FaultListResponse> ListHistoryFaultsAsync(string resourceGroupName, string farmId, string startTime, string endTime, CancellationToken cancellationToken);
+        Task<FaultListResponse> ListHistoryFaultsAsync(string resourceGroupName, string farmId, string startTime, string endTime, string resourceUri, CancellationToken cancellationToken);
     }
     
     /// <summary>
@@ -19791,7 +23685,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -19818,7 +23712,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<FaultGetResponse> DismissAsync(string resourceGroupName, string farmId, string faultId, CancellationToken cancellationToken)
+        public async Task<FaultGetResponse> DismissAsync(string resourceGroupName, string farmId, Guid faultId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -19836,10 +23730,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             if (farmId == null)
             {
                 throw new ArgumentNullException("farmId");
-            }
-            if (faultId == null)
-            {
-                throw new ArgumentNullException("faultId");
             }
             
             // Tracing
@@ -19867,7 +23757,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             url = url + "/providers/Microsoft.Storage.Admin/farms/";
             url = url + Uri.EscapeDataString(farmId);
             url = url + "/faults/";
-            url = url + Uri.EscapeDataString(faultId);
+            url = url + Uri.EscapeDataString(faultId.ToString());
             url = url + "/dismiss";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-12-01-preview");
@@ -19957,7 +23847,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                 JToken faultIdValue = propertiesValue["faultId"];
                                 if (faultIdValue != null && faultIdValue.Type != JTokenType.Null)
                                 {
-                                    string faultIdInstance = ((string)faultIdValue);
+                                    Guid faultIdInstance = Guid.Parse(((string)faultIdValue));
                                     propertiesInstance.FaultId = faultIdInstance;
                                 }
                                 
@@ -20174,7 +24064,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<FaultGetResponse> GetAsync(string resourceGroupName, string farmId, string faultId, CancellationToken cancellationToken)
+        public async Task<FaultGetResponse> GetAsync(string resourceGroupName, string farmId, Guid faultId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -20192,10 +24082,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             if (farmId == null)
             {
                 throw new ArgumentNullException("farmId");
-            }
-            if (faultId == null)
-            {
-                throw new ArgumentNullException("faultId");
             }
             
             // Tracing
@@ -20223,7 +24109,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             url = url + "/providers/Microsoft.Storage.Admin/farms/";
             url = url + Uri.EscapeDataString(farmId);
             url = url + "/faults/";
-            url = url + Uri.EscapeDataString(faultId);
+            url = url + Uri.EscapeDataString(faultId.ToString());
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-12-01-preview");
             if (queryParameters.Count > 0)
@@ -20312,7 +24198,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                 JToken faultIdValue = propertiesValue["faultId"];
                                 if (faultIdValue != null && faultIdValue.Type != JTokenType.Null)
                                 {
-                                    string faultIdInstance = ((string)faultIdValue);
+                                    Guid faultIdInstance = Guid.Parse(((string)faultIdValue));
                                     propertiesInstance.FaultId = faultIdInstance;
                                 }
                                 
@@ -20676,7 +24562,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                         JToken faultIdValue = propertiesValue["faultId"];
                                         if (faultIdValue != null && faultIdValue.Type != JTokenType.Null)
                                         {
-                                            string faultIdInstance = ((string)faultIdValue);
+                                            Guid faultIdInstance = Guid.Parse(((string)faultIdValue));
                                             propertiesInstance.FaultId = faultIdInstance;
                                         }
                                         
@@ -20892,13 +24778,16 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='endTime'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='resourceUri'>
+        /// Optional. Your documentation here.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<FaultListResponse> ListHistoryFaultsAsync(string resourceGroupName, string farmId, string startTime, string endTime, CancellationToken cancellationToken)
+        public async Task<FaultListResponse> ListHistoryFaultsAsync(string resourceGroupName, string farmId, string startTime, string endTime, string resourceUri, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -20937,6 +24826,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                 tracingParameters.Add("farmId", farmId);
                 tracingParameters.Add("startTime", startTime);
                 tracingParameters.Add("endTime", endTime);
+                tracingParameters.Add("resourceUri", resourceUri);
                 TracingAdapter.Enter(invocationId, this, "ListHistoryFaultsAsync", tracingParameters);
             }
             
@@ -20957,6 +24847,10 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             List<string> odataFilter = new List<string>();
             odataFilter.Add("startTime eq '" + Uri.EscapeDataString(startTime) + "'");
             odataFilter.Add("endTime eq '" + Uri.EscapeDataString(endTime) + "'");
+            if (resourceUri != null)
+            {
+                odataFilter.Add("resourceUri eq '" + Uri.EscapeDataString(resourceUri) + "'");
+            }
             if (odataFilter.Count > 0)
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
@@ -21052,7 +24946,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                         JToken faultIdValue = propertiesValue["faultId"];
                                         if (faultIdValue != null && faultIdValue.Type != JTokenType.Null)
                                         {
-                                            string faultIdInstance = ((string)faultIdValue);
+                                            Guid faultIdInstance = Guid.Parse(((string)faultIdValue));
                                             propertiesInstance.FaultId = faultIdInstance;
                                         }
                                         
@@ -21261,7 +25155,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21291,7 +25185,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21317,7 +25211,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21347,7 +25241,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21373,7 +25267,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21406,7 +25300,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21435,7 +25329,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21468,7 +25362,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21497,7 +25391,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21524,7 +25418,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21547,7 +25441,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21578,7 +25472,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21605,7 +25499,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21636,7 +25530,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IHealthMonitoringServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IHealthMonitoringServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -21847,7 +25741,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -23334,7 +27228,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -23534,7 +27428,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IManagementServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IManagementServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -23561,7 +27455,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IManagementServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IManagementServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -23584,7 +27478,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IManagementServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IManagementServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -23614,7 +27508,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IManagementServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IManagementServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -23640,7 +27534,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IManagementServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IManagementServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -23670,7 +27564,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IManagementServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IManagementServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -23696,7 +27590,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IManagementServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IManagementServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -23726,7 +27620,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IManagementServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IManagementServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -23861,7 +27755,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -25215,7 +29109,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25245,7 +29139,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25271,7 +29165,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25301,7 +29195,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25327,7 +29221,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25360,7 +29254,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25389,7 +29283,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25422,7 +29316,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25451,7 +29345,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25478,7 +29372,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25501,7 +29395,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25532,7 +29426,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25559,7 +29453,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25590,7 +29484,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IMetricsServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IMetricsServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -25801,7 +29695,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -27288,7 +31182,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -27488,7 +31382,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27518,7 +31412,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27544,7 +31438,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27574,7 +31468,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27600,7 +31494,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27631,7 +31525,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27658,7 +31552,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27689,7 +31583,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27716,7 +31610,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27746,7 +31640,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27772,7 +31666,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27805,7 +31699,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27834,7 +31728,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27867,7 +31761,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27896,7 +31790,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -27923,7 +31817,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.INodeOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.INodeOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -28151,7 +32045,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -28567,7 +32461,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -28641,7 +32535,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -29874,6 +33768,5380 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         }
     }
     
+    public static partial class QueueFrontendInstanceOperationsExtensions
+    {
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginRestarting(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueFrontendInstanceOperations)s).BeginRestartingAsync(resourceGroupName, farmId, instanceId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginRestartingAsync(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId)
+        {
+            return operations.BeginRestartingAsync(resourceGroupName, farmId, instanceId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static QueueFrontRoleInstanceGetResponse Get(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueFrontendInstanceOperations)s).GetAsync(resourceGroupName, farmId, instanceId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<QueueFrontRoleInstanceGetResponse> GetAsync(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId)
+        {
+            return operations.GetAsync(resourceGroupName, farmId, instanceId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static MetricDefinitionsResult GetMetricDefinitions(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId, string filter)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueFrontendInstanceOperations)s).GetMetricDefinitionsAsync(resourceGroupName, farmId, instanceId, filter);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<MetricDefinitionsResult> GetMetricDefinitionsAsync(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId, string filter)
+        {
+            return operations.GetMetricDefinitionsAsync(resourceGroupName, farmId, instanceId, filter, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static MetricsResult GetMetrics(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId, string filter)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueFrontendInstanceOperations)s).GetMetricsAsync(resourceGroupName, farmId, instanceId, filter);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<MetricsResult> GetMetricsAsync(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId, string filter)
+        {
+            return operations.GetMetricsAsync(resourceGroupName, farmId, instanceId, filter, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static QueueFrontEndRoleInstanceListResponse List(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueFrontendInstanceOperations)s).ListAsync(resourceGroupName, farmId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<QueueFrontEndRoleInstanceListResponse> ListAsync(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId)
+        {
+            return operations.ListAsync(resourceGroupName, farmId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse Restart(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueFrontendInstanceOperations)s).RestartAsync(resourceGroupName, farmId, instanceId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> RestartAsync(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId)
+        {
+            return operations.RestartAsync(resourceGroupName, farmId, instanceId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse SettingsPullNow(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueFrontendInstanceOperations)s).SettingsPullNowAsync(resourceGroupName, farmId, instanceId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueFrontendInstanceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> SettingsPullNowAsync(this IQueueFrontendInstanceOperations operations, string resourceGroupName, string farmId, string instanceId)
+        {
+            return operations.SettingsPullNowAsync(resourceGroupName, farmId, instanceId, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+    /// more information)
+    /// </summary>
+    public partial interface IQueueFrontendInstanceOperations
+    {
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginRestartingAsync(string resourceGroupName, string farmId, string instanceId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<QueueFrontRoleInstanceGetResponse> GetAsync(string resourceGroupName, string farmId, string instanceId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<MetricDefinitionsResult> GetMetricDefinitionsAsync(string resourceGroupName, string farmId, string instanceId, string filter, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<MetricsResult> GetMetricsAsync(string resourceGroupName, string farmId, string instanceId, string filter, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<QueueFrontEndRoleInstanceListResponse> ListAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> RestartAsync(string resourceGroupName, string farmId, string instanceId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> SettingsPullNowAsync(string resourceGroupName, string farmId, string instanceId, CancellationToken cancellationToken);
+    }
+    
+    /// <summary>
+    /// Your documentation here.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+    /// more information)
+    /// </summary>
+    internal partial class QueueFrontendInstanceOperations : IServiceOperations<StorageAdminManagementClient>, IQueueFrontendInstanceOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the QueueFrontendInstanceOperations
+        /// class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal QueueFrontendInstanceOperations(StorageAdminManagementClient client)
+        {
+            this._client = client;
+        }
+        
+        private StorageAdminManagementClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
+        /// </summary>
+        public StorageAdminManagementClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public async Task<LongRunningOperationResponse> BeginRestartingAsync(string resourceGroupName, string farmId, string instanceId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException("instanceId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("instanceId", instanceId);
+                TracingAdapter.Enter(invocationId, this, "BeginRestartingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queuefrontendinstances/";
+            url = url + Uri.EscapeDataString(instanceId);
+            url = url + "/restart";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    LongRunningOperationResponse result = null;
+                    // Deserialize Response
+                    result = new LongRunningOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.Conflict || statusCode == HttpStatusCode.NotFound || statusCode == HttpStatusCode.MethodNotAllowed || statusCode == HttpStatusCode.Forbidden)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<QueueFrontRoleInstanceGetResponse> GetAsync(string resourceGroupName, string farmId, string instanceId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException("instanceId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("instanceId", instanceId);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queuefrontendinstances/";
+            url = url + Uri.EscapeDataString(instanceId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    QueueFrontRoleInstanceGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new QueueFrontRoleInstanceGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            QueueFrontEndRoleInstanceModel roleInstanceInstance = new QueueFrontEndRoleInstanceModel();
+                            result.RoleInstance = roleInstanceInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                QueueFrontEndRoleInstance propertiesInstance = new QueueFrontEndRoleInstance();
+                                roleInstanceInstance.Properties = propertiesInstance;
+                                
+                                JToken settingsValue = propertiesValue["settings"];
+                                if (settingsValue != null && settingsValue.Type != JTokenType.Null)
+                                {
+                                    QueueFrontEndRoleInstanceEffectiveSettings settingsInstance = new QueueFrontEndRoleInstanceEffectiveSettings();
+                                    propertiesInstance.Settings = settingsInstance;
+                                    
+                                    JToken frontEndHttpListenPortValue = settingsValue["frontEndHttpListenPort"];
+                                    if (frontEndHttpListenPortValue != null && frontEndHttpListenPortValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndHttpListenPortInstance = ((int)frontEndHttpListenPortValue);
+                                        settingsInstance.FrontEndHttpListenPort = frontEndHttpListenPortInstance;
+                                    }
+                                    
+                                    JToken frontEndHttpsListenPortValue = settingsValue["frontEndHttpsListenPort"];
+                                    if (frontEndHttpsListenPortValue != null && frontEndHttpsListenPortValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndHttpsListenPortInstance = ((int)frontEndHttpsListenPortValue);
+                                        settingsInstance.FrontEndHttpsListenPort = frontEndHttpsListenPortInstance;
+                                    }
+                                    
+                                    JToken frontEndCallbackThreadsCountValue = settingsValue["frontEndCallbackThreadsCount"];
+                                    if (frontEndCallbackThreadsCountValue != null && frontEndCallbackThreadsCountValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndCallbackThreadsCountInstance = ((int)frontEndCallbackThreadsCountValue);
+                                        settingsInstance.FrontEndCallbackThreadsCount = frontEndCallbackThreadsCountInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingEnabledValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingEnabled"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingEnabledValue != null && frontEndCpuBasedKeepAliveThrottlingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndCpuBasedKeepAliveThrottlingEnabledInstance = ((bool)frontEndCpuBasedKeepAliveThrottlingEnabledValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingEnabled = frontEndCpuBasedKeepAliveThrottlingEnabledInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue != null && frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdInstance = ((double)frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold = frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue != null && frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleInstance = ((double)frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle = frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue != null && frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsInstance = ((int)frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds = frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken frontEndMemoryThrottlingEnabledValue = settingsValue["frontEndMemoryThrottlingEnabled"];
+                                    if (frontEndMemoryThrottlingEnabledValue != null && frontEndMemoryThrottlingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndMemoryThrottlingEnabledInstance = ((bool)frontEndMemoryThrottlingEnabledValue);
+                                        settingsInstance.FrontEndMemoryThrottlingEnabled = frontEndMemoryThrottlingEnabledInstance;
+                                    }
+                                    
+                                    JToken frontEndMaxMillisecondsBetweenMemorySamplesValue = settingsValue["frontEndMaxMillisecondsBetweenMemorySamples"];
+                                    if (frontEndMaxMillisecondsBetweenMemorySamplesValue != null && frontEndMaxMillisecondsBetweenMemorySamplesValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndMaxMillisecondsBetweenMemorySamplesInstance = ((int)frontEndMaxMillisecondsBetweenMemorySamplesValue);
+                                        settingsInstance.FrontEndMaxMillisecondsBetweenMemorySamples = frontEndMaxMillisecondsBetweenMemorySamplesInstance;
+                                    }
+                                    
+                                    JToken frontEndMemoryThrottleThresholdSettingsValue = settingsValue["frontEndMemoryThrottleThresholdSettings"];
+                                    if (frontEndMemoryThrottleThresholdSettingsValue != null && frontEndMemoryThrottleThresholdSettingsValue.Type != JTokenType.Null)
+                                    {
+                                        string frontEndMemoryThrottleThresholdSettingsInstance = ((string)frontEndMemoryThrottleThresholdSettingsValue);
+                                        settingsInstance.FrontEndMemoryThrottleThresholdSettings = frontEndMemoryThrottleThresholdSettingsInstance;
+                                    }
+                                    
+                                    JToken frontEndMinThreadPoolThreadsValue = settingsValue["frontEndMinThreadPoolThreads"];
+                                    if (frontEndMinThreadPoolThreadsValue != null && frontEndMinThreadPoolThreadsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndMinThreadPoolThreadsInstance = ((int)frontEndMinThreadPoolThreadsValue);
+                                        settingsInstance.FrontEndMinimumThreadPoolThreads = frontEndMinThreadPoolThreadsInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue = settingsValue["frontEndThreadPoolBasedKeepAliveIOCompletionThreshold"];
+                                    if (frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue != null && frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveIOCompletionThresholdInstance = ((int)frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold = frontEndThreadPoolBasedKeepAliveIOCompletionThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue = settingsValue["frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold"];
+                                    if (frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue != null && frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdInstance = ((int)frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold = frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue = settingsValue["frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds"];
+                                    if (frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue != null && frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsInstance = ((int)frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds = frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAlivePercentageValue = settingsValue["frontEndThreadPoolBasedKeepAlivePercentage"];
+                                    if (frontEndThreadPoolBasedKeepAlivePercentageValue != null && frontEndThreadPoolBasedKeepAlivePercentageValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndThreadPoolBasedKeepAlivePercentageInstance = ((double)frontEndThreadPoolBasedKeepAlivePercentageValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAlivePercentage = frontEndThreadPoolBasedKeepAlivePercentageInstance;
+                                    }
+                                    
+                                    JToken frontEndUseSlaTimeInAvailabilityValue = settingsValue["frontEndUseSlaTimeInAvailability"];
+                                    if (frontEndUseSlaTimeInAvailabilityValue != null && frontEndUseSlaTimeInAvailabilityValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndUseSlaTimeInAvailabilityInstance = ((bool)frontEndUseSlaTimeInAvailabilityValue);
+                                        settingsInstance.FrontEndUseSlaTimeInAvailability = frontEndUseSlaTimeInAvailabilityInstance;
+                                    }
+                                    
+                                    JToken settingsPollingIntervalInSecondsValue = settingsValue["settingsPollingIntervalInSeconds"];
+                                    if (settingsPollingIntervalInSecondsValue != null && settingsPollingIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int settingsPollingIntervalInSecondsInstance = ((int)settingsPollingIntervalInSecondsValue);
+                                        settingsInstance.SettingsPollingIntervalInSeconds = settingsPollingIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken settingsTimestampValue = settingsValue["settingsTimestamp"];
+                                    if (settingsTimestampValue != null && settingsTimestampValue.Type != JTokenType.Null)
+                                    {
+                                        string settingsTimestampInstance = ((string)settingsTimestampValue);
+                                        settingsInstance.SettingsTimestamp = settingsTimestampInstance;
+                                    }
+                                }
+                                
+                                JToken roleIdentifierValue = propertiesValue["roleIdentifier"];
+                                if (roleIdentifierValue != null && roleIdentifierValue.Type != JTokenType.Null)
+                                {
+                                    string roleIdentifierInstance = ((string)roleIdentifierValue);
+                                    propertiesInstance.RoleIdentifier = roleIdentifierInstance;
+                                }
+                                
+                                JToken versionValue = propertiesValue["version"];
+                                if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                {
+                                    string versionInstance = ((string)versionValue);
+                                    propertiesInstance.Version = versionInstance;
+                                }
+                                
+                                JToken statusValue = propertiesValue["status"];
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                {
+                                    RoleInstanceStatus statusInstance = ((RoleInstanceStatus)Enum.Parse(typeof(RoleInstanceStatus), ((string)statusValue), true));
+                                    propertiesInstance.Status = statusInstance;
+                                }
+                                
+                                JToken healthStatusValue = propertiesValue["healthStatus"];
+                                if (healthStatusValue != null && healthStatusValue.Type != JTokenType.Null)
+                                {
+                                    HealthStatus healthStatusInstance = ((HealthStatus)Enum.Parse(typeof(HealthStatus), ((string)healthStatusValue), true));
+                                    propertiesInstance.HealthStatus = healthStatusInstance;
+                                }
+                                
+                                JToken nodeUriValue = propertiesValue["nodeUri"];
+                                if (nodeUriValue != null && nodeUriValue.Type != JTokenType.Null)
+                                {
+                                    string nodeUriInstance = ((string)nodeUriValue);
+                                    propertiesInstance.NodeUri = nodeUriInstance;
+                                }
+                                
+                                JToken historyInfosArray = propertiesValue["historyInfos"];
+                                if (historyInfosArray != null && historyInfosArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken historyInfosValue in ((JArray)historyInfosArray))
+                                    {
+                                        RoleInstanceHistoricEntry roleInstanceHistoricEntryInstance = new RoleInstanceHistoricEntry();
+                                        propertiesInstance.HistoryInfos.Add(roleInstanceHistoricEntryInstance);
+                                        
+                                        JToken startTimeValue = historyInfosValue["startTime"];
+                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                            roleInstanceHistoricEntryInstance.StartTime = startTimeInstance;
+                                        }
+                                        
+                                        JToken endTimeValue = historyInfosValue["endTime"];
+                                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                            roleInstanceHistoricEntryInstance.EndTime = endTimeInstance;
+                                        }
+                                        
+                                        JToken durationValue = historyInfosValue["duration"];
+                                        if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
+                                            roleInstanceHistoricEntryInstance.Duration = durationInstance;
+                                        }
+                                        
+                                        JToken roleIdentifierValue2 = historyInfosValue["roleIdentifier"];
+                                        if (roleIdentifierValue2 != null && roleIdentifierValue2.Type != JTokenType.Null)
+                                        {
+                                            string roleIdentifierInstance2 = ((string)roleIdentifierValue2);
+                                            roleInstanceHistoricEntryInstance.RoleIdentifier = roleIdentifierInstance2;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                roleInstanceInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                roleInstanceInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                roleInstanceInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                roleInstanceInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    roleInstanceInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<MetricDefinitionsResult> GetMetricDefinitionsAsync(string resourceGroupName, string farmId, string instanceId, string filter, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException("instanceId");
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException("filter");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("instanceId", instanceId);
+                tracingParameters.Add("filter", filter);
+                TracingAdapter.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queuefrontendinstances/";
+            url = url + Uri.EscapeDataString(instanceId);
+            url = url + "/metricdefinitions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filter));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    MetricDefinitionsResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MetricDefinitionsResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    MetricDefinition metricDefinitionInstance = new MetricDefinition();
+                                    result.Value.Add(metricDefinitionInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString nameInstance = new LocalizableString();
+                                        metricDefinitionInstance.Name = nameInstance;
+                                        
+                                        JToken valueValue2 = nameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue2);
+                                            nameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = nameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            nameInstance.LocalizedValue = localizedValueInstance;
+                                        }
+                                    }
+                                    
+                                    JToken unitValue = valueValue["unit"];
+                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                    {
+                                        MetricUnit unitInstance = ((MetricUnit)Enum.Parse(typeof(MetricUnit), ((string)unitValue), true));
+                                        metricDefinitionInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    JToken primaryAggregationTypeValue = valueValue["primaryAggregationType"];
+                                    if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
+                                    {
+                                        MetricPrimaryAggregationType primaryAggregationTypeInstance = ((MetricPrimaryAggregationType)Enum.Parse(typeof(MetricPrimaryAggregationType), ((string)primaryAggregationTypeValue), true));
+                                        metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
+                                    }
+                                    
+                                    JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];
+                                    if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
+                                        {
+                                            MetricAvailability metricAvailabilityInstance = new MetricAvailability();
+                                            metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
+                                            
+                                            JToken timeGrainValue = metricAvailabilitiesValue["timeGrain"];
+                                            if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
+                                                metricAvailabilityInstance.TimeGrain = timeGrainInstance;
+                                            }
+                                            
+                                            JToken retentionValue = metricAvailabilitiesValue["retention"];
+                                            if (retentionValue != null && retentionValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan retentionInstance = XmlConvert.ToTimeSpan(((string)retentionValue));
+                                                metricAvailabilityInstance.Retention = retentionInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<MetricsResult> GetMetricsAsync(string resourceGroupName, string farmId, string instanceId, string filter, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException("instanceId");
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException("filter");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("instanceId", instanceId);
+                tracingParameters.Add("filter", filter);
+                TracingAdapter.Enter(invocationId, this, "GetMetricsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queuefrontendinstances/";
+            url = url + Uri.EscapeDataString(instanceId);
+            url = url + "/metrics";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filter));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    MetricsResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MetricsResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    Metric metricInstance = new Metric();
+                                    result.Metrics.Add(metricInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString nameInstance = new LocalizableString();
+                                        metricInstance.Name = nameInstance;
+                                        
+                                        JToken valueValue2 = nameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue2);
+                                            nameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = nameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            nameInstance.LocalizedValue = localizedValueInstance;
+                                        }
+                                    }
+                                    
+                                    JToken metricUnitValue = valueValue["metricUnit"];
+                                    if (metricUnitValue != null && metricUnitValue.Type != JTokenType.Null)
+                                    {
+                                        MetricUnit metricUnitInstance = ((MetricUnit)Enum.Parse(typeof(MetricUnit), ((string)metricUnitValue), true));
+                                        metricInstance.MetricUnit = metricUnitInstance;
+                                    }
+                                    
+                                    JToken timeGrainValue = valueValue["timeGrain"];
+                                    if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
+                                        metricInstance.TimeGrain = timeGrainInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = valueValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        metricInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = valueValue["endTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        metricInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken metricValuesArray = valueValue["metricValues"];
+                                    if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
+                                        {
+                                            MetricValue metricValueInstance = new MetricValue();
+                                            metricInstance.MetricValues.Add(metricValueInstance);
+                                            
+                                            JToken timeStampValue = metricValuesValue["timeStamp"];
+                                            if (timeStampValue != null && timeStampValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeStampInstance = ((DateTime)timeStampValue);
+                                                metricValueInstance.TimeStamp = timeStampInstance;
+                                            }
+                                            
+                                            JToken averageValue = metricValuesValue["average"];
+                                            if (averageValue != null && averageValue.Type != JTokenType.Null)
+                                            {
+                                                double averageInstance = ((double)averageValue);
+                                                metricValueInstance.Average = averageInstance;
+                                            }
+                                            
+                                            JToken minimumValue = metricValuesValue["minimum"];
+                                            if (minimumValue != null && minimumValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumInstance = ((double)minimumValue);
+                                                metricValueInstance.Minimum = minimumInstance;
+                                            }
+                                            
+                                            JToken maximumValue = metricValuesValue["maximum"];
+                                            if (maximumValue != null && maximumValue.Type != JTokenType.Null)
+                                            {
+                                                double maximumInstance = ((double)maximumValue);
+                                                metricValueInstance.Maximum = maximumInstance;
+                                            }
+                                            
+                                            JToken totalValue = metricValuesValue["total"];
+                                            if (totalValue != null && totalValue.Type != JTokenType.Null)
+                                            {
+                                                double totalInstance = ((double)totalValue);
+                                                metricValueInstance.Total = totalInstance;
+                                            }
+                                            
+                                            JToken countValue = metricValuesValue["count"];
+                                            if (countValue != null && countValue.Type != JTokenType.Null)
+                                            {
+                                                int countInstance = ((int)countValue);
+                                                metricValueInstance.Count = countInstance;
+                                            }
+                                            
+                                            JToken propertiesValue = metricValuesValue["properties"];
+                                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                            {
+                                                string propertiesInstance = propertiesValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                metricValueInstance.Properties = propertiesInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<QueueFrontEndRoleInstanceListResponse> ListAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queuefrontendinstances";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    QueueFrontEndRoleInstanceListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new QueueFrontEndRoleInstanceListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken roleInstancesArray = responseDoc;
+                            if (roleInstancesArray != null && roleInstancesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken roleInstancesValue in ((JArray)roleInstancesArray))
+                                {
+                                    QueueFrontEndRoleInstanceModel queueFrontEndRoleInstanceModelInstance = new QueueFrontEndRoleInstanceModel();
+                                    result.RoleInstances.Add(queueFrontEndRoleInstanceModelInstance);
+                                    
+                                    JToken propertiesValue = roleInstancesValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        QueueFrontEndRoleInstance propertiesInstance = new QueueFrontEndRoleInstance();
+                                        queueFrontEndRoleInstanceModelInstance.Properties = propertiesInstance;
+                                        
+                                        JToken settingsValue = propertiesValue["settings"];
+                                        if (settingsValue != null && settingsValue.Type != JTokenType.Null)
+                                        {
+                                            QueueFrontEndRoleInstanceEffectiveSettings settingsInstance = new QueueFrontEndRoleInstanceEffectiveSettings();
+                                            propertiesInstance.Settings = settingsInstance;
+                                            
+                                            JToken frontEndHttpListenPortValue = settingsValue["frontEndHttpListenPort"];
+                                            if (frontEndHttpListenPortValue != null && frontEndHttpListenPortValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndHttpListenPortInstance = ((int)frontEndHttpListenPortValue);
+                                                settingsInstance.FrontEndHttpListenPort = frontEndHttpListenPortInstance;
+                                            }
+                                            
+                                            JToken frontEndHttpsListenPortValue = settingsValue["frontEndHttpsListenPort"];
+                                            if (frontEndHttpsListenPortValue != null && frontEndHttpsListenPortValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndHttpsListenPortInstance = ((int)frontEndHttpsListenPortValue);
+                                                settingsInstance.FrontEndHttpsListenPort = frontEndHttpsListenPortInstance;
+                                            }
+                                            
+                                            JToken frontEndCallbackThreadsCountValue = settingsValue["frontEndCallbackThreadsCount"];
+                                            if (frontEndCallbackThreadsCountValue != null && frontEndCallbackThreadsCountValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndCallbackThreadsCountInstance = ((int)frontEndCallbackThreadsCountValue);
+                                                settingsInstance.FrontEndCallbackThreadsCount = frontEndCallbackThreadsCountInstance;
+                                            }
+                                            
+                                            JToken frontEndCpuBasedKeepAliveThrottlingEnabledValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingEnabled"];
+                                            if (frontEndCpuBasedKeepAliveThrottlingEnabledValue != null && frontEndCpuBasedKeepAliveThrottlingEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool frontEndCpuBasedKeepAliveThrottlingEnabledInstance = ((bool)frontEndCpuBasedKeepAliveThrottlingEnabledValue);
+                                                settingsInstance.FrontEndCpuBasedKeepAliveThrottlingEnabled = frontEndCpuBasedKeepAliveThrottlingEnabledInstance;
+                                            }
+                                            
+                                            JToken frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold"];
+                                            if (frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue != null && frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue.Type != JTokenType.Null)
+                                            {
+                                                double frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdInstance = ((double)frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue);
+                                                settingsInstance.FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold = frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdInstance;
+                                            }
+                                            
+                                            JToken frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle"];
+                                            if (frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue != null && frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue.Type != JTokenType.Null)
+                                            {
+                                                double frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleInstance = ((double)frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue);
+                                                settingsInstance.FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle = frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleInstance;
+                                            }
+                                            
+                                            JToken frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds"];
+                                            if (frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue != null && frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsInstance = ((int)frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue);
+                                                settingsInstance.FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds = frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsInstance;
+                                            }
+                                            
+                                            JToken frontEndMemoryThrottlingEnabledValue = settingsValue["frontEndMemoryThrottlingEnabled"];
+                                            if (frontEndMemoryThrottlingEnabledValue != null && frontEndMemoryThrottlingEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool frontEndMemoryThrottlingEnabledInstance = ((bool)frontEndMemoryThrottlingEnabledValue);
+                                                settingsInstance.FrontEndMemoryThrottlingEnabled = frontEndMemoryThrottlingEnabledInstance;
+                                            }
+                                            
+                                            JToken frontEndMaxMillisecondsBetweenMemorySamplesValue = settingsValue["frontEndMaxMillisecondsBetweenMemorySamples"];
+                                            if (frontEndMaxMillisecondsBetweenMemorySamplesValue != null && frontEndMaxMillisecondsBetweenMemorySamplesValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndMaxMillisecondsBetweenMemorySamplesInstance = ((int)frontEndMaxMillisecondsBetweenMemorySamplesValue);
+                                                settingsInstance.FrontEndMaxMillisecondsBetweenMemorySamples = frontEndMaxMillisecondsBetweenMemorySamplesInstance;
+                                            }
+                                            
+                                            JToken frontEndMemoryThrottleThresholdSettingsValue = settingsValue["frontEndMemoryThrottleThresholdSettings"];
+                                            if (frontEndMemoryThrottleThresholdSettingsValue != null && frontEndMemoryThrottleThresholdSettingsValue.Type != JTokenType.Null)
+                                            {
+                                                string frontEndMemoryThrottleThresholdSettingsInstance = ((string)frontEndMemoryThrottleThresholdSettingsValue);
+                                                settingsInstance.FrontEndMemoryThrottleThresholdSettings = frontEndMemoryThrottleThresholdSettingsInstance;
+                                            }
+                                            
+                                            JToken frontEndMinThreadPoolThreadsValue = settingsValue["frontEndMinThreadPoolThreads"];
+                                            if (frontEndMinThreadPoolThreadsValue != null && frontEndMinThreadPoolThreadsValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndMinThreadPoolThreadsInstance = ((int)frontEndMinThreadPoolThreadsValue);
+                                                settingsInstance.FrontEndMinimumThreadPoolThreads = frontEndMinThreadPoolThreadsInstance;
+                                            }
+                                            
+                                            JToken frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue = settingsValue["frontEndThreadPoolBasedKeepAliveIOCompletionThreshold"];
+                                            if (frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue != null && frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndThreadPoolBasedKeepAliveIOCompletionThresholdInstance = ((int)frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue);
+                                                settingsInstance.FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold = frontEndThreadPoolBasedKeepAliveIOCompletionThresholdInstance;
+                                            }
+                                            
+                                            JToken frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue = settingsValue["frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold"];
+                                            if (frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue != null && frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdInstance = ((int)frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue);
+                                                settingsInstance.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold = frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdInstance;
+                                            }
+                                            
+                                            JToken frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue = settingsValue["frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds"];
+                                            if (frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue != null && frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue.Type != JTokenType.Null)
+                                            {
+                                                int frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsInstance = ((int)frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue);
+                                                settingsInstance.FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds = frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsInstance;
+                                            }
+                                            
+                                            JToken frontEndThreadPoolBasedKeepAlivePercentageValue = settingsValue["frontEndThreadPoolBasedKeepAlivePercentage"];
+                                            if (frontEndThreadPoolBasedKeepAlivePercentageValue != null && frontEndThreadPoolBasedKeepAlivePercentageValue.Type != JTokenType.Null)
+                                            {
+                                                double frontEndThreadPoolBasedKeepAlivePercentageInstance = ((double)frontEndThreadPoolBasedKeepAlivePercentageValue);
+                                                settingsInstance.FrontEndThreadPoolBasedKeepAlivePercentage = frontEndThreadPoolBasedKeepAlivePercentageInstance;
+                                            }
+                                            
+                                            JToken frontEndUseSlaTimeInAvailabilityValue = settingsValue["frontEndUseSlaTimeInAvailability"];
+                                            if (frontEndUseSlaTimeInAvailabilityValue != null && frontEndUseSlaTimeInAvailabilityValue.Type != JTokenType.Null)
+                                            {
+                                                bool frontEndUseSlaTimeInAvailabilityInstance = ((bool)frontEndUseSlaTimeInAvailabilityValue);
+                                                settingsInstance.FrontEndUseSlaTimeInAvailability = frontEndUseSlaTimeInAvailabilityInstance;
+                                            }
+                                            
+                                            JToken settingsPollingIntervalInSecondsValue = settingsValue["settingsPollingIntervalInSeconds"];
+                                            if (settingsPollingIntervalInSecondsValue != null && settingsPollingIntervalInSecondsValue.Type != JTokenType.Null)
+                                            {
+                                                int settingsPollingIntervalInSecondsInstance = ((int)settingsPollingIntervalInSecondsValue);
+                                                settingsInstance.SettingsPollingIntervalInSeconds = settingsPollingIntervalInSecondsInstance;
+                                            }
+                                            
+                                            JToken settingsTimestampValue = settingsValue["settingsTimestamp"];
+                                            if (settingsTimestampValue != null && settingsTimestampValue.Type != JTokenType.Null)
+                                            {
+                                                string settingsTimestampInstance = ((string)settingsTimestampValue);
+                                                settingsInstance.SettingsTimestamp = settingsTimestampInstance;
+                                            }
+                                        }
+                                        
+                                        JToken roleIdentifierValue = propertiesValue["roleIdentifier"];
+                                        if (roleIdentifierValue != null && roleIdentifierValue.Type != JTokenType.Null)
+                                        {
+                                            string roleIdentifierInstance = ((string)roleIdentifierValue);
+                                            propertiesInstance.RoleIdentifier = roleIdentifierInstance;
+                                        }
+                                        
+                                        JToken versionValue = propertiesValue["version"];
+                                        if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                        {
+                                            string versionInstance = ((string)versionValue);
+                                            propertiesInstance.Version = versionInstance;
+                                        }
+                                        
+                                        JToken statusValue = propertiesValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            RoleInstanceStatus statusInstance = ((RoleInstanceStatus)Enum.Parse(typeof(RoleInstanceStatus), ((string)statusValue), true));
+                                            propertiesInstance.Status = statusInstance;
+                                        }
+                                        
+                                        JToken healthStatusValue = propertiesValue["healthStatus"];
+                                        if (healthStatusValue != null && healthStatusValue.Type != JTokenType.Null)
+                                        {
+                                            HealthStatus healthStatusInstance = ((HealthStatus)Enum.Parse(typeof(HealthStatus), ((string)healthStatusValue), true));
+                                            propertiesInstance.HealthStatus = healthStatusInstance;
+                                        }
+                                        
+                                        JToken nodeUriValue = propertiesValue["nodeUri"];
+                                        if (nodeUriValue != null && nodeUriValue.Type != JTokenType.Null)
+                                        {
+                                            string nodeUriInstance = ((string)nodeUriValue);
+                                            propertiesInstance.NodeUri = nodeUriInstance;
+                                        }
+                                        
+                                        JToken historyInfosArray = propertiesValue["historyInfos"];
+                                        if (historyInfosArray != null && historyInfosArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken historyInfosValue in ((JArray)historyInfosArray))
+                                            {
+                                                RoleInstanceHistoricEntry roleInstanceHistoricEntryInstance = new RoleInstanceHistoricEntry();
+                                                propertiesInstance.HistoryInfos.Add(roleInstanceHistoricEntryInstance);
+                                                
+                                                JToken startTimeValue = historyInfosValue["startTime"];
+                                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                                    roleInstanceHistoricEntryInstance.StartTime = startTimeInstance;
+                                                }
+                                                
+                                                JToken endTimeValue = historyInfosValue["endTime"];
+                                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                                    roleInstanceHistoricEntryInstance.EndTime = endTimeInstance;
+                                                }
+                                                
+                                                JToken durationValue = historyInfosValue["duration"];
+                                                if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
+                                                    roleInstanceHistoricEntryInstance.Duration = durationInstance;
+                                                }
+                                                
+                                                JToken roleIdentifierValue2 = historyInfosValue["roleIdentifier"];
+                                                if (roleIdentifierValue2 != null && roleIdentifierValue2.Type != JTokenType.Null)
+                                                {
+                                                    string roleIdentifierInstance2 = ((string)roleIdentifierValue2);
+                                                    roleInstanceHistoricEntryInstance.RoleIdentifier = roleIdentifierInstance2;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken idValue = roleInstancesValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        queueFrontEndRoleInstanceModelInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = roleInstancesValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        queueFrontEndRoleInstanceModelInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = roleInstancesValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        queueFrontEndRoleInstanceModelInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = roleInstancesValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        queueFrontEndRoleInstanceModelInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)roleInstancesValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            queueFrontEndRoleInstanceModelInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> RestartAsync(string resourceGroupName, string farmId, string instanceId, CancellationToken cancellationToken)
+        {
+            StorageAdminManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("instanceId", instanceId);
+                TracingAdapter.Enter(invocationId, this, "RestartAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.QueueFrontendInstances.BeginRestartingAsync(resourceGroupName, farmId, instanceId, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 30;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
+                {
+                    delayInSeconds = 15;
+                }
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='instanceId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> SettingsPullNowAsync(string resourceGroupName, string farmId, string instanceId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException("instanceId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("instanceId", instanceId);
+                TracingAdapter.Enter(invocationId, this, "SettingsPullNowAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queuefrontendinstances/";
+            url = url + Uri.EscapeDataString(instanceId);
+            url = url + "/settingspullnow";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.NoContent)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
+    public static partial class QueueServiceOperationsExtensions
+    {
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueServiceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here
+        /// </returns>
+        public static QueueServiceGetResponse Get(this IQueueServiceOperations operations, string resourceGroupName, string farmId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueServiceOperations)s).GetAsync(resourceGroupName, farmId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueServiceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here
+        /// </returns>
+        public static Task<QueueServiceGetResponse> GetAsync(this IQueueServiceOperations operations, string resourceGroupName, string farmId)
+        {
+            return operations.GetAsync(resourceGroupName, farmId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueServiceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static MetricDefinitionsResult GetMetricDefinitions(this IQueueServiceOperations operations, string resourceGroupName, string farmId, string filter)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueServiceOperations)s).GetMetricDefinitionsAsync(resourceGroupName, farmId, filter);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueServiceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<MetricDefinitionsResult> GetMetricDefinitionsAsync(this IQueueServiceOperations operations, string resourceGroupName, string farmId, string filter)
+        {
+            return operations.GetMetricDefinitionsAsync(resourceGroupName, farmId, filter, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueServiceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static MetricsResult GetMetrics(this IQueueServiceOperations operations, string resourceGroupName, string farmId, string filter)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueServiceOperations)s).GetMetricsAsync(resourceGroupName, farmId, filter);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueServiceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<MetricsResult> GetMetricsAsync(this IQueueServiceOperations operations, string resourceGroupName, string farmId, string filter)
+        {
+            return operations.GetMetricsAsync(resourceGroupName, farmId, filter, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueServiceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here
+        /// </returns>
+        public static QueueServiceGetResponse Patch(this IQueueServiceOperations operations, string resourceGroupName, string farmId, QueueServicePatchParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueServiceOperations)s).PatchAsync(resourceGroupName, farmId, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQueueServiceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here
+        /// </returns>
+        public static Task<QueueServiceGetResponse> PatchAsync(this IQueueServiceOperations operations, string resourceGroupName, string farmId, QueueServicePatchParameters parameters)
+        {
+            return operations.PatchAsync(resourceGroupName, farmId, parameters, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+    /// more information)
+    /// </summary>
+    public partial interface IQueueServiceOperations
+    {
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here
+        /// </returns>
+        Task<QueueServiceGetResponse> GetAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<MetricDefinitionsResult> GetMetricDefinitionsAsync(string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<MetricsResult> GetMetricsAsync(string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='parameters'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here
+        /// </returns>
+        Task<QueueServiceGetResponse> PatchAsync(string resourceGroupName, string farmId, QueueServicePatchParameters parameters, CancellationToken cancellationToken);
+    }
+    
+    /// <summary>
+    /// Your documentation here.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+    /// more information)
+    /// </summary>
+    internal partial class QueueServiceOperations : IServiceOperations<StorageAdminManagementClient>, IQueueServiceOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the QueueServiceOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal QueueServiceOperations(StorageAdminManagementClient client)
+        {
+            this._client = client;
+        }
+        
+        private StorageAdminManagementClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
+        /// </summary>
+        public StorageAdminManagementClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here
+        /// </returns>
+        public async Task<QueueServiceGetResponse> GetAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queueservices/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    QueueServiceGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new QueueServiceGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            QueueServiceResponseResource resourceInstance = new QueueServiceResponseResource();
+                            result.Resource = resourceInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                QueueServiceResponse propertiesInstance = new QueueServiceResponse();
+                                resourceInstance.QueueService = propertiesInstance;
+                                
+                                JToken settingsValue = propertiesValue["settings"];
+                                if (settingsValue != null && settingsValue.Type != JTokenType.Null)
+                                {
+                                    QueueServiceSettings settingsInstance = new QueueServiceSettings();
+                                    propertiesInstance.Settings = settingsInstance;
+                                    
+                                    JToken frontEndHttpListenPortValue = settingsValue["frontEndHttpListenPort"];
+                                    if (frontEndHttpListenPortValue != null && frontEndHttpListenPortValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndHttpListenPortInstance = ((int)frontEndHttpListenPortValue);
+                                        settingsInstance.FrontEndHttpListenPort = frontEndHttpListenPortInstance;
+                                    }
+                                    
+                                    JToken frontEndHttpsListenPortValue = settingsValue["frontEndHttpsListenPort"];
+                                    if (frontEndHttpsListenPortValue != null && frontEndHttpsListenPortValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndHttpsListenPortInstance = ((int)frontEndHttpsListenPortValue);
+                                        settingsInstance.FrontEndHttpsListenPort = frontEndHttpsListenPortInstance;
+                                    }
+                                    
+                                    JToken frontEndCallbackThreadsCountValue = settingsValue["frontEndCallbackThreadsCount"];
+                                    if (frontEndCallbackThreadsCountValue != null && frontEndCallbackThreadsCountValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndCallbackThreadsCountInstance = ((int)frontEndCallbackThreadsCountValue);
+                                        settingsInstance.FrontEndCallbackThreadsCount = frontEndCallbackThreadsCountInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingEnabledValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingEnabled"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingEnabledValue != null && frontEndCpuBasedKeepAliveThrottlingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndCpuBasedKeepAliveThrottlingEnabledInstance = ((bool)frontEndCpuBasedKeepAliveThrottlingEnabledValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingEnabled = frontEndCpuBasedKeepAliveThrottlingEnabledInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue != null && frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdInstance = ((double)frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold = frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue != null && frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleInstance = ((double)frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle = frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue = settingsValue["frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue != null && frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsInstance = ((int)frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds = frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken frontEndMemoryThrottlingEnabledValue = settingsValue["frontEndMemoryThrottlingEnabled"];
+                                    if (frontEndMemoryThrottlingEnabledValue != null && frontEndMemoryThrottlingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndMemoryThrottlingEnabledInstance = ((bool)frontEndMemoryThrottlingEnabledValue);
+                                        settingsInstance.FrontEndMemoryThrottlingEnabled = frontEndMemoryThrottlingEnabledInstance;
+                                    }
+                                    
+                                    JToken frontEndMaxMillisecondsBetweenMemorySamplesValue = settingsValue["frontEndMaxMillisecondsBetweenMemorySamples"];
+                                    if (frontEndMaxMillisecondsBetweenMemorySamplesValue != null && frontEndMaxMillisecondsBetweenMemorySamplesValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndMaxMillisecondsBetweenMemorySamplesInstance = ((int)frontEndMaxMillisecondsBetweenMemorySamplesValue);
+                                        settingsInstance.FrontEndMaxMillisecondsBetweenMemorySamples = frontEndMaxMillisecondsBetweenMemorySamplesInstance;
+                                    }
+                                    
+                                    JToken frontEndMemoryThrottleThresholdSettingsValue = settingsValue["frontEndMemoryThrottleThresholdSettings"];
+                                    if (frontEndMemoryThrottleThresholdSettingsValue != null && frontEndMemoryThrottleThresholdSettingsValue.Type != JTokenType.Null)
+                                    {
+                                        string frontEndMemoryThrottleThresholdSettingsInstance = ((string)frontEndMemoryThrottleThresholdSettingsValue);
+                                        settingsInstance.FrontEndMemoryThrottleThresholdSettings = frontEndMemoryThrottleThresholdSettingsInstance;
+                                    }
+                                    
+                                    JToken frontEndMinThreadPoolThreadsValue = settingsValue["frontEndMinThreadPoolThreads"];
+                                    if (frontEndMinThreadPoolThreadsValue != null && frontEndMinThreadPoolThreadsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndMinThreadPoolThreadsInstance = ((int)frontEndMinThreadPoolThreadsValue);
+                                        settingsInstance.FrontEndMinimumThreadPoolThreads = frontEndMinThreadPoolThreadsInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue = settingsValue["frontEndThreadPoolBasedKeepAliveIOCompletionThreshold"];
+                                    if (frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue != null && frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveIOCompletionThresholdInstance = ((int)frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold = frontEndThreadPoolBasedKeepAliveIOCompletionThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue = settingsValue["frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold"];
+                                    if (frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue != null && frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdInstance = ((int)frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold = frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue = settingsValue["frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds"];
+                                    if (frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue != null && frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsInstance = ((int)frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds = frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAlivePercentageValue = settingsValue["frontEndThreadPoolBasedKeepAlivePercentage"];
+                                    if (frontEndThreadPoolBasedKeepAlivePercentageValue != null && frontEndThreadPoolBasedKeepAlivePercentageValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndThreadPoolBasedKeepAlivePercentageInstance = ((double)frontEndThreadPoolBasedKeepAlivePercentageValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAlivePercentage = frontEndThreadPoolBasedKeepAlivePercentageInstance;
+                                    }
+                                    
+                                    JToken frontEndUseSlaTimeInAvailabilityValue = settingsValue["frontEndUseSlaTimeInAvailability"];
+                                    if (frontEndUseSlaTimeInAvailabilityValue != null && frontEndUseSlaTimeInAvailabilityValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndUseSlaTimeInAvailabilityInstance = ((bool)frontEndUseSlaTimeInAvailabilityValue);
+                                        settingsInstance.FrontEndUseSlaTimeInAvailability = frontEndUseSlaTimeInAvailabilityInstance;
+                                    }
+                                }
+                                
+                                JToken versionValue = propertiesValue["version"];
+                                if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                {
+                                    string versionInstance = ((string)versionValue);
+                                    propertiesInstance.Version = versionInstance;
+                                }
+                                
+                                JToken healthStatusValue = propertiesValue["healthStatus"];
+                                if (healthStatusValue != null && healthStatusValue.Type != JTokenType.Null)
+                                {
+                                    HealthStatus healthStatusInstance = ((HealthStatus)Enum.Parse(typeof(HealthStatus), ((string)healthStatusValue), true));
+                                    propertiesInstance.HealthStatus = healthStatusInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                resourceInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                resourceInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                resourceInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                resourceInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    resourceInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<MetricDefinitionsResult> GetMetricDefinitionsAsync(string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException("filter");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("filter", filter);
+                TracingAdapter.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queueservices/default/metricdefinitions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filter));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    MetricDefinitionsResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MetricDefinitionsResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    MetricDefinition metricDefinitionInstance = new MetricDefinition();
+                                    result.Value.Add(metricDefinitionInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString nameInstance = new LocalizableString();
+                                        metricDefinitionInstance.Name = nameInstance;
+                                        
+                                        JToken valueValue2 = nameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue2);
+                                            nameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = nameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            nameInstance.LocalizedValue = localizedValueInstance;
+                                        }
+                                    }
+                                    
+                                    JToken unitValue = valueValue["unit"];
+                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                    {
+                                        MetricUnit unitInstance = ((MetricUnit)Enum.Parse(typeof(MetricUnit), ((string)unitValue), true));
+                                        metricDefinitionInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    JToken primaryAggregationTypeValue = valueValue["primaryAggregationType"];
+                                    if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
+                                    {
+                                        MetricPrimaryAggregationType primaryAggregationTypeInstance = ((MetricPrimaryAggregationType)Enum.Parse(typeof(MetricPrimaryAggregationType), ((string)primaryAggregationTypeValue), true));
+                                        metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
+                                    }
+                                    
+                                    JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];
+                                    if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
+                                        {
+                                            MetricAvailability metricAvailabilityInstance = new MetricAvailability();
+                                            metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
+                                            
+                                            JToken timeGrainValue = metricAvailabilitiesValue["timeGrain"];
+                                            if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
+                                                metricAvailabilityInstance.TimeGrain = timeGrainInstance;
+                                            }
+                                            
+                                            JToken retentionValue = metricAvailabilitiesValue["retention"];
+                                            if (retentionValue != null && retentionValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan retentionInstance = XmlConvert.ToTimeSpan(((string)retentionValue));
+                                                metricAvailabilityInstance.Retention = retentionInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='filter'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<MetricsResult> GetMetricsAsync(string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException("filter");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("filter", filter);
+                TracingAdapter.Enter(invocationId, this, "GetMetricsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queueservices/default/metrics";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filter));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    MetricsResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new MetricsResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    Metric metricInstance = new Metric();
+                                    result.Metrics.Add(metricInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        LocalizableString nameInstance = new LocalizableString();
+                                        metricInstance.Name = nameInstance;
+                                        
+                                        JToken valueValue2 = nameValue["value"];
+                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                        {
+                                            string valueInstance = ((string)valueValue2);
+                                            nameInstance.Value = valueInstance;
+                                        }
+                                        
+                                        JToken localizedValueValue = nameValue["localizedValue"];
+                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
+                                        {
+                                            string localizedValueInstance = ((string)localizedValueValue);
+                                            nameInstance.LocalizedValue = localizedValueInstance;
+                                        }
+                                    }
+                                    
+                                    JToken metricUnitValue = valueValue["metricUnit"];
+                                    if (metricUnitValue != null && metricUnitValue.Type != JTokenType.Null)
+                                    {
+                                        MetricUnit metricUnitInstance = ((MetricUnit)Enum.Parse(typeof(MetricUnit), ((string)metricUnitValue), true));
+                                        metricInstance.MetricUnit = metricUnitInstance;
+                                    }
+                                    
+                                    JToken timeGrainValue = valueValue["timeGrain"];
+                                    if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan timeGrainInstance = XmlConvert.ToTimeSpan(((string)timeGrainValue));
+                                        metricInstance.TimeGrain = timeGrainInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = valueValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        metricInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = valueValue["endTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        metricInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken metricValuesArray = valueValue["metricValues"];
+                                    if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
+                                        {
+                                            MetricValue metricValueInstance = new MetricValue();
+                                            metricInstance.MetricValues.Add(metricValueInstance);
+                                            
+                                            JToken timeStampValue = metricValuesValue["timeStamp"];
+                                            if (timeStampValue != null && timeStampValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeStampInstance = ((DateTime)timeStampValue);
+                                                metricValueInstance.TimeStamp = timeStampInstance;
+                                            }
+                                            
+                                            JToken averageValue = metricValuesValue["average"];
+                                            if (averageValue != null && averageValue.Type != JTokenType.Null)
+                                            {
+                                                double averageInstance = ((double)averageValue);
+                                                metricValueInstance.Average = averageInstance;
+                                            }
+                                            
+                                            JToken minimumValue = metricValuesValue["minimum"];
+                                            if (minimumValue != null && minimumValue.Type != JTokenType.Null)
+                                            {
+                                                double minimumInstance = ((double)minimumValue);
+                                                metricValueInstance.Minimum = minimumInstance;
+                                            }
+                                            
+                                            JToken maximumValue = metricValuesValue["maximum"];
+                                            if (maximumValue != null && maximumValue.Type != JTokenType.Null)
+                                            {
+                                                double maximumInstance = ((double)maximumValue);
+                                                metricValueInstance.Maximum = maximumInstance;
+                                            }
+                                            
+                                            JToken totalValue = metricValuesValue["total"];
+                                            if (totalValue != null && totalValue.Type != JTokenType.Null)
+                                            {
+                                                double totalInstance = ((double)totalValue);
+                                                metricValueInstance.Total = totalInstance;
+                                            }
+                                            
+                                            JToken countValue = metricValuesValue["count"];
+                                            if (countValue != null && countValue.Type != JTokenType.Null)
+                                            {
+                                                int countInstance = ((int)countValue);
+                                                metricValueInstance.Count = countInstance;
+                                            }
+                                            
+                                            JToken propertiesValue = metricValuesValue["properties"];
+                                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                            {
+                                                string propertiesInstance = propertiesValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                metricValueInstance.Properties = propertiesInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here
+        /// </returns>
+        public async Task<QueueServiceGetResponse> PatchAsync(string resourceGroupName, string farmId, QueueServicePatchParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/queueservices/default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject queueServicePatchParametersValue = new JObject();
+                requestDoc = queueServicePatchParametersValue;
+                
+                if (parameters.QueueService != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    queueServicePatchParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.QueueService.Settings != null)
+                    {
+                        JObject settingsValue = new JObject();
+                        propertiesValue["settings"] = settingsValue;
+                        
+                        if (parameters.QueueService.Settings.FrontEndCallbackThreadsCount != null)
+                        {
+                            settingsValue["frontEndCallbackThreadsCount"] = parameters.QueueService.Settings.FrontEndCallbackThreadsCount.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndCpuBasedKeepAliveThrottlingEnabled != null)
+                        {
+                            settingsValue["frontEndCpuBasedKeepAliveThrottlingEnabled"] = parameters.QueueService.Settings.FrontEndCpuBasedKeepAliveThrottlingEnabled.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold != null)
+                        {
+                            settingsValue["frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold"] = parameters.QueueService.Settings.FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle != null)
+                        {
+                            settingsValue["frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle"] = parameters.QueueService.Settings.FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds != null)
+                        {
+                            settingsValue["frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds"] = parameters.QueueService.Settings.FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndMemoryThrottlingEnabled != null)
+                        {
+                            settingsValue["frontEndMemoryThrottlingEnabled"] = parameters.QueueService.Settings.FrontEndMemoryThrottlingEnabled.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndMaxMillisecondsBetweenMemorySamples != null)
+                        {
+                            settingsValue["frontEndMaxMillisecondsBetweenMemorySamples"] = parameters.QueueService.Settings.FrontEndMaxMillisecondsBetweenMemorySamples.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndMemoryThrottleThresholdSettings != null)
+                        {
+                            settingsValue["frontEndMemoryThrottleThresholdSettings"] = parameters.QueueService.Settings.FrontEndMemoryThrottleThresholdSettings;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndMinimumThreadPoolThreads != null)
+                        {
+                            settingsValue["frontEndMinThreadPoolThreads"] = parameters.QueueService.Settings.FrontEndMinimumThreadPoolThreads.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold != null)
+                        {
+                            settingsValue["frontEndThreadPoolBasedKeepAliveIOCompletionThreshold"] = parameters.QueueService.Settings.FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold != null)
+                        {
+                            settingsValue["frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold"] = parameters.QueueService.Settings.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds != null)
+                        {
+                            settingsValue["frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds"] = parameters.QueueService.Settings.FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndThreadPoolBasedKeepAlivePercentage != null)
+                        {
+                            settingsValue["frontEndThreadPoolBasedKeepAlivePercentage"] = parameters.QueueService.Settings.FrontEndThreadPoolBasedKeepAlivePercentage.Value;
+                        }
+                        
+                        if (parameters.QueueService.Settings.FrontEndUseSlaTimeInAvailability != null)
+                        {
+                            settingsValue["frontEndUseSlaTimeInAvailability"] = parameters.QueueService.Settings.FrontEndUseSlaTimeInAvailability.Value;
+                        }
+                    }
+                }
+                
+                if (parameters.Id != null)
+                {
+                    queueServicePatchParametersValue["id"] = parameters.Id;
+                }
+                
+                if (parameters.Name != null)
+                {
+                    queueServicePatchParametersValue["name"] = parameters.Name;
+                }
+                
+                if (parameters.Type != null)
+                {
+                    queueServicePatchParametersValue["type"] = parameters.Type;
+                }
+                
+                if (parameters.Location != null)
+                {
+                    queueServicePatchParametersValue["location"] = parameters.Location;
+                }
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    queueServicePatchParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    QueueServiceGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new QueueServiceGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            QueueServiceResponseResource resourceInstance = new QueueServiceResponseResource();
+                            result.Resource = resourceInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                QueueServiceResponse propertiesInstance = new QueueServiceResponse();
+                                resourceInstance.QueueService = propertiesInstance;
+                                
+                                JToken settingsValue2 = propertiesValue2["settings"];
+                                if (settingsValue2 != null && settingsValue2.Type != JTokenType.Null)
+                                {
+                                    QueueServiceSettings settingsInstance = new QueueServiceSettings();
+                                    propertiesInstance.Settings = settingsInstance;
+                                    
+                                    JToken frontEndHttpListenPortValue = settingsValue2["frontEndHttpListenPort"];
+                                    if (frontEndHttpListenPortValue != null && frontEndHttpListenPortValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndHttpListenPortInstance = ((int)frontEndHttpListenPortValue);
+                                        settingsInstance.FrontEndHttpListenPort = frontEndHttpListenPortInstance;
+                                    }
+                                    
+                                    JToken frontEndHttpsListenPortValue = settingsValue2["frontEndHttpsListenPort"];
+                                    if (frontEndHttpsListenPortValue != null && frontEndHttpsListenPortValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndHttpsListenPortInstance = ((int)frontEndHttpsListenPortValue);
+                                        settingsInstance.FrontEndHttpsListenPort = frontEndHttpsListenPortInstance;
+                                    }
+                                    
+                                    JToken frontEndCallbackThreadsCountValue = settingsValue2["frontEndCallbackThreadsCount"];
+                                    if (frontEndCallbackThreadsCountValue != null && frontEndCallbackThreadsCountValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndCallbackThreadsCountInstance = ((int)frontEndCallbackThreadsCountValue);
+                                        settingsInstance.FrontEndCallbackThreadsCount = frontEndCallbackThreadsCountInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingEnabledValue = settingsValue2["frontEndCpuBasedKeepAliveThrottlingEnabled"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingEnabledValue != null && frontEndCpuBasedKeepAliveThrottlingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndCpuBasedKeepAliveThrottlingEnabledInstance = ((bool)frontEndCpuBasedKeepAliveThrottlingEnabledValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingEnabled = frontEndCpuBasedKeepAliveThrottlingEnabledInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue = settingsValue2["frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue != null && frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdInstance = ((double)frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold = frontEndCpuBasedKeepAliveThrottlingPercentCpuThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue = settingsValue2["frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue != null && frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleInstance = ((double)frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle = frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottleInstance;
+                                    }
+                                    
+                                    JToken frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue = settingsValue2["frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds"];
+                                    if (frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue != null && frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsInstance = ((int)frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsValue);
+                                        settingsInstance.FrontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds = frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken frontEndMemoryThrottlingEnabledValue = settingsValue2["frontEndMemoryThrottlingEnabled"];
+                                    if (frontEndMemoryThrottlingEnabledValue != null && frontEndMemoryThrottlingEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndMemoryThrottlingEnabledInstance = ((bool)frontEndMemoryThrottlingEnabledValue);
+                                        settingsInstance.FrontEndMemoryThrottlingEnabled = frontEndMemoryThrottlingEnabledInstance;
+                                    }
+                                    
+                                    JToken frontEndMaxMillisecondsBetweenMemorySamplesValue = settingsValue2["frontEndMaxMillisecondsBetweenMemorySamples"];
+                                    if (frontEndMaxMillisecondsBetweenMemorySamplesValue != null && frontEndMaxMillisecondsBetweenMemorySamplesValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndMaxMillisecondsBetweenMemorySamplesInstance = ((int)frontEndMaxMillisecondsBetweenMemorySamplesValue);
+                                        settingsInstance.FrontEndMaxMillisecondsBetweenMemorySamples = frontEndMaxMillisecondsBetweenMemorySamplesInstance;
+                                    }
+                                    
+                                    JToken frontEndMemoryThrottleThresholdSettingsValue = settingsValue2["frontEndMemoryThrottleThresholdSettings"];
+                                    if (frontEndMemoryThrottleThresholdSettingsValue != null && frontEndMemoryThrottleThresholdSettingsValue.Type != JTokenType.Null)
+                                    {
+                                        string frontEndMemoryThrottleThresholdSettingsInstance = ((string)frontEndMemoryThrottleThresholdSettingsValue);
+                                        settingsInstance.FrontEndMemoryThrottleThresholdSettings = frontEndMemoryThrottleThresholdSettingsInstance;
+                                    }
+                                    
+                                    JToken frontEndMinThreadPoolThreadsValue = settingsValue2["frontEndMinThreadPoolThreads"];
+                                    if (frontEndMinThreadPoolThreadsValue != null && frontEndMinThreadPoolThreadsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndMinThreadPoolThreadsInstance = ((int)frontEndMinThreadPoolThreadsValue);
+                                        settingsInstance.FrontEndMinimumThreadPoolThreads = frontEndMinThreadPoolThreadsInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue = settingsValue2["frontEndThreadPoolBasedKeepAliveIOCompletionThreshold"];
+                                    if (frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue != null && frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveIOCompletionThresholdInstance = ((int)frontEndThreadPoolBasedKeepAliveIOCompletionThresholdValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveIOCompletionThreshold = frontEndThreadPoolBasedKeepAliveIOCompletionThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue = settingsValue2["frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold"];
+                                    if (frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue != null && frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdInstance = ((int)frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveWorkerThreadThreshold = frontEndThreadPoolBasedKeepAliveWorkerThreadThresholdInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue = settingsValue2["frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds"];
+                                    if (frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue != null && frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        int frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsInstance = ((int)frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds = frontEndThreadPoolBasedKeepAliveMonitorIntervalInSecondsInstance;
+                                    }
+                                    
+                                    JToken frontEndThreadPoolBasedKeepAlivePercentageValue = settingsValue2["frontEndThreadPoolBasedKeepAlivePercentage"];
+                                    if (frontEndThreadPoolBasedKeepAlivePercentageValue != null && frontEndThreadPoolBasedKeepAlivePercentageValue.Type != JTokenType.Null)
+                                    {
+                                        double frontEndThreadPoolBasedKeepAlivePercentageInstance = ((double)frontEndThreadPoolBasedKeepAlivePercentageValue);
+                                        settingsInstance.FrontEndThreadPoolBasedKeepAlivePercentage = frontEndThreadPoolBasedKeepAlivePercentageInstance;
+                                    }
+                                    
+                                    JToken frontEndUseSlaTimeInAvailabilityValue = settingsValue2["frontEndUseSlaTimeInAvailability"];
+                                    if (frontEndUseSlaTimeInAvailabilityValue != null && frontEndUseSlaTimeInAvailabilityValue.Type != JTokenType.Null)
+                                    {
+                                        bool frontEndUseSlaTimeInAvailabilityInstance = ((bool)frontEndUseSlaTimeInAvailabilityValue);
+                                        settingsInstance.FrontEndUseSlaTimeInAvailability = frontEndUseSlaTimeInAvailabilityInstance;
+                                    }
+                                }
+                                
+                                JToken versionValue = propertiesValue2["version"];
+                                if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                {
+                                    string versionInstance = ((string)versionValue);
+                                    propertiesInstance.Version = versionInstance;
+                                }
+                                
+                                JToken healthStatusValue = propertiesValue2["healthStatus"];
+                                if (healthStatusValue != null && healthStatusValue.Type != JTokenType.Null)
+                                {
+                                    HealthStatus healthStatusInstance = ((HealthStatus)Enum.Parse(typeof(HealthStatus), ((string)healthStatusValue), true));
+                                    propertiesInstance.HealthStatus = healthStatusInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                resourceInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                resourceInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                resourceInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                resourceInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    resourceInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
+    public static partial class QuotaOperationsExtensions
+    {
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQuotaOperations.
+        /// </param>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static QuotaGetResponse CreateOrUpdate(this IQuotaOperations operations, string locationName, string quotaName, QuotaCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQuotaOperations)s).CreateOrUpdateAsync(locationName, quotaName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQuotaOperations.
+        /// </param>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<QuotaGetResponse> CreateOrUpdateAsync(this IQuotaOperations operations, string locationName, string quotaName, QuotaCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateAsync(locationName, quotaName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQuotaOperations.
+        /// </param>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse Delete(this IQuotaOperations operations, string locationName, string quotaName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQuotaOperations)s).DeleteAsync(locationName, quotaName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQuotaOperations.
+        /// </param>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> DeleteAsync(this IQuotaOperations operations, string locationName, string quotaName)
+        {
+            return operations.DeleteAsync(locationName, quotaName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQuotaOperations.
+        /// </param>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static QuotaGetResponse Get(this IQuotaOperations operations, string locationName, string quotaName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQuotaOperations)s).GetAsync(locationName, quotaName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQuotaOperations.
+        /// </param>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<QuotaGetResponse> GetAsync(this IQuotaOperations operations, string locationName, string quotaName)
+        {
+            return operations.GetAsync(locationName, quotaName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQuotaOperations.
+        /// </param>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static QuotaListResponse List(this IQuotaOperations operations, string locationName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQuotaOperations)s).ListAsync(locationName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IQuotaOperations.
+        /// </param>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<QuotaListResponse> ListAsync(this IQuotaOperations operations, string locationName)
+        {
+            return operations.ListAsync(locationName, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+    /// more information)
+    /// </summary>
+    public partial interface IQuotaOperations
+    {
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='locationName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='parameters'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<QuotaGetResponse> CreateOrUpdateAsync(string locationName, string quotaName, QuotaCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='locationName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteAsync(string locationName, string quotaName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='locationName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<QuotaGetResponse> GetAsync(string locationName, string quotaName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='locationName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<QuotaListResponse> ListAsync(string locationName, CancellationToken cancellationToken);
+    }
+    
+    /// <summary>
+    /// Your documentation here.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+    /// more information)
+    /// </summary>
+    internal partial class QuotaOperations : IServiceOperations<StorageAdminManagementClient>, IQuotaOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the QuotaOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal QuotaOperations(StorageAdminManagementClient client)
+        {
+            this._client = client;
+        }
+        
+        private StorageAdminManagementClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
+        /// </summary>
+        public StorageAdminManagementClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<QuotaGetResponse> CreateOrUpdateAsync(string locationName, string quotaName, QuotaCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (locationName == null)
+            {
+                throw new ArgumentNullException("locationName");
+            }
+            if (quotaName == null)
+            {
+                throw new ArgumentNullException("quotaName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("locationName", locationName);
+                tracingParameters.Add("quotaName", quotaName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.Storage.Admin/locations/";
+            url = url + Uri.EscapeDataString(locationName);
+            url = url + "/quotas/";
+            url = url + Uri.EscapeDataString(quotaName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject quotaCreateOrUpdateParametersValue = new JObject();
+                requestDoc = quotaCreateOrUpdateParametersValue;
+                
+                if (parameters.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    quotaCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    propertiesValue["numberOfStorageAccounts"] = parameters.Properties.NumberOfStorageAccounts;
+                    
+                    propertiesValue["capacityInGb"] = parameters.Properties.CapacityInGB;
+                }
+                
+                if (parameters.Id != null)
+                {
+                    quotaCreateOrUpdateParametersValue["id"] = parameters.Id;
+                }
+                
+                if (parameters.Name != null)
+                {
+                    quotaCreateOrUpdateParametersValue["name"] = parameters.Name;
+                }
+                
+                if (parameters.Type != null)
+                {
+                    quotaCreateOrUpdateParametersValue["type"] = parameters.Type;
+                }
+                
+                if (parameters.Location != null)
+                {
+                    quotaCreateOrUpdateParametersValue["location"] = parameters.Location;
+                }
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    quotaCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    QuotaGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new QuotaGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            QuotaModel quotaInstance = new QuotaModel();
+                            result.Quota = quotaInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                Quota propertiesInstance = new Quota();
+                                quotaInstance.Properties = propertiesInstance;
+                                
+                                JToken numberOfStorageAccountsValue = propertiesValue2["numberOfStorageAccounts"];
+                                if (numberOfStorageAccountsValue != null && numberOfStorageAccountsValue.Type != JTokenType.Null)
+                                {
+                                    int numberOfStorageAccountsInstance = ((int)numberOfStorageAccountsValue);
+                                    propertiesInstance.NumberOfStorageAccounts = numberOfStorageAccountsInstance;
+                                }
+                                
+                                JToken capacityInGbValue = propertiesValue2["capacityInGb"];
+                                if (capacityInGbValue != null && capacityInGbValue.Type != JTokenType.Null)
+                                {
+                                    int capacityInGbInstance = ((int)capacityInGbValue);
+                                    propertiesInstance.CapacityInGB = capacityInGbInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                quotaInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                quotaInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                quotaInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                quotaInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    quotaInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> DeleteAsync(string locationName, string quotaName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (locationName == null)
+            {
+                throw new ArgumentNullException("locationName");
+            }
+            if (quotaName == null)
+            {
+                throw new ArgumentNullException("quotaName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("locationName", locationName);
+                tracingParameters.Add("quotaName", quotaName);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.Storage.Admin/locations/";
+            url = url + Uri.EscapeDataString(locationName);
+            url = url + "/quotas/";
+            url = url + Uri.EscapeDataString(quotaName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='quotaName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<QuotaGetResponse> GetAsync(string locationName, string quotaName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (locationName == null)
+            {
+                throw new ArgumentNullException("locationName");
+            }
+            if (quotaName == null)
+            {
+                throw new ArgumentNullException("quotaName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("locationName", locationName);
+                tracingParameters.Add("quotaName", quotaName);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.Storage.Admin/locations/";
+            url = url + Uri.EscapeDataString(locationName);
+            url = url + "/quotas/";
+            url = url + Uri.EscapeDataString(quotaName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    QuotaGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new QuotaGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            QuotaModel quotaInstance = new QuotaModel();
+                            result.Quota = quotaInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                Quota propertiesInstance = new Quota();
+                                quotaInstance.Properties = propertiesInstance;
+                                
+                                JToken numberOfStorageAccountsValue = propertiesValue["numberOfStorageAccounts"];
+                                if (numberOfStorageAccountsValue != null && numberOfStorageAccountsValue.Type != JTokenType.Null)
+                                {
+                                    int numberOfStorageAccountsInstance = ((int)numberOfStorageAccountsValue);
+                                    propertiesInstance.NumberOfStorageAccounts = numberOfStorageAccountsInstance;
+                                }
+                                
+                                JToken capacityInGbValue = propertiesValue["capacityInGb"];
+                                if (capacityInGbValue != null && capacityInGbValue.Type != JTokenType.Null)
+                                {
+                                    int capacityInGbInstance = ((int)capacityInGbValue);
+                                    propertiesInstance.CapacityInGB = capacityInGbInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                quotaInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                quotaInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                quotaInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                quotaInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    quotaInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='locationName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<QuotaListResponse> ListAsync(string locationName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (locationName == null)
+            {
+                throw new ArgumentNullException("locationName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("locationName", locationName);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.Storage.Admin/locations/";
+            url = url + Uri.EscapeDataString(locationName);
+            url = url + "/quotas";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    QuotaListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new QuotaListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    QuotaModel quotaModelInstance = new QuotaModel();
+                                    result.Quotas.Add(quotaModelInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        Quota propertiesInstance = new Quota();
+                                        quotaModelInstance.Properties = propertiesInstance;
+                                        
+                                        JToken numberOfStorageAccountsValue = propertiesValue["numberOfStorageAccounts"];
+                                        if (numberOfStorageAccountsValue != null && numberOfStorageAccountsValue.Type != JTokenType.Null)
+                                        {
+                                            int numberOfStorageAccountsInstance = ((int)numberOfStorageAccountsValue);
+                                            propertiesInstance.NumberOfStorageAccounts = numberOfStorageAccountsInstance;
+                                        }
+                                        
+                                        JToken capacityInGbValue = propertiesValue["capacityInGb"];
+                                        if (capacityInGbValue != null && capacityInGbValue.Type != JTokenType.Null)
+                                        {
+                                            int capacityInGbInstance = ((int)capacityInGbValue);
+                                            propertiesInstance.CapacityInGB = capacityInGbInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        quotaModelInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        quotaModelInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        quotaModelInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        quotaModelInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            quotaModelInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
     public static partial class ShareOperationsExtensions
     {
         /// <summary>
@@ -29883,7 +39151,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IShareOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -29913,7 +39181,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IShareOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -29939,7 +39207,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IShareOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -29972,7 +39240,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IShareOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -30001,7 +39269,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IShareOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -30034,7 +39302,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IShareOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -30063,7 +39331,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IShareOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -30090,7 +39358,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IShareOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -30104,6 +39372,62 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         public static Task<ShareListResponse> ListAsync(this IShareOperations operations, string resourceGroupName, string farmId)
         {
             return operations.ListAsync(resourceGroupName, farmId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='shareName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static ShareGetResponse Put(this IShareOperations operations, string resourceGroupName, string farmId, string shareName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IShareOperations)s).PutAsync(resourceGroupName, farmId, shareName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IShareOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='shareName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<ShareGetResponse> PutAsync(this IShareOperations operations, string resourceGroupName, string farmId, string shareName)
+        {
+            return operations.PutAsync(resourceGroupName, farmId, shareName, CancellationToken.None);
         }
     }
     
@@ -30204,6 +39528,28 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// Your documentation here.
         /// </returns>
         Task<ShareListResponse> ListAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='shareName'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<ShareGetResponse> PutAsync(string resourceGroupName, string farmId, string shareName, CancellationToken cancellationToken);
     }
     
     /// <summary>
@@ -30228,7 +39574,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -31339,6 +40685,274 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                 }
             }
         }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='shareName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<ShareGetResponse> PutAsync(string resourceGroupName, string farmId, string shareName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (shareName == null)
+            {
+                throw new ArgumentNullException("shareName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("shareName", shareName);
+                TracingAdapter.Enter(invocationId, this, "PutAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/shares/";
+            url = url + Uri.EscapeDataString(shareName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ShareGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ShareGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ShareModel shareInstance = new ShareModel();
+                            result.Share = shareInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                Share propertiesInstance = new Share();
+                                shareInstance.Properties = propertiesInstance;
+                                
+                                JToken shareNameValue = propertiesValue["shareName"];
+                                if (shareNameValue != null && shareNameValue.Type != JTokenType.Null)
+                                {
+                                    string shareNameInstance = ((string)shareNameValue);
+                                    propertiesInstance.ShareName = shareNameInstance;
+                                }
+                                
+                                JToken uncPathValue = propertiesValue["uncPath"];
+                                if (uncPathValue != null && uncPathValue.Type != JTokenType.Null)
+                                {
+                                    string uncPathInstance = ((string)uncPathValue);
+                                    propertiesInstance.UncPath = uncPathInstance;
+                                }
+                                
+                                JToken totalCapacityValue = propertiesValue["totalCapacity"];
+                                if (totalCapacityValue != null && totalCapacityValue.Type != JTokenType.Null)
+                                {
+                                    ulong totalCapacityInstance = ((ulong)totalCapacityValue);
+                                    propertiesInstance.TotalCapacity = totalCapacityInstance;
+                                }
+                                
+                                JToken usedCapacityValue = propertiesValue["usedCapacity"];
+                                if (usedCapacityValue != null && usedCapacityValue.Type != JTokenType.Null)
+                                {
+                                    ulong usedCapacityInstance = ((ulong)usedCapacityValue);
+                                    propertiesInstance.UsedCapacity = usedCapacityInstance;
+                                }
+                                
+                                JToken freeCapacityValue = propertiesValue["freeCapacity"];
+                                if (freeCapacityValue != null && freeCapacityValue.Type != JTokenType.Null)
+                                {
+                                    ulong freeCapacityInstance = ((ulong)freeCapacityValue);
+                                    propertiesInstance.FreeCapacity = freeCapacityInstance;
+                                }
+                                
+                                JToken healthStatusValue = propertiesValue["healthStatus"];
+                                if (healthStatusValue != null && healthStatusValue.Type != JTokenType.Null)
+                                {
+                                    HealthStatus healthStatusInstance = ((HealthStatus)Enum.Parse(typeof(HealthStatus), ((string)healthStatusValue), true));
+                                    propertiesInstance.HealthStatus = healthStatusInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                shareInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                shareInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                shareInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                shareInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    shareInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
     }
     
     public static partial class StorageAccountOperationsExtensions
@@ -31350,7 +40964,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAccountOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAccountOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -31358,17 +40972,17 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='versionedAccountName'>
+        /// <param name='accountId'>
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static StorageAccountGetResponse Get(this IStorageAccountOperations operations, string resourceGroupName, string farmId, string versionedAccountName)
+        public static StorageAccountGetResponse Get(this IStorageAccountOperations operations, string resourceGroupName, string farmId, string accountId)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IStorageAccountOperations)s).GetAsync(resourceGroupName, farmId, versionedAccountName);
+                return ((IStorageAccountOperations)s).GetAsync(resourceGroupName, farmId, accountId);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -31380,7 +40994,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAccountOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAccountOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -31388,15 +41002,15 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='versionedAccountName'>
+        /// <param name='accountId'>
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static Task<StorageAccountGetResponse> GetAsync(this IStorageAccountOperations operations, string resourceGroupName, string farmId, string versionedAccountName)
+        public static Task<StorageAccountGetResponse> GetAsync(this IStorageAccountOperations operations, string resourceGroupName, string farmId, string accountId)
         {
-            return operations.GetAsync(resourceGroupName, farmId, versionedAccountName, CancellationToken.None);
+            return operations.GetAsync(resourceGroupName, farmId, accountId, CancellationToken.None);
         }
         
         /// <summary>
@@ -31406,7 +41020,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAccountOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAccountOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -31439,7 +41053,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAccountOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAccountOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -31468,7 +41082,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAccountOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAccountOperations.
         /// </param>
         /// <param name='tenantSubscriptionId'>
         /// Required. Your documentation here.
@@ -31498,7 +41112,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAccountOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAccountOperations.
         /// </param>
         /// <param name='tenantSubscriptionId'>
         /// Required. Your documentation here.
@@ -31524,7 +41138,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAccountOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAccountOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -31532,7 +41146,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='versionedAccountName'>
+        /// <param name='accountId'>
         /// Required. Your documentation here.
         /// </param>
         /// <param name='undeleteParam'>
@@ -31542,11 +41156,11 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Undelete(this IStorageAccountOperations operations, string resourceGroupName, string farmId, string versionedAccountName, StorageAccountUndeleteParameters undeleteParam)
+        public static AzureOperationResponse Undelete(this IStorageAccountOperations operations, string resourceGroupName, string farmId, string accountId, StorageAccountUndeleteParameters undeleteParam)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IStorageAccountOperations)s).UndeleteAsync(resourceGroupName, farmId, versionedAccountName, undeleteParam);
+                return ((IStorageAccountOperations)s).UndeleteAsync(resourceGroupName, farmId, accountId, undeleteParam);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -31558,7 +41172,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IStorageAccountOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IStorageAccountOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -31566,7 +41180,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='versionedAccountName'>
+        /// <param name='accountId'>
         /// Required. Your documentation here.
         /// </param>
         /// <param name='undeleteParam'>
@@ -31576,9 +41190,9 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> UndeleteAsync(this IStorageAccountOperations operations, string resourceGroupName, string farmId, string versionedAccountName, StorageAccountUndeleteParameters undeleteParam)
+        public static Task<AzureOperationResponse> UndeleteAsync(this IStorageAccountOperations operations, string resourceGroupName, string farmId, string accountId, StorageAccountUndeleteParameters undeleteParam)
         {
-            return operations.UndeleteAsync(resourceGroupName, farmId, versionedAccountName, undeleteParam, CancellationToken.None);
+            return operations.UndeleteAsync(resourceGroupName, farmId, accountId, undeleteParam, CancellationToken.None);
         }
     }
     
@@ -31600,7 +41214,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Your documentation here.
         /// </param>
-        /// <param name='versionedAccountName'>
+        /// <param name='accountId'>
         /// Your documentation here.
         /// </param>
         /// <param name='cancellationToken'>
@@ -31609,7 +41223,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        Task<StorageAccountGetResponse> GetAsync(string resourceGroupName, string farmId, string versionedAccountName, CancellationToken cancellationToken);
+        Task<StorageAccountGetResponse> GetAsync(string resourceGroupName, string farmId, string accountId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Your documentation here.  (see
@@ -31669,7 +41283,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Your documentation here.
         /// </param>
-        /// <param name='versionedAccountName'>
+        /// <param name='accountId'>
         /// Your documentation here.
         /// </param>
         /// <param name='undeleteParam'>
@@ -31682,7 +41296,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> UndeleteAsync(string resourceGroupName, string farmId, string versionedAccountName, StorageAccountUndeleteParameters undeleteParam, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UndeleteAsync(string resourceGroupName, string farmId, string accountId, StorageAccountUndeleteParameters undeleteParam, CancellationToken cancellationToken);
     }
     
     /// <summary>
@@ -31707,7 +41321,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -31725,7 +41339,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='versionedAccountName'>
+        /// <param name='accountId'>
         /// Required. Your documentation here.
         /// </param>
         /// <param name='cancellationToken'>
@@ -31734,7 +41348,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<StorageAccountGetResponse> GetAsync(string resourceGroupName, string farmId, string versionedAccountName, CancellationToken cancellationToken)
+        public async Task<StorageAccountGetResponse> GetAsync(string resourceGroupName, string farmId, string accountId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -31753,9 +41367,9 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 throw new ArgumentNullException("farmId");
             }
-            if (versionedAccountName == null)
+            if (accountId == null)
             {
-                throw new ArgumentNullException("versionedAccountName");
+                throw new ArgumentNullException("accountId");
             }
             
             // Tracing
@@ -31767,7 +41381,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmId", farmId);
-                tracingParameters.Add("versionedAccountName", versionedAccountName);
+                tracingParameters.Add("accountId", accountId);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -31783,7 +41397,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             url = url + "/providers/Microsoft.Storage.Admin/farms/";
             url = url + Uri.EscapeDataString(farmId);
             url = url + "/storageaccounts/";
-            url = url + Uri.EscapeDataString(versionedAccountName);
+            url = url + Uri.EscapeDataString(accountId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-12-01-preview");
             if (queryParameters.Count > 0)
@@ -31862,13 +41476,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                         {
                             StorageAccountModel storageAccountInstance = new StorageAccountModel();
                             result.StorageAccount = storageAccountInstance;
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                storageAccountInstance.ResourceType = typeInstance;
-                            }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -32041,11 +41648,11 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                     propertiesInstance.Name = nameInstance;
                                 }
                                 
-                                JToken typeValue2 = propertiesValue["type"];
-                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                JToken typeValue = propertiesValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    string typeInstance2 = ((string)typeValue2);
-                                    propertiesInstance.Type = typeInstance2;
+                                    string typeInstance = ((string)typeValue);
+                                    propertiesInstance.Type = typeInstance;
                                 }
                                 
                                 JToken locationValue = propertiesValue["location"];
@@ -32067,20 +41674,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                 }
                             }
                             
-                            JToken tenantSubscriptionIdValue2 = responseDoc["tenantSubscriptionId"];
-                            if (tenantSubscriptionIdValue2 != null && tenantSubscriptionIdValue2.Type != JTokenType.Null)
-                            {
-                                Guid tenantSubscriptionIdInstance2 = Guid.Parse(((string)tenantSubscriptionIdValue2));
-                                storageAccountInstance.TenantSubscriptionId = tenantSubscriptionIdInstance2;
-                            }
-                            
-                            JToken accountStatusFilterValue = responseDoc["accountStatusFilter"];
-                            if (accountStatusFilterValue != null && accountStatusFilterValue.Type != JTokenType.Null)
-                            {
-                                StorageAccountStatusSearchFilter accountStatusFilterInstance = ((StorageAccountStatusSearchFilter)Enum.Parse(typeof(StorageAccountStatusSearchFilter), ((string)accountStatusFilterValue), true));
-                                storageAccountInstance.AccountStatusFilter = accountStatusFilterInstance;
-                            }
-                            
                             JToken idValue2 = responseDoc["id"];
                             if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
@@ -32095,11 +41688,11 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                 storageAccountInstance.Name = nameInstance2;
                             }
                             
-                            JToken typeValue3 = responseDoc["type"];
-                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                             {
-                                string typeInstance3 = ((string)typeValue3);
-                                storageAccountInstance.Type = typeInstance3;
+                                string typeInstance2 = ((string)typeValue2);
+                                storageAccountInstance.Type = typeInstance2;
                             }
                             
                             JToken locationValue2 = responseDoc["location"];
@@ -32314,13 +41907,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                     StorageAccountModel storageAccountModelInstance = new StorageAccountModel();
                                     result.StorageAccounts.Add(storageAccountModelInstance);
                                     
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        storageAccountModelInstance.ResourceType = typeInstance;
-                                    }
-                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
@@ -32492,11 +42078,11 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                             propertiesInstance.Name = nameInstance;
                                         }
                                         
-                                        JToken typeValue2 = propertiesValue["type"];
-                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        JToken typeValue = propertiesValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
-                                            string typeInstance2 = ((string)typeValue2);
-                                            propertiesInstance.Type = typeInstance2;
+                                            string typeInstance = ((string)typeValue);
+                                            propertiesInstance.Type = typeInstance;
                                         }
                                         
                                         JToken locationValue = propertiesValue["location"];
@@ -32518,20 +42104,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                         }
                                     }
                                     
-                                    JToken tenantSubscriptionIdValue2 = valueValue["tenantSubscriptionId"];
-                                    if (tenantSubscriptionIdValue2 != null && tenantSubscriptionIdValue2.Type != JTokenType.Null)
-                                    {
-                                        Guid tenantSubscriptionIdInstance2 = Guid.Parse(((string)tenantSubscriptionIdValue2));
-                                        storageAccountModelInstance.TenantSubscriptionId = tenantSubscriptionIdInstance2;
-                                    }
-                                    
-                                    JToken accountStatusFilterValue = valueValue["accountStatusFilter"];
-                                    if (accountStatusFilterValue != null && accountStatusFilterValue.Type != JTokenType.Null)
-                                    {
-                                        StorageAccountStatusSearchFilter accountStatusFilterInstance = ((StorageAccountStatusSearchFilter)Enum.Parse(typeof(StorageAccountStatusSearchFilter), ((string)accountStatusFilterValue), true));
-                                        storageAccountModelInstance.AccountStatusFilter = accountStatusFilterInstance;
-                                    }
-                                    
                                     JToken idValue2 = valueValue["id"];
                                     if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                     {
@@ -32546,11 +42118,11 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                                         storageAccountModelInstance.Name = nameInstance2;
                                     }
                                     
-                                    JToken typeValue3 = valueValue["type"];
-                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                    JToken typeValue2 = valueValue["type"];
+                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                     {
-                                        string typeInstance3 = ((string)typeValue3);
-                                        storageAccountModelInstance.Type = typeInstance3;
+                                        string typeInstance2 = ((string)typeValue2);
+                                        storageAccountModelInstance.Type = typeInstance2;
                                     }
                                     
                                     JToken locationValue2 = valueValue["location"];
@@ -32869,7 +42441,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='versionedAccountName'>
+        /// <param name='accountId'>
         /// Required. Your documentation here.
         /// </param>
         /// <param name='undeleteParam'>
@@ -32882,7 +42454,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> UndeleteAsync(string resourceGroupName, string farmId, string versionedAccountName, StorageAccountUndeleteParameters undeleteParam, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UndeleteAsync(string resourceGroupName, string farmId, string accountId, StorageAccountUndeleteParameters undeleteParam, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -32901,9 +42473,9 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 throw new ArgumentNullException("farmId");
             }
-            if (versionedAccountName == null)
+            if (accountId == null)
             {
-                throw new ArgumentNullException("versionedAccountName");
+                throw new ArgumentNullException("accountId");
             }
             if (undeleteParam == null)
             {
@@ -32919,7 +42491,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmId", farmId);
-                tracingParameters.Add("versionedAccountName", versionedAccountName);
+                tracingParameters.Add("accountId", accountId);
                 tracingParameters.Add("undeleteParam", undeleteParam);
                 TracingAdapter.Enter(invocationId, this, "UndeleteAsync", tracingParameters);
             }
@@ -32936,7 +42508,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             url = url + "/providers/Microsoft.Storage.Admin/farms/";
             url = url + Uri.EscapeDataString(farmId);
             url = url + "/storageaccounts/";
-            url = url + Uri.EscapeDataString(versionedAccountName);
+            url = url + Uri.EscapeDataString(accountId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("action=undelete");
             queryParameters.Add("api-version=2015-12-01-preview");
@@ -33089,7 +42661,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33119,7 +42691,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33145,7 +42717,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33175,7 +42747,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33201,7 +42773,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33234,7 +42806,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33263,7 +42835,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33296,7 +42868,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33325,7 +42897,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33352,7 +42924,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33375,7 +42947,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33406,7 +42978,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33433,7 +43005,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33464,7 +43036,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableFrontendInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableFrontendInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -33675,7 +43247,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -35344,7 +44916,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -35544,7 +45116,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35574,7 +45146,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35600,7 +45172,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35630,7 +45202,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35656,7 +45228,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35689,7 +45261,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35718,7 +45290,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35751,7 +45323,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35780,7 +45352,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35807,7 +45379,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35830,7 +45402,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35861,7 +45433,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35888,7 +45460,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -35919,7 +45491,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableMasterInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableMasterInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -36130,7 +45702,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -37603,7 +47175,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -37803,7 +47375,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -37833,7 +47405,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -37859,7 +47431,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -37889,7 +47461,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -37915,7 +47487,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -37948,7 +47520,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -37977,7 +47549,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -38010,7 +47582,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -38039,7 +47611,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -38066,7 +47638,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -38089,7 +47661,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -38120,7 +47692,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -38147,7 +47719,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -38178,7 +47750,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServerInstanceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServerInstanceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -38389,7 +47961,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
@@ -39932,7 +49504,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == OperationStatus.InProgress)
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -40132,7 +49704,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -40159,7 +49731,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -40182,7 +49754,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -40212,7 +49784,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -40238,7 +49810,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -40268,7 +49840,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -40294,7 +49866,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -40324,7 +49896,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.ITableServiceOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.ITableServiceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -40459,7 +50031,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.StorageAdminManagementClient.
+        /// Microsoft.AzureStack.AzureConsistentStorage.StorageAdminManagementClient.
         /// </summary>
         public StorageAdminManagementClient Client
         {
