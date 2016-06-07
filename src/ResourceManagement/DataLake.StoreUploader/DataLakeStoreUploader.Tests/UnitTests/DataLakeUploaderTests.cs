@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         private const int SmallFileLength = 128; 
         private readonly byte[] _smallFileData = new byte[SmallFileLength];
         private string _smallFilePath;
+        private string _downloadFilePath;
         private const int ThreadCount = 1;
         private const string TargetStreamPath = "1";
 
@@ -50,6 +51,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var runFolder = Guid.NewGuid();
             TestHelpers.GenerateFileData(_largeFileData, runFolder.ToString(), out _largeFilePath);
             TestHelpers.GenerateFileData(_smallFileData, runFolder.ToString(), out _smallFilePath);
+            TestHelpers.GenerateFileData(_smallFileData, runFolder.ToString(), out _downloadFilePath);
         }
 
         public void Dispose()
@@ -99,6 +101,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", fileThreadCount: DataLakeStoreUploader.MaxAllowedThreads + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
+
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", folderThreadCount: 0, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
+
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", folderThreadCount: DataLakeStoreUploader.MaxAllowedThreads + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
         }
 
         /// <summary>
@@ -124,10 +132,29 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             up = CreateParameters(filePath: _smallFilePath, isResume: true, isOverwrite: true);
             uploader = new DataLakeStoreUploader(up, frontEnd);
             uploader.Execute();
-            
 
             //no resume, overwrite
             up = CreateParameters(filePath: _smallFilePath, isResume: false, isOverwrite: true);
+            uploader = new DataLakeStoreUploader(up, frontEnd);
+            uploader.Execute();
+
+            //download no resume, no overwrite
+            up = CreateParameters(filePath: TargetStreamPath, targetStreamPath: _downloadFilePath, isResume: false, isDownload: true);
+            uploader = new DataLakeStoreUploader(up, frontEnd);
+            Assert.Throws<InvalidOperationException>(() => uploader.Execute());
+
+            //download resume, no overwrite
+            up = CreateParameters(filePath: TargetStreamPath, targetStreamPath: _downloadFilePath, isResume: true, isDownload: true);
+            uploader = new DataLakeStoreUploader(up, frontEnd);
+            Assert.Throws<InvalidOperationException>(() => uploader.Execute());
+
+            //download resume, overwrite
+            up = CreateParameters(filePath: TargetStreamPath, targetStreamPath: _downloadFilePath, isResume: true, isOverwrite: true, isDownload: true);
+            uploader = new DataLakeStoreUploader(up, frontEnd);
+            uploader.Execute();
+
+            //download no resume, overwrite
+            up = CreateParameters(filePath: TargetStreamPath, targetStreamPath: _downloadFilePath, isResume: false, isOverwrite: true, isDownload: true);
             uploader = new DataLakeStoreUploader(up, frontEnd);
             uploader.Execute();
         }
@@ -136,7 +163,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// Tests the case of a fresh upload with multiple segments.
         /// </summary>
         [Fact]
-        public void DataLakeUploader_FreshUpload()
+        public void DataLakeUploader_FreshUploadDownload()
         {
             var frontEnd = new InMemoryFrontEnd();
             var up = CreateParameters(isResume: false);
@@ -155,6 +182,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                     }
                 });
             var uploader = new DataLakeStoreUploader(up, frontEnd, progressTracker);
+
+            uploader.Execute();
+
+            VerifyFileUploadedSuccessfully(up, frontEnd);
+            VerifyProgressStatus(progress, _largeFileData.Length);
+
+            // now download
+            up = CreateParameters(isResume: false, isDownload: true, targetStreamPath: _downloadFilePath, isOverwrite: true, filePath: TargetStreamPath);
+            uploader = new DataLakeStoreUploader(up, frontEnd, progressTracker);
 
             uploader.Execute();
 
@@ -189,7 +225,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             uploader.Execute();
 
             VerifyFileUploadedSuccessfully(up, frontEnd);
-            VerifyFolderProgressStatus(progress, _largeFileData.Length + _smallFileData.Length, 2);
+            VerifyFolderProgressStatus(progress, _largeFileData.Length + (_smallFileData.Length *2), 3);
         }
 
         /// <summary>
@@ -403,7 +439,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <param name="isOverwrite">Whether to enable overwrite.</param>
         /// <param name="filePath">The file path.</param>
         /// <returns></returns>
-        private UploadParameters CreateParameters(bool isResume, bool isOverwrite = false, string filePath = null, bool isRecursive = false)
+        private UploadParameters CreateParameters(bool isResume, bool isOverwrite = false, string filePath = null, bool isRecursive = false, bool isDownload = false, string targetStreamPath = "1")
         {
             if (filePath == null)
             {
@@ -418,13 +454,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
             return new UploadParameters(
                 inputFilePath: filePath,
-                targetStreamPath: "1",
+                targetStreamPath: targetStreamPath,
                 accountName: "foo",
                 useSegmentBlockBackOffRetryStrategy: false,
                 fileThreadCount: ThreadCount,
                 isOverwrite: isOverwrite,
                 isResume: isResume,
                 isRecursive: isRecursive,
+                isDownload: isDownload,
                 maxSegmentLength: 4 * 1024 * 1024,
                 folderThreadCount: 2,
                 localMetadataLocation: Path.GetTempPath());
@@ -442,10 +479,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 var fileList = new Dictionary<string, byte[]>
                 {
                     {string.Format("{0}/{1}", up.TargetStreamPath, Path.GetFileName(_largeFilePath)), _largeFileData },
-                    {string.Format("{0}/{1}", up.TargetStreamPath, Path.GetFileName(_smallFilePath)), _smallFileData }
+                    {string.Format("{0}/{1}", up.TargetStreamPath, Path.GetFileName(_smallFilePath)), _smallFileData },
+                    {string.Format("{0}/{1}", up.TargetStreamPath, Path.GetFileName(_downloadFilePath)), _smallFileData }
                 };
 
-                VerifyFileUploadedSuccessfully(fileList, frontEnd);
+                VerifyFileUploadedSuccessfully(fileList, frontEnd, up.IsDownload);
             }
             else
             {
@@ -461,7 +499,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <param name="fileContents">The file contents.</param>
         private void VerifyFileUploadedSuccessfully(UploadParameters up, InMemoryFrontEnd frontEnd, byte[] fileContents)
         {
-            VerifyFileUploadedSuccessfully(new Dictionary<string, byte[]> { { up.TargetStreamPath, fileContents } }, frontEnd);
+            VerifyFileUploadedSuccessfully(new Dictionary<string, byte[]> { { up.TargetStreamPath, fileContents } }, frontEnd, up.IsDownload);
         }
 
         /// <summary>
@@ -469,16 +507,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// </summary>
         /// <param name="targetPathsAndData">The target paths and data for each path.</param>
         /// <param name="frontEnd">The front end to use.</param>
-        private void VerifyFileUploadedSuccessfully(Dictionary<string, byte[]> targetPathsAndData, InMemoryFrontEnd frontEnd)
+        private void VerifyFileUploadedSuccessfully(Dictionary<string, byte[]> targetPathsAndData, InMemoryFrontEnd frontEnd, bool isDownload)
         {
             var streamCount = targetPathsAndData.Keys.Count;
             Assert.Equal(streamCount, frontEnd.StreamCount);
             foreach (var path in targetPathsAndData.Keys)
             {
-                Assert.True(frontEnd.StreamExists(path), "Uploaded stream does not exist");
-                Assert.Equal(targetPathsAndData[path].Length, frontEnd.GetStreamLength(path));
+                Assert.True(frontEnd.StreamExists(path, isDownload), "Uploaded stream does not exist");
+                Assert.Equal(targetPathsAndData[path].Length, frontEnd.GetStreamLength(path, isDownload));
 
-                var uploadedData = frontEnd.GetStreamContents(path);
+                var uploadedData = frontEnd.GetStreamContents(path, isDownload);
                 AssertExtensions.AreEqual(targetPathsAndData[path], uploadedData, "Uploaded stream is not binary identical to input file");
             }
         }

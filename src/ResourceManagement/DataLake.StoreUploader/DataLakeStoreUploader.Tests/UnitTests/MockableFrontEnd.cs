@@ -98,6 +98,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             return this.ReadStreamImplementation(streamPath, offset, length, isDownload);
         }
 
+        public bool IsDirectory(string streamPath)
+        {
+            // no directory download tests yet.
+            return false;
+        }
+
         public Func<string, long, long, bool, Stream> ReadStreamImplementation { get; set; }
     }
 }

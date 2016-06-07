@@ -129,8 +129,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         ValidateMetadataForFreshUpload(metadata);
                     }
 
-                    //begin (or resume) uploading the file
-                    UploadFile(metadata);
+                    //begin (or resume) uploading/downloading the file
+                    if(this.Parameters.IsDownload)
+                    {
+                        DownloadFile(metadata);
+                    }
+                    else
+                    {
+                        UploadFile(metadata);
+                    }
 
                     //clean up metadata after a successful upload
                     metadata.DeleteFile();
@@ -164,7 +171,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 if (file.Status != SegmentUploadStatus.Complete)
                                 {
                                     var segmentProgressTracker = CreateSegmentProgressTracker(file, fileProgressTracker);
-                                    UploadFile(file, segmentProgressTracker);
+                                    if (this.Parameters.IsDownload)
+                                    {
+                                        DownloadFile(file, segmentProgressTracker);
+                                    }
+                                    else
+                                    {
+                                        UploadFile(file, segmentProgressTracker);
+                                    }
                                 }
 
                                 // attempt to save the metadata
@@ -175,8 +189,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                     file.DeleteFile();
                                 }
                                 catch { } // if we can't save the metadata or delete a temp file we shouldn't fail out.
-
-                                
                             }
                         );
 
@@ -214,9 +226,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <exception cref="System.ArgumentOutOfRangeException">ThreadCount</exception>
         private void ValidateParameters()
         {
-            if (!File.Exists(this.Parameters.InputFilePath) && !Directory.Exists(this.Parameters.InputFilePath))
+            if ((!this.Parameters.IsDownload && !File.Exists(this.Parameters.InputFilePath) && !Directory.Exists(this.Parameters.InputFilePath)) || (this.Parameters.IsDownload && !_frontEnd.StreamExists(this.Parameters.InputFilePath)))
             {
-                throw new FileNotFoundException("Could not find input file or folder", this.Parameters.InputFilePath);
+                throw new FileNotFoundException(string.Format("Could not find {0} input file or folder", this.Parameters.IsDownload ? " Data Lake stream" : "local"), this.Parameters.InputFilePath);
             }
 
             if (string.IsNullOrWhiteSpace(this.Parameters.TargetStreamPath))
@@ -236,11 +248,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             if (this.Parameters.FileThreadCount < 1 || this.Parameters.FileThreadCount > MaxAllowedThreads)
             {
-                throw new ArgumentOutOfRangeException(string.Format("ThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
+                throw new ArgumentOutOfRangeException(string.Format("FileThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
+            }
+
+            if (this.Parameters.FolderThreadCount < 1 || this.Parameters.FolderThreadCount > MaxAllowedThreads)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("FolderThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
             }
 
             // if the input is a directory, set it
-            isDirectory = Directory.Exists(this.Parameters.InputFilePath);
+            isDirectory = this.Parameters.IsDownload? _frontEnd.IsDirectory(this.Parameters.InputFilePath) : Directory.Exists(this.Parameters.InputFilePath);
             
         }
 
@@ -453,9 +470,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="metadata"></param>
         private void ValidateMetadataMatchesLocalFile(UploadMetadata metadata, bool isFolderUpload = false)
         {
-            //verify that it matches against local file (size, name)
-            var metadataInputFileInfo = new FileInfo(metadata.InputFilePath);
-
+            //verify that it matches against source file (size, name)
             if (isFolderUpload)
             {
                 if (!metadata.TargetStreamPath.Trim().Contains(this.Parameters.TargetStreamPath.Trim()))
@@ -470,20 +485,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     throw new InvalidOperationException("Metadata points to a different target stream than the input parameters");
                 }
 
-                var paramInputFileInfo = new FileInfo(this.Parameters.InputFilePath);
-
-                if (!paramInputFileInfo.FullName.Equals(metadataInputFileInfo.FullName, StringComparison.OrdinalIgnoreCase))
+                if (!this.Parameters.InputFilePath.Equals(metadata.InputFilePath, StringComparison.OrdinalIgnoreCase))
                 {
                     throw new InvalidOperationException("The metadata refers to different file than the one requested");
                 }
             }
 
-            if (!metadataInputFileInfo.Exists)
+            // in this specific case, we are targeting the server for download, the client for upload
+            // which is the reverse for standard cases for stream exists.
+            if (!_frontEnd.StreamExists(metadata.InputFilePath, !metadata.IsDownload))
             {
                 throw new InvalidOperationException("The metadata refers to a file that does not exist");
             }
 
-            if (metadata.FileLength != metadataInputFileInfo.Length)
+            if (metadata.FileLength != _frontEnd.GetStreamLength(metadata.InputFilePath, !metadata.IsDownload))
             {
                 throw new InvalidOperationException("The metadata's file information differs from the actual file");
             }
@@ -553,24 +568,37 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 throw new InvalidOperationException(string.Format("Metadata points to a different target stream folder: {0} than the input parameters: {1}", metadata.TargetStreamFolderPath, this.Parameters.TargetStreamPath));
             }
 
-            //verify that it matches against local file (size, name)
+            //verify that it matches against source folder (size, name)
             var metadataInputFileInfo = new DirectoryInfo(metadata.InputFolderPath);
             var paramInputFileInfo = new DirectoryInfo(this.Parameters.InputFilePath);
 
-            if (!paramInputFileInfo.FullName.Equals(metadataInputFileInfo.FullName, StringComparison.OrdinalIgnoreCase))
+            if (!this.Parameters.InputFilePath.Equals(metadata.InputFolderPath, StringComparison.OrdinalIgnoreCase))
             {
-                throw new InvalidOperationException("The metadata refers to different file than the one requested");
+                throw new InvalidOperationException("The metadata refers to different folder than the one requested");
             }
 
-            if (!metadataInputFileInfo.Exists)
+            if (!_frontEnd.StreamExists(metadata.InputFolderPath, !this.Parameters.IsDownload))
             {
-                throw new InvalidOperationException("The metadata refers to a file that does not exist");
+                throw new InvalidOperationException("The metadata refers to a folder that does not exist");
             }
 
-            var totalBytes = metadataInputFileInfo.GetFiles("*.*", 
-                this.Parameters.IsRecursive ?
-                SearchOption.AllDirectories : 
-                SearchOption.TopDirectoryOnly).Sum(file => file.Length);
+
+            long totalBytes = 0;
+            if (this.Parameters.IsDownload)
+            {
+                Parallel.ForEach(metadata.Files, file =>
+                {
+                    var fileLength = _frontEnd.GetStreamLength(file.InputFilePath);
+                    Interlocked.Add(ref totalBytes, fileLength);
+                });
+            }
+            else
+            {
+                totalBytes = metadataInputFileInfo.GetFiles("*.*",
+                    this.Parameters.IsRecursive ?
+                    SearchOption.AllDirectories :
+                    SearchOption.TopDirectoryOnly).Sum(file => file.Length);
+            }
             if (metadata.TotalFileBytes != totalBytes)
             {
                 throw new InvalidOperationException("The metadata's total size information for all files in the directory differs from the actual directory information!");
@@ -635,6 +663,56 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     var ssu = new SingleSegmentUploader(0, metadata, _frontEnd, _token, segmentProgressTracker);
                     ssu.UseBackOffRetryStrategy = this.Parameters.UseSegmentBlockBackOffRetryStrategy;
                     ssu.Upload();
+                }
+                metadata.Status = SegmentUploadStatus.Complete;
+
+            }
+            catch (OperationCanceledException)
+            {
+                // do nothing since we have already marked everything as failed
+            }
+        }
+
+        /// <summary>
+        /// Uploads the file using the given metadata.
+        /// 
+        /// </summary>
+        /// <param name="metadata"></param>
+        private void DownloadFile(UploadMetadata metadata, IProgress<SegmentUploadProgress> segmentProgressTracker = null)
+        {
+            try
+            {
+                segmentProgressTracker = segmentProgressTracker ?? CreateSegmentProgressTracker(metadata);
+
+                if (metadata.SegmentCount == 0)
+                {
+                    // simply create the target stream, overwriting existing streams if they exist
+                    _frontEnd.CreateStream(metadata.TargetStreamPath, true, null, 0, this.Parameters.IsDownload);
+                }
+                else if (metadata.SegmentCount > 1)
+                {
+                    //perform the multi-segment upload
+                    // reducing the thread count to make it equal to the segment count
+                    // if it is larger, since those extra threads will not be used.
+                    var msu = new MultipleSegmentDownloader(metadata,
+                        metadata.SegmentCount < this.Parameters.FileThreadCount ?
+                        metadata.SegmentCount :
+                        this.Parameters.FileThreadCount,
+                        _frontEnd, _token,
+                        segmentProgressTracker);
+                    msu.UseSegmentBlockBackOffRetryStrategy = this.Parameters.UseSegmentBlockBackOffRetryStrategy;
+                    msu.Download();
+
+                    //concatenate the files at the end
+                    ConcatenateSegments(metadata);
+                }
+                else
+                {
+                    //optimization if we only have one segment: upload it directly to the target stream
+                    metadata.Segments[0].Path = metadata.TargetStreamPath;
+                    var ssu = new SingleSegmentDownloader(0, metadata, _frontEnd, _token, segmentProgressTracker);
+                    ssu.UseBackOffRetryStrategy = this.Parameters.UseSegmentBlockBackOffRetryStrategy;
+                    ssu.Download();
                 }
                 metadata.Status = SegmentUploadStatus.Complete;
 
@@ -713,7 +791,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 if (this.Parameters.IsOverwrite)
                 {
-                    _frontEnd.DeleteStream(metadata.TargetStreamPath, this.Parameters.IsDownload);
+                    _frontEnd.DeleteStream(metadata.TargetStreamPath, false, this.Parameters.IsDownload);
                 }
                 else
                 {

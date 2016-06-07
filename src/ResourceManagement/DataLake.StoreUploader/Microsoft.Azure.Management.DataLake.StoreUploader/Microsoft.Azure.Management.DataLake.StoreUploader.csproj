@@ -38,9 +38,11 @@
     <Compile Include="DataLakeStoreUploader\DataLakeStoreUploader.cs" />
     <Compile Include="DataLakeStoreUploader\IFrontEndAdapter.cs" />
     <Compile Include="DataLakeStoreUploader\InvalidMetadataException.cs" />
+    <Compile Include="DataLakeStoreUploader\MultipleSegmentDownloader.cs" />
     <Compile Include="DataLakeStoreUploader\MultipleSegmentUploader.cs" />
     <Compile Include="DataLakeStoreUploader\SegmentUploadProgress.cs" />
     <Compile Include="DataLakeStoreUploader\SegmentUploadStatus.cs" />
+    <Compile Include="DataLakeStoreUploader\SingleSegmentDownloader.cs" />
     <Compile Include="DataLakeStoreUploader\SingleSegmentUploader.cs" />
     <Compile Include="DataLakeStoreUploader\StringExtensions.cs" />
     <Compile Include="DataLakeStoreUploader\UploadFailedException.cs" />

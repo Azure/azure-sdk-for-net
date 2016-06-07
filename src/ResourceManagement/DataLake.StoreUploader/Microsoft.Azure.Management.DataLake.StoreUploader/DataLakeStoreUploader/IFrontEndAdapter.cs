@@ -72,6 +72,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         bool StreamExists(string streamPath, bool isDownload = false);
 
         /// <summary>
+        /// Determines if the stream with given path on the server is a directory or a terminating file.
+        /// This is used exclusively for download.
+        /// </summary>
+        /// <param name="streamPath">The relative path to the stream.</param>
+        /// <returns>True if the stream is a directory, false otherwise.</returns>
+        bool IsDirectory(string streamPath);
+
+        /// <summary>
         /// Gets a value indicating the length of a stream, in bytes.
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>

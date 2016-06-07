@@ -89,6 +89,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (isDownload)
             {
+                // create the full directory to the stream if it doesn't exist
+                Directory.CreateDirectory(Path.GetDirectoryName(streamPath));
                 using (var localStream = new FileStream(streamPath, overwrite ? FileMode.Create : FileMode.CreateNew))
                 {
                     localStream.Write(data, 0, byteCount);
@@ -180,7 +182,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (isDownload)
             {
-                return _client.FileSystem.OpenAsync(_accountName, streamPath, length, offset, cancellationToken: _token).Result;
+                var task = _client.FileSystem.OpenAsync(_accountName, streamPath, length, offset, cancellationToken: _token);
+
+                if (!task.Wait(PerRequestTimeoutMs))
+                {
+                    throw new TaskCanceledException(string.Format("Reading stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
+                }
+
+                return task.GetAwaiter().GetResult();
             }
             else
             {
@@ -210,7 +219,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (isDownload)
             {
-                return File.Exists(streamPath);
+                return File.Exists(streamPath) || Directory.Exists(streamPath);
             }
             else
             {
@@ -281,6 +290,30 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 var fileInfoResponse = task.Result;
                 return (long)fileInfoResponse.FileStatus.Length;
             }
+        }
+
+        /// <summary>
+        /// Determines if the stream with given path on the server is a directory or a terminating file.
+        /// This is used exclusively for download.
+        /// </summary>
+        /// <param name="streamPath">The relative path to the stream.</param>
+        /// <returns>
+        /// True if the stream is a directory, false otherwise.
+        /// </returns>
+        /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
+        public bool IsDirectory(string streamPath)
+        {
+            var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
+
+            if (!task.Wait(PerRequestTimeoutMs))
+            {
+                throw new TaskCanceledException(
+                    string.Format("Get file status operation did not complete after {0} milliseconds.",
+                        PerRequestTimeoutMs));
+            }
+
+            var fileInfoResponse = task.Result;
+            return fileInfoResponse.FileStatus.Type.GetValueOrDefault() == FileType.DIRECTORY;
         }
 
         /// <summary>
