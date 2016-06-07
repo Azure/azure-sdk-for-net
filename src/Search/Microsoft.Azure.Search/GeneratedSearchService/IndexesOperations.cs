@@ -438,6 +438,13 @@ namespace Microsoft.Azure.Search
         /// <param name='index'>
         /// The definition of the index to create or update.
         /// </param>
+        /// <param name='allowIndexDowntime'>
+        /// Allows new analyzers, tokenizers, token filters, or char filters to be
+        /// added to an index by taking the index offline for at least a few seconds.
+        /// This temporarily causes indexing and query requests to fail. Performance
+        /// and write availability of the index can be impaired for several minutes
+        /// after the index is updated, or longer for very large indexes.
+        /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -450,7 +457,7 @@ namespace Microsoft.Azure.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (indexName == null)
             {
@@ -482,6 +489,7 @@ namespace Microsoft.Azure.Search
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("indexName", indexName);
                 tracingParameters.Add("index", index);
+                tracingParameters.Add("allowIndexDowntime", allowIndexDowntime);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
@@ -491,6 +499,10 @@ namespace Microsoft.Azure.Search
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "indexes('{indexName}')").ToString();
             _url = _url.Replace("{indexName}", Uri.EscapeDataString(indexName));
             List<string> _queryParameters = new List<string>();
+            if (allowIndexDowntime != null)
+            {
+                _queryParameters.Add(string.Format("allowIndexDowntime={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(allowIndexDowntime, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));

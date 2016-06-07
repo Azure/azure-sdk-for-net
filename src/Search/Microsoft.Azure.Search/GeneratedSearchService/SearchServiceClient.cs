@@ -300,6 +300,14 @@ namespace Microsoft.Azure.Search
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Analyzer>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Analyzer>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Tokenizer>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Tokenizer>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TokenFilter>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TokenFilter>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CharFilter>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CharFilter>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataChangeDetectionPolicy>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataChangeDetectionPolicy>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataDeletionDetectionPolicy>("@odata.type"));
