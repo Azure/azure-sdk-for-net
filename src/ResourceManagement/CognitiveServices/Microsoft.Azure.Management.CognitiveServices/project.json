@@ -1,59 +1,83 @@
 {
-  "version": "0.1.1-preview",
+  "version": "0.1.2-preview",
   "description": "Microsoft Azure Management Cognitive Services Library",
   "authors": [ "Microsoft" ],
-  "tags": [ "Microsoft Azure Cognitive Services management", "Cognitive Services", "Cognitive Services management", "REST HTTP client", "windowsazureofficial" ],
-  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
-  "compilationOptions": {
+  "packOptions": {
+    "summary": "Microsoft Azure Management Cognitive Services Library.",
+    "iconUrl": "https://cdn.rawgit.com/Azure/AutoRest/7c1576dfb56974176223545cfac5762d168ded5f/Documentation/images/autorest-small-flat.png",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure Cognitive Services management", "Cognitive Services", "Cognitive Services management", "REST HTTP client", "windowsazureofficial" ],
+    "requireLicenseAcceptance":  true,
+  },
+
+  "buildOptions": {
     "delaySign": true,
+    "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0, 4.0)"
+    "Microsoft.Rest.ClientRuntime": "[3.0.2,4.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)"
   },
 
   "frameworks": {
     "net45": {
       "frameworkAssemblies": {
-        "System.Collections": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Runtime": { "type": "build" },
+        "System.Collections": "",
+        "System.Linq.Expressions": "",
+        "System.Runtime": "",
         "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": { "type": "build" }
-      },
+        "System.Threading.Tasks": ""
+      }
+    },     
+    "netstandard1.1": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50", "portable-net45+win8"],
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime": "2.1"
+        "NETStandard.Library": "1.5.0-rc2-24027",
+        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
+        "Newtonsoft.Json": "8.0.3"
       }
     },
-    "dnxcore50": {
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50"],
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime": "2.1",
-        "System.Diagnostics.Tools": "4.0.1-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516",
-        "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
-        "System.Text.Encoding": "4.0.11-beta-23516",
-        "System.Text.RegularExpressions": "4.0.11-beta-23516",
-        "System.Threading.Tasks": "4.0.11-beta-23516",
-        "System.Xml.ReaderWriter": "4.0.11-beta-23516"
-      }
-    },
-    ".NETPortable,Version=v4.5,Profile=Profile111": {
-      "compilationOptions": { "define": [ "PORTABLE" ] },
-      "frameworkAssemblies": {
-        "System.Collections": { "type": "build" },
-        "System.Linq": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Net.Http": { "type": "build" },
-        "System.Net.Primitives": { "type": "build" },
-        "System.Resources.ResourceManager": { "type": "build" },
-        "System.Runtime": { "type": "build" },
-        "System.Runtime.Serialization.Primitives": { "type": "build" },
-        "System.Text.Encoding": { "type": "build" },
-        "System.Text.RegularExpressions": { "type": "build" },
-        "System.Threading.Tasks": { "type": "build" }
+        "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027",
+        "Microsoft.NETCore.Runtime": "1.0.2-rc2-24027",
+        "System.Collections": "4.0.11-rc2-24027",
+        "System.Collections.Concurrent": "4.0.12-rc2-24027",
+        "System.Diagnostics.Debug": "4.0.11-rc2-24027",
+        "System.Diagnostics.Tools": "4.0.1-rc2-24027",
+        "System.Diagnostics.Tracing": "4.1.0-rc2-24027",
+        "System.Globalization": "4.0.11-rc2-24027",
+        "System.IO": "4.1.0-rc2-24027",
+        "System.IO.Compression": "4.1.0-rc2-24027",
+        "System.Linq": "4.1.0-rc2-24027",
+        "System.Net.Http": "4.0.1-rc2-24027",
+        "System.Net.Primitives": "4.0.11-rc2-24027",
+        "System.ObjectModel": "4.0.12-rc2-24027",
+        "System.Reflection": "4.1.0-rc2-24027",
+        "System.Reflection.Extensions": "4.0.1-rc2-24027",
+        "System.Reflection.Primitives": "4.0.1-rc2-24027",
+        "System.Resources.ResourceManager": "4.0.1-rc2-24027",
+        "System.Runtime": "4.1.0-rc2-24027",
+        "System.Runtime.Extensions": "4.1.0-rc2-24027",
+        "System.Runtime.InteropServices": "4.1.0-rc2-24027",
+        "System.Runtime.InteropServices.RuntimeInformation": "4.0.0-rc2-24027",
+        "System.Runtime.Numerics": "4.0.1-rc2-24027",
+        "System.Text.Encoding": "4.0.11-rc2-24027",
+        "System.Text.Encoding.Extensions": "4.0.11-rc2-24027",
+        "System.Text.RegularExpressions": "4.0.12-rc2-24027",
+        "System.Threading": "4.0.11-rc2-24027",
+        "System.Threading.Tasks": "4.0.11-rc2-24027",
+        "System.Xml.ReaderWriter": "4.0.11-rc2-24027",
+        "System.Xml.XDocument": "4.0.11-rc2-24027",
+        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
+        "Newtonsoft.Json": "8.0.3"
       }
     }
   }

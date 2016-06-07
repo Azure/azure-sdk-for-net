@@ -1,57 +1,84 @@
 {
   "version": "2.0.0-preview",
   "title": "Microsoft Azure Search Library",
-  "summary": "Class library for using Azure Search.",
   "description": "Makes it easy to develop a .NET application that uses Azure Search.",
-  "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API.",
   "authors": [ "Microsoft" ],
-  "tags": [ "Microsoft Azure Search", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
-  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-  "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
 
-  "compilationOptions": {
+  "packOptions": {
+    "summary": "Class library for using Azure Search.",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure Search", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
+    "requireLicenseAcceptance":  true,
+    "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API.",
+  },
+
+  "buildOptions": {
     "delaySign": true,
+    "publicSign": false,
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)",
     "Microsoft.Spatial": "[6.15.0,7.0)"
   },
 
   "frameworks": {
     "net45": {
       "frameworkAssemblies": {
-        "System.Collections": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Runtime": { "type": "build" },
+        "System.Collections": "",
+        "System.Linq.Expressions": "",
+        "System.Runtime": "",
         "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": { "type": "build" }
+        "System.Threading.Tasks": "",
       }
     },
-    "dnxcore50": {
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50"],
       "dependencies": {
-        "System.Diagnostics.Tools": "4.0.0",
-        "System.Net.Http": "4.0.0",
-        "System.Runtime.Serialization.Primitives": "4.1.0",
-        "System.Threading.Tasks": "4.0.10",
-        "System.Xml.ReaderWriter": "4.0.10"
+        "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027",
+        "Microsoft.NETCore.Runtime": "1.0.2-rc2-24027",
+        "System.Collections": "4.0.11-rc2-24027",
+        "System.Collections.Concurrent": "4.0.12-rc2-24027",
+        "System.Diagnostics.Debug": "4.0.11-rc2-24027",
+        "System.Diagnostics.Tools": "4.0.1-rc2-24027",
+        "System.Diagnostics.Tracing": "4.1.0-rc2-24027",
+        "System.Globalization": "4.0.11-rc2-24027",
+        "System.IO": "4.1.0-rc2-24027",
+        "System.IO.Compression": "4.1.0-rc2-24027",
+        "System.Linq": "4.1.0-rc2-24027",
+        "System.Net.Http": "4.0.1-rc2-24027",
+        "System.Net.Primitives": "4.0.11-rc2-24027",
+        "System.ObjectModel": "4.0.12-rc2-24027",
+        "System.Reflection": "4.1.0-rc2-24027",
+        "System.Reflection.Extensions": "4.0.1-rc2-24027",
+        "System.Reflection.Primitives": "4.0.1-rc2-24027",
+        "System.Resources.ResourceManager": "4.0.1-rc2-24027",
+        "System.Runtime": "4.1.0-rc2-24027",
+        "System.Runtime.Extensions": "4.1.0-rc2-24027",
+        "System.Runtime.InteropServices": "4.1.0-rc2-24027",
+        "System.Runtime.InteropServices.RuntimeInformation": "4.0.0-rc2-24027",
+        "System.Runtime.Numerics": "4.0.1-rc2-24027",
+        "System.Text.Encoding": "4.0.11-rc2-24027",
+        "System.Text.Encoding.Extensions": "4.0.11-rc2-24027",
+        "System.Text.RegularExpressions": "4.0.12-rc2-24027",
+        "System.Threading": "4.0.11-rc2-24027",
+        "System.Threading.Tasks": "4.0.11-rc2-24027",
+        "System.Xml.ReaderWriter": "4.0.11-rc2-24027",
+        "System.Xml.XDocument": "4.0.11-rc2-24027",
+        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
+        "System.Dynamic.Runtime": "4.0.11-rc2-24027"
       }
     },
-    ".NETPortable,Version=v4.5,Profile=Profile111": {
-      "frameworkAssemblies": {
-        "System.Collections": { "type": "build" },
-        "System.Dynamic.Runtime": { "type": "build" },
-        "System.Linq": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Net.Http": { "type": "build" },
-        "System.Net.Primitives": { "type": "build" },
-        "System.Resources.ResourceManager": { "type": "build" },
-        "System.Runtime": { "type": "build" },
-        "System.Runtime.Serialization.Primitives": { "type": "build" },
-        "System.Text.Encoding": { "type": "build" },
-        "System.Text.RegularExpressions": { "type": "build" },
-        "System.Threading.Tasks": { "type": "build" }
+    "netstandard1.1": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50", "portable-net45+win8"],
+      "dependencies": {
+        "NETStandard.Library": "1.5.0-rc2-24027",
+        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
+        "System.Dynamic.Runtime": "4.0.11-rc2-24027"
       }
     }
   }

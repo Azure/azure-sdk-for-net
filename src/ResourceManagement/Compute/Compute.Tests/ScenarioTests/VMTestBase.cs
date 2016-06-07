@@ -95,7 +95,6 @@ namespace Compute.Tests
             {
                 if (m_windowsImageReference == null)
                 {
-                    Trace.TraceInformation("Querying available Windows Server image from PIR...");
                     m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
                 }
                 return m_windowsImageReference;
@@ -103,7 +102,6 @@ namespace Compute.Tests
 
             if (m_linuxImageReference == null)
             {
-                Trace.TraceInformation("Querying available Ubuntu image from PIR...");
                 // If this sku disappears, query latest with 
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
                 m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "15.10");

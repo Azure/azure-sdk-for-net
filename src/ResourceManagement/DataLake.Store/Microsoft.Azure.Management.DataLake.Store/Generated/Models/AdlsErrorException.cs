@@ -12,14 +12,14 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System;
     using System.Net.Http;
     using System.Runtime.Serialization;
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
     using System.Security.Permissions;
 #endif
 
     /// <summary>
     /// Exception thrown for an invalid response with AdlsError information.
     /// </summary>
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
     [Serializable]
 #endif
     public class AdlsErrorException : RestException
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         {
         }
 
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE
         /// <summary>
         /// Initializes a new instance of the AdlsErrorException class.
         /// </summary>
