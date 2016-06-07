@@ -25,6 +25,9 @@ namespace Microsoft.Azure.Search
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
@@ -57,6 +60,7 @@ namespace Microsoft.Azure.Search
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
@@ -75,6 +79,9 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -107,6 +114,7 @@ namespace Microsoft.Azure.Search
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class;
 
         /// <summary>
@@ -127,6 +135,9 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -168,7 +179,8 @@ namespace Microsoft.Azure.Search
             string key, 
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            Dictionary<string, List<string>> customHeaders = null, 
+            Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
@@ -193,6 +205,9 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -268,6 +283,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class;
 
         /// <summary>
@@ -282,6 +298,9 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -307,6 +326,7 @@ namespace Microsoft.Azure.Search
             IndexBatch batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
@@ -324,6 +344,9 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -349,6 +372,7 @@ namespace Microsoft.Azure.Search
             IndexBatch<T> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class;
 
         /// <summary>
@@ -368,6 +392,9 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -394,6 +421,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
@@ -417,6 +445,9 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -443,6 +474,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class;
 
         /// <summary>
@@ -464,6 +496,9 @@ namespace Microsoft.Azure.Search
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
@@ -482,6 +517,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
@@ -507,6 +543,9 @@ namespace Microsoft.Azure.Search
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
+        /// <param name='requestProperties'>
+        /// The custom properties to be added to the request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
@@ -525,6 +564,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class;
     }
 }
