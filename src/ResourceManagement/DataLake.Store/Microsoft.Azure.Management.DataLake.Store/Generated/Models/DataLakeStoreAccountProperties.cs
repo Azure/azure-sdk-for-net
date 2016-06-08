@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets gets the status of the Data Lake Store account while being
+        /// Gets the status of the Data Lake Store account while being
         /// provisioned. Possible values include: 'Failed', 'Creating',
         /// 'Running', 'Succeeded', 'Patching', 'Suspending', 'Resuming',
         /// 'Deleting', 'Deleted'
@@ -51,34 +51,33 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public DataLakeStoreAccountStatus? ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets gets the status of the Data Lake Store account after
-        /// provisioning has completed. Possible values include: 'active',
-        /// 'suspended'
+        /// Gets the status of the Data Lake Store account after provisioning
+        /// has completed. Possible values include: 'active', 'suspended'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public DataLakeStoreAccountState? State { get; private set; }
 
         /// <summary>
-        /// Gets gets the account creation time.
+        /// Gets the account creation time.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTime? CreationTime { get; private set; }
 
         /// <summary>
-        /// Gets gets the account last modified time.
+        /// Gets the account last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
         public DateTime? LastModifiedTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the gateway host.
+        /// Gets or sets the gateway host.
         /// </summary>
         [JsonProperty(PropertyName = "endpoint")]
         public string Endpoint { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the default owner group for all new
-        /// folders and files created in the Data Lake Store account.
+        /// Gets or sets the default owner group for all new folders and files
+        /// created in the Data Lake Store account.
         /// </summary>
         [JsonProperty(PropertyName = "defaultGroup")]
         public string DefaultGroup { get; set; }

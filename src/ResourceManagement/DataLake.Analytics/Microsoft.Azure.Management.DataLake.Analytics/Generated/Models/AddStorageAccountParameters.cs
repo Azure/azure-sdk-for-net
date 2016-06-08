@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the properties for the Azure Storage
-        /// account being added.
+        /// Gets or sets the properties for the Azure Storage account being
+        /// added.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public StorageAccountProperties Properties { get; set; }

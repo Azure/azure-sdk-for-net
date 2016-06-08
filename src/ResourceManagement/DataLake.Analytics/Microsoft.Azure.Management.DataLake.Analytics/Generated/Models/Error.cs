@@ -39,32 +39,31 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets gets or sets the HTTP status code or error code associated
-        /// with this error
+        /// Gets the HTTP status code or error code associated with this error
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the error message to display.
+        /// Gets the error message to display.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the target of the error.
+        /// Gets the target of the error.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the list of error details
+        /// Gets the list of error details
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public IList<ErrorDetails> Details { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the inner exceptions or errors, if any
+        /// Gets the inner exceptions or errors, if any
         /// </summary>
         [JsonProperty(PropertyName = "innerError")]
         public InnerError InnerError { get; private set; }

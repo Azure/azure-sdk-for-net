@@ -38,14 +38,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the password for the secret to pass in
+        /// Gets or sets the password for the secret to pass in
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the URI identifier for the secret in the
-        /// format &lt;hostname&gt;:&lt;port&gt;
+        /// Gets or sets the URI identifier for the secret in the format
+        /// &lt;hostname&gt;:&lt;port&gt;
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }

@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets gets the status of the AzureAsuncOperation. Possible values
+        /// Gets the status of the AzureAsuncOperation. Possible values
         /// include: 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]

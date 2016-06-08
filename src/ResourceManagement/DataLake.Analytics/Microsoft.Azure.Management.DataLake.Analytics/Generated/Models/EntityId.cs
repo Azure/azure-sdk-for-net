@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the external table
-        /// associated with this database, schema and table.
+        /// Gets or sets the name of the external table associated with this
+        /// database, schema and table.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public DdlName Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the version of the external data source.
+        /// Gets or sets the version of the external data source.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public Guid? Version { get; set; }

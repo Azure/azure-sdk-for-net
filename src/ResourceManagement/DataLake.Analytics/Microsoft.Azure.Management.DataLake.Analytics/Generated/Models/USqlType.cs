@@ -50,98 +50,96 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the schema associated with
-        /// this table and database.
+        /// Gets or sets the name of the schema associated with this table and
+        /// database.
         /// </summary>
         [JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of type for this type.
+        /// Gets or sets the name of type for this type.
         /// </summary>
         [JsonProperty(PropertyName = "typeName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the type family for this type.
+        /// Gets or sets the type family for this type.
         /// </summary>
         [JsonProperty(PropertyName = "typeFamily")]
         public string TypeFamily { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the C# name for this type.
+        /// Gets or sets the C# name for this type.
         /// </summary>
         [JsonProperty(PropertyName = "cSharpName")]
         public string CSharpName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the fully qualified C# name for this
-        /// type.
+        /// Gets or sets the fully qualified C# name for this type.
         /// </summary>
         [JsonProperty(PropertyName = "fullCSharpName")]
         public string FullCSharpName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the system type ID for this type.
+        /// Gets or sets the system type ID for this type.
         /// </summary>
         [JsonProperty(PropertyName = "systemTypeId")]
         public int? SystemTypeId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the user type ID for this type.
+        /// Gets or sets the user type ID for this type.
         /// </summary>
         [JsonProperty(PropertyName = "userTypeId")]
         public int? UserTypeId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the schema ID for this type.
+        /// Gets or sets the schema ID for this type.
         /// </summary>
         [JsonProperty(PropertyName = "schemaId")]
         public int? SchemaId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the principal ID for this type.
+        /// Gets or sets the principal ID for this type.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public int? PrincipalId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the the switch indicating if this type
-        /// is nullable.
+        /// Gets or sets the the switch indicating if this type is nullable.
         /// </summary>
         [JsonProperty(PropertyName = "isNullable")]
         public bool? IsNullable { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the the switch indicating if this type
-        /// is user defined.
+        /// Gets or sets the the switch indicating if this type is user
+        /// defined.
         /// </summary>
         [JsonProperty(PropertyName = "isUserDefined")]
         public bool? IsUserDefined { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the the switch indicating if this type
-        /// is an assembly type.
+        /// Gets or sets the the switch indicating if this type is an assembly
+        /// type.
         /// </summary>
         [JsonProperty(PropertyName = "isAssemblyType")]
         public bool? IsAssemblyType { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the the switch indicating if this type
-        /// is a table type.
+        /// Gets or sets the the switch indicating if this type is a table
+        /// type.
         /// </summary>
         [JsonProperty(PropertyName = "isTableType")]
         public bool? IsTableType { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the the switch indicating if this type
-        /// is a complex type.
+        /// Gets or sets the the switch indicating if this type is a complex
+        /// type.
         /// </summary>
         [JsonProperty(PropertyName = "isComplexType")]
         public bool? IsComplexType { get; set; }

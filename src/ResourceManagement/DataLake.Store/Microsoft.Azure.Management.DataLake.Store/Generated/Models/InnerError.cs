@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets gets the stack trace for the error
+        /// Gets the stack trace for the error
         /// </summary>
         [JsonProperty(PropertyName = "trace")]
         public string Trace { get; private set; }
 
         /// <summary>
-        /// Gets gets the context for the error message
+        /// Gets the context for the error message
         /// </summary>
         [JsonProperty(PropertyName = "context")]
         public string Context { get; private set; }

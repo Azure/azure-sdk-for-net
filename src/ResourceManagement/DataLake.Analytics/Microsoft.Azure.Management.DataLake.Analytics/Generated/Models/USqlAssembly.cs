@@ -42,47 +42,45 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the assembly.
+        /// Gets or sets the name of the assembly.
         /// </summary>
         [JsonProperty(PropertyName = "assemblyName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the CLR.
+        /// Gets or sets the name of the CLR.
         /// </summary>
         [JsonProperty(PropertyName = "clrName")]
         public string ClrName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the switch indicating if this assembly
-        /// is visible or not.
+        /// Gets or sets the switch indicating if this assembly is visible or
+        /// not.
         /// </summary>
         [JsonProperty(PropertyName = "isVisible")]
         public bool? IsVisible { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the switch indicating if this assembly
-        /// is user defined or not.
+        /// Gets or sets the switch indicating if this assembly is user
+        /// defined or not.
         /// </summary>
         [JsonProperty(PropertyName = "isUserDefined")]
         public bool? IsUserDefined { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of files associated with the
-        /// assembly
+        /// Gets or sets the list of files associated with the assembly
         /// </summary>
         [JsonProperty(PropertyName = "files")]
         public IList<USqlAssemblyFileInfo> Files { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of dependencies associated with
-        /// the assembly
+        /// Gets or sets the list of dependencies associated with the assembly
         /// </summary>
         [JsonProperty(PropertyName = "dependencies")]
         public IList<USqlAssemblyDependencyInfo> Dependencies { get; set; }

@@ -35,8 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets gets or sets the access token for the associated Azure
-        /// Storage Container.
+        /// Gets the access token for the associated Azure Storage Container.
         /// </summary>
         [JsonProperty(PropertyName = "accessToken")]
         public string AccessToken { get; private set; }

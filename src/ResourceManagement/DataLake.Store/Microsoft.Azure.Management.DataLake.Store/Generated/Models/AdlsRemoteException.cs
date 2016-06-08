@@ -37,16 +37,15 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets gets the full class package name for the exception thrown,
-        /// such as 'java.lang.IllegalArgumentException'.
+        /// Gets the full class package name for the exception thrown, such as
+        /// 'java.lang.IllegalArgumentException'.
         /// </summary>
         [JsonProperty(PropertyName = "javaClassName")]
         public string JavaClassName { get; private set; }
 
         /// <summary>
-        /// Gets gets the message associated with the exception that was
-        /// thrown, such as 'Invalid value for webhdfs parameter
-        /// "permission":...'.
+        /// Gets the message associated with the exception that was thrown,
+        /// such as 'Invalid value for webhdfs parameter "permission":...'.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }

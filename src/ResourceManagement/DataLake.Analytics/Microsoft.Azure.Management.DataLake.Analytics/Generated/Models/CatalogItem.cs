@@ -36,14 +36,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the Data Lake Analytics
-        /// account.
+        /// Gets or sets the name of the Data Lake Analytics account.
         /// </summary>
         [JsonProperty(PropertyName = "computeAccountName")]
         public string ComputeAccountName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the version of the catalog item.
+        /// Gets or sets the version of the catalog item.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public Guid? Version { get; set; }

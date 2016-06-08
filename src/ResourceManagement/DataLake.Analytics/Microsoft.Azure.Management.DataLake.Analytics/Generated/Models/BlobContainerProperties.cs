@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets gets or sets the last modified time of the blob container.
+        /// Gets the last modified time of the blob container.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
         public DateTime? LastModifiedTime { get; private set; }

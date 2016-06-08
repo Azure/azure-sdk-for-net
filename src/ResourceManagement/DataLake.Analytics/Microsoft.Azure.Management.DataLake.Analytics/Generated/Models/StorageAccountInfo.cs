@@ -36,15 +36,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the account name associated with the
-        /// Azure storage account.
+        /// Gets or sets the account name associated with the Azure storage
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the properties associated with this
-        /// storage account.
+        /// Gets or sets the properties associated with this storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public StorageAccountProperties Properties { get; set; }

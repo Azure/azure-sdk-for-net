@@ -37,8 +37,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the optional suffix for the Data Lake
-        /// Store account.
+        /// Gets or sets the optional suffix for the Data Lake Store account.
         /// </summary>
         [JsonProperty(PropertyName = "suffix")]
         public string Suffix { get; set; }

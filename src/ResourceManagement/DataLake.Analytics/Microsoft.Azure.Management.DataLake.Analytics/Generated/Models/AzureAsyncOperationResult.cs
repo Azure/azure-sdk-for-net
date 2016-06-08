@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets gets or sets the status of the AzureAsuncOperation. Possible
-        /// values include: 'InProgress', 'Succeeded', 'Failed'
+        /// Gets the status of the AzureAsuncOperation. Possible values
+        /// include: 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public OperationStatus? Status { get; private set; }

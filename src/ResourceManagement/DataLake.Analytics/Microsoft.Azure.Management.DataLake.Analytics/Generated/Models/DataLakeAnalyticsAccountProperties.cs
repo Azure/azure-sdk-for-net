@@ -47,70 +47,70 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets gets the provisioning status of the Data Lake Analytics
-        /// account. Possible values include: 'Failed', 'Creating',
-        /// 'Running', 'Succeeded', 'Patching', 'Suspending', 'Resuming',
-        /// 'Deleting', 'Deleted'
+        /// Gets the provisioning status of the Data Lake Analytics account.
+        /// Possible values include: 'Failed', 'Creating', 'Running',
+        /// 'Succeeded', 'Patching', 'Suspending', 'Resuming', 'Deleting',
+        /// 'Deleted'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public DataLakeAnalyticsAccountStatus? ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets gets the state of the Data Lake Analytics account. Possible
-        /// values include: 'active', 'suspended'
+        /// Gets the state of the Data Lake Analytics account. Possible values
+        /// include: 'active', 'suspended'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public DataLakeAnalyticsAccountState? State { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the default data lake storage account
-        /// associated with this Data Lake Analytics account.
+        /// Gets or sets the default data lake storage account associated with
+        /// this Data Lake Analytics account.
         /// </summary>
         [JsonProperty(PropertyName = "defaultDataLakeStoreAccount")]
         public string DefaultDataLakeStoreAccount { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the maximum supported degree of
-        /// parallelism for this acocunt.
+        /// Gets or sets the maximum supported degree of parallelism for this
+        /// acocunt.
         /// </summary>
         [JsonProperty(PropertyName = "maxDegreeOfParallelism")]
         public int? MaxDegreeOfParallelism { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the maximum supported jobs running under
-        /// the account at the same time.
+        /// Gets or sets the maximum supported jobs running under the account
+        /// at the same time.
         /// </summary>
         [JsonProperty(PropertyName = "maxJobCount")]
         public int? MaxJobCount { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of Data Lake storage accounts
-        /// associated with this account.
+        /// Gets or sets the list of Data Lake storage accounts associated
+        /// with this account.
         /// </summary>
         [JsonProperty(PropertyName = "dataLakeStoreAccounts")]
         public IList<DataLakeStoreAccountInfo> DataLakeStoreAccounts { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of Azure Blob storage accounts
-        /// associated with this account.
+        /// Gets or sets the list of Azure Blob storage accounts associated
+        /// with this account.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccounts")]
         public IList<StorageAccountInfo> StorageAccounts { get; set; }
 
         /// <summary>
-        /// Gets gets or sets the account creation time.
+        /// Gets the account creation time.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTime? CreationTime { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the account last modified time.
+        /// Gets the account last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
         public DateTime? LastModifiedTime { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the full CName endpoint for this account.
+        /// Gets the full CName endpoint for this account.
         /// </summary>
         [JsonProperty(PropertyName = "endpoint")]
         public string Endpoint { get; private set; }

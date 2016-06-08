@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the properties for the Data Lake Store
-        /// account being added.
+        /// Gets or sets the properties for the Data Lake Store account being
+        /// added.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DataLakeStoreAccountInfoProperties Properties { get; set; }

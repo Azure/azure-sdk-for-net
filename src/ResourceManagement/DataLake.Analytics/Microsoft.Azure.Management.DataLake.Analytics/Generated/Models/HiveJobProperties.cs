@@ -38,34 +38,34 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the statement information for each
-        /// statement in the script
+        /// Gets or sets the statement information for each statement in the
+        /// script
         /// </summary>
         [JsonProperty(PropertyName = "statementInfo")]
         public IList<HiveJobStatementInfo> StatementInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the Hive logs location
+        /// Gets or sets the Hive logs location
         /// </summary>
         [JsonProperty(PropertyName = "logsLocation")]
         public string LogsLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the location of the Hive warehouse
+        /// Gets or sets the location of the Hive warehouse
         /// </summary>
         [JsonProperty(PropertyName = "warehouseLocation")]
         public string WarehouseLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the number of statements that will be
-        /// run based on the script
+        /// Gets or sets the number of statements that will be run based on
+        /// the script
         /// </summary>
         [JsonProperty(PropertyName = "statementCount")]
         public int? StatementCount { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the number of statements that have been
-        /// run based on the script
+        /// Gets or sets the number of statements that have been run based on
+        /// the script
         /// </summary>
         [JsonProperty(PropertyName = "executedStatementCount")]
         public int? ExecutedStatementCount { get; set; }

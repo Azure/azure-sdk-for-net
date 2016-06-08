@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the count of items in the list.
+        /// Gets or sets the count of items in the list.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the link to the next page of results.
+        /// Gets or sets the link to the next page of results.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }

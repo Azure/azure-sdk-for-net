@@ -38,27 +38,25 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of ACLSpec entries on a file or
-        /// directory.
+        /// Gets or sets the list of ACLSpec entries on a file or directory.
         /// </summary>
         [JsonProperty(PropertyName = "entries")]
         public IList<string> Entries { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the group owner, an AAD Object ID.
+        /// Gets or sets the group owner, an AAD Object ID.
         /// </summary>
         [JsonProperty(PropertyName = "group")]
         public string Group { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the user owner, an AAD Object ID.
+        /// Gets or sets the user owner, an AAD Object ID.
         /// </summary>
         [JsonProperty(PropertyName = "owner")]
         public string Owner { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the indicator of whether the sticky bit
-        /// is on or off.
+        /// Gets or sets the indicator of whether the sticky bit is on or off.
         /// </summary>
         [JsonProperty(PropertyName = "stickyBit")]
         public bool? StickyBit { get; set; }

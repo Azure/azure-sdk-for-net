@@ -36,14 +36,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the start IP address for the firewall
-        /// rule.
+        /// Gets or sets the start IP address for the firewall rule.
         /// </summary>
         [JsonProperty(PropertyName = "startIpAddress")]
         public string StartIpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the end IP address for the firewall rule.
+        /// Gets or sets the end IP address for the firewall rule.
         /// </summary>
         [JsonProperty(PropertyName = "endIpAddress")]
         public string EndIpAddress { get; set; }

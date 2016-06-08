@@ -41,38 +41,38 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the account regional location.
+        /// Gets or sets the account regional location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the account name.
+        /// Gets or sets the account name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets gets or sets the namespace and type of the account.
+        /// Gets the namespace and type of the account.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the account subscription ID.
+        /// Gets the account subscription ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the value of custom properties.
+        /// Gets or sets the value of custom properties.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the properties defined by Data Lake
-        /// Analytics all properties are specific to each resource provider.
+        /// Gets or sets the properties defined by Data Lake Analytics all
+        /// properties are specific to each resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DataLakeAnalyticsAccountProperties Properties { get; set; }

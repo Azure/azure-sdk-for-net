@@ -38,25 +38,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets gets or sets the name of the blob container.
+        /// Gets the name of the blob container.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the unique identifier of the blob container.
+        /// Gets the unique identifier of the blob container.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the type of the blob container.
+        /// Gets the type of the blob container.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the properties of the blob container.
+        /// Gets the properties of the blob container.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public BlobContainerProperties Properties { get; private set; }

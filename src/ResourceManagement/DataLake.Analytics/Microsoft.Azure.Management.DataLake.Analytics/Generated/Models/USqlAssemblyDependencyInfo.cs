@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the EntityId of the dependency.
+        /// Gets or sets the EntityId of the dependency.
         /// </summary>
         [JsonProperty(PropertyName = "entityId")]
         public EntityId EntityId { get; set; }

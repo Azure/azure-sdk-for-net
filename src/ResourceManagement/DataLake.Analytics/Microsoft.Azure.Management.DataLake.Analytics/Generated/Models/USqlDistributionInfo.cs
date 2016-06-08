@@ -38,28 +38,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the type of this distribution.
+        /// Gets or sets the type of this distribution.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public int? Type { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of directed columns in the
-        /// distribution
+        /// Gets or sets the list of directed columns in the distribution
         /// </summary>
         [JsonProperty(PropertyName = "keys")]
         public IList<USqlDirectedColumn> Keys { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the count of indices using this
-        /// distribution.
+        /// Gets or sets the count of indices using this distribution.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the dynamic count of indices using this
-        /// distribution.
+        /// Gets or sets the dynamic count of indices using this distribution.
         /// </summary>
         [JsonProperty(PropertyName = "dynamicCount")]
         public int? DynamicCount { get; set; }

@@ -39,28 +39,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database the credential
-        /// is in.
+        /// Gets or sets the name of the database the credential is in.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the secret associated with
-        /// the credential.
+        /// Gets or sets the name of the secret associated with the credential.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public string Identity { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the credential.
+        /// Gets or sets the name of the credential.
         /// </summary>
         [JsonProperty(PropertyName = "credentialName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the user name associated with the
-        /// credential.
+        /// Gets or sets the user name associated with the credential.
         /// </summary>
         [JsonProperty(PropertyName = "userName")]
         public string UserName { get; set; }

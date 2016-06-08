@@ -39,31 +39,31 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the firewall rule's name.
+        /// Gets or sets the firewall rule's name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets gets the namespace and type of the firewall Rule.
+        /// Gets the namespace and type of the firewall Rule.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the firewall rule's subscription ID.
+        /// Gets or sets the firewall rule's subscription ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the firewall rule's regional location.
+        /// Gets or sets the firewall rule's regional location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the properties of the firewall rule.
+        /// Gets or sets the properties of the firewall rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public FirewallRuleProperties Properties { get; set; }

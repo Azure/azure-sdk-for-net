@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the schema.
+        /// Gets or sets the name of the schema.
         /// </summary>
         [JsonProperty(PropertyName = "schemaName")]
         public string Name { get; set; }

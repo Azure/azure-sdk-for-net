@@ -38,29 +38,29 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table associated with
-        /// this database and schema.
+        /// Gets or sets the name of the table associated with this database
+        /// and schema.
         /// </summary>
         [JsonProperty(PropertyName = "firstPart")]
         public string FirstPart { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table associated with
-        /// this database and schema.
+        /// Gets or sets the name of the table associated with this database
+        /// and schema.
         /// </summary>
         [JsonProperty(PropertyName = "secondPart")]
         public string SecondPart { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table associated with
-        /// this database and schema.
+        /// Gets or sets the name of the table associated with this database
+        /// and schema.
         /// </summary>
         [JsonProperty(PropertyName = "thirdPart")]
         public string ThirdPart { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table associated with
-        /// this database and schema.
+        /// Gets or sets the name of the table associated with this database
+        /// and schema.
         /// </summary>
         [JsonProperty(PropertyName = "server")]
         public string Server { get; set; }

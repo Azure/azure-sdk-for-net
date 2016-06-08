@@ -37,38 +37,38 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets gets the column where the error occured.
+        /// Gets the column where the error occured.
         /// </summary>
         [JsonProperty(PropertyName = "columnNumber")]
         public int? ColumnNumber { get; private set; }
 
         /// <summary>
-        /// Gets gets the ending index of the error.
+        /// Gets the ending index of the error.
         /// </summary>
         [JsonProperty(PropertyName = "end")]
         public int? End { get; private set; }
 
         /// <summary>
-        /// Gets gets the line number the error occured on.
+        /// Gets the line number the error occured on.
         /// </summary>
         [JsonProperty(PropertyName = "lineNumber")]
         public int? LineNumber { get; private set; }
 
         /// <summary>
-        /// Gets gets the error message.
+        /// Gets the error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets gets the severity of the error. Possible values include:
+        /// Gets the severity of the error. Possible values include:
         /// 'Warning', 'Error', 'Info'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
         public SeverityTypes? Severity { get; private set; }
 
         /// <summary>
-        /// Gets gets the starting index of the error.
+        /// Gets the starting index of the error.
         /// </summary>
         [JsonProperty(PropertyName = "start")]
         public int? Start { get; private set; }

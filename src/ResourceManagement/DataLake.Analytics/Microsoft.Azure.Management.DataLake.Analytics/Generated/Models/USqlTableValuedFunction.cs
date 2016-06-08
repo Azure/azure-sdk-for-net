@@ -39,27 +39,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the schema associated with
-        /// this database.
+        /// Gets or sets the name of the schema associated with this database.
         /// </summary>
         [JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table valued function.
+        /// Gets or sets the name of the table valued function.
         /// </summary>
         [JsonProperty(PropertyName = "tvfName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the definition of the table valued
-        /// function.
+        /// Gets or sets the definition of the table valued function.
         /// </summary>
         [JsonProperty(PropertyName = "definition")]
         public string Definition { get; set; }

@@ -40,34 +40,33 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the secret.
+        /// Gets or sets the name of the secret.
         /// </summary>
         [JsonProperty(PropertyName = "secretName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the creation time of the credential
-        /// object. This is the only information returned about a secret from
-        /// a GET.
+        /// Gets or sets the creation time of the credential object. This is
+        /// the only information returned about a secret from a GET.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTimeOffset? CreationTime { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the URI identifier for the secret in the
-        /// format &lt;hostname&gt;:&lt;port&gt;
+        /// Gets or sets the URI identifier for the secret in the format
+        /// &lt;hostname&gt;:&lt;port&gt;
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the password for the secret to pass in
+        /// Gets or sets the password for the secret to pass in
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }

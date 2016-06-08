@@ -37,22 +37,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or set the name of the resource.
+        /// Gets or sets the name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the path to the resource.
+        /// Gets or sets the path to the resource.
         /// </summary>
         [JsonProperty(PropertyName = "resourcePath")]
         public string ResourcePath { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the job resource type. Possible values
-        /// include: 'VertexResource', 'JobManagerResource',
-        /// 'StatisticsResource', 'VertexResourceInUserFolder',
-        /// 'JobManagerResourceInUserFolder', 'StatisticsResourceInUserFolder'
+        /// Gets or sets the job resource type. Possible values include:
+        /// 'VertexResource', 'JobManagerResource', 'StatisticsResource',
+        /// 'VertexResourceInUserFolder', 'JobManagerResourceInUserFolder',
+        /// 'StatisticsResourceInUserFolder'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public JobResourceType? Type { get; set; }

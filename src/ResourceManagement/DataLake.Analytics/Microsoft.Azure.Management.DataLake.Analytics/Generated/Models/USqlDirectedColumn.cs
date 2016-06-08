@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the index in the table.
+        /// Gets or sets the name of the index in the table.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the switch indicating if the index is
-        /// descending or not.
+        /// Gets or sets the switch indicating if the index is descending or
+        /// not.
         /// </summary>
         [JsonProperty(PropertyName = "descending")]
         public bool? Descending { get; set; }

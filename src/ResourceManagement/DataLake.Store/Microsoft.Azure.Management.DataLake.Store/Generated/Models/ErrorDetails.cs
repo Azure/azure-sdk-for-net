@@ -37,21 +37,20 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets gets the HTTP status code or error code associated with this
-        /// error
+        /// Gets the HTTP status code or error code associated with this error
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
-        /// Gets gets the error message localized based on Accept-Language
+        /// Gets the error message localized based on Accept-Language
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets gets the target of the particular error (for example, the
-        /// name of the property in error).
+        /// Gets the target of the particular error (for example, the name of
+        /// the property in error).
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }

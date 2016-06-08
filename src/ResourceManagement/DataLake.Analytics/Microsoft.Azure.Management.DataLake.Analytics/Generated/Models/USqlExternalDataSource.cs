@@ -40,34 +40,33 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the external data source.
+        /// Gets or sets the name of the external data source.
         /// </summary>
         [JsonProperty(PropertyName = "externalDataSourceName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the provider for the
-        /// external data source.
+        /// Gets or sets the name of the provider for the external data source.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the provider string for the
-        /// external data source.
+        /// Gets or sets the name of the provider string for the external data
+        /// source.
         /// </summary>
         [JsonProperty(PropertyName = "providerString")]
         public string ProviderString { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of types to push down from the
-        /// external data source.
+        /// Gets or sets the list of types to push down from the external data
+        /// source.
         /// </summary>
         [JsonProperty(PropertyName = "pushdownTypes")]
         public IList<string> PushdownTypes { get; set; }

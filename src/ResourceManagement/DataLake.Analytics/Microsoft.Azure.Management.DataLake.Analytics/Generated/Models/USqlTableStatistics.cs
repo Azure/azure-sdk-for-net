@@ -48,85 +48,84 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the schema associated with
-        /// this table and database.
+        /// Gets or sets the name of the schema associated with this table and
+        /// database.
         /// </summary>
         [JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table.
+        /// Gets or sets the name of the table.
         /// </summary>
         [JsonProperty(PropertyName = "tableName")]
         public string TableName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table statistics.
+        /// Gets or sets the name of the table statistics.
         /// </summary>
         [JsonProperty(PropertyName = "statisticsName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the user statistics.
+        /// Gets or sets the name of the user statistics.
         /// </summary>
         [JsonProperty(PropertyName = "userStatName")]
         public string UserStatName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the path to the statistics data.
+        /// Gets or sets the path to the statistics data.
         /// </summary>
         [JsonProperty(PropertyName = "statDataPath")]
         public string StatDataPath { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the creation time of the statistics.
+        /// Gets or sets the creation time of the statistics.
         /// </summary>
         [JsonProperty(PropertyName = "createTime")]
         public DateTimeOffset? CreateTime { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the last time the statistics were
-        /// updated.
+        /// Gets or sets the last time the statistics were updated.
         /// </summary>
         [JsonProperty(PropertyName = "updateTime")]
         public DateTimeOffset? UpdateTime { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the switch indicating if these
-        /// statistics are user created.
+        /// Gets or sets the switch indicating if these statistics are user
+        /// created.
         /// </summary>
         [JsonProperty(PropertyName = "isUserCreated")]
         public bool? IsUserCreated { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the switch indicating if these
-        /// statistics are automatically created.
+        /// Gets or sets the switch indicating if these statistics are
+        /// automatically created.
         /// </summary>
         [JsonProperty(PropertyName = "isAutoCreated")]
         public bool? IsAutoCreated { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the switch indicating if these
-        /// statistics have a filter.
+        /// Gets or sets the switch indicating if these statistics have a
+        /// filter.
         /// </summary>
         [JsonProperty(PropertyName = "hasFilter")]
         public bool? HasFilter { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the filter definition for the statistics.
+        /// Gets or sets the filter definition for the statistics.
         /// </summary>
         [JsonProperty(PropertyName = "filterDefinition")]
         public string FilterDefinition { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of column names associated with
-        /// these statistics.
+        /// Gets or sets the list of column names associated with these
+        /// statistics.
         /// </summary>
         [JsonProperty(PropertyName = "colNames")]
         public IList<string> ColNames { get; set; }

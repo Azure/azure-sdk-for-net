@@ -37,22 +37,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the assembly file type. Possible values
-        /// include: 'Assembly', 'Resource'
+        /// Gets or sets the assembly file type. Possible values include:
+        /// 'Assembly', 'Resource'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public FileType? Type { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the the original path to the assembly
-        /// file.
+        /// Gets or sets the the original path to the assembly file.
         /// </summary>
         [JsonProperty(PropertyName = "originalPath")]
         public string OriginalPath { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the the content path to the assembly
-        /// file.
+        /// Gets or sets the the content path to the assembly file.
         /// </summary>
         [JsonProperty(PropertyName = "contentPath")]
         public string ContentPath { get; set; }

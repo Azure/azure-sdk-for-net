@@ -36,15 +36,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the access key associated with this
-        /// Azure Storage account that will be used to connect to it.
+        /// Gets or sets the access key associated with this Azure Storage
+        /// account that will be used to connect to it.
         /// </summary>
         [JsonProperty(PropertyName = "accessKey")]
         public string AccessKey { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the optional suffix for the Data Lake
-        /// account.
+        /// Gets or sets the optional suffix for the Data Lake account.
         /// </summary>
         [JsonProperty(PropertyName = "suffix")]
         public string Suffix { get; set; }

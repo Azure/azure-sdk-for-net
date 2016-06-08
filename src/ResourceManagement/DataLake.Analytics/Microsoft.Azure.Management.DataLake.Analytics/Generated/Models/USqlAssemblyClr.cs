@@ -38,19 +38,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the assembly.
+        /// Gets or sets the name of the assembly.
         /// </summary>
         [JsonProperty(PropertyName = "assemblyClrName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the CLR.
+        /// Gets or sets the name of the CLR.
         /// </summary>
         [JsonProperty(PropertyName = "clrName")]
         public string ClrName { get; set; }

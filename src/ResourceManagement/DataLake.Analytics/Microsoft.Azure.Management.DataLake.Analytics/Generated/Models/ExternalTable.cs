@@ -36,15 +36,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table associated with
-        /// this database and schema.
+        /// Gets or sets the name of the table associated with this database
+        /// and schema.
         /// </summary>
         [JsonProperty(PropertyName = "tableName")]
         public string TableName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the data source associated with this
-        /// external table.
+        /// Gets or sets the data source associated with this external table.
         /// </summary>
         [JsonProperty(PropertyName = "dataSource")]
         public EntityId DataSource { get; set; }

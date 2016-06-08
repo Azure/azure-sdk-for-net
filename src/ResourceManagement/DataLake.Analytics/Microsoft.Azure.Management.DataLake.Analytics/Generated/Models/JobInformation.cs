@@ -50,73 +50,72 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the job's unique identifier (a GUID).
+        /// Gets or sets the job's unique identifier (a GUID).
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
         public Guid? JobId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the friendly name of the job.
+        /// Gets or sets the friendly name of the job.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the job type of the current job (Hive or
-        /// USql). Possible values include: 'USql', 'Hive'
+        /// Gets or sets the job type of the current job (Hive or USql).
+        /// Possible values include: 'USql', 'Hive'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public JobType Type { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the user or account that submitted the
-        /// job.
+        /// Gets or sets the user or account that submitted the job.
         /// </summary>
         [JsonProperty(PropertyName = "submitter")]
         public string Submitter { get; set; }
 
         /// <summary>
-        /// Gets gets the error message details for the job, if the job failed.
+        /// Gets the error message details for the job, if the job failed.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
         public IList<JobErrorDetails> ErrorMessage { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the degree of parallelism used for this
-        /// job. This must be greater than 0.
+        /// Gets or sets the degree of parallelism used for this job. This
+        /// must be greater than 0.
         /// </summary>
         [JsonProperty(PropertyName = "degreeOfParallelism")]
         public int? DegreeOfParallelism { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the priority value for the current job.
-        /// Lower numbers have a higher priority. By default, a job has a
-        /// priority of 1000. This must be greater than 0.
+        /// Gets or sets the priority value for the current job. Lower numbers
+        /// have a higher priority. By default, a job has a priority of 1000.
+        /// This must be greater than 0.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets gets the time the job was submitted to the service.
+        /// Gets the time the job was submitted to the service.
         /// </summary>
         [JsonProperty(PropertyName = "submitTime")]
         public DateTimeOffset? SubmitTime { get; private set; }
 
         /// <summary>
-        /// Gets gets the start time of the job.
+        /// Gets the start time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public DateTimeOffset? StartTime { get; private set; }
 
         /// <summary>
-        /// Gets gets the completion time of the job.
+        /// Gets the completion time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets gets the job state. When the job is in the Ended state, refer
-        /// to Result and ErrorMessage for details. Possible values include:
+        /// Gets the job state. When the job is in the Ended state, refer to
+        /// Result and ErrorMessage for details. Possible values include:
         /// 'Accepted', 'Compiling', 'Ended', 'New', 'Queued', 'Running',
         /// 'Scheduling', 'Starting', 'Paused', 'WaitingForCapacity'
         /// </summary>
@@ -124,7 +123,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public JobState? State { get; private set; }
 
         /// <summary>
-        /// Gets gets the result of job execution or the current result of the
+        /// Gets the result of job execution or the current result of the
         /// running job. Possible values include: 'None', 'Succeeded',
         /// 'Cancelled', 'Failed'
         /// </summary>
@@ -132,30 +131,29 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public JobResult? Result { get; private set; }
 
         /// <summary>
-        /// Gets gets or sets the log folder path to use in the following
-        /// format:
+        /// Gets the log folder path to use in the following format:
         /// adl://&lt;accountName&gt;.azuredatalakestore.net/system/jobservice/jobs/Usql/2016/03/13/17/18/5fe51957-93bc-4de0-8ddc-c5a4753b068b/logs/.
         /// </summary>
         [JsonProperty(PropertyName = "logFolder")]
         public string LogFolder { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of log file name patterns to
-        /// find in the logFolder. '*' is the only matching character
-        /// allowed. Example format: jobExecution*.log or *mylog*.txt
+        /// Gets or sets the list of log file name patterns to find in the
+        /// logFolder. '*' is the only matching character allowed. Example
+        /// format: jobExecution*.log or *mylog*.txt
         /// </summary>
         [JsonProperty(PropertyName = "logFilePatterns")]
         public IList<string> LogFilePatterns { get; set; }
 
         /// <summary>
-        /// Gets gets the job state audit records, indicating when various
+        /// Gets the job state audit records, indicating when various
         /// operations have been performed on this job.
         /// </summary>
         [JsonProperty(PropertyName = "stateAuditRecords")]
         public IList<JobStateAuditRecord> StateAuditRecords { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the job specific properties.
+        /// Gets or sets the job specific properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public JobProperties Properties { get; set; }

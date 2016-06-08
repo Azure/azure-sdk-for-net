@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Get subscription credentials which uniquely identify Microsoft
         /// Azure subscription. The subscription ID forms part of the URI for
         /// every service call.
         /// </summary>

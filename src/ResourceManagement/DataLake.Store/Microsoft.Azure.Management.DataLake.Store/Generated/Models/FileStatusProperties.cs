@@ -44,62 +44,62 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets gets the last access time as ticks since the epoch.
+        /// Gets the last access time as ticks since the epoch.
         /// </summary>
         [JsonProperty(PropertyName = "accessTime")]
         public long? AccessTime { get; private set; }
 
         /// <summary>
-        /// Gets gets the block size for the file.
+        /// Gets the block size for the file.
         /// </summary>
         [JsonProperty(PropertyName = "blockSize")]
         public long? BlockSize { get; private set; }
 
         /// <summary>
-        /// Gets gets the number of children in the directory.
+        /// Gets the number of children in the directory.
         /// </summary>
         [JsonProperty(PropertyName = "childrenNum")]
         public long? ChildrenNum { get; private set; }
 
         /// <summary>
-        /// Gets gets the group owner.
+        /// Gets the group owner.
         /// </summary>
         [JsonProperty(PropertyName = "group")]
         public string Group { get; private set; }
 
         /// <summary>
-        /// Gets gets the number of bytes in a file.
+        /// Gets the number of bytes in a file.
         /// </summary>
         [JsonProperty(PropertyName = "length")]
         public long? Length { get; private set; }
 
         /// <summary>
-        /// Gets gets the modification time as ticks since the epoch.
+        /// Gets the modification time as ticks since the epoch.
         /// </summary>
         [JsonProperty(PropertyName = "modificationTime")]
         public long? ModificationTime { get; private set; }
 
         /// <summary>
-        /// Gets gets the user who is the owner.
+        /// Gets the user who is the owner.
         /// </summary>
         [JsonProperty(PropertyName = "owner")]
         public string Owner { get; private set; }
 
         /// <summary>
-        /// Gets gets the path suffix.
+        /// Gets the path suffix.
         /// </summary>
         [JsonProperty(PropertyName = "pathSuffix")]
         public string PathSuffix { get; private set; }
 
         /// <summary>
-        /// Gets gets the permission represented as an string.
+        /// Gets the permission represented as an string.
         /// </summary>
         [JsonProperty(PropertyName = "permission")]
         public string Permission { get; private set; }
 
         /// <summary>
-        /// Gets gets the type of the path object. Possible values include:
-        /// 'FILE', 'DIRECTORY'
+        /// Gets the type of the path object. Possible values include: 'FILE',
+        /// 'DIRECTORY'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public FileType? Type { get; private set; }

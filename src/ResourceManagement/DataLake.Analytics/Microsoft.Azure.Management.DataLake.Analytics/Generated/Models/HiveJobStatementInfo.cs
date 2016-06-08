@@ -35,26 +35,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the log location for this statement.
+        /// Gets or sets the log location for this statement.
         /// </summary>
         [JsonProperty(PropertyName = "logLocation")]
         public string LogLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the result preview location for this
-        /// statement.
+        /// Gets or sets the result preview location for this statement.
         /// </summary>
         [JsonProperty(PropertyName = "resultPreviewLocation")]
         public string ResultPreviewLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the result location for this statement.
+        /// Gets or sets the result location for this statement.
         /// </summary>
         [JsonProperty(PropertyName = "resultLocation")]
         public string ResultLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the error message for this statement.
+        /// Gets or sets the error message for this statement.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
         public string ErrorMessage { get; set; }

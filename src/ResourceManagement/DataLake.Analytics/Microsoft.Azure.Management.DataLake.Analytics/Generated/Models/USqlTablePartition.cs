@@ -42,45 +42,44 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the schema associated with
-        /// this table partition and database.
+        /// Gets or sets the name of the schema associated with this table
+        /// partition and database.
         /// </summary>
         [JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table partition.
+        /// Gets or sets the name of the table partition.
         /// </summary>
         [JsonProperty(PropertyName = "partitionName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the Ddl object of the partition's parent.
+        /// Gets or sets the Ddl object of the partition's parent.
         /// </summary>
         [JsonProperty(PropertyName = "parentName")]
         public DdlName ParentName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the index ID for this partition.
+        /// Gets or sets the index ID for this partition.
         /// </summary>
         [JsonProperty(PropertyName = "indexId")]
         public int? IndexId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of labels associated with this
-        /// partition.
+        /// Gets or sets the list of labels associated with this partition.
         /// </summary>
         [JsonProperty(PropertyName = "label")]
         public IList<string> Label { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the creation time of the partition
+        /// Gets or sets the creation time of the partition
         /// </summary>
         [JsonProperty(PropertyName = "createDate")]
         public DateTimeOffset? CreateDate { get; set; }

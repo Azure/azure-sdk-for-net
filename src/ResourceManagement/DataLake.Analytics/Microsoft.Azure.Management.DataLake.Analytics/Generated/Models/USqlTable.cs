@@ -42,45 +42,44 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the schema associated with
-        /// this table and database.
+        /// Gets or sets the name of the schema associated with this table and
+        /// database.
         /// </summary>
         [JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the name of the table.
+        /// Gets or sets the name of the table.
         /// </summary>
         [JsonProperty(PropertyName = "tableName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of columns in this table
+        /// Gets or sets the list of columns in this table
         /// </summary>
         [JsonProperty(PropertyName = "columnList")]
         public IList<USqlTableColumn> ColumnList { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of indices in this table
+        /// Gets or sets the list of indices in this table
         /// </summary>
         [JsonProperty(PropertyName = "indexList")]
         public IList<USqlIndex> IndexList { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of partition keys in the table
+        /// Gets or sets the list of partition keys in the table
         /// </summary>
         [JsonProperty(PropertyName = "partitionKeyList")]
         public IList<string> PartitionKeyList { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the external table associated with the
-        /// table.
+        /// Gets or sets the external table associated with the table.
         /// </summary>
         [JsonProperty(PropertyName = "externalTable")]
         public ExternalTable ExternalTable { get; set; }

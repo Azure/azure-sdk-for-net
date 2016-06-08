@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets gets the result of the operation or request.
+        /// Gets the result of the operation or request.
         /// </summary>
         [JsonProperty(PropertyName = "boolean")]
         public bool? OperationResult { get; private set; }

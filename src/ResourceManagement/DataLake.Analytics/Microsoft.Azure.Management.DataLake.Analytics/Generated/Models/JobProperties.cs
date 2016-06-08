@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the runtime version of the Data Lake
-        /// Analytics engine to use for the specific type of job being run.
+        /// Gets or sets the runtime version of the Data Lake Analytics engine
+        /// to use for the specific type of job being run.
         /// </summary>
         [JsonProperty(PropertyName = "runtimeVersion")]
         public string RuntimeVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the script to run
+        /// Gets or sets the script to run
         /// </summary>
         [JsonProperty(PropertyName = "script")]
         public string Script { get; set; }
