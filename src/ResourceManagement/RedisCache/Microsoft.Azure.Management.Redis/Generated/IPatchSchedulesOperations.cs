@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Redis
     public partial interface IPatchSchedulesOperations
     {
         /// <summary>
-        /// Create or replace patching schedules for redis cache.
+        /// Create or replace the patching schedule for redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Redis
         /// </param>
         Task<AzureOperationResponse<RedisPatchSchedulesResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisPatchSchedulesRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes patching schedules for redis cache.
+        /// Deletes the patching schedule for redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Redis
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets patching schedules for redis cache.
+        /// Gets the patching schedule for redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

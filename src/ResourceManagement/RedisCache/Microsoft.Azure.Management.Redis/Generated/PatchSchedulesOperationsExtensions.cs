@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Redis
     public static partial class PatchSchedulesOperationsExtensions
     {
             /// <summary>
-            /// Create or replace patching schedules for redis cache.
+            /// Create or replace the patching schedule for redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
-            /// Create or replace patching schedules for redis cache.
+            /// Create or replace the patching schedule for redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
-            /// Deletes patching schedules for redis cache.
+            /// Deletes the patching schedule for redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
-            /// Deletes patching schedules for redis cache.
+            /// Deletes the patching schedule for redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
-            /// Gets patching schedules for redis cache.
+            /// Gets the patching schedule for redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
-            /// Gets patching schedules for redis cache.
+            /// Gets the patching schedule for redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

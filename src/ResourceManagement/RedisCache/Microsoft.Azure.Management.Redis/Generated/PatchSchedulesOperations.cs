@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Redis
         public RedisManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Create or replace patching schedules for redis cache.
+        /// Create or replace the patching schedule for redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.Redis
         }
 
         /// <summary>
-        /// Deletes patching schedules for redis cache.
+        /// Deletes the patching schedule for redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Management.Redis
         }
 
         /// <summary>
-        /// Gets patching schedules for redis cache.
+        /// Gets the patching schedule for redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

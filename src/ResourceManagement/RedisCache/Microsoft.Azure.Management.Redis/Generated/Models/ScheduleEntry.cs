@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the ScheduleEntry class.
         /// </summary>
-        public ScheduleEntry(string dayOfWeek, int startHourUtc, string maintenanceWindow = default(string))
+        public ScheduleEntry(string dayOfWeek, int startHourUtc, TimeSpan? maintenanceWindow = default(TimeSpan?))
         {
             DayOfWeek = dayOfWeek;
             StartHourUtc = startHourUtc;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// patching can take.
         /// </summary>
         [JsonProperty(PropertyName = "maintenanceWindow")]
-        public string MaintenanceWindow { get; set; }
+        public TimeSpan? MaintenanceWindow { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
