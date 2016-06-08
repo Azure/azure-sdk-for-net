@@ -42,28 +42,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Reference to the
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IFileFolderRestoreOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Optional. Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Optional. Name of the protected item whose files / folders are to
-        /// be restored.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// Optional. ID of the recovery point whose files / folders are to be
-        /// restored.
+        /// <param name='parameters'>
+        /// Required. Common parameters to be used with the file folder restore
+        /// APIs.
         /// </param>
         /// <param name='request'>
         /// Optional. File / folder restore request for the backup item.
@@ -71,11 +52,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public static BaseRecoveryServicesJobResponse Provision(this IFileFolderRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request)
+        public static BaseRecoveryServicesJobResponse Provision(this IFileFolderRestoreOperations operations, FileFolderRestoreParameters parameters, ProvisionILRRequest request)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IFileFolderRestoreOperations)s).ProvisionAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId, request);
+                return ((IFileFolderRestoreOperations)s).ProvisionAsync(parameters, request);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -91,28 +72,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Reference to the
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IFileFolderRestoreOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Optional. Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Optional. Name of the protected item whose files / folders are to
-        /// be restored.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// Optional. ID of the recovery point whose files / folders are to be
-        /// restored.
+        /// <param name='parameters'>
+        /// Required. Common parameters to be used with the file folder restore
+        /// APIs.
         /// </param>
         /// <param name='request'>
         /// Optional. File / folder restore request for the backup item.
@@ -120,9 +82,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public static Task<BaseRecoveryServicesJobResponse> ProvisionAsync(this IFileFolderRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request)
+        public static Task<BaseRecoveryServicesJobResponse> ProvisionAsync(this IFileFolderRestoreOperations operations, FileFolderRestoreParameters parameters, ProvisionILRRequest request)
         {
-            return operations.ProvisionAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId, request, CancellationToken.None);
+            return operations.ProvisionAsync(parameters, request, CancellationToken.None);
         }
         
         /// <summary>
@@ -136,38 +98,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Reference to the
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IFileFolderRestoreOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Optional. Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Optional. Name of the protected item whose files / folders are to
-        /// be restored.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// Optional. ID of the recovery point whose files / folders are to be
-        /// restored.
+        /// <param name='parameters'>
+        /// Required. Common parameters to be used with the file folder restore
+        /// APIs.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Revoke(this IFileFolderRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId)
+        public static AzureOperationResponse Revoke(this IFileFolderRestoreOperations operations, FileFolderRestoreParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IFileFolderRestoreOperations)s).RevokeAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId);
+                return ((IFileFolderRestoreOperations)s).RevokeAsync(parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -183,36 +126,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Reference to the
         /// Microsoft.Azure.Management.RecoveryServices.Backup.IFileFolderRestoreOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Optional. Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Optional. Name of the protected item whose files / folders are to
-        /// be restored.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// Optional. ID of the recovery point whose files / folders are to be
-        /// restored.
+        /// <param name='parameters'>
+        /// Required. Common parameters to be used with the file folder restore
+        /// APIs.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> RevokeAsync(this IFileFolderRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId)
+        public static Task<AzureOperationResponse> RevokeAsync(this IFileFolderRestoreOperations operations, FileFolderRestoreParameters parameters)
         {
-            return operations.RevokeAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId, CancellationToken.None);
+            return operations.RevokeAsync(parameters, CancellationToken.None);
         }
     }
 }

@@ -42,26 +42,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// To determine whether the backend service has finished processing
         /// the request, call Get Protected Item Operation Result API.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Name of the protected item whose files / folders are to be restored.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// ID of the recovery point whose files / folders are to be restored.
+        /// <param name='parameters'>
+        /// Common parameters to be used with the file folder restore APIs.
         /// </param>
         /// <param name='request'>
         /// File / folder restore request for the backup item.
@@ -72,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> ProvisionAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> ProvisionAsync(FileFolderRestoreParameters parameters, ProvisionILRRequest request, CancellationToken cancellationToken);
         
         /// <summary>
         /// Revokes an iSCSI connection which can be used to download a script
@@ -81,26 +63,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// whether the backend service has finished processing the request,
         /// call --- API.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Name of the protected item whose files / folders are to be restored.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// ID of the recovery point whose files / folders are to be restored.
+        /// <param name='parameters'>
+        /// Common parameters to be used with the file folder restore APIs.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -109,6 +73,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> RevokeAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RevokeAsync(FileFolderRestoreParameters parameters, CancellationToken cancellationToken);
     }
 }

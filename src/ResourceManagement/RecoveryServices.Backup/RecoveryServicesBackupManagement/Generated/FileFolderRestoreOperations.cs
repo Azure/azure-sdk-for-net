@@ -72,28 +72,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// To determine whether the backend service has finished processing
         /// the request, call Get Protected Item Operation Result API.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Optional. Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Optional. Name of the protected item whose files / folders are to
-        /// be restored.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// Optional. ID of the recovery point whose files / folders are to be
-        /// restored.
+        /// <param name='parameters'>
+        /// Required. Common parameters to be used with the file folder restore
+        /// APIs.
         /// </param>
         /// <param name='request'>
         /// Optional. File / folder restore request for the backup item.
@@ -104,16 +85,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public async Task<BaseRecoveryServicesJobResponse> ProvisionAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, ProvisionILRRequest request, CancellationToken cancellationToken)
+        public async Task<BaseRecoveryServicesJobResponse> ProvisionAsync(FileFolderRestoreParameters parameters, ProvisionILRRequest request, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ArgumentNullException("parameters");
             }
-            if (resourceName == null)
+            if (parameters.ResourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceName");
+                throw new ArgumentNullException("parameters.ResourceGroupName");
+            }
+            if (parameters.ResourceName == null)
+            {
+                throw new ArgumentNullException("parameters.ResourceName");
             }
             if (request != null)
             {
@@ -133,13 +118,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                tracingParameters.Add("fabricName", fabricName);
-                tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("protectedItemName", protectedItemName);
-                tracingParameters.Add("recoveryPointId", recoveryPointId);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("request", request);
                 TracingAdapter.Enter(invocationId, this, "ProvisionAsync", tracingParameters);
             }
@@ -152,7 +131,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + Uri.EscapeDataString(parameters.ResourceGroupName);
             url = url + "/providers/";
             if (this.Client.ResourceNamespace != null)
             {
@@ -161,26 +140,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
-            url = url + Uri.EscapeDataString(resourceName);
+            url = url + Uri.EscapeDataString(parameters.ResourceName);
             url = url + "/backupFabrics/";
-            if (fabricName != null)
+            if (parameters.FabricName != null)
             {
-                url = url + Uri.EscapeDataString(fabricName);
+                url = url + Uri.EscapeDataString(parameters.FabricName);
             }
             url = url + "/protectionContainers/";
-            if (containerName != null)
+            if (parameters.ContainerName != null)
             {
-                url = url + Uri.EscapeDataString(containerName);
+                url = url + Uri.EscapeDataString(parameters.ContainerName);
             }
             url = url + "/protectedItems/";
-            if (protectedItemName != null)
+            if (parameters.ProtectedItemName != null)
             {
-                url = url + Uri.EscapeDataString(protectedItemName);
+                url = url + Uri.EscapeDataString(parameters.ProtectedItemName);
             }
             url = url + "/recoveryPoints/";
-            if (recoveryPointId != null)
+            if (parameters.RecoveryPointId != null)
             {
-                url = url + Uri.EscapeDataString(recoveryPointId);
+                url = url + Uri.EscapeDataString(parameters.RecoveryPointId);
             }
             url = url + "/provisionilr";
             List<string> queryParameters = new List<string>();
@@ -211,8 +190,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
-                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("Accept-Language", parameters.CustomRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", parameters.CustomRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -362,28 +341,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// whether the backend service has finished processing the request,
         /// call --- API.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Optional. Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Optional. Name of the protected item whose files / folders are to
-        /// be restored.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// Optional. ID of the recovery point whose files / folders are to be
-        /// restored.
+        /// <param name='parameters'>
+        /// Required. Common parameters to be used with the file folder restore
+        /// APIs.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -392,16 +352,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> RevokeAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> RevokeAsync(FileFolderRestoreParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ArgumentNullException("parameters");
             }
-            if (resourceName == null)
+            if (parameters.ResourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceName");
+                throw new ArgumentNullException("parameters.ResourceGroupName");
+            }
+            if (parameters.ResourceName == null)
+            {
+                throw new ArgumentNullException("parameters.ResourceName");
             }
             
             // Tracing
@@ -411,13 +375,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                tracingParameters.Add("fabricName", fabricName);
-                tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("protectedItemName", protectedItemName);
-                tracingParameters.Add("recoveryPointId", recoveryPointId);
+                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "RevokeAsync", tracingParameters);
             }
             
@@ -429,7 +387,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + Uri.EscapeDataString(parameters.ResourceGroupName);
             url = url + "/providers/";
             if (this.Client.ResourceNamespace != null)
             {
@@ -438,26 +396,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
-            url = url + Uri.EscapeDataString(resourceName);
+            url = url + Uri.EscapeDataString(parameters.ResourceName);
             url = url + "/backupFabrics/";
-            if (fabricName != null)
+            if (parameters.FabricName != null)
             {
-                url = url + Uri.EscapeDataString(fabricName);
+                url = url + Uri.EscapeDataString(parameters.FabricName);
             }
             url = url + "/protectionContainers/";
-            if (containerName != null)
+            if (parameters.ContainerName != null)
             {
-                url = url + Uri.EscapeDataString(containerName);
+                url = url + Uri.EscapeDataString(parameters.ContainerName);
             }
             url = url + "/protectedItems/";
-            if (protectedItemName != null)
+            if (parameters.ProtectedItemName != null)
             {
-                url = url + Uri.EscapeDataString(protectedItemName);
+                url = url + Uri.EscapeDataString(parameters.ProtectedItemName);
             }
             url = url + "/recoveryPoints/";
-            if (recoveryPointId != null)
+            if (parameters.RecoveryPointId != null)
             {
-                url = url + Uri.EscapeDataString(recoveryPointId);
+                url = url + Uri.EscapeDataString(parameters.RecoveryPointId);
             }
             url = url + "/revokeilr";
             List<string> queryParameters = new List<string>();
@@ -488,8 +446,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
-                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("Accept-Language", parameters.CustomRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", parameters.CustomRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

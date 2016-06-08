@@ -112,6 +112,7 @@
     <Compile Include="Generated\Models\EncryptionDetails.cs" />
     <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
+    <Compile Include="Generated\Models\FileFolderRestoreParameters.cs" />
     <Compile Include="Generated\Models\GenericRecoveryPoint.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
     <Compile Include="Generated\Models\GetProtectedItemQueryParam.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Generated\Models\OperationStatusJobsExtendedInfo.cs" />
     <Compile Include="Generated\Models\OperationStatusProvisionILRExtendedInfo.cs" />
     <Compile Include="Generated\Models\OperationStatusValues.cs" />
+    <Compile Include="Generated\Models\OSType.cs" />
     <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs" />
     <Compile Include="Generated\Models\ProtectableItem.cs" />

@@ -29,6 +29,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ClientScriptForConnection
     {
+        private string _oSType;
+        
+        /// <summary>
+        /// Optional. OS type - Windows, Linux etc. for which this file /
+        /// folder restore client script works.
+        /// </summary>
+        public string OSType
+        {
+            get { return this._oSType; }
+            set { this._oSType = value; }
+        }
+        
         private string _scriptContent;
         
         /// <summary>

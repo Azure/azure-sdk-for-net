@@ -1111,6 +1111,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     string scriptExtensionInstance = ((string)scriptExtensionValue);
                                                     clientScriptForConnectionInstance.ScriptExtension = scriptExtensionInstance;
                                                 }
+                                                
+                                                JToken osTypeValue = clientScriptsValue["osType"];
+                                                if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string osTypeInstance = ((string)osTypeValue);
+                                                    clientScriptForConnectionInstance.OSType = osTypeInstance;
+                                                }
                                             }
                                         }
                                     }
