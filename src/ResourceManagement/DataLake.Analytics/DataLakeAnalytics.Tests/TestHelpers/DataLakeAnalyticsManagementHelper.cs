@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using System;
@@ -151,7 +151,11 @@ namespace DataLakeAnalytics.Tests
             var stoInput = new StorageAccountCreateParameters
             {
                 Location = location,
-                AccountType = AccountType.StandardGRS
+                Kind = Kind.Storage,
+                Sku = new Sku
+                {
+                    Name = SkuName.StandardGRS
+                }
             };
 
 
@@ -159,7 +163,7 @@ namespace DataLakeAnalytics.Tests
             storageManagementClient.StorageAccounts.Create(resourceGroupName, storageAccountName, stoInput);
 
             // retrieve the storage account primary access key
-            var accessKey = storageManagementClient.StorageAccounts.ListKeys(resourceGroupName, storageAccountName).Key1;
+            var accessKey = storageManagementClient.StorageAccounts.ListKeys(resourceGroupName, storageAccountName).Keys[0].Value;
             ThrowIfTrue(string.IsNullOrEmpty(accessKey), "storageManagementClient.StorageAccounts.ListKeys returned null.");
 
             // set the storage account suffix
