@@ -7,7 +7,7 @@
   "packOptions": {
     "tags": [ "" ],
     "projectUrl": "",
-    "licenseUrl": "",
+    "licenseUrl": ""
   },
 
   "buildOptions": {
@@ -25,11 +25,12 @@
     }
   },
   "dependencies": {
-    "Microsoft.NETCore.App": { 
-      "type": "platform", 
-      "version": "1.0.0-rc2-*" 
-    }, 
-    "Search.Management.Tests": "1.0.0",
-    "Microsoft.Azure.Search": "3.0.0-preview",
+    "Microsoft.AspNetCore.WebUtilities": "1.0.0-rc2-final",
+    "Microsoft.Azure.Search": "2.0.0-preview",
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0-rc2-*"
+    },
+    "Search.Management.Tests": "1.0.0"
   }
 }
