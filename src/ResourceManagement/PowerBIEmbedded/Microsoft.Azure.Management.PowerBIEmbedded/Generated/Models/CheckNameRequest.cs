@@ -26,13 +26,13 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
         }
 
         /// <summary>
-        /// Workspace collection name
+        /// Gets or sets workspace collection name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Resource type
+        /// Gets or sets resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

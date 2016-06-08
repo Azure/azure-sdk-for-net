@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
         }
 
         /// <summary>
-        /// Azure location
+        /// Gets or sets azure location
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

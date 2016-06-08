@@ -39,25 +39,25 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
         }
 
         /// <summary>
-        /// Resource id
+        /// Gets or sets resource id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Workspace collection name
+        /// Gets or sets workspace collection name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Resource type
+        /// Gets or sets resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// Azure location
+        /// Gets or sets azure location
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Properties
+        /// Gets or sets properties
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }

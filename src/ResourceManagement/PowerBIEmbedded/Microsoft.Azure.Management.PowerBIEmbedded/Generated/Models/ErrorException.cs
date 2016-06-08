@@ -5,10 +5,16 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
     using System;
     using System.Net.Http;
     using System.Runtime.Serialization;
+#if !PORTABLE 
+    using System.Security.Permissions;
+#endif
 
     /// <summary>
     /// Exception thrown for an invalid response with Error information.
     /// </summary>
+#if !PORTABLE 
+    [Serializable]
+#endif
     public class ErrorException : RestException
     {
         /// <summary>
@@ -51,5 +57,39 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
             : base(message, innerException)
         {
         }
+
+#if !PORTABLE 
+        /// <summary>
+        /// Initializes a new instance of the ErrorException class.
+        /// </summary>
+        /// <param name="info">Serialization info.</param>
+        /// <param name="context">Streaming context.</param>
+        protected ErrorException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
+        /// <summary>
+        /// Serializes content of the exception.
+        /// </summary>
+        /// <param name="info">Serialization info.</param>
+        /// <param name="context">Streaming context.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            if (info == null)
+            {
+                throw new ArgumentNullException("info");
+            }
+
+            info.AddValue("Request", Request);
+            info.AddValue("Response", Response);
+            info.AddValue("Body", Body);
+        }
+#endif
     }
 }

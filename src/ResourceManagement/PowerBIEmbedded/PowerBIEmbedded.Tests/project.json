@@ -4,7 +4,7 @@
   "authors": [ "Microsoft Corporation" ],
 
   "packOptions": {
-    "summary": "Storage.Tests Tests.",
+    "summary": "PowerBIEmbedded.Tests Tests.",
     "tags": [ "" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
@@ -28,12 +28,13 @@
         }
     }
   },
-  "dependencies": {
-    "Microsoft.Azure.Test.HttpRecorder": "[1.6.1-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.2-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)",
-    "Microsoft.Azure.ResourceManager": "1.0.0-preview",
-    "xunit": "2.1.0",
-    "dotnet-test-xunit": "1.0.0-rc2-build10015"
-  },
+    "dependencies": {
+        "Microsoft.Azure.Test.HttpRecorder": "[1.6.1-preview,2.0.0)",
+        "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.2-preview,2.0.0)",
+        "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)",
+        "Microsoft.Azure.ResourceManager": "1.0.0-preview",
+        "xunit": "2.1.0",
+        "dotnet-test-xunit": "1.0.0-rc2-build10015",
+        "Microsoft.Azure.Management.PowerBIEmbedded": "1.0.5-preview"
+    },
 }

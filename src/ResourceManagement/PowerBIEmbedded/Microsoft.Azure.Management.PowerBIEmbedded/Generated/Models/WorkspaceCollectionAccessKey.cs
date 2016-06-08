@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
         }
 
         /// <summary>
-        /// Key name. Possible values include: 'key1', 'key2'
+        /// Gets or sets key name. Possible values include: 'key1', 'key2'
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
         public AccessKeyName? KeyName { get; set; }
