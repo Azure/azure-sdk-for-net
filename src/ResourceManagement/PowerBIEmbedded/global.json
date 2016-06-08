@@ -1,6 +1,3 @@
 {
-    "projects": [ "../../TestFramework/", "Microsoft.Azure.Management.PowerBIEmbedded" ],
-    "sdk": {
-        "version": "1.0.0-rc1-final"
-    }
+    "projects": [ "../../TestFramework/", "Microsoft.Azure.Management.PowerBIEmbedded" ]
 }

@@ -3,6 +3,8 @@
 :: Copyright (C) Microsoft Corporation. All Rights Reserved.
 ::
 
+:: https://github.com/Azure/azure-rest-api-specs/commits/master
+
 @echo off
 set autoRestVersion=0.16.0-Nightly20160406
 if  "%1" == "" (
