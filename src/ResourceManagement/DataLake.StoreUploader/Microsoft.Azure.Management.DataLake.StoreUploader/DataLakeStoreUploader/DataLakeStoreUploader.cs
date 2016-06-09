@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 //we need to override the default .NET value for max connections to a host to our number of threads, if necessary (otherwise we won't achieve the parallelism we want)
                 _previousDefaultConnectionLimit = ServicePointManager.DefaultConnectionLimit;
-                ServicePointManager.DefaultConnectionLimit = Math.Max(this.Parameters.FileThreadCount,
+                ServicePointManager.DefaultConnectionLimit = Math.Max(this.Parameters.PerFileThreadCount,
                     ServicePointManager.DefaultConnectionLimit);
                 // check if we are uploading a file or a directory
                 if (!isDirectory)
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     var folderOptions = new ParallelOptions
                     {
                         CancellationToken = _token,
-                        MaxDegreeOfParallelism = this.Parameters.FolderThreadCount
+                        MaxDegreeOfParallelism = this.Parameters.FileCount
                     };
                     try
                     {
@@ -246,12 +246,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 throw new ArgumentNullException("AccountName", "Null or empty Account Name");
             }
 
-            if (this.Parameters.FileThreadCount < 1 || this.Parameters.FileThreadCount > MaxAllowedThreads)
+            if (this.Parameters.PerFileThreadCount < 1 || this.Parameters.PerFileThreadCount > MaxAllowedThreads)
             {
                 throw new ArgumentOutOfRangeException(string.Format("FileThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
             }
 
-            if (this.Parameters.FolderThreadCount < 1 || this.Parameters.FolderThreadCount > MaxAllowedThreads)
+            if (this.Parameters.FileCount < 1 || this.Parameters.FileCount > MaxAllowedThreads)
             {
                 throw new ArgumentOutOfRangeException(string.Format("FolderThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
             }
@@ -645,9 +645,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     // reducing the thread count to make it equal to the segment count
                     // if it is larger, since those extra threads will not be used.
                     var msu = new MultipleSegmentUploader(metadata, 
-                        metadata.SegmentCount < this.Parameters.FileThreadCount ? 
+                        metadata.SegmentCount < this.Parameters.PerFileThreadCount ? 
                         metadata.SegmentCount : 
-                        this.Parameters.FileThreadCount, 
+                        this.Parameters.PerFileThreadCount, 
                         _frontEnd, _token,
                         segmentProgressTracker);
                     msu.UseSegmentBlockBackOffRetryStrategy = this.Parameters.UseSegmentBlockBackOffRetryStrategy;
@@ -695,9 +695,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     // reducing the thread count to make it equal to the segment count
                     // if it is larger, since those extra threads will not be used.
                     var msu = new MultipleSegmentDownloader(metadata,
-                        metadata.SegmentCount < this.Parameters.FileThreadCount ?
+                        metadata.SegmentCount < this.Parameters.PerFileThreadCount ?
                         metadata.SegmentCount :
-                        this.Parameters.FileThreadCount,
+                        this.Parameters.PerFileThreadCount,
                         _frontEnd, _token,
                         segmentProgressTracker);
                     msu.UseSegmentBlockBackOffRetryStrategy = this.Parameters.UseSegmentBlockBackOffRetryStrategy;
@@ -805,7 +805,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             Parallel.For(
                 0,
                 metadata.SegmentCount,
-                new ParallelOptions() { MaxDegreeOfParallelism = this.Parameters.FileThreadCount },
+                new ParallelOptions() { MaxDegreeOfParallelism = this.Parameters.PerFileThreadCount },
                 (i) =>
                 {
                     try
