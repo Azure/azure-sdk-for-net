@@ -66,6 +66,14 @@ namespace Microsoft.Azure.Search
         /// <param name='index'>
         /// The definition of the index to create or update.
         /// </param>
+        /// <param name='allowIndexDowntime'>
+        /// Allows new analyzers, tokenizers, token filters, or char filters
+        /// to be added to an index by taking the index offline for at least
+        /// a few seconds. This temporarily causes indexing and query
+        /// requests to fail. Performance and write availability of the index
+        /// can be impaired for several minutes after the index is updated,
+        /// or longer for very large indexes.
+        /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -75,7 +83,7 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an Azure Search index and all the documents it contains.
         /// </summary>

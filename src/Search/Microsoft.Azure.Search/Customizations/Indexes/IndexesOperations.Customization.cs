@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Search
     internal partial class IndexesOperations
     {
         /// <inheritdoc />
-        public Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return CreateOrUpdateWithHttpMessagesAsync(index != null ? index.Name : null, index, searchRequestOptions, customHeaders, cancellationToken);
+            return CreateOrUpdateWithHttpMessagesAsync(index != null ? index.Name : null, index, allowIndexDowntime, searchRequestOptions, customHeaders, cancellationToken);
         }
         
         /// <inheritdoc />
