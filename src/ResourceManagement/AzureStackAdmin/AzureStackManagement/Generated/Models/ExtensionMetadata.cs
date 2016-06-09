@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.AzureStack.Management.Models
 {
@@ -62,15 +64,15 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._name = value; }
         }
         
-        private string _namespace;
+        private IList<string> _namespaces;
         
         /// <summary>
         /// Optional. Your documentation here.
         /// </summary>
-        public string Namespace
+        public IList<string> Namespaces
         {
-            get { return this._namespace; }
-            set { this._namespace = value; }
+            get { return this._namespaces; }
+            set { this._namespaces = value; }
         }
         
         /// <summary>
@@ -78,6 +80,7 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public ExtensionMetadata()
         {
+            this.Namespaces = new LazyList<string>();
         }
     }
 }
