@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Search.Models
         /// uses a regular expression to identify character sequences to preserve
         /// and a replacement pattern to identify characters to replace. For
         /// example, given the input text "aa bb aa bb", pattern
-        /// "(aa)\\\\\\\\s+(bb)", and replacement "$1#$2", the result would be
+        /// "(aa)\s+(bb)", and replacement "$1#$2", the result would be
         /// "aa#bb aa#bb".
         /// </summary>
         public static readonly TokenFilterName PatternReplace = new TokenFilterName("pattern_replace");
