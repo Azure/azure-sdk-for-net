@@ -1,7 +1,7 @@
 ﻿{
   "version": "1.2.2-preview",
   "copyright": "Copyright (c) Microsoft Corporation",
-  "title": "Test framewrok for Microsoft AutoRest Generated Clients",
+  "title": "Test framework for Microsoft AutoRest Generated Clients",
   "description": "Microsoft.Rest.ClientRuntime.Azure.TestFramework",
   "authors": [ "Microsoft Corporation" ],
   
