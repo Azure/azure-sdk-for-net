@@ -103,10 +103,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", perFileThreadCount: DataLakeStoreUploader.MaxAllowedThreads + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
 
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", fileCount: 0, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", concurrentFileCount: 0, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
 
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", fileCount: DataLakeStoreUploader.MaxAllowedThreads + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", concurrentFileCount: DataLakeStoreUploader.MaxAllowedThreads + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 isRecursive: isRecursive,
                 isDownload: isDownload,
                 maxSegmentLength: 4 * 1024 * 1024,
-                fileCount: 2,
+                concurrentFileCount: 2,
                 localMetadataLocation: Path.GetTempPath());
         }
 

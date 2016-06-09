@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     var folderOptions = new ParallelOptions
                     {
                         CancellationToken = _token,
-                        MaxDegreeOfParallelism = this.Parameters.FileCount
+                        MaxDegreeOfParallelism = this.Parameters.ConcurentFileCount
                     };
                     try
                     {
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 throw new ArgumentOutOfRangeException(string.Format("FileThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
             }
 
-            if (this.Parameters.FileCount < 1 || this.Parameters.FileCount > MaxAllowedThreads)
+            if (this.Parameters.ConcurentFileCount < 1 || this.Parameters.ConcurentFileCount > MaxAllowedThreads)
             {
                 throw new ArgumentOutOfRangeException(string.Format("FolderThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
             }

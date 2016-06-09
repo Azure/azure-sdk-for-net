@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     String.Format("{0}/{1}", this.TargetStreamFolderPath, relativeFilePath),
                     uploadParameters.AccountName,
                     uploadParameters.PerFileThreadCount,
-                    uploadParameters.FileCount,
+                    uploadParameters.ConcurentFileCount,
                     uploadParameters.IsOverwrite,
                     uploadParameters.IsResume,
                     uploadParameters.IsBinary,
