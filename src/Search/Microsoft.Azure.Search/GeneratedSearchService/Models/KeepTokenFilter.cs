@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to lower case all words
-        /// first.
+        /// first. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "keepWordsCase")]
         public bool? LowerCaseKeepWords { get; set; }

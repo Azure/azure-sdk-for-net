@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the minimum n-gram length.
+        /// Gets or sets the minimum n-gram length. Default is 1.
         /// </summary>
         [JsonProperty(PropertyName = "minGram")]
         public int? MinGram { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum n-gram length.
+        /// Gets or sets the maximum n-gram length. Default is 2.
         /// </summary>
         [JsonProperty(PropertyName = "maxGram")]
         public int? MaxGram { get; set; }

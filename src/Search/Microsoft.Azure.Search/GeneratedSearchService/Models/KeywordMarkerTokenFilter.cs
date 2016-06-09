@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to ignore case. If true,
-        /// all words are converted to lower case first.
+        /// all words are converted to lower case first. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "ignoreCase")]
         public bool? IgnoreCase { get; set; }

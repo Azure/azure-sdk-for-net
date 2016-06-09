@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether the original token will be
-        /// kept.
+        /// kept. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "preserveOriginal")]
         public bool? PreserveOriginal { get; set; }

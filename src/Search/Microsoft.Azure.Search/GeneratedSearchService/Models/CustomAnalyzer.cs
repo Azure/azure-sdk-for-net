@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the CustomAnalyzer class.
         /// </summary>
-        public CustomAnalyzer(string name, string tokenizer, IList<string> tokenFilters = default(IList<string>), IList<string> charFilters = default(IList<string>))
+        public CustomAnalyzer(string name, TokenizerName tokenizer, IList<TokenFilterName> tokenFilters = default(IList<TokenFilterName>), IList<CharFilterName> charFilters = default(IList<CharFilterName>))
             : base(name)
         {
             Tokenizer = tokenizer;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Search.Models
         /// words.
         /// </summary>
         [JsonProperty(PropertyName = "tokenizer")]
-        public string Tokenizer { get; set; }
+        public TokenizerName Tokenizer { get; set; }
 
         /// <summary>
         /// Gets or sets a list of token filters used to filter out or modify
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Search.Models
         /// filters are run in the order in which they are listed.
         /// </summary>
         [JsonProperty(PropertyName = "tokenFilters")]
-        public IList<string> TokenFilters { get; set; }
+        public IList<TokenFilterName> TokenFilters { get; set; }
 
         /// <summary>
         /// Gets or sets a list of character filters used to prepare input
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Search.Models
         /// the order in which they are listed.
         /// </summary>
         [JsonProperty(PropertyName = "charFilters")]
-        public IList<string> CharFilters { get; set; }
+        public IList<CharFilterName> CharFilters { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

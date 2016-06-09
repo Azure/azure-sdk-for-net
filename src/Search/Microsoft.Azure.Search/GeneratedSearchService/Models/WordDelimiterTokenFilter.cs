@@ -49,14 +49,14 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating whether to generate part words. If
         /// set, causes parts of words to be generated; for example
-        /// "AzureSearch" becomes "Azure" "Search",
+        /// "AzureSearch" becomes "Azure" "Search". Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "generateWordParts")]
         public bool? GenerateWordParts { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to generate number
-        /// subwords.
+        /// subwords. Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "generateNumberParts")]
         public bool? GenerateNumberParts { get; set; }
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating whether maximum runs of word parts
         /// will be catenated. For example, if this is set to true,
-        /// "Azure-Search" becomes "AzureSearch".
+        /// "Azure-Search" becomes "AzureSearch". Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "catenateWords")]
         public bool? CatenateWords { get; set; }
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating whether maximum runs of number
         /// parts will be catenated. For example, if this is set to true,
-        /// "1-2" becomes "12".
+        /// "1-2" becomes "12". Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "catenateNumbers")]
         public bool? CatenateNumbers { get; set; }
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating whether all subword parts will be
         /// catenated. For example, if this is set to true, "Azure-Search-1"
-        /// becomes "AzureSearch1".
+        /// becomes "AzureSearch1". Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "catenateAll")]
         public bool? CatenateAll { get; set; }
@@ -88,14 +88,14 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating whether to split words on
         /// caseChange. For example, if this is set to true, "AzureSearch"
-        /// becomes "Azure" "Search".
+        /// becomes "Azure" "Search". Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "splitOnCaseChange")]
         public bool? SplitOnCaseChange { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether original words will be
-        /// preserved and added to the subword list.
+        /// preserved and added to the subword list. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "preserveOriginal")]
         public bool? PreserveOriginal { get; set; }
@@ -103,14 +103,14 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating whether to split on numbers. For
         /// example, if this is set to true, "Azure1Search" becomes "Azure"
-        /// "1" "Search".
+        /// "1" "Search". Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "splitOnNumerics")]
         public bool? SplitOnNumerics { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to remove trailing "'s"
-        /// for each subword.
+        /// for each subword. Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "stemEnglishPossessive")]
         public bool? StemEnglishPossessive { get; set; }

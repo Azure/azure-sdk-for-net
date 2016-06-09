@@ -50,28 +50,28 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the minimum word size. Only words longer than this
-        /// get processed.
+        /// get processed. Default is 5.
         /// </summary>
         [JsonProperty(PropertyName = "minWordSize")]
         public int? MinWordSize { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum subword size. Only subwords longer than
-        /// this are outputted.
+        /// this are outputted. Default is 2.
         /// </summary>
         [JsonProperty(PropertyName = "minSubwordSize")]
         public int? MinSubwordSize { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum subword size. Only subwords shorter than
-        /// this are outputted.
+        /// this are outputted. Default is 15.
         /// </summary>
         [JsonProperty(PropertyName = "maxSubwordSize")]
         public int? MaxSubwordSize { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to add only the longest
-        /// matching subword to the output.
+        /// matching subword to the output. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "onlyLongestMatch")]
         public bool? OnlyLongestMatch { get; set; }

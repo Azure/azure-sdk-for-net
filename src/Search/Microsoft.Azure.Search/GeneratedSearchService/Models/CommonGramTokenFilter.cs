@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether common words matching will
-        /// be case insensitive.
+        /// be case insensitive. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "ignoreCase")]
         public bool? IgnoreCase { get; set; }
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets a value that indicates whether the token filter is in
         /// query mode. When in query mode, the token filter generates
         /// bigrams and then removes common words and single terms followed
-        /// by a common word.
+        /// by a common word. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "queryMode")]
         public bool? UseQueryMode { get; set; }

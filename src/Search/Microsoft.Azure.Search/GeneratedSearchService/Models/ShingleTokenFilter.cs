@@ -42,20 +42,21 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the maximum shingle size.
+        /// Gets or sets the maximum shingle size. Default is 2.
         /// </summary>
         [JsonProperty(PropertyName = "maxShingleSize")]
         public int? MaxShingleSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum shingle size.
+        /// Gets or sets the minimum shingle size. Default is 2.
         /// </summary>
         [JsonProperty(PropertyName = "minShingleSize")]
         public int? MinShingleSize { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the output stream will
-        /// contain the input tokens (unigrams) as well as shingles.
+        /// contain the input tokens (unigrams) as well as shingles. Default
+        /// is true.
         /// </summary>
         [JsonProperty(PropertyName = "outputUnigrams")]
         public bool? OutputUnigrams { get; set; }
@@ -63,21 +64,21 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating whether to output unigrams for
         /// those times when no shingles are available. This property takes
-        /// precedence when outputUnigrams is set to false.
+        /// precedence when outputUnigrams is set to false. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "outputUnigramsIfNoShingles")]
         public bool? OutputUnigramsIfNoShingles { get; set; }
 
         /// <summary>
         /// Gets or sets the string to use when joining adjacent tokens to
-        /// form a shingle.
+        /// form a shingle. Default is a single space (" ").
         /// </summary>
         [JsonProperty(PropertyName = "tokenSeparator")]
         public string TokenSeparator { get; set; }
 
         /// <summary>
         /// Gets or sets the string to insert for each position at which there
-        /// is no token.
+        /// is no token. Default is an underscore ("_").
         /// </summary>
         [JsonProperty(PropertyName = "filterToken")]
         public string FilterToken { get; set; }

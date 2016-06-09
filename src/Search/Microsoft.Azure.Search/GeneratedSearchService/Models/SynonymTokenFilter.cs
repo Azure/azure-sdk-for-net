@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to case-fold input for
-        /// matching.
+        /// matching. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "ignoreCase")]
         public bool? IgnoreCase { get; set; }
@@ -66,6 +66,7 @@ namespace Microsoft.Azure.Search.Models
         /// unbelievable, fabulous, amazing. If false, the following list:
         /// incredible, unbelievable, fabulous, amazing will be equivalent
         /// to: incredible, unbelievable, fabulous, amazing =&gt; incredible.
+        /// Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "expand")]
         public bool? Expand { get; set; }

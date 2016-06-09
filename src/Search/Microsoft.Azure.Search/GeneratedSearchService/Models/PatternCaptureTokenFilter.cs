@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to return the original
-        /// token even if one of the patterns matches.
+        /// token even if one of the patterns matches. Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "preserveOriginal")]
         public bool? PreserveOriginal { get; set; }

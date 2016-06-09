@@ -38,14 +38,15 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the maximum number of tokens to produce.
+        /// Gets or sets the maximum number of tokens to produce. Default is 1.
         /// </summary>
         [JsonProperty(PropertyName = "maxTokenCount")]
         public int? MaxTokenCount { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether all tokens from the input
-        /// must be consumed even if maxTokenCount is reached.
+        /// must be consumed even if maxTokenCount is reached. Default is
+        /// false.
         /// </summary>
         [JsonProperty(PropertyName = "consumeAllTokens")]
         public bool? ConsumeAllTokens { get; set; }

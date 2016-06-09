@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the PatternTokenizer class.
         /// </summary>
-        public PatternTokenizer(string name, string pattern = default(string), string flags = default(string), int? group = default(int?))
+        public PatternTokenizer(string name, string pattern = default(string), RegexFlags flags = default(RegexFlags), int? group = default(int?))
             : base(name)
         {
             Pattern = pattern;
@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a regular expression pattern to match token
-        /// separators.
+        /// separators. Default is an expression that matches one or more
+        /// whitespace characters.
         /// </summary>
         [JsonProperty(PropertyName = "pattern")]
         public string Pattern { get; set; }
@@ -50,13 +51,13 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets regular expression flags.
         /// </summary>
         [JsonProperty(PropertyName = "flags")]
-        public string Flags { get; set; }
+        public RegexFlags Flags { get; set; }
 
         /// <summary>
         /// Gets or sets the zero-based ordinal of the matching group in the
-        /// regular expression pattern to extract into tokens. Use -1 (the
-        /// default) if you want to use the entire pattern to split the input
-        /// into tokens, irrespective of matching groups.
+        /// regular expression pattern to extract into tokens. Use -1 if you
+        /// want to use the entire pattern to split the input into tokens,
+        /// irrespective of matching groups. Default is -1.
         /// </summary>
         [JsonProperty(PropertyName = "group")]
         public int? Group { get; set; }

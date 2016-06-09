@@ -40,27 +40,30 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the list of stopwords.
+        /// Gets or sets the list of stopwords. This property and the
+        /// stopwords_list property cannot both be set.
         /// </summary>
         [JsonProperty(PropertyName = "stopwords")]
         public IList<string> Stopwords { get; set; }
 
         /// <summary>
-        /// Gets or sets a predefined list of stopwords to use.
+        /// Gets or sets a predefined list of stopwords to use. This property
+        /// and the stopwords property cannot both be set. Default is
+        /// "_english_".
         /// </summary>
         [JsonProperty(PropertyName = "stopwords_list")]
         public string StopwordsList { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to ignore case. If true,
-        /// all words are converted to lower case first.
+        /// all words are converted to lower case first. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "ignoreCase")]
         public bool? IgnoreCase { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to ignore the last search
-        /// term if it's a stop word.
+        /// term if it's a stop word. Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "removeTrailing")]
         public bool? RemoveTrailingStopWords { get; set; }

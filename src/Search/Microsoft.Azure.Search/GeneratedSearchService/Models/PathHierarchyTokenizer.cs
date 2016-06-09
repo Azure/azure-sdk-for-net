@@ -41,33 +41,33 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the delimiter character to use.
+        /// Gets or sets the delimiter character to use. Default is "/".
         /// </summary>
         [JsonProperty(PropertyName = "delimiter")]
         public string Delimiter { get; set; }
 
         /// <summary>
         /// Gets or sets a value that, if set, replaces the delimiter
-        /// character.
+        /// character. Default is "/".
         /// </summary>
         [JsonProperty(PropertyName = "replacement")]
         public string Replacement { get; set; }
 
         /// <summary>
-        /// Gets or sets the buffer size.
+        /// Gets or sets the buffer size. Default is 1024.
         /// </summary>
         [JsonProperty(PropertyName = "bufferSize")]
         public int? BufferSize { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to generate tokens in
-        /// reverse order.
+        /// reverse order. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "reverse")]
         public bool? ReverseTokenOrder { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of initial tokens to skip.
+        /// Gets or sets the number of initial tokens to skip. Default is 0.
         /// </summary>
         [JsonProperty(PropertyName = "skip")]
         public int? NumberOfTokensToSkip { get; set; }

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to remove duplicates only
-        /// at the same position.
+        /// at the same position. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "onlyOnSamePosition")]
         public bool? OnlyOnSamePosition { get; set; }

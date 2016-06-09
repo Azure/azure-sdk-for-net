@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Search.Models
         /// maximum length are split. Maximum token length that can be used
         /// is 300 characters. Tokens longer than 300 characters are first
         /// split into tokens of length 300 and then each of those tokens is
-        /// split based on the max token length set.
+        /// split based on the max token length set. Default is 255.
         /// </summary>
         [JsonProperty(PropertyName = "maxTokenLength")]
         public int? MaxTokenLength { get; set; }
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating how the tokenizer is used. Set to
         /// true if used as the search tokenizer, set to false if used as the
-        /// indexing tokenizer.
+        /// indexing tokenizer. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "isSearchTokenizer")]
         public bool? IsSearchTokenizer { get; set; }

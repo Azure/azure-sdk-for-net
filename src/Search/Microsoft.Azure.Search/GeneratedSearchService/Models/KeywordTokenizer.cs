@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the read buffer size in bytes.
+        /// Gets or sets the read buffer size in bytes. Default is 256.
         /// </summary>
         [JsonProperty(PropertyName = "bufferSize")]
         public int? BufferSize { get; set; }

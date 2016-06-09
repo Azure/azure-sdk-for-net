@@ -14,8 +14,10 @@ namespace Microsoft.Azure.Search.Models
     [JsonConverter(typeof(ExtensibleEnumConverter<AnalyzerName>))]
     public sealed class AnalyzerName : ExtensibleEnum<AnalyzerName>
     {
-        // MAINTENANCE NOTE: Keep these ordered the same as the table on this page:
+        // MAINTENANCE NOTE: Keep the language analyzers ordered the same as the table on this page:
         // https://msdn.microsoft.com/library/azure/dn879793.aspx
+        // The other pre-defined analyzers come next, and should be ordered the same as the table on this page:
+        // https://msdn.microsoft.com/library/azure/mt605304.aspx
 
         /// <summary>
         /// Microsoft analyzer for Arabic.
@@ -457,6 +459,33 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly AnalyzerName StandardAsciiFoldingLucene =
             new AnalyzerName("standardasciifolding.lucene");
+
+        /// <summary>
+        /// Treats the entire content of a field as a single token. This is useful
+        /// for data like zip codes, ids, and some product names.
+        /// </summary>
+        public static readonly AnalyzerName Keyword = new AnalyzerName("keyword");
+
+        /// <summary>
+        /// Flexibly separates text into terms via a regular expression pattern.
+        /// </summary>
+        public static readonly AnalyzerName Pattern = new AnalyzerName("pattern");
+
+        /// <summary>
+        /// Divides text at non-letters and converts them to lower case.
+        /// </summary>
+        public static readonly AnalyzerName Simple = new AnalyzerName("simple");
+
+        /// <summary>
+        /// Divides text at non-letters; Applies the lowercase and stopword token
+        /// filters.
+        /// </summary>
+        public static readonly AnalyzerName Stop = new AnalyzerName("stop");
+
+        /// <summary>
+        /// An analyzer that uses the whitespace tokenizer.
+        /// </summary>
+        public static readonly AnalyzerName Whitespace = new AnalyzerName("whitespace");
 
         private AnalyzerName(string name) : base(name)
         {

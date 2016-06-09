@@ -40,20 +40,21 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the minimum n-gram length.
+        /// Gets or sets the minimum n-gram length. Default is 1.
         /// </summary>
         [JsonProperty(PropertyName = "minGram")]
         public int? MinGram { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum n-gram length.
+        /// Gets or sets the maximum n-gram length. Default is 2.
         /// </summary>
         [JsonProperty(PropertyName = "maxGram")]
         public int? MaxGram { get; set; }
 
         /// <summary>
         /// Gets or sets specifies which side of the input the n-gram should
-        /// be generated from. Possible values include: 'front', 'back'
+        /// be generated from. Default is "front". Possible values include:
+        /// 'front', 'back'
         /// </summary>
         [JsonProperty(PropertyName = "side")]
         public EdgeNGramTokenFilterSide? Side { get; set; }

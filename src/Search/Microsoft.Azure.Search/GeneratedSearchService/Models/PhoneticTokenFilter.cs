@@ -38,10 +38,11 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the phonetic encoder to use. Possible values include:
-        /// 'metaphone', 'doublemetaphone', 'soundex', 'refinedsoundex',
-        /// 'caverphone1', 'caverphone2', 'cologne', 'nysiis',
-        /// 'koelnerphonetik', 'haasephonetik', 'beidermorse'
+        /// Gets or sets the phonetic encoder to use. Default is "metaphone".
+        /// Possible values include: 'metaphone', 'doublemetaphone',
+        /// 'soundex', 'refinedsoundex', 'caverphone1', 'caverphone2',
+        /// 'cologne', 'nysiis', 'koelnerphonetik', 'haasephonetik',
+        /// 'beidermorse'
         /// </summary>
         [JsonProperty(PropertyName = "encoder")]
         public PhoneticEncoder? Encoder { get; set; }
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a value indicating whether encoded tokens should
         /// replace original tokens. If false, encoded tokens are added as
-        /// synonyms.
+        /// synonyms. Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "replace")]
         public bool? ReplaceOriginalTokens { get; set; }

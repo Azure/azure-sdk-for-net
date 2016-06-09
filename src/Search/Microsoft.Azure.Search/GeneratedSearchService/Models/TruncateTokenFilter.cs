@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the length at which terms will be truncated.
+        /// Gets or sets the length at which terms will be truncated. Default
+        /// is 300.
         /// </summary>
         [JsonProperty(PropertyName = "length")]
         public int? Length { get; set; }

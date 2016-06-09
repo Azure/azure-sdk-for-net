@@ -38,13 +38,14 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the minimum length in characters.
+        /// Gets or sets the minimum length in characters. Default is 0.
         /// </summary>
         [JsonProperty(PropertyName = "min")]
         public int? Min { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum length in characters.
+        /// Gets or sets the maximum length in characters. Default is
+        /// 2147483647 (2^31-1).
         /// </summary>
         [JsonProperty(PropertyName = "max")]
         public int? Max { get; set; }

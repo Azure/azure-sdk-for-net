@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the PatternAnalyzer class.
         /// </summary>
-        public PatternAnalyzer(string name, bool? lowerCaseTerms = default(bool?), string pattern = default(string), string flags = default(string), IList<string> stopwords = default(IList<string>))
+        public PatternAnalyzer(string name, bool? lowerCaseTerms = default(bool?), string pattern = default(string), RegexFlags flags = default(RegexFlags), IList<string> stopwords = default(IList<string>))
             : base(name)
         {
             LowerCaseTerms = lowerCaseTerms;
@@ -41,14 +41,15 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether terms should be
-        /// lower-cased.
+        /// lower-cased. Default is true.
         /// </summary>
         [JsonProperty(PropertyName = "lowercase")]
         public bool? LowerCaseTerms { get; set; }
 
         /// <summary>
         /// Gets or sets a regular expression pattern to match token
-        /// separators.
+        /// separators. Default is an expression that matches one or more
+        /// whitespace characters.
         /// </summary>
         [JsonProperty(PropertyName = "pattern")]
         public string Pattern { get; set; }
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets regular expression flags.
         /// </summary>
         [JsonProperty(PropertyName = "flags")]
-        public string Flags { get; set; }
+        public RegexFlags Flags { get; set; }
 
         /// <summary>
         /// Gets or sets a list of stopwords.
