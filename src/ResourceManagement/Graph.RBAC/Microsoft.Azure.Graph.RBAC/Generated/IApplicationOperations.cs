@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Graph.RBAC
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -35,6 +36,19 @@ namespace Microsoft.Azure.Graph.RBAC
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<Application>> CreateWithHttpMessagesAsync(ApplicationCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists applications by filter parameters.
+        /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ApplicationListResult>> ListWithHttpMessagesAsync(ODataQuery<ApplicationFilter> odataQuery = default(ODataQuery<ApplicationFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an application.
         /// </summary>

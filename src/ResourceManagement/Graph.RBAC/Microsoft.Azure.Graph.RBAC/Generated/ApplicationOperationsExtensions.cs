@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Graph.RBAC
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -51,6 +52,38 @@ namespace Microsoft.Azure.Graph.RBAC
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Lists applications by filter parameters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static ApplicationListResult List(this IApplicationOperations operations, ODataQuery<ApplicationFilter> odataQuery = default(ODataQuery<ApplicationFilter>))
+            {
+                return Task.Factory.StartNew(s => ((IApplicationOperations)s).ListAsync(odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists applications by filter parameters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationListResult> ListAsync( this IApplicationOperations operations, ODataQuery<ApplicationFilter> odataQuery = default(ODataQuery<ApplicationFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
