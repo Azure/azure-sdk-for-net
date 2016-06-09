@@ -4,6 +4,7 @@ using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Net;
 using Xunit;
 using DayOfWeekEnum = Microsoft.Azure.Management.Redis.Models.DayOfWeek;
 
@@ -26,18 +27,20 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(SkuName.Premium, response.Sku.Name);
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
 
-                ScheduleEntry[] entries = new ScheduleEntry[2];
-                entries[0] = new ScheduleEntry
+                ScheduleEntry[] entries = new ScheduleEntry[]
                 {
-                    DayOfWeek = DayOfWeekEnum.Monday,
-                    StartHourUtc = 10,
-                    MaintenanceWindow = TimeSpan.FromHours(10)
-                };
-                entries[1] = new ScheduleEntry
-                {
-                    DayOfWeek = DayOfWeekEnum.Tuesday,
-                    StartHourUtc = 11,
-                    MaintenanceWindow = TimeSpan.FromHours(11)
+                    new ScheduleEntry
+                    {
+                        DayOfWeek = DayOfWeekEnum.Monday,
+                        StartHourUtc = 10,
+                        MaintenanceWindow = TimeSpan.FromHours(10)
+                    },
+                    new ScheduleEntry
+                    {
+                        DayOfWeek = DayOfWeekEnum.Tuesday,
+                        StartHourUtc = 11,
+                        MaintenanceWindow = TimeSpan.FromHours(11)
+                    }
                 };
 
                 ValidateResponseForSchedulePatch(_client.PatchSchedules.CreateOrUpdate(resourceGroupName: "sunnyjapan", name: "sunny-scheduling-dv2", parameters: new RedisPatchSchedulesRequest(entries)));
@@ -45,6 +48,7 @@ namespace AzureRedisCache.Tests
                 _client.PatchSchedules.Delete(resourceGroupName: "sunnyjapan", name: "sunny-scheduling-dv2");
                 var ex = Assert.Throws<CloudException>(() => _client.PatchSchedules.Get(resourceGroupName: "sunnyjapan", name: "sunny-scheduling-dv2"));
                 Assert.Contains("There are no patch schedules found for redis cache 'sunny-scheduling-dv2'", ex.Message);
+                Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
             }
         }
 
