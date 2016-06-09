@@ -19,8 +19,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Cognitive Services Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Cognitive Services management functions for managing Microsoft Azure Cognitive Services accounts.")]
 
-[assembly: AssemblyVersion("0.1.0")]
-[assembly: AssemblyFileVersion("0.1.0")]
+[assembly: AssemblyVersion("0.1.2")]
+[assembly: AssemblyFileVersion("0.1.2")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

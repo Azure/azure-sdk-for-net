@@ -318,37 +318,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the external data sources.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlExternalDataSource> ListExternalDataSources(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlExternalDataSource> ListExternalDataSources(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -364,28 +348,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the external data sources.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -395,9 +363,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -461,37 +429,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlCredential> ListCredentials(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlCredential> ListCredentials(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -506,28 +458,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -537,9 +473,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlCredential>> ListCredentialsAsync(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlCredential>> ListCredentialsAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListCredentialsWithHttpMessagesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCredentialsWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -612,37 +548,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='schemaName'>
             /// The name of the schema containing the procedures.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlProcedure> ListProcedures(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlProcedure> ListProcedures(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlProcedure> odataQuery = default(ODataQuery<USqlProcedure>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -660,28 +580,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='schemaName'>
             /// The name of the schema containing the procedures.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -691,9 +595,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlProcedure>> ListProceduresAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlProcedure>> ListProceduresAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlProcedure> odataQuery = default(ODataQuery<USqlProcedure>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListProceduresWithHttpMessagesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListProceduresWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -766,37 +670,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='schemaName'>
             /// The name of the schema containing the tables.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTable> ListTables(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlTable> ListTables(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTable> odataQuery = default(ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -814,28 +702,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='schemaName'>
             /// The name of the schema containing the tables.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -845,9 +717,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTable>> ListTablesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTable>> ListTablesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTable> odataQuery = default(ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListTablesWithHttpMessagesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListTablesWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -920,37 +792,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='schemaName'>
             /// The name of the schema containing the views.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlView> ListViews(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlView> ListViews(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlView> odataQuery = default(ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -968,28 +824,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='schemaName'>
             /// The name of the schema containing the views.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -999,9 +839,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlView>> ListViewsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlView>> ListViewsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlView> odataQuery = default(ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListViewsWithHttpMessagesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListViewsWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1086,37 +926,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='tableName'>
             /// The name of the table containing the statistics.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTableStatistics> ListTableStatistics(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlTableStatistics> ListTableStatistics(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1138,28 +962,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='tableName'>
             /// The name of the table containing the statistics.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -1169,9 +977,147 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListTableStatisticsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListTableStatisticsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the specified table partition from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the partition.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the partition.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the partition.
+            /// </param>
+            /// <param name='partitionName'>
+            /// The name of the table partition.
+            /// </param>
+            public static USqlTablePartition GetTablePartition(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName)
+            {
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTablePartitionAsync(accountName, databaseName, schemaName, tableName, partitionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the specified table partition from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the partition.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the partition.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the partition.
+            /// </param>
+            /// <param name='partitionName'>
+            /// The name of the table partition.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<USqlTablePartition> GetTablePartitionAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTablePartitionWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, partitionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of table partitions from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the partitions.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the partitions.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the partitions.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTablePartition> ListTablePartitions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTablePartition> odataQuery = default(ODataQuery<USqlTablePartition>), string select = default(string), bool? count = default(bool?))
+            {
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablePartitionsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of table partitions from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the partitions.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the partitions.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the partitions.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTablePartition>> ListTablePartitionsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTablePartition> odataQuery = default(ODataQuery<USqlTablePartition>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTablePartitionsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1319,37 +1265,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='schemaName'>
             /// The name of the schema containing the table valued functions.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTableValuedFunction> ListTableValuedFunctions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlTableValuedFunction> ListTableValuedFunctions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableValuedFunction> odataQuery = default(ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1368,28 +1298,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='schemaName'>
             /// The name of the schema containing the table valued functions.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -1399,9 +1313,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableValuedFunction> odataQuery = default(ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1465,37 +1379,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the assembly.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlAssemblyClr> ListAssemblies(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlAssemblyClr> ListAssemblies(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlAssembly> odataQuery = default(ODataQuery<USqlAssembly>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1510,28 +1408,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the assembly.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -1541,9 +1423,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesAsync(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlAssembly> odataQuery = default(ODataQuery<USqlAssembly>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAssembliesWithHttpMessagesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAssembliesWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1607,37 +1489,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlSchema> ListSchemas(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlSchema> ListSchemas(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlSchema> odataQuery = default(ODataQuery<USqlSchema>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1652,28 +1518,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -1683,9 +1533,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlSchema>> ListSchemasAsync(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlSchema>> ListSchemasAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlSchema> odataQuery = default(ODataQuery<USqlSchema>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSchemasWithHttpMessagesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSchemasWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1740,37 +1590,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlDatabase> ListDatabases(this ICatalogOperations operations, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlDatabase> ListDatabases(this ICatalogOperations operations, string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesAsync(accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesAsync(accountName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1782,28 +1616,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
-            /// <param name='filter'>
-            /// OData filter. Optional.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to return. Optional.
-            /// </param>
-            /// <param name='skip'>
-            /// The number of items to skip over before returning elements. Optional.
-            /// </param>
-            /// <param name='expand'>
-            /// OData expansion. Expand related resources in line with the retrieved
-            /// resources, e.g. Categories?$expand=Products would expand Product data in
-            /// line with each Category entry. Optional.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
             /// OData Select statement. Limits the properties on each entry to just those
             /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-            /// </param>
-            /// <param name='orderby'>
-            /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order you'd like the
-            /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
             /// The Boolean value of true or false to request a count of the matching
@@ -1813,9 +1631,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlDatabase>> ListDatabasesAsync(this ICatalogOperations operations, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlDatabase>> ListDatabasesAsync(this ICatalogOperations operations, string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListDatabasesWithHttpMessagesAsync(accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListDatabasesWithHttpMessagesAsync(accountName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2024,6 +1842,42 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListTableStatisticsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of table partitions from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlTablePartition> ListTablePartitionsNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablePartitionsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of table partitions from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTablePartition>> ListTablePartitionsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTablePartitionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

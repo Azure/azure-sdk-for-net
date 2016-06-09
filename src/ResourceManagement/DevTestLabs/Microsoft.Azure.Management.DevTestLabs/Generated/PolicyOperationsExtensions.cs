@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class PolicyOperationsExtensions
     {
             /// <summary>
-            /// List policies.
+            /// List policies in a given policy set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List policies.
+            /// List policies in a given policy set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List policies.
+            /// List policies in a given policy set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// List policies.
+            /// List policies in a given policy set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

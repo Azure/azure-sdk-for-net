@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface IVirtualMachineOperations
     {
         /// <summary>
-        /// List virtual machines.
+        /// List virtual machines in a given lab.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse> BeginStopWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List virtual machines.
+        /// List virtual machines in a given lab.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

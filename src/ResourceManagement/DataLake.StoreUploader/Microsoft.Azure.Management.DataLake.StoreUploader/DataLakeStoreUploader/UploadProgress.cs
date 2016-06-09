@@ -14,6 +14,8 @@
 // limitations under the License.
 // 
 
+using System;
+
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
 {
     /// <summary>
@@ -24,18 +26,21 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         
         #region Private
 
-        private SegmentUploadProgress[] _segmentProgress;
+        internal SegmentUploadProgress[] _segmentProgress;
+        private readonly IProgress<UploadProgress> _progressTracker;
 
         #endregion
 
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UploadProgress"/> class.
+        /// Initializes a new instance of the <see cref="UploadProgress" /> class.
         /// </summary>
         /// <param name="metadata">The metadata.</param>
-        internal UploadProgress(UploadMetadata metadata)
+        /// <param name="progressTracker">The progress tracker.</param>
+        internal UploadProgress(UploadMetadata metadata, IProgress<UploadProgress> progressTracker = null)
         {
+            _progressTracker = progressTracker;
             Populate(metadata);
         }
 
@@ -47,7 +52,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             this.TotalFileLength = metadata.FileLength;
             this.TotalSegmentCount = metadata.SegmentCount;
-
+            this.UploadId = metadata.UploadId;
             _segmentProgress = new SegmentUploadProgress[this.TotalSegmentCount];
 
             foreach (var segmentInfo in metadata.Segments)
@@ -90,7 +95,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The uploaded byte count.
         /// </value>
-        public long UploadedByteCount { get; private set; }
+        public long UploadedByteCount { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the upload identifier, which is used by folder upload to find each
+        /// individual file upload when updating progress.
+        /// </summary>
+        /// <value>
+        /// The upload identifier.
+        /// </value>
+        internal string UploadId { get; set; }
 
         /// <summary>
         /// Gets the upload progress for a particular segment.
@@ -120,6 +134,18 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 this.UploadedByteCount += deltaLength;
 
                 _segmentProgress[segmentProgress.SegmentNumber] = segmentProgress;
+
+                if(_progressTracker != null)
+                {
+                    try
+                    {
+                        _progressTracker.Report(this);
+                    }
+                    catch
+                    {
+                        // don't break the upload if the progress tracker threw one our way
+                    }
+                }
             }
         }
 

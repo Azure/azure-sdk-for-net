@@ -189,5 +189,18 @@ namespace CognitiveServices.Tests.Helpers
                 Assert.Equal(account.Tags["key2"], "value2");
             }
         }
+
+        public static void ValidateExpectedException(Action action, string expectedErrorCode)
+        {
+            try
+            {
+                action();
+                Assert.True(false, "Expected an Exception");
+            }
+            catch (ErrorException e)
+            {
+                Assert.Equal(expectedErrorCode, e.Body.ErrorProperty.Code);
+            }
+        }
     }
 }

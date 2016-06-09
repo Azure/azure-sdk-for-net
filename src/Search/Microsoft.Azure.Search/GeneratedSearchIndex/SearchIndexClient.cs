@@ -288,9 +288,7 @@ namespace Microsoft.Azure.Search
                         new Iso8601TimeSpanConverter()
                     }
             };
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
-
-            UserAgentHelper.SetUserAgent(HttpClient, this.GetType());
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }
 }

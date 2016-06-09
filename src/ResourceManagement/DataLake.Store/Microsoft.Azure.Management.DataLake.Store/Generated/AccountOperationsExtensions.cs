@@ -169,44 +169,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the next page of Data Lake Store firewall rules, if any, for the
-            /// specified account. The response includes a link to the next page of
-            /// results, if any.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextLink'>
-            /// The URL to the next page of the firewall rules list.
-            /// </param>
-            public static IPage<FirewallRule> FirewallRulesListNext(this IAccountOperations operations, string nextLink)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).FirewallRulesListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the next page of Data Lake Store firewall rules, if any, for the
-            /// specified account. The response includes a link to the next page of
-            /// results, if any.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextLink'>
-            /// The URL to the next page of the firewall rules list.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<FirewallRule>> FirewallRulesListNextAsync(this IAccountOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.FirewallRulesListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates or updates the specified firewall rule.
             /// </summary>
             /// <param name='operations'>
@@ -759,44 +721,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task<IPage<FirewallRule>> ListFirewallRulesNextAsync(this IAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListFirewallRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the next page of Data Lake Store firewall rules, if any, for the
-            /// specified account. The response includes a link to the next page of
-            /// results, if any.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<FirewallRule> FirewallRulesListNextNext(this IAccountOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).FirewallRulesListNextNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the next page of Data Lake Store firewall rules, if any, for the
-            /// specified account. The response includes a link to the next page of
-            /// results, if any.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<FirewallRule>> FirewallRulesListNextNextAsync(this IAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.FirewallRulesListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

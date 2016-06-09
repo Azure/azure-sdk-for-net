@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using Xunit;
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
     {
         #region Private
 
-        private const int LargeFileLength = 50 * 1024 * 1024; // 50mb
+        private const int LargeFileLength = 40 * 1024 * 1024; // 40mb
         private readonly byte[] _largeFileData = new byte[LargeFileLength];
         private string _largeFilePath;
         private const int SmallFileLength = 128; 
@@ -46,20 +47,17 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
         public DataLakeUploaderTests()
         {
-            TestHelpers.GenerateFileData(_largeFileData, out _largeFilePath);
-            TestHelpers.GenerateFileData(_smallFileData, out _smallFilePath);
+            var runFolder = Guid.NewGuid();
+            TestHelpers.GenerateFileData(_largeFileData, runFolder.ToString(), out _largeFilePath);
+            TestHelpers.GenerateFileData(_smallFileData, runFolder.ToString(), out _smallFilePath);
         }
 
         public void Dispose()
         {
-            if (File.Exists(_largeFilePath))
+            var tempDir = Path.GetDirectoryName(_largeFilePath);
+            if (Directory.Exists(tempDir))
             {
-                File.Delete(_largeFilePath);
-            }
-
-            if (File.Exists(_smallFilePath))
-            {
-                File.Delete(_smallFilePath);
+                Directory.Delete(tempDir, true);
             }
         }
 
@@ -97,10 +95,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
             //bad thread count
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", threadCount: 0, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", fileThreadCount: 0, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
 
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", threadCount: DataLakeStoreUploader.MaxAllowedThreads + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
+                () => { new DataLakeStoreUploader(new UploadParameters(_largeFilePath, "1", "foo", fileThreadCount: DataLakeStoreUploader.MaxAllowedThreads + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
         }
 
         /// <summary>
@@ -162,6 +160,36 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
             VerifyFileUploadedSuccessfully(up, frontEnd);
             VerifyProgressStatus(progress, _largeFileData.Length);
+        }
+
+        /// <summary>
+        /// Tests the case of a fresh upload with multiple segments and multiple files.
+        /// </summary>
+        [Fact]
+        public void DataLakeUploader_FreshFolderUpload()
+        {
+            var frontEnd = new InMemoryFrontEnd();
+            var up = CreateParameters(isResume: false, isRecursive: true);
+            UploadFolderProgress progress = null;
+            var syncRoot = new object();
+            IProgress<UploadFolderProgress> progressTracker = new Progress<UploadFolderProgress>(
+                (p) =>
+                {
+                    lock (syncRoot)
+                    {
+                        //it is possible that these come out of order because of race conditions (multiple threads reporting at the same time); only update if we are actually making progress
+                        if (progress == null || progress.UploadedByteCount < p.UploadedByteCount)
+                        {
+                            progress = p;
+                        }
+                    }
+                });
+            var uploader = new DataLakeStoreUploader(up, frontEnd, null, progressTracker);
+
+            uploader.Execute();
+
+            VerifyFileUploadedSuccessfully(up, frontEnd);
+            VerifyFolderProgressStatus(progress, _largeFileData.Length + _smallFileData.Length, 2);
         }
 
         /// <summary>
@@ -250,6 +278,51 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// Tests the resume upload when only some segments were uploaded previously
         /// </summary>
         [Fact]
+        public void DataLakeUploader_ResumePartialFolderUpload()
+        {
+            //attempt to load the file fully, but only allow creating 1 target stream
+            var backingFrontEnd = new InMemoryFrontEnd();
+            var frontEnd = new MockableFrontEnd(backingFrontEnd);
+
+            int createStreamCount = 0;
+            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount) =>
+            {
+                createStreamCount++;
+                if (createStreamCount > 1)
+                {
+                    //we only allow 1 file to be created
+                    throw new IntentionalException();
+                }
+                backingFrontEnd.CreateStream(path, overwrite, data, byteCount);
+            };
+            var up = CreateParameters(isResume: false, isRecursive: true);
+            var uploader = new DataLakeStoreUploader(up, frontEnd);
+            uploader.DeleteMetadataFile();
+
+            Assert.Throws<AggregateException>(() => uploader.Execute());
+            Assert.False(frontEnd.StreamExists(up.TargetStreamPath), "Target stream should not have been created");
+            Assert.Equal(1, backingFrontEnd.StreamCount);
+
+            //resume the upload but point it to the real back-end, which doesn't throw exceptions
+            up = CreateParameters(isResume: true, isRecursive: true);
+            uploader = new DataLakeStoreUploader(up, backingFrontEnd);
+
+            try
+            {
+                uploader.Execute();
+            }
+            finally
+            {
+                uploader.DeleteMetadataFile();
+            }
+
+            VerifyFileUploadedSuccessfully(up, backingFrontEnd);
+        }
+
+        /// <summary>
+        /// Tests the resume upload when only some segments were uploaded previously
+        /// </summary>
+        [Fact]
         public void DataLakeUploader_ResumePartialUpload()
         {
             //attempt to load the file fully, but only allow creating 1 target stream
@@ -304,7 +377,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var up = new UploadParameters(
                 inputFilePath: _smallFilePath,
                 targetStreamPath: "1",
-                threadCount: ThreadCount,
+                fileThreadCount: ThreadCount,
                 accountName: "foo",
                 isResume: false,
                 maxSegmentLength: 4 * 1024 * 1024,
@@ -329,21 +402,30 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <param name="isOverwrite">Whether to enable overwrite.</param>
         /// <param name="filePath">The file path.</param>
         /// <returns></returns>
-        private UploadParameters CreateParameters(bool isResume, bool isOverwrite = false, string filePath = null)
+        private UploadParameters CreateParameters(bool isResume, bool isOverwrite = false, string filePath = null, bool isRecursive = false)
         {
             if (filePath == null)
             {
-                filePath = _largeFilePath;
+                if (isRecursive)
+                {
+                    filePath = Path.GetDirectoryName(_largeFilePath);
+                }
+                else
+                {
+                    filePath = _largeFilePath;
+                }
             }
             return new UploadParameters(
                 inputFilePath: filePath,
                 targetStreamPath: "1",
                 accountName: "foo",
                 useSegmentBlockBackOffRetryStrategy: false,
-                threadCount: ThreadCount,
+                fileThreadCount: ThreadCount,
                 isOverwrite: isOverwrite,
                 isResume: isResume,
+                isRecursive: isRecursive,
                 maxSegmentLength: 4 * 1024 * 1024,
+                folderThreadCount: 2,
                 localMetadataLocation: Path.GetTempPath());
         }
 
@@ -354,7 +436,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <param name="frontEnd">The front end.</param>
         private void VerifyFileUploadedSuccessfully(UploadParameters up, InMemoryFrontEnd frontEnd)
         {
-            VerifyFileUploadedSuccessfully(up, frontEnd, _largeFileData);
+            if (up.IsRecursive)
+            {
+                var fileList = new Dictionary<string, byte[]>
+                {
+                    {string.Format("{0}/{1}", up.TargetStreamPath, Path.GetFileName(_largeFilePath)), _largeFileData },
+                    {string.Format("{0}/{1}", up.TargetStreamPath, Path.GetFileName(_smallFilePath)), _smallFileData }
+                };
+
+                VerifyFileUploadedSuccessfully(fileList, frontEnd);
+            }
+            else
+            {
+                VerifyFileUploadedSuccessfully(up, frontEnd, _largeFileData);
+            }
         }
 
         /// <summary>
@@ -365,12 +460,26 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <param name="fileContents">The file contents.</param>
         private void VerifyFileUploadedSuccessfully(UploadParameters up, InMemoryFrontEnd frontEnd, byte[] fileContents)
         {
-            Assert.True(frontEnd.StreamExists(up.TargetStreamPath), "Uploaded stream does not exist");
-            Assert.Equal(1, frontEnd.StreamCount);
-            Assert.Equal(fileContents.Length, frontEnd.GetStreamLength(up.TargetStreamPath));
+            VerifyFileUploadedSuccessfully(new Dictionary<string, byte[]> { { up.TargetStreamPath, fileContents } }, frontEnd);
+        }
 
-            var uploadedData = frontEnd.GetStreamContents(up.TargetStreamPath);
-            AssertExtensions.AreEqual(fileContents, uploadedData, "Uploaded stream is not binary identical to input file");
+        /// <summary>
+        /// Verifies the file was successfully uploaded.
+        /// </summary>
+        /// <param name="targetPathsAndData">The target paths and data for each path.</param>
+        /// <param name="frontEnd">The front end to use.</param>
+        private void VerifyFileUploadedSuccessfully(Dictionary<string, byte[]> targetPathsAndData, InMemoryFrontEnd frontEnd)
+        {
+            var streamCount = targetPathsAndData.Keys.Count;
+            Assert.Equal(streamCount, frontEnd.StreamCount);
+            foreach (var path in targetPathsAndData.Keys)
+            {
+                Assert.True(frontEnd.StreamExists(path), "Uploaded stream does not exist");
+                Assert.Equal(targetPathsAndData[path].Length, frontEnd.GetStreamLength(path));
+
+                var uploadedData = frontEnd.GetStreamContents(path);
+                AssertExtensions.AreEqual(targetPathsAndData[path], uploadedData, "Uploaded stream is not binary identical to input file");
+            }
         }
 
         /// <summary>
@@ -381,7 +490,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         private void VerifyProgressStatus(UploadProgress progress, long fileLength)
         {
             Assert.Equal(fileLength, progress.TotalFileLength);
-            Assert.True(1 < progress.TotalSegmentCount, "UploadProgress: Unexpected value for TotalSegmentCount");
+            Assert.True(1 <= progress.TotalSegmentCount, "UploadProgress: Unexpected value for TotalSegmentCount");
             Assert.Equal(progress.TotalFileLength, progress.UploadedByteCount);
 
             long uploadedByteSum = 0;
@@ -395,6 +504,26 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
 
             Assert.Equal(progress.UploadedByteCount, uploadedByteSum);
+        }
+
+        /// <summary>
+        /// Verifies the progress status.
+        /// </summary>
+        /// <param name="progress">The progress.</param>
+        /// <param name="totalFileLength">Total length of the file.</param>
+        /// <param name="totalFiles">The total files.</param>
+        private void VerifyFolderProgressStatus(UploadFolderProgress progress, long totalFileLength, int totalFiles)
+        {
+            Assert.Equal(totalFileLength, progress.TotalFileLength);
+            Assert.Equal(totalFiles, progress.TotalFileCount);
+            Assert.Equal(progress.TotalFileCount, progress.UploadedFileCount);
+            Assert.Equal(progress.TotalFileLength, progress.UploadedByteCount);
+
+            for (int i = 0; i < progress.TotalFileCount; i++)
+            {
+                var eachProgress = progress.GetSegmentProgress(i);
+                VerifyProgressStatus(eachProgress, eachProgress.TotalFileLength);
+            }
         }
 
         private class IntentionalException : Exception { }

@@ -31,6 +31,7 @@ namespace Network.Tests.Gateways
                 {
                     Operation = UpdateGatewayPublicDiagnosticsOperation.StartDiagnostics,
                     CustomerStorageName = "daschult20140611a",
+                    // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                     CustomerStorageKey = "EyXneSsrZJJbBT4bHL6p4KdO+S5YCtM75PAA1gVWd39vwHm2CHfosBRRDkJYJWpY2mpnYlMROpgqmEci6b3u0w==",
                     ContainerName = "hydra-test-diagnostics",
                     CaptureDurationInSeconds = "1",
@@ -86,6 +87,7 @@ namespace Network.Tests.Gateways
                 StartGatewayPublicDiagnosticsParameters parameters = new StartGatewayPublicDiagnosticsParameters()
                 {
                     Operation = UpdateGatewayPublicDiagnosticsOperation.StartDiagnostics,
+                    // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                     CustomerStorageKey = "EyXneSsrZJJbBT4bHL6p4KdO+S5YCtM75PAA1gVWd39vwHm2CHfosBRRDkJYJWpY2mpnYlMROpgqmEci6b3u0w==",
                     ContainerName = "hydra-test-diagnostics",
                     CaptureDurationInSeconds = "1",
@@ -145,6 +147,7 @@ namespace Network.Tests.Gateways
                 {
                     Operation = UpdateGatewayPublicDiagnosticsOperation.StartDiagnostics,
                     CustomerStorageName = "daschult20140611a",
+                    // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                     CustomerStorageKey = "EyXneSsrZJJbBT4bHL6p4KdO+S5YCtM75PAA1gVWd39vwHm2CHfosBRRDkJYJWpY2mpnYlMROpgqmEci6b3u0w==",
                     CaptureDurationInSeconds = "1",
                 };
@@ -179,6 +182,7 @@ namespace Network.Tests.Gateways
                 {
                     Operation = UpdateGatewayPublicDiagnosticsOperation.StartDiagnostics,
                     CustomerStorageName = "daschult20140611a",
+                    // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                     CustomerStorageKey = "EyXneSsrZJJbBT4bHL6p4KdO+S5YCtM75PAA1gVWd39vwHm2CHfosBRRDkJYJWpY2mpnYlMROpgqmEci6b3u0w==",
                     ContainerName = "hydra-test-diagnostics",
                 };
@@ -208,6 +212,7 @@ namespace Network.Tests.Gateways
                 {
                     Operation = UpdateGatewayPublicDiagnosticsOperation.StartDiagnostics,
                     CustomerStorageName = "daschult20140611a",
+                    // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                     CustomerStorageKey = "EyXneSsrZJJbBT4bHL6p4KdO+S5YCtM75PAA1gVWd39vwHm2CHfosBRRDkJYJWpY2mpnYlMROpgqmEci6b3u0w==",
                     ContainerName = "hydra-test-diagnostics",
                     CaptureDurationInSeconds = "300",

@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides Microsoft Azure DataLakeUploader functions for managing the Microsoft Azure DataLakeUploader service.")]
 
 [assembly: AssemblyVersion("0.10.0.0")]
-[assembly: AssemblyFileVersion("0.10.1.0")]
+[assembly: AssemblyFileVersion("0.10.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
