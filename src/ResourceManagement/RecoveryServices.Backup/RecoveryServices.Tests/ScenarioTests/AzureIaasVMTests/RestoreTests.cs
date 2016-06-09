@@ -66,6 +66,10 @@ namespace RecoveryServices.Tests
                     StorageAccountId = storageAccountId,
                     SubnetId = string.Empty,
                     VirtualNetworkId = string.Empty,
+                    SourceResourceId = string.Empty,
+                    TargetDomainNameId = string.Empty,
+                    TargetResourceGroupId = string.Empty,
+                    TargetVirtualMachineId = string.Empty,
                 };
 
                 TriggerRestoreRequest triggerRestoreRequest = new TriggerRestoreRequest();
