@@ -198,6 +198,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._importExport; }
         }
         
+        private IJobAccountOperations _jobAccounts;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Job
+        /// Accounts. Contains operations to: Create, Retrieve, Update, and
+        /// Delete Job Accounts
+        /// </summary>
+        public virtual IJobAccountOperations JobAccounts
+        {
+            get { return this._jobAccounts; }
+        }
+        
         private IRecommendedElasticPoolOperations _recommendedElasticPools;
         
         /// <summary>
@@ -366,6 +378,7 @@ namespace Microsoft.Azure.Management.Sql
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._importExport = new ImportExportOperations(this);
+            this._jobAccounts = new JobAccountOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
@@ -453,6 +466,7 @@ namespace Microsoft.Azure.Management.Sql
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._importExport = new ImportExportOperations(this);
+            this._jobAccounts = new JobAccountOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
