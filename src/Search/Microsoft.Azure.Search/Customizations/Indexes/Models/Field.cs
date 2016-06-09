@@ -15,12 +15,6 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public class Field
     {
-        [JsonProperty("type")]
-        private string rawType;
-
-        [JsonProperty("analyzer")]
-        private string rawAnalyzerName;
-
         /// <summary>
         /// Initializes a new instance of the Field class.
         /// </summary>
@@ -75,13 +69,13 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the data type of the field.
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "type")]
         public DataType Type { get; set; }
 
         /// <summary>
         /// Name of the text analyzer to use.
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "analyzer")]
         public AnalyzerName Analyzer { get; set; }
 
         /// <summary>
@@ -142,20 +136,6 @@ namespace Microsoft.Azure.Search.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Type");
             }
-        }
-
-        [OnSerializing]
-        public void OnSerializing(StreamingContext context)
-        {
-            this.rawType = this.Type;
-            this.rawAnalyzerName = this.Analyzer;
-        }
-
-        [OnDeserialized]
-        public void OnDeserialized(StreamingContext context)
-        {
-            this.Type = DataType.Create(this.rawType);  // Type cannot be null, but Analyzer can be.
-            this.Analyzer = this.rawAnalyzerName != null ? AnalyzerName.Create(this.rawAnalyzerName) : null;
         }
     }
 }
