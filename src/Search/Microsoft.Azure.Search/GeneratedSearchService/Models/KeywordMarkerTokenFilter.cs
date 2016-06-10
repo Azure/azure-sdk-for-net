@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the KeywordMarkerTokenFilter class.
         /// </summary>
-        public KeywordMarkerTokenFilter(string name, IList<string> keywords = default(IList<string>), bool? ignoreCase = default(bool?))
+        public KeywordMarkerTokenFilter(string name, IList<string> keywords, bool? ignoreCase = default(bool?))
             : base(name)
         {
             Keywords = keywords;
@@ -56,6 +56,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (Keywords == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Keywords");
+            }
         }
     }
 }
