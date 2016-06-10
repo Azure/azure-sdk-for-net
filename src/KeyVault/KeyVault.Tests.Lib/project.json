@@ -15,11 +15,11 @@
     "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0)",
     "Microsoft.Extensions.Configuration": "1.0.0-rc2-final",
     "Microsoft.Azure.Graph.RBAC": "2.2.1-preview",
-    "Microsoft.Azure.ResourceManager": "3.0.0-preview",
     "Microsoft.Azure.KeyVault": "2.0.0-preview",
     "Microsoft.Azure.Management.KeyVault": "2.0.0-preview",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.2.2-preview",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-final"
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-final",
+    "Microsoft.Azure.Management.ResourceManager": "1.1.2-preview"
   },
 
   "frameworks": {

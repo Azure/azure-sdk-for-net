@@ -28,11 +28,11 @@ using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.KeyVault.Models;
-using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Azure.Management.ResourceManager;
 
 namespace KeyVault.Tests
 {
