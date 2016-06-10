@@ -109,8 +109,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets network traffic is allowed or denied. Possible values
-        /// are 'Allow' and 'Deny. Possible values for this property include:
-        /// 'Allow', 'Deny'.
+        /// are 'Allow' and 'Deny'. Possible values for this property
+        /// include: 'Allow', 'Deny'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.access")]
         public string Access { get; set; }
