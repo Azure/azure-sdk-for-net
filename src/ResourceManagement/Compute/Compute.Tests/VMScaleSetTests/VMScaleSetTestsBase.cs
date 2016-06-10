@@ -208,11 +208,11 @@ namespace Compute.Tests
             var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
 
             var subnetResponse = subnet ?? CreateVNET(rgName);
-
+            var ipconfigNames = new List<string> { ComputeManagementTestUtilities.GenerateName("ip") };
             var nicResponse = CreateNIC(
                 rgName,
                 subnetResponse,
-                getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
+                getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null, ipconfigNames);
 
             inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount.Name, imageRef, subnetResponse.Id);
             if (vmScaleSetCustomizer != null)

@@ -216,11 +216,12 @@ namespace Compute.Tests
                 PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
                 
                 Subnet subnetResponse = CreateVNET(rgName);
-
+                var ipconfigNames = new List<string> { ComputeManagementTestUtilities.GenerateName("ip") };
                 NetworkInterface nicResponse = CreateNIC(
                     rgName, 
                     subnetResponse, 
-                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
+                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null,
+                    ipconfigNames);
 
                 string asetId = CreateAvailabilitySet(rgName, asName);
 
@@ -371,11 +372,16 @@ namespace Compute.Tests
             return putVnetResponse;
         }
 
-        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null)
+        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, List<string> ipconfigNames, string nicname = null)
         {
             // Create Nic
-            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
-            string ipConfigName = ComputeManagementTestUtilities.GenerateName("ip");
+            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");            
+            var ipConfigurations = new List<NetworkInterfaceIPConfiguration>();
+            bool primary = false;
+            foreach(var ip in ipconfigNames)
+            {
+                ipConfigurations.Add(new NetworkInterfaceIPConfiguration() { Name = ip, PrivateIPAllocationMethod = IPAllocationMethod.Dynamic, Subnet = subnet, });
+            }
 
             var nicParameters = new NetworkInterface()
             {
@@ -384,27 +390,21 @@ namespace Compute.Tests
                 {
                     { "key" ,"value" }
                 },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
-                    new NetworkInterfaceIPConfiguration()
-                    {
-                        Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        Subnet = subnet,
-                    }
-                }
+                IpConfigurations = ipConfigurations
+                             
             };
-
             if (publicIPaddress != null)
             {
                 nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.PublicIPAddress() { Id = publicIPaddress };
             }
 
+            nicParameters.IpConfigurations[0].Primary = true;
+
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
             var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicname);
             return getNicResponse;
         }
-
+      
         private static string GetChildAppGwResourceId(string subscriptionId,
                                                         string resourceGroupName,
                                                         string appGwname,
