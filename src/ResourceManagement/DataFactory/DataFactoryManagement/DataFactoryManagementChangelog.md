@@ -1,17 +1,17 @@
 For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
-## Version 4.10.0
-_Release date: 2016.06.03_
-
-### Bug fix
-* Introduce an overload of ActivityWindowOperationExtensions.List() which takes an ActivityWindowsByActivityListParameters instance. 
-
 ## Version 4.9.0
-_Release date: 2016.06.03_ 
+_Release date: 2016.06.10_ 
 
 ### Feature Additions
+
 * Add EnableStaging and StagingSettings properties to CopyActivity
     * Enable copy via interim staging.
+
+### Bug fix
+
+* Introduce an overload of ActivityWindowOperationExtensions.List() which takes an ActivityWindowsByActivityListParameters instance. 
+* Mark WriteBatchSize and WriteBatchTimeout as optional in CopySink.
 
 ## Version 4.8.0
 _Release date: 2016.05.25_
