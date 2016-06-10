@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface IVirtualNetworkOperations
     {
         /// <summary>
-        /// List virtual networks.
+        /// List virtual networks in a given lab.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </param>
         Task<AzureOperationResponse<VirtualNetwork>> PatchResourceWithHttpMessagesAsync(string resourceGroupName, string labName, string name, VirtualNetwork virtualNetwork, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List virtual networks.
+        /// List virtual networks in a given lab.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

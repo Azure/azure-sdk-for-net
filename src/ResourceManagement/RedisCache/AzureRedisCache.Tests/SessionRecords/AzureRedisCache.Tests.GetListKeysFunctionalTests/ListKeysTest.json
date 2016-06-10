@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra15483/providers/Microsoft.Cache/Redis/hydracache1/listKeys?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL2h5ZHJhMTU0ODMvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMS9saXN0S2V5cz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra11029/providers/Microsoft.Cache/Redis/hydracache1/listKeys?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL2h5ZHJhMTEwMjkvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMS9saXN0S2V5cz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "096d7fc3-15b1-4898-8e67-5fe8cd1fa1db"
+          "be31ebd7-a1ac-482e-bfb7-3eb4de773b8a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"aAIyVK5gavjJXJ8KgXpV5GLmVsVGdLRq1YqLwmwXcIQ=\",\r\n  \"secondaryKey\": \"HhO0rbA45uHND0pz2lJNzjBtL/LXWoAXiRHtmA6QF4c=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"KB3eyuceFDvMSFLf33wnNTBw/25ZUUWde8VGlZxTc9o=\",\r\n  \"secondaryKey\": \"cPRwBJ9guYIaw4xZDwrrnXnS9cMcC+KEUmUDCrq/JJY=\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 22 Mar 2016 22:38:07 GMT"
+          "Wed, 18 May 2016 22:57:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,22 +43,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "685cd601-659c-4d85-9a55-0b5690ad8be3"
+          "b2388dc2-9b74-4dbe-a2b5-21a9b54d9892"
         ],
         "x-rp-server-mvid": [
-          "dff20dfc-37d1-4691-adc5-29065fb74e50"
+          "bd1e4ace-5dbd-4224-976a-99df2f0c997c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "ccaa79f6-2973-4312-8220-ec304e871c54"
+          "53e6cd2a-1509-407e-beec-80bbe709d7ca"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160322T223807Z:ccaa79f6-2973-4312-8220-ec304e871c54"
+          "NORTHEUROPE:20160518T225718Z:53e6cd2a-1509-407e-beec-80bbe709d7ca"
         ]
       },
       "StatusCode": 200

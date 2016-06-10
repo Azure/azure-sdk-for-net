@@ -6,19 +6,21 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.DevTestLabs.Models
+namespace Microsoft.Azure.Management.CognitiveServices.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for CostPropertyType.
+    /// Defines values for KeyName.
     /// </summary>
-    public static class CostPropertyType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum KeyName
     {
-        public const string Unavailable = "Unavailable";
-        public const string Reported = "Reported";
-        public const string Projected = "Projected";
+        [EnumMember(Value = "Key1")]
+        Key1,
+        [EnumMember(Value = "Key2")]
+        Key2
     }
 }

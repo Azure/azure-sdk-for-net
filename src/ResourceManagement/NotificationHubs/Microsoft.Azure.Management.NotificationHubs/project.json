@@ -1,52 +1,53 @@
 {
-  "version": "1.0.0-preview",
-  "description": "Provides developers with libraries to create  and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.",
+  "version": "1.0.1-preview",
+  "description": "Provides developers with libraries to create and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.",
   "authors": [ "Microsoft" ],
-  "tags": [ "Microsoft Azure NotificationHubs Management", "NotificationHubs", "NotificationHubs management", "REST HTTP client", "windowsazureofficial" ],
-  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
 
-  "compilationOptions": {
+  "packOptions": {
+    "summary": "Provides developers with libraries to create and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.",
+    "iconUrl": "https://cdn.rawgit.com/Azure/AutoRest/7c1576dfb56974176223545cfac5762d168ded5f/Documentation/images/autorest-small-flat.png",
+    "tags": [ "Microsoft Azure NotificationHubs Management", "NotificationHubs", "NotificationHubs management", "REST HTTP client", "windowsazureofficial" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "requireLicenseAcceptance":  true,
+  },
+
+  "buildOptions": {
     "delaySign": true,
+    "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0, 4.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)"
   },
 
   "frameworks": {
     "net45": {
-      "frameworkAssemblies": {
-        "System.Collections": { "type": "build" },
-        "System.Linq.Expressions": {"type": "build"},
-        "System.Runtime": {"type": "build"},
-        "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": {"type": "build"}
-      }
     },
-    "dnxcore50": {
+    "netstandard1.5": {
+      "imports": ["dnxcore50"],
       "dependencies": {
-        "System.Diagnostics.Tools": "4.0.1-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516",
-        "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
-        "System.Threading.Tasks": "4.0.11-beta-23516",
-        "System.Xml.ReaderWriter": "4.0.11-beta-23516"
+        "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027",
+        "Microsoft.NETCore.Runtime": "1.0.2-rc2-24027",
+        "System.Diagnostics.Debug": "4.0.11-rc2-24027",
+        "System.Diagnostics.Tools": "4.0.1-rc2-24027",
+        "System.Diagnostics.Tracing": "4.1.0-rc2-24027",
+        "Microsoft.CSharp": "4.0.1-rc2-24027",
+        "System.Threading.Thread": "4.0.0-rc2-24027", 
+        "System.Threading.Tasks": "4.0.11-rc2-24027",
+        "System.Threading.Timer": "4.0.1-rc2-24027",
+        "System.Collections": "4.0.11-rc2-24027",
+        "System.Linq": "4.1.0-rc2-24027",
+        "System.Runtime": "4.1.0-rc2-24027",
+        "System.Net.Http": "4.0.1-rc2-24027",
+        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027"
       }
     },
-    ".NETPortable,Version=v4.5,Profile=Profile111": {
-      "frameworkAssemblies": {
-        "System.Collections": { "type": "build" },
-        "System.Linq": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Net.Http": { "type": "build" },
-        "System.Net.Primitives": { "type": "build" },
-        "System.Resources.ResourceManager":  {"type" : "build"},
-        "System.Runtime": { "type": "build" },
-        "System.Runtime.Serialization.Primitives":  { "type": "build" },
-        "System.Text.Encoding": { "type": "build" },
-        "System.Text.RegularExpressions": { "type": "build" },
-        "System.Threading.Tasks": { "type": "build" }
+    "netstandard1.1": {
+      "imports": ["dnxcore50"],
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027"
       }
     }
   }

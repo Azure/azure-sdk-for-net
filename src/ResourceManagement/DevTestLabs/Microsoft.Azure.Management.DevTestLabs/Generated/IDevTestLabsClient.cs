@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using Models;
 
     /// <summary>
-    /// The DevTest Labs client version 2015-05-21-preview.
+    /// The DevTest Labs Client.
     /// </summary>
     public partial interface IDevTestLabsClient : IDisposable
     {
@@ -85,11 +85,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// Gets the IArtifactOperations.
         /// </summary>
         IArtifactOperations Artifact { get; }
-
-        /// <summary>
-        /// Gets the ICostInsightOperations.
-        /// </summary>
-        ICostInsightOperations CostInsight { get; }
 
         /// <summary>
         /// Gets the ICostOperations.

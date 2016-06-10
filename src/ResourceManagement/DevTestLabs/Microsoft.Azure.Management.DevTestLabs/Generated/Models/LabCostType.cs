@@ -13,12 +13,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for TaskType.
+    /// Defines values for LabCostType.
     /// </summary>
-    public static class TaskType
+    public static class LabCostType
     {
-        public const string LabVmsShutdownTask = "LabVmsShutdownTask";
-        public const string LabVmsStartupTask = "LabVmsStartupTask";
-        public const string LabBillingTask = "LabBillingTask";
+        public const string Unavailable = "Unavailable";
+        public const string Reported = "Reported";
+        public const string Projected = "Projected";
     }
 }

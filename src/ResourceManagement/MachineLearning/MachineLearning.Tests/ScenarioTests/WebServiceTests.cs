@@ -47,15 +47,13 @@ namespace MachineLearning.Tests.ScenarioTests
         private const string CPResourceType = "commitmentPlans";
 
         private const string ResourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.MachineLearning/webServices/{2}";
-        private const string ServiceDefinitionJsonFileDogfood = @".\TestData\GraphWebServiceDefinition_Dogfood.json";
-        private const string ServiceDefinitionJsonFileProduction = @".\TestData\GraphWebServiceDefinition_Prod.json";
-
+        
         /// <summary>
         /// The tests are currently recorded against Azure Production, using the web service definition file specified by ServiceDefinitionJsonFileProduction.
         /// When testing new changes to the SDK, you can first record the test against dogfood using the ServiceDefinitionJsonFileDogfood file. Then once everything
         /// is working as expected, re-record the test against Prod before submitting an official pull request.
         /// </summary>
-        private const string TestServiceDefinitionFile = WebServiceTests.ServiceDefinitionJsonFileProduction;
+        private readonly string TestServiceDefinitionFile;
 
         private const int AsyncOperationPollingIntervalSeconds = 5;
 
@@ -66,6 +64,11 @@ namespace MachineLearning.Tests.ScenarioTests
             AzureMLWebServicesManagementClient amlServicesClient, 
             string cpResourceId, 
             StorageAccount storageAccount);
+
+        public WebServiceTests()
+        {
+            TestServiceDefinitionFile = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "GraphWebServiceDefinition_Prod.json");
+        }
 
         [Fact]
         public void CreateGetRemoveGraphWebService()
@@ -79,7 +82,7 @@ namespace MachineLearning.Tests.ScenarioTests
                     amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName);
 
                     // Create and validate the AML service resource
-                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(WebServiceTests.TestServiceDefinitionFile, cpResourceId, storageAccount);
+                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(this.TestServiceDefinitionFile, cpResourceId, storageAccount);
                     var webService = amlServicesClient.WebServices.CreateOrUpdateWithRequestId(serviceDefinition, resourceGroupName, webServiceName);
                     WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, webService, serviceDefinition);
 
@@ -121,7 +124,7 @@ namespace MachineLearning.Tests.ScenarioTests
                 try
                 {
                     // Create and validate the AML service resource
-                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(WebServiceTests.TestServiceDefinitionFile, cpResourceId, storageAccount);
+                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(this.TestServiceDefinitionFile, cpResourceId, storageAccount);
                     var webService = amlServicesClient.WebServices.CreateOrUpdateWithRequestId(serviceDefinition, resourceGroupName, webServiceName);
                     WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, webService, serviceDefinition);
 
@@ -171,7 +174,7 @@ namespace MachineLearning.Tests.ScenarioTests
                 try
                 {
                     // Create a few webservices in the same resource group
-                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(WebServiceTests.TestServiceDefinitionFile, cpResourceId, storageAccount);
+                    var serviceDefinition = WebServiceTests.GetServiceDefinitionFromTestData(this.TestServiceDefinitionFile, cpResourceId, storageAccount);
                     var webService1 = amlServicesClient.WebServices.CreateOrUpdateWithRequestId(serviceDefinition, resourceGroupName, webServiceName);
                     WebServiceTests.ValidateWebServiceResource(amlServicesClient.SubscriptionId, resourceGroupName, webServiceName, webService1, serviceDefinition);
                     var webService2 = amlServicesClient.WebServices.CreateOrUpdateWithRequestId(serviceDefinition, resourceGroupName, service2Name);
@@ -388,7 +391,7 @@ namespace MachineLearning.Tests.ScenarioTests
             string deploymentParams = @"{'planName': {'value': '" + commitmentPlanName + "'}, 'planSkuName': {'value': 'PLAN_SKU_NAME'}, 'planSkuTier': {'value': 'PLAN_SKU_TIER'}, 'apiVersion': {'value': '" + cpApiVersion + "'}}";
             var deploymentProperties = new DeploymentProperties
             {
-                Template = JObject.Parse(File.ReadAllText(@".\TestData\DeployCommitmentPlanTemplate.json")),
+                Template = JObject.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "TestData", "DeployCommitmentPlanTemplate.json"))),
                 Parameters = JObject.Parse(deploymentParams),
                 Mode = DeploymentMode.Incremental
             };
