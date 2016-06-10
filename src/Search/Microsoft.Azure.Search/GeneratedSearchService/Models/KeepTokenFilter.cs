@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the KeepTokenFilter class.
         /// </summary>
-        public KeepTokenFilter(string name, IList<string> keepWords = default(IList<string>), bool? lowerCaseKeepWords = default(bool?))
+        public KeepTokenFilter(string name, IList<string> keepWords, bool? lowerCaseKeepWords = default(bool?))
             : base(name)
         {
             KeepWords = keepWords;
@@ -57,6 +57,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (KeepWords == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeepWords");
+            }
         }
     }
 }

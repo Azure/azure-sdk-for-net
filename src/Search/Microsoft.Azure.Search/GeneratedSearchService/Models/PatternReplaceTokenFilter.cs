@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the PatternReplaceTokenFilter class.
         /// </summary>
-        public PatternReplaceTokenFilter(string name, string pattern = default(string), string replacement = default(string))
+        public PatternReplaceTokenFilter(string name, string pattern, string replacement)
             : base(name)
         {
             Pattern = pattern;
@@ -56,6 +56,14 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (Pattern == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Pattern");
+            }
+            if (Replacement == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Replacement");
+            }
         }
     }
 }

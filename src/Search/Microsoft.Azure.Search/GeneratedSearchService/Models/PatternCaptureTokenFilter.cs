@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the PatternCaptureTokenFilter class.
         /// </summary>
-        public PatternCaptureTokenFilter(string name, IList<string> patterns = default(IList<string>), bool? preserveOriginal = default(bool?))
+        public PatternCaptureTokenFilter(string name, IList<string> patterns, bool? preserveOriginal = default(bool?))
             : base(name)
         {
             Patterns = patterns;
@@ -57,6 +57,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (Patterns == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Patterns");
+            }
         }
     }
 }
