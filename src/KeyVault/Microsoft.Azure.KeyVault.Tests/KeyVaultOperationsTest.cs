@@ -250,11 +250,11 @@ namespace KeyVault.Tests
 
                 try
                 {
-                    Trace.WriteLine("Verify generated key is as expected");
+                    //Trace.WriteLine("Verify generated key is as expected");
                     VerifyKeyAttributesAreEqual(attributes, createdKey.Attributes);
                     Assert.Equal(JsonWebKeyType.RsaHsm, createdKey.Key.Kty);
 
-                    Trace.WriteLine("Get the key");
+                    //Trace.WriteLine("Get the key");
                     var retrievedKey = client.GetKeyAsync(createdKey.Key.Kid).GetAwaiter().GetResult();
                     VerifyKeyAttributesAreEqual(attributes, retrievedKey.Attributes);
                     VerifyWebKeysAreEqual(createdKey.Key, retrievedKey.Key);
@@ -262,7 +262,7 @@ namespace KeyVault.Tests
                 }
                 finally
                 {
-                    Trace.WriteLine("Delete the key");
+                    //Trace.WriteLine("Delete the key");
                     var deletedKey = client.DeleteKeyAsync(_vaultAddress, "CreateHsmKeyTest").GetAwaiter().GetResult();
 
                     VerifyKeyAttributesAreEqual(deletedKey.Attributes, createdKey.Attributes);
@@ -2119,9 +2119,9 @@ namespace KeyVault.Tests
             }
         }
 
-#endregion
+        #endregion
 
-#region Helper Methods
+        #region Helper Methods
 
         private static SecretAttributes NewSecretAttributes(bool enabled, bool active, bool expired)
         {

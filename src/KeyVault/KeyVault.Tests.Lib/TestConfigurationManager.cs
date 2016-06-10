@@ -18,6 +18,7 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using System.IO;
 
 namespace KeyVault.Tests
 {
@@ -40,9 +41,10 @@ namespace KeyVault.Tests
             // We don't use IsNullOrEmpty because an empty setting overrides what's on AppSettings.
             if (value == null)
             {
-                var configBuilder = new ConfigurationBuilder();
-                var config = configBuilder.Add(new JsonConfigurationProvider("appsettings.json", false)).Build();
-                value = config.GetSection("AppSettings:"+ settingName).Value;
+                var config = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile("appsettings.json").Build();
+                value = config.GetSection("AppSettings:" + settingName).Value;
             }
 
             return value ?? defaultValue;

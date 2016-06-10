@@ -13,13 +13,13 @@
           "133"
         ],
         "x-ms-client-request-id": [
-          "3bd427a9-5965-4f57-bd66-fdc5dd27f5ff"
+          "21f2f8c1-07ce-49e1-b332-2aa998c1139d"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    }\r\n  ]\r\n}",
@@ -33,35 +33,38 @@
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Jun 2016 16:42:10 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "b0731dc0-2070-4fa4-b437-92396c82ff85"
+          "3e3f3ffb-8c92-4185-b982-d3d80c9963a6"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.751"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 18 May 2016 16:26:41 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+          "1.0.0.756"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -70,22 +73,22 @@
       "RequestUri": "/certificates/contacts?api-version=2015-06-01-preview2",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "325"
+          "250"
         ],
         "x-ms-client-request-id": [
-          "50e69b6e-d164-486a-98f9-aa7f5f61086a"
+          "a65679d1-6279-4518-b324-1cc9df28baf7"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
@@ -99,35 +102,38 @@
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Jun 2016 16:42:10 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "b4f7ad2f-752e-48ad-8937-764b43e4108f"
+          "f958ff10-e725-4dba-8bbe-5aa803c12f7a"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.751"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 18 May 2016 16:26:41 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+          "1.0.0.756"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -139,13 +145,13 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c1e6ff11-3e27-45a2-aa72-1dbdcd116d30"
+          "370a12ae-2dd2-4d72-bde5-d50a92769b84"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    }\r\n  ]\r\n}",
@@ -159,35 +165,38 @@
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Jun 2016 16:42:10 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "4a3ecf73-efb9-4293-a92c-3f3541498c46"
+          "9fbf17cb-3377-4425-bc3b-6027422706a4"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.751"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 18 May 2016 16:26:41 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+          "1.0.0.756"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -199,13 +208,13 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "59f5688e-bbe0-4dff-91b3-73d044b9fbf1"
+          "104368d5-c932-405d-9071-487ee7bf7499"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
@@ -219,35 +228,38 @@
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Jun 2016 16:42:10 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "222f7e97-5b74-4dc7-ad46-e3579c11f0b0"
+          "933a18ce-6ab8-4b42-a109-584ecff0a5da"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.751"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 18 May 2016 16:26:41 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+          "1.0.0.756"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -259,13 +271,13 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "118b226d-4a1a-4cb6-8548-63e55149e2d7"
+          "ec52b59f-8900-4df7-ae88-a21428ca3aba"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0.0"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/contacts\",\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
@@ -279,35 +291,38 @@
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Jun 2016 16:42:10 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
           "East US"
         ],
         "x-ms-request-id": [
-          "5ed4ed00-be53-4aeb-a50e-e1ddca8e31fc"
+          "4a6cf31c-85e9-42b9-a19b-6b61bb5db6b7"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.751"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000;includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 18 May 2016 16:26:41 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+          "1.0.0.756"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -317,6 +332,6 @@
   "Variables": {
     "VaultAddress": "https://sdktestvault0518.vault.azure.net",
     "KeyName": "sdktestkey",
-    "KeyVersion": "24be47dea9334e4687f117bd566701ca"
+    "KeyVersion": "31140407d0b9469e8dad03718dfb920b"
   }
 }

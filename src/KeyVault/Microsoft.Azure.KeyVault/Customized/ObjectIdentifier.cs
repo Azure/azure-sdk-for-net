@@ -203,6 +203,11 @@ namespace Microsoft.Azure.KeyVault
 
     public sealed class CertificateIdentifier : ObjectIdentifier
     {
+        public static bool IsSecretIdentifier(string identifier)
+        {
+            return ObjectIdentifier.IsObjectIdentifier("certificates", identifier);
+        }
+
         public CertificateIdentifier(string vault, string name, string version = null)
             : base(vault, "certificates", name, version)
         {
@@ -262,10 +267,10 @@ namespace Microsoft.Azure.KeyVault
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", identifier, baseUri.Segments.Length));
 
             if (!string.Equals(baseUri.Segments[1], "certificates/"))
-                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}/', found '{2}'", identifier, "certificates/", baseUri.Segments[1]));
+                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}', found '{2}'", identifier, "certificates/", baseUri.Segments[1]));
 
             if (!string.Equals(baseUri.Segments[2], "issuers/"))
-                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}/', found '{2}'", identifier, "issuers/", baseUri.Segments[1]));
+                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}', found '{2}'", identifier, "issuers/", baseUri.Segments[1]));
 
             _name = baseUri.Segments[3].Substring(0, baseUri.Segments[3].Length).TrimEnd('/');
             _version = null;

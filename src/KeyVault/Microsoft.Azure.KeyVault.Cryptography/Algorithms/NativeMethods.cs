@@ -16,7 +16,7 @@
 // See the Apache License, Version 2.0 for the specific language
 // governing permissions and limitations under the License.
 
-#if !DNXCORE50
+#if !PORTABLE
 
 using System;
 using System.IO;

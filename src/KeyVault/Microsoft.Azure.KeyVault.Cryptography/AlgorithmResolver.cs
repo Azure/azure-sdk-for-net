@@ -46,7 +46,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
 
             Default.AddAlgorithm( Rs256.AlgorithmName, new Rs256() );
 
-#if !DNXCORE50
+#if !PORTABLE
             Default.AddAlgorithm( RsNull.AlgorithmName, new RsNull() );
 #endif
         }
