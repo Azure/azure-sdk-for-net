@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Microsoft Azure CDN Management Library",
   "authors": [ "Microsoft" ],
 
@@ -19,8 +19,8 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)",
-    "Microsoft.Rest.ClientRuntime": "[3.0.2,4.0.0)" 
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)",
+    "Microsoft.Rest.ClientRuntime": "[2.3.0,3.0.0)" 
   },
 
   "frameworks": {

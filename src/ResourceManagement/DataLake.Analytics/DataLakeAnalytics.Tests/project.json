@@ -31,13 +31,13 @@
       "type": "platform", 
       "version": "1.0.0-rc2-*" 
     }, 
-    "Microsoft.Azure.Test.HttpRecorder": "[1.6.1-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.2-preview,2.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)",
-    "Microsoft.Rest.ClientRuntime": "[3.0.2,4.0.0)" ,
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.2-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.3-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)",
+    "Microsoft.Rest.ClientRuntime": "[2.3.0,3.0.0)" ,
     "Microsoft.Azure.Management.Storage": "[4.1.0-preview]",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
-    "Microsoft.Azure.Management.DataLake.Analytics": "[0.11.4-preview,1.0)",
+    "Microsoft.Azure.Management.DataLake.Analytics": "[0.11.5-preview,1.0)",
     "Microsoft.Azure.Management.DataLake.Store": "0.13.0-preview",
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-build10015"

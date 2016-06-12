@@ -1,5 +1,5 @@
 {
-  "version": "5.0.1-preview",
+  "version": "5.0.2-preview",
   "description": "Microsoft Azure Management Storage Library",
   "authors": [ "Microsoft" ],
 
@@ -23,7 +23,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
   },
 
   "frameworks": {
