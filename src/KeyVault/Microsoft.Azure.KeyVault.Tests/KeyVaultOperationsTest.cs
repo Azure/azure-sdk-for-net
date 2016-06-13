@@ -806,7 +806,7 @@ namespace KeyVault.Tests
                 string originalSecretValue = "mysecretvalue";
 
                 var originalSecret = client.SetSecretAsync(
-                    vault: _vaultAddress,
+                    vaultBaseUrl: _vaultAddress,
                     secretName: secretName,
                     value: originalSecretValue,
                     tags: new Dictionary<string, string>() { { "purpose", "unit test" } },

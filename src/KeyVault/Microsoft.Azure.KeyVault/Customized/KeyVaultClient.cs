@@ -68,7 +68,7 @@ namespace Microsoft.Azure.KeyVault
         /// <summary>
         /// Gets the certificate operation response.
         /// </summary>
-        /// <param name='vault'>
+        /// <param name='vaultBaseUrl'>
         /// The vault name, e.g. https://myvault.vault.azure.net
         /// </param>
         /// <param name='certificateName'>
@@ -83,11 +83,11 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<string>> GetPendingCertificateSigningRequestWithHttpMessagesAsync(string vault, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<string>> GetPendingCertificateSigningRequestWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (vault == null)
+            if (vaultBaseUrl == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vault");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
             }
             if (certificateName == null)
             {
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.KeyVault
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("vault", vault);
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
                 tracingParameters.Add("certificateName", certificateName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetCertificateOperation", tracingParameters);
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.KeyVault
             // Construct URL
             var _baseUrl = this.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "certificates/{certificate-name}/pending";
-            _url = _url.Replace("{vault}", vault);
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
             _url = _url.Replace("{certificate-name}", Uri.EscapeDataString(certificateName));
             List<string> _queryParameters = new List<string>();
             if (this.ApiVersion != null)

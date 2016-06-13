@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.KeyVault;
@@ -35,7 +35,8 @@ namespace KeyVault.Management.Tests
                     Permissions = new Permissions
                     {
                         Keys = new string[] { "all" },
-                        Secrets = null
+                        Secrets = null,
+                        Certificates = new string[] { "all" }
                     }
                 };
                 var createdVault = client.Vaults.CreateOrUpdate(
@@ -163,7 +164,8 @@ namespace KeyVault.Management.Tests
                     Permissions = new Permissions
                     {
                         Keys = new string[] { "all" },
-                        Secrets = null
+                        Secrets = null,
+                        Certificates = new string[] { "all" }
                     }
                 };
                 var createVault = client.Vaults.CreateOrUpdate(
@@ -353,7 +355,8 @@ namespace KeyVault.Management.Tests
                                         ObjectId = objectIdGuid,
                                         Permissions = new Permissions{
                                             Keys = new string[]{"all"},
-                                            Secrets = new string[]{"all"}
+                                            Secrets = new string[]{"all"},
+                                            Certificates = new string[] { "all" }
                                         }
                                     }
                                 }

@@ -17,7 +17,7 @@
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.0-rc2-3002702"
+          "version": "1.0.0-rc2-*"
         },
         "System.Security.Cryptography.Csp": "4.0.0-rc2-24027",
         "System.Security.Cryptography.Cng": "4.1.0-rc2-24027",
@@ -27,10 +27,6 @@
       }
     },
     "net451": {
-      "frameworkAssemblies": {
-        "System.Net.Http.WebRequest": "",
-        "System.Security": "4.0.0.0"
-      }
     }
   },
   "dependencies": {

@@ -63,10 +63,10 @@ namespace Microsoft.Azure.KeyVault
         {
         }
 
-        protected ObjectIdentifier(string vault, string collection, string name, string version = null)
+        protected ObjectIdentifier(string vaultBaseUrl, string collection, string name, string version = null)
         {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
+            if (string.IsNullOrEmpty(vaultBaseUrl))
+                throw new ArgumentNullException("vaultBaseUrl");
 
             if (string.IsNullOrEmpty(collection))
                 throw new ArgumentNullException("collection");
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.KeyVault
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException("keyName");
 
-            var baseUri = new Uri(vault, UriKind.Absolute);
+            var baseUri = new Uri(vaultBaseUrl, UriKind.Absolute);
 
             _name = name;
             _version = version;
@@ -172,8 +172,8 @@ namespace Microsoft.Azure.KeyVault
             return ObjectIdentifier.IsObjectIdentifier("keys", identifier);
         }
 
-        public KeyIdentifier(string vault, string name, string version = null)
-            : base(vault, "keys", name, version)
+        public KeyIdentifier(string vaultBaseUrl, string name, string version = null)
+            : base(vaultBaseUrl, "keys", name, version)
         {
         }
 
@@ -190,8 +190,8 @@ namespace Microsoft.Azure.KeyVault
             return ObjectIdentifier.IsObjectIdentifier("secrets", identifier);
         }
 
-        public SecretIdentifier(string vault, string name, string version = null)
-            : base(vault, "secrets", name, version)
+        public SecretIdentifier(string vaultBaseUrl, string name, string version = null)
+            : base(vaultBaseUrl, "secrets", name, version)
         {
         }
 
@@ -208,8 +208,8 @@ namespace Microsoft.Azure.KeyVault
             return ObjectIdentifier.IsObjectIdentifier("certificates", identifier);
         }
 
-        public CertificateIdentifier(string vault, string name, string version = null)
-            : base(vault, "certificates", name, version)
+        public CertificateIdentifier(string vaultBaseUrl, string name, string version = null)
+            : base(vaultBaseUrl, "certificates", name, version)
         {
         }
 
@@ -221,8 +221,8 @@ namespace Microsoft.Azure.KeyVault
 
     public sealed class CertificateOperationIdentifier : ObjectIdentifier
     {
-        public CertificateOperationIdentifier(string vault, string name)
-            : base(vault, "certificates", name, "pending")
+        public CertificateOperationIdentifier(string vaultBaseUrl, string name)
+            : base(vaultBaseUrl, "certificates", name, "pending")
         {
         }
 
@@ -236,15 +236,15 @@ namespace Microsoft.Azure.KeyVault
 
     public sealed class IssuerIdentifier : ObjectIdentifier
     {
-        public IssuerIdentifier(string vault, string name)
+        public IssuerIdentifier(string vaultBaseUrl, string name)
         {
-            if (string.IsNullOrEmpty(vault))
-                throw new ArgumentNullException("vault");
+            if (string.IsNullOrEmpty(vaultBaseUrl))
+                throw new ArgumentNullException("vaultBaseUrl");
 
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            var baseUri = new Uri(vault, UriKind.Absolute);
+            var baseUri = new Uri(vaultBaseUrl, UriKind.Absolute);
 
             _name = name;
             _version = null;

@@ -17,7 +17,7 @@
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.0-rc2-3002702"
+          "version": "1.0.0-rc2-*"
         },
         "System.Security.Cryptography.Primitives": "4.0.0-rc2-24027",
         "System.Security.Cryptography.Algorithms": "4.1.0-rc2-24027",
