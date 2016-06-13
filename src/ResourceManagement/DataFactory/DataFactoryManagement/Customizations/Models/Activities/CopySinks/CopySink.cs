@@ -25,13 +25,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Write batch size.
         /// </summary>
-        [AdfRequired]
         public int WriteBatchSize { get; set; }
 
         /// <summary>
         /// Write batch timeout.
         /// </summary>
-        [AdfRequired]
         public TimeSpan WriteBatchTimeout { get; set; }
 
         /// <summary>
