@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Normalizes the Unicode representation of Sorani text.
+    /// Normalizes the Unicode representation of Sorani text. This token
+    /// filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.SoraniNormalizationTokenFilter")]
     public partial class SoraniNormalizationTokenFilter : TokenFilter

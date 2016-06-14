@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Removes English possessives, and dots from acronyms.
+    /// Removes "'s" from the end of words, and removes dots from acronyms.
+    /// This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ClassicTokenFilter")]
     public partial class ClassicTokenFilter : TokenFilter

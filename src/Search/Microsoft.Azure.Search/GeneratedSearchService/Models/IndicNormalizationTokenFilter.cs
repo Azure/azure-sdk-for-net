@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Normalizes the Unicode representation of text in Indian languages.
+    /// This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.IndicNormalizationTokenFilter")]
     public partial class IndicNormalizationTokenFilter : TokenFilter

@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Normalizes token text to upper case.
+    /// Normalizes token text to upper case. This token filter is implemented
+    /// using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.UppercaseTokenFilter")]
     public partial class UppercaseTokenFilter : TokenFilter

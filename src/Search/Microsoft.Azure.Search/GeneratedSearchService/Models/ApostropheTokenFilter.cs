@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Strips all characters after an apostrophe.
+    /// Strips all characters after an apostrophe (including the apostrophe
+    /// itself). This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ApostropheTokenFilter")]
     public partial class ApostropheTokenFilter : TokenFilter

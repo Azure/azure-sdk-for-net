@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Emits each incoming token twice, once as keyword and once as
-    /// non-keyword.
+    /// non-keyword. This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeywordRepeatTokenFilter")]
     public partial class KeywordRepeatTokenFilter : TokenFilter

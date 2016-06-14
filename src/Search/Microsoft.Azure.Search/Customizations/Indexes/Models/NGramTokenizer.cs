@@ -4,16 +4,11 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    using System;
-    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Tokenizes the input into n-grams of the given size(s).
+    /// Tokenizes the input into n-grams of the given size(s). This tokenizer is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.NGramTokenizer")]
     public partial class NGramTokenizer : Tokenizer

@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Uses Java regexes to emit multiple tokens - one for each capture group
-    /// in one or more patterns.
+    /// in one or more patterns. This token filter is implemented using
+    /// Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PatternCaptureTokenFilter")]
     public partial class PatternCaptureTokenFilter : TokenFilter

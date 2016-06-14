@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// A token filter which applies a pattern to each token in the stream,
     /// replacing match occurrences with the specified replacement string.
+    /// This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PatternReplaceTokenFilter")]
     public partial class PatternReplaceTokenFilter : TokenFilter

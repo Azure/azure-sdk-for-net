@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A high-performance kstem filter for English.
+    /// A high-performance kstem filter for English. This token filter is
+    /// implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KStemTokenFilter")]
     public partial class KStemTokenFilter : TokenFilter

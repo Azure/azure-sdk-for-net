@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Normalizes token text to lower case.
+    /// Normalizes token text to lower case. This token filter is implemented
+    /// using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.LowercaseTokenFilter")]
     public partial class LowercaseTokenFilter : TokenFilter
