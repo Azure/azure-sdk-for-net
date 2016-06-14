@@ -1,5 +1,5 @@
 {
-  "version": "4.5.1-preview",
+  "version": "4.5.2-preview",
   "description": "Provides management capabilities for Network services.",
   "authors": [ "Microsoft" ],
 
@@ -19,7 +19,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)" 
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)" 
     },
 
   "frameworks": {
