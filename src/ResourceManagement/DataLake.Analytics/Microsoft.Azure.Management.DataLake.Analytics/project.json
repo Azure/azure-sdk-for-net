@@ -1,5 +1,5 @@
 {
-  "version": "0.11.4-preview",
+  "version": "0.11.5-preview",
   "description": "Provides Data Lake Analytics account, job and catalog management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -19,7 +19,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)" 
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)" 
   },
 
   "frameworks": {

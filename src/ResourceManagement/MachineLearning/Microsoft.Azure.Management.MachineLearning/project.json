@@ -1,6 +1,5 @@
 {
-  "version": "0.9.1-preview",
-  "title": "SDK Library for Microsoft Azure Management Machine Learning",
+  "version": "0.9.3-preview",
   "description": "Provides Machine Learning WebServices management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -10,7 +9,7 @@
     "tags": [ "Microsoft Azure Machine Learning WebServices management", "WebServices management", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "requireLicenseAcceptance":  true,
+    "requireLicenseAcceptance":  true
   },
 
   "buildOptions": {
@@ -20,7 +19,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
   },
 
   "frameworks": {
@@ -45,7 +44,7 @@
       }
     },
     "netstandard1.1": {
-      "imports": ["dnxcore50"],
+      "imports": ["dnxcore50"]
     }
   }
 }
