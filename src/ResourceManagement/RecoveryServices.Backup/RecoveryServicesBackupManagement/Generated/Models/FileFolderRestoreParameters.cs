@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
@@ -29,11 +30,109 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class FileFolderRestoreParameters
     {
+        private string _containerName;
+        
+        /// <summary>
+        /// Optional. Name of the container where the protected item belongs to.
+        /// </summary>
+        public string ContainerName
+        {
+            get { return this._containerName; }
+            set { this._containerName = value; }
+        }
+        
+        private CustomRequestHeaders _customRequestHeaders;
+        
+        /// <summary>
+        /// Optional. Request header parameters.
+        /// </summary>
+        public CustomRequestHeaders CustomRequestHeaders
+        {
+            get { return this._customRequestHeaders; }
+            set { this._customRequestHeaders = value; }
+        }
+        
+        private string _fabricName;
+        
+        /// <summary>
+        /// Optional. Fabric name of the protected item.
+        /// </summary>
+        public string FabricName
+        {
+            get { return this._fabricName; }
+            set { this._fabricName = value; }
+        }
+        
+        private string _protectedItemName;
+        
+        /// <summary>
+        /// Optional. Name of the protected item whose files / folders are to
+        /// be restored.
+        /// </summary>
+        public string ProtectedItemName
+        {
+            get { return this._protectedItemName; }
+            set { this._protectedItemName = value; }
+        }
+        
+        private string _recoveryPointId;
+        
+        /// <summary>
+        /// Optional. ID of the recovery point whose files / folders are to be
+        /// restored.
+        /// </summary>
+        public string RecoveryPointId
+        {
+            get { return this._recoveryPointId; }
+            set { this._recoveryPointId = value; }
+        }
+        
+        private string _resourceGroupName;
+        
+        /// <summary>
+        /// Required. Resource group name of your recovery services vault.
+        /// </summary>
+        public string ResourceGroupName
+        {
+            get { return this._resourceGroupName; }
+            set { this._resourceGroupName = value; }
+        }
+        
+        private string _resourceName;
+        
+        /// <summary>
+        /// Required. Name of your recovery services vault.
+        /// </summary>
+        public string ResourceName
+        {
+            get { return this._resourceName; }
+            set { this._resourceName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the FileFolderRestoreParameters class.
         /// </summary>
         public FileFolderRestoreParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the FileFolderRestoreParameters class
+        /// with required arguments.
+        /// </summary>
+        public FileFolderRestoreParameters(string resourceGroupName, string resourceName)
+            : this()
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            this.ResourceGroupName = resourceGroupName;
+            this.ResourceName = resourceName;
         }
     }
 }

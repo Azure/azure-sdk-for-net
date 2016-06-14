@@ -44,8 +44,14 @@ namespace RecoveryServices.Tests.Helpers
             string containerName = "IaasVMContainer;iaasvmcontainerv2;pstestrg;pstestv2vm1";
             string protectedItemName = "VM;iaasvmcontainerv2;pstestrg;pstestv2vm1";
 
+            TriggerBackupRequest backupRequest = new TriggerBackupRequest();
+            backupRequest.Item = new BackupRequestResource();
+            IaaSVMBackupRequest iaasVmBackupRequest = new IaaSVMBackupRequest();
+            iaasVmBackupRequest.RecoveryPointExpiryTimeInUTC = DateTime.UtcNow.AddDays(1);
+            backupRequest.Item.Properties = iaasVmBackupRequest;
+
             var response = Client.Backups.TriggerBackup(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(),
-                fabricName, containerName, protectedItemName);
+                fabricName, containerName, protectedItemName, backupRequest);
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
