@@ -30,11 +30,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the TableSpecification class.
         /// </summary>
-        public TableSpecification(string type, IDictionary<string, ColumnSpecification> properties, string title = default(string), string description = default(string))
+        public TableSpecification(string type, string title = default(string), string description = default(string), string format = default(string), IDictionary<string, ColumnSpecification> properties = default(IDictionary<string, ColumnSpecification>))
         {
             Title = title;
             Description = description;
             Type = type;
+            Format = format;
             Properties = properties;
         }
 
@@ -51,10 +52,16 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// The type of the entity described in swagger. Always 'object'.
+        /// The type of the entity described in swagger.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// The format, if 'type' is not 'object'
+        /// </summary>
+        [JsonProperty(PropertyName = "format")]
+        public string Format { get; set; }
 
         /// <summary>
         /// The set of columns within the data table.
@@ -70,10 +77,6 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
             if (Type == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
             }
             if (this.Properties != null)
             {
