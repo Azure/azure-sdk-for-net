@@ -1,5 +1,5 @@
 {
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Microsoft.Azure.Management.DevTestLabs",
   "authors": [ "Microsoft" ],
 
@@ -19,7 +19,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
   },
 
   "frameworks": {
@@ -38,8 +38,7 @@
       "buildOptions": { "define": [ "PORTABLE" ] },
       "imports": ["dnxcore50", "portable-net45+win8"],
       "dependencies": {
-        "NETStandard.Library": "1.5.0-rc2-24027",
-        "Newtonsoft.Json": "8.0.3"
+        "NETStandard.Library": "1.5.0-rc2-24027"
       }
     },
     "netstandard1.5": {
@@ -75,8 +74,7 @@
         "System.Threading": "4.0.11-rc2-24027",
         "System.Threading.Tasks": "4.0.11-rc2-24027",
         "System.Xml.ReaderWriter": "4.0.11-rc2-24027",
-        "System.Xml.XDocument": "4.0.11-rc2-24027",
-        "Newtonsoft.Json": "8.0.3"
+        "System.Xml.XDocument": "4.0.11-rc2-24027"
       }
     }
   }
