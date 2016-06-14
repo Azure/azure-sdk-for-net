@@ -25,8 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// Base class for protection policy. Workload-specific protection policies
-    /// are derived from this class.
+    /// Base class for protection policy.
     /// </summary>
     public partial class ProtectionPolicyBase
     {

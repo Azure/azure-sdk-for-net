@@ -60,14 +60,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='protectedItemName'>
         /// Optional. Name of the protected item which has to be backed up.
         /// </param>
+        /// <param name='request'>
+        /// Optional. Backup request for the backup item.
+        /// </param>
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public static BaseRecoveryServicesJobResponse TriggerBackup(this IBackupOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName)
+        public static BaseRecoveryServicesJobResponse TriggerBackup(this IBackupOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, TriggerBackupRequest request)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBackupOperations)s).TriggerBackupAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName);
+                return ((IBackupOperations)s).TriggerBackupAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, request);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -102,12 +105,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='protectedItemName'>
         /// Optional. Name of the protected item which has to be backed up.
         /// </param>
+        /// <param name='request'>
+        /// Optional. Backup request for the backup item.
+        /// </param>
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public static Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(this IBackupOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName)
+        public static Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(this IBackupOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, TriggerBackupRequest request)
         {
-            return operations.TriggerBackupAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, CancellationToken.None);
+            return operations.TriggerBackupAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, request, CancellationToken.None);
         }
     }
 }

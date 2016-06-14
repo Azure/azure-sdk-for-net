@@ -136,6 +136,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             get { return this._containers; }
         }
         
+        private IFileFolderRestoreOperations _fileFolderRestores;
+        
+        /// <summary>
+        /// The Resource Manager API includes operations for triggering and
+        /// managing actions of the file / folder recovery of items protected
+        /// by your Recovery Services Vault.
+        /// </summary>
+        public virtual IFileFolderRestoreOperations FileFolderRestores
+        {
+            get { return this._fileFolderRestores; }
+        }
+        
         private IJobOperations _jobs;
         
         /// <summary>
@@ -215,6 +227,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             this._backupEngines = new BackupEngineOperations(this);
             this._backups = new BackupOperations(this);
             this._containers = new ContainerOperations(this);
+            this._fileFolderRestores = new FileFolderRestoreOperations(this);
             this._jobs = new JobOperations(this);
             this._protectableObjects = new ProtectableObjectOperations(this);
             this._protectedItems = new ProtectedItemOperations(this);
@@ -293,6 +306,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             this._backupEngines = new BackupEngineOperations(this);
             this._backups = new BackupOperations(this);
             this._containers = new ContainerOperations(this);
+            this._fileFolderRestores = new FileFolderRestoreOperations(this);
             this._jobs = new JobOperations(this);
             this._protectableObjects = new ProtectableObjectOperations(this);
             this._protectedItems = new ProtectedItemOperations(this);
@@ -1065,6 +1079,49 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                     }
                                     operationStatusInstance.Properties = operationStatusJobsExtendedInfoInstance;
+                                }
+                                if (typeName == "OperationStatusProvisionILRExtendedInfo")
+                                {
+                                    OperationStatusProvisionILRExtendedInfo operationStatusProvisionILRExtendedInfoInstance = new OperationStatusProvisionILRExtendedInfo();
+                                    
+                                    JToken recoveryTargetValue = propertiesValue["recoveryTarget"];
+                                    if (recoveryTargetValue != null && recoveryTargetValue.Type != JTokenType.Null)
+                                    {
+                                        InstanceItemRecoveryTarget recoveryTargetInstance = new InstanceItemRecoveryTarget();
+                                        operationStatusProvisionILRExtendedInfoInstance.RecoveryTarget = recoveryTargetInstance;
+                                        
+                                        JToken clientScriptsArray = recoveryTargetValue["clientScripts"];
+                                        if (clientScriptsArray != null && clientScriptsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken clientScriptsValue in ((JArray)clientScriptsArray))
+                                            {
+                                                ClientScriptForConnection clientScriptForConnectionInstance = new ClientScriptForConnection();
+                                                recoveryTargetInstance.ClientScripts.Add(clientScriptForConnectionInstance);
+                                                
+                                                JToken scriptContentValue = clientScriptsValue["scriptContent"];
+                                                if (scriptContentValue != null && scriptContentValue.Type != JTokenType.Null)
+                                                {
+                                                    string scriptContentInstance = ((string)scriptContentValue);
+                                                    clientScriptForConnectionInstance.ScriptContent = scriptContentInstance;
+                                                }
+                                                
+                                                JToken scriptExtensionValue = clientScriptsValue["scriptExtension"];
+                                                if (scriptExtensionValue != null && scriptExtensionValue.Type != JTokenType.Null)
+                                                {
+                                                    string scriptExtensionInstance = ((string)scriptExtensionValue);
+                                                    clientScriptForConnectionInstance.ScriptExtension = scriptExtensionInstance;
+                                                }
+                                                
+                                                JToken osTypeValue = clientScriptsValue["osType"];
+                                                if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string osTypeInstance = ((string)osTypeValue);
+                                                    clientScriptForConnectionInstance.OSType = osTypeInstance;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    operationStatusInstance.Properties = operationStatusProvisionILRExtendedInfoInstance;
                                 }
                             }
                         }

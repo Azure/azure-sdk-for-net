@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. FriendlyName of the recovery point.
+        /// Optional. Friendly name of the recovery point.
         /// </summary>
         public string FriendlyName
         {
