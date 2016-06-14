@@ -20,7 +20,7 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[4.0.2,5.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)",
     "Microsoft.Spatial": "[6.15.0,7.0)"
   },
 
