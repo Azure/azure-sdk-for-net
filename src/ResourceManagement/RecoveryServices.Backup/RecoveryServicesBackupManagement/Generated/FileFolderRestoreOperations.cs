@@ -131,14 +131,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-<<<<<<< HEAD
-            if (parameters.ResourceGroupName != null)
-            {
-                url = url + Uri.EscapeDataString(parameters.ResourceGroupName.ToString());
-            }
-=======
             url = url + Uri.EscapeDataString(parameters.ResourceGroupName);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             url = url + "/providers/";
             if (this.Client.ResourceNamespace != null)
             {
@@ -147,49 +140,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
-<<<<<<< HEAD
-            if (parameters.ResourceName != null)
-            {
-                url = url + Uri.EscapeDataString(parameters.ResourceName.ToString());
-            }
-            url = url + "/backupFabrics/";
-            if (parameters.FabricName != null)
-            {
-                url = url + Uri.EscapeDataString(parameters.FabricName.ToString());
-=======
             url = url + Uri.EscapeDataString(parameters.ResourceName);
             url = url + "/backupFabrics/";
             if (parameters.FabricName != null)
             {
                 url = url + Uri.EscapeDataString(parameters.FabricName);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             }
             url = url + "/protectionContainers/";
             if (parameters.ContainerName != null)
             {
-<<<<<<< HEAD
-                url = url + Uri.EscapeDataString(parameters.ContainerName.ToString());
-=======
                 url = url + Uri.EscapeDataString(parameters.ContainerName);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             }
             url = url + "/protectedItems/";
             if (parameters.ProtectedItemName != null)
             {
-<<<<<<< HEAD
-                url = url + Uri.EscapeDataString(parameters.ProtectedItemName.ToString());
-=======
                 url = url + Uri.EscapeDataString(parameters.ProtectedItemName);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             }
             url = url + "/recoveryPoints/";
             if (parameters.RecoveryPointId != null)
             {
-<<<<<<< HEAD
-                url = url + Uri.EscapeDataString(parameters.RecoveryPointId.ToString());
-=======
                 url = url + Uri.EscapeDataString(parameters.RecoveryPointId);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             }
             url = url + "/provisionilr";
             List<string> queryParameters = new List<string>();
@@ -389,8 +359,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ArgumentNullException("parameters");
             }
-<<<<<<< HEAD
-=======
             if (parameters.ResourceGroupName == null)
             {
                 throw new ArgumentNullException("parameters.ResourceGroupName");
@@ -399,7 +367,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ArgumentNullException("parameters.ResourceName");
             }
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -420,14 +387,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-<<<<<<< HEAD
-            if (parameters.ResourceGroupName != null)
-            {
-                url = url + Uri.EscapeDataString(parameters.ResourceGroupName.ToString());
-            }
-=======
             url = url + Uri.EscapeDataString(parameters.ResourceGroupName);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             url = url + "/providers/";
             if (this.Client.ResourceNamespace != null)
             {
@@ -436,49 +396,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
-<<<<<<< HEAD
-            if (parameters.ResourceName != null)
-            {
-                url = url + Uri.EscapeDataString(parameters.ResourceName.ToString());
-            }
-            url = url + "/backupFabrics/";
-            if (parameters.FabricName != null)
-            {
-                url = url + Uri.EscapeDataString(parameters.FabricName.ToString());
-=======
             url = url + Uri.EscapeDataString(parameters.ResourceName);
             url = url + "/backupFabrics/";
             if (parameters.FabricName != null)
             {
                 url = url + Uri.EscapeDataString(parameters.FabricName);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             }
             url = url + "/protectionContainers/";
             if (parameters.ContainerName != null)
             {
-<<<<<<< HEAD
-                url = url + Uri.EscapeDataString(parameters.ContainerName.ToString());
-=======
                 url = url + Uri.EscapeDataString(parameters.ContainerName);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             }
             url = url + "/protectedItems/";
             if (parameters.ProtectedItemName != null)
             {
-<<<<<<< HEAD
-                url = url + Uri.EscapeDataString(parameters.ProtectedItemName.ToString());
-=======
                 url = url + Uri.EscapeDataString(parameters.ProtectedItemName);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             }
             url = url + "/recoveryPoints/";
             if (parameters.RecoveryPointId != null)
             {
-<<<<<<< HEAD
-                url = url + Uri.EscapeDataString(parameters.RecoveryPointId.ToString());
-=======
                 url = url + Uri.EscapeDataString(parameters.RecoveryPointId);
->>>>>>> 740146e0cb21e3936facf1ced5ba012a0cdd2af9
             }
             url = url + "/revokeilr";
             List<string> queryParameters = new List<string>();
