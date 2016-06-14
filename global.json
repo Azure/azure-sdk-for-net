@@ -15,8 +15,5 @@
     "src/ResourceManagement/Microsoft.Azure.Management.RemoteApp",
     "src/ResourceManagement/DevTestLabs/Microsoft.Azure.Management.DevTestLabs",
     "src/ResourceManagement/MachineLearning/Microsoft.Azure.Management.MachineLearning"
-  ],
-  "sdk": {
-    "version": "1.0.0-rc1-final"
-  }
+  ]
 }
