@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.2.2-preview",
+  "version": "1.2.3-preview",
   "copyright": "Copyright (c) Microsoft Corporation",
   "title": "Test framework for Microsoft AutoRest Generated Clients",
   "description": "Microsoft.Rest.ClientRuntime.Azure.TestFramework",
@@ -27,7 +27,8 @@
       }
     },
     "netstandard1.5": {
-      "imports": ["dnxcore50"],
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": [ "dnxcore50" ],
       "dependencies": {
         "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha",
         "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027",
@@ -37,7 +38,7 @@
         "System.Diagnostics.Tracing": "4.1.0-rc2-24027",
         "Microsoft.CSharp": "4.0.1-rc2-24027",
         "System.Threading": "4.0.11-rc2-24027",
-        "System.Threading.Thread": "4.0.0-rc2-24027", 
+        "System.Threading.Thread": "4.0.0-rc2-24027",
         "System.Threading.Tasks": "4.0.11-rc2-24027",
         "System.Threading.Timer": "4.0.1-rc2-24027",
         "System.Collections": "4.0.11-rc2-24027",
@@ -48,6 +49,6 @@
     }
   },
   "dependencies": {
-    "Microsoft.Azure.Test.HttpRecorder": "[1.6.1-preview,2.0.0)"
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.2-preview,2.0.0)"
   }
 }

@@ -20,8 +20,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Machine Learning Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Machine Learning.")]
 
-[assembly: AssemblyVersion("0.9.2.0")]
-[assembly: AssemblyFileVersion("0.9.2.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
