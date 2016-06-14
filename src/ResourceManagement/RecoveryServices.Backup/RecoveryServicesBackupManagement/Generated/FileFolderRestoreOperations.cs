@@ -38,18 +38,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
     /// The Resource Manager API includes operations for triggering and
-    /// managing restore actions of the items protected by your Recovery
-    /// Services Vault.
+    /// managing actions of the file / folder recovery of items protected by
+    /// your Recovery Services Vault.
     /// </summary>
-    internal partial class RestoreOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IRestoreOperations
+    internal partial class FileFolderRestoreOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IFileFolderRestoreOperations
     {
         /// <summary>
-        /// Initializes a new instance of the RestoreOperations class.
+        /// Initializes a new instance of the FileFolderRestoreOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal RestoreOperations(RecoveryServicesBackupManagementClient client)
+        internal FileFolderRestoreOperations(RecoveryServicesBackupManagementClient client)
         {
             this._client = client;
         }
@@ -66,37 +66,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// The Trigger Restore Operation starts an operation in the service
-        /// which triggers the restore of the specified item in the specified
-        /// container in your Recovery Services Vault based on the specified
-        /// recovery point ID. This is an asynchronous operation. To determine
-        /// whether the backend service has finished processing the request,
-        /// call Get Protected Item Operation Result API.
+        /// Provisions an iSCSI connection which can be used to download a
+        /// script which when run opens the file explorer displaying all
+        /// recoverable files and folders. This is an asynchronous operation.
+        /// To determine whether the backend service has finished processing
+        /// the request, call Get Protected Item Operation Result API.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Resource group name of your recovery services vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// Required. Name of your recovery services vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Fabric name of the protected item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Optional. Name of the container where the protected item belongs to.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Optional. Name of the protected item whose recovery points are to
-        /// be fetched.
-        /// </param>
-        /// <param name='recoveryPointId'>
-        /// Optional. ID of the recovery point whose details are to be fetched.
+        /// <param name='parameters'>
+        /// Required. Common parameters to be used with the file folder restore
+        /// APIs.
         /// </param>
         /// <param name='request'>
-        /// Optional. Restore request for the backup item.
+        /// Optional. File / folder restore request for the backup item.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -104,16 +85,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public async Task<BaseRecoveryServicesJobResponse> TriggerRestoreAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreRequest request, CancellationToken cancellationToken)
+        public async Task<BaseRecoveryServicesJobResponse> ProvisionAsync(FileFolderRestoreParameters parameters, ProvisionILRRequest request, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ArgumentNullException("parameters");
             }
-            if (resourceName == null)
+            if (parameters.ResourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceName");
+                throw new ArgumentNullException("parameters.ResourceGroupName");
+            }
+            if (parameters.ResourceName == null)
+            {
+                throw new ArgumentNullException("parameters.ResourceName");
             }
             if (request != null)
             {
@@ -133,15 +118,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                tracingParameters.Add("fabricName", fabricName);
-                tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("protectedItemName", protectedItemName);
-                tracingParameters.Add("recoveryPointId", recoveryPointId);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("request", request);
-                TracingAdapter.Enter(invocationId, this, "TriggerRestoreAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ProvisionAsync", tracingParameters);
             }
             
             // Construct URL
@@ -152,7 +131,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + Uri.EscapeDataString(parameters.ResourceGroupName);
             url = url + "/providers/";
             if (this.Client.ResourceNamespace != null)
             {
@@ -161,28 +140,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/";
             url = url + "vaults";
             url = url + "/";
-            url = url + Uri.EscapeDataString(resourceName);
+            url = url + Uri.EscapeDataString(parameters.ResourceName);
             url = url + "/backupFabrics/";
-            if (fabricName != null)
+            if (parameters.FabricName != null)
             {
-                url = url + Uri.EscapeDataString(fabricName);
+                url = url + Uri.EscapeDataString(parameters.FabricName);
             }
             url = url + "/protectionContainers/";
-            if (containerName != null)
+            if (parameters.ContainerName != null)
             {
-                url = url + Uri.EscapeDataString(containerName);
+                url = url + Uri.EscapeDataString(parameters.ContainerName);
             }
             url = url + "/protectedItems/";
-            if (protectedItemName != null)
+            if (parameters.ProtectedItemName != null)
             {
-                url = url + Uri.EscapeDataString(protectedItemName);
+                url = url + Uri.EscapeDataString(parameters.ProtectedItemName);
             }
             url = url + "/recoveryPoints/";
-            if (recoveryPointId != null)
+            if (parameters.RecoveryPointId != null)
             {
-                url = url + Uri.EscapeDataString(recoveryPointId);
+                url = url + Uri.EscapeDataString(parameters.RecoveryPointId);
             }
-            url = url + "/restore";
+            url = url + "/provisionilr";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
@@ -211,8 +190,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
-                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("Accept-Language", parameters.CustomRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", parameters.CustomRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -231,89 +210,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         JObject propertiesValue = new JObject();
                         itemValue["properties"] = propertiesValue;
-                        if (request.Item.Properties is IaasVMRestoreRequest)
+                        if (request.Item.Properties is IaasVMILRRegistrationRequest)
                         {
-                            propertiesValue["objectType"] = "IaasVMRestoreRequest";
-                            IaasVMRestoreRequest derived = ((IaasVMRestoreRequest)request.Item.Properties);
+                            propertiesValue["objectType"] = "IaasVMILRRegistrationRequest";
+                            IaasVMILRRegistrationRequest derived = ((IaasVMILRRegistrationRequest)request.Item.Properties);
                             
                             if (derived.RecoveryPointId != null)
                             {
                                 propertiesValue["recoveryPointId"] = derived.RecoveryPointId;
                             }
                             
-                            if (derived.RecoveryType != null)
+                            if (derived.InitiatorName != null)
                             {
-                                propertiesValue["recoveryType"] = derived.RecoveryType;
+                                propertiesValue["initiatorName"] = derived.InitiatorName;
                             }
                             
-                            if (derived.StorageAccountId != null)
+                            if (derived.RenewExistingRegistration != null)
                             {
-                                propertiesValue["storageAccountId"] = derived.StorageAccountId;
-                            }
-                            
-                            if (derived.VirtualMachineName != null)
-                            {
-                                propertiesValue["virtualMachineName"] = derived.VirtualMachineName;
-                            }
-                            
-                            propertiesValue["createNewCloudService"] = derived.CreateNewCloudService;
-                            
-                            if (derived.CloudServiceOrResourceGroup != null)
-                            {
-                                propertiesValue["cloudServiceOrResourceGroup"] = derived.CloudServiceOrResourceGroup;
-                            }
-                            
-                            if (derived.CloudServiceOrResourceGroupId != null)
-                            {
-                                propertiesValue["cloudServiceOrResourceGroupId"] = derived.CloudServiceOrResourceGroupId;
-                            }
-                            
-                            if (derived.VirtualNetworkId != null)
-                            {
-                                propertiesValue["virtualNetworkId"] = derived.VirtualNetworkId;
-                            }
-                            
-                            if (derived.Region != null)
-                            {
-                                propertiesValue["region"] = derived.Region;
-                            }
-                            
-                            if (derived.AffinityGroup != null)
-                            {
-                                propertiesValue["affinityGroup"] = derived.AffinityGroup;
-                            }
-                            
-                            if (derived.SubnetId != null)
-                            {
-                                propertiesValue["subnetId"] = derived.SubnetId;
-                            }
-                            
-                            if (derived.EncryptionDetails != null)
-                            {
-                                JObject encryptionDetailsValue = new JObject();
-                                propertiesValue["encryptionDetails"] = encryptionDetailsValue;
-                                
-                                encryptionDetailsValue["encryptionEnabled"] = derived.EncryptionDetails.EncryptionEnabled;
-                                
-                                if (derived.EncryptionDetails.KekUrl != null)
-                                {
-                                    encryptionDetailsValue["kekUrl"] = derived.EncryptionDetails.KekUrl;
-                                }
-                                
-                                if (derived.EncryptionDetails.SecretKeyUrl != null)
-                                {
-                                    encryptionDetailsValue["secretKeyUrl"] = derived.EncryptionDetails.SecretKeyUrl;
-                                }
-                                
-                                if (derived.EncryptionDetails.KekVaultId != null)
-                                {
-                                    encryptionDetailsValue["kekVaultId"] = derived.EncryptionDetails.KekVaultId;
-                                }
-                                
-                                if (derived.EncryptionDetails.SecretKeyVaultId != null)
-                                {
-                                    encryptionDetailsValue["secretKeyVaultId"] = derived.EncryptionDetails.SecretKeyVaultId;
-                                }
+                                propertiesValue["renewExistingRegistration"] = derived.RenewExistingRegistration;
                             }
                         }
                     }
@@ -396,18 +310,180 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    
+                    if (shouldTrace)
                     {
-                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                        TracingAdapter.Exit(invocationId, result);
                     }
-                    if (httpResponse.Headers.Contains("Location"))
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
                     {
-                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        httpResponse.Dispose();
                     }
-                    if (httpResponse.Headers.Contains("Retry-After"))
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Revokes an iSCSI connection which can be used to download a script
+        /// which when run opens the file explorer displaying all recoverable
+        /// files and folders. This is an asynchronous operation. To determine
+        /// whether the backend service has finished processing the request,
+        /// call --- API.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Common parameters to be used with the file folder restore
+        /// APIs.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> RevokeAsync(FileFolderRestoreParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.ResourceGroupName == null)
+            {
+                throw new ArgumentNullException("parameters.ResourceGroupName");
+            }
+            if (parameters.ResourceName == null)
+            {
+                throw new ArgumentNullException("parameters.ResourceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "RevokeAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(parameters.ResourceGroupName);
+            url = url + "/providers/";
+            if (this.Client.ResourceNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            }
+            url = url + "/";
+            url = url + "vaults";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(parameters.ResourceName);
+            url = url + "/backupFabrics/";
+            if (parameters.FabricName != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.FabricName);
+            }
+            url = url + "/protectionContainers/";
+            if (parameters.ContainerName != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.ContainerName);
+            }
+            url = url + "/protectedItems/";
+            if (parameters.ProtectedItemName != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.ProtectedItemName);
+            }
+            url = url + "/recoveryPoints/";
+            if (parameters.RecoveryPointId != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.RecoveryPointId);
+            }
+            url = url + "/revokeilr";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2016-05-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", parameters.CustomRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", parameters.CustomRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
                     {
-                        result.RetryAfter = httpResponse.Headers.GetValues("Retry-After").FirstOrDefault();
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
                     
                     if (shouldTrace)
                     {
