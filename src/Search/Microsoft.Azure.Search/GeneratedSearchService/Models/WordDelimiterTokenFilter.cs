@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Splits words into subwords and performs optional transformations on
-    /// subword groups.
+    /// subword groups. This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.WordDelimiterTokenFilter")]
     public partial class WordDelimiterTokenFilter : TokenFilter

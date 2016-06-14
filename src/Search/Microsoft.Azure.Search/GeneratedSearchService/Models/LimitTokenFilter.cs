@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Limits the number of tokens while indexing.
+    /// Limits the number of tokens while indexing. This token filter is
+    /// implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.LimitTokenFilter")]
     public partial class LimitTokenFilter : TokenFilter

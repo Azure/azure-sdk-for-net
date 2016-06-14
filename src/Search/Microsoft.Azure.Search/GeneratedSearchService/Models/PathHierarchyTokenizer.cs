@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Tokenizer for path-like hierarchies.
+    /// Tokenizer for path-like hierarchies. This tokenizer is implemented
+    /// using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PathHierarchyTokenizer")]
     public partial class PathHierarchyTokenizer : Tokenizer

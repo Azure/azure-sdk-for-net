@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Divides text at non-letters; Applies the lowercase and stopword token
-    /// filters.
+    /// filters. This analyzer is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StopAnalyzer")]
     public partial class StopAnalyzer : Analyzer

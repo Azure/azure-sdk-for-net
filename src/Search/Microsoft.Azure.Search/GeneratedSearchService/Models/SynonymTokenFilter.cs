@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Matches single or multi-word synonyms in a token stream.
+    /// Matches single or multi-word synonyms in a token stream. This token
+    /// filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.SynonymTokenFilter")]
     public partial class SynonymTokenFilter : TokenFilter

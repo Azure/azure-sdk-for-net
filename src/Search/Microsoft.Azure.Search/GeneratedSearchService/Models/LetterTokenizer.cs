@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Divides text at non-letters and converts them to lower case.
+    /// Divides text at non-letters. This tokenizer is implemented using
+    /// Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.LetterTokenizer")]
     public partial class LetterTokenizer : Tokenizer

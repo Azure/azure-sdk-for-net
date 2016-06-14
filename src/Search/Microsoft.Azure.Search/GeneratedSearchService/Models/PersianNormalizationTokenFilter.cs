@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Applies normalization for Persian.
+    /// Applies normalization for Persian. This token filter is implemented
+    /// using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PersianNormalizationTokenFilter")]
     public partial class PersianNormalizationTokenFilter : TokenFilter

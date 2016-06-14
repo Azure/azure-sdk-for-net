@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Normalizes CJK width differences. Folds fullwidth ASCII variants into
     /// the equivalent basic Latin, and half-width Katakana variants into the
-    /// equivalent Kana.
+    /// equivalent Kana. This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.CjkWidthTokenFilter")]
     public partial class CjkWidthTokenFilter : TokenFilter

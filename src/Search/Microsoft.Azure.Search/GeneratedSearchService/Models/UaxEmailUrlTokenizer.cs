@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Tokenizes urls and emails as one token.
+    /// Tokenizes urls and emails as one token. This tokenizer is implemented
+    /// using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.UaxEmailUrlTokenizer")]
     public partial class UaxEmailUrlTokenizer : Tokenizer

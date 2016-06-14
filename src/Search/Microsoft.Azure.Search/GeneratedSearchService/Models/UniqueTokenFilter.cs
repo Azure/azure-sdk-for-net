@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Filters out tokens with same text as the previous token.
+    /// Filters out tokens with same text as the previous token. This token
+    /// filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.UniqueTokenFilter")]
     public partial class UniqueTokenFilter : TokenFilter

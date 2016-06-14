@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Grammar-based tokenizer that is suitable for processing most
-    /// European-language documents.
+    /// European-language documents. This tokenizer is implemented using
+    /// Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ClassicTokenizer")]
     public partial class ClassicTokenizer : Tokenizer

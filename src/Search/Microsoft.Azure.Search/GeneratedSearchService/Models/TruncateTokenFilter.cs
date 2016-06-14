@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Truncates the terms to a specific length.
+    /// Truncates the terms to a specific length. This token filter is
+    /// implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.TruncateTokenFilter")]
     public partial class TruncateTokenFilter : TokenFilter
