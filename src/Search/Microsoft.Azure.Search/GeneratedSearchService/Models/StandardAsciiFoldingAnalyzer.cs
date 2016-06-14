@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Standard analyzer with ASCII folding filter.
+    /// Standard analyzer with ASCII folding filter. This analyzer is
+    /// implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StandardAsciiFoldingAnalyzer")]
     public partial class StandardAsciiFoldingAnalyzer : Analyzer

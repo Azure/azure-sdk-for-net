@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Normalizes use of the interchangeable Scandinavian characters.
+    /// Normalizes use of the interchangeable Scandinavian characters. This
+    /// token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ScandinavianNormalizationTokenFilter")]
     public partial class ScandinavianNormalizationTokenFilter : TokenFilter

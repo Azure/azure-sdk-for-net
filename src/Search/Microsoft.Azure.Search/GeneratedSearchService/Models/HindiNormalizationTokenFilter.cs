@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Normalizes text in Hindi to remove some differences in spelling
-    /// variations.
+    /// variations. This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.HindiNormalizationTokenFilter")]
     public partial class HindiNormalizationTokenFilter : TokenFilter

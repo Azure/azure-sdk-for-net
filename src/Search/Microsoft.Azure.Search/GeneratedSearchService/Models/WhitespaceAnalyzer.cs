@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// An analyzer that uses the whitespace tokenizer.
+    /// An analyzer that uses the whitespace tokenizer. This analyzer is
+    /// implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.WhitespaceAnalyzer")]
     public partial class WhitespaceAnalyzer : Analyzer

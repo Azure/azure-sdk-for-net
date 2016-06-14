@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Folds Scandinavian characters åÅäæÄÆ-&gt;a and öÖøØ-&gt;o. It also
     /// discriminates against use of double vowels aa, ae, ao, oe and oo,
-    /// leaving just the first one.
+    /// leaving just the first one. This token filter is implemented using
+    /// Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ScandinavianFoldingNormalizationTokenFilter")]
     public partial class ScandinavianFoldingNormalizationTokenFilter : TokenFilter

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// A token filter that applies the Arabic normalizer to normalize the
-    /// orthography.
+    /// orthography. This token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ArabicNormalizationTokenFilter")]
     public partial class ArabicNormalizationTokenFilter : TokenFilter

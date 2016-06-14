@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A character filter that attempts to strip out HTML constructs.
+    /// A character filter that attempts to strip out HTML constructs. This
+    /// character filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.HtmlStripCharFilter")]
     public partial class HtmlStripCharFilter : CharFilter

@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Reverses the token string.
+    /// Reverses the token string. This token filter is implemented using
+    /// Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ReverseTokenFilter")]
     public partial class ReverseTokenFilter : TokenFilter

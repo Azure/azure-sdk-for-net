@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Decomposes compound words found in many Germanic languages.
+    /// Decomposes compound words found in many Germanic languages. This token
+    /// filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter")]
     public partial class DictionaryDecompounderTokenFilter : TokenFilter

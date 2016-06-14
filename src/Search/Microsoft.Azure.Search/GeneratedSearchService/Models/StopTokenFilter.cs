@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Removes stop words from a token stream.
+    /// Removes stop words from a token stream. This token filter is
+    /// implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StopTokenFilter")]
     public partial class StopTokenFilter : TokenFilter

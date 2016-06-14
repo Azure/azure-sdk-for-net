@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Divides text at non-letters and converts them to lower case.
+    /// Divides text at non-letters and converts them to lower case. This
+    /// analyzer is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.SimpleAnalyzer")]
     public partial class SimpleAnalyzer : Analyzer
