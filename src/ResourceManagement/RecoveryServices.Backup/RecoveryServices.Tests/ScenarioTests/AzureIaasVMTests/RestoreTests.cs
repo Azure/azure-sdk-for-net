@@ -48,6 +48,7 @@ namespace RecoveryServices.Tests
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string recoveryPointId = ConfigurationManager.AppSettings["RecoveryPointName"];
                 string storageAccountId = ConfigurationManager.AppSettings["StorageAccountId"];
+                string sourceResourceId = ConfigurationManager.AppSettings["SourceVmIdForRestore"];
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
@@ -55,7 +56,7 @@ namespace RecoveryServices.Tests
                 string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
                 string containerUri = containeType + ";" + containerUniqueName;
                 string itemUri = itemType + ";" + itemUniqueName;
-
+                
                 IaasVMRestoreRequest restoreRequest = new IaasVMRestoreRequest()
                 {
                     AffinityGroup = String.Empty,
@@ -66,7 +67,7 @@ namespace RecoveryServices.Tests
                     StorageAccountId = storageAccountId,
                     SubnetId = string.Empty,
                     VirtualNetworkId = string.Empty,
-                    SourceResourceId = string.Empty,
+                    SourceResourceId = sourceResourceId,
                     TargetDomainNameId = string.Empty,
                     TargetResourceGroupId = string.Empty,
                     TargetVirtualMachineId = string.Empty,
