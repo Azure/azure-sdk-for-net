@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Search
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             string invocationId;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.Search
                 continuationToken.NextPageParameters,
                 clientRequestId,
                 customHeaders,
+                requestProperties,
                 continuationToken.NextPageParameters == null,
                 shouldTrace,
                 invocationId,
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Search
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             string invocationId;
@@ -73,6 +76,7 @@ namespace Microsoft.Azure.Search
                 continuationToken.NextPageParameters,
                 clientRequestId,
                 customHeaders,
+                requestProperties,
                 continuationToken.NextPageParameters == null,
                 shouldTrace,
                 invocationId,
@@ -85,6 +89,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return DoGetWithHttpMessagesAsync<Document>(
@@ -92,6 +97,7 @@ namespace Microsoft.Azure.Search
                 selectedFields,
                 searchRequestOptions,
                 customHeaders,
+                requestProperties,
                 cancellationToken,
                 JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
         }
@@ -101,6 +107,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             JsonSerializerSettings jsonSerializerSettings = 
@@ -110,6 +117,7 @@ namespace Microsoft.Azure.Search
                 selectedFields,
                 searchRequestOptions,
                 customHeaders,
+                requestProperties,
                 cancellationToken,
                 jsonSerializerSettings);
         }
@@ -118,6 +126,7 @@ namespace Microsoft.Azure.Search
             IndexBatch batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (batch == null)
@@ -128,13 +137,14 @@ namespace Microsoft.Azure.Search
             JsonSerializerSettings jsonSettings = 
                 JsonUtility.CreateDocumentSerializerSettings(this.Client.SerializationSettings);
             string payload = SafeJsonConvert.SerializeObject(batch, jsonSettings);
-            return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
+            return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, requestProperties, cancellationToken);
         }
 
         public Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync<T>(
             IndexBatch<T> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             if (batch == null)
@@ -147,7 +157,7 @@ namespace Microsoft.Azure.Search
                 JsonUtility.CreateTypedSerializerSettings<T>(this.Client.SerializationSettings, useCamelCase);
             string payload = SafeJsonConvert.SerializeObject(batch, jsonSettings);
 
-            return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
+            return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, requestProperties, cancellationToken);
         }
 
         public Task<AzureOperationResponse<DocumentSearchResult>> SearchWithHttpMessagesAsync(
@@ -155,6 +165,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return DoSearchWithHttpMessagesAsync<DocumentSearchResult, SearchResult, Document>(
@@ -162,6 +173,7 @@ namespace Microsoft.Azure.Search
                 searchParameters,
                 searchRequestOptions,
                 customHeaders,
+                requestProperties,
                 cancellationToken,
                 DeserializeForSearch);
         }
@@ -171,6 +183,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             return DoSearchWithHttpMessagesAsync<DocumentSearchResult<T>, SearchResult<T>, T>(
@@ -178,6 +191,7 @@ namespace Microsoft.Azure.Search
                 searchParameters,
                 searchRequestOptions,
                 customHeaders,
+                requestProperties,
                 cancellationToken,
                 DeserializeForSearch<T>);
         }
@@ -188,6 +202,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return DoSuggestWithHttpMessagesAsync<DocumentSuggestResult, SuggestResult, Document>(
@@ -196,6 +211,7 @@ namespace Microsoft.Azure.Search
                 suggestParameters,
                 searchRequestOptions,
                 customHeaders,
+                requestProperties,
                 cancellationToken,
                 DeserializeForSuggest);
         }
@@ -206,6 +222,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
+            Dictionary<string, object> requestProperties = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             return DoSuggestWithHttpMessagesAsync<DocumentSuggestResult<T>, SuggestResult<T>, T>(
@@ -214,6 +231,7 @@ namespace Microsoft.Azure.Search
                 suggestParameters,
                 searchRequestOptions,
                 customHeaders,
+                requestProperties,
                 cancellationToken,
                 DeserializeForSuggest<T>);
         }
@@ -253,6 +271,7 @@ namespace Microsoft.Azure.Search
             SearchParametersPayload searchParameters,
             Guid? clientRequestId,
             Dictionary<string, List<string>> customHeaders,
+            Dictionary<string, object> requestProperties,
             bool useGet,
             bool shouldTrace,
             string invocationId,
@@ -267,6 +286,15 @@ namespace Microsoft.Azure.Search
             HttpResponseMessage httpResponse = null;
             httpRequest.Method = useGet ? new HttpMethod("GET") : new HttpMethod("POST");
             httpRequest.RequestUri = new Uri(url);
+
+            // Set request properties
+            if (requestProperties != null)
+            {
+                foreach (var key in requestProperties.Keys)
+                {
+                    httpRequest.Properties.Add(key, requestProperties[key]);
+                }
+            }
 
             // Set Headers
             if (this.Client.AcceptLanguage != null)
@@ -422,6 +450,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
+            Dictionary<string, object> requestProperties,
             CancellationToken cancellationToken,
             JsonSerializerSettings jsonSerializerSettings) where T : class
         {
@@ -486,6 +515,15 @@ namespace Microsoft.Azure.Search
             HttpResponseMessage httpResponse = null;
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
+
+            // Set request properties
+            if (requestProperties != null)
+            {
+                foreach (var requestKey in requestProperties.Keys)
+                {
+                    httpRequest.Properties.Add(requestKey, requestProperties[key]);
+                }
+            }
 
             // Set Headers
             if (this.Client.AcceptLanguage != null)
@@ -613,6 +651,7 @@ namespace Microsoft.Azure.Search
             string payload,
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
+            Dictionary<string, object> requestProperties,
             CancellationToken cancellationToken)
         {
             if (this.Client.ApiVersion == null)
@@ -662,6 +701,15 @@ namespace Microsoft.Azure.Search
             HttpResponseMessage httpResponse = null;
             httpRequest.Method = new HttpMethod("POST");
             httpRequest.RequestUri = new Uri(url);
+
+            // Set request properties
+            if (requestProperties != null)
+            {
+                foreach (var key in requestProperties.Keys)
+                {
+                    httpRequest.Properties.Add(key, requestProperties[key]);
+                }
+            }
 
             // Set Headers
             if (this.Client.AcceptLanguage != null)
@@ -820,6 +868,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
+            Dictionary<string, object> requestProperties,
             CancellationToken cancellationToken,
             Func<string, DocumentSearchResponsePayload<TDocResult, TDoc>> deserialize)
             where TSearchResult : DocumentSearchResultBase<TDocResult, TDoc>, new()
@@ -886,6 +935,7 @@ namespace Microsoft.Azure.Search
                 searchParameters.ToPayload(searchText),
                 clientRequestId,
                 customHeaders,
+                requestProperties,
                 useGet,
                 shouldTrace,
                 invocationId,
@@ -899,6 +949,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
+            Dictionary<string, object> requestProperties,
             CancellationToken cancellationToken,
             Func<string, DocumentSuggestResponsePayload<TDocResult, TDoc>> deserialize)
             where TSuggestResult : DocumentSuggestResultBase<TDocResult, TDoc>, new()
@@ -975,6 +1026,15 @@ namespace Microsoft.Azure.Search
             HttpResponseMessage httpResponse = null;
             httpRequest.Method = useGet ? new HttpMethod("GET") : new HttpMethod("POST");
             httpRequest.RequestUri = new Uri(url);
+
+            // Set request properties
+            if (requestProperties != null)
+            {
+                foreach(var key in requestProperties.Keys)
+                {
+                    httpRequest.Properties.Add(key, requestProperties[key]);
+                }
+            }
 
             // Set Headers
             if (this.Client.AcceptLanguage != null)
