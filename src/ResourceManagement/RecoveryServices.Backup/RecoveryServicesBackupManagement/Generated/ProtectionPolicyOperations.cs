@@ -802,6 +802,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     }
                                 }
                             }
+                            
+                            if (derived7.BackupManagementType != null)
+                            {
+                                propertiesValue["backupManagementType"] = derived7.BackupManagementType;
+                            }
+                            
+                            propertiesValue["protectedItemsCount"] = derived7.ProtectedItemsCount;
                         }
                     }
                     
@@ -1635,6 +1642,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
                                         }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue3 = propertiesValue2["backupManagementType"];
+                                    if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                        azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                    }
+                                    
+                                    JToken protectedItemsCountValue3 = propertiesValue2["protectedItemsCount"];
+                                    if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                        azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
                                     }
                                     itemInstance.Properties = azureSqlProtectionPolicyInstance;
                                 }
@@ -2818,6 +2839,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
                                         }
                                     }
+                                    
+                                    JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                        azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                    }
+                                    
+                                    JToken protectedItemsCountValue3 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                        azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
+                                    }
                                     itemInstance.Properties = azureSqlProtectionPolicyInstance;
                                 }
                             }
@@ -3829,6 +3864,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
                                         }
                                     }
+                                    
+                                    JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                        azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                    }
+                                    
+                                    JToken protectedItemsCountValue3 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                        azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
+                                    }
                                     itemInstance.Properties = azureSqlProtectionPolicyInstance;
                                 }
                             }
@@ -4792,6 +4841,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
                                         }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                        azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                    }
+                                    
+                                    JToken protectedItemsCountValue3 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                        azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
                                     }
                                     itemInstance.Properties = azureSqlProtectionPolicyInstance;
                                 }
@@ -5819,6 +5882,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                     azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
                                                 }
+                                            }
+                                            
+                                            JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                                azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                            }
+                                            
+                                            JToken protectedItemsCountValue3 = propertiesValue["protectedItemsCount"];
+                                            if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                            {
+                                                int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                                azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
                                             }
                                             protectionPolicyResourceInstance.Properties = azureSqlProtectionPolicyInstance;
                                         }

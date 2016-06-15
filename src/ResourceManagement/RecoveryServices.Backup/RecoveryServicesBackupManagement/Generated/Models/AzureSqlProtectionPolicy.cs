@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure SQL workload-specific protection policy.
     /// </summary>
-    public partial class AzureSqlProtectionPolicy : ProtectionPolicyBase
+    public partial class AzureSqlProtectionPolicy : ProtectionPolicy
     {
         private RetentionPolicy _retentionPolicy;
         
