@@ -42,15 +42,15 @@ namespace RecoveryServices.Tests
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
-                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
                 string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
-                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRestore"];
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
                 string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
                 string containerUri = containeType + ";" + containerUniqueName;
 
-                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRestore"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string itemUri = itemType + ";" + itemUniqueName;
 
@@ -87,17 +87,17 @@ namespace RecoveryServices.Tests
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
-                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"]; string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"]; string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
-                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRestore"];
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
                 string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
                 string containerUri = containeType + ";" + containerUniqueName;
 
-                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRestore"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string itemUri = itemType + ";" + itemUniqueName;
-                string rpId = ConfigurationManager.AppSettings["RecoveryPointName"];
+                string rpId = ConfigurationManager.AppSettings["RecoveryPointNameRP"];
                 
                 var response = client.RecoveryPoints.Get(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, rpId);
