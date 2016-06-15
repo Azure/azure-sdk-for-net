@@ -193,7 +193,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
             cluster.HttpPassword = "fakePassword";
 
             cluster.DefaultStorageAccount = new WabStorageAccountConfiguration("fakeAccount.blob.core.windows.net",
-                "O92A/ccaUTRKmFMmypgT22fj2Oq3+zbwlZiHbZ4DiXxWaRrCSCgJcU2RTMaZQnxFwVIgj8Awz9NFA0kyKH0wtA==",
+                "O92A/ccaUTRKmFMmypgT22fj2Oq3+zbwlZiHbZ4DiXxWaRrCSCgJcU2RTMaZQnxFwVIgj8Awz9NFA0kyKH0wtA==", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline")]
                 "fakeCluster");
 
             cluster.ClusterType = clusterType;
