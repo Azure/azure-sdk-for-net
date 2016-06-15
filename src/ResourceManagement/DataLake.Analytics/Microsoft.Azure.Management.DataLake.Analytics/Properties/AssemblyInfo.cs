@@ -19,7 +19,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Data Lake Analytics Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Data Lake Analytics management operations including account, catalog and job management.")]
 
-[assembly: AssemblyVersion("0.11.5.0")]
+[assembly: AssemblyVersion("0.11.0.0")]
 [assembly: AssemblyFileVersion("0.11.5.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
