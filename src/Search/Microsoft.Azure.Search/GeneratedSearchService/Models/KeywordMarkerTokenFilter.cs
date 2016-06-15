@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Marks terms as keywords.
+    /// Marks terms as keywords. This token filter is implemented using Apache
+    /// Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeywordMarkerTokenFilter")]
     public partial class KeywordMarkerTokenFilter : TokenFilter

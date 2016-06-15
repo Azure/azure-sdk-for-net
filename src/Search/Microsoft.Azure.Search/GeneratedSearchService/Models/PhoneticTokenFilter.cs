@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Create tokens for phonetic matches.
+    /// Create tokens for phonetic matches. This token filter is implemented
+    /// using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PhoneticTokenFilter")]
     public partial class PhoneticTokenFilter : TokenFilter

@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// A character filter that applies mappings defined with the mappings
     /// option. Matching is greedy (longest pattern matching at a given point
-    /// wins). Replacement is allowed to be the empty string.
+    /// wins). Replacement is allowed to be the empty string. This character
+    /// filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.MappingCharFilter")]
     public partial class MappingCharFilter : CharFilter

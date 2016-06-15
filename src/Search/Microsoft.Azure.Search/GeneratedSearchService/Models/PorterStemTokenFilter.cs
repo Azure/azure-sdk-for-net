@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Transforms the token stream as per the Porter stemming algorithm.
+    /// Uses the Porter stemming algorithm to transform the token stream. This
+    /// token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PorterStemTokenFilter")]
     public partial class PorterStemTokenFilter : TokenFilter

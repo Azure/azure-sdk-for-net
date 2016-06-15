@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Standard Lucene analyzer; Composed of the standard tokenizer,
+    /// Standard Apache Lucene analyzer; Composed of the standard tokenizer,
     /// lowercase filter and stop filter.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StandardAnalyzer")]

@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Treats the entire content of a field as a single token. This is useful
-    /// for data like zip codes, ids, and some product names.
+    /// for data like zip codes, ids, and some product names. This analyzer
+    /// is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeywordAnalyzer")]
     public partial class KeywordAnalyzer : Analyzer

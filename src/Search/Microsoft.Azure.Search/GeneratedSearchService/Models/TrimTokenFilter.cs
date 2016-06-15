@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Trims leading and trailing whitespace from tokens.
+    /// Trims leading and trailing whitespace from tokens. This token filter
+    /// is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.TrimTokenFilter")]
     public partial class TrimTokenFilter : TokenFilter

@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// A token filter that only keeps tokens with text contained in a
-    /// specified list of words.
+    /// specified list of words. This token filter is implemented using
+    /// Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeepTokenFilter")]
     public partial class KeepTokenFilter : TokenFilter

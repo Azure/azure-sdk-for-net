@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Divides text at whitespace.
+    /// Divides text at whitespace. This tokenizer is implemented using Apache
+    /// Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.WhitespaceTokenizer")]
     public partial class WhitespaceTokenizer : Tokenizer

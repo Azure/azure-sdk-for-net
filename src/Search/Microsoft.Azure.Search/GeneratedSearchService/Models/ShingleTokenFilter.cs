@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Creates combinations of tokens as a single token.
+    /// Creates combinations of tokens as a single token. This token filter is
+    /// implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ShingleTokenFilter")]
     public partial class ShingleTokenFilter : TokenFilter

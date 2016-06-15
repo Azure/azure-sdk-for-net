@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Normalizes German characters according to the heuristics of the
-    /// German2 snowball algorithm.
+    /// German2 snowball algorithm. This token filter is implemented using
+    /// Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.GermanNormalizationTokenFilter")]
     public partial class GermanNormalizationTokenFilter : TokenFilter

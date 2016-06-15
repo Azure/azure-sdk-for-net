@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Converts alphabetic, numeric, and symbolic Unicode characters which
     /// are not in the first 127 ASCII characters (the "Basic Latin" Unicode
-    /// block) into their ASCII equivalents, if such equivalents exist.
+    /// block) into their ASCII equivalents, if such equivalents exist. This
+    /// token filter is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.AsciiFoldingTokenFilter")]
     public partial class AsciiFoldingTokenFilter : TokenFilter

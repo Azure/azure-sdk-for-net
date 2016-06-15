@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Flexibly separates text into terms via a regular expression pattern.
+    /// This analyzer is implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PatternAnalyzer")]
     public partial class PatternAnalyzer : Analyzer

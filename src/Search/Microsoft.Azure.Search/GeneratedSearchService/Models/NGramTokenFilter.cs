@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Generates n-grams of the given size(s).
+    /// Generates n-grams of the given size(s). This token filter is
+    /// implemented using Apache Lucene.
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.NGramTokenFilter")]
     public partial class NGramTokenFilter : TokenFilter
