@@ -28,7 +28,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace RecoveryServices.Tests.ScenarioTests.AzureSql
+namespace RecoveryServices.Tests
 {
     public class AzureSqlContainerTests: RecoveryServicesTestsBase
     {
@@ -48,10 +48,10 @@ namespace RecoveryServices.Tests.ScenarioTests.AzureSql
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
                 ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
 
-                string containerUniqueName = ConfigurationManager.AppSettings["AzureSqlContainerName"];
-                AzureSqlProtectionContainer container = response.ItemList.ProtectionContainers[0].Properties as AzureSqlProtectionContainer;
+                string containerUniqueName = ConfigurationManager.AppSettings["ContainerTypeAzureSql"] + ";" + ConfigurationManager.AppSettings["AzureSqlContainerName"];
+                var container = response.ItemList.ProtectionContainers[0];
                 Assert.NotNull(container);
-                Assert.Equal(containerUniqueName, container.FriendlyName);
+                Assert.Equal(containerUniqueName, container.Name);
             }
         }
 
@@ -66,8 +66,9 @@ namespace RecoveryServices.Tests.ScenarioTests.AzureSql
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                string mabContainerName = ConfigurationManager.AppSettings["AzureSqlContainerName"];
-                AzureOperationResponse response = containerTestHelper.UnregisterMABContainer(mabContainerName);
+                string sqlContainerName =  ConfigurationManager.AppSettings["ContainerTypeAzureSql"] + ";" + ConfigurationManager.AppSettings["AzureSqlContainerName"];
+                AzureOperationResponse response = containerTestHelper.UnregisterMABContainer(sqlContainerName);
+                Assert.Equal(response.StatusCode, HttpStatusCode.NoContent);
             }
         }
     }

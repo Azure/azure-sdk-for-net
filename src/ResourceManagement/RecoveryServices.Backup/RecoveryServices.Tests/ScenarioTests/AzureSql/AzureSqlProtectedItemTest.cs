@@ -53,8 +53,8 @@ namespace RecoveryServices.Tests
                 string itemName = ConfigurationManager.AppSettings[TestConstants.AzureSqlItemName];
                 Assert.True(response.ItemList.Value.Any(item =>
                 {
-                    return item.Properties.GetType().IsSubclassOf(typeof(AzureSqlProtectedItem)) &&
-                           item.Name.Contains(itemName);
+                    return ((item.Properties is AzureSqlProtectedItem) &&
+                           item.Name.Contains(itemName));
                 }),
                     "Retrieved list of items doesn't contain AzureSqlProtectedItem test item");
             }
@@ -85,6 +85,7 @@ namespace RecoveryServices.Tests
 
                 var response = protectedItemTestHelper.DeleteProtectedItem(fabricName,
                     containerName, itemName);
+                Assert.Equal(response.StatusCode, HttpStatusCode.Accepted);
             }
         }
 
@@ -114,8 +115,8 @@ namespace RecoveryServices.Tests
                 var response = protectedItemTestHelper.GetProtectedItem(fabricName,
                     containerName, itemName);
 
-                Assert.Equal(itemName, response.Item.Name);
-                Assert.Equal(typeof(AzureSqlProtectedItem).Name, response.Item.GetType().Name);
+                Assert.Equal(itemUniqueName, response.Item.Name);
+                Assert.NotNull(response.Item.Properties as AzureSqlProtectedItem);
             }
         }
     }

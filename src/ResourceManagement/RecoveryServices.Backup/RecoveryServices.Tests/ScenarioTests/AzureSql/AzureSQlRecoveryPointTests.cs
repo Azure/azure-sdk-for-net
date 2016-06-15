@@ -42,8 +42,8 @@ namespace RecoveryServices.Tests
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
-                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgName"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultName"];
                 string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
                 string containerUniqueName = ConfigurationManager.AppSettings[TestConstants.AzureSqlContainerName];
@@ -54,8 +54,8 @@ namespace RecoveryServices.Tests
                 string itemType = ConfigurationManager.AppSettings[TestConstants.WorkloadTypeAzureSqlDb];
                 string itemUri = itemType + ";" + itemUniqueName;
 
-                DateTime startTime = new DateTime(2016, 4, 17, 15, 25, 9, DateTimeKind.Utc);
-                DateTime endTime = new DateTime(2016, 4, 18, 19, 25, 9, DateTimeKind.Utc);
+                DateTime startTime = new DateTime(2016, 6, 13, 15, 25, 9, DateTimeKind.Utc);
+                DateTime endTime = new DateTime(2016, 6, 16, 19, 25, 9, DateTimeKind.Utc);
 
                 RecoveryPointQueryParameters queryFilter = new RecoveryPointQueryParameters();
                 queryFilter.StartDate = startTime.ToString("yyyy-MM-dd hh:mm:ss tt");
@@ -70,7 +70,7 @@ namespace RecoveryServices.Tests
                 foreach (var rpo in response.RecoveryPointList.RecoveryPoints)
                 {
                     Assert.True(!string.IsNullOrEmpty(rpo.Name), "RP Id cant be null");
-                    RecoveryPoint rp = rpo.Properties as RecoveryPoint;
+                    GenericRecoveryPoint rp = rpo.Properties as GenericRecoveryPoint;
                     Assert.True(!string.IsNullOrEmpty(rp.RecoveryPointTime), "RecoveryPointTime can't be null or empty");
                 }
             }
@@ -86,8 +86,8 @@ namespace RecoveryServices.Tests
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
-                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgName"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultName"];
                 string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
                 string containerUniqueName = ConfigurationManager.AppSettings[TestConstants.AzureSqlContainerName];
@@ -105,7 +105,7 @@ namespace RecoveryServices.Tests
                 var rpo = response.RecPoint;
                 Assert.NotNull(rpo);
                 Assert.True(!string.IsNullOrEmpty(rpo.Name), "RP Id cant be null");
-                RecoveryPoint rp = rpo.Properties as RecoveryPoint;
+                GenericRecoveryPoint rp = rpo.Properties as GenericRecoveryPoint;
                 Assert.True(!string.IsNullOrEmpty(rp.RecoveryPointTime), "RecoveryPointTime can't be null or empty");
             }
         }

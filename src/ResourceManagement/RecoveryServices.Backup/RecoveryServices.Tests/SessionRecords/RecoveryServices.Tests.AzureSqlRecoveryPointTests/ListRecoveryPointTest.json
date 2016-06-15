@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e73eba62-bdbb-4b06-90a2-6df4a45d6238/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupFabrics/Azure/protectionContainers/AzureSqlContainer%3BSql%3BtestRG%3BContosoServer/protectedItems/AzureSqlDb%3BdsName%3B558ff01dfd4c4ca7b17d570ede1d4fb8/recoveryPoints?api-version=2016-05-01&$filter=startDate%20eq%20'2016-06-13%2003:25:09%20PM'%20and%20endDate%20eq%20'2016-06-16%2007:25:09%20PM'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTczZWJhNjItYmRiYi00YjA2LTkwYTItNmRmNGE0NWQ2MjM4L3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBGYWJyaWNzL0F6dXJlL3Byb3RlY3Rpb25Db250YWluZXJzL0F6dXJlU3FsQ29udGFpbmVyJTNCU3FsJTNCdGVzdFJHJTNCQ29udG9zb1NlcnZlci9wcm90ZWN0ZWRJdGVtcy9BenVyZVNxbERiJTNCZHNOYW1lJTNCNTU4ZmYwMWRmZDRjNGNhN2IxN2Q1NzBlZGUxZDRmYjgvcmVjb3ZlcnlQb2ludHM/YXBpLXZlcnNpb249MjAxNi0wNS0wMSYkZmlsdGVyPXN0YXJ0RGF0ZSUyMGVxJTIwJzIwMTYtMDYtMTMlMjAwMyUzQTI1JTNBMDklMjBQTSclMjBhbmQlMjBlbmREYXRlJTIwZXElMjAnMjAxNi0wNi0xNiUyMDA3JTNBMjUlM0EwOSUyMFBNJw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "19bba310-930e-4785-b93e-99be1979a2e0"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/e73eba62-bdbb-4b06-90a2-6df4a45d6238/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupFabrics/Azure/protectionContainers/AzureSqlContainer;Sql;testRG;ContosoServer/protectedItems/AzureSqlDb;dsName;558ff01dfd4c4ca7b17d570ede1d4fb8/recoveryPoints/17546051788653\",\r\n      \"name\": \"17546051788653\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/recoveryPoints\",\r\n      \"properties\": {\r\n        \"objectType\": \"GenericRecoveryPoint\",\r\n        \"friendlyName\": \"aabbrp1\",\r\n        \"recoveryPointType\": \"Incremental\",\r\n        \"recoveryPointTime\": \"2016-06-14T13:55:32.0102751\",\r\n        \"recoveryPointAdditionalInfo\": \"bb\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e73eba62-bdbb-4b06-90a2-6df4a45d6238/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupFabrics/Azure/protectionContainers/AzureSqlContainer;Sql;testRG;ContosoServer/protectedItems/AzureSqlDb;dsName;558ff01dfd4c4ca7b17d570ede1d4fb8/recoveryPoints/14752021863745\",\r\n      \"name\": \"14752021863745\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/recoveryPoints\",\r\n      \"properties\": {\r\n        \"objectType\": \"GenericRecoveryPoint\",\r\n        \"friendlyName\": \"aarp2\",\r\n        \"recoveryPointType\": \"Incremental\",\r\n        \"recoveryPointTime\": \"2016-06-14T13:55:28.4320909\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e73eba62-bdbb-4b06-90a2-6df4a45d6238/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupFabrics/Azure/protectionContainers/AzureSqlContainer;Sql;testRG;ContosoServer/protectedItems/AzureSqlDb;dsName;558ff01dfd4c4ca7b17d570ede1d4fb8/recoveryPoints/10673919090862\",\r\n      \"name\": \"10673919090862\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/recoveryPoints\",\r\n      \"properties\": {\r\n        \"objectType\": \"GenericRecoveryPoint\",\r\n        \"friendlyName\": \"aabbccrp3\",\r\n        \"recoveryPointType\": \"Incremental\",\r\n        \"recoveryPointTime\": \"2016-06-14T13:55:23.8539049\",\r\n        \"recoveryPointAdditionalInfo\": \"aa\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1917"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "cb7e36f3-f670-4615-9921-9f214ecd79bb"
+        ],
+        "x-ms-client-request-id": [
+          "19bba310-930e-4785-b93e-99be1979a2e0",
+          "19bba310-930e-4785-b93e-99be1979a2e0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14190"
+        ],
+        "x-ms-correlation-request-id": [
+          "cb7e36f3-f670-4615-9921-9f214ecd79bb"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20160615T065013Z:cb7e36f3-f670-4615-9921-9f214ecd79bb"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 15 Jun 2016 06:50:13 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "e73eba62-bdbb-4b06-90a2-6df4a45d6238"
+  }
+}

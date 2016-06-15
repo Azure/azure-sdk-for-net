@@ -28,7 +28,7 @@ using Microsoft.Azure.Test;
 using RecoveryServices.Tests.Helpers;
 using Microsoft.Azure;
 
-namespace RecoveryServices.Tests.ScenarioTests.AzureSql
+namespace RecoveryServices.Tests
 {
     public class AzureSqlPolicyTests : RecoveryServicesTestsBase
     {
@@ -43,7 +43,7 @@ namespace RecoveryServices.Tests.ScenarioTests.AzureSql
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
                 PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
                 ProtectionPolicyQueryParameters queryParams = new ProtectionPolicyQueryParameters();
-                queryParams.BackupManagementType = "AzureSql";
+                queryParams.BackupManagementType = ConfigurationManager.AppSettings["ProviderTypeAzureSql"];
 
                 ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(queryParams);
 
@@ -78,42 +78,85 @@ namespace RecoveryServices.Tests.ScenarioTests.AzureSql
                 PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
                 string policyName = ConfigurationManager.AppSettings["AzureSqlPolicyName"];
 
+                //create policy request
+                SimpleRetentionPolicy retPolicy = new SimpleRetentionPolicy();
+                retPolicy.RetentionDuration = new RetentionDuration()
+                {
+                    DurationType = "Weeks",
+                    Count = 6
+                };
+
+                AzureSqlProtectionPolicy sqlPolicy = new AzureSqlProtectionPolicy()
+                {
+                    RetentionPolicy = retPolicy
+                };
+
+                ProtectionPolicyRequest policyRequest = new ProtectionPolicyRequest()
+                {
+                    Item = new ProtectionPolicyResource()
+                    {
+                        Properties = sqlPolicy
+                    }
+                };
+
+                //create policy
+                ProtectionPolicyResponse response = policyTestHelper.AddOrUpdateProtectionPolicy(
+                                                       policyName,
+                                                       policyRequest);
 
                 // get policy
-                ProtectionPolicyResponse response = policyTestHelper.GetProtectionPolicy(policyName);
+                response = policyTestHelper.GetProtectionPolicy(policyName);
                 Assert.NotNull(response.Item.Name);
                 Assert.Equal(response.Item.Name, policyName);
                 Assert.NotNull(response.Item.Id);
                 Assert.NotNull(response.Item.Type);
                 Assert.NotNull(response.Item.Properties);
+                Assert.NotNull(response.Item.Properties as AzureSqlProtectionPolicy);
+                AzureSqlProtectionPolicy resultPolicy = response.Item.Properties as AzureSqlProtectionPolicy;
+                SimpleRetentionPolicy resultRetetion = resultPolicy.RetentionPolicy as SimpleRetentionPolicy;
+                Assert.Equal(resultRetetion.RetentionDuration.DurationType, "Weeks");
+                Assert.Equal(resultRetetion.RetentionDuration.Count, 6);
 
-                // now add new policy
-                ProtectionPolicyRequest request = new ProtectionPolicyRequest()
+                //update policy request
+                retPolicy.RetentionDuration = new RetentionDuration()
+                {
+                    DurationType = "Months",
+                    Count = 2
+                };
+
+                sqlPolicy = new AzureSqlProtectionPolicy()
+                {
+                    RetentionPolicy = retPolicy
+                };
+
+                policyRequest = new ProtectionPolicyRequest()
                 {
                     Item = new ProtectionPolicyResource()
                     {
-                        Properties = response.Item.Properties
+                        Properties = sqlPolicy
                     }
                 };
+                
 
-                string newPolicyName = ConfigurationManager.AppSettings["AzureSqlModifiedPolicyName"];
+                // update policy
                 response = policyTestHelper.AddOrUpdateProtectionPolicy(
-                                                       newPolicyName,
-                                                       request);
-                // now update the policy
-                response = policyTestHelper.AddOrUpdateProtectionPolicy(
-                                                       newPolicyName,
-                                                       request);
+                                                       policyName,
+                                                       policyRequest);
                 // validations
                 Assert.NotNull(response.Item.Name);
-                Assert.Equal(response.Item.Name, newPolicyName);
+                Assert.Equal(response.Item.Name, policyName);
                 Assert.NotNull(response.Item.Id);
                 Assert.NotNull(response.Item.Type);
                 Assert.NotNull(response.Item.Properties);
+                Assert.NotNull(response.Item.Properties as AzureSqlProtectionPolicy);
+                resultPolicy = response.Item.Properties as AzureSqlProtectionPolicy;
+                resultRetetion = resultPolicy.RetentionPolicy as SimpleRetentionPolicy;
+                Assert.Equal(resultRetetion.RetentionDuration.DurationType, "Months");
+                Assert.Equal(resultRetetion.RetentionDuration.Count, 2);
 
 
                 // delete the policy
-                AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(newPolicyName);
+                AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(policyName);
                 Assert.Equal(deleteResponse.StatusCode, HttpStatusCode.OK);
             }
         }
