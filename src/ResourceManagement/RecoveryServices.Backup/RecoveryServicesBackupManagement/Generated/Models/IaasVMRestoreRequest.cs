@@ -34,38 +34,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         
         /// <summary>
         /// Optional. Affinity group to which the VM should be restored to.
+        /// Used only for Classic Compute Virtual Machines.
         /// </summary>
         public string AffinityGroup
         {
             get { return this._affinityGroup; }
             set { this._affinityGroup = value; }
-        }
-        
-        private string _cloudServiceOrResourceGroup;
-        
-        /// <summary>
-        /// Optional. Specifies either the cloud service name or the resource
-        /// group name to which the VM has to be restored to.If the VM is of
-        /// type Classic, this will be the cloud service name and resource
-        /// group name if it is a Compute VM.
-        /// </summary>
-        public string CloudServiceOrResourceGroup
-        {
-            get { return this._cloudServiceOrResourceGroup; }
-            set { this._cloudServiceOrResourceGroup = value; }
-        }
-        
-        private string _cloudServiceOrResourceGroupId;
-        
-        /// <summary>
-        /// Optional. Please use this only when the CreateNewCloudService is
-        /// set to false. The value should be the ID of the domain name  for
-        /// Classic VMs and ID of the resource group for Compute VMs.
-        /// </summary>
-        public string CloudServiceOrResourceGroupId
-        {
-            get { return this._cloudServiceOrResourceGroupId; }
-            set { this._cloudServiceOrResourceGroupId = value; }
         }
         
         private bool _createNewCloudService;
@@ -116,6 +90,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._region = value; }
         }
         
+        private string _sourceResourceId;
+        
+        /// <summary>
+        /// Optional. Fully qualified ARM ID of the source VM which is being
+        /// recovered.
+        /// </summary>
+        public string SourceResourceId
+        {
+            get { return this._sourceResourceId; }
+            set { this._sourceResourceId = value; }
+        }
+        
         private string _storageAccountId;
         
         /// <summary>
@@ -140,15 +126,41 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._subnetId = value; }
         }
         
-        private string _virtualMachineName;
+        private string _targetDomainNameId;
         
         /// <summary>
-        /// Optional. Name that the VM has to be restored to.
+        /// Optional. Fully qualified ARM ID of the domain name to be used with
+        /// the VM being cretaed as part of the restore operation. This
+        /// applies only to Classic Virtual Machines.
         /// </summary>
-        public string VirtualMachineName
+        public string TargetDomainNameId
         {
-            get { return this._virtualMachineName; }
-            set { this._virtualMachineName = value; }
+            get { return this._targetDomainNameId; }
+            set { this._targetDomainNameId = value; }
+        }
+        
+        private string _targetResourceGroupId;
+        
+        /// <summary>
+        /// Optional. Fully qualified ARM ID of the resource group where the VM
+        /// has to be cretaed as part of the restore operation.
+        /// </summary>
+        public string TargetResourceGroupId
+        {
+            get { return this._targetResourceGroupId; }
+            set { this._targetResourceGroupId = value; }
+        }
+        
+        private string _targetVirtualMachineId;
+        
+        /// <summary>
+        /// Optional. Fully qualified ARM ID of the VM to be cretaed as part of
+        /// the restore operation.
+        /// </summary>
+        public string TargetVirtualMachineId
+        {
+            get { return this._targetVirtualMachineId; }
+            set { this._targetVirtualMachineId = value; }
         }
         
         private string _virtualNetworkId;

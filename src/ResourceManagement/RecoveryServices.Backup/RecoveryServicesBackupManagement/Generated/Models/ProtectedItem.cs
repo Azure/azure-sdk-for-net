@@ -66,6 +66,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._policyId = value; }
         }
         
+        private string _sourceResourceId;
+        
+        /// <summary>
+        /// Optional. ARM ID of the resource to be protected.
+        /// </summary>
+        public string SourceResourceId
+        {
+            get { return this._sourceResourceId; }
+            set { this._sourceResourceId = value; }
+        }
+        
         private string _workloadType;
         
         /// <summary>
