@@ -48,6 +48,7 @@ namespace RecoveryServices.Tests
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string recoveryPointId = ConfigurationManager.AppSettings["RecoveryPointName"];
                 string storageAccountId = ConfigurationManager.AppSettings["StorageAccountId"];
+                string sourceResourceId = ConfigurationManager.AppSettings["SourceVmIdForRestore"];
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
@@ -59,15 +60,17 @@ namespace RecoveryServices.Tests
                 IaasVMRestoreRequest restoreRequest = new IaasVMRestoreRequest()
                 {
                     AffinityGroup = String.Empty,
-                    CloudServiceOrResourceGroup = String.Empty,
                     CreateNewCloudService = false,
                     RecoveryPointId = recoveryPointId,
                     RecoveryType = RecoveryType.RestoreDisks,
                     Region = vaultLocation,
                     StorageAccountId = storageAccountId,
                     SubnetId = string.Empty,
-                    VirtualMachineName = string.Empty,
                     VirtualNetworkId = string.Empty,
+                    SourceResourceId = sourceResourceId,
+                    TargetDomainNameId = string.Empty,
+                    TargetResourceGroupId = string.Empty,
+                    TargetVirtualMachineId = string.Empty,
                 };
 
                 TriggerRestoreRequest triggerRestoreRequest = new TriggerRestoreRequest();
