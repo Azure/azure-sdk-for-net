@@ -5287,6 +5287,17 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Models
             set { this._recycledTime = value; }
         }
         
+        private string _resourceAdminApiVersion;
+        
+        /// <summary>
+        /// Optional. your documentation here
+        /// </summary>
+        public string ResourceAdminApiVersion
+        {
+            get { return this._resourceAdminApiVersion; }
+            set { this._resourceAdminApiVersion = value; }
+        }
+        
         private StorageAccountState _state;
         
         /// <summary>
@@ -41090,17 +41101,20 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='tenantResourceGroup'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='resourceAdminApiVersion'>
+        /// Required. Your documentation here
+        /// </param>
         /// <param name='parameters'>
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static StorageAccountSyncResponse Sync(this IStorageAccountOperations operations, string tenantSubscriptionId, string tenantResourceGroup, StorageAccountSyncRequest parameters)
+        public static StorageAccountSyncResponse Sync(this IStorageAccountOperations operations, string tenantSubscriptionId, string tenantResourceGroup, string resourceAdminApiVersion, StorageAccountSyncRequest parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IStorageAccountOperations)s).SyncAsync(tenantSubscriptionId, tenantResourceGroup, parameters);
+                return ((IStorageAccountOperations)s).SyncAsync(tenantSubscriptionId, tenantResourceGroup, resourceAdminApiVersion, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -41120,15 +41134,18 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='tenantResourceGroup'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='resourceAdminApiVersion'>
+        /// Required. Your documentation here
+        /// </param>
         /// <param name='parameters'>
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static Task<StorageAccountSyncResponse> SyncAsync(this IStorageAccountOperations operations, string tenantSubscriptionId, string tenantResourceGroup, StorageAccountSyncRequest parameters)
+        public static Task<StorageAccountSyncResponse> SyncAsync(this IStorageAccountOperations operations, string tenantSubscriptionId, string tenantResourceGroup, string resourceAdminApiVersion, StorageAccountSyncRequest parameters)
         {
-            return operations.SyncAsync(tenantSubscriptionId, tenantResourceGroup, parameters, CancellationToken.None);
+            return operations.SyncAsync(tenantSubscriptionId, tenantResourceGroup, resourceAdminApiVersion, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -41261,6 +41278,9 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='tenantResourceGroup'>
         /// Your documentation here.
         /// </param>
+        /// <param name='resourceAdminApiVersion'>
+        /// Your documentation here
+        /// </param>
         /// <param name='parameters'>
         /// Your documentation here.
         /// </param>
@@ -41270,7 +41290,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        Task<StorageAccountSyncResponse> SyncAsync(string tenantSubscriptionId, string tenantResourceGroup, StorageAccountSyncRequest parameters, CancellationToken cancellationToken);
+        Task<StorageAccountSyncResponse> SyncAsync(string tenantSubscriptionId, string tenantResourceGroup, string resourceAdminApiVersion, StorageAccountSyncRequest parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Your documentation here.  (see
@@ -41632,6 +41652,13 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                                 {
                                     WacAccountStates wacInternalStateInstance = StorageAdminManagementClient.ParseWacAccountStates(((string)wacInternalStateValue));
                                     propertiesInstance.WacInternalState = wacInternalStateInstance;
+                                }
+                                
+                                JToken resourceAdminApiVersionValue = propertiesValue["resourceAdminApiVersion"];
+                                if (resourceAdminApiVersionValue != null && resourceAdminApiVersionValue.Type != JTokenType.Null)
+                                {
+                                    string resourceAdminApiVersionInstance = ((string)resourceAdminApiVersionValue);
+                                    propertiesInstance.ResourceAdminApiVersion = resourceAdminApiVersionInstance;
                                 }
                                 
                                 JToken idValue = propertiesValue["id"];
@@ -42064,6 +42091,13 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                                             propertiesInstance.WacInternalState = wacInternalStateInstance;
                                         }
                                         
+                                        JToken resourceAdminApiVersionValue = propertiesValue["resourceAdminApiVersion"];
+                                        if (resourceAdminApiVersionValue != null && resourceAdminApiVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceAdminApiVersionInstance = ((string)resourceAdminApiVersionValue);
+                                            propertiesInstance.ResourceAdminApiVersion = resourceAdminApiVersionInstance;
+                                        }
+                                        
                                         JToken idValue = propertiesValue["id"];
                                         if (idValue != null && idValue.Type != JTokenType.Null)
                                         {
@@ -42187,6 +42221,9 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='tenantResourceGroup'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='resourceAdminApiVersion'>
+        /// Required. Your documentation here
+        /// </param>
         /// <param name='parameters'>
         /// Required. Your documentation here.
         /// </param>
@@ -42196,7 +42233,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<StorageAccountSyncResponse> SyncAsync(string tenantSubscriptionId, string tenantResourceGroup, StorageAccountSyncRequest parameters, CancellationToken cancellationToken)
+        public async Task<StorageAccountSyncResponse> SyncAsync(string tenantSubscriptionId, string tenantResourceGroup, string resourceAdminApiVersion, StorageAccountSyncRequest parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (tenantSubscriptionId == null)
@@ -42206,6 +42243,10 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             if (tenantResourceGroup == null)
             {
                 throw new ArgumentNullException("tenantResourceGroup");
+            }
+            if (resourceAdminApiVersion == null)
+            {
+                throw new ArgumentNullException("resourceAdminApiVersion");
             }
             if (parameters == null)
             {
@@ -42221,6 +42262,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("tenantSubscriptionId", tenantSubscriptionId);
                 tracingParameters.Add("tenantResourceGroup", tenantResourceGroup);
+                tracingParameters.Add("resourceAdminApiVersion", resourceAdminApiVersion);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "SyncAsync", tracingParameters);
             }
@@ -42238,7 +42280,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             url = url + Uri.EscapeDataString(tenantResourceGroup);
             url = url + "/SynchronizeResources";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(resourceAdminApiVersion));
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
