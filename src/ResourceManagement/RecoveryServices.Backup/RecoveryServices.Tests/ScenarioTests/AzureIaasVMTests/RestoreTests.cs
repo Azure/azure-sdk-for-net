@@ -56,7 +56,7 @@ namespace RecoveryServices.Tests
                 string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
                 string containerUri = containeType + ";" + containerUniqueName;
                 string itemUri = itemType + ";" + itemUniqueName;
-                
+
                 IaasVMRestoreRequest restoreRequest = new IaasVMRestoreRequest()
                 {
                     AffinityGroup = String.Empty,
