@@ -371,6 +371,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         genericRecoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance2;
                                     }
                                     
+                                    JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                    if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance = ((string)friendlyNameValue);
+                                        genericRecoveryPointInstance.FriendlyName = friendlyNameInstance;
+                                    }
+                                    
                                     JToken recoveryPointTimeValue2 = propertiesValue["recoveryPointTime"];
                                     if (recoveryPointTimeValue2 != null && recoveryPointTimeValue2.Type != JTokenType.Null)
                                     {
@@ -810,6 +817,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string recoveryPointTypeInstance2 = ((string)recoveryPointTypeValue2);
                                                 genericRecoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance2;
+                                            }
+                                            
+                                            JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance = ((string)friendlyNameValue);
+                                                genericRecoveryPointInstance.FriendlyName = friendlyNameInstance;
                                             }
                                             
                                             JToken recoveryPointTimeValue2 = propertiesValue["recoveryPointTime"];

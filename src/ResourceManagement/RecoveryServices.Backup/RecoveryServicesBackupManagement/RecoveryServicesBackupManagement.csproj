@@ -87,6 +87,8 @@
     <Compile Include="Generated\Models\AzureIaaSVMProtectionPolicy.cs" />
     <Compile Include="Generated\Models\AzureSqlProtectedItem.cs" />
     <Compile Include="Generated\Models\AzureSqlProtectedItemExtendedInfo.cs" />
+    <Compile Include="Generated\Models\AzureSqlProtectionContainer.cs" />
+    <Compile Include="Generated\Models\AzureSqlProtectionPolicy.cs" />
     <Compile Include="Generated\Models\BackupEngine.cs" />
     <Compile Include="Generated\Models\BackupEngineBase.cs" />
     <Compile Include="Generated\Models\BackupEngineListQueryParams.cs" />

@@ -38,5 +38,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// The Windows container type.
         /// </summary>
         public const string Windows = "Windows";
+        
+        /// <summary>
+        /// The Azure SQL container type.
+        /// </summary>
+        public const string AzureSqlContainer = "AzureSqlContainer";
     }
 }

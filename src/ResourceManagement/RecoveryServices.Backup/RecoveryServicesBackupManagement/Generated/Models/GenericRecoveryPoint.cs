@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class GenericRecoveryPoint : RecoveryPointBase
     {
+        private string _friendlyName;
+        
+        /// <summary>
+        /// Optional. Friendly name of the recovery point.
+        /// </summary>
+        public string FriendlyName
+        {
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
         private string _recoveryPointAdditionalInfo;
         
         /// <summary>

@@ -64,6 +64,10 @@
     <Compile Include="ScenarioTests\AzureIaasVMTests\BackupTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\RecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\RestoreTests.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlContainerTests.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlPolicyTests.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlProtectedItemTest.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlRecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\DpmTests\BackupEngineTest.cs" />
     <Compile Include="ScenarioTests\JobTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectableObjectTests.cs" />
@@ -131,7 +135,34 @@
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.RestoreDiskTests\RestoreDiskTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlContainerTests\ListAzureSqlContainersTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlContainerTests\UnregisterContainersTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlPolicyTests\GetAddUpdateDeleteAzureSqlPolicyTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlPolicyTests\ListRecoveryServicesAzureSqlProtectionPolicyTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlProtectedItemTest\DeleteProtectedItemTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlProtectedItemTest\GetProtectedItemTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlProtectedItemTest\ListProtectedItemTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlRecoveryPointTests\GetRecoveryPointDetailTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Include="SessionRecords\RecoveryServices.Tests.AzureSqlRecoveryPointTests\ListRecoveryPointTest.json">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
