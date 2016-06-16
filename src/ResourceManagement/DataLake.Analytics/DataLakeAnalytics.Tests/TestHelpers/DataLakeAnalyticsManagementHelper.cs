@@ -349,7 +349,8 @@ END;", dbName, tableName, tvfName, viewName, procName);
                 {
                     // Type = JobType.USql,
                     Script = scriptToRun
-                }
+                },
+                JobId = jobIdToUse
             };
             var jobCreateResponse = jobClient.Job.Create(dataLakeAnalyticsAccountName, jobIdToUse, createOrBuildParams);
 
