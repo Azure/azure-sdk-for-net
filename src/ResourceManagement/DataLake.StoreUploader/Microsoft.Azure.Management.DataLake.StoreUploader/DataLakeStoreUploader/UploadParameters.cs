@@ -29,26 +29,28 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="inputFilePath">The full path to the file or folder to be uploaded.</param>
         /// <param name="targetStreamPath">The full stream path where the file or folder will be uploaded to.</param>
         /// <param name="accountName">Name of the account to upload to.</param>
-        /// <param name="fileThreadCount">The file thread count, indicating the number of file segments to upload in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
-        /// <param name="folderThreadCount">The folder thread count, indicating the number of files to upload in parallel during a folder upload. This parameter is ignored for single file uploads. Default is 5 for folder uploads</param>
+        /// <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to upload in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
+        /// <param name="concurrentFileCount">The parallel file count, indicating the number of files to upload in parallel during a folder upload. This parameter is ignored for single file uploads. Default is 5 for folder uploads</param>
         /// <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
         /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
         /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
         /// <param name="isRecursive">(Optional) Indicates whether to upload the source folder recursively or not. If true, will upload the source directory and all sub directories, preserving directory structure.</param>
+        /// <param name="isDownload">(Optional) if set to <c>true</c> [is download] instead of an upload scenario. Default is false.</param>
         /// <param name="maxSegmentLength">Maximum length of each segment. The default is 256mb, which gives optimal performance. Modify at your own risk.</param>
         /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
-        public UploadParameters(string inputFilePath, string targetStreamPath, string accountName, int fileThreadCount = 1, int folderThreadCount = 5, bool isOverwrite = false, bool isResume = false, bool isBinary = true, bool isRecursive = false, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null)
+        public UploadParameters(string inputFilePath, string targetStreamPath, string accountName, int perFileThreadCount = 10, int concurrentFileCount = 5, bool isOverwrite = false, bool isResume = false, bool isBinary = true, bool isRecursive = false, bool isDownload = false, long maxSegmentLength = 256 * 1024 * 1024, string localMetadataLocation = null)
         {
             this.InputFilePath = inputFilePath;
             this.TargetStreamPath = targetStreamPath;
-            this.FileThreadCount = fileThreadCount;
-            this.FolderThreadCount = folderThreadCount;
+            this.PerFileThreadCount = perFileThreadCount;
+            this.ConcurentFileCount = concurrentFileCount;
             this.AccountName = accountName;
             this.IsOverwrite = isOverwrite;
             this.IsResume = isResume;
             this.IsBinary = isBinary;
             this.IsRecursive = isRecursive;
             this.MaxSegementLength = maxSegmentLength;
+            this.IsDownload = isDownload;
 
             if (string.IsNullOrWhiteSpace(localMetadataLocation))
             {
@@ -70,16 +72,17 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="targetStreamPath">The full stream path where the file or folder will be uploaded to.</param>
         /// <param name="accountName">Name of the account to upload to.</param>
         /// <param name="useSegmentBlockBackOffRetryStrategy">if set to <c>true</c> [use segment block back off retry strategy].</param>
-        /// <param name="fileThreadCount">(Optional) The maximum number of parallel threads to use for the upload.</param>
-        /// <param name="folderThreadCount">The folder thread count.</param>
+        /// <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to upload in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
+        /// <param name="concurrentFileCount">The parallel file count, indicating the number of files to upload in parallel during a folder upload. This parameter is ignored for single file uploads. Default is 5 for folder uploads</param>
         /// <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
         /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
         /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
         /// <param name="isRecursive">(Optional) Indicates whether to upload the source folder recursively or not. If true, will upload the source directory and all sub directories, preserving directory structure.</param>
+        /// <param name="isDownload">(Optional) if set to <c>true</c> [is download] instead of an upload scenario. Default is false.</param>
         /// <param name="maxSegmentLength">Maximum length of the segment.</param>
         /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
-        internal UploadParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int fileThreadCount = 1, int folderThreadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, bool isRecursive = false, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null) :
-            this(inputFilePath, targetStreamPath, accountName, fileThreadCount, folderThreadCount, isOverwrite, isResume, isBinary, isRecursive, maxSegmentLength, localMetadataLocation)
+        internal UploadParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int perFileThreadCount = 10, int concurrentFileCount = 5, bool isOverwrite = false, bool isResume = false, bool isBinary = true, bool isRecursive = false, bool isDownload = false, long maxSegmentLength = 256 * 1024 * 1024, string localMetadataLocation = null) :
+            this(inputFilePath, targetStreamPath, accountName, perFileThreadCount, concurrentFileCount, isOverwrite, isResume, isBinary, isRecursive, isDownload, maxSegmentLength, localMetadataLocation)
         {
             this.UseSegmentBlockBackOffRetryStrategy = useSegmentBlockBackOffRetryStrategy;
         }
@@ -90,7 +93,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// <c>true</c> if [to use segment block back off retry strategy]; otherwise, <c>false</c>.
         /// </value>
-        internal bool UseSegmentBlockBackOffRetryStrategy {get; set; }
+        internal bool UseSegmentBlockBackOffRetryStrategy { get; set; }
 
         /// <summary>
         /// Gets a value indicating the full path to the file or folder to be uploaded.
@@ -122,16 +125,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The file thread count.
         /// </value>
-        public int FileThreadCount { get; internal set; }
+        public int PerFileThreadCount { get; internal set; }
 
 
         /// <summary>
-        /// Gets the folder thread count, which indicates how many files in a folder will be uploaded in parallel
+        /// Gets the parallel file count, which indicates how many files in a folder will be uploaded in parallel
         /// </summary>
         /// <value>
         /// The folder thread count.
         /// </value>
-        public int FolderThreadCount { get; internal set; }
+        public int ConcurentFileCount { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether to overwrite the target stream if it already exists.
@@ -164,6 +167,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         ///   <c>true</c> if this instance is recursive; otherwise, <c>false</c>.
         /// </value>
         public bool IsRecursive { get; internal set; }
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is downloading to the local machine instead of uploading.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is download; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDownload { get; internal set; }
 
         /// <summary>
         /// Gets the maximum length of each segement.

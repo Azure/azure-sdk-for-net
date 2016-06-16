@@ -54,34 +54,21 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="metadataFilePath">The file path to assign to this metadata file (for saving purposes).</param>
         /// <param name="uploadParameters">The parameters to use for constructing this metadata.</param>
-        internal UploadMetadata(string metadataFilePath, UploadParameters uploadParameters)
+        /// <param name="frontEnd">The front end. This is used only in the constructor for determining file length</param>
+        internal UploadMetadata(string metadataFilePath, UploadParameters uploadParameters, IFrontEndAdapter frontEnd)
         {
             this.MetadataFilePath = metadataFilePath;
            
             this.UploadId = Guid.NewGuid().ToString("N");
             this.InputFilePath = uploadParameters.InputFilePath;
             this.TargetStreamPath = uploadParameters.TargetStreamPath;
+            this.IsDownload = uploadParameters.IsDownload;
 
-            string streamDirectory;
-            var streamName = SplitTargetStreamPathByName(out streamDirectory);
-            
-            if (string.IsNullOrEmpty(streamDirectory))
-            {
-                // the scenario where the file is being uploaded at the root
-                this.SegmentStreamDirectory = string.Format("/{0}.segments.{1}", streamName, Guid.NewGuid());
-            }
-            else
-            {
-                // the scenario where the file is being uploaded in a sub folder
-                this.SegmentStreamDirectory = string.Format("{0}/{1}.segments.{2}",
-                    streamDirectory,
-                    streamName, Guid.NewGuid());
-            }
+            this.SegmentStreamDirectory = GetSegmentStreamDirectory();
 
             this.IsBinary = uploadParameters.IsBinary;
 
-            var fileInfo = new FileInfo(uploadParameters.InputFilePath);
-            this.FileLength = fileInfo.Length;
+            this.FileLength = frontEnd.GetStreamLength(uploadParameters.InputFilePath, !IsDownload);
 
             this.EncodingCodePage = uploadParameters.FileEncoding.CodePage;
 
@@ -89,9 +76,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // this protects us against agressive increase of thread count resulting in far more segments than
             // is reasonable for a given file size. We also ensure that each segment is at least 256mb in size.
             // This is the size that ensures we have the optimal storage creation in the store.
-            var preliminarySegmentCount = (int)Math.Ceiling((double) fileInfo.Length/uploadParameters.MaxSegementLength);
-            this.SegmentCount = Math.Min(preliminarySegmentCount, UploadSegmentMetadata.CalculateSegmentCount(fileInfo.Length));
-            this.SegmentLength = UploadSegmentMetadata.CalculateSegmentLength(fileInfo.Length, this.SegmentCount);
+            var preliminarySegmentCount = (int)Math.Ceiling((double)this.FileLength / uploadParameters.MaxSegementLength);
+            this.SegmentCount = Math.Min(preliminarySegmentCount, UploadSegmentMetadata.CalculateSegmentCount(this.FileLength));
+            this.SegmentLength = UploadSegmentMetadata.CalculateSegmentLength(this.FileLength, this.SegmentCount);
 
             this.Segments = new UploadSegmentMetadata[this.SegmentCount];
             for (int i = 0; i < this.SegmentCount; i++)
@@ -99,7 +86,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 this.Segments[i] = new UploadSegmentMetadata(i, this);
             }
 
-            if (!uploadParameters.IsBinary && this.SegmentCount > 1)
+            if (!uploadParameters.IsBinary && this.SegmentCount > 1 && !this.IsDownload)
             {
                 this.AlignSegmentsToRecordBoundaries();
                 
@@ -195,6 +182,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </value>
         [DataMember(Name = "IsBinary")]
         public bool IsBinary { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is a download instead of an upload.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is download; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember(Name = "IsDownload")]
+        public bool IsDownload { get; set; }
 
         /// <summary>
         /// Gets the CodePage of the current encoding being used.
@@ -374,22 +370,60 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <returns></returns>
         internal string SplitTargetStreamPathByName(out string targetStreamDirectory)
         {
-            var numFoldersInPath = this.TargetStreamPath.Split('/').Length;
-            if (numFoldersInPath - 1 == 0 || (numFoldersInPath - 1 == 1 && this.TargetStreamPath.StartsWith("/")))
+            if (this.IsDownload)
             {
-                // the scenario where the file is being uploaded at the root
-                targetStreamDirectory = null;
-                return this.TargetStreamPath.TrimStart('/');
+                targetStreamDirectory = Path.GetDirectoryName(this.TargetStreamPath);
+                return Path.GetFileName(this.TargetStreamPath);
             }
             else
             {
-                // the scenario where the file is being uploaded in a sub folder
-                targetStreamDirectory = this.TargetStreamPath.Substring(0,
-                    this.TargetStreamPath.LastIndexOf('/'));
-                return this.TargetStreamPath.Substring(this.TargetStreamPath.LastIndexOf('/') + 1);
+                var numFoldersInPath = this.TargetStreamPath.Split('/').Length;
+                if (numFoldersInPath - 1 == 0 || (numFoldersInPath - 1 == 1 && this.TargetStreamPath.StartsWith("/")))
+                {
+                    // the scenario where the file is being uploaded at the root
+                    targetStreamDirectory = null;
+                    return this.TargetStreamPath.TrimStart('/');
+                }
+                else
+                {
+                    // the scenario where the file is being uploaded in a sub folder
+                    targetStreamDirectory = this.TargetStreamPath.Substring(0,
+                        this.TargetStreamPath.LastIndexOf('/'));
+                    return this.TargetStreamPath.Substring(this.TargetStreamPath.LastIndexOf('/') + 1);
+                }
             }
         }
 
+
+        internal string GetSegmentStreamDirectory()
+        {
+            string streamDirectory;
+            var streamName = SplitTargetStreamPathByName(out streamDirectory);
+
+            if(this.IsDownload)
+            {
+                // for downloads, there is always a "folder" (such as 'C:\').
+                return string.Format(@"{0}\{1}.segments.{2}",
+                    streamDirectory,
+                    streamName, Guid.NewGuid());
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(streamDirectory))
+                {
+                    // the scenario where the file is being uploaded at the root
+                    return string.Format("/{0}.segments.{1}", streamName, Guid.NewGuid());
+                }
+                else
+                {
+                    // the scenario where the file is being uploaded in a sub folder
+                    return string.Format("{0}/{1}.segments.{2}",
+                        streamDirectory,
+                        streamName, Guid.NewGuid());
+                }
+            }
+            
+        }
         /// <summary>
         /// Aligns segments to match record boundaries (where a record boundary = a new line).
         /// If not possible (max record size = 4MB), throws an exception.

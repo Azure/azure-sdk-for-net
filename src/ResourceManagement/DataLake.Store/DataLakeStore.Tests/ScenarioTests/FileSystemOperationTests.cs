@@ -201,7 +201,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        //[Fact] commenting this out until we have a good test for validating access denied within the same tenant
         public void DataLakeStoreFileSystemTestAccessDenied()
         {
             using (var context = MockContext.Start(this.GetType().FullName))

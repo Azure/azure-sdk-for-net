@@ -17,28 +17,35 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Azure Storage blob container properties information.
+    /// A Data Lake Analytics catalog type field information item.
     /// </summary>
-    public partial class BlobContainerProperties
+    public partial class TypeFieldInfo
     {
         /// <summary>
-        /// Initializes a new instance of the BlobContainerProperties class.
+        /// Initializes a new instance of the TypeFieldInfo class.
         /// </summary>
-        public BlobContainerProperties() { }
+        public TypeFieldInfo() { }
 
         /// <summary>
-        /// Initializes a new instance of the BlobContainerProperties class.
+        /// Initializes a new instance of the TypeFieldInfo class.
         /// </summary>
-        public BlobContainerProperties(DateTime? lastModifiedTime = default(DateTime?))
+        public TypeFieldInfo(string name = default(string), string type = default(string))
         {
-            LastModifiedTime = lastModifiedTime;
+            Name = name;
+            Type = type;
         }
 
         /// <summary>
-        /// Gets the last modified time of the blob container.
+        /// Gets or sets the name of the field associated with this type.
         /// </summary>
-        [JsonProperty(PropertyName = "lastModifiedTime")]
-        public DateTime? LastModifiedTime { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the field.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }
