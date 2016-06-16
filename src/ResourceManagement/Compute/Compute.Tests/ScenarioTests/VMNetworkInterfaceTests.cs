@@ -45,7 +45,7 @@ namespace Compute.Tests
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM;
                 try
-                {   
+                {
                     // Create the resource Group, it might have been already created during StorageAccount creation.
                     var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
                         rgName,
@@ -60,14 +60,12 @@ namespace Compute.Tests
 
                     Subnet subnetResponse = CreateVNET(rgName);
 
-                    var ipconfigNames = new List<string> { ComputeManagementTestUtilities.GenerateName("ip") };
-
-                    NetworkInterface nicResponse = CreateNIC(rgName, subnetResponse,null, ipconfigNames:ipconfigNames);
+                    NetworkInterface nicResponse = CreateNIC(rgName, subnetResponse, null);
 
                     string asetId = CreateAvailabilitySet(rgName, asName);
 
                     inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id);
-                    
+
                     string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
                     var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(
@@ -128,10 +126,8 @@ namespace Compute.Tests
 
                     string nicname1 = ComputeManagementTestUtilities.GenerateName(null);
                     string nicname2 = ComputeManagementTestUtilities.GenerateName(null);
-                    var ipconfigNames1 = new List<string> { ComputeManagementTestUtilities.GenerateName("ip") };
-                    var ipconfigNames2 = new List<string> { ComputeManagementTestUtilities.GenerateName("ip") };
-                    NetworkInterface nicResponse1 = CreateNIC(rgName, subnetResponse, null, ipconfigNames:ipconfigNames1, nicname:nicname1);
-                    NetworkInterface nicResponse2 = CreateNIC(rgName, subnetResponse, null, ipconfigNames2,nicname2);
+                    NetworkInterface nicResponse1 = CreateNIC(rgName, subnetResponse, null, nicname1);
+                    NetworkInterface nicResponse2 = CreateNIC(rgName, subnetResponse, null, nicname2);
                     string asetId = CreateAvailabilitySet(rgName, asName);
 
                     inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
@@ -140,10 +136,10 @@ namespace Compute.Tests
                     inputVM.NetworkProfile.NetworkInterfaces[0].Primary = false;
 
                     inputVM.NetworkProfile.NetworkInterfaces.Add(new NetworkInterfaceReference
-                                                                     {
-                                                                         Id = nicResponse2.Id, 
-                                                                         Primary = true
-                                                                     });
+                    {
+                        Id = nicResponse2.Id,
+                        Primary = true
+                    });
 
                     string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
@@ -158,9 +154,9 @@ namespace Compute.Tests
 
                     var getNicResponse1 = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse1.Name);
                     // TODO AutoRest: Recording Passed, but these assertions failed in Playback mode
-                   Assert.NotNull(getNicResponse1.MacAddress);
-                   Assert.NotNull(getNicResponse1.Primary);
-                   Assert.True(getNicResponse1.Primary != null && !getNicResponse1.Primary.Value);
+                    Assert.NotNull(getNicResponse1.MacAddress);
+                    Assert.NotNull(getNicResponse1.Primary);
+                    Assert.True(getNicResponse1.Primary != null && !getNicResponse1.Primary.Value);
 
                     var getNicResponse2 = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse2.Name);
                     // TODO AutoRest: Recording Passed, but these assertions failed in Playback mode
@@ -208,10 +204,8 @@ namespace Compute.Tests
 
                     string nicname1 = ComputeManagementTestUtilities.GenerateName(null);
                     string nicname2 = ComputeManagementTestUtilities.GenerateName(null);
-                    var ipconfigNames1 = new List<string> { ComputeManagementTestUtilities.GenerateName("ip"), ComputeManagementTestUtilities.GenerateName("ip") };
-                    var ipconfigNames2 = new List<string> { ComputeManagementTestUtilities.GenerateName("ip") , ComputeManagementTestUtilities.GenerateName("ip") };
-                    NetworkInterface nicResponse1 = CreateNIC(rgName, subnetResponse, null,ipconfigNames1, nicname1);
-                    NetworkInterface nicResponse2 = CreateNIC(rgName, subnetResponse, null, ipconfigNames2, nicname2);
+                    NetworkInterface nicResponse1 = CreateMultiIpConfigNIC(rgName, subnetResponse, nicname1);
+                    NetworkInterface nicResponse2 = CreateMultiIpConfigNIC(rgName, subnetResponse, nicname2);
                     string asetId = CreateAvailabilitySet(rgName, asName);
 
                     inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
