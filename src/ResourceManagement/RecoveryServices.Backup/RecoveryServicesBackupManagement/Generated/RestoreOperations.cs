@@ -273,6 +273,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["subnetId"] = derived.SubnetId;
                             }
                             
+<<<<<<< HEAD
                             if (derived.SourceResourceId != null)
                             {
                                 propertiesValue["sourceResourceId"] = derived.SourceResourceId;
@@ -291,6 +292,34 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived.TargetDomainNameId != null)
                             {
                                 propertiesValue["targetDomainNameId"] = derived.TargetDomainNameId;
+=======
+                            if (derived.EncryptionDetails != null)
+                            {
+                                JObject encryptionDetailsValue = new JObject();
+                                propertiesValue["encryptionDetails"] = encryptionDetailsValue;
+                                
+                                encryptionDetailsValue["encryptionEnabled"] = derived.EncryptionDetails.EncryptionEnabled;
+                                
+                                if (derived.EncryptionDetails.KekUrl != null)
+                                {
+                                    encryptionDetailsValue["kekUrl"] = derived.EncryptionDetails.KekUrl;
+                                }
+                                
+                                if (derived.EncryptionDetails.SecretKeyUrl != null)
+                                {
+                                    encryptionDetailsValue["secretKeyUrl"] = derived.EncryptionDetails.SecretKeyUrl;
+                                }
+                                
+                                if (derived.EncryptionDetails.KekVaultId != null)
+                                {
+                                    encryptionDetailsValue["kekVaultId"] = derived.EncryptionDetails.KekVaultId;
+                                }
+                                
+                                if (derived.EncryptionDetails.SecretKeyVaultId != null)
+                                {
+                                    encryptionDetailsValue["secretKeyVaultId"] = derived.EncryptionDetails.SecretKeyVaultId;
+                                }
+>>>>>>> 28537e496a39dbea3b06e11ee8b5e10e3dc828c6
                             }
                         }
                     }

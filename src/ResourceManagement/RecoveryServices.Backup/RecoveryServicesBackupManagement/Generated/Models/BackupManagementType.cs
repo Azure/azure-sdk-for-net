@@ -33,5 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         DPM = 2,
         
         AzureBackupServer = 3,
+        
+        AzureSql = 4,
     }
 }

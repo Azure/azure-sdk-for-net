@@ -85,5 +85,46 @@ namespace RecoveryServices.Tests
                 Assert.True(!string.IsNullOrEmpty(response.Location), "Location cant be null");
             }
         }
+
+        [Fact]
+        public void FileFolderRestoreTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                string resourceGroupName = "labRG1";
+                string resourceName = "idcdlslbRSVault";
+                string resourceNamespace = "Microsoft.RecoveryServicesBVTD";
+                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                string containerUniqueName = "iaasvmcontainer;labrg1;hydrarecordvm";
+                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
+                string itemUniqueName = containerUniqueName;
+                string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+
+                FileFolderRestoreParameters parameters = new FileFolderRestoreParameters();
+                parameters.ContainerName = containeType + ";" + containerUniqueName;
+                parameters.CustomRequestHeaders = CommonTestHelper.GetCustomRequestHeaders();
+                parameters.FabricName = fabricName;
+                parameters.ProtectedItemName = itemType + ";" + itemUniqueName;
+                parameters.RecoveryPointId = "2621477890965";
+                parameters.ResourceGroupName = resourceGroupName;
+                parameters.ResourceName = resourceName;
+
+                ProvisionILRRequest request = new ProvisionILRRequest();
+                request.Item = new ILRRestoreRequestResource();
+                IaasVMILRRegistrationRequest iaasVmRequest = new IaasVMILRRegistrationRequest();
+                iaasVmRequest.RecoveryPointId = parameters.RecoveryPointId;
+                iaasVmRequest.RenewExistingRegistration = false.ToString();
+                request.Item.Properties = iaasVmRequest;
+
+                var response = client.FileFolderRestores.Provision(parameters, request);
+
+                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+                Assert.True(!string.IsNullOrEmpty(response.Location), "Location cant be null");
+            }
+        }
     }
 }
