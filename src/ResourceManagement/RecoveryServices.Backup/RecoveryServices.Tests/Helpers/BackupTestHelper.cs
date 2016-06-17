@@ -38,16 +38,16 @@ namespace RecoveryServices.Tests.Helpers
 
         public void BackupProtectedItem()
         {
-            string rsVaultRgName = "pstestrg";
-            string rsVaultName = "pstestrsvault";
+            string rsVaultRgName = "labRG1";
+            string rsVaultName = "idcdlslbRSVault";
             string fabricName = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
-            string containerName = "IaasVMContainer;iaasvmcontainerv2;pstestrg;pstestv2vm1";
-            string protectedItemName = "VM;iaasvmcontainerv2;pstestrg;pstestv2vm1";
+            string containerName = "IaasVMContainer;iaasvmcontainerv2;vikasnprodrg;vikasnrec";
+            string protectedItemName = "VM;iaasvmcontainerv2;vikasnprodrg;vikasnrec";
 
             TriggerBackupRequest backupRequest = new TriggerBackupRequest();
             backupRequest.Item = new BackupRequestResource();
             IaaSVMBackupRequest iaasVmBackupRequest = new IaaSVMBackupRequest();
-            iaasVmBackupRequest.RecoveryPointExpiryTimeInUTC = DateTime.UtcNow.AddDays(1);
+            iaasVmBackupRequest.RecoveryPointExpiryTimeInUTC = DateTime.UtcNow.AddDays(2);
             backupRequest.Item.Properties = iaasVmBackupRequest;
 
             var response = Client.Backups.TriggerBackup(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(),
