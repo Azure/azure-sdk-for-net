@@ -689,9 +689,7 @@ namespace Compute.Tests
             Assert.NotNull(vmOut.AvailabilitySet);
             Assert.True(vm.AvailabilitySet.Id.ToLowerInvariant() == vmOut.AvailabilitySet.Id.ToLowerInvariant());
             ValidatePlan(vm.Plan, vmOut.Plan);
-            // TODO: it's null somtimes.
-            //Assert.NotNull(vmOut.Properties.Id);
-            //Assert.True(expectedVMReferenceId.ToLowerInvariant() == vmOut.Properties.Id.ToLowerInvariant());
+            Assert.NotNull(vmOut.VmId);
         }
 
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachine vmOut)
