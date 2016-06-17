@@ -6,8 +6,8 @@
     "packOptions": {
         "summary": "PowerBIEmbedded.Tests Tests.",
         "tags": [ "" ],
-        "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-        "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+        "projectUrl": "",
+        "licenseUrl": ""
     },
     "buildOptions": {
         "delaySign": true,
@@ -35,8 +35,8 @@
         "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)",
         "Microsoft.Rest.ClientRuntime": "[2.3.0,3.0.0)",
         "Microsoft.Azure.ResourceManager": "1.0.0-preview",
+        "Microsoft.Azure.Management.PowerBIEmbedded": "[1.0.5-preview,2.0.0)",
         "xunit": "2.1.0",
-        "dotnet-test-xunit": "1.0.0-rc2-build10015",
-        "Microsoft.Azure.Management.PowerBIEmbedded": "[1.0.5-preview,2.0.0)"
-    },
+        "dotnet-test-xunit": "1.0.0-rc2-build10015"
+    }
 }
