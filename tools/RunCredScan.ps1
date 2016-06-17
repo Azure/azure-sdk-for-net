@@ -1,8 +1,37 @@
-﻿$credentialScannerLocation = $args[0]+"\CredentialScanner.exe"
-$searcherFile = $args[0]+"\Searchers\buildsearchers.xml"
-$sourceLocation = $args[1]
-$logFile = $args[2]
-$logMatchFile = $logFile + "-matches.tsv"
+﻿<#
+.SYNOPSIS
+Powershell script to run credential scanner tool
+
+.DESCRIPTION
+Powershell script to run credential scanner tool
+
+.PARAMETER CredScanFolder
+Credential Scanner directory path
+
+.PARAMETER SourceCodeLocation
+Source code directory path to run credential scanner tool on
+
+.PARAMETER LogFileName
+Full Name of the log file to write credential scanner output to
+
+.EXAMPLE
+RunCredScan.ps1 -CredScanFolder C:\Test\CredScan -SourceCodeLocation C:\Test\azure-sdk-for-net -LogFileName C:\Test\scanlog
+#>
+
+[CmdletBinding()]
+Param(
+[Parameter(Mandatory=$True)]
+[String]$CredScanFolder,
+[Parameter(Mandatory=$True)]
+[String]$SourceCodeLocation,
+[Parameter(Mandatory=$True)]
+[String]$LogFileName
+)
+
+$credentialScannerLocation = $CredScanFolder +"\CredentialScanner.exe"
+$searcherFile = $CredScanFolder + "\Searchers\buildsearchers.xml"
+$sourceLocation = $SourceCodeLocation
+$logMatchFile = $LogFileName + "-matches.tsv"
 
 #Check if CredentialScanner exists on machine
 if (-not (Test-Path $credentialScannerLocation)) {
@@ -39,12 +68,6 @@ $matchesLog = [string[]](Get-Content -Path $logMatchFile)
 # logMatchFile contains headings always even if there are no matches. Hence check if line count is greater than 1. If a match is found, throw an exception
 if ($matchesLog.Count -gt 1)
 {
-    #Write all matches to console
-    Write-Host "Credential scanner matches"
-    foreach ($matchLine in $matchesLog)
-    {
-        Write-Host $matchLine
-    }
     throw "Credential scanner match found exception!"
 }
 else
