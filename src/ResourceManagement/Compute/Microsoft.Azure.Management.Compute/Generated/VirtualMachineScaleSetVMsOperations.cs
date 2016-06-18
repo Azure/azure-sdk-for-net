@@ -237,9 +237,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to deallocate a virtual machine virtual machine scale set.Shuts
-        /// down the virtual machine and releases the compute resources. You are not
-        /// billed for the compute resources that this virtual machine uses.
+        /// Allows you to deallocate a virtual machine scale set virtual machine.
+        /// Shuts down the virtual machine and releases the compute resources. You
+        /// are not billed for the compute resources that this virtual machine uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -265,9 +265,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to deallocate a virtual machine virtual machine scale set.Shuts
-        /// down the virtual machine and releases the compute resources. You are not
-        /// billed for the compute resources that this virtual machine uses.
+        /// Allows you to deallocate a virtual machine scale set virtual machine.
+        /// Shuts down the virtual machine and releases the compute resources. You
+        /// are not billed for the compute resources that this virtual machine uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

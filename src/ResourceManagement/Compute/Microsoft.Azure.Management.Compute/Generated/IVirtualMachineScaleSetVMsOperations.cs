@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Allows you to deallocate a virtual machine virtual machine scale
-        /// set.Shuts down the virtual machine and releases the compute
+        /// Allows you to deallocate a virtual machine scale set virtual
+        /// machine. Shuts down the virtual machine and releases the compute
         /// resources. You are not billed for the compute resources that this
         /// virtual machine uses.
         /// </summary>
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Allows you to deallocate a virtual machine virtual machine scale
-        /// set.Shuts down the virtual machine and releases the compute
+        /// Allows you to deallocate a virtual machine scale set virtual
+        /// machine. Shuts down the virtual machine and releases the compute
         /// resources. You are not billed for the compute resources that this
         /// virtual machine uses.
         /// </summary>
