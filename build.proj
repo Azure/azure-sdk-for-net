@@ -129,15 +129,15 @@
     <Exec Command="dnvm use 1.0.0-rc1-final -r coreclr -a x64" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
     
     <!--workaround for https://github.com/aspnet/dnx/issues/2216. do a full restore across-->
-    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+    <Exec Command="dotnet restore $(_TemporaryDnxFeeds)" WorkingDirectory="$(LibraryRoot)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
 
     <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
   <Target Name="BuildDnxLibraries">
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"/>
+    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
+    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"/>
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
