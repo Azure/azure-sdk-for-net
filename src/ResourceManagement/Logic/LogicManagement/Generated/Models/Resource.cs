@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets the resource name.
+        /// Gets or sets the resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the resource type.
+        /// Gets or sets the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

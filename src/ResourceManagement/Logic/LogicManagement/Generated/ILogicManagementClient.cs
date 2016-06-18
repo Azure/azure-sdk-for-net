@@ -69,7 +69,6 @@ namespace Microsoft.Azure.Management.Logic
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
-
         /// <summary>
         /// Gets the IWorkflowsOperations.
         /// </summary>
@@ -105,5 +104,44 @@ namespace Microsoft.Azure.Management.Logic
         /// </summary>
         IWorkflowRunActionsOperations WorkflowRunActions { get; }
 
+        /// <summary>
+        /// Gets the IIntegrationAccountsOperations.
+        /// </summary>
+        IIntegrationAccountsOperations IntegrationAccounts { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountSchemasOperations.
+        /// </summary>
+        IIntegrationAccountSchemasOperations IntegrationAccountSchemas { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountMapsOperations.
+        /// </summary>
+        IIntegrationAccountMapsOperations IntegrationAccountMaps { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountPartnersOperations.
+        /// </summary>
+        IIntegrationAccountPartnersOperations IntegrationAccountPartners { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountAgreementsOperations.
+        /// </summary>
+        IIntegrationAccountAgreementsOperations IntegrationAccountAgreements { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountCertificatesOperations.
+        /// </summary>
+        IIntegrationAccountCertificatesOperations IntegrationAccountCertificates { get; }
+
+        /// <summary>
+        /// Initialize integration account client.
+        /// </summary>
+        void InitializeIntegrationAccountClient();
+
+        /// <summary>
+        /// Initialize workflow client.
+        /// </summary>
+        void InitializeWorkflowClient();
     }
 }

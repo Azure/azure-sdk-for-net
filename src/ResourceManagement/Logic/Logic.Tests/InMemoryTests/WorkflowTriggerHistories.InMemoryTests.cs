@@ -70,8 +70,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggerHistories_List_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
-
+            var client = this.CreateWorkflowClient(handler);            
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
@@ -88,8 +87,8 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggerHistories_List_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
-
+            var client = this.CreateWorkflowClient(handler);
+            
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
@@ -114,8 +113,8 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggerHistories_ListNext_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
-
+            var client = this.CreateWorkflowClient(handler);
+            
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
@@ -130,7 +129,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggerHistories_ListNext_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -156,8 +155,8 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggerHistories_Get_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
-
+            var client = this.CreateWorkflowClient(handler);
+            
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
@@ -175,8 +174,8 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggerHistories_Get_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
-
+            var client = this.CreateWorkflowClient(handler);
+            
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
