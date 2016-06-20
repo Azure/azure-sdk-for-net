@@ -316,10 +316,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 }
 
                 // clean up all the files only in the event of success.
-                foreach (var inputPath in inputStreamPaths)
-                {
-                    File.Delete(inputPath);
-                }
+                var toDelete = Path.GetDirectoryName(inputStreamPaths[0]);
+                Directory.Delete(toDelete, true);
             }
             else
             {
