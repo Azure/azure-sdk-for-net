@@ -28,7 +28,7 @@ namespace Microsoft.AzureStack.Management.Models
     /// <summary>
     /// The subscription definition object.
     /// </summary>
-    public partial class SubscriptionDefinition
+    public partial class AdminSubscriptionDefinition
     {
         private string _displayName;
         
@@ -44,7 +44,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _externalReferenceId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the external reference identifier.
         /// </summary>
         public string ExternalReferenceId
         {
@@ -76,6 +76,17 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._offerId = value; }
         }
         
+        private string _owner;
+        
+        /// <summary>
+        /// Optional. Gets or sets the subscription owner.
+        /// </summary>
+        public string Owner
+        {
+            get { return this._owner; }
+            set { this._owner = value; }
+        }
+        
         private Microsoft.AzureStack.Management.Models.SubscriptionState? _state;
         
         /// <summary>
@@ -98,10 +109,21 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._subscriptionId = value; }
         }
         
+        private string _tenantId;
+        
         /// <summary>
-        /// Initializes a new instance of the SubscriptionDefinition class.
+        /// Optional. ets or sets the directory tenant identifier.
         /// </summary>
-        public SubscriptionDefinition()
+        public string TenantId
+        {
+            get { return this._tenantId; }
+            set { this._tenantId = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AdminSubscriptionDefinition class.
+        /// </summary>
+        public AdminSubscriptionDefinition()
         {
         }
     }

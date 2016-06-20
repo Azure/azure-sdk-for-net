@@ -26,25 +26,25 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Usage Connections Model
     /// </summary>
-    public partial class AdminOfferModel : ResourceBase
+    public partial class UsageConnectionModel : ResourceBase
     {
-        private AdminOfferPropertiesDefinition _properties;
+        private UsageConnection _properties;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Usage Connections Contract
         /// </summary>
-        public AdminOfferPropertiesDefinition Properties
+        public UsageConnection Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AdminOfferModel class.
+        /// Initializes a new instance of the UsageConnectionModel class.
         /// </summary>
-        public AdminOfferModel()
+        public UsageConnectionModel()
         {
         }
     }

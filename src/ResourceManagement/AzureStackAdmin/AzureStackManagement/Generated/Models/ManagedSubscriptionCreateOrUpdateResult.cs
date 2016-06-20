@@ -31,12 +31,12 @@ namespace Microsoft.AzureStack.Management.Models
     /// </summary>
     public partial class ManagedSubscriptionCreateOrUpdateResult : AzureOperationResponse
     {
-        private SubscriptionDefinition _subscription;
+        private AdminSubscriptionDefinition _subscription;
         
         /// <summary>
         /// Optional. Your documentation here.
         /// </summary>
-        public SubscriptionDefinition Subscription
+        public AdminSubscriptionDefinition Subscription
         {
             get { return this._subscription; }
             set { this._subscription = value; }

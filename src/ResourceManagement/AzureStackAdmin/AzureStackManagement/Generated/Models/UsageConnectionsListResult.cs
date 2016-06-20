@@ -31,7 +31,7 @@ namespace Microsoft.AzureStack.Management.Models
     /// <summary>
     /// Your documentation here.
     /// </summary>
-    public partial class ManagedSubscriptionListResult : AzureOperationResponse
+    public partial class UsageConnectionsListResult : AzureOperationResponse
     {
         private string _nextLink;
         
@@ -44,31 +44,30 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._nextLink = value; }
         }
         
-        private IList<AdminSubscriptionDefinition> _subscriptions;
+        private IList<UsageConnectionModel> _usageConnections;
         
         /// <summary>
         /// Optional. Your documentation here.
         /// </summary>
-        public IList<AdminSubscriptionDefinition> Subscriptions
+        public IList<UsageConnectionModel> UsageConnections
         {
-            get { return this._subscriptions; }
-            set { this._subscriptions = value; }
+            get { return this._usageConnections; }
+            set { this._usageConnections = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ManagedSubscriptionListResult
-        /// class.
+        /// Initializes a new instance of the UsageConnectionsListResult class.
         /// </summary>
-        public ManagedSubscriptionListResult()
+        public UsageConnectionsListResult()
         {
-            this.Subscriptions = new LazyList<AdminSubscriptionDefinition>();
+            this.UsageConnections = new LazyList<UsageConnectionModel>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ManagedSubscriptionListResult
-        /// class with required arguments.
+        /// Initializes a new instance of the UsageConnectionsListResult class
+        /// with required arguments.
         /// </summary>
-        public ManagedSubscriptionListResult(string nextLink)
+        public UsageConnectionsListResult(string nextLink)
             : this()
         {
             if (nextLink == null)

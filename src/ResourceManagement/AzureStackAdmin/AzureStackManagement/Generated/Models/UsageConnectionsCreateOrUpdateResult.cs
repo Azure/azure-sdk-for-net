@@ -21,30 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The usage connection create or update result.
     /// </summary>
-    public partial class AdminOfferModel : ResourceBase
+    public partial class UsageConnectionsCreateOrUpdateResult : AzureOperationResponse
     {
-        private AdminOfferPropertiesDefinition _properties;
+        private UsageConnectionModel _usageConnection;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. The usage connection.
         /// </summary>
-        public AdminOfferPropertiesDefinition Properties
+        public UsageConnectionModel UsageConnection
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._usageConnection; }
+            set { this._usageConnection = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AdminOfferModel class.
+        /// Initializes a new instance of the
+        /// UsageConnectionsCreateOrUpdateResult class.
         /// </summary>
-        public AdminOfferModel()
+        public UsageConnectionsCreateOrUpdateResult()
         {
         }
     }

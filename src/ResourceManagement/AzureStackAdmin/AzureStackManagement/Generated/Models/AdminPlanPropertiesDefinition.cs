@@ -23,19 +23,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// A plan represents a package of quotas and capabilities that are offered
+    /// tenants
     /// </summary>
-    public partial class AdminPlanDefinition
+    public partial class AdminPlanPropertiesDefinition
     {
         private string _description;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Description of the plan
         /// </summary>
         public string Description
         {
@@ -46,7 +46,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Display name of the plan
         /// </summary>
         public string DisplayName
         {
@@ -57,7 +57,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _externalReferenceId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. The external reference identifier
         /// </summary>
         public string ExternalReferenceId
         {
@@ -65,21 +65,10 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._externalReferenceId = value; }
         }
         
-        private int? _maxOccurrencesPerOffer;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public int? MaxOccurrencesPerOffer
-        {
-            get { return this._maxOccurrencesPerOffer; }
-            set { this._maxOccurrencesPerOffer = value; }
-        }
-        
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Name of the plan
         /// </summary>
         public string Name
         {
@@ -87,43 +76,32 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._name = value; }
         }
         
-        private QuotaSyncState _quotaSyncState;
+        private IList<string> _quotaIds;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Quota Ids associated with the plan
         /// </summary>
-        public QuotaSyncState QuotaSyncState
+        public IList<string> QuotaIds
         {
-            get { return this._quotaSyncState; }
-            set { this._quotaSyncState = value; }
+            get { return this._quotaIds; }
+            set { this._quotaIds = value; }
         }
         
-        private IList<ServiceQuotaDefinition> _serviceQuotas;
+        private IList<string> _skuIds;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. SKU Ids associated with the plan
         /// </summary>
-        public IList<ServiceQuotaDefinition> ServiceQuotas
+        public IList<string> SkuIds
         {
-            get { return this._serviceQuotas; }
-            set { this._serviceQuotas = value; }
-        }
-        
-        private AccessibilityState _state;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public AccessibilityState State
-        {
-            get { return this._state; }
-            set { this._state = value; }
+            get { return this._skuIds; }
+            set { this._skuIds = value; }
         }
         
         private int? _subscriptionCount;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. The number of subscriptions associated with the plan
         /// </summary>
         public int? SubscriptionCount
         {
@@ -132,11 +110,13 @@ namespace Microsoft.AzureStack.Management.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the AdminPlanDefinition class.
+        /// Initializes a new instance of the AdminPlanPropertiesDefinition
+        /// class.
         /// </summary>
-        public AdminPlanDefinition()
+        public AdminPlanPropertiesDefinition()
         {
-            this.ServiceQuotas = new LazyList<ServiceQuotaDefinition>();
+            this.QuotaIds = new LazyList<string>();
+            this.SkuIds = new LazyList<string>();
         }
     }
 }

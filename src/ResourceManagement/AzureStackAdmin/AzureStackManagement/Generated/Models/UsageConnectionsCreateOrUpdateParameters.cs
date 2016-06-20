@@ -26,26 +26,42 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Usage Connections Create or Update Parameters
     /// </summary>
-    public partial class AdminOfferModel : ResourceBase
+    public partial class UsageConnectionsCreateOrUpdateParameters
     {
-        private AdminOfferPropertiesDefinition _properties;
+        private UsageConnectionModel _usageConnections;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Required. Usage Connections Model
         /// </summary>
-        public AdminOfferPropertiesDefinition Properties
+        public UsageConnectionModel UsageConnections
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._usageConnections; }
+            set { this._usageConnections = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AdminOfferModel class.
+        /// Initializes a new instance of the
+        /// UsageConnectionsCreateOrUpdateParameters class.
         /// </summary>
-        public AdminOfferModel()
+        public UsageConnectionsCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// UsageConnectionsCreateOrUpdateParameters class with required
+        /// arguments.
+        /// </summary>
+        public UsageConnectionsCreateOrUpdateParameters(UsageConnectionModel usageConnections)
+            : this()
+        {
+            if (usageConnections == null)
+            {
+                throw new ArgumentNullException("usageConnections");
+            }
+            this.UsageConnections = usageConnections;
         }
     }
 }

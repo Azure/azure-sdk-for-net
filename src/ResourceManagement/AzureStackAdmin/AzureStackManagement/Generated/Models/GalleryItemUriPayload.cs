@@ -27,12 +27,24 @@ namespace Microsoft.AzureStack.Management.Models
     /// <summary>
     /// Your documentation here.
     /// </summary>
-    public enum QuotaSyncState
+    public partial class GalleryItemUriPayload
     {
-        InSync = 0,
+        private string _galleryItemUri;
         
-        Syncing = 1,
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public string GalleryItemUri
+        {
+            get { return this._galleryItemUri; }
+            set { this._galleryItemUri = value; }
+        }
         
-        OutOfSync = 2,
+        /// <summary>
+        /// Initializes a new instance of the GalleryItemUriPayload class.
+        /// </summary>
+        public GalleryItemUriPayload()
+        {
+        }
     }
 }

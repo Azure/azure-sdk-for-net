@@ -30,12 +30,12 @@ namespace Microsoft.AzureStack.Management.Models
     /// </summary>
     public partial class AdminPlanModel : ResourceBase
     {
-        private AdminPlanDefinition _properties;
+        private AdminPlanPropertiesDefinition _properties;
         
         /// <summary>
         /// Optional. Your documentation here.
         /// </summary>
-        public AdminPlanDefinition Properties
+        public AdminPlanPropertiesDefinition Properties
         {
             get { return this._properties; }
             set { this._properties = value; }

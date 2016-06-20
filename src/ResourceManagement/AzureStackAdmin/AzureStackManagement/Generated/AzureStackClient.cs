@@ -219,18 +219,6 @@ namespace Microsoft.AzureStack.Management
             get { return this._offers; }
         }
         
-        private IPackageOperations _package;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IPackageOperations Package
-        {
-            get { return this._package; }
-        }
-        
         private IPlanOperations _plans;
         
         /// <summary>
@@ -327,6 +315,18 @@ namespace Microsoft.AzureStack.Management
             get { return this._subscriptions; }
         }
         
+        private IUsageConnectionsOperations _usageConnections;
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        public virtual IUsageConnectionsOperations UsageConnections
+        {
+            get { return this._usageConnections; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AzureStackClient class.
         /// </summary>
@@ -346,7 +346,6 @@ namespace Microsoft.AzureStack.Management
             this._managedPlans = new ManagedPlanOperations(this);
             this._managedSubscriptions = new ManagedSubscriptionOperations(this);
             this._offers = new OfferOperations(this);
-            this._package = new PackageOperations(this);
             this._plans = new PlanOperations(this);
             this._providerRegistrations = new ProviderRegistrationOperations(this);
             this._publicGalleryItem = new PublicGalleryItemOperations(this);
@@ -355,6 +354,7 @@ namespace Microsoft.AzureStack.Management
             this._resourceProviders = new ResourceProviderOperations(this);
             this._shallowResources = new ShallowResourceOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
+            this._usageConnections = new UsageConnectionsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -414,7 +414,6 @@ namespace Microsoft.AzureStack.Management
             this._managedPlans = new ManagedPlanOperations(this);
             this._managedSubscriptions = new ManagedSubscriptionOperations(this);
             this._offers = new OfferOperations(this);
-            this._package = new PackageOperations(this);
             this._plans = new PlanOperations(this);
             this._providerRegistrations = new ProviderRegistrationOperations(this);
             this._publicGalleryItem = new PublicGalleryItemOperations(this);
@@ -423,6 +422,7 @@ namespace Microsoft.AzureStack.Management
             this._resourceProviders = new ResourceProviderOperations(this);
             this._shallowResources = new ShallowResourceOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
+            this._usageConnections = new UsageConnectionsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         

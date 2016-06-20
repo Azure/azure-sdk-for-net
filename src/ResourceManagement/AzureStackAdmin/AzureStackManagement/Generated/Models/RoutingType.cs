@@ -21,31 +21,47 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The resource routing type.
     /// </summary>
-    public partial class PackageCreateOrUpdateResult : AzureOperationResponse
+    public enum RoutingType
     {
-        private string _manifest;
+        /// <summary>
+        /// The resource routing type is default.
+        /// </summary>
+        Default = 0,
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// The resource routing type is proxy only.
         /// </summary>
-        public string Manifest
-        {
-            get { return this._manifest; }
-            set { this._manifest = value; }
-        }
+        ProxyOnly = 1,
         
         /// <summary>
-        /// Initializes a new instance of the PackageCreateOrUpdateResult class.
+        /// The resource routing type is host based.
         /// </summary>
-        public PackageCreateOrUpdateResult()
-        {
-        }
+        HostBased = 2,
+        
+        /// <summary>
+        /// The resource routing type is extension.
+        /// </summary>
+        Extension = 4,
+        
+        /// <summary>
+        /// The resource routing type is tenant.
+        /// </summary>
+        Tenant = 8,
+        
+        /// <summary>
+        /// The resource routing type is fan out.
+        /// </summary>
+        Fanout = 16,
+        
+        /// <summary>
+        /// The resource routing type is Location based.
+        /// </summary>
+        LocationBased = 32,
     }
 }

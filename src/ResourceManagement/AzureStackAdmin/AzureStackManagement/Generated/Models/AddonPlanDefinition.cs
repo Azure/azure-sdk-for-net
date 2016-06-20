@@ -21,30 +21,42 @@
 
 using System;
 using System.Linq;
-using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Contains the name of the desired plan to be linked or unlinked from an
+    /// offer.
     /// </summary>
-    public partial class AdminOfferModel : ResourceBase
+    public partial class AddonPlanDefinition
     {
-        private AdminOfferPropertiesDefinition _properties;
+        private int? _maxAcquisitionCount;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the maximum number of instances that can be
+        /// acquired by a single subscription.
         /// </summary>
-        public AdminOfferPropertiesDefinition Properties
+        public int? MaxAcquisitionCount
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._maxAcquisitionCount; }
+            set { this._maxAcquisitionCount = value; }
+        }
+        
+        private string _planId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the plan identifier.
+        /// </summary>
+        public string PlanId
+        {
+            get { return this._planId; }
+            set { this._planId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AdminOfferModel class.
+        /// Initializes a new instance of the AddonPlanDefinition class.
         /// </summary>
-        public AdminOfferModel()
+        public AddonPlanDefinition()
         {
         }
     }

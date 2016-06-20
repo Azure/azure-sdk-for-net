@@ -30,6 +30,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.AzureStack.Management;
 using Microsoft.AzureStack.Management.Models;
 using Newtonsoft.Json.Linq;
@@ -178,6 +179,19 @@ namespace Microsoft.AzureStack.Management
                     JObject subscriptionApprovalEndpointValue = new JObject();
                     delegatedProviderConfigurationOperationsCreateOrUpdateParametersValue["subscriptionApprovalEndpoint"] = subscriptionApprovalEndpointValue;
                     
+                    if (parameters.DelegatedProviderConfiguration.SubscriptionApprovalEndpoint.ApiVersions != null)
+                    {
+                        if (parameters.DelegatedProviderConfiguration.SubscriptionApprovalEndpoint.ApiVersions is ILazyCollection == false || ((ILazyCollection)parameters.DelegatedProviderConfiguration.SubscriptionApprovalEndpoint.ApiVersions).IsInitialized)
+                        {
+                            JArray apiVersionsArray = new JArray();
+                            foreach (string apiVersionsItem in parameters.DelegatedProviderConfiguration.SubscriptionApprovalEndpoint.ApiVersions)
+                            {
+                                apiVersionsArray.Add(apiVersionsItem);
+                            }
+                            subscriptionApprovalEndpointValue["apiVersions"] = apiVersionsArray;
+                        }
+                    }
+                    
                     if (parameters.DelegatedProviderConfiguration.SubscriptionApprovalEndpoint.ApiVersion != null)
                     {
                         subscriptionApprovalEndpointValue["apiVersion"] = parameters.DelegatedProviderConfiguration.SubscriptionApprovalEndpoint.ApiVersion;
@@ -210,6 +224,19 @@ namespace Microsoft.AzureStack.Management
                 {
                     JObject pricingEndpointValue = new JObject();
                     delegatedProviderConfigurationOperationsCreateOrUpdateParametersValue["pricingEndpoint"] = pricingEndpointValue;
+                    
+                    if (parameters.DelegatedProviderConfiguration.PricingEndpoint.ApiVersions != null)
+                    {
+                        if (parameters.DelegatedProviderConfiguration.PricingEndpoint.ApiVersions is ILazyCollection == false || ((ILazyCollection)parameters.DelegatedProviderConfiguration.PricingEndpoint.ApiVersions).IsInitialized)
+                        {
+                            JArray apiVersionsArray2 = new JArray();
+                            foreach (string apiVersionsItem2 in parameters.DelegatedProviderConfiguration.PricingEndpoint.ApiVersions)
+                            {
+                                apiVersionsArray2.Add(apiVersionsItem2);
+                            }
+                            pricingEndpointValue["apiVersions"] = apiVersionsArray2;
+                        }
+                    }
                     
                     if (parameters.DelegatedProviderConfiguration.PricingEndpoint.ApiVersion != null)
                     {
@@ -322,6 +349,15 @@ namespace Microsoft.AzureStack.Management
                                 ResourceProviderEndpoint subscriptionApprovalEndpointInstance = new ResourceProviderEndpoint();
                                 delegatedProviderConfigurationInstance.SubscriptionApprovalEndpoint = subscriptionApprovalEndpointInstance;
                                 
+                                JToken apiVersionsArray3 = subscriptionApprovalEndpointValue2["apiVersions"];
+                                if (apiVersionsArray3 != null && apiVersionsArray3.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray3))
+                                    {
+                                        subscriptionApprovalEndpointInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                    }
+                                }
+                                
                                 JToken apiVersionValue = subscriptionApprovalEndpointValue2["apiVersion"];
                                 if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
                                 {
@@ -370,6 +406,15 @@ namespace Microsoft.AzureStack.Management
                             {
                                 ResourceProviderEndpoint pricingEndpointInstance = new ResourceProviderEndpoint();
                                 delegatedProviderConfigurationInstance.PricingEndpoint = pricingEndpointInstance;
+                                
+                                JToken apiVersionsArray4 = pricingEndpointValue2["apiVersions"];
+                                if (apiVersionsArray4 != null && apiVersionsArray4.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken apiVersionsValue2 in ((JArray)apiVersionsArray4))
+                                    {
+                                        pricingEndpointInstance.ApiVersions.Add(((string)apiVersionsValue2));
+                                    }
+                                }
                                 
                                 JToken apiVersionValue2 = pricingEndpointValue2["apiVersion"];
                                 if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
@@ -586,6 +631,15 @@ namespace Microsoft.AzureStack.Management
                                 ResourceProviderEndpoint subscriptionApprovalEndpointInstance = new ResourceProviderEndpoint();
                                 configurationInstance.SubscriptionApprovalEndpoint = subscriptionApprovalEndpointInstance;
                                 
+                                JToken apiVersionsArray = subscriptionApprovalEndpointValue["apiVersions"];
+                                if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                    {
+                                        subscriptionApprovalEndpointInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                    }
+                                }
+                                
                                 JToken apiVersionValue = subscriptionApprovalEndpointValue["apiVersion"];
                                 if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
                                 {
@@ -634,6 +688,15 @@ namespace Microsoft.AzureStack.Management
                             {
                                 ResourceProviderEndpoint pricingEndpointInstance = new ResourceProviderEndpoint();
                                 configurationInstance.PricingEndpoint = pricingEndpointInstance;
+                                
+                                JToken apiVersionsArray2 = pricingEndpointValue["apiVersions"];
+                                if (apiVersionsArray2 != null && apiVersionsArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken apiVersionsValue2 in ((JArray)apiVersionsArray2))
+                                    {
+                                        pricingEndpointInstance.ApiVersions.Add(((string)apiVersionsValue2));
+                                    }
+                                }
                                 
                                 JToken apiVersionValue2 = pricingEndpointValue["apiVersion"];
                                 if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)

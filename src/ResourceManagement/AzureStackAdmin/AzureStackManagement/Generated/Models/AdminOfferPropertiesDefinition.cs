@@ -28,36 +28,38 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// An offer represents a billing service agreement for a subscription
     /// </summary>
-    public partial class AdminOfferDefinition
+    public partial class AdminOfferPropertiesDefinition
     {
-        private IList<AdminPlanDefinition> _addonPlans;
+        private IList<AddonPlanDefinition> _addonPlans;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the references to add-on plans that a tenant
+        /// can optionally acquire as a part of the offer.
         /// </summary>
-        public IList<AdminPlanDefinition> AddonPlans
+        public IList<AddonPlanDefinition> AddonPlans
         {
             get { return this._addonPlans; }
             set { this._addonPlans = value; }
         }
         
-        private IList<AdminPlanDefinition> _basePlans;
+        private IList<string> _basePlanIds;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the identifiers of the base plans that
+        /// become available to tenant.
         /// </summary>
-        public IList<AdminPlanDefinition> BasePlans
+        public IList<string> BasePlanIds
         {
-            get { return this._basePlans; }
-            set { this._basePlans = value; }
+            get { return this._basePlanIds; }
+            set { this._basePlanIds = value; }
         }
         
         private string _description;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Description of the offer.
         /// </summary>
         public string Description
         {
@@ -68,7 +70,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Display name of the offer.
         /// </summary>
         public string DisplayName
         {
@@ -79,7 +81,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _externalReferenceId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. The external reference identifier.
         /// </summary>
         public string ExternalReferenceId
         {
@@ -90,7 +92,7 @@ namespace Microsoft.AzureStack.Management.Models
         private int? _maxSubscriptionsPerAccount;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the maximum subscriptions per account.
         /// </summary>
         public int? MaxSubscriptionsPerAccount
         {
@@ -101,7 +103,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Name of the offer.
         /// </summary>
         public string Name
         {
@@ -109,21 +111,10 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._name = value; }
         }
         
-        private QuotaSyncState _quotaSyncState;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public QuotaSyncState QuotaSyncState
-        {
-            get { return this._quotaSyncState; }
-            set { this._quotaSyncState = value; }
-        }
-        
         private AccessibilityState _state;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. State of the offer.
         /// </summary>
         public AccessibilityState State
         {
@@ -134,7 +125,7 @@ namespace Microsoft.AzureStack.Management.Models
         private int? _subscriptionCount;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Subscription count assoicated with the offer
         /// </summary>
         public int? SubscriptionCount
         {
@@ -143,12 +134,13 @@ namespace Microsoft.AzureStack.Management.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the AdminOfferDefinition class.
+        /// Initializes a new instance of the AdminOfferPropertiesDefinition
+        /// class.
         /// </summary>
-        public AdminOfferDefinition()
+        public AdminOfferPropertiesDefinition()
         {
-            this.AddonPlans = new LazyList<AdminPlanDefinition>();
-            this.BasePlans = new LazyList<AdminPlanDefinition>();
+            this.AddonPlans = new LazyList<AddonPlanDefinition>();
+            this.BasePlanIds = new LazyList<string>();
         }
     }
 }

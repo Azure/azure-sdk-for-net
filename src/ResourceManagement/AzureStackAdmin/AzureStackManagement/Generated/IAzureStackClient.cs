@@ -187,16 +187,6 @@ namespace Microsoft.AzureStack.Management
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
-        IPackageOperations Package
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
         IPlanOperations Plans
         {
             get; 
@@ -268,6 +258,16 @@ namespace Microsoft.AzureStack.Management
         /// more information)
         /// </summary>
         ISubscriptionOperations Subscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        IUsageConnectionsOperations UsageConnections
         {
             get; 
         }

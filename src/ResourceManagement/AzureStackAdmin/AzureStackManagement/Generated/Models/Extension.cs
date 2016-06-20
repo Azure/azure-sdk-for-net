@@ -21,30 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The resource provider extension.
     /// </summary>
-    public partial class AdminOfferModel : ResourceBase
+    public partial class Extension
     {
-        private AdminOfferPropertiesDefinition _properties;
+        private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the name.
         /// </summary>
-        public AdminOfferPropertiesDefinition Properties
+        public string Name
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _uri;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Uri.
+        /// </summary>
+        public string Uri
+        {
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AdminOfferModel class.
+        /// Initializes a new instance of the Extension class.
         /// </summary>
-        public AdminOfferModel()
+        public Extension()
         {
         }
     }

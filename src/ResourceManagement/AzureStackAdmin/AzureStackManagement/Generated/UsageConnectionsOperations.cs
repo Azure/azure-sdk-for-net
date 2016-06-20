@@ -42,15 +42,15 @@ namespace Microsoft.AzureStack.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
-    internal partial class GalleryItemOperations : IServiceOperations<AzureStackClient>, IGalleryItemOperations
+    internal partial class UsageConnectionsOperations : IServiceOperations<AzureStackClient>, IUsageConnectionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the GalleryItemOperations class.
+        /// Initializes a new instance of the UsageConnectionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal GalleryItemOperations(AzureStackClient client)
+        internal UsageConnectionsOperations(AzureStackClient client)
         {
             this._client = client;
         }
@@ -72,22 +72,21 @@ namespace Microsoft.AzureStack.Management
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource Group Name
         /// </param>
-        /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
+        /// <param name='usageConnectionId'>
+        /// Required. Usage Connection Id
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Usage Connections Create or Update Parameters
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The usage connection create or update result.
         /// </returns>
-        public async Task<AzureOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string galleryItemId, GalleryItemCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<UsageConnectionsCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, string usageConnectionId, UsageConnectionsCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -102,17 +101,17 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
-            if (galleryItemId == null)
+            if (usageConnectionId == null)
             {
-                throw new ArgumentNullException("galleryItemId");
+                throw new ArgumentNullException("usageConnectionId");
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.GalleryItem == null)
+            if (parameters.UsageConnections == null)
             {
-                throw new ArgumentNullException("parameters.GalleryItem");
+                throw new ArgumentNullException("parameters.UsageConnections");
             }
             
             // Tracing
@@ -123,7 +122,7 @@ namespace Microsoft.AzureStack.Management
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("galleryItemId", galleryItemId);
+                tracingParameters.Add("usageConnectionId", usageConnectionId);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
@@ -137,8 +136,8 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Gallery.Admin/galleryitems/";
-            url = url + Uri.EscapeDataString(galleryItemId);
+            url = url + "/providers/Microsoft.Commerce.Providers/usageConnections/";
+            url = url + Uri.EscapeDataString(usageConnectionId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             if (queryParameters.Count > 0)
@@ -176,50 +175,85 @@ namespace Microsoft.AzureStack.Management
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject galleryItemCreateOrUpdateParametersValue = new JObject();
-                requestDoc = galleryItemCreateOrUpdateParametersValue;
+                JObject usageConnectionsCreateOrUpdateParametersValue = new JObject();
+                requestDoc = usageConnectionsCreateOrUpdateParametersValue;
                 
-                if (parameters.GalleryItem.Properties != null)
+                if (parameters.UsageConnections.Properties != null)
                 {
                     JObject propertiesValue = new JObject();
-                    galleryItemCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    usageConnectionsCreateOrUpdateParametersValue["properties"] = propertiesValue;
                     
-                    if (parameters.GalleryItem.Properties.GalleryItemUri != null)
+                    if (parameters.UsageConnections.Properties.Name != null)
                     {
-                        propertiesValue["galleryItemUri"] = parameters.GalleryItem.Properties.GalleryItemUri;
+                        propertiesValue["name"] = parameters.UsageConnections.Properties.Name;
+                    }
+                    
+                    if (parameters.UsageConnections.Properties.ProviderLocation != null)
+                    {
+                        propertiesValue["providerLocation"] = parameters.UsageConnections.Properties.ProviderLocation;
+                    }
+                    
+                    if (parameters.UsageConnections.Properties.ProviderNamespace != null)
+                    {
+                        propertiesValue["providerNamespace"] = parameters.UsageConnections.Properties.ProviderNamespace;
+                    }
+                    
+                    if (parameters.UsageConnections.Properties.UsageStorageConnectionString != null)
+                    {
+                        propertiesValue["usageStorageConnectionString"] = parameters.UsageConnections.Properties.UsageStorageConnectionString;
+                    }
+                    
+                    if (parameters.UsageConnections.Properties.UsageReportingQueue != null)
+                    {
+                        propertiesValue["usageReportingQueue"] = parameters.UsageConnections.Properties.UsageReportingQueue;
+                    }
+                    
+                    if (parameters.UsageConnections.Properties.UsageReportingTable != null)
+                    {
+                        propertiesValue["usageReportingTable"] = parameters.UsageConnections.Properties.UsageReportingTable;
+                    }
+                    
+                    if (parameters.UsageConnections.Properties.ErrorReportingQueue != null)
+                    {
+                        propertiesValue["errorReportingQueue"] = parameters.UsageConnections.Properties.ErrorReportingQueue;
+                    }
+                    
+                    if (parameters.UsageConnections.Properties.ErrorReportingTable != null)
+                    {
+                        propertiesValue["errorReportingTable"] = parameters.UsageConnections.Properties.ErrorReportingTable;
                     }
                 }
                 
-                if (parameters.GalleryItem.Id != null)
+                if (parameters.UsageConnections.Id != null)
                 {
-                    galleryItemCreateOrUpdateParametersValue["id"] = parameters.GalleryItem.Id;
+                    usageConnectionsCreateOrUpdateParametersValue["id"] = parameters.UsageConnections.Id;
                 }
                 
-                if (parameters.GalleryItem.Name != null)
+                if (parameters.UsageConnections.Name != null)
                 {
-                    galleryItemCreateOrUpdateParametersValue["name"] = parameters.GalleryItem.Name;
+                    usageConnectionsCreateOrUpdateParametersValue["name"] = parameters.UsageConnections.Name;
                 }
                 
-                if (parameters.GalleryItem.Type != null)
+                if (parameters.UsageConnections.Type != null)
                 {
-                    galleryItemCreateOrUpdateParametersValue["type"] = parameters.GalleryItem.Type;
+                    usageConnectionsCreateOrUpdateParametersValue["type"] = parameters.UsageConnections.Type;
                 }
                 
-                if (parameters.GalleryItem.Location != null)
+                if (parameters.UsageConnections.Location != null)
                 {
-                    galleryItemCreateOrUpdateParametersValue["location"] = parameters.GalleryItem.Location;
+                    usageConnectionsCreateOrUpdateParametersValue["location"] = parameters.UsageConnections.Location;
                 }
                 
-                if (parameters.GalleryItem.Tags != null)
+                if (parameters.UsageConnections.Tags != null)
                 {
                     JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.GalleryItem.Tags)
+                    foreach (KeyValuePair<string, string> pair in parameters.UsageConnections.Tags)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
-                    galleryItemCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                    usageConnectionsCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -253,9 +287,128 @@ namespace Microsoft.AzureStack.Management
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    UsageConnectionsCreateOrUpdateResult result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new UsageConnectionsCreateOrUpdateResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            UsageConnectionModel usageConnectionInstance = new UsageConnectionModel();
+                            result.UsageConnection = usageConnectionInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                UsageConnection propertiesInstance = new UsageConnection();
+                                usageConnectionInstance.Properties = propertiesInstance;
+                                
+                                JToken nameValue = propertiesValue2["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = ((string)nameValue);
+                                    propertiesInstance.Name = nameInstance;
+                                }
+                                
+                                JToken providerLocationValue = propertiesValue2["providerLocation"];
+                                if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
+                                {
+                                    string providerLocationInstance = ((string)providerLocationValue);
+                                    propertiesInstance.ProviderLocation = providerLocationInstance;
+                                }
+                                
+                                JToken providerNamespaceValue = propertiesValue2["providerNamespace"];
+                                if (providerNamespaceValue != null && providerNamespaceValue.Type != JTokenType.Null)
+                                {
+                                    string providerNamespaceInstance = ((string)providerNamespaceValue);
+                                    propertiesInstance.ProviderNamespace = providerNamespaceInstance;
+                                }
+                                
+                                JToken usageStorageConnectionStringValue = propertiesValue2["usageStorageConnectionString"];
+                                if (usageStorageConnectionStringValue != null && usageStorageConnectionStringValue.Type != JTokenType.Null)
+                                {
+                                    string usageStorageConnectionStringInstance = ((string)usageStorageConnectionStringValue);
+                                    propertiesInstance.UsageStorageConnectionString = usageStorageConnectionStringInstance;
+                                }
+                                
+                                JToken usageReportingQueueValue = propertiesValue2["usageReportingQueue"];
+                                if (usageReportingQueueValue != null && usageReportingQueueValue.Type != JTokenType.Null)
+                                {
+                                    string usageReportingQueueInstance = ((string)usageReportingQueueValue);
+                                    propertiesInstance.UsageReportingQueue = usageReportingQueueInstance;
+                                }
+                                
+                                JToken usageReportingTableValue = propertiesValue2["usageReportingTable"];
+                                if (usageReportingTableValue != null && usageReportingTableValue.Type != JTokenType.Null)
+                                {
+                                    string usageReportingTableInstance = ((string)usageReportingTableValue);
+                                    propertiesInstance.UsageReportingTable = usageReportingTableInstance;
+                                }
+                                
+                                JToken errorReportingQueueValue = propertiesValue2["errorReportingQueue"];
+                                if (errorReportingQueueValue != null && errorReportingQueueValue.Type != JTokenType.Null)
+                                {
+                                    string errorReportingQueueInstance = ((string)errorReportingQueueValue);
+                                    propertiesInstance.ErrorReportingQueue = errorReportingQueueInstance;
+                                }
+                                
+                                JToken errorReportingTableValue = propertiesValue2["errorReportingTable"];
+                                if (errorReportingTableValue != null && errorReportingTableValue.Type != JTokenType.Null)
+                                {
+                                    string errorReportingTableInstance = ((string)errorReportingTableValue);
+                                    propertiesInstance.ErrorReportingTable = errorReportingTableInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                usageConnectionInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                usageConnectionInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                usageConnectionInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                usageConnectionInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    usageConnectionInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     
                     if (shouldTrace)
@@ -289,7 +442,7 @@ namespace Microsoft.AzureStack.Management
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='galleryItemId'>
+        /// <param name='usageConnectionId'>
         /// Required. Your documentation here.
         /// </param>
         /// <param name='cancellationToken'>
@@ -299,7 +452,7 @@ namespace Microsoft.AzureStack.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string galleryItemId, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string usageConnectionId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -314,9 +467,9 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
-            if (galleryItemId == null)
+            if (usageConnectionId == null)
             {
-                throw new ArgumentNullException("galleryItemId");
+                throw new ArgumentNullException("usageConnectionId");
             }
             
             // Tracing
@@ -327,7 +480,7 @@ namespace Microsoft.AzureStack.Management
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("galleryItemId", galleryItemId);
+                tracingParameters.Add("usageConnectionId", usageConnectionId);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
@@ -340,8 +493,8 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Gallery.Admin/galleryitems/";
-            url = url + Uri.EscapeDataString(galleryItemId);
+            url = url + "/providers/Microsoft.Commerce.Providers/usageConnections/";
+            url = url + Uri.EscapeDataString(usageConnectionId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             if (queryParameters.Count > 0)
@@ -436,18 +589,18 @@ namespace Microsoft.AzureStack.Management
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource Group name for usage connection information
         /// </param>
-        /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
+        /// <param name='usageConnectionId'>
+        /// Required. Usage Connection Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Usage Connections Model as result
         /// </returns>
-        public async Task<GalleryItemGetResult> GetAsync(string resourceGroupName, string galleryItemId, CancellationToken cancellationToken)
+        public async Task<UsageConnectionsGetResult> GetAsync(string resourceGroupName, string usageConnectionId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -462,9 +615,9 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
-            if (galleryItemId == null)
+            if (usageConnectionId == null)
             {
-                throw new ArgumentNullException("galleryItemId");
+                throw new ArgumentNullException("usageConnectionId");
             }
             
             // Tracing
@@ -475,7 +628,7 @@ namespace Microsoft.AzureStack.Management
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("galleryItemId", galleryItemId);
+                tracingParameters.Add("usageConnectionId", usageConnectionId);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -488,8 +641,8 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Gallery.Admin/galleryitems/";
-            url = url + Uri.EscapeDataString(galleryItemId);
+            url = url + "/providers/Microsoft.Commerce.Providers/usageConnections/";
+            url = url + Uri.EscapeDataString(usageConnectionId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             if (queryParameters.Count > 0)
@@ -550,13 +703,13 @@ namespace Microsoft.AzureStack.Management
                     }
                     
                     // Create Result
-                    GalleryItemGetResult result = null;
+                    UsageConnectionsGetResult result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new GalleryItemGetResult();
+                        result = new UsageConnectionsGetResult();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -565,20 +718,69 @@ namespace Microsoft.AzureStack.Management
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            GalleryItemModel galleryItemInstance = new GalleryItemModel();
-                            result.GalleryItem = galleryItemInstance;
+                            UsageConnectionModel usageConnectionsInstance = new UsageConnectionModel();
+                            result.UsageConnections = usageConnectionsInstance;
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
-                                galleryItemInstance.Properties = propertiesInstance;
+                                UsageConnection propertiesInstance = new UsageConnection();
+                                usageConnectionsInstance.Properties = propertiesInstance;
                                 
-                                JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
-                                if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
+                                JToken nameValue = propertiesValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string galleryItemUriInstance = ((string)galleryItemUriValue);
-                                    propertiesInstance.GalleryItemUri = galleryItemUriInstance;
+                                    string nameInstance = ((string)nameValue);
+                                    propertiesInstance.Name = nameInstance;
+                                }
+                                
+                                JToken providerLocationValue = propertiesValue["providerLocation"];
+                                if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
+                                {
+                                    string providerLocationInstance = ((string)providerLocationValue);
+                                    propertiesInstance.ProviderLocation = providerLocationInstance;
+                                }
+                                
+                                JToken providerNamespaceValue = propertiesValue["providerNamespace"];
+                                if (providerNamespaceValue != null && providerNamespaceValue.Type != JTokenType.Null)
+                                {
+                                    string providerNamespaceInstance = ((string)providerNamespaceValue);
+                                    propertiesInstance.ProviderNamespace = providerNamespaceInstance;
+                                }
+                                
+                                JToken usageStorageConnectionStringValue = propertiesValue["usageStorageConnectionString"];
+                                if (usageStorageConnectionStringValue != null && usageStorageConnectionStringValue.Type != JTokenType.Null)
+                                {
+                                    string usageStorageConnectionStringInstance = ((string)usageStorageConnectionStringValue);
+                                    propertiesInstance.UsageStorageConnectionString = usageStorageConnectionStringInstance;
+                                }
+                                
+                                JToken usageReportingQueueValue = propertiesValue["usageReportingQueue"];
+                                if (usageReportingQueueValue != null && usageReportingQueueValue.Type != JTokenType.Null)
+                                {
+                                    string usageReportingQueueInstance = ((string)usageReportingQueueValue);
+                                    propertiesInstance.UsageReportingQueue = usageReportingQueueInstance;
+                                }
+                                
+                                JToken usageReportingTableValue = propertiesValue["usageReportingTable"];
+                                if (usageReportingTableValue != null && usageReportingTableValue.Type != JTokenType.Null)
+                                {
+                                    string usageReportingTableInstance = ((string)usageReportingTableValue);
+                                    propertiesInstance.UsageReportingTable = usageReportingTableInstance;
+                                }
+                                
+                                JToken errorReportingQueueValue = propertiesValue["errorReportingQueue"];
+                                if (errorReportingQueueValue != null && errorReportingQueueValue.Type != JTokenType.Null)
+                                {
+                                    string errorReportingQueueInstance = ((string)errorReportingQueueValue);
+                                    propertiesInstance.ErrorReportingQueue = errorReportingQueueInstance;
+                                }
+                                
+                                JToken errorReportingTableValue = propertiesValue["errorReportingTable"];
+                                if (errorReportingTableValue != null && errorReportingTableValue.Type != JTokenType.Null)
+                                {
+                                    string errorReportingTableInstance = ((string)errorReportingTableValue);
+                                    propertiesInstance.ErrorReportingTable = errorReportingTableInstance;
                                 }
                             }
                             
@@ -586,28 +788,28 @@ namespace Microsoft.AzureStack.Management
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 string idInstance = ((string)idValue);
-                                galleryItemInstance.Id = idInstance;
+                                usageConnectionsInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
-                                string nameInstance = ((string)nameValue);
-                                galleryItemInstance.Name = nameInstance;
+                                string nameInstance2 = ((string)nameValue2);
+                                usageConnectionsInstance.Name = nameInstance2;
                             }
                             
                             JToken typeValue = responseDoc["type"];
                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
                                 string typeInstance = ((string)typeValue);
-                                galleryItemInstance.Type = typeInstance;
+                                usageConnectionsInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                galleryItemInstance.Location = locationInstance;
+                                usageConnectionsInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -617,7 +819,7 @@ namespace Microsoft.AzureStack.Management
                                 {
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
-                                    galleryItemInstance.Tags.Add(tagsKey, tagsValue);
+                                    usageConnectionsInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -662,7 +864,7 @@ namespace Microsoft.AzureStack.Management
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<GalleryItemListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
+        public async Task<UsageConnectionsListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -698,7 +900,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Gallery.Admin/galleryitems";
+            url = url + "/providers/Microsoft.Commerce.Providers/usageConnections";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             if (queryParameters.Count > 0)
@@ -759,13 +961,13 @@ namespace Microsoft.AzureStack.Management
                     }
                     
                     // Create Result
-                    GalleryItemListResult result = null;
+                    UsageConnectionsListResult result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new GalleryItemListResult();
+                        result = new UsageConnectionsListResult();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -779,20 +981,69 @@ namespace Microsoft.AzureStack.Management
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    GalleryItemModel galleryItemModelInstance = new GalleryItemModel();
-                                    result.GalleryItems.Add(galleryItemModelInstance);
+                                    UsageConnectionModel usageConnectionModelInstance = new UsageConnectionModel();
+                                    result.UsageConnections.Add(usageConnectionModelInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
-                                        galleryItemModelInstance.Properties = propertiesInstance;
+                                        UsageConnection propertiesInstance = new UsageConnection();
+                                        usageConnectionModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
-                                        if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
+                                        JToken nameValue = propertiesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            string galleryItemUriInstance = ((string)galleryItemUriValue);
-                                            propertiesInstance.GalleryItemUri = galleryItemUriInstance;
+                                            string nameInstance = ((string)nameValue);
+                                            propertiesInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken providerLocationValue = propertiesValue["providerLocation"];
+                                        if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
+                                        {
+                                            string providerLocationInstance = ((string)providerLocationValue);
+                                            propertiesInstance.ProviderLocation = providerLocationInstance;
+                                        }
+                                        
+                                        JToken providerNamespaceValue = propertiesValue["providerNamespace"];
+                                        if (providerNamespaceValue != null && providerNamespaceValue.Type != JTokenType.Null)
+                                        {
+                                            string providerNamespaceInstance = ((string)providerNamespaceValue);
+                                            propertiesInstance.ProviderNamespace = providerNamespaceInstance;
+                                        }
+                                        
+                                        JToken usageStorageConnectionStringValue = propertiesValue["usageStorageConnectionString"];
+                                        if (usageStorageConnectionStringValue != null && usageStorageConnectionStringValue.Type != JTokenType.Null)
+                                        {
+                                            string usageStorageConnectionStringInstance = ((string)usageStorageConnectionStringValue);
+                                            propertiesInstance.UsageStorageConnectionString = usageStorageConnectionStringInstance;
+                                        }
+                                        
+                                        JToken usageReportingQueueValue = propertiesValue["usageReportingQueue"];
+                                        if (usageReportingQueueValue != null && usageReportingQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string usageReportingQueueInstance = ((string)usageReportingQueueValue);
+                                            propertiesInstance.UsageReportingQueue = usageReportingQueueInstance;
+                                        }
+                                        
+                                        JToken usageReportingTableValue = propertiesValue["usageReportingTable"];
+                                        if (usageReportingTableValue != null && usageReportingTableValue.Type != JTokenType.Null)
+                                        {
+                                            string usageReportingTableInstance = ((string)usageReportingTableValue);
+                                            propertiesInstance.UsageReportingTable = usageReportingTableInstance;
+                                        }
+                                        
+                                        JToken errorReportingQueueValue = propertiesValue["errorReportingQueue"];
+                                        if (errorReportingQueueValue != null && errorReportingQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string errorReportingQueueInstance = ((string)errorReportingQueueValue);
+                                            propertiesInstance.ErrorReportingQueue = errorReportingQueueInstance;
+                                        }
+                                        
+                                        JToken errorReportingTableValue = propertiesValue["errorReportingTable"];
+                                        if (errorReportingTableValue != null && errorReportingTableValue.Type != JTokenType.Null)
+                                        {
+                                            string errorReportingTableInstance = ((string)errorReportingTableValue);
+                                            propertiesInstance.ErrorReportingTable = errorReportingTableInstance;
                                         }
                                     }
                                     
@@ -800,28 +1051,28 @@ namespace Microsoft.AzureStack.Management
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        galleryItemModelInstance.Id = idInstance;
+                                        usageConnectionModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        string nameInstance = ((string)nameValue);
-                                        galleryItemModelInstance.Name = nameInstance;
+                                        string nameInstance2 = ((string)nameValue2);
+                                        usageConnectionModelInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
                                     if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
                                         string typeInstance = ((string)typeValue);
-                                        galleryItemModelInstance.Type = typeInstance;
+                                        usageConnectionModelInstance.Type = typeInstance;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
-                                        galleryItemModelInstance.Location = locationInstance;
+                                        usageConnectionModelInstance.Location = locationInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -831,7 +1082,7 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             string tagsKey = ((string)property.Name);
                                             string tagsValue = ((string)property.Value);
-                                            galleryItemModelInstance.Tags.Add(tagsKey, tagsValue);
+                                            usageConnectionModelInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }
@@ -887,7 +1138,7 @@ namespace Microsoft.AzureStack.Management
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<GalleryItemListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        public async Task<UsageConnectionsListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {
             // Validate
             if (nextLink == null)
@@ -952,13 +1203,13 @@ namespace Microsoft.AzureStack.Management
                     }
                     
                     // Create Result
-                    GalleryItemListResult result = null;
+                    UsageConnectionsListResult result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new GalleryItemListResult();
+                        result = new UsageConnectionsListResult();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -972,20 +1223,69 @@ namespace Microsoft.AzureStack.Management
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    GalleryItemModel galleryItemModelInstance = new GalleryItemModel();
-                                    result.GalleryItems.Add(galleryItemModelInstance);
+                                    UsageConnectionModel usageConnectionModelInstance = new UsageConnectionModel();
+                                    result.UsageConnections.Add(usageConnectionModelInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
-                                        galleryItemModelInstance.Properties = propertiesInstance;
+                                        UsageConnection propertiesInstance = new UsageConnection();
+                                        usageConnectionModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
-                                        if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
+                                        JToken nameValue = propertiesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            string galleryItemUriInstance = ((string)galleryItemUriValue);
-                                            propertiesInstance.GalleryItemUri = galleryItemUriInstance;
+                                            string nameInstance = ((string)nameValue);
+                                            propertiesInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken providerLocationValue = propertiesValue["providerLocation"];
+                                        if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
+                                        {
+                                            string providerLocationInstance = ((string)providerLocationValue);
+                                            propertiesInstance.ProviderLocation = providerLocationInstance;
+                                        }
+                                        
+                                        JToken providerNamespaceValue = propertiesValue["providerNamespace"];
+                                        if (providerNamespaceValue != null && providerNamespaceValue.Type != JTokenType.Null)
+                                        {
+                                            string providerNamespaceInstance = ((string)providerNamespaceValue);
+                                            propertiesInstance.ProviderNamespace = providerNamespaceInstance;
+                                        }
+                                        
+                                        JToken usageStorageConnectionStringValue = propertiesValue["usageStorageConnectionString"];
+                                        if (usageStorageConnectionStringValue != null && usageStorageConnectionStringValue.Type != JTokenType.Null)
+                                        {
+                                            string usageStorageConnectionStringInstance = ((string)usageStorageConnectionStringValue);
+                                            propertiesInstance.UsageStorageConnectionString = usageStorageConnectionStringInstance;
+                                        }
+                                        
+                                        JToken usageReportingQueueValue = propertiesValue["usageReportingQueue"];
+                                        if (usageReportingQueueValue != null && usageReportingQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string usageReportingQueueInstance = ((string)usageReportingQueueValue);
+                                            propertiesInstance.UsageReportingQueue = usageReportingQueueInstance;
+                                        }
+                                        
+                                        JToken usageReportingTableValue = propertiesValue["usageReportingTable"];
+                                        if (usageReportingTableValue != null && usageReportingTableValue.Type != JTokenType.Null)
+                                        {
+                                            string usageReportingTableInstance = ((string)usageReportingTableValue);
+                                            propertiesInstance.UsageReportingTable = usageReportingTableInstance;
+                                        }
+                                        
+                                        JToken errorReportingQueueValue = propertiesValue["errorReportingQueue"];
+                                        if (errorReportingQueueValue != null && errorReportingQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string errorReportingQueueInstance = ((string)errorReportingQueueValue);
+                                            propertiesInstance.ErrorReportingQueue = errorReportingQueueInstance;
+                                        }
+                                        
+                                        JToken errorReportingTableValue = propertiesValue["errorReportingTable"];
+                                        if (errorReportingTableValue != null && errorReportingTableValue.Type != JTokenType.Null)
+                                        {
+                                            string errorReportingTableInstance = ((string)errorReportingTableValue);
+                                            propertiesInstance.ErrorReportingTable = errorReportingTableInstance;
                                         }
                                     }
                                     
@@ -993,28 +1293,28 @@ namespace Microsoft.AzureStack.Management
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        galleryItemModelInstance.Id = idInstance;
+                                        usageConnectionModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        string nameInstance = ((string)nameValue);
-                                        galleryItemModelInstance.Name = nameInstance;
+                                        string nameInstance2 = ((string)nameValue2);
+                                        usageConnectionModelInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
                                     if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
                                         string typeInstance = ((string)typeValue);
-                                        galleryItemModelInstance.Type = typeInstance;
+                                        usageConnectionModelInstance.Type = typeInstance;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
-                                        galleryItemModelInstance.Location = locationInstance;
+                                        usageConnectionModelInstance.Location = locationInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -1024,7 +1324,7 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             string tagsKey = ((string)property.Name);
                                             string tagsValue = ((string)property.Value);
-                                            galleryItemModelInstance.Tags.Add(tagsKey, tagsValue);
+                                            usageConnectionModelInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }
@@ -1075,7 +1375,7 @@ namespace Microsoft.AzureStack.Management
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<GalleryItemListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken)
+        public async Task<UsageConnectionsListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1096,7 +1396,7 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/providers/Microsoft.Gallery.Admin/galleryitems";
+            url = url + "/providers/Microsoft.Commerce.Providers/usageConnections";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             if (queryParameters.Count > 0)
@@ -1157,13 +1457,13 @@ namespace Microsoft.AzureStack.Management
                     }
                     
                     // Create Result
-                    GalleryItemListResult result = null;
+                    UsageConnectionsListResult result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new GalleryItemListResult();
+                        result = new UsageConnectionsListResult();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1177,20 +1477,69 @@ namespace Microsoft.AzureStack.Management
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    GalleryItemModel galleryItemModelInstance = new GalleryItemModel();
-                                    result.GalleryItems.Add(galleryItemModelInstance);
+                                    UsageConnectionModel usageConnectionModelInstance = new UsageConnectionModel();
+                                    result.UsageConnections.Add(usageConnectionModelInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
-                                        galleryItemModelInstance.Properties = propertiesInstance;
+                                        UsageConnection propertiesInstance = new UsageConnection();
+                                        usageConnectionModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
-                                        if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
+                                        JToken nameValue = propertiesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            string galleryItemUriInstance = ((string)galleryItemUriValue);
-                                            propertiesInstance.GalleryItemUri = galleryItemUriInstance;
+                                            string nameInstance = ((string)nameValue);
+                                            propertiesInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken providerLocationValue = propertiesValue["providerLocation"];
+                                        if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
+                                        {
+                                            string providerLocationInstance = ((string)providerLocationValue);
+                                            propertiesInstance.ProviderLocation = providerLocationInstance;
+                                        }
+                                        
+                                        JToken providerNamespaceValue = propertiesValue["providerNamespace"];
+                                        if (providerNamespaceValue != null && providerNamespaceValue.Type != JTokenType.Null)
+                                        {
+                                            string providerNamespaceInstance = ((string)providerNamespaceValue);
+                                            propertiesInstance.ProviderNamespace = providerNamespaceInstance;
+                                        }
+                                        
+                                        JToken usageStorageConnectionStringValue = propertiesValue["usageStorageConnectionString"];
+                                        if (usageStorageConnectionStringValue != null && usageStorageConnectionStringValue.Type != JTokenType.Null)
+                                        {
+                                            string usageStorageConnectionStringInstance = ((string)usageStorageConnectionStringValue);
+                                            propertiesInstance.UsageStorageConnectionString = usageStorageConnectionStringInstance;
+                                        }
+                                        
+                                        JToken usageReportingQueueValue = propertiesValue["usageReportingQueue"];
+                                        if (usageReportingQueueValue != null && usageReportingQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string usageReportingQueueInstance = ((string)usageReportingQueueValue);
+                                            propertiesInstance.UsageReportingQueue = usageReportingQueueInstance;
+                                        }
+                                        
+                                        JToken usageReportingTableValue = propertiesValue["usageReportingTable"];
+                                        if (usageReportingTableValue != null && usageReportingTableValue.Type != JTokenType.Null)
+                                        {
+                                            string usageReportingTableInstance = ((string)usageReportingTableValue);
+                                            propertiesInstance.UsageReportingTable = usageReportingTableInstance;
+                                        }
+                                        
+                                        JToken errorReportingQueueValue = propertiesValue["errorReportingQueue"];
+                                        if (errorReportingQueueValue != null && errorReportingQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string errorReportingQueueInstance = ((string)errorReportingQueueValue);
+                                            propertiesInstance.ErrorReportingQueue = errorReportingQueueInstance;
+                                        }
+                                        
+                                        JToken errorReportingTableValue = propertiesValue["errorReportingTable"];
+                                        if (errorReportingTableValue != null && errorReportingTableValue.Type != JTokenType.Null)
+                                        {
+                                            string errorReportingTableInstance = ((string)errorReportingTableValue);
+                                            propertiesInstance.ErrorReportingTable = errorReportingTableInstance;
                                         }
                                     }
                                     
@@ -1198,28 +1547,28 @@ namespace Microsoft.AzureStack.Management
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        galleryItemModelInstance.Id = idInstance;
+                                        usageConnectionModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        string nameInstance = ((string)nameValue);
-                                        galleryItemModelInstance.Name = nameInstance;
+                                        string nameInstance2 = ((string)nameValue2);
+                                        usageConnectionModelInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
                                     if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
                                         string typeInstance = ((string)typeValue);
-                                        galleryItemModelInstance.Type = typeInstance;
+                                        usageConnectionModelInstance.Type = typeInstance;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
-                                        galleryItemModelInstance.Location = locationInstance;
+                                        usageConnectionModelInstance.Location = locationInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -1229,7 +1578,7 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             string tagsKey = ((string)property.Name);
                                             string tagsValue = ((string)property.Value);
-                                            galleryItemModelInstance.Tags.Add(tagsKey, tagsValue);
+                                            usageConnectionModelInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }

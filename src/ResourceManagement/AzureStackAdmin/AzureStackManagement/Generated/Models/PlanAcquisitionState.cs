@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The state of the plan acquisition.
     /// </summary>
     public enum PlanAcquisitionState
     {
-        None = 0,
+        NotSpecified = 0,
         
-        Base = 1,
+        Created = 1,
         
-        Addon = 2,
+        Deleted = 2,
     }
 }

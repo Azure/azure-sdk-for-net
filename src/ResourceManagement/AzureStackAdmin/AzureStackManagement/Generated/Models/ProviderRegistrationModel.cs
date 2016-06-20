@@ -30,12 +30,12 @@ namespace Microsoft.AzureStack.Management.Models
     /// </summary>
     public partial class ProviderRegistrationModel : ResourceBase
     {
-        private ProviderRegistrationDefinition _properties;
+        private ManifestPropertiesDefinition _properties;
         
         /// <summary>
         /// Optional. Your documentation here.
         /// </summary>
-        public ProviderRegistrationDefinition Properties
+        public ManifestPropertiesDefinition Properties
         {
             get { return this._properties; }
             set { this._properties = value; }

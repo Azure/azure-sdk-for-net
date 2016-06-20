@@ -173,11 +173,13 @@ namespace Microsoft.AzureStack.Management
                                     ExtensionMetadata extensionMetadataInstance = new ExtensionMetadata();
                                     result.ExtensionsMetadata.Add(extensionMetadataInstance);
                                     
-                                    JToken namespaceValue = valueValue["namespace"];
-                                    if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                    JToken namespacesArray = valueValue["namespaces"];
+                                    if (namespacesArray != null && namespacesArray.Type != JTokenType.Null)
                                     {
-                                        string namespaceInstance = ((string)namespaceValue);
-                                        extensionMetadataInstance.Namespace = namespaceInstance;
+                                        foreach (JToken namespacesValue in ((JArray)namespacesArray))
+                                        {
+                                            extensionMetadataInstance.Namespaces.Add(((string)namespacesValue));
+                                        }
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
