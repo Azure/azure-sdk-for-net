@@ -95,6 +95,7 @@ namespace WebSites.Tests.ScenarioTests
 
                 // the following URL just have a proper format, but it is not valid - for an API test it is not needed to be valid,
                 // since we are just testing a roundtrip here
+                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                 string storageUrl = "https://nonexistingusername3567.blob.core.windows.net/backup/?sv=2012-02-12&st=2013-12-05T19%3A30%3A45Z&se=2017-12-04T19%3A30%3A45Z&sr=c&sp=rwdl&sig=3BY5sbzQ2NeKvdaelzxc8inxJgE1mGq2a%2BaqUeFGJYo%3D";
 
                 var sr = new BackupRequest()
