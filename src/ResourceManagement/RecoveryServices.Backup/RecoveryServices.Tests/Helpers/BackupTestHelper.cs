@@ -41,8 +41,8 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = "labRG1";
             string rsVaultName = "idcdlslbRSVault";
             string fabricName = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
-            string containerName = "IaasVMContainer;iaasvmcontainerv2;vikasnprodrg;vikasnrec";
-            string protectedItemName = "VM;iaasvmcontainerv2;vikasnprodrg;vikasnrec";
+            string containerName = "IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore";
+            string protectedItemName = "VM;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore";
 
             TriggerBackupRequest backupRequest = new TriggerBackupRequest();
             backupRequest.Item = new BackupRequestResource();

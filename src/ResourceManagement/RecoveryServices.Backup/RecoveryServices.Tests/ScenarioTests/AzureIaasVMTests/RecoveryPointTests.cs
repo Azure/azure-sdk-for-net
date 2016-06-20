@@ -54,8 +54,8 @@ namespace RecoveryServices.Tests
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string itemUri = itemType + ";" + itemUniqueName;
 
-                DateTime startTime = new DateTime(2016, 4, 17, 15, 25, 9, DateTimeKind.Utc);
-                DateTime endTime = new DateTime(2016, 4, 18, 19, 25, 9, DateTimeKind.Utc);
+                DateTime startTime = new DateTime(2016, 6, 18, 0, 0, 0, DateTimeKind.Utc);
+                DateTime endTime = new DateTime(2016, 6, 22, 0, 0, 0, DateTimeKind.Utc);
 
                 RecoveryPointQueryParameters queryFilter = new RecoveryPointQueryParameters();
                 queryFilter.StartDate = startTime.ToString("yyyy-MM-dd hh:mm:ss tt");
@@ -63,7 +63,7 @@ namespace RecoveryServices.Tests
 
                 var response = client.RecoveryPoints.List(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, queryFilter);
-                
+
                 Assert.NotNull(response.RecoveryPointList);
                 Assert.NotNull(response.RecoveryPointList.RecoveryPoints);
 
@@ -88,7 +88,8 @@ namespace RecoveryServices.Tests
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
                 string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
-                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"]; string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
                 string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
                 string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
@@ -98,7 +99,7 @@ namespace RecoveryServices.Tests
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string itemUri = itemType + ";" + itemUniqueName;
                 string rpId = ConfigurationManager.AppSettings["RecoveryPointNameRP"];
-                
+
                 var response = client.RecoveryPoints.Get(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, rpId);
 
