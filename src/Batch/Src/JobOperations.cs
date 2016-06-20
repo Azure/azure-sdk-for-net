@@ -892,6 +892,7 @@
         /// If you do want to customize this behavior, specify an AddTaskCollectionResultHandler in the <see cref="CustomBehaviors"/>
         /// or <paramref name="additionalBehaviors"/> collections.</para>
         /// </remarks>
+        /// <exception cref="ParallelOperationsException">Thrown if one or more requests to the Batch service fail.</exception>
         public async System.Threading.Tasks.Task AddTaskAsync(
             string jobId,
             IEnumerable<CloudTask> tasksToAdd,
@@ -944,6 +945,7 @@
         /// If you do want to customize this behavior, specify an AddTaskCollectionResultHandler in the <see cref="CustomBehaviors"/>
         /// or <paramref name="additionalBehaviors"/> collections.</para>
         /// </remarks>
+        /// <exception cref="ParallelOperationsException">Thrown if one or more requests to the Batch service fail.</exception>
         public void AddTask(
             string jobId,
             IEnumerable<CloudTask> tasksToAdd,
