@@ -71,6 +71,14 @@ namespace RecoveryServices.Tests
                     TargetDomainNameId = string.Empty,
                     TargetResourceGroupId = string.Empty,
                     TargetVirtualMachineId = string.Empty,
+                    EncryptionDetails = new EncryptionDetails()
+                    {
+                        EncryptionEnabled = true,
+                        KekUrl = ConfigurationManager.AppSettings["KekUrl"],
+                        KekVaultId = ConfigurationManager.AppSettings["KekVaultId"],
+                        SecretKeyUrl = ConfigurationManager.AppSettings["SecretKeyUrl"],
+                        SecretKeyVaultId = ConfigurationManager.AppSettings["SecretKeyVaultId"],
+                    },
                 };
 
                 TriggerRestoreRequest triggerRestoreRequest = new TriggerRestoreRequest();

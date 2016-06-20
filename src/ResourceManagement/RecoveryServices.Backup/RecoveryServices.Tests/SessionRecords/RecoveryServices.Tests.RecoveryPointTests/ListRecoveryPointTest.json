@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/d22f872b-f3f1-425a-8100-c74a376452b1/resourceGroups/restorerg1/providers/Microsoft.RecoveryServices/vaults/restorern1/backupFabrics/Azure/protectionContainers/IaasVMContainer%3Biaasvmcontainerv2%3Bshswain-rg1%3Bshswain-vm1/protectedItems/vm%3Biaasvmcontainerv2%3Bshswain-rg1%3Bshswain-vm1/recoveryPoints?api-version=2016-05-01&$filter=startDate%20eq%20'2016-04-17%2003:25:09%20PM'%20and%20endDate%20eq%20'2016-04-18%2007:25:09%20PM'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDIyZjg3MmItZjNmMS00MjVhLTgxMDAtYzc0YTM3NjQ1MmIxL3Jlc291cmNlR3JvdXBzL3Jlc3RvcmVyZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9yZXN0b3Jlcm4xL2JhY2t1cEZhYnJpY3MvQXp1cmUvcHJvdGVjdGlvbkNvbnRhaW5lcnMvSWFhc1ZNQ29udGFpbmVyJTNCaWFhc3ZtY29udGFpbmVydjIlM0JzaHN3YWluLXJnMSUzQnNoc3dhaW4tdm0xL3Byb3RlY3RlZEl0ZW1zL3ZtJTNCaWFhc3ZtY29udGFpbmVydjIlM0JzaHN3YWluLXJnMSUzQnNoc3dhaW4tdm0xL3JlY292ZXJ5UG9pbnRzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDEmJGZpbHRlcj1zdGFydERhdGUlMjBlcSUyMCcyMDE2LTA0LTE3JTIwMDMlM0EyNSUzQTA5JTIwUE0nJTIwYW5kJTIwZW5kRGF0ZSUyMGVxJTIwJzIwMTYtMDQtMTglMjAwNyUzQTI1JTNBMDklMjBQTSc=",
+      "RequestUri": "/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault/backupFabrics/Azure/protectionContainers/IaasVMContainer%3Biaasvmcontainerv2%3Barpittestresourcegroup%3Bvkencryrestore/protectedItems/vm%3Biaasvmcontainerv2%3Barpittestresourcegroup%3Bvkencryrestore/recoveryPoints?api-version=2016-05-01&$filter=startDate%20eq%20'2016-06-18%2012%3A00%3A00%20AM'%20and%20endDate%20eq%20'2016-06-22%2012%3A00%3A00%20AM'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdC9iYWNrdXBGYWJyaWNzL0F6dXJlL3Byb3RlY3Rpb25Db250YWluZXJzL0lhYXNWTUNvbnRhaW5lciUzQmlhYXN2bWNvbnRhaW5lcnYyJTNCYXJwaXR0ZXN0cmVzb3VyY2Vncm91cCUzQnZrZW5jcnlyZXN0b3JlL3Byb3RlY3RlZEl0ZW1zL3ZtJTNCaWFhc3ZtY29udGFpbmVydjIlM0JhcnBpdHRlc3RyZXNvdXJjZWdyb3VwJTNCdmtlbmNyeXJlc3RvcmUvcmVjb3ZlcnlQb2ludHM/YXBpLXZlcnNpb249MjAxNi0wNS0wMSYkZmlsdGVyPXN0YXJ0RGF0ZSUyMGVxJTIwJzIwMTYtMDYtMTglMjAxMiUzQTAwJTNBMDAlMjBBTSclMjBhbmQlMjBlbmREYXRlJTIwZXElMjAnMjAxNi0wNi0yMiUyMDEyJTNBMDAlM0EwMCUyMEFNJw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3c28d8fe-2885-49b5-8fcb-d36fb5e2789f"
+          "b0506438-170d-4b01-9e75-856541d33b1e"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/d22f872b-f3f1-425a-8100-c74a376452b1/resourceGroups/restorerg1/providers/Microsoft.RecoveryServices/vaults/restorern1/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;shswain-rg1;shswain-vm1/protectedItems/VM;iaasvmcontainerv2;shswain-rg1;shswain-vm1/recoveryPoints/23864730435904\",\r\n      \"name\": \"23864730435904\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/recoveryPoints\",\r\n      \"properties\": {\r\n        \"objectType\": \"IaasVMRecoveryPoint\",\r\n        \"recoveryPointType\": \"AppConsistent\",\r\n        \"recoveryPointTime\": \"2016-04-18T12:35:03.1970354Z\",\r\n        \"recoveryPointAdditionalInfo\": \"\",\r\n        \"sourceVMStorageType\": \"PremiumVMOnNormalStorage\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/VM;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/recoveryPoints/13738976139650\",\r\n      \"name\": \"13738976139650\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/recoveryPoints\",\r\n      \"properties\": {\r\n        \"objectType\": \"IaasVMRecoveryPoint\",\r\n        \"recoveryPointType\": \"AppConsistent\",\r\n        \"recoveryPointTime\": \"2016-06-20T13:28:40.7064946Z\",\r\n        \"recoveryPointAdditionalInfo\": \"\",\r\n        \"sourceVMStorageType\": \"NormalStorage\",\r\n        \"isInstantILRSessionActive\": false\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "693"
+          "749"
         ],
         "Content-Type": [
           "application/json"
@@ -28,29 +28,29 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "14e340ae-392f-44a1-b381-99fb6444d695"
+          "f757d78d-705a-4e9b-be1b-89d4c778f770"
         ],
         "x-ms-client-request-id": [
-          "3c28d8fe-2885-49b5-8fcb-d36fb5e2789f",
-          "3c28d8fe-2885-49b5-8fcb-d36fb5e2789f"
+          "b0506438-170d-4b01-9e75-856541d33b1e",
+          "b0506438-170d-4b01-9e75-856541d33b1e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14588"
+          "14591"
         ],
         "x-ms-correlation-request-id": [
-          "14e340ae-392f-44a1-b381-99fb6444d695"
+          "f757d78d-705a-4e9b-be1b-89d4c778f770"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160418T155700Z:14e340ae-392f-44a1-b381-99fb6444d695"
+          "CENTRALUS:20160620T150221Z:f757d78d-705a-4e9b-be1b-89d4c778f770"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 18 Apr 2016 15:56:59 GMT"
+          "Mon, 20 Jun 2016 15:02:20 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -64,6 +64,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "d22f872b-f3f1-425a-8100-c74a376452b1"
+    "SubscriptionId": "fc74b460-0edc-41b5-81b3-baddc1fc4257"
   }
 }
