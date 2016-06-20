@@ -33,7 +33,7 @@ namespace RecoveryServices.Tests
     public class AzureSqlPolicyTests : RecoveryServicesTestsBase
     {
         [Fact]
-        public void ListRecoveryServicesAzureSqlProtectionPolicyTest()
+        public void ListProtectionPolicyTest()
         {
             using (UndoContext context = UndoContext.Current)
             {
@@ -67,7 +67,7 @@ namespace RecoveryServices.Tests
         }
 
         [Fact]
-        public void GetAddUpdateDeleteAzureSqlPolicyTest()
+        public void PolicyCrudTest()
         {
             using (UndoContext context = UndoContext.Current)
             {

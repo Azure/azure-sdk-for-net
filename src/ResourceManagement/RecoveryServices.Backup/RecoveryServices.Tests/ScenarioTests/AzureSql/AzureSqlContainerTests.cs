@@ -33,7 +33,7 @@ namespace RecoveryServices.Tests
     public class AzureSqlContainerTests: RecoveryServicesTestsBase
     {
         [Fact]
-        public void ListAzureSqlContainersTest()
+        public void ListContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
             {
