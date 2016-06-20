@@ -81,8 +81,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
         /// <param name="overwrite">Whether to overwrite an existing stream.</param>
-        /// <param name="data"></param>
-        /// <param name="byteCount"></param>
+        /// <param name="data">The data.</param>
+        /// <param name="byteCount">The byte count.</param>
+        /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
         public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
         {
             using (var toAppend = data != null ? new MemoryStream(data, 0, byteCount) : new MemoryStream())
@@ -103,15 +104,31 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
         /// <param name="recurse">if set to <c>true</c> [recurse]. This is used for folder streams only.</param>
-        public void DeleteStream(string streamPath, bool recurse = false)
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will delete a stream on the local machine instead of on the server.</param>
+        /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
+        public void DeleteStream(string streamPath, bool recurse = false, bool isDownload = false)
         {
-            var task = _client.FileSystem.DeleteAsync(_accountName, streamPath, recurse, cancellationToken: _token);
-            if (!task.Wait(PerRequestTimeoutMs))
+            if (isDownload)
             {
-                throw new TaskCanceledException(string.Format("Delete stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
+                if(Directory.Exists(streamPath))
+                {
+                    Directory.Delete(streamPath, recurse);
+                }
+                else if(File.Exists(streamPath))
+                {
+                    File.Delete(streamPath);
+                }
             }
+            else
+            {
+                var task = _client.FileSystem.DeleteAsync(_accountName, streamPath, recurse, cancellationToken: _token);
+                if (!task.Wait(PerRequestTimeoutMs))
+                {
+                    throw new TaskCanceledException(string.Format("Delete stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
+                }
 
-            task.GetAwaiter().GetResult();
+                task.GetAwaiter().GetResult();
+            }
         }
 
         /// <summary>
@@ -121,12 +138,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="data">The data.</param>
         /// <param name="offset">The offset.</param>
         /// <param name="byteCount">The byte count.</param>
+        /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
         public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
         {
             using (var stream = new MemoryStream(data, 0, byteCount))
             {
                 var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, cancellationToken: _token);
-                
+
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
                     throw new TaskCanceledException(string.Format("Append to stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
@@ -136,18 +154,108 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
         }
 
+        public Stream ReadStream(string streamPath, long offset, long length, bool isDownload = false)
+        {
+            if (isDownload)
+            {
+                var task = _client.FileSystem.OpenAsync(_accountName, streamPath, length, offset, cancellationToken: _token);
+
+                if (!task.Wait(PerRequestTimeoutMs))
+                {
+                    throw new TaskCanceledException(string.Format("Reading stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
+                }
+
+                return task.GetAwaiter().GetResult();
+            }
+            else
+            {
+                // note that length is not used here since we will automatically stop reading once we reach the end of the stream.
+                var stream = new FileStream(streamPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+                if (offset >= stream.Length)
+                {
+                    throw new ArgumentException("StartOffset is beyond the end of the input file", "StartOffset");
+                }
+
+                stream.Seek(offset, SeekOrigin.Begin);
+                return stream;
+            }
+        }
+
         /// <summary>
         /// Determines if the stream with given path exists.
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will test if the stream exists on the local machine instead of on the server.</param>
         /// <returns>
         /// True if the stream exists, false otherwise.
         /// </returns>
-        public bool StreamExists(string streamPath)
+        /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
+        public bool StreamExists(string streamPath, bool isDownload = false)
         {
-            try
+            if (isDownload)
+            {
+                return File.Exists(streamPath) || Directory.Exists(streamPath);
+            }
+            else
+            {
+                try
+                {
+                    var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
+                    if (!task.Wait(PerRequestTimeoutMs))
+                    {
+                        throw new TaskCanceledException(
+                            string.Format("Get file status operation did not complete after {0} milliseconds.",
+                                PerRequestTimeoutMs));
+                    }
+
+                    task.GetAwaiter().GetResult();
+                }
+                catch (AggregateException ex)
+                {
+                    if (ex.InnerExceptions.Count != 1) throw;
+
+                    var cloudEx = ex.InnerExceptions[0] as AdlsErrorException;
+                    if (cloudEx != null && (cloudEx.Response.StatusCode == HttpStatusCode.NotFound || cloudEx.Body.RemoteException is AdlsFileNotFoundException))
+                    {
+                        return false;
+                    }
+
+                    throw;
+                }
+                catch (AdlsErrorException cloudEx)
+                {
+                    if (cloudEx.Response.StatusCode == HttpStatusCode.NotFound || cloudEx.Body.RemoteException is AdlsFileNotFoundException)
+                    {
+                        return false;
+                    }
+
+                    throw;
+                }
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating the length of a stream, in bytes.
+        /// </summary>
+        /// <param name="streamPath">The relative path to the stream.</param>
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will get the stream length on the local machine instead of on the server.</param>
+        /// <returns>
+        /// The length of the stream, in bytes.
+        /// </returns>
+        /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
+        public long GetStreamLength(string streamPath, bool isDownload = false)
+        {
+            if (isDownload)
+            {
+                return new FileInfo(streamPath).Length;
+            }
+            else
             {
                 var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
+
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
                     throw new TaskCanceledException(
@@ -155,41 +263,21 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             PerRequestTimeoutMs));
                 }
 
-                task.GetAwaiter().GetResult();
+                var fileInfoResponse = task.Result;
+                return (long)fileInfoResponse.FileStatus.Length;
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count != 1) throw;
-
-                var cloudEx = ex.InnerExceptions[0] as AdlsErrorException;
-                if (cloudEx != null && (cloudEx.Response.StatusCode == HttpStatusCode.NotFound || cloudEx.Body.RemoteException is AdlsFileNotFoundException))
-                {
-                    return false;
-                }
-
-                throw;
-            }
-            catch (AdlsErrorException cloudEx)
-            {
-                if(cloudEx.Response.StatusCode == HttpStatusCode.NotFound || cloudEx.Body.RemoteException is AdlsFileNotFoundException)
-                {
-                    return false;
-                }
-
-                throw;
-            }
-
-            return true;
         }
 
         /// <summary>
-        /// Gets a value indicating the length of a stream, in bytes.
+        /// Determines if the stream with given path on the server is a directory or a terminating file.
+        /// This is used exclusively for download.
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
         /// <returns>
-        /// The length of the stream, in bytes.
+        /// True if the stream is a directory, false otherwise.
         /// </returns>
-        public long GetStreamLength(string streamPath)
+        /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
+        public bool IsDirectory(string streamPath)
         {
             var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
 
@@ -201,7 +289,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
 
             var fileInfoResponse = task.Result;
-            return (long)fileInfoResponse.FileStatus.Length;
+            return fileInfoResponse.FileStatus.Type.GetValueOrDefault() == FileType.DIRECTORY;
         }
 
         /// <summary>
@@ -210,26 +298,50 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="targetStreamPath">The relative path to the target stream.</param>
         /// <param name="inputStreamPaths">An ordered array of paths to the input streams.</param>
-        public void Concatenate(string targetStreamPath, string[] inputStreamPaths)
+        /// <param name="isDownload">if set to <c>true</c> [is download], meaning we will concatenate the streams on the local machine instead of on the server.</param>
+        /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
+        public void Concatenate(string targetStreamPath, string[] inputStreamPaths, bool isDownload = false)
         {
-            // this is required for the current version of the microsoft concatenate
-            // TODO: Improve WebHDFS concatenate to take in the list of paths to concatenate
-            // in the request body.
-            var paths = "sources=" + string.Join(",", inputStreamPaths);
-
-            // For the current implementation, we require UTF8 encoding.
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(paths)))
+            if (isDownload)
             {
-                var task = _client.FileSystem.MsConcatAsync(_accountName, targetStreamPath, stream, true, cancellationToken: _token);
-
-                if (!task.Wait(PerRequestTimeoutMs))
+                using (var targetStream = new FileStream(targetStreamPath, FileMode.CreateNew))
                 {
-                    throw new TaskCanceledException(
-                        string.Format("Concatenate operation did not complete after {0} milliseconds.",
-                            PerRequestTimeoutMs));
+                    foreach(var inputPath in inputStreamPaths)
+                    {
+                        using (var inputStream = File.OpenRead(inputPath))
+                        {
+                            inputStream.CopyTo(targetStream);
+                        }
+                    }
                 }
 
-                task.GetAwaiter().GetResult();
+                // clean up all the files only in the event of success.
+                foreach (var inputPath in inputStreamPaths)
+                {
+                    File.Delete(inputPath);
+                }
+            }
+            else
+            {
+                // this is required for the current version of the microsoft concatenate
+                // TODO: Improve WebHDFS concatenate to take in the list of paths to concatenate
+                // in the request body.
+                var paths = "sources=" + string.Join(",", inputStreamPaths);
+
+                // For the current implementation, we require UTF8 encoding.
+                using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(paths)))
+                {
+                    var task = _client.FileSystem.MsConcatAsync(_accountName, targetStreamPath, stream, true, cancellationToken: _token);
+
+                    if (!task.Wait(PerRequestTimeoutMs))
+                    {
+                        throw new TaskCanceledException(
+                            string.Format("Concatenate operation did not complete after {0} milliseconds.",
+                                PerRequestTimeoutMs));
+                    }
+
+                    task.GetAwaiter().GetResult();
+                }
             }
         }
 

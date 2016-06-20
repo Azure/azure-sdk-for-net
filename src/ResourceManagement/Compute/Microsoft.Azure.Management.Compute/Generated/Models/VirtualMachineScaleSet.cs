@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Specifies whether the Virtual Machine Scale Set should be

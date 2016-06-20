@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="metadataFilePath">The file path to assign to this metadata file (for saving purposes).</param>
         /// <param name="uploadParameters">The parameters to use for constructing this metadata.</param>
-        public UploadFolderMetadata(string metadataFilePath, UploadParameters uploadParameters)
+        /// <param name="frontend">The frontend to use when generating per file metadata.</param>
+        public UploadFolderMetadata(string metadataFilePath, UploadParameters uploadParameters, IFrontEndAdapter frontend)
         {
             this.MetadataFilePath = metadataFilePath;
            
@@ -83,18 +84,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     curFile,
                     String.Format("{0}/{1}", this.TargetStreamFolderPath, relativeFilePath),
                     uploadParameters.AccountName,
-                    uploadParameters.FileThreadCount,
-                    uploadParameters.FolderThreadCount,
+                    uploadParameters.PerFileThreadCount,
+                    uploadParameters.ConcurentFileCount,
                     uploadParameters.IsOverwrite,
                     uploadParameters.IsResume,
                     uploadParameters.IsBinary,
                     uploadParameters.IsRecursive,
+                    uploadParameters.IsDownload,
                     uploadParameters.MaxSegementLength,
                     uploadParameters.LocalMetadataLocation
                 );
                 
                 var uploadMetadataPath = Path.Combine(uploadParameters.LocalMetadataLocation, string.Format("{0}.upload.xml", Path.GetFileName(curFile)));
-                this.Files[i] = new UploadMetadata(uploadMetadataPath, paramsPerFile);
+                this.Files[i] = new UploadMetadata(uploadMetadataPath, paramsPerFile, frontend);
             });
         }
 
