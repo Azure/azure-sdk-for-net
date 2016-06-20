@@ -10912,10 +10912,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (parameters.AddressSpace is ILazyCollection == false || ((ILazyCollection)parameters.AddressSpace).IsInitialized)
                     {
-                        XElement addressSpaceSequenceElement = new XElement(XName.Get("AddressSpace", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                        XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
+                        XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
+                        XElement addressSpaceSequenceElement = new XElement(defaultNs + "AddressSpace");
+                        addressSpaceSequenceElement.Add(new XAttribute(XNamespace.Xmlns + "a", array));
+
                         foreach (string addressSpaceItem in parameters.AddressSpace)
                         {
-                            XElement addressSpaceItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                            XElement addressSpaceItemElement = new XElement(array + "string", addressSpaceItem);
                             addressSpaceItemElement.Value = addressSpaceItem;
                             addressSpaceSequenceElement.Add(addressSpaceItemElement);
                         }
