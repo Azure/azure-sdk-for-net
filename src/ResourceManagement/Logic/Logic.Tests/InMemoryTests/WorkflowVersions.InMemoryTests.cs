@@ -61,7 +61,7 @@ namespace Test.Azure.Management.Logic
                         'audience':'https://management.azure.com/',
                         'tenant':'66666666-6666-6666-6666-666666666666',
                         'clientId':'66666666-6666-6666-6666-666666666666',
-                        'secret':'<placeholder>'
+                       'secret':'<placeholder>'                    
                     },
                     'type':'Object'
                 }
@@ -107,7 +107,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowVersions_Get_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -124,7 +124,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowVersions_Get_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
