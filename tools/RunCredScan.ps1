@@ -55,7 +55,7 @@ Write-Host "Running credential scanner from location: " $credentialScannerLocati
 Write-Host "Source location for credential scanner: " $sourceLocation
 Write-Host "Searcher file location for credential scanner: " $searcherFile
 
-$proc = Start-Process -FilePath $credentialScannerLocation -ArgumentList $sourceLocation, $searcherFile, $logFile -NoNewWindow -Wait -PassThru
+$proc = Start-Process -FilePath $credentialScannerLocation -ArgumentList $sourceLocation, $searcherFile, $LogFileName -NoNewWindow -Wait -PassThru
 
 #Check process exit code after running credential scanner
 if ($proc.ExitCode -ne 0) {
