@@ -27,9 +27,9 @@
     }
   },
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "type": "platform",
-      "version": "1.0.0-rc2-*"
+    "Microsoft.NETCore.App": { 
+      "type": "platform", 
+      "version": "1.0.0" 
     },
     "Microsoft.Azure.Test.HttpRecorder": "[1.6.2-preview,2.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.3-preview,2.0.0)",
