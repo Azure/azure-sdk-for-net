@@ -36,6 +36,6 @@
     }
   },
   "dependencies": {
-    "Microsoft.Azure.Test.HttpRecorder": ""
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.0-preview,2.0)"
   }
 }
