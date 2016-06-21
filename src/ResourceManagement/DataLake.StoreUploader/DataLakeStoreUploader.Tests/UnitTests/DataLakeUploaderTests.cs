@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// Tests the case of a fresh upload with multiple segments and multiple files.
         /// </summary>
         [Fact]
-        public void DataLakeUploader_FreshFolderUpload()
+        public void DataLakeUploader_FreshFolderUploadDownload()
         {
             var frontEnd = new InMemoryFrontEnd();
             var up = CreateParameters(isResume: false, isRecursive: true);
@@ -227,6 +227,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
             VerifyFileUploadedSuccessfully(up, frontEnd);
             VerifyFolderProgressStatus(progress, _largeFileData.Length + (_smallFileData.Length *2), 3);
+            // now download
         }
 
         /// <summary>
