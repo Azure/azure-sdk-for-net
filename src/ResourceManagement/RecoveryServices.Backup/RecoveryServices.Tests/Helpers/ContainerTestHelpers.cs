@@ -17,15 +17,10 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test.HttpRecorder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace RecoveryServices.Tests.Helpers
+namespace RecoveryServices.Backup.Tests.Helpers
 {
     public class ContainerTestHelper
     {
@@ -36,11 +31,8 @@ namespace RecoveryServices.Tests.Helpers
             Client = client;
         }
 
-        public ProtectionContainerListResponse ListContainers(ProtectionContainerListQueryParams queryParams)
+        public ProtectionContainerListResponse ListContainers(string rsVaultRgName, string rsVaultName, ProtectionContainerListQueryParams queryParams)
         {
-            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
-
             ProtectionContainerListResponse response = Client.Containers.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
@@ -49,11 +41,8 @@ namespace RecoveryServices.Tests.Helpers
             return response;
         }
 
-        public BaseRecoveryServicesJobResponse RefreshContainer(string fabricName)
+        public BaseRecoveryServicesJobResponse RefreshContainer(string rsVaultRgName, string rsVaultName, string fabricName)
         {
-            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
-
             BaseRecoveryServicesJobResponse response = Client.Containers.BeginRefresh(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(), fabricName);
 
             Assert.NotNull(response);

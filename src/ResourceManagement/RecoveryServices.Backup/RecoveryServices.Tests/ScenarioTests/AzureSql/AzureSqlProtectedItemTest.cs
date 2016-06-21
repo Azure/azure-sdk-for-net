@@ -13,24 +13,18 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using System;
-using System.Collections.Generic;
+using RecoveryServices.Backup.Tests.Helpers;
 using System.Configuration;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class AzureSqlProtectedItemTest : RecoveryServicesTestsBase
+    public class AzureSqlProtectedItemTest : RecoveryServicesBackupTestsBase
     {
         [Fact]
         public void ListProtectedItemTest()
@@ -40,6 +34,8 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+                string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
@@ -47,8 +43,8 @@ namespace RecoveryServices.Tests
                 queryParams.BackupManagementType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureSql);
                 queryParams.DatasourceType = CommonTestHelper.GetSetting(TestConstants.WorkloadTypeAzureSqlDb);
 
-                ProtectedItemTestHelper itemTestHelper = new ProtectedItemTestHelper(client);
-                var response = itemTestHelper.ListProtectedItems(queryParams);
+                ProtectedItemTestHelpers itemTestHelper = new ProtectedItemTestHelpers(client);
+                var response = itemTestHelper.ListProtectedItems(rsVaultRgName, rsVaultName, queryParams);
 
                 string itemName = ConfigurationManager.AppSettings[TestConstants.AzureSqlItemName];
                 Assert.True(response.ItemList.Value.Any(item =>
@@ -81,10 +77,10 @@ namespace RecoveryServices.Tests
                 string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
                 string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-                ProtectedItemTestHelper protectedItemTestHelper = new ProtectedItemTestHelper(client);
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
 
-                var response = protectedItemTestHelper.DeleteProtectedItem(fabricName,
-                    containerName, itemName);
+                var response = protectedItemTestHelper.DeleteProtectedItem(
+                    rsVaultRgName, rsVaultName, fabricName, containerName, itemName);
                 Assert.Equal(response.StatusCode, HttpStatusCode.Accepted);
             }
         }
@@ -105,15 +101,13 @@ namespace RecoveryServices.Tests
                 string itemType = ConfigurationManager.AppSettings[TestConstants.WorkloadTypeAzureSqlDb];
                 string containerName = containeType + ";" + containerUniqueName;
                 string itemName = itemType + ";" + itemUniqueName;
-                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
                 string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
                 string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-                ProtectedItemTestHelper protectedItemTestHelper = new ProtectedItemTestHelper(client);
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
 
-                var response = protectedItemTestHelper.GetProtectedItem(fabricName,
-                    containerName, itemName);
+                var response = protectedItemTestHelper.GetProtectedItem(rsVaultRgName, rsVaultName, containerName, itemName);
 
                 Assert.Equal(itemUniqueName, response.Item.Name);
                 Assert.NotNull(response.Item.Properties as AzureSqlProtectedItem);

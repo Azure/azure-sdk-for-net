@@ -13,49 +13,65 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using System.Threading;
 using Microsoft.Azure.Test.HttpRecorder;
+using RecoveryServices.Backup.Tests.Helpers;
+using System;
+using System.Configuration;
+using System.Net;
+using System.Threading;
+using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class JobTests : RecoveryServicesTestsBase
-    {       
+    public class JobTests : RecoveryServicesBackupTestsBase
+    {
         public void ListJobsAndGetJobTest()
         {
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
 
-                string resourceNamespace = null;
-
-                if (string.IsNullOrEmpty(resourceNamespace))
-                {
-                    resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
-                }
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                // TODO: Create VM instead of taking these parameters from config
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
+                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
+                string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+                string containerUri = containeType + ";" + containerUniqueName;
+                string itemUri = itemType + ";" + itemUniqueName;
+                string utcDateTimeFormat = ConfigurationManager.AppSettings["UTCDateTimeFormat"];
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                // 2. Get default policy
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+                string policyId = policyTestHelper.GetDefaultPolicyId(resourceGroupName, resourceName);
+
+                // 3. Enable protection
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
+                DateTime protectionStartTime = DateTime.UtcNow;
+                protectedItemTestHelper.EnableProtection(resourceGroupName, resourceName, policyId, containerUri, itemUri);
+                DateTime protectionEndTime = DateTime.UtcNow;
+
+                // ACTION: List jobs
                 CommonJobQueryFilters commonFilters = new CommonJobQueryFilters();
                 commonFilters.BackupManagementType = BackupManagementType.AzureIaasVM.ToString();
-                commonFilters.StartTime = (new DateTime(2016, 4, 12, 20, 0, 0)).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss tt");
-                commonFilters.EndTime = (new DateTime(2016, 4, 13, 20, 0, 0)).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss tt");
+                commonFilters.StartTime = protectionStartTime.ToString(utcDateTimeFormat);
+                commonFilters.EndTime = protectionEndTime.ToString(utcDateTimeFormat);
+                JobTestHelpers helper = new JobTestHelpers(client);
+                var jobList = helper.ListJobs(resourceGroupName, resourceName, commonFilters, null);
 
-                JobTestHelper helper = new JobTestHelper(client);
-                var jobList = helper.ListJobs(commonFilters, null);
-
+                // VALIDATION
                 foreach (var job in jobList.ItemList.Value)
                 {
                     Assert.NotNull(job.Id);
@@ -63,10 +79,10 @@ namespace RecoveryServices.Tests
                     helper.ValidateJobResponse(job.Properties, commonFilters);
 
                     // validating getjob
-                    var jobDetalis = helper.GetJob(job.Name);
-                    Assert.NotNull(jobDetalis);
-                    Assert.NotNull(jobDetalis.Item);
-                    helper.ValidateJobResponse(jobDetalis.Item.Properties, null);
+                    var jobDetails = helper.GetJob(resourceGroupName, resourceName, job.Name);
+                    Assert.NotNull(jobDetails);
+                    Assert.NotNull(jobDetails.Item);
+                    helper.ValidateJobResponse(jobDetails.Item.Properties, null);
                 }
             }
         }
@@ -78,42 +94,59 @@ namespace RecoveryServices.Tests
             {
                 context.Start();
 
-                string resourceNamespace = null;
-
-                if (string.IsNullOrEmpty(resourceNamespace))
-                {
-                    resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
-                }
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                // TODO: Create VM instead of taking these parameters from config
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
+                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
+                string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+                string containerUri = containeType + ";" + containerUniqueName;
+                string itemUri = itemType + ";" + itemUniqueName;
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                // take a protected item, and trigger backup
-                // wait for it to complete. cancel it.
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                // 2. Get default policy
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+                string policyId = policyTestHelper.GetDefaultPolicyId(resourceGroupName, resourceName);
+
+                // 3. Enable protection
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
+                DateTime protectionStartTime = DateTime.UtcNow;
+                protectedItemTestHelper.EnableProtection(resourceGroupName, resourceName, policyId, containerUri, itemUri);
+                DateTime protectionEndTime = DateTime.UtcNow;
+
+                // 4. Trigger backup and get the job
+                BackupTestHelpers backupTestHelper = new BackupTestHelpers(client);
+                string jobId = backupTestHelper.BackupProtectedItem(resourceGroupName, resourceName, containerUri, itemUri);
                 CommonJobQueryFilters commonFilters = new CommonJobQueryFilters();
                 commonFilters.Status = JobStatus.InProgress.ToString();
                 commonFilters.Operation = JobOperation.Backup.ToString();
+                JobTestHelpers helper = new JobTestHelpers(client);
+                var job = helper.GetJob(resourceGroupName, resourceName, jobId);
 
-                JobTestHelper helper = new JobTestHelper(client);
-                var jobList = helper.ListJobs(commonFilters, null);
-
-                if (jobList.ItemList.Value.Count > 0)
-                {
-                    string jobId, opId;
-                    jobId = jobList.ItemList.Value[0].Name;
-                    // cancel the first job
-                    var cancelResponse = helper.CancelJob(jobId);
-                    opId = helper.GetOpId(cancelResponse.Location);
-                    var opStatus = helper.GetJobOperationStatus(jobId, opId);
-
-                    while (opStatus.StatusCode == HttpStatusCode.Accepted)
+                // ACTION: Cancel the job
+                var cancelResponse = helper.CancelJob(resourceGroupName, resourceName, jobId);
+                var opId = helper.GetOpId(cancelResponse.Location);
+                var opStatus = helper.GetJobOperationStatus(resourceGroupName, resourceName, jobId, opId);
+                TestUtilities.RetryActionWithTimeout(
+                    () => opStatus = helper.GetJobOperationStatus(resourceGroupName, resourceName, jobId, opId),
+                    () => opStatus.StatusCode != HttpStatusCode.Accepted,
+                    TimeSpan.FromMinutes(30),
+                    statusCode =>
                     {
                         if (HttpMockServer.Mode == HttpRecorderMode.Record)
                         {
                             Thread.Sleep(15 * 1000);
                         }
-                        opStatus = helper.GetJobOperationStatus(jobId, opId);
-                    }
-                }
+                        return true;
+                    });
             }
         }
     }
