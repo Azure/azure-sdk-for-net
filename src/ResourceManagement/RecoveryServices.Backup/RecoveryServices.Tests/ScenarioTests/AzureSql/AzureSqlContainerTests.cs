@@ -13,24 +13,18 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using System;
-using System.Collections.Generic;
+using RecoveryServices.Backup.Tests.Helpers;
 using System.Configuration;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class AzureSqlContainerTests: RecoveryServicesTestsBase
+    public class AzureSqlContainerTests : RecoveryServicesBackupTestsBase
     {
         [Fact]
         public void ListContainersTest()
@@ -40,13 +34,15 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+                string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
                 ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
                 queryParams.BackupManagementType = BackupManagementType.AzureSql.ToString();
 
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
+                ProtectionContainerListResponse response = containerTestHelper.ListContainers(rsVaultRgName, rsVaultName, queryParams);
 
                 string containerUniqueName = ConfigurationManager.AppSettings["ContainerTypeAzureSql"] + ";" + ConfigurationManager.AppSettings["AzureSqlContainerName"];
                 var container = response.ItemList.ProtectionContainers[0];
@@ -66,7 +62,7 @@ namespace RecoveryServices.Tests
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                string sqlContainerName =  ConfigurationManager.AppSettings["ContainerTypeAzureSql"] + ";" + ConfigurationManager.AppSettings["AzureSqlContainerName"];
+                string sqlContainerName = ConfigurationManager.AppSettings["ContainerTypeAzureSql"] + ";" + ConfigurationManager.AppSettings["AzureSqlContainerName"];
                 AzureOperationResponse response = containerTestHelper.UnregisterMABContainer(sqlContainerName);
                 Assert.Equal(response.StatusCode, HttpStatusCode.NoContent);
             }

@@ -13,23 +13,15 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using System;
-using System.Collections.Generic;
+using RecoveryServices.Backup.Tests.Helpers;
 using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class BackupTests : RecoveryServicesTestsBase
+    public class BackupTests : RecoveryServicesBackupTestsBase
     {
         [Fact]
         public void BackupProtectedItemTest()
@@ -39,11 +31,36 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                // TODO: Create VM instead of taking these parameters from config
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
+                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
+                string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+                string containerUri = containeType + ";" + containerUniqueName;
+                string itemUri = itemType + ";" + itemUniqueName;
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                BackupTestHelper backupTestHelper = new BackupTestHelper(client);
-                backupTestHelper.BackupProtectedItem();
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                // 2. Get default policy
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+                string policyId = policyTestHelper.GetDefaultPolicyId(resourceGroupName, resourceName);
+
+                // 3. Enable protection
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
+                protectedItemTestHelper.EnableProtection(resourceGroupName, resourceName, policyId, containerUri, itemUri);
+
+                // Action: Trigger backup and wait for completion
+                BackupTestHelpers backupTestHelper = new BackupTestHelpers(client);
+                string jobId = backupTestHelper.BackupProtectedItem(resourceGroupName, resourceName, containerUri, itemUri);
+                JobTestHelpers jobTestHelper = new JobTestHelpers(client);
+                jobTestHelper.WaitForJob(resourceGroupName, resourceName, jobId);
             }
         }
     }

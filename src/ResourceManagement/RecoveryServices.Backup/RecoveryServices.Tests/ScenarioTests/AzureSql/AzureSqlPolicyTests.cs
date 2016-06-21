@@ -13,24 +13,19 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using Microsoft.Azure;
+using RecoveryServices.Backup.Tests.Helpers;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Net;
+using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class AzureSqlPolicyTests : RecoveryServicesTestsBase
+    public class AzureSqlPolicyTests : RecoveryServicesBackupTestsBase
     {
         [Fact]
         public void ListProtectionPolicyTest()
@@ -40,12 +35,15 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+                string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
-                PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
                 ProtectionPolicyQueryParameters queryParams = new ProtectionPolicyQueryParameters();
                 queryParams.BackupManagementType = ConfigurationManager.AppSettings["ProviderTypeAzureSql"];
 
-                ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(queryParams);
+                ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(rsVaultRgName, rsVaultName, queryParams);
 
                 // atleast one default policy is expected
                 Assert.NotNull(response.ItemList);
@@ -74,8 +72,11 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+                string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
-                PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
                 string policyName = ConfigurationManager.AppSettings["AzureSqlPolicyName"];
 
                 //create policy request
@@ -100,12 +101,10 @@ namespace RecoveryServices.Tests
                 };
 
                 //create policy
-                ProtectionPolicyResponse response = policyTestHelper.AddOrUpdateProtectionPolicy(
-                                                       policyName,
-                                                       policyRequest);
+                ProtectionPolicyResponse response = policyTestHelper.AddOrUpdateProtectionPolicy(rsVaultRgName, rsVaultName, policyName, policyRequest);
 
                 // get policy
-                response = policyTestHelper.GetProtectionPolicy(policyName);
+                response = policyTestHelper.GetProtectionPolicy(rsVaultRgName, rsVaultName, policyName);
                 Assert.NotNull(response.Item.Name);
                 Assert.Equal(response.Item.Name, policyName);
                 Assert.NotNull(response.Item.Id);
@@ -136,12 +135,10 @@ namespace RecoveryServices.Tests
                         Properties = sqlPolicy
                     }
                 };
-                
+
 
                 // update policy
-                response = policyTestHelper.AddOrUpdateProtectionPolicy(
-                                                       policyName,
-                                                       policyRequest);
+                response = policyTestHelper.AddOrUpdateProtectionPolicy(rsVaultRgName, rsVaultName, policyName, policyRequest);
                 // validations
                 Assert.NotNull(response.Item.Name);
                 Assert.Equal(response.Item.Name, policyName);
@@ -156,7 +153,7 @@ namespace RecoveryServices.Tests
 
 
                 // delete the policy
-                AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(policyName);
+                AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(rsVaultRgName, rsVaultName, policyName);
                 Assert.Equal(deleteResponse.StatusCode, HttpStatusCode.OK);
             }
         }
