@@ -282,14 +282,22 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
         public bool IsDirectory(string streamPath)
         {
-            // no directory download tests.
+            // no directory download tests by default.
+            // if running directory download tests this
+            // needs to be overwritten by the mock.
             return false;
         }
 
         public IDictionary<string, long> ListDirectory(string directoryPath, bool recursive)
         {
-            // folder download not currently tested here.
-            throw new NotImplementedException();
+            // TODO: support recursive tests.
+            var toReturn = new Dictionary<string, long>();
+            foreach (var entry in _streams)
+            {
+                toReturn.Add(entry.Key, entry.Value.Length);
+            }
+
+            return toReturn;
         }
 
         public int StreamCount
