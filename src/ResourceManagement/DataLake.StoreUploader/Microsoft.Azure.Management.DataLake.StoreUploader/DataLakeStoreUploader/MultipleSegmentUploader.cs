@@ -15,6 +15,7 @@
 // 
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         public void Upload()
         {
             var pendingSegments = GetPendingSegmentsToUpload(_metadata);
-            var exceptions = new List<Exception>();
+            var exceptions = new ConcurrentQueue<Exception>();
 
             int threadCount = Math.Min(pendingSegments.Count, _maxThreadCount);
             var threads = new List<Thread>(threadCount);
@@ -127,7 +128,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="pendingSegments">The pending segments.</param>
         /// <param name="exceptions">The exceptions.</param>
-        private void ProcessPendingSegments(Queue<SegmentQueueItem> pendingSegments, ICollection<Exception> exceptions)
+        private void ProcessPendingSegments(Queue<SegmentQueueItem> pendingSegments, ConcurrentQueue<Exception> exceptions)
         {
             while (pendingSegments.Count > 0)
             {
@@ -167,7 +168,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         //keep track of the last exception for each segment and report it back
                         lock (exceptions)
                         {
-                            exceptions.Add(ex);
+                            exceptions.Enqueue(ex);
                         }
                     }
                 }

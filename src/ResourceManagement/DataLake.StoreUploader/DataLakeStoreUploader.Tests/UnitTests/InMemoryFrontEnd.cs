@@ -286,6 +286,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             return false;
         }
 
+        public IDictionary<string, long> ListDirectory(string directoryPath, bool recursive)
+        {
+            // folder download not currently tested here.
+            throw new NotImplementedException();
+        }
+
         public int StreamCount
         {
             get { return _streams.Count; }

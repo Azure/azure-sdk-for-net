@@ -111,11 +111,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // we always truncate here because overwrite validation should have already been done.
             // always create the directory as well
             Directory.CreateDirectory(Path.GetDirectoryName(_segmentMetadata.Path));
-            using (var outputStream = new FileStream(_segmentMetadata.Path, FileMode.Create))
-            {
-                // download the data
-                DownloadSegmentContents(outputStream);
-            }
+            
+            // download the data
+            DownloadSegmentContents();
 
             VerifyDownloadedStream();
             //any exceptions are (re)thrown to be handled by the caller; we do not handle retries or other recovery techniques here
@@ -160,8 +158,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <summary>
         /// Downloads the segment contents.
         /// </summary>
-        /// <param name="targetStream">The target stream.</param>
-        private void DownloadSegmentContents(FileStream targetStream)
+        private void DownloadSegmentContents()
         {
             // set the current offset in the stream we are reading to the offset
             // that this segment starts at.
@@ -172,45 +169,51 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // set the length remaining to ensure that only the exact number of bytes is ultimately downloaded
             // for this segment.
             var lengthRemaining = _segmentMetadata.Length;
-            for (int i = 0; i < numRequests; i++)
+            using (var outputStream = new FileStream(_segmentMetadata.Path, FileMode.Create))
             {
-                _token.ThrowIfCancellationRequested();
-                int attemptCount = 0;
-                bool downloadCompleted = false;
-                while (!downloadCompleted && attemptCount < MaxBufferDownloadAttemptCount)
+                for (int i = 0; i < numRequests; i++)
                 {
                     _token.ThrowIfCancellationRequested();
-                    attemptCount++;
-                    try
+                    int attemptCount = 0;
+                    bool downloadCompleted = false;
+                    while (!downloadCompleted && attemptCount < MaxBufferDownloadAttemptCount)
                     {
-                        // test to make sure that the remaining length is larger than the max size, otherwise just download the remaining length
-                        long lengthToDownload = (long)BufferLength;
-                        if (lengthRemaining - lengthToDownload < 0)
+                        _token.ThrowIfCancellationRequested();
+                        attemptCount++;
+                        try
                         {
-                            lengthToDownload = lengthRemaining;
-                        }
+                            // test to make sure that the remaining length is larger than the max size, otherwise just download the remaining length
+                            long lengthToDownload = (long)BufferLength;
+                            if (lengthRemaining - lengthToDownload < 0)
+                            {
+                                lengthToDownload = lengthRemaining;
+                            }
 
-                        using (var readStream = _frontEnd.ReadStream(_metadata.InputFilePath, curOffset, lengthToDownload, _metadata.IsDownload))
-                        {
-                            readStream.CopyTo(targetStream);
-                        }
+                            using (var readStream = _frontEnd.ReadStream(_metadata.InputFilePath, curOffset, lengthToDownload, _metadata.IsDownload))
+                            {
+                                readStream.CopyTo(outputStream);
+                            }
 
-                        lengthRemaining -= lengthToDownload;
-                        curOffset += lengthToDownload;
-                        downloadCompleted = true;
-                        ReportProgress(targetStream.Length, false);
-                    }
-                    catch
-                    {
-                        //if we tried more than the number of times we were allowed to, give up and throw the exception
-                        if (attemptCount >= MaxBufferDownloadAttemptCount)
-                        {
-                            ReportProgress(targetStream.Length, true);
-                            throw;
+                            lengthRemaining -= lengthToDownload;
+                            curOffset += lengthToDownload;
+                            downloadCompleted = true;
+                            ReportProgress(outputStream.Length, false);
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            //if we tried more than the number of times we were allowed to, give up and throw the exception
+                            if (attemptCount >= MaxBufferDownloadAttemptCount)
+                            {
+                                ReportProgress(outputStream.Length, true);
+                                throw ex;
+                            }
+                            else
+                            {
+                                WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                                
+                                // forcibly put the stream back to where it should be based on where we think we are in the download.
+                                outputStream.Seek(curOffset, SeekOrigin.Begin); 
+                            }
                         }
                     }
                 }
