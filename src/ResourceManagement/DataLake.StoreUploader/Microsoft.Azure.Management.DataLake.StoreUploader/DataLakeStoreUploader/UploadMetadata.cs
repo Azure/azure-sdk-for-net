@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="metadataFilePath">The file path to assign to this metadata file (for saving purposes).</param>
         /// <param name="uploadParameters">The parameters to use for constructing this metadata.</param>
         /// <param name="frontEnd">The front end. This is used only in the constructor for determining file length</param>
-        internal UploadMetadata(string metadataFilePath, UploadParameters uploadParameters, IFrontEndAdapter frontEnd)
+        internal UploadMetadata(string metadataFilePath, UploadParameters uploadParameters, IFrontEndAdapter frontEnd, long fileSize = -1)
         {
             this.MetadataFilePath = metadataFilePath;
            
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             this.IsBinary = uploadParameters.IsBinary;
 
-            this.FileLength = frontEnd.GetStreamLength(uploadParameters.InputFilePath, !IsDownload);
+            this.FileLength = fileSize < 0 ? frontEnd.GetStreamLength(uploadParameters.InputFilePath, !IsDownload) : fileSize;
 
             this.EncodingCodePage = uploadParameters.FileEncoding.CodePage;
 

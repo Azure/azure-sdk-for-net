@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+using System.Collections.Generic;
 using System.IO;
 
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
@@ -76,6 +77,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="streamPath">The relative path to the stream.</param>
         /// <returns>True if the stream is a directory, false otherwise.</returns>
         bool IsDirectory(string streamPath);
+
+        /// <summary>
+        /// Lists the Data Lake Store directory specified.
+        /// </summary>
+        /// <param name="directoryPath">The directory path.</param>
+        /// <param name="recursive">if set to <c>true</c> [recursive].</param>
+        /// <returns>
+        /// The list of string paths and their corresponding file sizes, in bytes.
+        /// </returns>
+        IDictionary<string, long> ListDirectory(string directoryPath, bool recursive);
 
         /// <summary>
         /// Gets a value indicating the length of a stream, in bytes.

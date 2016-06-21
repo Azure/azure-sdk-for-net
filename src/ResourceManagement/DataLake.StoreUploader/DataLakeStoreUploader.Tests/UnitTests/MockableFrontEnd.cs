@@ -12,6 +12,7 @@ using System.IO;
 namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.Azure.Management.DataLake.StoreUploader;
 
@@ -102,6 +103,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         {
             // no directory download tests yet.
             return false;
+        }
+
+        public IDictionary<string, long> ListDirectory(string directoryPath, bool recursive)
+        {
+            // download folder not currently tested here.
+            throw new NotImplementedException();
         }
 
         public Func<string, long, long, bool, Stream> ReadStreamImplementation { get; set; }
