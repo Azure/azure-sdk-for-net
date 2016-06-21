@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists virtual-machine-sizes available in a location for a subscription.
+        /// Lists all available virtual machine sizes for a subscription in a location.
         /// </summary>
         /// <param name='location'>
         /// The location upon which virtual-machine-sizes is queried.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists virtual-machine-sizes available in a location for a subscription.
+        /// Lists all available virtual machine sizes for a subscription in a location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

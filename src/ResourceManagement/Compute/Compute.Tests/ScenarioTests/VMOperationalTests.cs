@@ -134,7 +134,7 @@ namespace Compute.Tests
                             vm.StorageProfile.ImageReference = null;
                             vm.StorageProfile.OsDisk.Image = new VirtualHardDisk { Uri = imageUri };
                             vm.StorageProfile.OsDisk.Vhd.Uri = vm.StorageProfile.OsDisk.Vhd.Uri.Replace(".vhd", "copy.vhd");
-                            vm.StorageProfile.OsDisk.OsType = "Windows";
+                            vm.StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
                         }, false, false);
                     Assert.True(vm2.StorageProfile.OsDisk.Image.Uri == imageUri);
                 }

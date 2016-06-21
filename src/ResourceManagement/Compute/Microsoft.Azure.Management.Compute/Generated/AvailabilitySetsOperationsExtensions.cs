@@ -171,7 +171,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available to be used for an availability set.
+            /// Lists all available virtual machine sizes that can be used to create a new
+            /// virtual machine in an existing availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -188,7 +189,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available to be used for an availability set.
+            /// Lists all available virtual machine sizes that can be used to create a new
+            /// virtual machine in an existing availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -241,7 +243,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available to be used for an availability set.
+            /// Lists all available virtual machine sizes that can be used to create a new
+            /// virtual machine in an existing availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -255,7 +258,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available to be used for an availability set.
+            /// Lists all available virtual machine sizes that can be used to create a new
+            /// virtual machine in an existing availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -87,8 +87,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         Task<AzureOperationResponse<IPage<AvailabilitySet>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists virtual-machine-sizes available to be used for an
-        /// availability set.
+        /// Lists all available virtual machine sizes that can be used to
+        /// create a new virtual machine in an existing availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -117,8 +117,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         Task<AzureOperationResponse<IPage<AvailabilitySet>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists virtual-machine-sizes available to be used for an
-        /// availability set.
+        /// Lists all available virtual machine sizes that can be used to
+        /// create a new virtual machine in an existing availability set.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

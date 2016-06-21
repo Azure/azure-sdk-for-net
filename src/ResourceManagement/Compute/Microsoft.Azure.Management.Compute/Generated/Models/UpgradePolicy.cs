@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the UpgradePolicy class.
         /// </summary>
-        public UpgradePolicy(string mode = default(string))
+        public UpgradePolicy(UpgradeMode? mode = default(UpgradeMode?))
         {
             Mode = mode;
         }
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// include: 'Automatic', 'Manual'.
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
-        public string Mode { get; set; }
+        public UpgradeMode? Mode { get; set; }
 
     }
 }

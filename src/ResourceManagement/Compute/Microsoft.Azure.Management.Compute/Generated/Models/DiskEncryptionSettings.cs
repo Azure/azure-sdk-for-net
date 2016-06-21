@@ -29,10 +29,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DiskEncryptionSettings class.
         /// </summary>
-        public DiskEncryptionSettings(KeyVaultSecretReference diskEncryptionKey, KeyVaultKeyReference keyEncryptionKey = default(KeyVaultKeyReference))
+        public DiskEncryptionSettings(KeyVaultSecretReference diskEncryptionKey, KeyVaultKeyReference keyEncryptionKey = default(KeyVaultKeyReference), bool? enabled = default(bool?))
         {
             DiskEncryptionKey = diskEncryptionKey;
             KeyEncryptionKey = keyEncryptionKey;
+            Enabled = enabled;
         }
 
         /// <summary>
@@ -46,6 +47,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyEncryptionKey")]
         public KeyVaultKeyReference KeyEncryptionKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether disk encryption should be enabled on the
+        /// Virtual Machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "enabled")]
+        public bool? Enabled { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

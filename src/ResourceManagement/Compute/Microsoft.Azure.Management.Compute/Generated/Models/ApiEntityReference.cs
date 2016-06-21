@@ -35,8 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the relative URL in the previous Service Management
-        /// API's namespace. For Example:
+        /// Gets or sets ARM resource id in the form of
         /// /subscriptions/{SubcriptionId}/resourceGroups/{ResourceGroupName}/...
         /// </summary>
         [JsonProperty(PropertyName = "id")]

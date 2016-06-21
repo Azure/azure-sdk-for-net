@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class VirtualMachineSizesOperationsExtensions
     {
             /// <summary>
-            /// Lists virtual-machine-sizes available in a location for a subscription.
+            /// Lists all available virtual machine sizes for a subscription in a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available in a location for a subscription.
+            /// Lists all available virtual machine sizes for a subscription in a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available in a location for a subscription.
+            /// Lists all available virtual machine sizes for a subscription in a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available in a location for a subscription.
+            /// Lists all available virtual machine sizes for a subscription in a location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

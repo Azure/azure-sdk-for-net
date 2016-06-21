@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Compute
     public partial interface IVirtualMachineSizesOperations
     {
         /// <summary>
-        /// Lists virtual-machine-sizes available in a location for a
-        /// subscription.
+        /// Lists all available virtual machine sizes for a subscription in a
+        /// location.
         /// </summary>
         /// <param name='location'>
         /// The location upon which virtual-machine-sizes is queried.
@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         Task<AzureOperationResponse<IPage<VirtualMachineSize>>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists virtual-machine-sizes available in a location for a
-        /// subscription.
+        /// Lists all available virtual machine sizes for a subscription in a
+        /// location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

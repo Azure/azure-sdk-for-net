@@ -15,9 +15,12 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for UpgradeMode.
     /// </summary>
-    public static class UpgradeMode
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum UpgradeMode
     {
-        public const string Automatic = "Automatic";
-        public const string Manual = "Manual";
+        [EnumMember(Value = "Automatic")]
+        Automatic,
+        [EnumMember(Value = "Manual")]
+        Manual
     }
 }

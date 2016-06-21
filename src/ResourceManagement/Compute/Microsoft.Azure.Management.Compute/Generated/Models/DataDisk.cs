@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DataDisk class.
         /// </summary>
-        public DataDisk(int? lun, string name, VirtualHardDisk vhd, string createOption, VirtualHardDisk image = default(VirtualHardDisk), string caching = default(string), int? diskSizeGB = default(int?))
+        public DataDisk(int? lun, string name, VirtualHardDisk vhd, DiskCreateOptionTypes? createOption, VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?))
         {
             Lun = lun;
             Name = name;
@@ -72,14 +72,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// include: 'None', 'ReadOnly', 'ReadWrite'.
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
-        public string Caching { get; set; }
+        public CachingTypes? Caching { get; set; }
 
         /// <summary>
         /// Gets or sets the create option. Possible values for this property
         /// include: 'fromImage', 'empty', 'attach'.
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
-        public string CreateOption { get; set; }
+        public DiskCreateOptionTypes? CreateOption { get; set; }
 
         /// <summary>
         /// Gets or sets the initial disk size in GB for blank data disks, and
