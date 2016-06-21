@@ -183,11 +183,6 @@ namespace Microsoft.AzureStack.Management
                     JObject propertiesValue = new JObject();
                     usageConnectionsCreateOrUpdateParametersValue["properties"] = propertiesValue;
                     
-                    if (parameters.UsageConnections.Properties.Name != null)
-                    {
-                        propertiesValue["name"] = parameters.UsageConnections.Properties.Name;
-                    }
-                    
                     if (parameters.UsageConnections.Properties.ProviderLocation != null)
                     {
                         propertiesValue["providerLocation"] = parameters.UsageConnections.Properties.ProviderLocation;
@@ -311,13 +306,6 @@ namespace Microsoft.AzureStack.Management
                                 UsageConnection propertiesInstance = new UsageConnection();
                                 usageConnectionInstance.Properties = propertiesInstance;
                                 
-                                JToken nameValue = propertiesValue2["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    propertiesInstance.Name = nameInstance;
-                                }
-                                
                                 JToken providerLocationValue = propertiesValue2["providerLocation"];
                                 if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
                                 {
@@ -375,11 +363,11 @@ namespace Microsoft.AzureStack.Management
                                 usageConnectionInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                usageConnectionInstance.Name = nameInstance2;
+                                string nameInstance = ((string)nameValue);
+                                usageConnectionInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -727,13 +715,6 @@ namespace Microsoft.AzureStack.Management
                                 UsageConnection propertiesInstance = new UsageConnection();
                                 usageConnectionsInstance.Properties = propertiesInstance;
                                 
-                                JToken nameValue = propertiesValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    propertiesInstance.Name = nameInstance;
-                                }
-                                
                                 JToken providerLocationValue = propertiesValue["providerLocation"];
                                 if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
                                 {
@@ -791,11 +772,11 @@ namespace Microsoft.AzureStack.Management
                                 usageConnectionsInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                usageConnectionsInstance.Name = nameInstance2;
+                                string nameInstance = ((string)nameValue);
+                                usageConnectionsInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -990,13 +971,6 @@ namespace Microsoft.AzureStack.Management
                                         UsageConnection propertiesInstance = new UsageConnection();
                                         usageConnectionModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken nameValue = propertiesValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            propertiesInstance.Name = nameInstance;
-                                        }
-                                        
                                         JToken providerLocationValue = propertiesValue["providerLocation"];
                                         if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
                                         {
@@ -1054,11 +1028,11 @@ namespace Microsoft.AzureStack.Management
                                         usageConnectionModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        usageConnectionModelInstance.Name = nameInstance2;
+                                        string nameInstance = ((string)nameValue);
+                                        usageConnectionModelInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -1232,13 +1206,6 @@ namespace Microsoft.AzureStack.Management
                                         UsageConnection propertiesInstance = new UsageConnection();
                                         usageConnectionModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken nameValue = propertiesValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            propertiesInstance.Name = nameInstance;
-                                        }
-                                        
                                         JToken providerLocationValue = propertiesValue["providerLocation"];
                                         if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
                                         {
@@ -1296,11 +1263,11 @@ namespace Microsoft.AzureStack.Management
                                         usageConnectionModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        usageConnectionModelInstance.Name = nameInstance2;
+                                        string nameInstance = ((string)nameValue);
+                                        usageConnectionModelInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -1486,13 +1453,6 @@ namespace Microsoft.AzureStack.Management
                                         UsageConnection propertiesInstance = new UsageConnection();
                                         usageConnectionModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken nameValue = propertiesValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            propertiesInstance.Name = nameInstance;
-                                        }
-                                        
                                         JToken providerLocationValue = propertiesValue["providerLocation"];
                                         if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
                                         {
@@ -1550,11 +1510,11 @@ namespace Microsoft.AzureStack.Management
                                         usageConnectionModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        usageConnectionModelInstance.Name = nameInstance2;
+                                        string nameInstance = ((string)nameValue);
+                                        usageConnectionModelInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];

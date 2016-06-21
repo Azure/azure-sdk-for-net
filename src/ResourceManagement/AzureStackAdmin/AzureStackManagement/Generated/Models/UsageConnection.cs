@@ -51,17 +51,6 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._errorReportingTable = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Usage Connection Id
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private string _providerLocation;
         
         /// <summary>
