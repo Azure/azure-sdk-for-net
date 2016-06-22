@@ -1,0 +1,78 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/shankcanaryrg/providers/Microsoft.RecoveryServices/vaults/shankcanary2/backupFabrics/Azure/protectionContainers/IaasVMContainer%3Biaasvmcontainerv2%3Bshraccanrg%3Bshraccanv2/protectedItems/vm%3Biaasvmcontainerv2%3Bshraccanrg%3Bshraccanv2/recoveryPoints/30641628955971/restore?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Jlc291cmNlR3JvdXBzL3NoYW5rY2FuYXJ5cmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9zaGFua2NhbmFyeTIvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXIlM0JpYWFzdm1jb250YWluZXJ2MiUzQnNocmFjY2FucmclM0JzaHJhY2NhbnYyL3Byb3RlY3RlZEl0ZW1zL3ZtJTNCaWFhc3ZtY29udGFpbmVydjIlM0JzaHJhY2NhbnJnJTNCc2hyYWNjYW52Mi9yZWNvdmVyeVBvaW50cy8zMDY0MTYyODk1NTk3MS9yZXN0b3JlP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"objectType\": \"IaasVMRestoreRequest\",\r\n    \"recoveryPointId\": \"30641628955971\",\r\n    \"recoveryType\": \"RestoreDisks\",\r\n    \"storageAccountId\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/shraccanrg/providers/Microsoft.Storage/storageAccounts/shraccanseastorv2\",\r\n    \"createNewCloudService\": false,\r\n    \"virtualNetworkId\": \"\",\r\n    \"region\": \"southeastasia\",\r\n    \"affinityGroup\": \"\",\r\n    \"subnetId\": \"\",\r\n    \"sourceResourceId\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/shraccanrg/providers/Microsoft.Compute/virtualMachines/shraccanv2\",\r\n    \"targetVirtualMachineId\": \"\",\r\n    \"targetResourceGroupId\": \"\",\r\n    \"targetDomainNameId\": \"\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "723"
+        ],
+        "x-ms-client-request-id": [
+          "f34af667-1a49-4d3f-b42c-47682a3a8962"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/shankcanaryrg/providers/Microsoft.RecoveryServices/vaults/shankcanary2/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;shraccanrg;shraccanv2/protectedItems/vm;iaasvmcontainerv2;shraccanrg;shraccanv2/operationsStatus/74c08606-a88f-4a54-9314-9d6962c98d01?api-version=2016-05-01"
+        ],
+        "x-ms-request-id": [
+          "ca6a6f3f-8e5e-4383-8563-302055678934"
+        ],
+        "x-ms-client-request-id": [
+          "f34af667-1a49-4d3f-b42c-47682a3a8962",
+          "f34af667-1a49-4d3f-b42c-47682a3a8962"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "ca6a6f3f-8e5e-4383-8563-302055678934"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20160614T152621Z:ca6a6f3f-8e5e-4383-8563-302055678934"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 14 Jun 2016 15:26:20 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/shankcanaryrg/providers/Microsoft.RecoveryServices/vaults/shankcanary2/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;shraccanrg;shraccanv2/protectedItems/vm;iaasvmcontainerv2;shraccanrg;shraccanv2/operationResults/74c08606-a88f-4a54-9314-9d6962c98d01?api-version=2016-05-01"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f2edfd5d-5496-4683-b94f-b3588c579009"
+  }
+}

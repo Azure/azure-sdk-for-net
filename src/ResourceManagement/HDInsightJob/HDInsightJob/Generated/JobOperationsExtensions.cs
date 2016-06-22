@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// Submits a Hive job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitHiveJob(this IJobOperations operations, HiveJobSubmissionParameters parameters)
+        public static JobSubmissionResponse SubmitHiveJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// Submits a Hive job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -230,13 +230,13 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitHiveJobAsync(this IJobOperations operations, HiveJobSubmissionParameters parameters)
+        public static Task<JobSubmissionResponse> SubmitHiveJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitHiveJobAsync(parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Submits a MapReduce job to an HDINSIGHT cluster.
+        /// Submits a MapReduce job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitMapReduceJob(this IJobOperations operations, MapReduceJobSubmissionParameters parameters)
+        public static JobSubmissionResponse SubmitMapReduceJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits a MapReduce job to an HDINSIGHT cluster.
+        /// Submits a MapReduce job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -270,13 +270,13 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitMapReduceJobAsync(this IJobOperations operations, MapReduceJobSubmissionParameters parameters)
+        public static Task<JobSubmissionResponse> SubmitMapReduceJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitMapReduceJobAsync(parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Submits a MapReduce streaming job to an HDINSIGHT cluster.
+        /// Submits a MapReduce streaming job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitMapReduceStreamingJob(this IJobOperations operations, MapReduceStreamingJobSubmissionParameters parameters)
+        public static JobSubmissionResponse SubmitMapReduceStreamingJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits a MapReduce streaming job to an HDINSIGHT cluster.
+        /// Submits a MapReduce streaming job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -310,13 +310,13 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(this IJobOperations operations, MapReduceStreamingJobSubmissionParameters parameters)
+        public static Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitMapReduceStreamingJobAsync(parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// Submits a Pig job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitPigJob(this IJobOperations operations, PigJobSubmissionParameters parameters)
+        public static JobSubmissionResponse SubmitPigJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// Submits a Pig job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -350,13 +350,13 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitPigJobAsync(this IJobOperations operations, PigJobSubmissionParameters parameters)
+        public static Task<JobSubmissionResponse> SubmitPigJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitPigJobAsync(parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// Submits a Sqoop job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static JobSubmissionResponse SubmitSqoopJob(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
+        public static JobSubmissionResponse SubmitSqoopJob(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
         
         /// <summary>
-        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// Submits a Sqoop job to an HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -390,7 +390,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public static Task<JobSubmissionResponse> SubmitSqoopJobAsync(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
+        public static Task<JobSubmissionResponse> SubmitSqoopJobAsync(this IJobOperations operations, JobSubmissionParameters parameters)
         {
             return operations.SubmitSqoopJobAsync(parameters, CancellationToken.None);
         }

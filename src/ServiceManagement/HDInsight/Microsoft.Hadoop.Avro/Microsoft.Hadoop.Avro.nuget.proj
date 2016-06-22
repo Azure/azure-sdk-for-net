@@ -6,7 +6,7 @@
     -->
     <SdkNuGetPackage Include="Microsoft.Hadoop.Avro">
       <Folder>$(MSBuildThisFileDirectory)</Folder>
-      <PackageVersion>1.5.12</PackageVersion>
+      <PackageVersion>1.5.13</PackageVersion>
     </SdkNuGetPackage>
   </ItemGroup>
 </Project>

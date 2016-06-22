@@ -468,11 +468,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 Location = "East US"
             };
 
-            cluster1.DefaultStorageAccountName = "hdicurrenteastus.blob.core.windows.net";
+            cluster1.DefaultStorageAccountName = "storageaccount.blob.core.windows.net";
             cluster1.DefaultStorageContainer = "newcontainer";
-            cluster1.DefaultStorageAccountKey = "jKe7cqoU0a9OmDFlwi3DHZLf7JoKwGOU2pV1iZdBKifxwQuDOKwZFyXMJrPSLtGgDV9b7pVKSGz6lbBWcfX2lA==";
+            cluster1.DefaultStorageAccountKey = "fakekey";
 
-            var metaStore = new Metastore("lbl44y45cd.bigbean.windowsazure.mscds.com", "newmaytestdb", "bcarlson", "SuperPass1!");
+            var metaStore = new Metastore("serverabcd.bigbean.windowsazure.mscds.com", "newmaytestdb", "bcarlson", "SuperPass1!");
             cluster1.HiveMetastore = cluster1.OozieMetastore = metaStore;
 
             string payload = new PayloadConverter().SerializeClusterCreateRequest(cluster1);

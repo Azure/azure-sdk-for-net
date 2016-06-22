@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         public RecoveryPlanManualActionDetails()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecoveryPlanManualActionDetails
-        /// class with required arguments.
-        /// </summary>
-        public RecoveryPlanManualActionDetails(string instanceType)
-            : this()
-        {
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
-            this.InstanceType = instanceType;
-        }
     }
 }

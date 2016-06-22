@@ -72,6 +72,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._dataVirtualHardDisks = value; }
         }
         
+        private DebugSettings _debugSettings;
+        
+        /// <summary>
+        /// Optional. Debug settings for console output.
+        /// </summary>
+        public DebugSettings DebugSettings
+        {
+            get { return this._debugSettings; }
+            set { this._debugSettings = value; }
+        }
+        
         private string _defaultWinRmCertificateThumbprint;
         
         /// <summary>
@@ -82,6 +93,34 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._defaultWinRmCertificateThumbprint; }
             set { this._defaultWinRmCertificateThumbprint = value; }
+        }
+        
+        private string _licenseType;
+        
+        /// <summary>
+        /// Optional. Specifies that the image or disk that is being used was
+        /// licensed on-premises. This element is only used for images that
+        /// contain the Windows Server operating system. Possible values are:
+        /// Windows_Client, Windows_Server
+        /// </summary>
+        public string LicenseType
+        {
+            get { return this._licenseType; }
+            set { this._licenseType = value; }
+        }
+        
+        private string _migrationState;
+        
+        /// <summary>
+        /// Optional. Specifies the IaaS Classic to ARM migration state of the
+        /// virtual machine.Possible values are: None, Preparing, Prepared,
+        /// PrepareFailed, Committing, Committed, CommitFailed, Aborting,
+        /// AbortFailed.None is treated as null value and it is not be visible.
+        /// </summary>
+        public string MigrationState
+        {
+            get { return this._migrationState; }
+            set { this._migrationState = value; }
         }
         
         private string _osVersion;
@@ -106,6 +145,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._oSVirtualHardDisk; }
             set { this._oSVirtualHardDisk = value; }
+        }
+        
+        private bool? _provisionGuestAgent;
+        
+        /// <summary>
+        /// Optional. Optional. Indicates whether the VM Agent is installed on
+        /// the Virtual Machine. To run a resource extension in a Virtual
+        /// Machine,this service must be installed. Possible values are: true,
+        /// false
+        /// </summary>
+        public bool? ProvisionGuestAgent
+        {
+            get { return this._provisionGuestAgent; }
+            set { this._provisionGuestAgent = value; }
         }
         
         private string _roleName;

@@ -707,6 +707,19 @@ namespace Microsoft.Azure.Management.Automation
                     }
                 }
                 
+                if (parameters.Properties.Draft.OutputTypes != null)
+                {
+                    if (parameters.Properties.Draft.OutputTypes is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Draft.OutputTypes).IsInitialized)
+                    {
+                        JArray outputTypesArray = new JArray();
+                        foreach (string outputTypesItem in parameters.Properties.Draft.OutputTypes)
+                        {
+                            outputTypesArray.Add(outputTypesItem);
+                        }
+                        draftValue["outputTypes"] = outputTypesArray;
+                    }
+                }
+                
                 if (parameters.Properties.Description != null)
                 {
                     propertiesValue["description"] = parameters.Properties.Description;
@@ -1238,6 +1251,15 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
+                                JToken outputTypesArray = propertiesValue["outputTypes"];
+                                if (outputTypesArray != null && outputTypesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken outputTypesValue in ((JArray)outputTypesArray))
+                                    {
+                                        propertiesInstance.OutputTypes.Add(((string)outputTypesValue));
+                                    }
+                                }
+                                
                                 JToken draftValue = propertiesValue["draft"];
                                 if (draftValue != null && draftValue.Type != JTokenType.Null)
                                 {
@@ -1344,6 +1366,15 @@ namespace Microsoft.Azure.Management.Automation
                                                 string defaultValueInstance2 = ((string)defaultValueValue2);
                                                 runbookParameterInstance2.DefaultValue = defaultValueInstance2;
                                             }
+                                        }
+                                    }
+                                    
+                                    JToken outputTypesArray2 = draftValue["outputTypes"];
+                                    if (outputTypesArray2 != null && outputTypesArray2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken outputTypesValue2 in ((JArray)outputTypesArray2))
+                                        {
+                                            draftInstance.OutputTypes.Add(((string)outputTypesValue2));
                                         }
                                     }
                                 }
@@ -1735,6 +1766,15 @@ namespace Microsoft.Azure.Management.Automation
                                             }
                                         }
                                         
+                                        JToken outputTypesArray = propertiesValue["outputTypes"];
+                                        if (outputTypesArray != null && outputTypesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken outputTypesValue in ((JArray)outputTypesArray))
+                                            {
+                                                propertiesInstance.OutputTypes.Add(((string)outputTypesValue));
+                                            }
+                                        }
+                                        
                                         JToken draftValue = propertiesValue["draft"];
                                         if (draftValue != null && draftValue.Type != JTokenType.Null)
                                         {
@@ -1841,6 +1881,15 @@ namespace Microsoft.Azure.Management.Automation
                                                         string defaultValueInstance2 = ((string)defaultValueValue2);
                                                         runbookParameterInstance2.DefaultValue = defaultValueInstance2;
                                                     }
+                                                }
+                                            }
+                                            
+                                            JToken outputTypesArray2 = draftValue["outputTypes"];
+                                            if (outputTypesArray2 != null && outputTypesArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken outputTypesValue2 in ((JArray)outputTypesArray2))
+                                                {
+                                                    draftInstance.OutputTypes.Add(((string)outputTypesValue2));
                                                 }
                                             }
                                         }
@@ -2209,6 +2258,15 @@ namespace Microsoft.Azure.Management.Automation
                                             }
                                         }
                                         
+                                        JToken outputTypesArray = propertiesValue["outputTypes"];
+                                        if (outputTypesArray != null && outputTypesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken outputTypesValue in ((JArray)outputTypesArray))
+                                            {
+                                                propertiesInstance.OutputTypes.Add(((string)outputTypesValue));
+                                            }
+                                        }
+                                        
                                         JToken draftValue = propertiesValue["draft"];
                                         if (draftValue != null && draftValue.Type != JTokenType.Null)
                                         {
@@ -2315,6 +2373,15 @@ namespace Microsoft.Azure.Management.Automation
                                                         string defaultValueInstance2 = ((string)defaultValueValue2);
                                                         runbookParameterInstance2.DefaultValue = defaultValueInstance2;
                                                     }
+                                                }
+                                            }
+                                            
+                                            JToken outputTypesArray2 = draftValue["outputTypes"];
+                                            if (outputTypesArray2 != null && outputTypesArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken outputTypesValue2 in ((JArray)outputTypesArray2))
+                                                {
+                                                    draftInstance.OutputTypes.Add(((string)outputTypesValue2));
                                                 }
                                             }
                                         }
@@ -2778,6 +2845,15 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
+                                JToken outputTypesArray = propertiesValue2["outputTypes"];
+                                if (outputTypesArray != null && outputTypesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken outputTypesValue in ((JArray)outputTypesArray))
+                                    {
+                                        propertiesInstance.OutputTypes.Add(((string)outputTypesValue));
+                                    }
+                                }
+                                
                                 JToken draftValue = propertiesValue2["draft"];
                                 if (draftValue != null && draftValue.Type != JTokenType.Null)
                                 {
@@ -2884,6 +2960,15 @@ namespace Microsoft.Azure.Management.Automation
                                                 string defaultValueInstance2 = ((string)defaultValueValue2);
                                                 runbookParameterInstance2.DefaultValue = defaultValueInstance2;
                                             }
+                                        }
+                                    }
+                                    
+                                    JToken outputTypesArray2 = draftValue["outputTypes"];
+                                    if (outputTypesArray2 != null && outputTypesArray2.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken outputTypesValue2 in ((JArray)outputTypesArray2))
+                                        {
+                                            draftInstance.OutputTypes.Add(((string)outputTypesValue2));
                                         }
                                     }
                                 }

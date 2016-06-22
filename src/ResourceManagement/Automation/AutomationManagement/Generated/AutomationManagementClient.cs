@@ -306,6 +306,18 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._modules; }
         }
         
+        private IObjectDataTypeOperations _objectDataTypes;
+        
+        /// <summary>
+        /// Service operation for automation object data types.  (see
+        /// http://aka.ms/azureautomationsdk/objectdatatypeoperations for more
+        /// information)
+        /// </summary>
+        public virtual IObjectDataTypeOperations ObjectDataTypes
+        {
+            get { return this._objectDataTypes; }
+        }
+        
         private IRunbookDraftOperations _runbookDraft;
         
         /// <summary>
@@ -437,6 +449,7 @@ namespace Microsoft.Azure.Management.Automation
             this._jobSchedules = new JobScheduleOperations(this);
             this._jobStreams = new JobStreamOperations(this);
             this._modules = new ModuleOperations(this);
+            this._objectDataTypes = new ObjectDataTypeOperations(this);
             this._runbookDraft = new RunbookDraftOperations(this);
             this._runbooks = new RunbookOperations(this);
             this._schedules = new ScheduleOperations(this);
@@ -529,6 +542,7 @@ namespace Microsoft.Azure.Management.Automation
             this._jobSchedules = new JobScheduleOperations(this);
             this._jobStreams = new JobStreamOperations(this);
             this._modules = new ModuleOperations(this);
+            this._objectDataTypes = new ObjectDataTypeOperations(this);
             this._runbookDraft = new RunbookDraftOperations(this);
             this._runbooks = new RunbookOperations(this);
             this._schedules = new ScheduleOperations(this);

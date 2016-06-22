@@ -24,9 +24,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
     public class PayloadConverterTests : IntegrationTestBase
     {
         private string RootCallsPayload = "{" +
-"	\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/\"," +
+"	\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/\"," +
 "	\"items\": [{" +
-"		\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=core-site&tag=default\"," +
+"		\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=core-site&tag=default\"," +
 "		\"tag\": \"default\"," +
 "		\"type\": \"core-site\", " +
 "		\"Config\": {" +
@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
 "		}" +
 "	}," +
 "	{" +
-"		\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=hdfs-site&tag=default\"," +
+"		\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=hdfs-site&tag=default\"," +
 "		\"tag\": \"default\"," +
 "		\"type\": \"hdfs-site\"," +
 "		\"Config\": {" +
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
 "		}" +
 "	}," +
 "	{" +
-"		\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=mapred-site&tag=default\"," +
+"		\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=mapred-site&tag=default\"," +
 "		\"tag\": \"default\"," +
 "		\"type\": \"mapred-site\"," +
 "		\"Config\": {" +
@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
 "		}" +
 "	}," +
 "	{" +
-"		\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=hive-site&tag=default\"," +
+"		\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=hive-site&tag=default\"," +
 "		\"tag\": \"default\"," +
 "		\"type\": \"hive-site\"," +
 "		\"Config\": {" +
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
 "		}" +
 "	}," +
 "	{" +
-"		\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=oozie-site&tag=default\"," +
+"		\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=oozie-site&tag=default\"," +
 "		\"tag\": \"default\"," +
 "		\"type\": \"oozie-site\"," +
 "		\"Config\": {" +
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
 "		}" +
 "	}," +
 "	{" +
-"		\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=Sqoop_-site&tag=default\"," +
+"		\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=Sqoop_-site&tag=default\"," +
 "		\"tag\": \"default\"," +
 "		\"type\": \"Sqoop_-site\"," +
 "		\"Config\": {" +
@@ -76,16 +76,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
 "}";
 
         private string CoreSiteSettings = "{" +
-"	\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=core-site&tag=default\"," +
+"	\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=core-site&tag=default\"," +
 "	\"items\": [{" +
-"		\"href\": \"https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=core-site&tag=default\"," +
+"		\"href\": \"https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=core-site&tag=default\"," +
 "		\"tag\": \"default\"," +
 "		\"type\": \"core-site\"," +
 "		\"Config\": {" +
 "			\"cluster_name\": \"apitestclusterrdfe19-laureny\"" +
 "		}," +
 "		\"properties\": {" +
-"			\"fs.default.name\": \"asv://apitestclusterrdfe19-laureny@hdicurrenteastus.blob.core.windows.net\"," +
+"			\"fs.default.name\": \"asv://apitestclusterrdfe19-laureny@storageaccount.blob.core.windows.net\"," +
 "			\"hadoop.tmp.dir\": \"/hdfs/tmp\"," +
 "			\"fs.trash.interval\": \"60\"," +
 "			\"fs.checkpoint.dir\": \"c:\\hdfs\\2nn\"," +
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
 "			\"slave.host.name\": \"\"," +
 "			\"hadoop.proxyuser.hdp.hosts\": \"headnodehost\"," +
 "			\"fs.azure.selfthrottling.read.factor\": \"1.000000\"," +
-"			\"fs.azure.account.key.hdicurrenteastus.blob.core.windows.net\": \"jKe7cqoU0a9OmDFlwi3DHZLf7JoKwGOU2pV1iZdBKifxwQuDOKwZFyXMJrPSLtGgDV9b7pVKSGz6lbBWcfX2lA==\"" +
+"			\"fs.azure.account.key.storageaccount.blob.core.windows.net\": \"fakekey\"" +
 "		}" +
 "	}]" +
 "}";
@@ -124,11 +124,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Configuration
             var converter = new PayloadConverter();
             var componentSettingsAddresses = converter.DeSerializeComponentSettingAddresses(RootCallsPayload);
             Assert.IsNotNull(componentSettingsAddresses);
-            Assert.AreEqual(componentSettingsAddresses.Core.OriginalString, "https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=core-site&tag=default");
-            Assert.AreEqual(componentSettingsAddresses.Hive.OriginalString, "https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=hive-site&tag=default");
-            Assert.AreEqual(componentSettingsAddresses.Hdfs.OriginalString, "https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=hdfs-site&tag=default");
-            Assert.AreEqual(componentSettingsAddresses.MapReduce.OriginalString, "https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=mapred-site&tag=default");
-            Assert.AreEqual(componentSettingsAddresses.Oozie.OriginalString, "https://apitestclusterrdfe19-laureny.hdinsight-stable.azure-test.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=oozie-site&tag=default");
+            Assert.AreEqual(componentSettingsAddresses.Core.OriginalString, "https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=core-site&tag=default");
+            Assert.AreEqual(componentSettingsAddresses.Hive.OriginalString, "https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=hive-site&tag=default");
+            Assert.AreEqual(componentSettingsAddresses.Hdfs.OriginalString, "https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=hdfs-site&tag=default");
+            Assert.AreEqual(componentSettingsAddresses.MapReduce.OriginalString, "https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=mapred-site&tag=default");
+            Assert.AreEqual(componentSettingsAddresses.Oozie.OriginalString, "https://apitestclusterrdfe19-fake.hdinsight.azure.net:563/ambari/api/v1/clusters/apitestclusterrdfe19-laureny/configurations/?type=oozie-site&tag=default");
         }
 
         [TestMethod]

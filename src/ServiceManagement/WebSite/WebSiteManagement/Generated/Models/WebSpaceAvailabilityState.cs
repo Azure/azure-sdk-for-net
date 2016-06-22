@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
+    /// <summary>
+    /// The availability of a web space.
+    /// </summary>
     public enum WebSpaceAvailabilityState
     {
         Normal = 0,

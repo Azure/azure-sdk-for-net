@@ -38,5 +38,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         Standard = 3,
         
         Premium = 4,
+        
+        Dynamic = 5,
     }
 }

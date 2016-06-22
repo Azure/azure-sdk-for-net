@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         private static SingleRecordSetTestContext SetupSingleRecordSetTest()
         {
             var testContext = new SingleRecordSetTestContext();
-            testContext.ZoneName = TestUtilities.GenerateName("hydratestdnszone");
+            testContext.ZoneName = TestUtilities.GenerateName("hydratestdnszone.com");
             testContext.RecordSetName = TestUtilities.GenerateName("hydratestdnsrec");
             testContext.Location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
             testContext.ResourceGroup = ResourceGroupHelper.CreateResourceGroup();
@@ -96,7 +96,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     RecordType.A,
-                    createParameters);
+                    ifMatch: null,
+                    ifNoneMatch: null,
+                    parameters: createParameters);
 
                 Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
                 Assert.True(
@@ -118,8 +120,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 // Call Update on the object returned by Create (important distinction from Get below)
                 Models.RecordSet createdRecordSet = createResponse.RecordSet;
-                createdRecordSet.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } };
+
                 createdRecordSet.Properties.Ttl = 120;
+                createdRecordSet.Properties.Metadata = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } };
                 createdRecordSet.Properties.ARecords = new List<ARecord> 
                 { 
                     new ARecord { Ipv4Address = "123.32.1.0" }, 
@@ -130,8 +133,10 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ResourceGroup.Name, 
                     testContext.ZoneName, 
                     testContext.RecordSetName, 
-                    RecordType.A, 
-                    new RecordSetCreateOrUpdateParameters { RecordSet = createdRecordSet });
+                    RecordType.A,
+                    ifMatch: null,
+                    ifNoneMatch: null,
+                    parameters: new RecordSetCreateOrUpdateParameters { RecordSet = createdRecordSet });
 
                 Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
                 Assert.True(
@@ -153,7 +158,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 // Call Update on the object returned by Get (important distinction from Create above)
                 Models.RecordSet retrievedRecordSet = getresponse.RecordSet;
-                retrievedRecordSet.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
                 retrievedRecordSet.Properties.Ttl = 180;
                 retrievedRecordSet.Properties.ARecords = new List<ARecord> 
                 { 
@@ -166,8 +170,10 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ResourceGroup.Name, 
                     testContext.ZoneName, 
                     testContext.RecordSetName, 
-                    RecordType.A, 
-                    new RecordSetCreateOrUpdateParameters { RecordSet = retrievedRecordSet });
+                    RecordType.A,
+                    ifMatch: null,
+                    ifNoneMatch: null,
+                    parameters: new RecordSetCreateOrUpdateParameters { RecordSet = retrievedRecordSet });
 
                 Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
                 Assert.True(
@@ -180,15 +186,17 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ResourceGroup.Name, 
                     testContext.ZoneName, 
                     testContext.RecordSetName, 
-                    RecordType.A, 
-                    new RecordSetDeleteParameters());
+                    RecordType.A,
+                    ifMatch: null,
+                    ifNoneMatch: null);
                 Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
 
                 // Delete the zone
                 deleteResponse = testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name, 
-                    testContext.ZoneName, 
-                    new ZoneDeleteParameters());
+                    testContext.ZoneName,
+                    ifMatch: null, 
+                    ifNoneMatch: null);
             }
         }
 
@@ -302,8 +310,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 createParams.RecordSet.Properties.TxtRecords = new List<TxtRecord> 
                     {    
-                        new TxtRecord { Value = "lorem" }, 
-                        new TxtRecord { Value = "ipsum" },
+                        new TxtRecord { Value = new[] {"lorem"}.ToList() }, 
+                        new TxtRecord { Value = new[] {"ipsum"}.ToList() }, 
                 };
 
                 return;
@@ -360,7 +368,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ZoneName,
                     "@",
                     RecordType.SOA,
-                    updateParameters);
+                    ifMatch: null,
+                    ifNoneMatch: null,
+                    parameters: updateParameters);
 
                 Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
                 Assert.True(
@@ -382,7 +392,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
-                    new ZoneDeleteParameters());
+                    ifMatch: null, 
+                    ifNoneMatch: null);
             }
         }
 
@@ -496,18 +507,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
             }
         }
 
-        [Fact]
-        public void ListRecordsInZoneOneTypeWithFilter()
-        {
-            this.ListRecordsInZoneWithFilter(isCrossType: false);
-        }
-
-        [Fact]
-        public void ListRecordsInZoneAcrossTypesWithFilter()
-        {
-            this.ListRecordsInZoneWithFilter(isCrossType: true);
-        }
-
         private void ListRecordsInZoneWithFilter(bool isCrossType)
         {
             using (UndoContext context = UndoContext.Current)
@@ -568,7 +567,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 const string suffix = ".com";
 
-                var recordSetNames = new[] { TestUtilities.GenerateName("hydratestrec") + suffix, TestUtilities.GenerateName("hydratestrec") + ".con", TestUtilities.GenerateName("hydratestrec") + ".con" };
+                var recordSetNames = new[] { TestUtilities.GenerateName("hydratestrec") + suffix, TestUtilities.GenerateName("hydratestrec") + ".com", TestUtilities.GenerateName("hydratestrec") + ".com" };
 
                 RecordSetScenarioTests.CreateRecordSets(testContext, recordSetNames);
 
@@ -587,7 +586,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         RecordType.TXT,
-                        new RecordSetListParameters { Top = "3" });
+                        new RecordSetListParameters { Top = "1" });
                 }
 
                 listResponse = testContext.DnsClient.RecordSets.ListNext(listResponse.NextLink);
@@ -616,7 +615,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     RecordType.CNAME,
-                    createParameters);
+                    ifMatch: null,
+                    ifNoneMatch: null,
+                    parameters: createParameters);
 
                 RecordSetCreateOrUpdateParameters updateParameters = new RecordSetCreateOrUpdateParameters { RecordSet = createResponse.RecordSet };
                 updateParameters.RecordSet.ETag = "somegibberish";
@@ -627,8 +628,10 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ResourceGroup.Name, 
                         testContext.ZoneName, 
                         testContext.RecordSetName, 
-                        RecordType.CNAME, 
-                        updateParameters),
+                        RecordType.CNAME,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: updateParameters),
                     exceptionAsserts: ex => ex.Error.Code == "PreconditionFailed");
 
                 // expect Precondition Failed 412
@@ -638,7 +641,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ZoneName,
                         testContext.RecordSetName,
                         RecordType.CNAME,
-                        new RecordSetDeleteParameters { IfMatch = "somemoregib" }),
+                        ifMatch: null,
+                        ifNoneMatch: null),
                     exceptionAsserts: ex => ex.Error.Code == "PreconditionFailed");
 
                 testContext.DnsClient.RecordSets.Delete(
@@ -646,9 +650,10 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ZoneName,
                         testContext.RecordSetName,
                         RecordType.CNAME,
-                        new RecordSetDeleteParameters { IfMatch = null });
+                        ifMatch: null,
+                        ifNoneMatch: null);
 
-                testContext.DnsClient.Zones.Delete(testContext.ResourceGroup.Name, testContext.ZoneName, new ZoneDeleteParameters());
+                testContext.DnsClient.Zones.Delete(testContext.ResourceGroup.Name, testContext.ZoneName, ifMatch: null, ifNoneMatch: null);
             }
         }
 
@@ -668,7 +673,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     recordType,
-                    createParameters);
+                    ifMatch: null,
+                    ifNoneMatch: null,
+                    parameters: createParameters);
 
                 Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
                 Assert.True(
@@ -693,13 +700,15 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     recordType,
-                    new RecordSetDeleteParameters { IfMatch = getresponse.RecordSet.ETag });  
+                    ifMatch: null,
+                    ifNoneMatch: null);  
                 Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
 
                 deleteResponse = testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
-                    new ZoneDeleteParameters());
+                    ifMatch: null, 
+                    ifNoneMatch: null);
             }
         }
 
@@ -708,9 +717,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public static void CreateRecordSets(SingleRecordSetTestContext testContext, string[] recordSetNames)
         {
             RecordSetCreateOrUpdateParameters createParameters1 = testContext.GetNewTestRecordSkeleton(recordSetNames[0]);
-            createParameters1.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = "text1" } };
+            createParameters1.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = new [] { "text1" }.ToList() } };
             RecordSetCreateOrUpdateParameters createParameters2 = testContext.GetNewTestRecordSkeleton(recordSetNames[1]);
-            createParameters2.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = "text2" } };
+            createParameters2.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = new[] { "text1" }.ToList() } };
             RecordSetCreateOrUpdateParameters createParameters3 = testContext.GetNewTestRecordSkeleton(recordSetNames[2]);
             createParameters3.RecordSet.Properties.AaaaRecords = new List<AaaaRecord> { new AaaaRecord { Ipv6Address = "123::45" } };
 
@@ -719,21 +728,27 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 testContext.ZoneName,
                 createParameters1.RecordSet.Name,
                 RecordType.TXT,
-                createParameters1);
+                ifMatch: null,
+                ifNoneMatch: null,
+                parameters: createParameters1);
 
             testContext.DnsClient.RecordSets.CreateOrUpdate(
                 testContext.ResourceGroup.Name,
                 testContext.ZoneName,
                 createParameters2.RecordSet.Name,
                 RecordType.TXT,
-                createParameters2);
+                ifMatch: null,
+                ifNoneMatch: null,
+                parameters: createParameters2);
 
             testContext.DnsClient.RecordSets.CreateOrUpdate(
                 testContext.ResourceGroup.Name,
                 testContext.ZoneName,
                 createParameters3.RecordSet.Name,
                 RecordType.AAAA,
-                createParameters3);
+                ifMatch: null,
+                ifNoneMatch: null,
+                parameters: createParameters3);
         }
 
         public static void DeleteRecordSetsAndZone(SingleRecordSetTestContext testContext, string[] recordSetNames)
@@ -743,23 +758,26 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ZoneName,
                         recordSetNames[0],
                         RecordType.TXT,
-                        new RecordSetDeleteParameters { IfMatch = null });
+                        ifMatch: null,
+                        ifNoneMatch: null);
 
             testContext.DnsClient.RecordSets.Delete(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         recordSetNames[1],
                         RecordType.TXT,
-                        new RecordSetDeleteParameters { IfMatch = null });
+                        ifMatch: null,
+                        ifNoneMatch: null);
 
             testContext.DnsClient.RecordSets.Delete(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         recordSetNames[2],
                         RecordType.AAAA,
-                        new RecordSetDeleteParameters { IfMatch = null });
+                        ifMatch: null,
+                        ifNoneMatch: null);
 
-            testContext.DnsClient.Zones.Delete(testContext.ResourceGroup.Name, testContext.ZoneName, new ZoneDeleteParameters());
+            testContext.DnsClient.Zones.Delete(testContext.ResourceGroup.Name, testContext.ZoneName, ifMatch: null, ifNoneMatch: null);
         }
 
         #endregion

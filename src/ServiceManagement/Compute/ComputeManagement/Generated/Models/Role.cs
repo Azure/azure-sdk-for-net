@@ -67,6 +67,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._dataVirtualHardDisks = value; }
         }
         
+        private DebugSettings _debugSettings;
+        
+        /// <summary>
+        /// Optional. This parameter can be used to set debug settings for a
+        /// VM. When boot diagnostics feature is enabled, console screenshot
+        /// or serial output is stored in blob storage. This property is only
+        /// returned with a version header of 2015-09-01 or newer.
+        /// </summary>
+        public DebugSettings DebugSettings
+        {
+            get { return this._debugSettings; }
+            set { this._debugSettings = value; }
+        }
+        
         private string _defaultWinRmCertificateThumbprint;
         
         /// <summary>
@@ -90,6 +104,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._label = value; }
         }
         
+        private string _licenseType;
+        
+        /// <summary>
+        /// Optional. Specifies that the image or disk that is being used was
+        /// licensed on-premises. This element is only used for images that
+        /// contain the Windows Server operating system. Possible values are:
+        /// Windows_Client, Windows_Server
+        /// </summary>
+        public string LicenseType
+        {
+            get { return this._licenseType; }
+            set { this._licenseType = value; }
+        }
+        
         private Uri _mediaLocation;
         
         /// <summary>
@@ -100,6 +128,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._mediaLocation; }
             set { this._mediaLocation = value; }
+        }
+        
+        private string _migrationState;
+        
+        /// <summary>
+        /// Optional. Specifies the IaaS Classic to ARM migration state of the
+        /// virtual machine.Possible values are: None, Preparing, Prepared,
+        /// PrepareFailed, Committing, Committed, CommitFailed, Aborting,
+        /// AbortFailed.None is treated as null value and it is not be visible.
+        /// </summary>
+        public string MigrationState
+        {
+            get { return this._migrationState; }
+            set { this._migrationState = value; }
         }
         
         private string _oSVersion;

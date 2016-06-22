@@ -29,8 +29,6 @@ namespace Microsoft.Azure
     /// </summary>
     internal class AzureApplicationSettings
     {
-        public static bool WriteToTrace { get; set; }
-
         private const string RoleEnvironmentTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment";
         private const string RoleEnvironmentExceptionTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironmentException";
         private const string IsAvailablePropertyName = "IsAvailable";
@@ -44,14 +42,6 @@ namespace Microsoft.Azure
 
         private Type _roleEnvironmentExceptionType;         // Exception thrown for missing settings.
         private MethodInfo _getServiceSettingMethod;        // Method for getting values from the service configuration.
-
-        /// <summary>
-        /// Initializes global application settings (such as writing to the Trace singleton)
-        /// </summary>
-        static AzureApplicationSettings()
-        {
-            WriteToTrace = true;
-        }
 
         /// <summary>
         /// Initializes the settings.
@@ -123,6 +113,27 @@ namespace Microsoft.Azure
         /// Gets a setting with the given name.
         /// </summary>
         /// <param name="name">Setting name.</param>
+        /// <param name="outputResultsToTrace"></param>
+        /// <returns>Setting value or null if such setting does not exist.</returns>
+        internal string GetSetting(string name, bool outputResultsToTrace)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(name));
+
+            string value = null;
+
+            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting, outputResultsToTrace);
+            if (value == null)
+            {
+                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n], outputResultsToTrace);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Gets a setting with the given name. This method is included for backwards compatibility.
+        /// </summary>
+        /// <param name="name">Setting name.</param>
         /// <returns>Setting value or null if such setting does not exist.</returns>
         internal string GetSetting(string name)
         {
@@ -130,10 +141,10 @@ namespace Microsoft.Azure
 
             string value = null;
 
-            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting);
+            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting, true);
             if (value == null)
             {
-                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n]);
+                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n], true);
             }
 
             return value;
@@ -147,29 +158,33 @@ namespace Microsoft.Azure
         /// <param name="getValue">Method to obtain given setting.</param>
         /// <returns>Setting value, or null if not found.</returns>
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Necessary for robust handling withing the configuration module.")]
-        private static string GetValue(string providerName, string settingName, Func<string, string> getValue)
+        private static string GetValue(string providerName, string settingName, Func<string, string> getValue, bool outputResultsToTrace)
         {
             string value = getValue(settingName);
-            string message;
 
-            if (value != null)
+            if (outputResultsToTrace)
             {
-                message = "PASS";
-            }
-            else
-            {
-                message = "FAIL";
-            }
+                string message;
 
-            message = string.Format(CultureInfo.InvariantCulture, "Getting \"{0}\" from {1}: {2}.", settingName, providerName, message);
+                if (value != null)
+                {
+                    message = "PASS";
+                }
+                else
+                {
+                    message = "FAIL";
+                }
 
-            try
-            {
-                WriteTraceLine(message);
-            }
-            catch (Exception)
-            {
-                // Omit writing the trace message, running outside of dev fabric.
+                message = string.Format(CultureInfo.InvariantCulture, "Getting \"{0}\" from {1}: {2}.", settingName, providerName, message);
+
+                try
+                {
+                    WriteTraceLine(message);
+                }
+                catch (Exception)
+                {
+                    // Omit writing the trace message, running outside of dev fabric.
+                }
             }
 
             return value;
@@ -247,10 +262,7 @@ namespace Microsoft.Azure
         /// <param name="message">The message to write to Trace</param>
         private static void WriteTraceLine(string message)
         {
-            if (WriteToTrace)
-            {
-                Trace.WriteLine(message);
-            }
+            Trace.WriteLine(message);
         }
     }
 }

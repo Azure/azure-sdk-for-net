@@ -110,6 +110,7 @@ namespace Microsoft.Azure.Management.HDInsight
             : base()
         {
             this._clusters = new ClusterOperations(this);
+			this.SetRetryPolicy(HDInsightRetryPolicy);
             this._apiVersion = "2015-03-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -176,6 +177,7 @@ namespace Microsoft.Azure.Management.HDInsight
             : base(httpClient)
         {
             this._clusters = new ClusterOperations(this);
+			this.SetRetryPolicy(HDInsightRetryPolicy);
             this._apiVersion = "2015-03-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -311,7 +313,6 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
                 httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials

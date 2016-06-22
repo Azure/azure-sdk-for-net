@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 
@@ -337,6 +338,58 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
+        /// Fetches resource storage config.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of resource group to which vault belongs
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. The name of the vault
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a get resource storage config response.
+        /// </returns>
+        public static GetResourceStorageConfigResponse GetResourceStorageConfig(this IVaultOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVaultOperations)s).GetResourceStorageConfigAsync(resourceGroupName, resourceName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Fetches resource storage config.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of resource group to which vault belongs
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. The name of the vault
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a get resource storage config response.
+        /// </returns>
+        public static Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(this IVaultOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetResourceStorageConfigAsync(resourceGroupName, resourceName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Retrieve a list of Vaults.
         /// </summary>
         /// <param name='operations'>
@@ -382,6 +435,66 @@ namespace Microsoft.Azure.Management.RecoveryServices
         public static Task<VaultListResponse> ListAsync(this IVaultOperations operations, string resourceGroupName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(resourceGroupName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Updates vault storage model type.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
+        /// <param name='updateVaultStorageTypeRequest'>
+        /// Required. Update Vault Storage Type Request
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse UpdateStorageType(this IVaultOperations operations, string resourceGroupName, string resourceName, UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVaultOperations)s).UpdateStorageTypeAsync(resourceGroupName, resourceName, updateVaultStorageTypeRequest, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates vault storage model type.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
+        /// <param name='updateVaultStorageTypeRequest'>
+        /// Required. Update Vault Storage Type Request
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> UpdateStorageTypeAsync(this IVaultOperations operations, string resourceGroupName, string resourceName, UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.UpdateStorageTypeAsync(resourceGroupName, resourceName, updateVaultStorageTypeRequest, customRequestHeaders, CancellationToken.None);
         }
     }
 }

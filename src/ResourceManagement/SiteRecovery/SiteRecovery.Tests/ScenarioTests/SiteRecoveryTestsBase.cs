@@ -19,7 +19,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 // using System.Web.Script.Serialization;
-using Microsoft.Azure.Management.RecoveryServices;
+using Microsoft.Azure.Management.SiteRecoveryVault;
 using Microsoft.Azure.Management.SiteRecovery;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 using Microsoft.Azure.Common.Internals;
@@ -56,10 +56,10 @@ namespace SiteRecovery.Tests
         protected readonly RecordedDelegationHandler CustomHttpHandler
             = new RecordedDelegationHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-        public RecoveryServicesManagementClient GetRecoveryServicesClient(RecordedDelegationHandler handler)
+        public SiteRecoveryVaultManagementClient GetRecoveryServicesClient(RecordedDelegationHandler handler)
         {
             handler.IsPassThrough = true;
-            return this.GetRecoveryServicesManagementClient().WithHandler(handler); ;
+            return this.GetSiteRecoveryVaultManagementClient().WithHandler(handler); ;
         }
 
         public SiteRecoveryManagementClient GetSiteRecoveryClient(RecordedDelegationHandler handler)

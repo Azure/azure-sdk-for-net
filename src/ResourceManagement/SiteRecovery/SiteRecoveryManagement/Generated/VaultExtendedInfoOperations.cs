@@ -31,17 +31,17 @@ using System.Threading.Tasks;
 using Hyak.Common;
 using Hyak.Common.Internals;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices;
 using Microsoft.Azure.Management.SiteRecovery.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
     /// <summary>
     /// Definition of vault extended info operations for the Site Recovery
     /// extension.
     /// </summary>
-    internal partial class VaultExtendedInfoOperations : IServiceOperations<RecoveryServicesManagementClient>, IVaultExtendedInfoOperations
+    internal partial class VaultExtendedInfoOperations : IServiceOperations<SiteRecoveryVaultManagementClient>, IVaultExtendedInfoOperations
     {
         /// <summary>
         /// Initializes a new instance of the VaultExtendedInfoOperations class.
@@ -49,18 +49,18 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal VaultExtendedInfoOperations(RecoveryServicesManagementClient client)
+        internal VaultExtendedInfoOperations(SiteRecoveryVaultManagementClient client)
         {
             this._client = client;
         }
         
-        private RecoveryServicesManagementClient _client;
+        private SiteRecoveryVaultManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.RecoveryServicesManagementClient.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.SiteRecoveryVaultManagementClient.
         /// </summary>
-        public RecoveryServicesManagementClient Client
+        public SiteRecoveryVaultManagementClient Client
         {
             get { return this._client; }
         }

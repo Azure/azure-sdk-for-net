@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>b6d140c1</NuGetPackageImportStamp>
-  </PropertyGroup>
+    </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

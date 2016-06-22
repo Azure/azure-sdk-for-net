@@ -103,6 +103,14 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
+        /// Operations for managing log profiles.
+        /// </summary>
+        ILogProfilesOperations LogProfilesOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing the collection of diagonstics and
         /// monitoring data.
         /// </summary>

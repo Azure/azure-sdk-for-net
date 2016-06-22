@@ -89,7 +89,6 @@ namespace ResourceGroups.Tests
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 JObject json = JObject.Parse(handler.Request);
-
                 Assert.Equal(HttpStatusCode.OK, client.Deployments.Get(groupName, deploymentName).StatusCode);
             }
         }
@@ -116,6 +115,10 @@ namespace ResourceGroups.Tests
                         Parameters =
                             @"{ 'hostingPlanName': {'value': 'mctest0101'},'siteLocation': {'value': 'West US'}}",
                         Mode = DeploymentMode.Incremental,
+                        DebugSetting = new DeploymentDebugSetting
+                        {
+                            DeploymentDebugDetailLevel = "RequestContent"
+                        }
                     }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -142,9 +145,10 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(deploymentListResult.Deployments[0].Properties.CorrelationId);
                 Assert.True(deploymentGetResult.Deployment.Properties.Parameters.Contains("mctest0101"));
                 Assert.True(deploymentListResult.Deployments[0].Properties.Parameters.Contains("mctest0101"));
-
+                Assert.Equal("RequestContent", deploymentGetResult.Deployment.Properties.DebugSetting.DeploymentDebugDetailLevel);
                 //stop the deployment
-                if(deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Running"))
+                if(deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Running")
+                    || deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Accepted"))
                 {
                     client.Deployments.Cancel(groupName, deploymentName);
                 }
@@ -177,7 +181,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = DeploymentMode.Incremental,
+                        Mode = DeploymentMode.Incremental
                     }
                 };
 

@@ -16,7 +16,6 @@
 // governing permissions and limitations under the License.
 
 using System;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,6 +39,9 @@ namespace Microsoft.Azure.KeyVault
         private static readonly int                      DefaultKeySize = KeySize256;
         private static readonly RNGCryptoServiceProvider Rng            = new RNGCryptoServiceProvider();
 
+        private byte[] _key;
+        private bool   _isDisposed;
+ 
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -61,7 +63,7 @@ namespace Microsoft.Azure.KeyVault
         /// Constructor
         /// </summary>
         /// <param name="kid">The key identifier to use</param>
-        /// <param name="keySize">The key size</param>
+        /// <param name="keySize">The key size in bytes</param>
         public SymmetricKey( string kid, int keySize )
         {
             if ( string.IsNullOrWhiteSpace( kid ) )
@@ -71,9 +73,9 @@ namespace Microsoft.Azure.KeyVault
                 throw new ArgumentOutOfRangeException( "keySize", "The key size must be 128, 192, 256, 384 or 512 bits of data" );
 
             Kid = kid;
-            Key = new byte[keySize];
-
-            Rng.GetNonZeroBytes( Key );
+            _key = new byte[keySize];
+ 
+            Rng.GetNonZeroBytes( _key );
         }
 
         /// <summary>
@@ -93,11 +95,18 @@ namespace Microsoft.Azure.KeyVault
                 throw new ArgumentOutOfRangeException( "keyBytes", "The key material must be 128, 192, 256, 384 or 512 bits of data" );
 
             Kid = kid;
-            Key = keyBytes;
+            _key = keyBytes;
         }
-
-        public byte[] Key { get; private set; }
-
+ 
+        [Obsolete("The Key property will be removed in a future release, please remove references to it")]
+        public byte[] Key
+        {
+            get
+            {
+                return _key;
+            }
+        }
+ 
         #region IKey Implementation
 
         public string Kid { get; protected set; }
@@ -106,7 +115,7 @@ namespace Microsoft.Azure.KeyVault
         {
             get
             {
-                switch ( Key.Length )
+                switch ( _key.Length )
                 {
                     case KeySize128:
                         return Aes128Cbc.AlgorithmName;
@@ -132,7 +141,7 @@ namespace Microsoft.Azure.KeyVault
         {
             get
             {
-                switch ( Key.Length )
+                switch ( _key.Length )
                 {
                     case KeySize128:
                         return AesKw128.AlgorithmName;
@@ -166,6 +175,9 @@ namespace Microsoft.Azure.KeyVault
 
         public async Task<byte[]> DecryptAsync( byte[] ciphertext, byte[] iv, byte[] authenticationData = null, byte[] authenticationTag = null, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _isDisposed )
+                throw new ObjectDisposedException( string.Format( "SymmetricKey {0} is disposed", Kid ) );
+ 
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultEncryptionAlgorithm;
 
@@ -179,8 +191,8 @@ namespace Microsoft.Azure.KeyVault
 
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
-
-            using ( var encryptor = algo.CreateDecryptor( Key, iv, authenticationData ) )
+ 
+            using ( var encryptor = algo.CreateDecryptor( _key, iv, authenticationData ) )
             {
                 var result    = encryptor.TransformFinalBlock( ciphertext, 0, ciphertext.Length );
                 var transform = encryptor as IAuthenticatedCryptoTransform;
@@ -200,6 +212,9 @@ namespace Microsoft.Azure.KeyVault
 
         public async Task<Tuple<byte[], byte[], string>> EncryptAsync( byte[] plaintext, byte[] iv, byte[] authenticationData = null, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _isDisposed )
+                throw new ObjectDisposedException( string.Format( "SymmetricKey {0} is disposed", Kid ) );
+ 
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultEncryptionAlgorithm;
 
@@ -213,8 +228,8 @@ namespace Microsoft.Azure.KeyVault
 
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
-
-            using ( var encryptor = algo.CreateEncryptor( Key, iv, authenticationData ) )
+ 
+            using ( var encryptor = algo.CreateEncryptor( _key, iv, authenticationData ) )
             {
                 var    cipherText        = encryptor.TransformFinalBlock( plaintext, 0, plaintext.Length );
                 byte[] authenticationTag = null;
@@ -231,6 +246,9 @@ namespace Microsoft.Azure.KeyVault
 
         public async Task<Tuple<byte[], string>> WrapKeyAsync( byte[] key, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _isDisposed )
+                throw new ObjectDisposedException( string.Format( "SymmetricKey {0} is disposed", Kid ) );
+ 
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultKeyWrapAlgorithm;
 
@@ -241,8 +259,8 @@ namespace Microsoft.Azure.KeyVault
 
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
-
-            using ( var encryptor = algo.CreateEncryptor( Key, null ) )
+ 
+            using ( var encryptor = algo.CreateEncryptor( _key, null ) )
             {
                 return new Tuple<byte[], string>( encryptor.TransformFinalBlock( key, 0, key.Length ), algorithm );
             }
@@ -250,18 +268,21 @@ namespace Microsoft.Azure.KeyVault
 
         public async Task<byte[]> UnwrapKeyAsync( byte[] encryptedKey, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
+            if ( _isDisposed )
+                throw new ObjectDisposedException( string.Format( "SymmetricKey {0} is disposed", Kid ) );
+ 
             if ( string.IsNullOrWhiteSpace( algorithm ) )
                 algorithm = DefaultKeyWrapAlgorithm;
 
             if ( encryptedKey == null || encryptedKey.Length == 0 )
-                throw new ArgumentNullException( "wrappedKey" );
-
+                throw new ArgumentNullException( "encryptedKey" );
+ 
             var algo = AlgorithmResolver.Default[algorithm] as KeyWrapAlgorithm;
 
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
-
-            using ( var encryptor = algo.CreateDecryptor( Key, null ) )
+ 
+            using ( var encryptor = algo.CreateDecryptor( _key, null ) )
             {
                 return encryptor.TransformFinalBlock( encryptedKey, 0, encryptedKey.Length );
             }
@@ -289,7 +310,14 @@ namespace Microsoft.Azure.KeyVault
 
         protected virtual void Dispose( bool disposing )
         {
-            // Intentionally empty: IDisposable is the base for IKey
+            if ( disposing )
+            {
+                if ( !_isDisposed )
+                {
+                    _isDisposed = true;
+                    _key.Zero();
+                }
+            }
         }
     }
 }
