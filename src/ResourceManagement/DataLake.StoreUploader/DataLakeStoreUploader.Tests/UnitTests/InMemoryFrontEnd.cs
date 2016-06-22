@@ -116,7 +116,22 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
             else
             {
-                return _streams.ContainsKey(streamPath);
+                bool result = _streams.ContainsKey(streamPath);
+                if(!result)
+                {
+                    // check to see if it is a folder by splitting on "/"
+                    // because we only support (currently) one level of folders
+                    // we will check the first index and if we find the folder return true.
+                    foreach(var entry in _streams.Keys)
+                    {
+                        if (entry.Split('/')[0].Equals(streamPath, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return result;
             }
         }
 
