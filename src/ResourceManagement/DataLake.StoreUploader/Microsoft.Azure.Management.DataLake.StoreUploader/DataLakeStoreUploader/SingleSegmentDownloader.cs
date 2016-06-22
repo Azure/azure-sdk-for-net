@@ -164,6 +164,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // that this segment starts at.
             long curOffset = _segmentMetadata.Offset;
 
+            // set the offset of the local file that we are creating to the beginning of the local stream.
+            // this value will be used to ensure that we are always reporting the right progress and that,
+            // in the event of faiure, we reset the local stream to the proper location.
+            long localOffset = 0;
+
             // determine the number of requests made based on length of file divded by 32MB max size requests
             var numRequests = Math.Ceiling(_segmentMetadata.Length / BufferLength);
             // set the length remaining to ensure that only the exact number of bytes is ultimately downloaded
@@ -194,17 +199,18 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 readStream.CopyTo(outputStream);
                             }
 
+                            downloadCompleted = true;
                             lengthRemaining -= lengthToDownload;
                             curOffset += lengthToDownload;
-                            downloadCompleted = true;
-                            ReportProgress(outputStream.Length, false);
+                            localOffset += lengthToDownload;
+                            ReportProgress(localOffset, false);
                         }
                         catch (Exception ex)
                         {
                             //if we tried more than the number of times we were allowed to, give up and throw the exception
                             if (attemptCount >= MaxBufferDownloadAttemptCount)
                             {
-                                ReportProgress(outputStream.Length, true);
+                                ReportProgress(localOffset, true);
                                 throw ex;
                             }
                             else
@@ -212,7 +218,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
                                 
                                 // forcibly put the stream back to where it should be based on where we think we are in the download.
-                                outputStream.Seek(curOffset, SeekOrigin.Begin); 
+                                outputStream.Seek(localOffset, SeekOrigin.Begin); 
                             }
                         }
                     }
