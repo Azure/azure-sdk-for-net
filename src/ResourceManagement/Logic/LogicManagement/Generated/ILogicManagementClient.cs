@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
+    /// Composite Swagger for Logic Management Client
     /// </summary>
     public partial interface ILogicManagementClient : IDisposable
     {
@@ -46,11 +47,6 @@ namespace Microsoft.Azure.Management.Logic
         /// The subscription id.
         /// </summary>
         string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The API version.
-        /// </summary>
-        string ApiVersion { get; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -104,6 +100,36 @@ namespace Microsoft.Azure.Management.Logic
         /// Gets the IWorkflowRunActionsOperations.
         /// </summary>
         IWorkflowRunActionsOperations WorkflowRunActions { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountsOperations.
+        /// </summary>
+        IIntegrationAccountsOperations IntegrationAccounts { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountSchemasOperations.
+        /// </summary>
+        IIntegrationAccountSchemasOperations IntegrationAccountSchemas { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountMapsOperations.
+        /// </summary>
+        IIntegrationAccountMapsOperations IntegrationAccountMaps { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountPartnersOperations.
+        /// </summary>
+        IIntegrationAccountPartnersOperations IntegrationAccountPartners { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountAgreementsOperations.
+        /// </summary>
+        IIntegrationAccountAgreementsOperations IntegrationAccountAgreements { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountCertificatesOperations.
+        /// </summary>
+        IIntegrationAccountCertificatesOperations IntegrationAccountCertificates { get; }
 
     }
 }
