@@ -227,7 +227,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
             VerifyFileUploadedSuccessfully(up, frontEnd);
             VerifyFolderProgressStatus(progress, _largeFileData.Length + (_smallFileData.Length *2), 3);
+            
             // now download
+            var downloadFrontEnd = new MockableFrontEnd(frontEnd);
+            
+            // replace the isDirectory implementation to return true
+            downloadFrontEnd.IsDirectoryImplementation = (streamPath) => { return true; };
+            progress = null;
+            up = CreateParameters(isRecursive: true, isResume: false, isDownload: true, targetStreamPath: Path.GetDirectoryName(_downloadFilePath), isOverwrite: true, filePath: TargetStreamPath);
+            uploader = new DataLakeStoreUploader(up, downloadFrontEnd, null, progressTracker);
+
+            uploader.Execute();
+            VerifyFileUploadedSuccessfully(up, downloadFrontEnd.BaseAdapter);
+            VerifyFolderProgressStatus(progress, _largeFileData.Length + (_smallFileData.Length * 2), 3);
         }
 
         /// <summary>
