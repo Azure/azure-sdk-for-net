@@ -38,7 +38,6 @@ namespace Test.Azure.Management.Logic
                 string integrationAccountAgreementName =
                     TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
@@ -69,7 +68,6 @@ namespace Test.Azure.Management.Logic
                     TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
 
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
@@ -107,7 +105,6 @@ namespace Test.Azure.Management.Logic
                 string integrationAccountAgreementName =
                     TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
@@ -149,7 +146,6 @@ namespace Test.Azure.Management.Logic
                     TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
 
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
@@ -195,7 +191,6 @@ namespace Test.Azure.Management.Logic
                 string integrationAccountAgreementName =
                     TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
@@ -232,7 +227,6 @@ namespace Test.Azure.Management.Logic
                     TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
 
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName, CreateIntegrationAccountInstance(integrationAccountName));

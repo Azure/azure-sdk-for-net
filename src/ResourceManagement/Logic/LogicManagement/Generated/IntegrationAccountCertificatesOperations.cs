@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Logic
         {
             if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.subscriptionId");
             }
             if (resourceGroupName == null)
             {
@@ -84,10 +84,7 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "integrationAccountName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -97,6 +94,7 @@ namespace Microsoft.Azure.Management.Logic
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
@@ -105,12 +103,12 @@ namespace Microsoft.Azure.Management.Logic
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/certificates").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));    
             _url = _url.Replace("{integrationAccountName}", Uri.EscapeDataString(integrationAccountName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -264,7 +262,7 @@ namespace Microsoft.Azure.Management.Logic
         {
             if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.subscriptionId");
             }
             if (resourceGroupName == null)
             {
@@ -278,10 +276,7 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -292,6 +287,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
                 tracingParameters.Add("certificateName", certificateName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -303,9 +299,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{integrationAccountName}", Uri.EscapeDataString(integrationAccountName));
             _url = _url.Replace("{certificateName}", Uri.EscapeDataString(certificateName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -458,7 +454,7 @@ namespace Microsoft.Azure.Management.Logic
         {
             if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.subscriptionId");
             }
             if (resourceGroupName == null)
             {
@@ -472,14 +468,11 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (certificate == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificate");
             }
+            string apiVersion = "2015-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -490,6 +483,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
                 tracingParameters.Add("certificateName", certificateName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("certificate", certificate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
@@ -502,9 +496,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{integrationAccountName}", Uri.EscapeDataString(integrationAccountName));
             _url = _url.Replace("{certificateName}", Uri.EscapeDataString(certificateName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -675,7 +669,7 @@ namespace Microsoft.Azure.Management.Logic
         {
             if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.subscriptionId");
             }
             if (resourceGroupName == null)
             {
@@ -689,10 +683,7 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -703,6 +694,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("integrationAccountName", integrationAccountName);
                 tracingParameters.Add("certificateName", certificateName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -714,9 +706,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{integrationAccountName}", Uri.EscapeDataString(integrationAccountName));
             _url = _url.Replace("{certificateName}", Uri.EscapeDataString(certificateName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

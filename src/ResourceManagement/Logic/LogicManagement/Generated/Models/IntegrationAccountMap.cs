@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Logic.Models
 
     /// <summary>
     /// </summary>
-    public partial class IntegrationAccountMap : Resource
+    public partial class IntegrationAccountMap : IntegrationAccountResource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountMap class.
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountMap class.
         /// </summary>
-        public IntegrationAccountMap(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MapType? mapType = default(MapType?), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), ContentLink contentLink = default(ContentLink), object metadata = default(object))
+        public IntegrationAccountMap(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MapType? mapType = default(MapType?), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), IntegrationAccountContentLink contentLink = default(IntegrationAccountContentLink), object metadata = default(object))
             : base(id, name, type, location, tags)
         {
             MapType = mapType;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets the content link.
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentLink")]
-        public ContentLink ContentLink { get; private set; }
+        public IntegrationAccountContentLink ContentLink { get; private set; }
 
         /// <summary>
         /// Gets or sets the metadata.

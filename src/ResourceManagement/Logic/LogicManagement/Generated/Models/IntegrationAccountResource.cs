@@ -18,17 +18,17 @@ namespace Microsoft.Azure.Management.Logic.Models
 
     /// <summary>
     /// </summary>
-    public partial class Resource : IResource
+    public partial class IntegrationAccountResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the IntegrationAccountResource class.
         /// </summary>
-        public Resource() { }
+        public IntegrationAccountResource() { }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the IntegrationAccountResource class.
         /// </summary>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public IntegrationAccountResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets the resource name.
+        /// Gets or sets the resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the resource type.
+        /// Gets or sets the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

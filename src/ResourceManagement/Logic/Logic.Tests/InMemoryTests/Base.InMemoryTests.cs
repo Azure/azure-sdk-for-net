@@ -31,7 +31,6 @@ namespace Test.Azure.Management.Logic
         protected ILogicManagementClient CreateIntegrationAccountClient(RecordedDelegatingHandler handler)
         {
             var client = new LogicManagementClient(new TokenCredentials("token"), handler);
-            client.InitializeIntegrationAccountClient();
             client.SubscriptionId = "66666666-6666-6666-6666-666666666666";
             return client;
         }
@@ -44,7 +43,6 @@ namespace Test.Azure.Management.Logic
         protected ILogicManagementClient CreateWorkflowClient(RecordedDelegatingHandler handler)
         {
             var client = new LogicManagementClient(new TokenCredentials("token"), handler);
-            client.InitializeWorkflowClient();
             client.SubscriptionId = "66666666-6666-6666-6666-666666666666";
             return client;
         }

@@ -400,10 +400,9 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(null, "IntegrationAccountName", new ListCallbackUrlParameters()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, null, new ListCallbackUrlParameters()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, "IntegrationAccountName", new ListCallbackUrlParameters()));
+            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(null, "IntegrationAccountName"));
+            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, null));            
+            Assert.Throws<CloudException>(() => client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, "IntegrationAccountName"));
         }
 
         [Fact]
@@ -418,7 +417,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.IntegrationAccountCallbackUrl
             };
 
-            var result = client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, "IntegrationAccountName", new ListCallbackUrlParameters());
+            var result = client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, "IntegrationAccountName" );
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();

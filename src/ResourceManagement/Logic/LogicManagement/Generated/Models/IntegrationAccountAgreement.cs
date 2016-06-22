@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Logic.Models
 
     /// <summary>
     /// </summary>
-    public partial class IntegrationAccountAgreement : Resource
+    public partial class IntegrationAccountAgreement : IntegrationAccountResource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountAgreement

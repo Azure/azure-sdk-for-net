@@ -149,10 +149,8 @@ namespace Test.Azure.Management.Logic
                     this.resourceGroupName,
                     workflowName,
                     accessKeyName,
-                    new RegenerateSecretKeyParameters
-                    {
-                        KeyType = KeyType.Primary
-                    });
+                    KeyType.Primary
+                    );
 
                 Assert.NotEmpty(secretKeys.PrimarySecretKey);
                 Assert.NotEmpty(secretKeys.SecondarySecretKey);

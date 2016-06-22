@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
+    /// Composite Swagger for Logic Management Client
     /// </summary>
     public partial interface ILogicManagementClient : IDisposable
     {
@@ -48,11 +49,6 @@ namespace Microsoft.Azure.Management.Logic
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -68,6 +64,7 @@ namespace Microsoft.Azure.Management.Logic
         /// generated and included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
+
 
         /// <summary>
         /// Gets the IWorkflowsOperations.
@@ -134,14 +131,5 @@ namespace Microsoft.Azure.Management.Logic
         /// </summary>
         IIntegrationAccountCertificatesOperations IntegrationAccountCertificates { get; }
 
-        /// <summary>
-        /// Initialize integration account client.
-        /// </summary>
-        void InitializeIntegrationAccountClient();
-
-        /// <summary>
-        /// Initialize workflow client.
-        /// </summary>
-        void InitializeWorkflowClient();
     }
 }

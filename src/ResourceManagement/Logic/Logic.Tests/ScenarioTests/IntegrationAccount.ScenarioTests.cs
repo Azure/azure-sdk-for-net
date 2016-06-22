@@ -37,7 +37,6 @@ namespace Test.Azure.Management.Logic
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
                 // Create a IntegrationAccount
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
@@ -63,7 +62,6 @@ namespace Test.Azure.Management.Logic
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 // Create a IntegrationAccount
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
@@ -106,7 +104,6 @@ namespace Test.Azure.Management.Logic
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 // Create a IntegrationAccount
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
@@ -135,7 +132,6 @@ namespace Test.Azure.Management.Logic
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 // Create a IntegrationAccount
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
@@ -164,7 +160,6 @@ namespace Test.Azure.Management.Logic
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 // Create a IntegrationAccount
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
@@ -193,7 +188,6 @@ namespace Test.Azure.Management.Logic
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 // Create a IntegrationAccount
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
@@ -234,7 +228,6 @@ namespace Test.Azure.Management.Logic
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
-                client.InitializeIntegrationAccountClient();
 
                 // Create a IntegrationAccount
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
@@ -243,15 +236,12 @@ namespace Test.Azure.Management.Logic
 
                 // Get the IntegrationAccount and verify the content
                 var callbackUrl1 = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName, new ListCallbackUrlParameters()
-                    {
-                        NotAfter = DateTime.Now.AddDays(100)
-                    });
+                    integrationAccountName);
 
                 Assert.NotNull(callbackUrl1);
 
                 var callbackUrl2 = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName, new ListCallbackUrlParameters());
+                    integrationAccountName);
 
                 Assert.NotNull(callbackUrl2);
 

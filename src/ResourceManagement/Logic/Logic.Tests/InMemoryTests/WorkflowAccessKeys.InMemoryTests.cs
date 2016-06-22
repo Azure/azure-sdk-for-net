@@ -12,7 +12,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Xunit;
-
+    using System;
     public class WorkflowAccessKeysInMemoryTests : BaseInMemoryTests
     {
         #region Constructor
@@ -356,11 +356,10 @@ namespace Test.Azure.Management.Logic
                 Content = this.Empty
             };
 
-            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey(null, "wfName", "accessKeyName", new RegenerateSecretKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", null, "accessKeyName", new RegenerateSecretKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", null, new RegenerateSecretKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", new RegenerateSecretKeyParameters()));
+            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey(null, "wfName", "accessKeyName", KeyType.Primary));
+            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", null, "accessKeyName", KeyType.Primary));
+            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", null, KeyType.Primary));            
+            Assert.Throws<CloudException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", KeyType.Primary));
         }
 
         [Fact]
@@ -375,7 +374,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.SecretKeyResponse
             };
 
-            var response = client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", new RegenerateSecretKeyParameters());
+            var response = client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", KeyType.Primary );
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();

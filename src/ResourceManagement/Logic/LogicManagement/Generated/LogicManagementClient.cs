@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
+    /// Composite Swagger for Logic Management Client
     /// </summary>
     public partial class LogicManagementClient : ServiceClient<LogicManagementClient>, ILogicManagementClient, IAzureClient
     {
@@ -53,11 +54,6 @@ namespace Microsoft.Azure.Management.Logic
         /// The subscription id.
         /// </summary>
         public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The API version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -110,7 +106,7 @@ namespace Microsoft.Azure.Management.Logic
         /// Gets the IWorkflowRunActionsOperations.
         /// </summary>
         public virtual IWorkflowRunActionsOperations WorkflowRunActions { get; private set; }
-		
+
         /// <summary>
         /// Gets the IIntegrationAccountsOperations.
         /// </summary>
@@ -140,7 +136,6 @@ namespace Microsoft.Azure.Management.Logic
         /// Gets the IIntegrationAccountCertificatesOperations.
         /// </summary>
         public virtual IIntegrationAccountCertificatesOperations IntegrationAccountCertificates { get; private set; }
-	
 
         /// <summary>
         /// Initializes a new instance of the LogicManagementClient class.
@@ -149,7 +144,8 @@ namespace Microsoft.Azure.Management.Logic
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
         protected LogicManagementClient(params DelegatingHandler[] handlers) : base(handlers)
-        {            
+        {
+            this.Initialize();
         }
 
         /// <summary>
@@ -162,7 +158,8 @@ namespace Microsoft.Azure.Management.Logic
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
         protected LogicManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
-        {        
+        {
+            this.Initialize();
         }
 
         /// <summary>
@@ -317,7 +314,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <summary>
         /// Initializes client properties.
         /// </summary>
-        public void InitializeWorkflowClient()
+        private void Initialize()
         {
             this.Workflows = new WorkflowsOperations(this);
             this.WorkflowVersions = new WorkflowVersionsOperations(this);
@@ -326,46 +323,6 @@ namespace Microsoft.Azure.Management.Logic
             this.WorkflowTriggerHistories = new WorkflowTriggerHistoriesOperations(this);
             this.WorkflowRuns = new WorkflowRunsOperations(this);
             this.WorkflowRunActions = new WorkflowRunActionsOperations(this);
-            this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-02-01-preview";
-            this.AcceptLanguage = "en-US";
-            this.LongRunningOperationRetryTimeout = 30;
-            this.GenerateClientRequestId = true;
-            SerializationSettings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented,
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
-                    {
-                        new Iso8601TimeSpanConverter()
-                    }
-            };
-            SerializationSettings.Converters.Add(new ResourceJsonConverter());
-            DeserializationSettings = new JsonSerializerSettings
-            {
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
-                    {
-                        new Iso8601TimeSpanConverter()
-                    }
-            };
-            DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
-        }
-
-        /// <summary>
-        /// Initializes client properties.
-        /// </summary>
-        public void InitializeIntegrationAccountClient()
-        {
             this.IntegrationAccounts = new IntegrationAccountsOperations(this);
             this.IntegrationAccountSchemas = new IntegrationAccountSchemasOperations(this);
             this.IntegrationAccountMaps = new IntegrationAccountMapsOperations(this);
@@ -373,7 +330,6 @@ namespace Microsoft.Azure.Management.Logic
             this.IntegrationAccountAgreements = new IntegrationAccountAgreementsOperations(this);
             this.IntegrationAccountCertificates = new IntegrationAccountCertificatesOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-08-01-preview";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;
@@ -405,6 +361,6 @@ namespace Microsoft.Azure.Management.Logic
             };
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
-        }		
+        }    
     }
 }
