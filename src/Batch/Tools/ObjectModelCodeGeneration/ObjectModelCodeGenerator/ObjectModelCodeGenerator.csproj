@@ -9,6 +9,7 @@
     <RootNamespace>ObjectModelCodeGenerator</RootNamespace>
     <AssemblyName>ObjectModelCodeGenerator</AssemblyName>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AutoRestProjects>true</AutoRestProjects>
     <TestProject>true</TestProject>
   </PropertyGroup>

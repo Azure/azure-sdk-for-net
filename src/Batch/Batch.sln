@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch", "Src\Batch.csproj", "{3328FBBF-9C20-4775-B367-856C09DC13BF}"
 EndProject
@@ -43,6 +43,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProxyLayerParser", "ProxyLayerParser", "{686EAF74-B419-4310-AFD8-3710E8E8061F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyLayerParser", "Tools\ObjectModelCodeGeneration\RoslynParser\ProxyLayerParser.csproj", "{13A13BB2-684F-4A2B-BCF9-34A9F9616599}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigureAwaitAnalyzer", "ConfigureAwaitAnalyzer", "{D007B9BF-D886-4B0A-87E0-AEB6EFB1390F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigureAwaitAnalyzer", "Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj", "{48215D6D-DB21-48B8-AB03-1297A94DF696}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigureAwaitAnalyzer.Tests", "Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.Tests\ConfigureAwaitAnalyzer.Tests.csproj", "{5F8690AA-765A-4112-8C68-0BB00C322FDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +100,17 @@ Global
 		{13A13BB2-684F-4A2B-BCF9-34A9F9616599}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{13A13BB2-684F-4A2B-BCF9-34A9F9616599}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{13A13BB2-684F-4A2B-BCF9-34A9F9616599}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{5F8690AA-765A-4112-8C68-0BB00C322FDB}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{5F8690AA-765A-4112-8C68-0BB00C322FDB}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{5F8690AA-765A-4112-8C68-0BB00C322FDB}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{5F8690AA-765A-4112-8C68-0BB00C322FDB}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{5F8690AA-765A-4112-8C68-0BB00C322FDB}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,5 +134,8 @@ Global
 		{380D5910-2411-4E93-AE2B-1533033A8D79} = {CB71AF88-3513-4109-92D4-0BA8770BB454}
 		{686EAF74-B419-4310-AFD8-3710E8E8061F} = {CB71AF88-3513-4109-92D4-0BA8770BB454}
 		{13A13BB2-684F-4A2B-BCF9-34A9F9616599} = {686EAF74-B419-4310-AFD8-3710E8E8061F}
+		{D007B9BF-D886-4B0A-87E0-AEB6EFB1390F} = {3DE96B66-463F-470B-92F2-7284A2DD022C}
+		{48215D6D-DB21-48B8-AB03-1297A94DF696} = {D007B9BF-D886-4B0A-87E0-AEB6EFB1390F}
+		{5F8690AA-765A-4112-8C68-0BB00C322FDB} = {D007B9BF-D886-4B0A-87E0-AEB6EFB1390F}
 	EndGlobalSection
 EndGlobal

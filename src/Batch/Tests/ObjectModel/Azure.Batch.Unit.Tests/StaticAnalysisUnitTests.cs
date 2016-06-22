@@ -1,10 +1,7 @@
 ﻿namespace Azure.Batch.Unit.Tests
 {
-    using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Text.RegularExpressions;
     using BatchTestCommon;
     using TestUtilities;
     using Xunit;
@@ -14,8 +11,6 @@
     {
         private readonly string sourceLocation;
         private readonly string proxySourceLocation;
-
-        private readonly IReadOnlyList<string> sourceLocationsToScan;
 
         private const string SourceFileType = @".*\.cs";
         private readonly ITestOutputHelper testOutputHelper;
@@ -28,78 +23,6 @@
 
             this.sourceLocation = @"..\..\..\..\..\src";
             this.proxySourceLocation = @"..\..\..\..\..\src\" + GeneratedProtocolFolder;
-
-            this.sourceLocationsToScan = new List<string>()
-                                         {
-                                             this.sourceLocation
-                                         };
-        }
-
-        [Fact]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void AwaitAlwaysFollowedByConfigureAwaitFalse()
-        {
-            //What this expression means:
-            //(?<!//.*?) -- Make sure that any await we find is not preceeded on the same line by //
-            //(?s: -- means . will match newlines in this sub-expression.
-            //await\\s+ -- Find the word await followed by at least 1 whitespace character
-            //.*?(;|$|ConfigureAwait\\(.*?false\\)) -- After the await stop matching if
-            //we see a ;, the end of the file, or the string "ConfigureAwait(<text>false)" where
-            //<text> can be any characters but not newline.
-            const string pattern = "(?<!//.*?)(?s:await\\s+.*?(;|$|ConfigureAwait\\([\\w\\W]*?false\\)))";
-
-            SourceParser sourceParser = new SourceParser(this.sourceLocationsToScan, SourceFileType, null, pattern);
-
-            List<SourceParserResult> results = sourceParser.Parse().ToList();
-
-            //Some sanity on the number of results we have
-            const int expectedAtLeastThisManyAwaits = 350;
-            this.testOutputHelper.WriteLine("Found {0} awaits", results.Count);
-            Assert.True(results.Count > expectedAtLeastThisManyAwaits);
-
-            foreach (SourceParserResult parserResult in results)
-            {
-                Match match = parserResult.Match;
-                int configureAwaitCount = Regex.Matches(match.Value, "ConfigureAwait").Count;
-                int awaitCount = Regex.Matches(match.Value, "await").Count;
-
-                if (awaitCount == 1)
-                {
-                    if (configureAwaitCount == 0)
-                    {
-                        //Didn't find configureawait
-                        string message = string.Format("No ConfigureAwait in {0} at {1} -- {2}", parserResult.File, parserResult.LineNumber, match.Value);
-                        this.testOutputHelper.WriteLine(message);
-
-                        Assert.True(false, message);
-                    }
-                    else if (configureAwaitCount == 1)
-                    {
-                        //Found configureawait
-                        this.testOutputHelper.WriteLine("Found ConfigureAwait in {0} at {1} -- {2}", parserResult.File, parserResult.LineNumber, match.Value);
-                    }
-                    else
-                    {
-                        string message =
-                            string.Format("Found more than 1 ConfigureAwait in substring, which is not expected.  File: {0}, Line: {1}, String: {2}",
-                                parserResult.File,
-                                parserResult.LineNumber,
-                                parserResult.Match.Value);
-
-                        Assert.True(false, message);
-                    }
-                }
-                else
-                {
-                    string message =
-                            string.Format("Found more than 1 Await in substring, which is not expected.  File: {0}, Line: {1}, String: {2}",
-                                parserResult.File,
-                                parserResult.LineNumber,
-                                parserResult.Match.Value);
-
-                    Assert.True(false, message);
-                }
-            }
         }
 
         [Fact]
