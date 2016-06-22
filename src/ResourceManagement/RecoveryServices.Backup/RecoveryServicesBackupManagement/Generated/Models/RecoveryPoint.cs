@@ -31,6 +31,42 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class RecoveryPoint : RecoveryPointBase
     {
+        private bool _isInstantILRSessionActive;
+        
+        /// <summary>
+        /// Optional. Identifies whether the instant ILR session associated
+        /// with this recovery point is still active.
+        /// </summary>
+        public bool IsInstantILRSessionActive
+        {
+            get { return this._isInstantILRSessionActive; }
+            set { this._isInstantILRSessionActive = value; }
+        }
+        
+        private bool? _isSourceVMEncrypted;
+        
+        /// <summary>
+        /// Optional. Identifies whether this recovery point represents an
+        /// encrypted VM at the time of backup.
+        /// </summary>
+        public bool? IsSourceVMEncrypted
+        {
+            get { return this._isSourceVMEncrypted; }
+            set { this._isSourceVMEncrypted = value; }
+        }
+        
+        private KeyAndSecretDetails _keyAndSecret;
+        
+        /// <summary>
+        /// Optional. Required details for recovering an encrypted VM.
+        /// Applicable only when IsSourceVMEncrypted is true.
+        /// </summary>
+        public KeyAndSecretDetails KeyAndSecret
+        {
+            get { return this._keyAndSecret; }
+            set { this._keyAndSecret = value; }
+        }
+        
         private string _recoveryPointAdditionalInfo;
         
         /// <summary>

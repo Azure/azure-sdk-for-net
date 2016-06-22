@@ -292,6 +292,34 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 propertiesValue["targetDomainNameId"] = derived.TargetDomainNameId;
                             }
+                            
+                            if (derived.EncryptionDetails != null)
+                            {
+                                JObject encryptionDetailsValue = new JObject();
+                                propertiesValue["encryptionDetails"] = encryptionDetailsValue;
+                                
+                                encryptionDetailsValue["encryptionEnabled"] = derived.EncryptionDetails.EncryptionEnabled;
+                                
+                                if (derived.EncryptionDetails.KekUrl != null)
+                                {
+                                    encryptionDetailsValue["kekUrl"] = derived.EncryptionDetails.KekUrl;
+                                }
+                                
+                                if (derived.EncryptionDetails.SecretKeyUrl != null)
+                                {
+                                    encryptionDetailsValue["secretKeyUrl"] = derived.EncryptionDetails.SecretKeyUrl;
+                                }
+                                
+                                if (derived.EncryptionDetails.KekVaultId != null)
+                                {
+                                    encryptionDetailsValue["kekVaultId"] = derived.EncryptionDetails.KekVaultId;
+                                }
+                                
+                                if (derived.EncryptionDetails.SecretKeyVaultId != null)
+                                {
+                                    encryptionDetailsValue["secretKeyVaultId"] = derived.EncryptionDetails.SecretKeyVaultId;
+                                }
+                            }
                         }
                     }
                 }

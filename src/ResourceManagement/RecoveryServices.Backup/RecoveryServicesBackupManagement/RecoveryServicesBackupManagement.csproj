@@ -84,6 +84,8 @@
     <Compile Include="Generated\Models\AzureIaaSVMProtectionPolicy.cs" />
     <Compile Include="Generated\Models\AzureSqlProtectedItem.cs" />
     <Compile Include="Generated\Models\AzureSqlProtectedItemExtendedInfo.cs" />
+    <Compile Include="Generated\Models\AzureSqlProtectionContainer.cs" />
+    <Compile Include="Generated\Models\AzureSqlProtectionPolicy.cs" />
     <Compile Include="Generated\Models\BackupEngine.cs" />
     <Compile Include="Generated\Models\BackupEngineBase.cs" />
     <Compile Include="Generated\Models\BackupEngineListQueryParams.cs" />
@@ -94,7 +96,10 @@
     <Compile Include="Generated\Models\BackupManagementType.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
+    <Compile Include="Generated\Models\BackupRequest.cs" />
+    <Compile Include="Generated\Models\BackupRequestResource.cs" />
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
+    <Compile Include="Generated\Models\BekDetails.cs" />
     <Compile Include="Generated\Models\CommonJobQueryFilters.cs" />
     <Compile Include="Generated\Models\ContainerType.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
@@ -102,11 +107,13 @@
     <Compile Include="Generated\Models\DailyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\Day.cs" />
     <Compile Include="Generated\Models\DpmBackupEngine.cs" />
+    <Compile Include="Generated\Models\EncryptionDetails.cs" />
     <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
     <Compile Include="Generated\Models\GenericRecoveryPoint.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
     <Compile Include="Generated\Models\GetProtectedItemQueryParam.cs" />
+    <Compile Include="Generated\Models\IaaSVMBackupRequest.cs" />
     <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
     <Compile Include="Generated\Models\Job.cs" />
     <Compile Include="Generated\Models\JobBackupManagementType.cs" />
@@ -122,6 +129,8 @@
     <Compile Include="Generated\Models\JobStatus.cs" />
     <Compile Include="Generated\Models\JobSupportedAction.cs" />
     <Compile Include="Generated\Models\JobTaskDetails.cs" />
+    <Compile Include="Generated\Models\KekDetails.cs" />
+    <Compile Include="Generated\Models\KeyAndSecretDetails.cs" />
     <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
     <Compile Include="Generated\Models\LongTermSchedulePolicy.cs" />
     <Compile Include="Generated\Models\MabFileFolderProtectedItem.cs" />
@@ -190,6 +199,7 @@
     <Compile Include="Generated\Models\ScheduleRunFrequencyType.cs" />
     <Compile Include="Generated\Models\SimpleRetentionPolicy.cs" />
     <Compile Include="Generated\Models\SimpleSchedulePolicy.cs" />
+    <Compile Include="Generated\Models\TriggerBackupRequest.cs" />
     <Compile Include="Generated\Models\TriggerRestoreRequest.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionFormat.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionSchedule.cs" />

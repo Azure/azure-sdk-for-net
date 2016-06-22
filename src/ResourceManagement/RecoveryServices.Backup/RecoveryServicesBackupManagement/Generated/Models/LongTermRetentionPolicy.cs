@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private DailyRetentionSchedule _dailySchedule;
         
         /// <summary>
-        /// Optional. Daily retention schedule of this protection policy.
+        /// Optional. Daily retention schedule of the protection policy.
         /// </summary>
         public DailyRetentionSchedule DailySchedule
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private MonthlyRetentionSchedule _monthlySchedule;
         
         /// <summary>
-        /// Optional. Monthly retention schedule of protection policy.
+        /// Optional. Monthly retention schedule of the protection policy.
         /// </summary>
         public MonthlyRetentionSchedule MonthlySchedule
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private WeeklyRetentionSchedule _weeklySchedule;
         
         /// <summary>
-        /// Optional. Weekly retention schedule of protection policy.
+        /// Optional. Weekly retention schedule of the protection policy.
         /// </summary>
         public WeeklyRetentionSchedule WeeklySchedule
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private YearlyRetentionSchedule _yearlySchedule;
         
         /// <summary>
-        /// Optional. Yearly retention schedule of protection policy.
+        /// Optional. Yearly retention schedule of the protection policy.
         /// </summary>
         public YearlyRetentionSchedule YearlySchedule
         {

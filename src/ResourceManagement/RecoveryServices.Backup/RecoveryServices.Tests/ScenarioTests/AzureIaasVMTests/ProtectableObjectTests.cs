@@ -13,23 +13,17 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using System;
-using System.Collections.Generic;
+using RecoveryServices.Backup.Tests.Helpers;
 using System.Configuration;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class ProtectableObjectTests : RecoveryServicesTestsBase
+    public class ProtectableObjectTests : RecoveryServicesBackupTestsBase
     {
         [Fact]
         public void ListProtectableObjectTest()
@@ -37,26 +31,48 @@ namespace RecoveryServices.Tests
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
+
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                // TODO: Create VM instead of taking these parameters from config
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
+                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
+                string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+                string containerUri = containeType + ";" + containerUniqueName;
+                string itemUri = itemType + ";" + itemUniqueName;
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                // 2. Get default policy
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+                string policyId = policyTestHelper.GetDefaultPolicyId(resourceGroupName, resourceName);
+
+                // 3. Enable protection
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
+                protectedItemTestHelper.EnableProtection(resourceGroupName, resourceName, policyId, containerUri, itemUri);
+
+                // ACTION: List protectable objects
                 ProtectableObjectListQueryParameters queryParams = new ProtectableObjectListQueryParameters();
-
-                PaginationRequest paginationParam = new PaginationRequest();
-
+                queryParams.BackupManagementType = BackupManagementType.AzureIaasVM.ToString();
                 ProtectableObjectTestHelper poTestHelper = new ProtectableObjectTestHelper(client);
-                ProtectableObjectListResponse response = poTestHelper.ListProtectableObjects(queryParams, paginationParam);
+                ProtectableObjectListResponse response = poTestHelper.ListProtectableObjects(
+                    resourceGroupName, resourceName, queryParams, new PaginationRequest());
 
-                string protectableObjectName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
-                Assert.True(
-                    response.ItemList.ProtectableObjects.Any(
-                        protectableObject =>
-                        {
-                            return protectableObject.Properties.GetType() == typeof(AzureIaaSClassicComputeVMProtectableItem) &&
-                                    protectableObject.Name == protectableObjectName;
-                        }),
-                        "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectable Item");
+                // VALIDATION: VM should not be found in the list
+                Assert.False(response.ItemList.ProtectableObjects.Any(
+                    protectableObject =>
+                    {
+                        return protectableObject.Properties.GetType().IsSubclassOf(typeof(AzureIaaSVMProtectableItem)) &&
+                            protectableObject.Name.Contains(containerUniqueName);
+                    }),
+                    "Retrieved list of containers doesn't contain AzureIaaSVMProtectableItem Item");
             }
         }
     }
