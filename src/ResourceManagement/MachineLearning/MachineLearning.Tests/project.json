@@ -25,9 +25,9 @@
     }
   },
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "type": "platform",
-      "version": "1.0.0-rc2-*"
+    "Microsoft.NETCore.App": { 
+      "type": "platform", 
+      "version": "1.0.0" 
     },
     "System.Diagnostics.TraceSource": "4.0.0-rc2-24027",
     "Microsoft.Azure.Test.HttpRecorder": "[1.6.2-preview,2.0.0)",

@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "1.0.0",
   "description": "Authorization.Tests Class Library",
   "authors": [ "Microsoft Corporation" ],
 
@@ -25,16 +25,15 @@
     }
   },
   "dependencies": {
-    "Microsoft.NETCore.App": { 
-      "type": "platform", 
-      "version": "1.0.0-rc2-*" 
-    }, 
-    "Microsoft.Azure.Test.HttpRecorder": "[1.6.2-preview,2.0.0)",
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.3-preview,2.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)",
     "Microsoft.Azure.Management.Authorization": "[2.4.2-preview,3.0.0)",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
     "xunit": "2.1.0",
-    "dotnet-test-xunit": "1.0.0-rc2-build10015"
+    "dotnet-test-xunit": "1.0.0-rc2-192208-24"
   }
 }
