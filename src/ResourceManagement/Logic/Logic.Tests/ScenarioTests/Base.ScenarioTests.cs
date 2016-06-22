@@ -33,7 +33,6 @@ namespace Test.Azure.Management.Logic
         protected LogicManagementClient GetIntegrationAccountClient(MockContext context)
         {
             var client = context.GetServiceClient<LogicManagementClient>();
-            client.InitializeIntegrationAccountClient();
             return client;
         }
 
@@ -64,7 +63,6 @@ namespace Test.Azure.Management.Logic
         protected LogicManagementClient GetWorkflowClient(MockContext context)
         {
             var client = context.GetServiceClient<LogicManagementClient>();
-            client.InitializeWorkflowClient();
             return client;
         }
 

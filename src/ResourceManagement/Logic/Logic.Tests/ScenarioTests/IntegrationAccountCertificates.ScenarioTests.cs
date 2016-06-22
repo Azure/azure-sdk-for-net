@@ -307,7 +307,7 @@ namespace Test.Azure.Management.Logic
                                 "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/IntegrationAccountVault",
                                 Constants.DefaultSubscription, Constants.DefaultResourceGroup)
                     },
-                    KeyVersion = "5d8ea4e3fa1e4db4841270254cde2fbf"
+                    KeyVersion = "10816c5390074324a968b5cc5c2dfaaf"
                 },
                 PublicCertificate = Convert.ToBase64String(cert.GetRawCertData())
             };

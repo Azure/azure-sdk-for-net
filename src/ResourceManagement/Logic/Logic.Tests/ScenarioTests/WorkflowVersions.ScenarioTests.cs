@@ -20,7 +20,6 @@ namespace Test.Azure.Management.Logic
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetWorkflowClient(context);
-                client.InitializeWorkflowClient();
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
                     resourceGroupName: this.resourceGroupName,

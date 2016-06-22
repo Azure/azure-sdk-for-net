@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Logic.Models
 
     /// <summary>
     /// </summary>
-    public partial class IntegrationAccountCertificate : Resource
+    public partial class IntegrationAccountCertificate : IntegrationAccountResource
     {
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountCertificate
