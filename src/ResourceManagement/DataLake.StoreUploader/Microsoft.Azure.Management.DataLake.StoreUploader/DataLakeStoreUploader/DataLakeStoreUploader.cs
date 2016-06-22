@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             
             //we need to override the default .NET value for max connections to a host to our number of threads, if necessary (otherwise we won't achieve the parallelism we want)
             _previousDefaultConnectionLimit = ServicePointManager.DefaultConnectionLimit;
-            ServicePointManager.DefaultConnectionLimit = Math.Max((this.Parameters.PerFileThreadCount * this.Parameters.ConcurentFileCount) + this.Parameters.ConcurentFileCount,
+            ServicePointManager.DefaultConnectionLimit = Math.Max((this.Parameters.PerFileThreadCount * this.Parameters.ConcurrentFileCount) + this.Parameters.ConcurrentFileCount,
                 ServicePointManager.DefaultConnectionLimit);
             
             //ensure that input parameters are correct
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     var folderOptions = new ParallelOptions
                     {
                         CancellationToken = _token,
-                        MaxDegreeOfParallelism = this.Parameters.ConcurentFileCount
+                        MaxDegreeOfParallelism = this.Parameters.ConcurrentFileCount
                     };
                     try
                     {
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 throw new ArgumentOutOfRangeException(string.Format("FileThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
             }
 
-            if (this.Parameters.ConcurentFileCount < 1 || this.Parameters.ConcurentFileCount > MaxAllowedThreads)
+            if (this.Parameters.ConcurrentFileCount < 1 || this.Parameters.ConcurrentFileCount > MaxAllowedThreads)
             {
                 throw new ArgumentOutOfRangeException(string.Format("FolderThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
             }
