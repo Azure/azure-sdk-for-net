@@ -79,6 +79,7 @@ namespace Insights.Tests.InMemoryTests
             return new ServiceDiagnosticSettings
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
+                ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
                 StorageAccountName = "sa1",
                 Logs = new List<LogSettings>
                 {
@@ -126,6 +127,7 @@ namespace Insights.Tests.InMemoryTests
 
             Assert.Equal(exp.StorageAccountId, act.StorageAccountId);
             Assert.Equal(exp.StorageAccountName, act.StorageAccountName);
+            Assert.Equal(exp.ServiceBusRuleId, act.ServiceBusRuleId);
         }
 
         private static void Compare<T>(T exp, T act)

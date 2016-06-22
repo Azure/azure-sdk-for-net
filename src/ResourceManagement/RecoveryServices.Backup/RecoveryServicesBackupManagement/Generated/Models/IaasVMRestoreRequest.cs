@@ -55,6 +55,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._createNewCloudService = value; }
         }
         
+        private EncryptionDetails _encryptionDetails;
+        
+        /// <summary>
+        /// Optional. Details needed if the source VM was encrypted at the time
+        /// of backup.
+        /// </summary>
+        public EncryptionDetails EncryptionDetails
+        {
+            get { return this._encryptionDetails; }
+            set { this._encryptionDetails = value; }
+        }
+        
         private string _recoveryPointId;
         
         /// <summary>

@@ -13,26 +13,17 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using Microsoft.Azure;
+using RecoveryServices.Backup.Tests.Helpers;
+using System;
+using System.Configuration;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class RestoreDiskTests : RecoveryServicesTestsBase
+    public class RestoreDiskTests : RecoveryServicesBackupTestsBase
     {
-        [Fact]
         public void RestoreDiskTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -40,49 +31,56 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
-                string vaultLocation = ConfigurationManager.AppSettings["vaultLocation"];
-                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
-                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRestore"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                // TODO: Create VM instead of taking these parameters from config
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
                 string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
-                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRestore"];
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
-                string recoveryPointId = ConfigurationManager.AppSettings["RecoveryPointName"];
+                string containerUri = containeType + ";" + containerUniqueName;
+                string itemUri = itemType + ";" + itemUniqueName;
                 string storageAccountId = ConfigurationManager.AppSettings["StorageAccountId"];
-                string sourceResourceId = ConfigurationManager.AppSettings["SourceVmIdForRestore"];
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
-                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
-                string containerUri = containeType + ";" + containerUniqueName;
-                string itemUri = itemType + ";" + itemUniqueName;
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
 
-                IaasVMRestoreRequest restoreRequest = new IaasVMRestoreRequest()
-                {
-                    AffinityGroup = String.Empty,
-                    CreateNewCloudService = false,
-                    RecoveryPointId = recoveryPointId,
-                    RecoveryType = RecoveryType.RestoreDisks,
-                    Region = vaultLocation,
-                    StorageAccountId = storageAccountId,
-                    SubnetId = string.Empty,
-                    VirtualNetworkId = string.Empty,
-                    SourceResourceId = sourceResourceId,
-                    TargetDomainNameId = string.Empty,
-                    TargetResourceGroupId = string.Empty,
-                    TargetVirtualMachineId = string.Empty,
-                };
+                // 2. Get default policy
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+                string policyId = policyTestHelper.GetDefaultPolicyId(resourceGroupName, resourceName);
 
-                TriggerRestoreRequest triggerRestoreRequest = new TriggerRestoreRequest();
-                triggerRestoreRequest.Item = new RestoreRequestResource();
-                triggerRestoreRequest.Item.Properties = new RestoreRequest();
-                triggerRestoreRequest.Item.Properties = restoreRequest;
+                // 3. Enable protection
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
+                protectedItemTestHelper.EnableProtection(resourceGroupName, resourceName, policyId, containerUri, itemUri);
 
-                var response = client.Restores.TriggerRestore(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
-                    fabricName, containerUri, itemUri, recoveryPointId, triggerRestoreRequest);
+                // 4. Get protected item's source resource ID
+                var protectedItemResponse = protectedItemTestHelper.GetProtectedItem(resourceGroupName, resourceName, containerUri, itemUri);
+                string sourceResourceId = ((AzureIaaSVMProtectedItem)protectedItemResponse.Item.Properties).VirtualMachineId;
 
-                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
-                Assert.True(!string.IsNullOrEmpty(response.Location), "Location cant be null");
+                // 5. Trigger backup and wait for completion
+                BackupTestHelpers backupTestHelper = new BackupTestHelpers(client);
+                DateTime backupStartTime = DateTime.UtcNow;
+                string backupJobId = backupTestHelper.BackupProtectedItem(resourceGroupName, resourceName, containerUri, itemUri);
+                JobTestHelpers jobTestHelper = new JobTestHelpers(client);
+                jobTestHelper.WaitForJob(resourceGroupName, resourceName, backupJobId);
+                DateTime backupEndTime = DateTime.UtcNow;
+
+                // 6. Get latest RP
+                RecoveryPointTestHelpers recoveryPointTestHelper = new RecoveryPointTestHelpers(client);
+                var recoveryPoints = recoveryPointTestHelper.ListRecoveryPoints(
+                    resourceGroupName, resourceName, containerUri, itemUri, backupStartTime, backupEndTime);
+                var recoveryPointResource = recoveryPointTestHelper.GetRecoveryPointDetails(
+                    resourceGroupName, resourceName, containerUri, itemUri, recoveryPoints[0].Name);
+
+                // ACTION: Trigger disk restore on the latest RP and wait for completion
+                RestoreTestHelpers restoreTestHelper = new RestoreTestHelpers(client);
+                string restoreJobId = restoreTestHelper.RestoreProtectedItem(
+                    resourceGroupName, resourceName, containerUri, itemUri, sourceResourceId, storageAccountId, recoveryPointResource);
+                jobTestHelper.WaitForJob(resourceGroupName, resourceName, restoreJobId);
             }
         }
     }

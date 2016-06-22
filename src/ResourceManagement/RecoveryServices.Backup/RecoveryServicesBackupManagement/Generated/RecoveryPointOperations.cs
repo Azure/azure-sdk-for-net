@@ -281,6 +281,83 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string sourceVMStorageTypeInstance = ((string)sourceVMStorageTypeValue);
                                         recoveryPointInstance.SourceVMStorageType = sourceVMStorageTypeInstance;
                                     }
+                                    
+                                    JToken isSourceVMEncryptedValue = propertiesValue["isSourceVMEncrypted"];
+                                    if (isSourceVMEncryptedValue != null && isSourceVMEncryptedValue.Type != JTokenType.Null)
+                                    {
+                                        bool isSourceVMEncryptedInstance = ((bool)isSourceVMEncryptedValue);
+                                        recoveryPointInstance.IsSourceVMEncrypted = isSourceVMEncryptedInstance;
+                                    }
+                                    
+                                    JToken keyAndSecretValue = propertiesValue["keyAndSecret"];
+                                    if (keyAndSecretValue != null && keyAndSecretValue.Type != JTokenType.Null)
+                                    {
+                                        KeyAndSecretDetails keyAndSecretInstance = new KeyAndSecretDetails();
+                                        recoveryPointInstance.KeyAndSecret = keyAndSecretInstance;
+                                        
+                                        JToken kekDetailsValue = keyAndSecretValue["kekDetails"];
+                                        if (kekDetailsValue != null && kekDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            KekDetails kekDetailsInstance = new KekDetails();
+                                            keyAndSecretInstance.KekDetails = kekDetailsInstance;
+                                            
+                                            JToken keyUrlValue = kekDetailsValue["keyUrl"];
+                                            if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                            {
+                                                string keyUrlInstance = ((string)keyUrlValue);
+                                                kekDetailsInstance.KeyUrl = keyUrlInstance;
+                                            }
+                                            
+                                            JToken keyVaultIdValue = kekDetailsValue["keyVaultId"];
+                                            if (keyVaultIdValue != null && keyVaultIdValue.Type != JTokenType.Null)
+                                            {
+                                                string keyVaultIdInstance = ((string)keyVaultIdValue);
+                                                kekDetailsInstance.KeyVaultId = keyVaultIdInstance;
+                                            }
+                                            
+                                            JToken keyBackupDataValue = kekDetailsValue["keyBackupData"];
+                                            if (keyBackupDataValue != null && keyBackupDataValue.Type != JTokenType.Null)
+                                            {
+                                                string keyBackupDataInstance = ((string)keyBackupDataValue);
+                                                kekDetailsInstance.KeyBackupData = keyBackupDataInstance;
+                                            }
+                                        }
+                                        
+                                        JToken bekDetailsValue = keyAndSecretValue["bekDetails"];
+                                        if (bekDetailsValue != null && bekDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            BekDetails bekDetailsInstance = new BekDetails();
+                                            keyAndSecretInstance.BekDetails = bekDetailsInstance;
+                                            
+                                            JToken secretUrlValue = bekDetailsValue["secretUrl"];
+                                            if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                            {
+                                                string secretUrlInstance = ((string)secretUrlValue);
+                                                bekDetailsInstance.SecretUrl = secretUrlInstance;
+                                            }
+                                            
+                                            JToken secretVaultIdValue = bekDetailsValue["secretVaultId"];
+                                            if (secretVaultIdValue != null && secretVaultIdValue.Type != JTokenType.Null)
+                                            {
+                                                string secretVaultIdInstance = ((string)secretVaultIdValue);
+                                                bekDetailsInstance.SecretVaultId = secretVaultIdInstance;
+                                            }
+                                            
+                                            JToken secretDataValue = bekDetailsValue["secretData"];
+                                            if (secretDataValue != null && secretDataValue.Type != JTokenType.Null)
+                                            {
+                                                string secretDataInstance = ((string)secretDataValue);
+                                                bekDetailsInstance.SecretData = secretDataInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken isInstantILRSessionActiveValue = propertiesValue["isInstantILRSessionActive"];
+                                    if (isInstantILRSessionActiveValue != null && isInstantILRSessionActiveValue.Type != JTokenType.Null)
+                                    {
+                                        bool isInstantILRSessionActiveInstance = ((bool)isInstantILRSessionActiveValue);
+                                        recoveryPointInstance.IsInstantILRSessionActive = isInstantILRSessionActiveInstance;
+                                    }
                                     recPointInstance.Properties = recoveryPointInstance;
                                 }
                                 if (typeName == "GenericRecoveryPoint")
@@ -292,6 +369,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string recoveryPointTypeInstance2 = ((string)recoveryPointTypeValue2);
                                         genericRecoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance2;
+                                    }
+                                    
+                                    JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                    if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance = ((string)friendlyNameValue);
+                                        genericRecoveryPointInstance.FriendlyName = friendlyNameInstance;
                                     }
                                     
                                     JToken recoveryPointTimeValue2 = propertiesValue["recoveryPointTime"];
@@ -645,6 +729,83 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 string sourceVMStorageTypeInstance = ((string)sourceVMStorageTypeValue);
                                                 recoveryPointInstance.SourceVMStorageType = sourceVMStorageTypeInstance;
                                             }
+                                            
+                                            JToken isSourceVMEncryptedValue = propertiesValue["isSourceVMEncrypted"];
+                                            if (isSourceVMEncryptedValue != null && isSourceVMEncryptedValue.Type != JTokenType.Null)
+                                            {
+                                                bool isSourceVMEncryptedInstance = ((bool)isSourceVMEncryptedValue);
+                                                recoveryPointInstance.IsSourceVMEncrypted = isSourceVMEncryptedInstance;
+                                            }
+                                            
+                                            JToken keyAndSecretValue = propertiesValue["keyAndSecret"];
+                                            if (keyAndSecretValue != null && keyAndSecretValue.Type != JTokenType.Null)
+                                            {
+                                                KeyAndSecretDetails keyAndSecretInstance = new KeyAndSecretDetails();
+                                                recoveryPointInstance.KeyAndSecret = keyAndSecretInstance;
+                                                
+                                                JToken kekDetailsValue = keyAndSecretValue["kekDetails"];
+                                                if (kekDetailsValue != null && kekDetailsValue.Type != JTokenType.Null)
+                                                {
+                                                    KekDetails kekDetailsInstance = new KekDetails();
+                                                    keyAndSecretInstance.KekDetails = kekDetailsInstance;
+                                                    
+                                                    JToken keyUrlValue = kekDetailsValue["keyUrl"];
+                                                    if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                                    {
+                                                        string keyUrlInstance = ((string)keyUrlValue);
+                                                        kekDetailsInstance.KeyUrl = keyUrlInstance;
+                                                    }
+                                                    
+                                                    JToken keyVaultIdValue = kekDetailsValue["keyVaultId"];
+                                                    if (keyVaultIdValue != null && keyVaultIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string keyVaultIdInstance = ((string)keyVaultIdValue);
+                                                        kekDetailsInstance.KeyVaultId = keyVaultIdInstance;
+                                                    }
+                                                    
+                                                    JToken keyBackupDataValue = kekDetailsValue["keyBackupData"];
+                                                    if (keyBackupDataValue != null && keyBackupDataValue.Type != JTokenType.Null)
+                                                    {
+                                                        string keyBackupDataInstance = ((string)keyBackupDataValue);
+                                                        kekDetailsInstance.KeyBackupData = keyBackupDataInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken bekDetailsValue = keyAndSecretValue["bekDetails"];
+                                                if (bekDetailsValue != null && bekDetailsValue.Type != JTokenType.Null)
+                                                {
+                                                    BekDetails bekDetailsInstance = new BekDetails();
+                                                    keyAndSecretInstance.BekDetails = bekDetailsInstance;
+                                                    
+                                                    JToken secretUrlValue = bekDetailsValue["secretUrl"];
+                                                    if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                                    {
+                                                        string secretUrlInstance = ((string)secretUrlValue);
+                                                        bekDetailsInstance.SecretUrl = secretUrlInstance;
+                                                    }
+                                                    
+                                                    JToken secretVaultIdValue = bekDetailsValue["secretVaultId"];
+                                                    if (secretVaultIdValue != null && secretVaultIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string secretVaultIdInstance = ((string)secretVaultIdValue);
+                                                        bekDetailsInstance.SecretVaultId = secretVaultIdInstance;
+                                                    }
+                                                    
+                                                    JToken secretDataValue = bekDetailsValue["secretData"];
+                                                    if (secretDataValue != null && secretDataValue.Type != JTokenType.Null)
+                                                    {
+                                                        string secretDataInstance = ((string)secretDataValue);
+                                                        bekDetailsInstance.SecretData = secretDataInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken isInstantILRSessionActiveValue = propertiesValue["isInstantILRSessionActive"];
+                                            if (isInstantILRSessionActiveValue != null && isInstantILRSessionActiveValue.Type != JTokenType.Null)
+                                            {
+                                                bool isInstantILRSessionActiveInstance = ((bool)isInstantILRSessionActiveValue);
+                                                recoveryPointInstance.IsInstantILRSessionActive = isInstantILRSessionActiveInstance;
+                                            }
                                             recoveryPointResourceInstance.Properties = recoveryPointInstance;
                                         }
                                         if (typeName == "GenericRecoveryPoint")
@@ -656,6 +817,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string recoveryPointTypeInstance2 = ((string)recoveryPointTypeValue2);
                                                 genericRecoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance2;
+                                            }
+                                            
+                                            JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance = ((string)friendlyNameValue);
+                                                genericRecoveryPointInstance.FriendlyName = friendlyNameInstance;
                                             }
                                             
                                             JToken recoveryPointTimeValue2 = propertiesValue["recoveryPointTime"];

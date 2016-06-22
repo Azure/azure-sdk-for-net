@@ -261,6 +261,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     retentionPolicyValue["retentionPolicyType"] = "SimpleRetentionPolicy";
                                     SimpleRetentionPolicy derived5 = ((SimpleRetentionPolicy)derived2.RetentionPolicy);
+                                    
+                                    if (derived5.RetentionDuration != null)
+                                    {
+                                        JObject retentionDurationValue = new JObject();
+                                        retentionPolicyValue["retentionDuration"] = retentionDurationValue;
+                                        
+                                        retentionDurationValue["count"] = derived5.RetentionDuration.Count;
+                                        
+                                        if (derived5.RetentionDuration.DurationType != null)
+                                        {
+                                            retentionDurationValue["durationType"] = derived5.RetentionDuration.DurationType;
+                                        }
+                                    }
                                 }
                                 if (derived2.RetentionPolicy is LongTermRetentionPolicy)
                                 {
@@ -284,14 +297,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         
                                         if (derived6.DailySchedule.RetentionDuration != null)
                                         {
-                                            JObject retentionDurationValue = new JObject();
-                                            dailyScheduleValue["retentionDuration"] = retentionDurationValue;
+                                            JObject retentionDurationValue2 = new JObject();
+                                            dailyScheduleValue["retentionDuration"] = retentionDurationValue2;
                                             
-                                            retentionDurationValue["count"] = derived6.DailySchedule.RetentionDuration.Count;
+                                            retentionDurationValue2["count"] = derived6.DailySchedule.RetentionDuration.Count;
                                             
                                             if (derived6.DailySchedule.RetentionDuration.DurationType != null)
                                             {
-                                                retentionDurationValue["durationType"] = derived6.DailySchedule.RetentionDuration.DurationType;
+                                                retentionDurationValue2["durationType"] = derived6.DailySchedule.RetentionDuration.DurationType;
                                             }
                                         }
                                     }
@@ -323,14 +336,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         
                                         if (derived6.WeeklySchedule.RetentionDuration != null)
                                         {
-                                            JObject retentionDurationValue2 = new JObject();
-                                            weeklyScheduleValue["retentionDuration"] = retentionDurationValue2;
+                                            JObject retentionDurationValue3 = new JObject();
+                                            weeklyScheduleValue["retentionDuration"] = retentionDurationValue3;
                                             
-                                            retentionDurationValue2["count"] = derived6.WeeklySchedule.RetentionDuration.Count;
+                                            retentionDurationValue3["count"] = derived6.WeeklySchedule.RetentionDuration.Count;
                                             
                                             if (derived6.WeeklySchedule.RetentionDuration.DurationType != null)
                                             {
-                                                retentionDurationValue2["durationType"] = derived6.WeeklySchedule.RetentionDuration.DurationType;
+                                                retentionDurationValue3["durationType"] = derived6.WeeklySchedule.RetentionDuration.DurationType;
                                             }
                                         }
                                     }
@@ -404,14 +417,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         
                                         if (derived6.MonthlySchedule.RetentionDuration != null)
                                         {
-                                            JObject retentionDurationValue3 = new JObject();
-                                            monthlyScheduleValue["retentionDuration"] = retentionDurationValue3;
+                                            JObject retentionDurationValue4 = new JObject();
+                                            monthlyScheduleValue["retentionDuration"] = retentionDurationValue4;
                                             
-                                            retentionDurationValue3["count"] = derived6.MonthlySchedule.RetentionDuration.Count;
+                                            retentionDurationValue4["count"] = derived6.MonthlySchedule.RetentionDuration.Count;
                                             
                                             if (derived6.MonthlySchedule.RetentionDuration.DurationType != null)
                                             {
-                                                retentionDurationValue3["durationType"] = derived6.MonthlySchedule.RetentionDuration.DurationType;
+                                                retentionDurationValue4["durationType"] = derived6.MonthlySchedule.RetentionDuration.DurationType;
                                             }
                                         }
                                     }
@@ -495,14 +508,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         
                                         if (derived6.YearlySchedule.RetentionDuration != null)
                                         {
-                                            JObject retentionDurationValue4 = new JObject();
-                                            yearlyScheduleValue["retentionDuration"] = retentionDurationValue4;
+                                            JObject retentionDurationValue5 = new JObject();
+                                            yearlyScheduleValue["retentionDuration"] = retentionDurationValue5;
                                             
-                                            retentionDurationValue4["count"] = derived6.YearlySchedule.RetentionDuration.Count;
+                                            retentionDurationValue5["count"] = derived6.YearlySchedule.RetentionDuration.Count;
                                             
                                             if (derived6.YearlySchedule.RetentionDuration.DurationType != null)
                                             {
-                                                retentionDurationValue4["durationType"] = derived6.YearlySchedule.RetentionDuration.DurationType;
+                                                retentionDurationValue5["durationType"] = derived6.YearlySchedule.RetentionDuration.DurationType;
                                             }
                                         }
                                     }
@@ -515,6 +528,287 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             }
                             
                             propertiesValue["protectedItemsCount"] = derived2.ProtectedItemsCount;
+                        }
+                        if (request.Item.Properties is AzureSqlProtectionPolicy)
+                        {
+                            propertiesValue["backupManagementType"] = "AzureSql";
+                            AzureSqlProtectionPolicy derived7 = ((AzureSqlProtectionPolicy)request.Item.Properties);
+                            
+                            if (derived7.RetentionPolicy != null)
+                            {
+                                JObject retentionPolicyValue2 = new JObject();
+                                propertiesValue["retentionPolicy"] = retentionPolicyValue2;
+                                if (derived7.RetentionPolicy is SimpleRetentionPolicy)
+                                {
+                                    retentionPolicyValue2["retentionPolicyType"] = "SimpleRetentionPolicy";
+                                    SimpleRetentionPolicy derived8 = ((SimpleRetentionPolicy)derived7.RetentionPolicy);
+                                    
+                                    if (derived8.RetentionDuration != null)
+                                    {
+                                        JObject retentionDurationValue6 = new JObject();
+                                        retentionPolicyValue2["retentionDuration"] = retentionDurationValue6;
+                                        
+                                        retentionDurationValue6["count"] = derived8.RetentionDuration.Count;
+                                        
+                                        if (derived8.RetentionDuration.DurationType != null)
+                                        {
+                                            retentionDurationValue6["durationType"] = derived8.RetentionDuration.DurationType;
+                                        }
+                                    }
+                                }
+                                if (derived7.RetentionPolicy is LongTermRetentionPolicy)
+                                {
+                                    retentionPolicyValue2["retentionPolicyType"] = "LongTermRetentionPolicy";
+                                    LongTermRetentionPolicy derived9 = ((LongTermRetentionPolicy)derived7.RetentionPolicy);
+                                    
+                                    if (derived9.DailySchedule != null)
+                                    {
+                                        JObject dailyScheduleValue2 = new JObject();
+                                        retentionPolicyValue2["dailySchedule"] = dailyScheduleValue2;
+                                        
+                                        if (derived9.DailySchedule.RetentionTimes != null)
+                                        {
+                                            JArray retentionTimesArray5 = new JArray();
+                                            foreach (DateTime retentionTimesItem5 in derived9.DailySchedule.RetentionTimes)
+                                            {
+                                                retentionTimesArray5.Add(retentionTimesItem5);
+                                            }
+                                            dailyScheduleValue2["retentionTimes"] = retentionTimesArray5;
+                                        }
+                                        
+                                        if (derived9.DailySchedule.RetentionDuration != null)
+                                        {
+                                            JObject retentionDurationValue7 = new JObject();
+                                            dailyScheduleValue2["retentionDuration"] = retentionDurationValue7;
+                                            
+                                            retentionDurationValue7["count"] = derived9.DailySchedule.RetentionDuration.Count;
+                                            
+                                            if (derived9.DailySchedule.RetentionDuration.DurationType != null)
+                                            {
+                                                retentionDurationValue7["durationType"] = derived9.DailySchedule.RetentionDuration.DurationType;
+                                            }
+                                        }
+                                    }
+                                    
+                                    if (derived9.WeeklySchedule != null)
+                                    {
+                                        JObject weeklyScheduleValue2 = new JObject();
+                                        retentionPolicyValue2["weeklySchedule"] = weeklyScheduleValue2;
+                                        
+                                        if (derived9.WeeklySchedule.DaysOfTheWeek != null)
+                                        {
+                                            JArray daysOfTheWeekArray4 = new JArray();
+                                            foreach (string daysOfTheWeekItem4 in derived9.WeeklySchedule.DaysOfTheWeek)
+                                            {
+                                                daysOfTheWeekArray4.Add(daysOfTheWeekItem4);
+                                            }
+                                            weeklyScheduleValue2["daysOfTheWeek"] = daysOfTheWeekArray4;
+                                        }
+                                        
+                                        if (derived9.WeeklySchedule.RetentionTimes != null)
+                                        {
+                                            JArray retentionTimesArray6 = new JArray();
+                                            foreach (DateTime retentionTimesItem6 in derived9.WeeklySchedule.RetentionTimes)
+                                            {
+                                                retentionTimesArray6.Add(retentionTimesItem6);
+                                            }
+                                            weeklyScheduleValue2["retentionTimes"] = retentionTimesArray6;
+                                        }
+                                        
+                                        if (derived9.WeeklySchedule.RetentionDuration != null)
+                                        {
+                                            JObject retentionDurationValue8 = new JObject();
+                                            weeklyScheduleValue2["retentionDuration"] = retentionDurationValue8;
+                                            
+                                            retentionDurationValue8["count"] = derived9.WeeklySchedule.RetentionDuration.Count;
+                                            
+                                            if (derived9.WeeklySchedule.RetentionDuration.DurationType != null)
+                                            {
+                                                retentionDurationValue8["durationType"] = derived9.WeeklySchedule.RetentionDuration.DurationType;
+                                            }
+                                        }
+                                    }
+                                    
+                                    if (derived9.MonthlySchedule != null)
+                                    {
+                                        JObject monthlyScheduleValue2 = new JObject();
+                                        retentionPolicyValue2["monthlySchedule"] = monthlyScheduleValue2;
+                                        
+                                        if (derived9.MonthlySchedule.RetentionScheduleFormatType != null)
+                                        {
+                                            monthlyScheduleValue2["retentionScheduleFormatType"] = derived9.MonthlySchedule.RetentionScheduleFormatType;
+                                        }
+                                        
+                                        if (derived9.MonthlySchedule.RetentionScheduleDaily != null)
+                                        {
+                                            JObject retentionScheduleDailyValue3 = new JObject();
+                                            monthlyScheduleValue2["retentionScheduleDaily"] = retentionScheduleDailyValue3;
+                                            
+                                            if (derived9.MonthlySchedule.RetentionScheduleDaily.DaysOfTheMonth != null)
+                                            {
+                                                JArray daysOfTheMonthArray3 = new JArray();
+                                                foreach (Day daysOfTheMonthItem3 in derived9.MonthlySchedule.RetentionScheduleDaily.DaysOfTheMonth)
+                                                {
+                                                    JObject dayValue3 = new JObject();
+                                                    daysOfTheMonthArray3.Add(dayValue3);
+                                                    
+                                                    dayValue3["date"] = daysOfTheMonthItem3.Date;
+                                                    
+                                                    dayValue3["isLast"] = daysOfTheMonthItem3.IsLast;
+                                                }
+                                                retentionScheduleDailyValue3["daysOfTheMonth"] = daysOfTheMonthArray3;
+                                            }
+                                        }
+                                        
+                                        if (derived9.MonthlySchedule.RetentionScheduleWeekly != null)
+                                        {
+                                            JObject retentionScheduleWeeklyValue3 = new JObject();
+                                            monthlyScheduleValue2["retentionScheduleWeekly"] = retentionScheduleWeeklyValue3;
+                                            
+                                            if (derived9.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek != null)
+                                            {
+                                                JArray daysOfTheWeekArray5 = new JArray();
+                                                foreach (string daysOfTheWeekItem5 in derived9.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
+                                                {
+                                                    daysOfTheWeekArray5.Add(daysOfTheWeekItem5);
+                                                }
+                                                retentionScheduleWeeklyValue3["daysOfTheWeek"] = daysOfTheWeekArray5;
+                                            }
+                                            
+                                            if (derived9.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth != null)
+                                            {
+                                                JArray weeksOfTheMonthArray3 = new JArray();
+                                                foreach (string weeksOfTheMonthItem3 in derived9.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
+                                                {
+                                                    weeksOfTheMonthArray3.Add(weeksOfTheMonthItem3);
+                                                }
+                                                retentionScheduleWeeklyValue3["weeksOfTheMonth"] = weeksOfTheMonthArray3;
+                                            }
+                                        }
+                                        
+                                        if (derived9.MonthlySchedule.RetentionTimes != null)
+                                        {
+                                            JArray retentionTimesArray7 = new JArray();
+                                            foreach (DateTime retentionTimesItem7 in derived9.MonthlySchedule.RetentionTimes)
+                                            {
+                                                retentionTimesArray7.Add(retentionTimesItem7);
+                                            }
+                                            monthlyScheduleValue2["retentionTimes"] = retentionTimesArray7;
+                                        }
+                                        
+                                        if (derived9.MonthlySchedule.RetentionDuration != null)
+                                        {
+                                            JObject retentionDurationValue9 = new JObject();
+                                            monthlyScheduleValue2["retentionDuration"] = retentionDurationValue9;
+                                            
+                                            retentionDurationValue9["count"] = derived9.MonthlySchedule.RetentionDuration.Count;
+                                            
+                                            if (derived9.MonthlySchedule.RetentionDuration.DurationType != null)
+                                            {
+                                                retentionDurationValue9["durationType"] = derived9.MonthlySchedule.RetentionDuration.DurationType;
+                                            }
+                                        }
+                                    }
+                                    
+                                    if (derived9.YearlySchedule != null)
+                                    {
+                                        JObject yearlyScheduleValue2 = new JObject();
+                                        retentionPolicyValue2["yearlySchedule"] = yearlyScheduleValue2;
+                                        
+                                        if (derived9.YearlySchedule.RetentionScheduleFormatType != null)
+                                        {
+                                            yearlyScheduleValue2["retentionScheduleFormatType"] = derived9.YearlySchedule.RetentionScheduleFormatType;
+                                        }
+                                        
+                                        if (derived9.YearlySchedule.MonthsOfYear != null)
+                                        {
+                                            JArray monthsOfYearArray2 = new JArray();
+                                            foreach (string monthsOfYearItem2 in derived9.YearlySchedule.MonthsOfYear)
+                                            {
+                                                monthsOfYearArray2.Add(monthsOfYearItem2);
+                                            }
+                                            yearlyScheduleValue2["monthsOfYear"] = monthsOfYearArray2;
+                                        }
+                                        
+                                        if (derived9.YearlySchedule.RetentionScheduleDaily != null)
+                                        {
+                                            JObject retentionScheduleDailyValue4 = new JObject();
+                                            yearlyScheduleValue2["retentionScheduleDaily"] = retentionScheduleDailyValue4;
+                                            
+                                            if (derived9.YearlySchedule.RetentionScheduleDaily.DaysOfTheMonth != null)
+                                            {
+                                                JArray daysOfTheMonthArray4 = new JArray();
+                                                foreach (Day daysOfTheMonthItem4 in derived9.YearlySchedule.RetentionScheduleDaily.DaysOfTheMonth)
+                                                {
+                                                    JObject dayValue4 = new JObject();
+                                                    daysOfTheMonthArray4.Add(dayValue4);
+                                                    
+                                                    dayValue4["date"] = daysOfTheMonthItem4.Date;
+                                                    
+                                                    dayValue4["isLast"] = daysOfTheMonthItem4.IsLast;
+                                                }
+                                                retentionScheduleDailyValue4["daysOfTheMonth"] = daysOfTheMonthArray4;
+                                            }
+                                        }
+                                        
+                                        if (derived9.YearlySchedule.RetentionScheduleWeekly != null)
+                                        {
+                                            JObject retentionScheduleWeeklyValue4 = new JObject();
+                                            yearlyScheduleValue2["retentionScheduleWeekly"] = retentionScheduleWeeklyValue4;
+                                            
+                                            if (derived9.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek != null)
+                                            {
+                                                JArray daysOfTheWeekArray6 = new JArray();
+                                                foreach (string daysOfTheWeekItem6 in derived9.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
+                                                {
+                                                    daysOfTheWeekArray6.Add(daysOfTheWeekItem6);
+                                                }
+                                                retentionScheduleWeeklyValue4["daysOfTheWeek"] = daysOfTheWeekArray6;
+                                            }
+                                            
+                                            if (derived9.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth != null)
+                                            {
+                                                JArray weeksOfTheMonthArray4 = new JArray();
+                                                foreach (string weeksOfTheMonthItem4 in derived9.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
+                                                {
+                                                    weeksOfTheMonthArray4.Add(weeksOfTheMonthItem4);
+                                                }
+                                                retentionScheduleWeeklyValue4["weeksOfTheMonth"] = weeksOfTheMonthArray4;
+                                            }
+                                        }
+                                        
+                                        if (derived9.YearlySchedule.RetentionTimes != null)
+                                        {
+                                            JArray retentionTimesArray8 = new JArray();
+                                            foreach (DateTime retentionTimesItem8 in derived9.YearlySchedule.RetentionTimes)
+                                            {
+                                                retentionTimesArray8.Add(retentionTimesItem8);
+                                            }
+                                            yearlyScheduleValue2["retentionTimes"] = retentionTimesArray8;
+                                        }
+                                        
+                                        if (derived9.YearlySchedule.RetentionDuration != null)
+                                        {
+                                            JObject retentionDurationValue10 = new JObject();
+                                            yearlyScheduleValue2["retentionDuration"] = retentionDurationValue10;
+                                            
+                                            retentionDurationValue10["count"] = derived9.YearlySchedule.RetentionDuration.Count;
+                                            
+                                            if (derived9.YearlySchedule.RetentionDuration.DurationType != null)
+                                            {
+                                                retentionDurationValue10["durationType"] = derived9.YearlySchedule.RetentionDuration.DurationType;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if (derived7.BackupManagementType != null)
+                            {
+                                propertiesValue["backupManagementType"] = derived7.BackupManagementType;
+                            }
+                            
+                            propertiesValue["protectedItemsCount"] = derived7.ProtectedItemsCount;
                         }
                     }
                     
@@ -673,94 +967,69 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                     }
                                     
-                                    JToken retentionPolicyValue2 = propertiesValue2["retentionPolicy"];
-                                    if (retentionPolicyValue2 != null && retentionPolicyValue2.Type != JTokenType.Null)
+                                    JToken retentionPolicyValue3 = propertiesValue2["retentionPolicy"];
+                                    if (retentionPolicyValue3 != null && retentionPolicyValue3.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)retentionPolicyValue2["retentionPolicyType"]);
+                                        string typeName3 = ((string)retentionPolicyValue3["retentionPolicyType"]);
                                         if (typeName3 == "SimpleRetentionPolicy")
                                         {
                                             SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
+                                            
+                                            JToken retentionDurationValue11 = retentionPolicyValue3["retentionDuration"];
+                                            if (retentionDurationValue11 != null && retentionDurationValue11.Type != JTokenType.Null)
+                                            {
+                                                RetentionDuration retentionDurationInstance = new RetentionDuration();
+                                                simpleRetentionPolicyInstance.RetentionDuration = retentionDurationInstance;
+                                                
+                                                JToken countValue = retentionDurationValue11["count"];
+                                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance = ((int)countValue);
+                                                    retentionDurationInstance.Count = countInstance;
+                                                }
+                                                
+                                                JToken durationTypeValue = retentionDurationValue11["durationType"];
+                                                if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string durationTypeInstance = ((string)durationTypeValue);
+                                                    retentionDurationInstance.DurationType = durationTypeInstance;
+                                                }
+                                            }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                         }
                                         if (typeName3 == "LongTermRetentionPolicy")
                                         {
                                             LongTermRetentionPolicy longTermRetentionPolicyInstance = new LongTermRetentionPolicy();
                                             
-                                            JToken dailyScheduleValue2 = retentionPolicyValue2["dailySchedule"];
-                                            if (dailyScheduleValue2 != null && dailyScheduleValue2.Type != JTokenType.Null)
+                                            JToken dailyScheduleValue3 = retentionPolicyValue3["dailySchedule"];
+                                            if (dailyScheduleValue3 != null && dailyScheduleValue3.Type != JTokenType.Null)
                                             {
                                                 DailyRetentionSchedule dailyScheduleInstance = new DailyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.DailySchedule = dailyScheduleInstance;
                                                 
-                                                JToken retentionTimesArray5 = dailyScheduleValue2["retentionTimes"];
-                                                if (retentionTimesArray5 != null && retentionTimesArray5.Type != JTokenType.Null)
+                                                JToken retentionTimesArray9 = dailyScheduleValue3["retentionTimes"];
+                                                if (retentionTimesArray9 != null && retentionTimesArray9.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken retentionTimesValue in ((JArray)retentionTimesArray5))
+                                                    foreach (JToken retentionTimesValue in ((JArray)retentionTimesArray9))
                                                     {
                                                         dailyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue));
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue5 = dailyScheduleValue2["retentionDuration"];
-                                                if (retentionDurationValue5 != null && retentionDurationValue5.Type != JTokenType.Null)
-                                                {
-                                                    RetentionDuration retentionDurationInstance = new RetentionDuration();
-                                                    dailyScheduleInstance.RetentionDuration = retentionDurationInstance;
-                                                    
-                                                    JToken countValue = retentionDurationValue5["count"];
-                                                    if (countValue != null && countValue.Type != JTokenType.Null)
-                                                    {
-                                                        int countInstance = ((int)countValue);
-                                                        retentionDurationInstance.Count = countInstance;
-                                                    }
-                                                    
-                                                    JToken durationTypeValue = retentionDurationValue5["durationType"];
-                                                    if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
-                                                    {
-                                                        string durationTypeInstance = ((string)durationTypeValue);
-                                                        retentionDurationInstance.DurationType = durationTypeInstance;
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken weeklyScheduleValue2 = retentionPolicyValue2["weeklySchedule"];
-                                            if (weeklyScheduleValue2 != null && weeklyScheduleValue2.Type != JTokenType.Null)
-                                            {
-                                                WeeklyRetentionSchedule weeklyScheduleInstance = new WeeklyRetentionSchedule();
-                                                longTermRetentionPolicyInstance.WeeklySchedule = weeklyScheduleInstance;
-                                                
-                                                JToken daysOfTheWeekArray4 = weeklyScheduleValue2["daysOfTheWeek"];
-                                                if (daysOfTheWeekArray4 != null && daysOfTheWeekArray4.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken daysOfTheWeekValue in ((JArray)daysOfTheWeekArray4))
-                                                    {
-                                                        weeklyScheduleInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue));
-                                                    }
-                                                }
-                                                
-                                                JToken retentionTimesArray6 = weeklyScheduleValue2["retentionTimes"];
-                                                if (retentionTimesArray6 != null && retentionTimesArray6.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken retentionTimesValue2 in ((JArray)retentionTimesArray6))
-                                                    {
-                                                        weeklyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue2));
-                                                    }
-                                                }
-                                                
-                                                JToken retentionDurationValue6 = weeklyScheduleValue2["retentionDuration"];
-                                                if (retentionDurationValue6 != null && retentionDurationValue6.Type != JTokenType.Null)
+                                                JToken retentionDurationValue12 = dailyScheduleValue3["retentionDuration"];
+                                                if (retentionDurationValue12 != null && retentionDurationValue12.Type != JTokenType.Null)
                                                 {
                                                     RetentionDuration retentionDurationInstance2 = new RetentionDuration();
-                                                    weeklyScheduleInstance.RetentionDuration = retentionDurationInstance2;
+                                                    dailyScheduleInstance.RetentionDuration = retentionDurationInstance2;
                                                     
-                                                    JToken countValue2 = retentionDurationValue6["count"];
+                                                    JToken countValue2 = retentionDurationValue12["count"];
                                                     if (countValue2 != null && countValue2.Type != JTokenType.Null)
                                                     {
                                                         int countInstance2 = ((int)countValue2);
                                                         retentionDurationInstance2.Count = countInstance2;
                                                     }
                                                     
-                                                    JToken durationTypeValue2 = retentionDurationValue6["durationType"];
+                                                    JToken durationTypeValue2 = retentionDurationValue12["durationType"];
                                                     if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                     {
                                                         string durationTypeInstance2 = ((string)durationTypeValue2);
@@ -769,29 +1038,75 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 }
                                             }
                                             
-                                            JToken monthlyScheduleValue2 = retentionPolicyValue2["monthlySchedule"];
-                                            if (monthlyScheduleValue2 != null && monthlyScheduleValue2.Type != JTokenType.Null)
+                                            JToken weeklyScheduleValue3 = retentionPolicyValue3["weeklySchedule"];
+                                            if (weeklyScheduleValue3 != null && weeklyScheduleValue3.Type != JTokenType.Null)
+                                            {
+                                                WeeklyRetentionSchedule weeklyScheduleInstance = new WeeklyRetentionSchedule();
+                                                longTermRetentionPolicyInstance.WeeklySchedule = weeklyScheduleInstance;
+                                                
+                                                JToken daysOfTheWeekArray7 = weeklyScheduleValue3["daysOfTheWeek"];
+                                                if (daysOfTheWeekArray7 != null && daysOfTheWeekArray7.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken daysOfTheWeekValue in ((JArray)daysOfTheWeekArray7))
+                                                    {
+                                                        weeklyScheduleInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray10 = weeklyScheduleValue3["retentionTimes"];
+                                                if (retentionTimesArray10 != null && retentionTimesArray10.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue2 in ((JArray)retentionTimesArray10))
+                                                    {
+                                                        weeklyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue13 = weeklyScheduleValue3["retentionDuration"];
+                                                if (retentionDurationValue13 != null && retentionDurationValue13.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance3 = new RetentionDuration();
+                                                    weeklyScheduleInstance.RetentionDuration = retentionDurationInstance3;
+                                                    
+                                                    JToken countValue3 = retentionDurationValue13["count"];
+                                                    if (countValue3 != null && countValue3.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance3 = ((int)countValue3);
+                                                        retentionDurationInstance3.Count = countInstance3;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue3 = retentionDurationValue13["durationType"];
+                                                    if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
+                                                        retentionDurationInstance3.DurationType = durationTypeInstance3;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken monthlyScheduleValue3 = retentionPolicyValue3["monthlySchedule"];
+                                            if (monthlyScheduleValue3 != null && monthlyScheduleValue3.Type != JTokenType.Null)
                                             {
                                                 MonthlyRetentionSchedule monthlyScheduleInstance = new MonthlyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.MonthlySchedule = monthlyScheduleInstance;
                                                 
-                                                JToken retentionScheduleFormatTypeValue = monthlyScheduleValue2["retentionScheduleFormatType"];
+                                                JToken retentionScheduleFormatTypeValue = monthlyScheduleValue3["retentionScheduleFormatType"];
                                                 if (retentionScheduleFormatTypeValue != null && retentionScheduleFormatTypeValue.Type != JTokenType.Null)
                                                 {
                                                     string retentionScheduleFormatTypeInstance = ((string)retentionScheduleFormatTypeValue);
                                                     monthlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance;
                                                 }
                                                 
-                                                JToken retentionScheduleDailyValue3 = monthlyScheduleValue2["retentionScheduleDaily"];
-                                                if (retentionScheduleDailyValue3 != null && retentionScheduleDailyValue3.Type != JTokenType.Null)
+                                                JToken retentionScheduleDailyValue5 = monthlyScheduleValue3["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue5 != null && retentionScheduleDailyValue5.Type != JTokenType.Null)
                                                 {
                                                     DailyRetentionFormat retentionScheduleDailyInstance = new DailyRetentionFormat();
                                                     monthlyScheduleInstance.RetentionScheduleDaily = retentionScheduleDailyInstance;
                                                     
-                                                    JToken daysOfTheMonthArray3 = retentionScheduleDailyValue3["daysOfTheMonth"];
-                                                    if (daysOfTheMonthArray3 != null && daysOfTheMonthArray3.Type != JTokenType.Null)
+                                                    JToken daysOfTheMonthArray5 = retentionScheduleDailyValue5["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray5 != null && daysOfTheMonthArray5.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken daysOfTheMonthValue in ((JArray)daysOfTheMonthArray3))
+                                                        foreach (JToken daysOfTheMonthValue in ((JArray)daysOfTheMonthArray5))
                                                         {
                                                             Day dayInstance = new Day();
                                                             retentionScheduleDailyInstance.DaysOfTheMonth.Add(dayInstance);
@@ -813,94 +1128,94 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionScheduleWeeklyValue3 = monthlyScheduleValue2["retentionScheduleWeekly"];
-                                                if (retentionScheduleWeeklyValue3 != null && retentionScheduleWeeklyValue3.Type != JTokenType.Null)
+                                                JToken retentionScheduleWeeklyValue5 = monthlyScheduleValue3["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue5 != null && retentionScheduleWeeklyValue5.Type != JTokenType.Null)
                                                 {
                                                     WeeklyRetentionFormat retentionScheduleWeeklyInstance = new WeeklyRetentionFormat();
                                                     monthlyScheduleInstance.RetentionScheduleWeekly = retentionScheduleWeeklyInstance;
                                                     
-                                                    JToken daysOfTheWeekArray5 = retentionScheduleWeeklyValue3["daysOfTheWeek"];
-                                                    if (daysOfTheWeekArray5 != null && daysOfTheWeekArray5.Type != JTokenType.Null)
+                                                    JToken daysOfTheWeekArray8 = retentionScheduleWeeklyValue5["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray8 != null && daysOfTheWeekArray8.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken daysOfTheWeekValue2 in ((JArray)daysOfTheWeekArray5))
+                                                        foreach (JToken daysOfTheWeekValue2 in ((JArray)daysOfTheWeekArray8))
                                                         {
                                                             retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue2));
                                                         }
                                                     }
                                                     
-                                                    JToken weeksOfTheMonthArray3 = retentionScheduleWeeklyValue3["weeksOfTheMonth"];
-                                                    if (weeksOfTheMonthArray3 != null && weeksOfTheMonthArray3.Type != JTokenType.Null)
+                                                    JToken weeksOfTheMonthArray5 = retentionScheduleWeeklyValue5["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray5 != null && weeksOfTheMonthArray5.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken weeksOfTheMonthValue in ((JArray)weeksOfTheMonthArray3))
+                                                        foreach (JToken weeksOfTheMonthValue in ((JArray)weeksOfTheMonthArray5))
                                                         {
                                                             retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue));
                                                         }
                                                     }
                                                 }
                                                 
-                                                JToken retentionTimesArray7 = monthlyScheduleValue2["retentionTimes"];
-                                                if (retentionTimesArray7 != null && retentionTimesArray7.Type != JTokenType.Null)
+                                                JToken retentionTimesArray11 = monthlyScheduleValue3["retentionTimes"];
+                                                if (retentionTimesArray11 != null && retentionTimesArray11.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken retentionTimesValue3 in ((JArray)retentionTimesArray7))
+                                                    foreach (JToken retentionTimesValue3 in ((JArray)retentionTimesArray11))
                                                     {
                                                         monthlyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue3));
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue7 = monthlyScheduleValue2["retentionDuration"];
-                                                if (retentionDurationValue7 != null && retentionDurationValue7.Type != JTokenType.Null)
+                                                JToken retentionDurationValue14 = monthlyScheduleValue3["retentionDuration"];
+                                                if (retentionDurationValue14 != null && retentionDurationValue14.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance3 = new RetentionDuration();
-                                                    monthlyScheduleInstance.RetentionDuration = retentionDurationInstance3;
+                                                    RetentionDuration retentionDurationInstance4 = new RetentionDuration();
+                                                    monthlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
                                                     
-                                                    JToken countValue3 = retentionDurationValue7["count"];
-                                                    if (countValue3 != null && countValue3.Type != JTokenType.Null)
+                                                    JToken countValue4 = retentionDurationValue14["count"];
+                                                    if (countValue4 != null && countValue4.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance3 = ((int)countValue3);
-                                                        retentionDurationInstance3.Count = countInstance3;
+                                                        int countInstance4 = ((int)countValue4);
+                                                        retentionDurationInstance4.Count = countInstance4;
                                                     }
                                                     
-                                                    JToken durationTypeValue3 = retentionDurationValue7["durationType"];
-                                                    if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
+                                                    JToken durationTypeValue4 = retentionDurationValue14["durationType"];
+                                                    if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
-                                                        retentionDurationInstance3.DurationType = durationTypeInstance3;
+                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
+                                                        retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                     }
                                                 }
                                             }
                                             
-                                            JToken yearlyScheduleValue2 = retentionPolicyValue2["yearlySchedule"];
-                                            if (yearlyScheduleValue2 != null && yearlyScheduleValue2.Type != JTokenType.Null)
+                                            JToken yearlyScheduleValue3 = retentionPolicyValue3["yearlySchedule"];
+                                            if (yearlyScheduleValue3 != null && yearlyScheduleValue3.Type != JTokenType.Null)
                                             {
                                                 YearlyRetentionSchedule yearlyScheduleInstance = new YearlyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.YearlySchedule = yearlyScheduleInstance;
                                                 
-                                                JToken retentionScheduleFormatTypeValue2 = yearlyScheduleValue2["retentionScheduleFormatType"];
+                                                JToken retentionScheduleFormatTypeValue2 = yearlyScheduleValue3["retentionScheduleFormatType"];
                                                 if (retentionScheduleFormatTypeValue2 != null && retentionScheduleFormatTypeValue2.Type != JTokenType.Null)
                                                 {
                                                     string retentionScheduleFormatTypeInstance2 = ((string)retentionScheduleFormatTypeValue2);
                                                     yearlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance2;
                                                 }
                                                 
-                                                JToken monthsOfYearArray2 = yearlyScheduleValue2["monthsOfYear"];
-                                                if (monthsOfYearArray2 != null && monthsOfYearArray2.Type != JTokenType.Null)
+                                                JToken monthsOfYearArray3 = yearlyScheduleValue3["monthsOfYear"];
+                                                if (monthsOfYearArray3 != null && monthsOfYearArray3.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken monthsOfYearValue in ((JArray)monthsOfYearArray2))
+                                                    foreach (JToken monthsOfYearValue in ((JArray)monthsOfYearArray3))
                                                     {
                                                         yearlyScheduleInstance.MonthsOfYear.Add(((string)monthsOfYearValue));
                                                     }
                                                 }
                                                 
-                                                JToken retentionScheduleDailyValue4 = yearlyScheduleValue2["retentionScheduleDaily"];
-                                                if (retentionScheduleDailyValue4 != null && retentionScheduleDailyValue4.Type != JTokenType.Null)
+                                                JToken retentionScheduleDailyValue6 = yearlyScheduleValue3["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue6 != null && retentionScheduleDailyValue6.Type != JTokenType.Null)
                                                 {
                                                     DailyRetentionFormat retentionScheduleDailyInstance2 = new DailyRetentionFormat();
                                                     yearlyScheduleInstance.RetentionScheduleDaily = retentionScheduleDailyInstance2;
                                                     
-                                                    JToken daysOfTheMonthArray4 = retentionScheduleDailyValue4["daysOfTheMonth"];
-                                                    if (daysOfTheMonthArray4 != null && daysOfTheMonthArray4.Type != JTokenType.Null)
+                                                    JToken daysOfTheMonthArray6 = retentionScheduleDailyValue6["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray6 != null && daysOfTheMonthArray6.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken daysOfTheMonthValue2 in ((JArray)daysOfTheMonthArray4))
+                                                        foreach (JToken daysOfTheMonthValue2 in ((JArray)daysOfTheMonthArray6))
                                                         {
                                                             Day dayInstance2 = new Day();
                                                             retentionScheduleDailyInstance2.DaysOfTheMonth.Add(dayInstance2);
@@ -922,58 +1237,58 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionScheduleWeeklyValue4 = yearlyScheduleValue2["retentionScheduleWeekly"];
-                                                if (retentionScheduleWeeklyValue4 != null && retentionScheduleWeeklyValue4.Type != JTokenType.Null)
+                                                JToken retentionScheduleWeeklyValue6 = yearlyScheduleValue3["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue6 != null && retentionScheduleWeeklyValue6.Type != JTokenType.Null)
                                                 {
                                                     WeeklyRetentionFormat retentionScheduleWeeklyInstance2 = new WeeklyRetentionFormat();
                                                     yearlyScheduleInstance.RetentionScheduleWeekly = retentionScheduleWeeklyInstance2;
                                                     
-                                                    JToken daysOfTheWeekArray6 = retentionScheduleWeeklyValue4["daysOfTheWeek"];
-                                                    if (daysOfTheWeekArray6 != null && daysOfTheWeekArray6.Type != JTokenType.Null)
+                                                    JToken daysOfTheWeekArray9 = retentionScheduleWeeklyValue6["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray9 != null && daysOfTheWeekArray9.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken daysOfTheWeekValue3 in ((JArray)daysOfTheWeekArray6))
+                                                        foreach (JToken daysOfTheWeekValue3 in ((JArray)daysOfTheWeekArray9))
                                                         {
                                                             retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue3));
                                                         }
                                                     }
                                                     
-                                                    JToken weeksOfTheMonthArray4 = retentionScheduleWeeklyValue4["weeksOfTheMonth"];
-                                                    if (weeksOfTheMonthArray4 != null && weeksOfTheMonthArray4.Type != JTokenType.Null)
+                                                    JToken weeksOfTheMonthArray6 = retentionScheduleWeeklyValue6["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray6 != null && weeksOfTheMonthArray6.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken weeksOfTheMonthValue2 in ((JArray)weeksOfTheMonthArray4))
+                                                        foreach (JToken weeksOfTheMonthValue2 in ((JArray)weeksOfTheMonthArray6))
                                                         {
                                                             retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue2));
                                                         }
                                                     }
                                                 }
                                                 
-                                                JToken retentionTimesArray8 = yearlyScheduleValue2["retentionTimes"];
-                                                if (retentionTimesArray8 != null && retentionTimesArray8.Type != JTokenType.Null)
+                                                JToken retentionTimesArray12 = yearlyScheduleValue3["retentionTimes"];
+                                                if (retentionTimesArray12 != null && retentionTimesArray12.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken retentionTimesValue4 in ((JArray)retentionTimesArray8))
+                                                    foreach (JToken retentionTimesValue4 in ((JArray)retentionTimesArray12))
                                                     {
                                                         yearlyScheduleInstance.RetentionTimes.Add(((DateTime)retentionTimesValue4));
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue8 = yearlyScheduleValue2["retentionDuration"];
-                                                if (retentionDurationValue8 != null && retentionDurationValue8.Type != JTokenType.Null)
+                                                JToken retentionDurationValue15 = yearlyScheduleValue3["retentionDuration"];
+                                                if (retentionDurationValue15 != null && retentionDurationValue15.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance4 = new RetentionDuration();
-                                                    yearlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
+                                                    RetentionDuration retentionDurationInstance5 = new RetentionDuration();
+                                                    yearlyScheduleInstance.RetentionDuration = retentionDurationInstance5;
                                                     
-                                                    JToken countValue4 = retentionDurationValue8["count"];
-                                                    if (countValue4 != null && countValue4.Type != JTokenType.Null)
+                                                    JToken countValue5 = retentionDurationValue15["count"];
+                                                    if (countValue5 != null && countValue5.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance4 = ((int)countValue4);
-                                                        retentionDurationInstance4.Count = countInstance4;
+                                                        int countInstance5 = ((int)countValue5);
+                                                        retentionDurationInstance5.Count = countInstance5;
                                                     }
                                                     
-                                                    JToken durationTypeValue4 = retentionDurationValue8["durationType"];
-                                                    if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
+                                                    JToken durationTypeValue5 = retentionDurationValue15["durationType"];
+                                                    if (durationTypeValue5 != null && durationTypeValue5.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
-                                                        retentionDurationInstance4.DurationType = durationTypeInstance4;
+                                                        string durationTypeInstance5 = ((string)durationTypeValue5);
+                                                        retentionDurationInstance5.DurationType = durationTypeInstance5;
                                                     }
                                                 }
                                             }
@@ -995,6 +1310,354 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
+                                }
+                                if (typeName == "AzureSql")
+                                {
+                                    AzureSqlProtectionPolicy azureSqlProtectionPolicyInstance = new AzureSqlProtectionPolicy();
+                                    
+                                    JToken retentionPolicyValue4 = propertiesValue2["retentionPolicy"];
+                                    if (retentionPolicyValue4 != null && retentionPolicyValue4.Type != JTokenType.Null)
+                                    {
+                                        string typeName4 = ((string)retentionPolicyValue4["retentionPolicyType"]);
+                                        if (typeName4 == "SimpleRetentionPolicy")
+                                        {
+                                            SimpleRetentionPolicy simpleRetentionPolicyInstance2 = new SimpleRetentionPolicy();
+                                            
+                                            JToken retentionDurationValue16 = retentionPolicyValue4["retentionDuration"];
+                                            if (retentionDurationValue16 != null && retentionDurationValue16.Type != JTokenType.Null)
+                                            {
+                                                RetentionDuration retentionDurationInstance6 = new RetentionDuration();
+                                                simpleRetentionPolicyInstance2.RetentionDuration = retentionDurationInstance6;
+                                                
+                                                JToken countValue6 = retentionDurationValue16["count"];
+                                                if (countValue6 != null && countValue6.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance6 = ((int)countValue6);
+                                                    retentionDurationInstance6.Count = countInstance6;
+                                                }
+                                                
+                                                JToken durationTypeValue6 = retentionDurationValue16["durationType"];
+                                                if (durationTypeValue6 != null && durationTypeValue6.Type != JTokenType.Null)
+                                                {
+                                                    string durationTypeInstance6 = ((string)durationTypeValue6);
+                                                    retentionDurationInstance6.DurationType = durationTypeInstance6;
+                                                }
+                                            }
+                                            azureSqlProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance2;
+                                        }
+                                        if (typeName4 == "LongTermRetentionPolicy")
+                                        {
+                                            LongTermRetentionPolicy longTermRetentionPolicyInstance2 = new LongTermRetentionPolicy();
+                                            
+                                            JToken dailyScheduleValue4 = retentionPolicyValue4["dailySchedule"];
+                                            if (dailyScheduleValue4 != null && dailyScheduleValue4.Type != JTokenType.Null)
+                                            {
+                                                DailyRetentionSchedule dailyScheduleInstance2 = new DailyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.DailySchedule = dailyScheduleInstance2;
+                                                
+                                                JToken retentionTimesArray13 = dailyScheduleValue4["retentionTimes"];
+                                                if (retentionTimesArray13 != null && retentionTimesArray13.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue5 in ((JArray)retentionTimesArray13))
+                                                    {
+                                                        dailyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue5));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue17 = dailyScheduleValue4["retentionDuration"];
+                                                if (retentionDurationValue17 != null && retentionDurationValue17.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance7 = new RetentionDuration();
+                                                    dailyScheduleInstance2.RetentionDuration = retentionDurationInstance7;
+                                                    
+                                                    JToken countValue7 = retentionDurationValue17["count"];
+                                                    if (countValue7 != null && countValue7.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance7 = ((int)countValue7);
+                                                        retentionDurationInstance7.Count = countInstance7;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue7 = retentionDurationValue17["durationType"];
+                                                    if (durationTypeValue7 != null && durationTypeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance7 = ((string)durationTypeValue7);
+                                                        retentionDurationInstance7.DurationType = durationTypeInstance7;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken weeklyScheduleValue4 = retentionPolicyValue4["weeklySchedule"];
+                                            if (weeklyScheduleValue4 != null && weeklyScheduleValue4.Type != JTokenType.Null)
+                                            {
+                                                WeeklyRetentionSchedule weeklyScheduleInstance2 = new WeeklyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.WeeklySchedule = weeklyScheduleInstance2;
+                                                
+                                                JToken daysOfTheWeekArray10 = weeklyScheduleValue4["daysOfTheWeek"];
+                                                if (daysOfTheWeekArray10 != null && daysOfTheWeekArray10.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken daysOfTheWeekValue4 in ((JArray)daysOfTheWeekArray10))
+                                                    {
+                                                        weeklyScheduleInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue4));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray14 = weeklyScheduleValue4["retentionTimes"];
+                                                if (retentionTimesArray14 != null && retentionTimesArray14.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue6 in ((JArray)retentionTimesArray14))
+                                                    {
+                                                        weeklyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue6));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue18 = weeklyScheduleValue4["retentionDuration"];
+                                                if (retentionDurationValue18 != null && retentionDurationValue18.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance8 = new RetentionDuration();
+                                                    weeklyScheduleInstance2.RetentionDuration = retentionDurationInstance8;
+                                                    
+                                                    JToken countValue8 = retentionDurationValue18["count"];
+                                                    if (countValue8 != null && countValue8.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance8 = ((int)countValue8);
+                                                        retentionDurationInstance8.Count = countInstance8;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue8 = retentionDurationValue18["durationType"];
+                                                    if (durationTypeValue8 != null && durationTypeValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance8 = ((string)durationTypeValue8);
+                                                        retentionDurationInstance8.DurationType = durationTypeInstance8;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken monthlyScheduleValue4 = retentionPolicyValue4["monthlySchedule"];
+                                            if (monthlyScheduleValue4 != null && monthlyScheduleValue4.Type != JTokenType.Null)
+                                            {
+                                                MonthlyRetentionSchedule monthlyScheduleInstance2 = new MonthlyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.MonthlySchedule = monthlyScheduleInstance2;
+                                                
+                                                JToken retentionScheduleFormatTypeValue3 = monthlyScheduleValue4["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue3 != null && retentionScheduleFormatTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string retentionScheduleFormatTypeInstance3 = ((string)retentionScheduleFormatTypeValue3);
+                                                    monthlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance3;
+                                                }
+                                                
+                                                JToken retentionScheduleDailyValue7 = monthlyScheduleValue4["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue7 != null && retentionScheduleDailyValue7.Type != JTokenType.Null)
+                                                {
+                                                    DailyRetentionFormat retentionScheduleDailyInstance3 = new DailyRetentionFormat();
+                                                    monthlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance3;
+                                                    
+                                                    JToken daysOfTheMonthArray7 = retentionScheduleDailyValue7["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray7 != null && daysOfTheMonthArray7.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheMonthValue3 in ((JArray)daysOfTheMonthArray7))
+                                                        {
+                                                            Day dayInstance3 = new Day();
+                                                            retentionScheduleDailyInstance3.DaysOfTheMonth.Add(dayInstance3);
+                                                            
+                                                            JToken dateValue3 = daysOfTheMonthValue3["date"];
+                                                            if (dateValue3 != null && dateValue3.Type != JTokenType.Null)
+                                                            {
+                                                                int dateInstance3 = ((int)dateValue3);
+                                                                dayInstance3.Date = dateInstance3;
+                                                            }
+                                                            
+                                                            JToken isLastValue3 = daysOfTheMonthValue3["isLast"];
+                                                            if (isLastValue3 != null && isLastValue3.Type != JTokenType.Null)
+                                                            {
+                                                                bool isLastInstance3 = ((bool)isLastValue3);
+                                                                dayInstance3.IsLast = isLastInstance3;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleWeeklyValue7 = monthlyScheduleValue4["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue7 != null && retentionScheduleWeeklyValue7.Type != JTokenType.Null)
+                                                {
+                                                    WeeklyRetentionFormat retentionScheduleWeeklyInstance3 = new WeeklyRetentionFormat();
+                                                    monthlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance3;
+                                                    
+                                                    JToken daysOfTheWeekArray11 = retentionScheduleWeeklyValue7["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray11 != null && daysOfTheWeekArray11.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheWeekValue5 in ((JArray)daysOfTheWeekArray11))
+                                                        {
+                                                            retentionScheduleWeeklyInstance3.DaysOfTheWeek.Add(((string)daysOfTheWeekValue5));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeksOfTheMonthArray7 = retentionScheduleWeeklyValue7["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray7 != null && weeksOfTheMonthArray7.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken weeksOfTheMonthValue3 in ((JArray)weeksOfTheMonthArray7))
+                                                        {
+                                                            retentionScheduleWeeklyInstance3.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue3));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray15 = monthlyScheduleValue4["retentionTimes"];
+                                                if (retentionTimesArray15 != null && retentionTimesArray15.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue7 in ((JArray)retentionTimesArray15))
+                                                    {
+                                                        monthlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue7));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue19 = monthlyScheduleValue4["retentionDuration"];
+                                                if (retentionDurationValue19 != null && retentionDurationValue19.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance9 = new RetentionDuration();
+                                                    monthlyScheduleInstance2.RetentionDuration = retentionDurationInstance9;
+                                                    
+                                                    JToken countValue9 = retentionDurationValue19["count"];
+                                                    if (countValue9 != null && countValue9.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance9 = ((int)countValue9);
+                                                        retentionDurationInstance9.Count = countInstance9;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue9 = retentionDurationValue19["durationType"];
+                                                    if (durationTypeValue9 != null && durationTypeValue9.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance9 = ((string)durationTypeValue9);
+                                                        retentionDurationInstance9.DurationType = durationTypeInstance9;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken yearlyScheduleValue4 = retentionPolicyValue4["yearlySchedule"];
+                                            if (yearlyScheduleValue4 != null && yearlyScheduleValue4.Type != JTokenType.Null)
+                                            {
+                                                YearlyRetentionSchedule yearlyScheduleInstance2 = new YearlyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.YearlySchedule = yearlyScheduleInstance2;
+                                                
+                                                JToken retentionScheduleFormatTypeValue4 = yearlyScheduleValue4["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue4 != null && retentionScheduleFormatTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string retentionScheduleFormatTypeInstance4 = ((string)retentionScheduleFormatTypeValue4);
+                                                    yearlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance4;
+                                                }
+                                                
+                                                JToken monthsOfYearArray4 = yearlyScheduleValue4["monthsOfYear"];
+                                                if (monthsOfYearArray4 != null && monthsOfYearArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken monthsOfYearValue2 in ((JArray)monthsOfYearArray4))
+                                                    {
+                                                        yearlyScheduleInstance2.MonthsOfYear.Add(((string)monthsOfYearValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleDailyValue8 = yearlyScheduleValue4["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue8 != null && retentionScheduleDailyValue8.Type != JTokenType.Null)
+                                                {
+                                                    DailyRetentionFormat retentionScheduleDailyInstance4 = new DailyRetentionFormat();
+                                                    yearlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance4;
+                                                    
+                                                    JToken daysOfTheMonthArray8 = retentionScheduleDailyValue8["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray8 != null && daysOfTheMonthArray8.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheMonthValue4 in ((JArray)daysOfTheMonthArray8))
+                                                        {
+                                                            Day dayInstance4 = new Day();
+                                                            retentionScheduleDailyInstance4.DaysOfTheMonth.Add(dayInstance4);
+                                                            
+                                                            JToken dateValue4 = daysOfTheMonthValue4["date"];
+                                                            if (dateValue4 != null && dateValue4.Type != JTokenType.Null)
+                                                            {
+                                                                int dateInstance4 = ((int)dateValue4);
+                                                                dayInstance4.Date = dateInstance4;
+                                                            }
+                                                            
+                                                            JToken isLastValue4 = daysOfTheMonthValue4["isLast"];
+                                                            if (isLastValue4 != null && isLastValue4.Type != JTokenType.Null)
+                                                            {
+                                                                bool isLastInstance4 = ((bool)isLastValue4);
+                                                                dayInstance4.IsLast = isLastInstance4;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleWeeklyValue8 = yearlyScheduleValue4["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue8 != null && retentionScheduleWeeklyValue8.Type != JTokenType.Null)
+                                                {
+                                                    WeeklyRetentionFormat retentionScheduleWeeklyInstance4 = new WeeklyRetentionFormat();
+                                                    yearlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance4;
+                                                    
+                                                    JToken daysOfTheWeekArray12 = retentionScheduleWeeklyValue8["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray12 != null && daysOfTheWeekArray12.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheWeekValue6 in ((JArray)daysOfTheWeekArray12))
+                                                        {
+                                                            retentionScheduleWeeklyInstance4.DaysOfTheWeek.Add(((string)daysOfTheWeekValue6));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeksOfTheMonthArray8 = retentionScheduleWeeklyValue8["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray8 != null && weeksOfTheMonthArray8.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken weeksOfTheMonthValue4 in ((JArray)weeksOfTheMonthArray8))
+                                                        {
+                                                            retentionScheduleWeeklyInstance4.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue4));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray16 = yearlyScheduleValue4["retentionTimes"];
+                                                if (retentionTimesArray16 != null && retentionTimesArray16.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue8 in ((JArray)retentionTimesArray16))
+                                                    {
+                                                        yearlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue8));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue20 = yearlyScheduleValue4["retentionDuration"];
+                                                if (retentionDurationValue20 != null && retentionDurationValue20.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance10 = new RetentionDuration();
+                                                    yearlyScheduleInstance2.RetentionDuration = retentionDurationInstance10;
+                                                    
+                                                    JToken countValue10 = retentionDurationValue20["count"];
+                                                    if (countValue10 != null && countValue10.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance10 = ((int)countValue10);
+                                                        retentionDurationInstance10.Count = countInstance10;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue10 = retentionDurationValue20["durationType"];
+                                                    if (durationTypeValue10 != null && durationTypeValue10.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance10 = ((string)durationTypeValue10);
+                                                        retentionDurationInstance10.DurationType = durationTypeInstance10;
+                                                    }
+                                                }
+                                            }
+                                            azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue3 = propertiesValue2["backupManagementType"];
+                                    if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                        azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                    }
+                                    
+                                    JToken protectedItemsCountValue3 = propertiesValue2["protectedItemsCount"];
+                                    if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                        azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
+                                    }
+                                    itemInstance.Properties = azureSqlProtectionPolicyInstance;
                                 }
                             }
                             
@@ -1507,6 +2170,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         if (typeName3 == "SimpleRetentionPolicy")
                                         {
                                             SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
+                                            
+                                            JToken retentionDurationValue = retentionPolicyValue["retentionDuration"];
+                                            if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
+                                            {
+                                                RetentionDuration retentionDurationInstance = new RetentionDuration();
+                                                simpleRetentionPolicyInstance.RetentionDuration = retentionDurationInstance;
+                                                
+                                                JToken countValue = retentionDurationValue["count"];
+                                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance = ((int)countValue);
+                                                    retentionDurationInstance.Count = countInstance;
+                                                }
+                                                
+                                                JToken durationTypeValue = retentionDurationValue["durationType"];
+                                                if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string durationTypeInstance = ((string)durationTypeValue);
+                                                    retentionDurationInstance.DurationType = durationTypeInstance;
+                                                }
+                                            }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                         }
                                         if (typeName3 == "LongTermRetentionPolicy")
@@ -1528,24 +2212,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue = dailyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
+                                                JToken retentionDurationValue2 = dailyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance = new RetentionDuration();
-                                                    dailyScheduleInstance.RetentionDuration = retentionDurationInstance;
+                                                    RetentionDuration retentionDurationInstance2 = new RetentionDuration();
+                                                    dailyScheduleInstance.RetentionDuration = retentionDurationInstance2;
                                                     
-                                                    JToken countValue = retentionDurationValue["count"];
-                                                    if (countValue != null && countValue.Type != JTokenType.Null)
+                                                    JToken countValue2 = retentionDurationValue2["count"];
+                                                    if (countValue2 != null && countValue2.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance = ((int)countValue);
-                                                        retentionDurationInstance.Count = countInstance;
+                                                        int countInstance2 = ((int)countValue2);
+                                                        retentionDurationInstance2.Count = countInstance2;
                                                     }
                                                     
-                                                    JToken durationTypeValue = retentionDurationValue["durationType"];
-                                                    if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                    JToken durationTypeValue2 = retentionDurationValue2["durationType"];
+                                                    if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance = ((string)durationTypeValue);
-                                                        retentionDurationInstance.DurationType = durationTypeInstance;
+                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
+                                                        retentionDurationInstance2.DurationType = durationTypeInstance2;
                                                     }
                                                 }
                                             }
@@ -1574,24 +2258,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue2 = weeklyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
+                                                JToken retentionDurationValue3 = weeklyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance2 = new RetentionDuration();
-                                                    weeklyScheduleInstance.RetentionDuration = retentionDurationInstance2;
+                                                    RetentionDuration retentionDurationInstance3 = new RetentionDuration();
+                                                    weeklyScheduleInstance.RetentionDuration = retentionDurationInstance3;
                                                     
-                                                    JToken countValue2 = retentionDurationValue2["count"];
-                                                    if (countValue2 != null && countValue2.Type != JTokenType.Null)
+                                                    JToken countValue3 = retentionDurationValue3["count"];
+                                                    if (countValue3 != null && countValue3.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance2 = ((int)countValue2);
-                                                        retentionDurationInstance2.Count = countInstance2;
+                                                        int countInstance3 = ((int)countValue3);
+                                                        retentionDurationInstance3.Count = countInstance3;
                                                     }
                                                     
-                                                    JToken durationTypeValue2 = retentionDurationValue2["durationType"];
-                                                    if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
+                                                    JToken durationTypeValue3 = retentionDurationValue3["durationType"];
+                                                    if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
-                                                        retentionDurationInstance2.DurationType = durationTypeInstance2;
+                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
+                                                        retentionDurationInstance3.DurationType = durationTypeInstance3;
                                                     }
                                                 }
                                             }
@@ -1674,24 +2358,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue3 = monthlyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
+                                                JToken retentionDurationValue4 = monthlyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance3 = new RetentionDuration();
-                                                    monthlyScheduleInstance.RetentionDuration = retentionDurationInstance3;
+                                                    RetentionDuration retentionDurationInstance4 = new RetentionDuration();
+                                                    monthlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
                                                     
-                                                    JToken countValue3 = retentionDurationValue3["count"];
-                                                    if (countValue3 != null && countValue3.Type != JTokenType.Null)
+                                                    JToken countValue4 = retentionDurationValue4["count"];
+                                                    if (countValue4 != null && countValue4.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance3 = ((int)countValue3);
-                                                        retentionDurationInstance3.Count = countInstance3;
+                                                        int countInstance4 = ((int)countValue4);
+                                                        retentionDurationInstance4.Count = countInstance4;
                                                     }
                                                     
-                                                    JToken durationTypeValue3 = retentionDurationValue3["durationType"];
-                                                    if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
+                                                    JToken durationTypeValue4 = retentionDurationValue4["durationType"];
+                                                    if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
-                                                        retentionDurationInstance3.DurationType = durationTypeInstance3;
+                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
+                                                        retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                     }
                                                 }
                                             }
@@ -1783,24 +2467,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue4 = yearlyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
+                                                JToken retentionDurationValue5 = yearlyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue5 != null && retentionDurationValue5.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance4 = new RetentionDuration();
-                                                    yearlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
+                                                    RetentionDuration retentionDurationInstance5 = new RetentionDuration();
+                                                    yearlyScheduleInstance.RetentionDuration = retentionDurationInstance5;
                                                     
-                                                    JToken countValue4 = retentionDurationValue4["count"];
-                                                    if (countValue4 != null && countValue4.Type != JTokenType.Null)
+                                                    JToken countValue5 = retentionDurationValue5["count"];
+                                                    if (countValue5 != null && countValue5.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance4 = ((int)countValue4);
-                                                        retentionDurationInstance4.Count = countInstance4;
+                                                        int countInstance5 = ((int)countValue5);
+                                                        retentionDurationInstance5.Count = countInstance5;
                                                     }
                                                     
-                                                    JToken durationTypeValue4 = retentionDurationValue4["durationType"];
-                                                    if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
+                                                    JToken durationTypeValue5 = retentionDurationValue5["durationType"];
+                                                    if (durationTypeValue5 != null && durationTypeValue5.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
-                                                        retentionDurationInstance4.DurationType = durationTypeInstance4;
+                                                        string durationTypeInstance5 = ((string)durationTypeValue5);
+                                                        retentionDurationInstance5.DurationType = durationTypeInstance5;
                                                     }
                                                 }
                                             }
@@ -1822,6 +2506,354 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
+                                }
+                                if (typeName == "AzureSql")
+                                {
+                                    AzureSqlProtectionPolicy azureSqlProtectionPolicyInstance = new AzureSqlProtectionPolicy();
+                                    
+                                    JToken retentionPolicyValue2 = propertiesValue["retentionPolicy"];
+                                    if (retentionPolicyValue2 != null && retentionPolicyValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName4 = ((string)retentionPolicyValue2["retentionPolicyType"]);
+                                        if (typeName4 == "SimpleRetentionPolicy")
+                                        {
+                                            SimpleRetentionPolicy simpleRetentionPolicyInstance2 = new SimpleRetentionPolicy();
+                                            
+                                            JToken retentionDurationValue6 = retentionPolicyValue2["retentionDuration"];
+                                            if (retentionDurationValue6 != null && retentionDurationValue6.Type != JTokenType.Null)
+                                            {
+                                                RetentionDuration retentionDurationInstance6 = new RetentionDuration();
+                                                simpleRetentionPolicyInstance2.RetentionDuration = retentionDurationInstance6;
+                                                
+                                                JToken countValue6 = retentionDurationValue6["count"];
+                                                if (countValue6 != null && countValue6.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance6 = ((int)countValue6);
+                                                    retentionDurationInstance6.Count = countInstance6;
+                                                }
+                                                
+                                                JToken durationTypeValue6 = retentionDurationValue6["durationType"];
+                                                if (durationTypeValue6 != null && durationTypeValue6.Type != JTokenType.Null)
+                                                {
+                                                    string durationTypeInstance6 = ((string)durationTypeValue6);
+                                                    retentionDurationInstance6.DurationType = durationTypeInstance6;
+                                                }
+                                            }
+                                            azureSqlProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance2;
+                                        }
+                                        if (typeName4 == "LongTermRetentionPolicy")
+                                        {
+                                            LongTermRetentionPolicy longTermRetentionPolicyInstance2 = new LongTermRetentionPolicy();
+                                            
+                                            JToken dailyScheduleValue2 = retentionPolicyValue2["dailySchedule"];
+                                            if (dailyScheduleValue2 != null && dailyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                DailyRetentionSchedule dailyScheduleInstance2 = new DailyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.DailySchedule = dailyScheduleInstance2;
+                                                
+                                                JToken retentionTimesArray5 = dailyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray5 != null && retentionTimesArray5.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue5 in ((JArray)retentionTimesArray5))
+                                                    {
+                                                        dailyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue5));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue7 = dailyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue7 != null && retentionDurationValue7.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance7 = new RetentionDuration();
+                                                    dailyScheduleInstance2.RetentionDuration = retentionDurationInstance7;
+                                                    
+                                                    JToken countValue7 = retentionDurationValue7["count"];
+                                                    if (countValue7 != null && countValue7.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance7 = ((int)countValue7);
+                                                        retentionDurationInstance7.Count = countInstance7;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue7 = retentionDurationValue7["durationType"];
+                                                    if (durationTypeValue7 != null && durationTypeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance7 = ((string)durationTypeValue7);
+                                                        retentionDurationInstance7.DurationType = durationTypeInstance7;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken weeklyScheduleValue2 = retentionPolicyValue2["weeklySchedule"];
+                                            if (weeklyScheduleValue2 != null && weeklyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                WeeklyRetentionSchedule weeklyScheduleInstance2 = new WeeklyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.WeeklySchedule = weeklyScheduleInstance2;
+                                                
+                                                JToken daysOfTheWeekArray4 = weeklyScheduleValue2["daysOfTheWeek"];
+                                                if (daysOfTheWeekArray4 != null && daysOfTheWeekArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken daysOfTheWeekValue4 in ((JArray)daysOfTheWeekArray4))
+                                                    {
+                                                        weeklyScheduleInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue4));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray6 = weeklyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray6 != null && retentionTimesArray6.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue6 in ((JArray)retentionTimesArray6))
+                                                    {
+                                                        weeklyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue6));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue8 = weeklyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue8 != null && retentionDurationValue8.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance8 = new RetentionDuration();
+                                                    weeklyScheduleInstance2.RetentionDuration = retentionDurationInstance8;
+                                                    
+                                                    JToken countValue8 = retentionDurationValue8["count"];
+                                                    if (countValue8 != null && countValue8.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance8 = ((int)countValue8);
+                                                        retentionDurationInstance8.Count = countInstance8;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue8 = retentionDurationValue8["durationType"];
+                                                    if (durationTypeValue8 != null && durationTypeValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance8 = ((string)durationTypeValue8);
+                                                        retentionDurationInstance8.DurationType = durationTypeInstance8;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken monthlyScheduleValue2 = retentionPolicyValue2["monthlySchedule"];
+                                            if (monthlyScheduleValue2 != null && monthlyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                MonthlyRetentionSchedule monthlyScheduleInstance2 = new MonthlyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.MonthlySchedule = monthlyScheduleInstance2;
+                                                
+                                                JToken retentionScheduleFormatTypeValue3 = monthlyScheduleValue2["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue3 != null && retentionScheduleFormatTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string retentionScheduleFormatTypeInstance3 = ((string)retentionScheduleFormatTypeValue3);
+                                                    monthlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance3;
+                                                }
+                                                
+                                                JToken retentionScheduleDailyValue3 = monthlyScheduleValue2["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue3 != null && retentionScheduleDailyValue3.Type != JTokenType.Null)
+                                                {
+                                                    DailyRetentionFormat retentionScheduleDailyInstance3 = new DailyRetentionFormat();
+                                                    monthlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance3;
+                                                    
+                                                    JToken daysOfTheMonthArray3 = retentionScheduleDailyValue3["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray3 != null && daysOfTheMonthArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheMonthValue3 in ((JArray)daysOfTheMonthArray3))
+                                                        {
+                                                            Day dayInstance3 = new Day();
+                                                            retentionScheduleDailyInstance3.DaysOfTheMonth.Add(dayInstance3);
+                                                            
+                                                            JToken dateValue3 = daysOfTheMonthValue3["date"];
+                                                            if (dateValue3 != null && dateValue3.Type != JTokenType.Null)
+                                                            {
+                                                                int dateInstance3 = ((int)dateValue3);
+                                                                dayInstance3.Date = dateInstance3;
+                                                            }
+                                                            
+                                                            JToken isLastValue3 = daysOfTheMonthValue3["isLast"];
+                                                            if (isLastValue3 != null && isLastValue3.Type != JTokenType.Null)
+                                                            {
+                                                                bool isLastInstance3 = ((bool)isLastValue3);
+                                                                dayInstance3.IsLast = isLastInstance3;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleWeeklyValue3 = monthlyScheduleValue2["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue3 != null && retentionScheduleWeeklyValue3.Type != JTokenType.Null)
+                                                {
+                                                    WeeklyRetentionFormat retentionScheduleWeeklyInstance3 = new WeeklyRetentionFormat();
+                                                    monthlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance3;
+                                                    
+                                                    JToken daysOfTheWeekArray5 = retentionScheduleWeeklyValue3["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray5 != null && daysOfTheWeekArray5.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheWeekValue5 in ((JArray)daysOfTheWeekArray5))
+                                                        {
+                                                            retentionScheduleWeeklyInstance3.DaysOfTheWeek.Add(((string)daysOfTheWeekValue5));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeksOfTheMonthArray3 = retentionScheduleWeeklyValue3["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray3 != null && weeksOfTheMonthArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken weeksOfTheMonthValue3 in ((JArray)weeksOfTheMonthArray3))
+                                                        {
+                                                            retentionScheduleWeeklyInstance3.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue3));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray7 = monthlyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray7 != null && retentionTimesArray7.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue7 in ((JArray)retentionTimesArray7))
+                                                    {
+                                                        monthlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue7));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue9 = monthlyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue9 != null && retentionDurationValue9.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance9 = new RetentionDuration();
+                                                    monthlyScheduleInstance2.RetentionDuration = retentionDurationInstance9;
+                                                    
+                                                    JToken countValue9 = retentionDurationValue9["count"];
+                                                    if (countValue9 != null && countValue9.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance9 = ((int)countValue9);
+                                                        retentionDurationInstance9.Count = countInstance9;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue9 = retentionDurationValue9["durationType"];
+                                                    if (durationTypeValue9 != null && durationTypeValue9.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance9 = ((string)durationTypeValue9);
+                                                        retentionDurationInstance9.DurationType = durationTypeInstance9;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken yearlyScheduleValue2 = retentionPolicyValue2["yearlySchedule"];
+                                            if (yearlyScheduleValue2 != null && yearlyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                YearlyRetentionSchedule yearlyScheduleInstance2 = new YearlyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.YearlySchedule = yearlyScheduleInstance2;
+                                                
+                                                JToken retentionScheduleFormatTypeValue4 = yearlyScheduleValue2["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue4 != null && retentionScheduleFormatTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string retentionScheduleFormatTypeInstance4 = ((string)retentionScheduleFormatTypeValue4);
+                                                    yearlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance4;
+                                                }
+                                                
+                                                JToken monthsOfYearArray2 = yearlyScheduleValue2["monthsOfYear"];
+                                                if (monthsOfYearArray2 != null && monthsOfYearArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken monthsOfYearValue2 in ((JArray)monthsOfYearArray2))
+                                                    {
+                                                        yearlyScheduleInstance2.MonthsOfYear.Add(((string)monthsOfYearValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleDailyValue4 = yearlyScheduleValue2["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue4 != null && retentionScheduleDailyValue4.Type != JTokenType.Null)
+                                                {
+                                                    DailyRetentionFormat retentionScheduleDailyInstance4 = new DailyRetentionFormat();
+                                                    yearlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance4;
+                                                    
+                                                    JToken daysOfTheMonthArray4 = retentionScheduleDailyValue4["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray4 != null && daysOfTheMonthArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheMonthValue4 in ((JArray)daysOfTheMonthArray4))
+                                                        {
+                                                            Day dayInstance4 = new Day();
+                                                            retentionScheduleDailyInstance4.DaysOfTheMonth.Add(dayInstance4);
+                                                            
+                                                            JToken dateValue4 = daysOfTheMonthValue4["date"];
+                                                            if (dateValue4 != null && dateValue4.Type != JTokenType.Null)
+                                                            {
+                                                                int dateInstance4 = ((int)dateValue4);
+                                                                dayInstance4.Date = dateInstance4;
+                                                            }
+                                                            
+                                                            JToken isLastValue4 = daysOfTheMonthValue4["isLast"];
+                                                            if (isLastValue4 != null && isLastValue4.Type != JTokenType.Null)
+                                                            {
+                                                                bool isLastInstance4 = ((bool)isLastValue4);
+                                                                dayInstance4.IsLast = isLastInstance4;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleWeeklyValue4 = yearlyScheduleValue2["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue4 != null && retentionScheduleWeeklyValue4.Type != JTokenType.Null)
+                                                {
+                                                    WeeklyRetentionFormat retentionScheduleWeeklyInstance4 = new WeeklyRetentionFormat();
+                                                    yearlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance4;
+                                                    
+                                                    JToken daysOfTheWeekArray6 = retentionScheduleWeeklyValue4["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray6 != null && daysOfTheWeekArray6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheWeekValue6 in ((JArray)daysOfTheWeekArray6))
+                                                        {
+                                                            retentionScheduleWeeklyInstance4.DaysOfTheWeek.Add(((string)daysOfTheWeekValue6));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeksOfTheMonthArray4 = retentionScheduleWeeklyValue4["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray4 != null && weeksOfTheMonthArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken weeksOfTheMonthValue4 in ((JArray)weeksOfTheMonthArray4))
+                                                        {
+                                                            retentionScheduleWeeklyInstance4.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue4));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray8 = yearlyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray8 != null && retentionTimesArray8.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue8 in ((JArray)retentionTimesArray8))
+                                                    {
+                                                        yearlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue8));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue10 = yearlyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue10 != null && retentionDurationValue10.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance10 = new RetentionDuration();
+                                                    yearlyScheduleInstance2.RetentionDuration = retentionDurationInstance10;
+                                                    
+                                                    JToken countValue10 = retentionDurationValue10["count"];
+                                                    if (countValue10 != null && countValue10.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance10 = ((int)countValue10);
+                                                        retentionDurationInstance10.Count = countInstance10;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue10 = retentionDurationValue10["durationType"];
+                                                    if (durationTypeValue10 != null && durationTypeValue10.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance10 = ((string)durationTypeValue10);
+                                                        retentionDurationInstance10.DurationType = durationTypeInstance10;
+                                                    }
+                                                }
+                                            }
+                                            azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                        azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                    }
+                                    
+                                    JToken protectedItemsCountValue3 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                        azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
+                                    }
+                                    itemInstance.Properties = azureSqlProtectionPolicyInstance;
                                 }
                             }
                             
@@ -2163,6 +3195,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         if (typeName3 == "SimpleRetentionPolicy")
                                         {
                                             SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
+                                            
+                                            JToken retentionDurationValue = retentionPolicyValue["retentionDuration"];
+                                            if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
+                                            {
+                                                RetentionDuration retentionDurationInstance = new RetentionDuration();
+                                                simpleRetentionPolicyInstance.RetentionDuration = retentionDurationInstance;
+                                                
+                                                JToken countValue = retentionDurationValue["count"];
+                                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance = ((int)countValue);
+                                                    retentionDurationInstance.Count = countInstance;
+                                                }
+                                                
+                                                JToken durationTypeValue = retentionDurationValue["durationType"];
+                                                if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string durationTypeInstance = ((string)durationTypeValue);
+                                                    retentionDurationInstance.DurationType = durationTypeInstance;
+                                                }
+                                            }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                         }
                                         if (typeName3 == "LongTermRetentionPolicy")
@@ -2184,24 +3237,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue = dailyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
+                                                JToken retentionDurationValue2 = dailyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance = new RetentionDuration();
-                                                    dailyScheduleInstance.RetentionDuration = retentionDurationInstance;
+                                                    RetentionDuration retentionDurationInstance2 = new RetentionDuration();
+                                                    dailyScheduleInstance.RetentionDuration = retentionDurationInstance2;
                                                     
-                                                    JToken countValue = retentionDurationValue["count"];
-                                                    if (countValue != null && countValue.Type != JTokenType.Null)
+                                                    JToken countValue2 = retentionDurationValue2["count"];
+                                                    if (countValue2 != null && countValue2.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance = ((int)countValue);
-                                                        retentionDurationInstance.Count = countInstance;
+                                                        int countInstance2 = ((int)countValue2);
+                                                        retentionDurationInstance2.Count = countInstance2;
                                                     }
                                                     
-                                                    JToken durationTypeValue = retentionDurationValue["durationType"];
-                                                    if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                    JToken durationTypeValue2 = retentionDurationValue2["durationType"];
+                                                    if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance = ((string)durationTypeValue);
-                                                        retentionDurationInstance.DurationType = durationTypeInstance;
+                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
+                                                        retentionDurationInstance2.DurationType = durationTypeInstance2;
                                                     }
                                                 }
                                             }
@@ -2230,24 +3283,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue2 = weeklyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
+                                                JToken retentionDurationValue3 = weeklyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance2 = new RetentionDuration();
-                                                    weeklyScheduleInstance.RetentionDuration = retentionDurationInstance2;
+                                                    RetentionDuration retentionDurationInstance3 = new RetentionDuration();
+                                                    weeklyScheduleInstance.RetentionDuration = retentionDurationInstance3;
                                                     
-                                                    JToken countValue2 = retentionDurationValue2["count"];
-                                                    if (countValue2 != null && countValue2.Type != JTokenType.Null)
+                                                    JToken countValue3 = retentionDurationValue3["count"];
+                                                    if (countValue3 != null && countValue3.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance2 = ((int)countValue2);
-                                                        retentionDurationInstance2.Count = countInstance2;
+                                                        int countInstance3 = ((int)countValue3);
+                                                        retentionDurationInstance3.Count = countInstance3;
                                                     }
                                                     
-                                                    JToken durationTypeValue2 = retentionDurationValue2["durationType"];
-                                                    if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
+                                                    JToken durationTypeValue3 = retentionDurationValue3["durationType"];
+                                                    if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
-                                                        retentionDurationInstance2.DurationType = durationTypeInstance2;
+                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
+                                                        retentionDurationInstance3.DurationType = durationTypeInstance3;
                                                     }
                                                 }
                                             }
@@ -2330,24 +3383,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue3 = monthlyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
+                                                JToken retentionDurationValue4 = monthlyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance3 = new RetentionDuration();
-                                                    monthlyScheduleInstance.RetentionDuration = retentionDurationInstance3;
+                                                    RetentionDuration retentionDurationInstance4 = new RetentionDuration();
+                                                    monthlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
                                                     
-                                                    JToken countValue3 = retentionDurationValue3["count"];
-                                                    if (countValue3 != null && countValue3.Type != JTokenType.Null)
+                                                    JToken countValue4 = retentionDurationValue4["count"];
+                                                    if (countValue4 != null && countValue4.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance3 = ((int)countValue3);
-                                                        retentionDurationInstance3.Count = countInstance3;
+                                                        int countInstance4 = ((int)countValue4);
+                                                        retentionDurationInstance4.Count = countInstance4;
                                                     }
                                                     
-                                                    JToken durationTypeValue3 = retentionDurationValue3["durationType"];
-                                                    if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
+                                                    JToken durationTypeValue4 = retentionDurationValue4["durationType"];
+                                                    if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
-                                                        retentionDurationInstance3.DurationType = durationTypeInstance3;
+                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
+                                                        retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                     }
                                                 }
                                             }
@@ -2439,24 +3492,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue4 = yearlyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
+                                                JToken retentionDurationValue5 = yearlyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue5 != null && retentionDurationValue5.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance4 = new RetentionDuration();
-                                                    yearlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
+                                                    RetentionDuration retentionDurationInstance5 = new RetentionDuration();
+                                                    yearlyScheduleInstance.RetentionDuration = retentionDurationInstance5;
                                                     
-                                                    JToken countValue4 = retentionDurationValue4["count"];
-                                                    if (countValue4 != null && countValue4.Type != JTokenType.Null)
+                                                    JToken countValue5 = retentionDurationValue5["count"];
+                                                    if (countValue5 != null && countValue5.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance4 = ((int)countValue4);
-                                                        retentionDurationInstance4.Count = countInstance4;
+                                                        int countInstance5 = ((int)countValue5);
+                                                        retentionDurationInstance5.Count = countInstance5;
                                                     }
                                                     
-                                                    JToken durationTypeValue4 = retentionDurationValue4["durationType"];
-                                                    if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
+                                                    JToken durationTypeValue5 = retentionDurationValue5["durationType"];
+                                                    if (durationTypeValue5 != null && durationTypeValue5.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
-                                                        retentionDurationInstance4.DurationType = durationTypeInstance4;
+                                                        string durationTypeInstance5 = ((string)durationTypeValue5);
+                                                        retentionDurationInstance5.DurationType = durationTypeInstance5;
                                                     }
                                                 }
                                             }
@@ -2478,6 +3531,354 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
+                                }
+                                if (typeName == "AzureSql")
+                                {
+                                    AzureSqlProtectionPolicy azureSqlProtectionPolicyInstance = new AzureSqlProtectionPolicy();
+                                    
+                                    JToken retentionPolicyValue2 = propertiesValue["retentionPolicy"];
+                                    if (retentionPolicyValue2 != null && retentionPolicyValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName4 = ((string)retentionPolicyValue2["retentionPolicyType"]);
+                                        if (typeName4 == "SimpleRetentionPolicy")
+                                        {
+                                            SimpleRetentionPolicy simpleRetentionPolicyInstance2 = new SimpleRetentionPolicy();
+                                            
+                                            JToken retentionDurationValue6 = retentionPolicyValue2["retentionDuration"];
+                                            if (retentionDurationValue6 != null && retentionDurationValue6.Type != JTokenType.Null)
+                                            {
+                                                RetentionDuration retentionDurationInstance6 = new RetentionDuration();
+                                                simpleRetentionPolicyInstance2.RetentionDuration = retentionDurationInstance6;
+                                                
+                                                JToken countValue6 = retentionDurationValue6["count"];
+                                                if (countValue6 != null && countValue6.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance6 = ((int)countValue6);
+                                                    retentionDurationInstance6.Count = countInstance6;
+                                                }
+                                                
+                                                JToken durationTypeValue6 = retentionDurationValue6["durationType"];
+                                                if (durationTypeValue6 != null && durationTypeValue6.Type != JTokenType.Null)
+                                                {
+                                                    string durationTypeInstance6 = ((string)durationTypeValue6);
+                                                    retentionDurationInstance6.DurationType = durationTypeInstance6;
+                                                }
+                                            }
+                                            azureSqlProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance2;
+                                        }
+                                        if (typeName4 == "LongTermRetentionPolicy")
+                                        {
+                                            LongTermRetentionPolicy longTermRetentionPolicyInstance2 = new LongTermRetentionPolicy();
+                                            
+                                            JToken dailyScheduleValue2 = retentionPolicyValue2["dailySchedule"];
+                                            if (dailyScheduleValue2 != null && dailyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                DailyRetentionSchedule dailyScheduleInstance2 = new DailyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.DailySchedule = dailyScheduleInstance2;
+                                                
+                                                JToken retentionTimesArray5 = dailyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray5 != null && retentionTimesArray5.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue5 in ((JArray)retentionTimesArray5))
+                                                    {
+                                                        dailyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue5));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue7 = dailyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue7 != null && retentionDurationValue7.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance7 = new RetentionDuration();
+                                                    dailyScheduleInstance2.RetentionDuration = retentionDurationInstance7;
+                                                    
+                                                    JToken countValue7 = retentionDurationValue7["count"];
+                                                    if (countValue7 != null && countValue7.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance7 = ((int)countValue7);
+                                                        retentionDurationInstance7.Count = countInstance7;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue7 = retentionDurationValue7["durationType"];
+                                                    if (durationTypeValue7 != null && durationTypeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance7 = ((string)durationTypeValue7);
+                                                        retentionDurationInstance7.DurationType = durationTypeInstance7;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken weeklyScheduleValue2 = retentionPolicyValue2["weeklySchedule"];
+                                            if (weeklyScheduleValue2 != null && weeklyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                WeeklyRetentionSchedule weeklyScheduleInstance2 = new WeeklyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.WeeklySchedule = weeklyScheduleInstance2;
+                                                
+                                                JToken daysOfTheWeekArray4 = weeklyScheduleValue2["daysOfTheWeek"];
+                                                if (daysOfTheWeekArray4 != null && daysOfTheWeekArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken daysOfTheWeekValue4 in ((JArray)daysOfTheWeekArray4))
+                                                    {
+                                                        weeklyScheduleInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue4));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray6 = weeklyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray6 != null && retentionTimesArray6.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue6 in ((JArray)retentionTimesArray6))
+                                                    {
+                                                        weeklyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue6));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue8 = weeklyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue8 != null && retentionDurationValue8.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance8 = new RetentionDuration();
+                                                    weeklyScheduleInstance2.RetentionDuration = retentionDurationInstance8;
+                                                    
+                                                    JToken countValue8 = retentionDurationValue8["count"];
+                                                    if (countValue8 != null && countValue8.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance8 = ((int)countValue8);
+                                                        retentionDurationInstance8.Count = countInstance8;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue8 = retentionDurationValue8["durationType"];
+                                                    if (durationTypeValue8 != null && durationTypeValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance8 = ((string)durationTypeValue8);
+                                                        retentionDurationInstance8.DurationType = durationTypeInstance8;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken monthlyScheduleValue2 = retentionPolicyValue2["monthlySchedule"];
+                                            if (monthlyScheduleValue2 != null && monthlyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                MonthlyRetentionSchedule monthlyScheduleInstance2 = new MonthlyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.MonthlySchedule = monthlyScheduleInstance2;
+                                                
+                                                JToken retentionScheduleFormatTypeValue3 = monthlyScheduleValue2["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue3 != null && retentionScheduleFormatTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string retentionScheduleFormatTypeInstance3 = ((string)retentionScheduleFormatTypeValue3);
+                                                    monthlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance3;
+                                                }
+                                                
+                                                JToken retentionScheduleDailyValue3 = monthlyScheduleValue2["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue3 != null && retentionScheduleDailyValue3.Type != JTokenType.Null)
+                                                {
+                                                    DailyRetentionFormat retentionScheduleDailyInstance3 = new DailyRetentionFormat();
+                                                    monthlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance3;
+                                                    
+                                                    JToken daysOfTheMonthArray3 = retentionScheduleDailyValue3["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray3 != null && daysOfTheMonthArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheMonthValue3 in ((JArray)daysOfTheMonthArray3))
+                                                        {
+                                                            Day dayInstance3 = new Day();
+                                                            retentionScheduleDailyInstance3.DaysOfTheMonth.Add(dayInstance3);
+                                                            
+                                                            JToken dateValue3 = daysOfTheMonthValue3["date"];
+                                                            if (dateValue3 != null && dateValue3.Type != JTokenType.Null)
+                                                            {
+                                                                int dateInstance3 = ((int)dateValue3);
+                                                                dayInstance3.Date = dateInstance3;
+                                                            }
+                                                            
+                                                            JToken isLastValue3 = daysOfTheMonthValue3["isLast"];
+                                                            if (isLastValue3 != null && isLastValue3.Type != JTokenType.Null)
+                                                            {
+                                                                bool isLastInstance3 = ((bool)isLastValue3);
+                                                                dayInstance3.IsLast = isLastInstance3;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleWeeklyValue3 = monthlyScheduleValue2["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue3 != null && retentionScheduleWeeklyValue3.Type != JTokenType.Null)
+                                                {
+                                                    WeeklyRetentionFormat retentionScheduleWeeklyInstance3 = new WeeklyRetentionFormat();
+                                                    monthlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance3;
+                                                    
+                                                    JToken daysOfTheWeekArray5 = retentionScheduleWeeklyValue3["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray5 != null && daysOfTheWeekArray5.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheWeekValue5 in ((JArray)daysOfTheWeekArray5))
+                                                        {
+                                                            retentionScheduleWeeklyInstance3.DaysOfTheWeek.Add(((string)daysOfTheWeekValue5));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeksOfTheMonthArray3 = retentionScheduleWeeklyValue3["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray3 != null && weeksOfTheMonthArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken weeksOfTheMonthValue3 in ((JArray)weeksOfTheMonthArray3))
+                                                        {
+                                                            retentionScheduleWeeklyInstance3.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue3));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray7 = monthlyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray7 != null && retentionTimesArray7.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue7 in ((JArray)retentionTimesArray7))
+                                                    {
+                                                        monthlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue7));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue9 = monthlyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue9 != null && retentionDurationValue9.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance9 = new RetentionDuration();
+                                                    monthlyScheduleInstance2.RetentionDuration = retentionDurationInstance9;
+                                                    
+                                                    JToken countValue9 = retentionDurationValue9["count"];
+                                                    if (countValue9 != null && countValue9.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance9 = ((int)countValue9);
+                                                        retentionDurationInstance9.Count = countInstance9;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue9 = retentionDurationValue9["durationType"];
+                                                    if (durationTypeValue9 != null && durationTypeValue9.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance9 = ((string)durationTypeValue9);
+                                                        retentionDurationInstance9.DurationType = durationTypeInstance9;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken yearlyScheduleValue2 = retentionPolicyValue2["yearlySchedule"];
+                                            if (yearlyScheduleValue2 != null && yearlyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                YearlyRetentionSchedule yearlyScheduleInstance2 = new YearlyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.YearlySchedule = yearlyScheduleInstance2;
+                                                
+                                                JToken retentionScheduleFormatTypeValue4 = yearlyScheduleValue2["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue4 != null && retentionScheduleFormatTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string retentionScheduleFormatTypeInstance4 = ((string)retentionScheduleFormatTypeValue4);
+                                                    yearlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance4;
+                                                }
+                                                
+                                                JToken monthsOfYearArray2 = yearlyScheduleValue2["monthsOfYear"];
+                                                if (monthsOfYearArray2 != null && monthsOfYearArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken monthsOfYearValue2 in ((JArray)monthsOfYearArray2))
+                                                    {
+                                                        yearlyScheduleInstance2.MonthsOfYear.Add(((string)monthsOfYearValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleDailyValue4 = yearlyScheduleValue2["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue4 != null && retentionScheduleDailyValue4.Type != JTokenType.Null)
+                                                {
+                                                    DailyRetentionFormat retentionScheduleDailyInstance4 = new DailyRetentionFormat();
+                                                    yearlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance4;
+                                                    
+                                                    JToken daysOfTheMonthArray4 = retentionScheduleDailyValue4["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray4 != null && daysOfTheMonthArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheMonthValue4 in ((JArray)daysOfTheMonthArray4))
+                                                        {
+                                                            Day dayInstance4 = new Day();
+                                                            retentionScheduleDailyInstance4.DaysOfTheMonth.Add(dayInstance4);
+                                                            
+                                                            JToken dateValue4 = daysOfTheMonthValue4["date"];
+                                                            if (dateValue4 != null && dateValue4.Type != JTokenType.Null)
+                                                            {
+                                                                int dateInstance4 = ((int)dateValue4);
+                                                                dayInstance4.Date = dateInstance4;
+                                                            }
+                                                            
+                                                            JToken isLastValue4 = daysOfTheMonthValue4["isLast"];
+                                                            if (isLastValue4 != null && isLastValue4.Type != JTokenType.Null)
+                                                            {
+                                                                bool isLastInstance4 = ((bool)isLastValue4);
+                                                                dayInstance4.IsLast = isLastInstance4;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleWeeklyValue4 = yearlyScheduleValue2["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue4 != null && retentionScheduleWeeklyValue4.Type != JTokenType.Null)
+                                                {
+                                                    WeeklyRetentionFormat retentionScheduleWeeklyInstance4 = new WeeklyRetentionFormat();
+                                                    yearlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance4;
+                                                    
+                                                    JToken daysOfTheWeekArray6 = retentionScheduleWeeklyValue4["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray6 != null && daysOfTheWeekArray6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheWeekValue6 in ((JArray)daysOfTheWeekArray6))
+                                                        {
+                                                            retentionScheduleWeeklyInstance4.DaysOfTheWeek.Add(((string)daysOfTheWeekValue6));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeksOfTheMonthArray4 = retentionScheduleWeeklyValue4["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray4 != null && weeksOfTheMonthArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken weeksOfTheMonthValue4 in ((JArray)weeksOfTheMonthArray4))
+                                                        {
+                                                            retentionScheduleWeeklyInstance4.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue4));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray8 = yearlyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray8 != null && retentionTimesArray8.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue8 in ((JArray)retentionTimesArray8))
+                                                    {
+                                                        yearlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue8));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue10 = yearlyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue10 != null && retentionDurationValue10.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance10 = new RetentionDuration();
+                                                    yearlyScheduleInstance2.RetentionDuration = retentionDurationInstance10;
+                                                    
+                                                    JToken countValue10 = retentionDurationValue10["count"];
+                                                    if (countValue10 != null && countValue10.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance10 = ((int)countValue10);
+                                                        retentionDurationInstance10.Count = countInstance10;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue10 = retentionDurationValue10["durationType"];
+                                                    if (durationTypeValue10 != null && durationTypeValue10.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance10 = ((string)durationTypeValue10);
+                                                        retentionDurationInstance10.DurationType = durationTypeInstance10;
+                                                    }
+                                                }
+                                            }
+                                            azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                        azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                    }
+                                    
+                                    JToken protectedItemsCountValue3 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                        azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
+                                    }
+                                    itemInstance.Properties = azureSqlProtectionPolicyInstance;
                                 }
                             }
                             
@@ -2772,6 +4173,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         if (typeName3 == "SimpleRetentionPolicy")
                                         {
                                             SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
+                                            
+                                            JToken retentionDurationValue = retentionPolicyValue["retentionDuration"];
+                                            if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
+                                            {
+                                                RetentionDuration retentionDurationInstance = new RetentionDuration();
+                                                simpleRetentionPolicyInstance.RetentionDuration = retentionDurationInstance;
+                                                
+                                                JToken countValue = retentionDurationValue["count"];
+                                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance = ((int)countValue);
+                                                    retentionDurationInstance.Count = countInstance;
+                                                }
+                                                
+                                                JToken durationTypeValue = retentionDurationValue["durationType"];
+                                                if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string durationTypeInstance = ((string)durationTypeValue);
+                                                    retentionDurationInstance.DurationType = durationTypeInstance;
+                                                }
+                                            }
                                             azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                         }
                                         if (typeName3 == "LongTermRetentionPolicy")
@@ -2793,24 +4215,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue = dailyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
+                                                JToken retentionDurationValue2 = dailyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance = new RetentionDuration();
-                                                    dailyScheduleInstance.RetentionDuration = retentionDurationInstance;
+                                                    RetentionDuration retentionDurationInstance2 = new RetentionDuration();
+                                                    dailyScheduleInstance.RetentionDuration = retentionDurationInstance2;
                                                     
-                                                    JToken countValue = retentionDurationValue["count"];
-                                                    if (countValue != null && countValue.Type != JTokenType.Null)
+                                                    JToken countValue2 = retentionDurationValue2["count"];
+                                                    if (countValue2 != null && countValue2.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance = ((int)countValue);
-                                                        retentionDurationInstance.Count = countInstance;
+                                                        int countInstance2 = ((int)countValue2);
+                                                        retentionDurationInstance2.Count = countInstance2;
                                                     }
                                                     
-                                                    JToken durationTypeValue = retentionDurationValue["durationType"];
-                                                    if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                    JToken durationTypeValue2 = retentionDurationValue2["durationType"];
+                                                    if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance = ((string)durationTypeValue);
-                                                        retentionDurationInstance.DurationType = durationTypeInstance;
+                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
+                                                        retentionDurationInstance2.DurationType = durationTypeInstance2;
                                                     }
                                                 }
                                             }
@@ -2839,24 +4261,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue2 = weeklyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
+                                                JToken retentionDurationValue3 = weeklyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance2 = new RetentionDuration();
-                                                    weeklyScheduleInstance.RetentionDuration = retentionDurationInstance2;
+                                                    RetentionDuration retentionDurationInstance3 = new RetentionDuration();
+                                                    weeklyScheduleInstance.RetentionDuration = retentionDurationInstance3;
                                                     
-                                                    JToken countValue2 = retentionDurationValue2["count"];
-                                                    if (countValue2 != null && countValue2.Type != JTokenType.Null)
+                                                    JToken countValue3 = retentionDurationValue3["count"];
+                                                    if (countValue3 != null && countValue3.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance2 = ((int)countValue2);
-                                                        retentionDurationInstance2.Count = countInstance2;
+                                                        int countInstance3 = ((int)countValue3);
+                                                        retentionDurationInstance3.Count = countInstance3;
                                                     }
                                                     
-                                                    JToken durationTypeValue2 = retentionDurationValue2["durationType"];
-                                                    if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
+                                                    JToken durationTypeValue3 = retentionDurationValue3["durationType"];
+                                                    if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
-                                                        retentionDurationInstance2.DurationType = durationTypeInstance2;
+                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
+                                                        retentionDurationInstance3.DurationType = durationTypeInstance3;
                                                     }
                                                 }
                                             }
@@ -2939,24 +4361,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue3 = monthlyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
+                                                JToken retentionDurationValue4 = monthlyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance3 = new RetentionDuration();
-                                                    monthlyScheduleInstance.RetentionDuration = retentionDurationInstance3;
+                                                    RetentionDuration retentionDurationInstance4 = new RetentionDuration();
+                                                    monthlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
                                                     
-                                                    JToken countValue3 = retentionDurationValue3["count"];
-                                                    if (countValue3 != null && countValue3.Type != JTokenType.Null)
+                                                    JToken countValue4 = retentionDurationValue4["count"];
+                                                    if (countValue4 != null && countValue4.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance3 = ((int)countValue3);
-                                                        retentionDurationInstance3.Count = countInstance3;
+                                                        int countInstance4 = ((int)countValue4);
+                                                        retentionDurationInstance4.Count = countInstance4;
                                                     }
                                                     
-                                                    JToken durationTypeValue3 = retentionDurationValue3["durationType"];
-                                                    if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
+                                                    JToken durationTypeValue4 = retentionDurationValue4["durationType"];
+                                                    if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
-                                                        retentionDurationInstance3.DurationType = durationTypeInstance3;
+                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
+                                                        retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                     }
                                                 }
                                             }
@@ -3048,24 +4470,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     }
                                                 }
                                                 
-                                                JToken retentionDurationValue4 = yearlyScheduleValue["retentionDuration"];
-                                                if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
+                                                JToken retentionDurationValue5 = yearlyScheduleValue["retentionDuration"];
+                                                if (retentionDurationValue5 != null && retentionDurationValue5.Type != JTokenType.Null)
                                                 {
-                                                    RetentionDuration retentionDurationInstance4 = new RetentionDuration();
-                                                    yearlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
+                                                    RetentionDuration retentionDurationInstance5 = new RetentionDuration();
+                                                    yearlyScheduleInstance.RetentionDuration = retentionDurationInstance5;
                                                     
-                                                    JToken countValue4 = retentionDurationValue4["count"];
-                                                    if (countValue4 != null && countValue4.Type != JTokenType.Null)
+                                                    JToken countValue5 = retentionDurationValue5["count"];
+                                                    if (countValue5 != null && countValue5.Type != JTokenType.Null)
                                                     {
-                                                        int countInstance4 = ((int)countValue4);
-                                                        retentionDurationInstance4.Count = countInstance4;
+                                                        int countInstance5 = ((int)countValue5);
+                                                        retentionDurationInstance5.Count = countInstance5;
                                                     }
                                                     
-                                                    JToken durationTypeValue4 = retentionDurationValue4["durationType"];
-                                                    if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
+                                                    JToken durationTypeValue5 = retentionDurationValue5["durationType"];
+                                                    if (durationTypeValue5 != null && durationTypeValue5.Type != JTokenType.Null)
                                                     {
-                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
-                                                        retentionDurationInstance4.DurationType = durationTypeInstance4;
+                                                        string durationTypeInstance5 = ((string)durationTypeValue5);
+                                                        retentionDurationInstance5.DurationType = durationTypeInstance5;
                                                     }
                                                 }
                                             }
@@ -3087,6 +4509,354 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
+                                }
+                                if (typeName == "AzureSql")
+                                {
+                                    AzureSqlProtectionPolicy azureSqlProtectionPolicyInstance = new AzureSqlProtectionPolicy();
+                                    
+                                    JToken retentionPolicyValue2 = propertiesValue["retentionPolicy"];
+                                    if (retentionPolicyValue2 != null && retentionPolicyValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeName4 = ((string)retentionPolicyValue2["retentionPolicyType"]);
+                                        if (typeName4 == "SimpleRetentionPolicy")
+                                        {
+                                            SimpleRetentionPolicy simpleRetentionPolicyInstance2 = new SimpleRetentionPolicy();
+                                            
+                                            JToken retentionDurationValue6 = retentionPolicyValue2["retentionDuration"];
+                                            if (retentionDurationValue6 != null && retentionDurationValue6.Type != JTokenType.Null)
+                                            {
+                                                RetentionDuration retentionDurationInstance6 = new RetentionDuration();
+                                                simpleRetentionPolicyInstance2.RetentionDuration = retentionDurationInstance6;
+                                                
+                                                JToken countValue6 = retentionDurationValue6["count"];
+                                                if (countValue6 != null && countValue6.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance6 = ((int)countValue6);
+                                                    retentionDurationInstance6.Count = countInstance6;
+                                                }
+                                                
+                                                JToken durationTypeValue6 = retentionDurationValue6["durationType"];
+                                                if (durationTypeValue6 != null && durationTypeValue6.Type != JTokenType.Null)
+                                                {
+                                                    string durationTypeInstance6 = ((string)durationTypeValue6);
+                                                    retentionDurationInstance6.DurationType = durationTypeInstance6;
+                                                }
+                                            }
+                                            azureSqlProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance2;
+                                        }
+                                        if (typeName4 == "LongTermRetentionPolicy")
+                                        {
+                                            LongTermRetentionPolicy longTermRetentionPolicyInstance2 = new LongTermRetentionPolicy();
+                                            
+                                            JToken dailyScheduleValue2 = retentionPolicyValue2["dailySchedule"];
+                                            if (dailyScheduleValue2 != null && dailyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                DailyRetentionSchedule dailyScheduleInstance2 = new DailyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.DailySchedule = dailyScheduleInstance2;
+                                                
+                                                JToken retentionTimesArray5 = dailyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray5 != null && retentionTimesArray5.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue5 in ((JArray)retentionTimesArray5))
+                                                    {
+                                                        dailyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue5));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue7 = dailyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue7 != null && retentionDurationValue7.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance7 = new RetentionDuration();
+                                                    dailyScheduleInstance2.RetentionDuration = retentionDurationInstance7;
+                                                    
+                                                    JToken countValue7 = retentionDurationValue7["count"];
+                                                    if (countValue7 != null && countValue7.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance7 = ((int)countValue7);
+                                                        retentionDurationInstance7.Count = countInstance7;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue7 = retentionDurationValue7["durationType"];
+                                                    if (durationTypeValue7 != null && durationTypeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance7 = ((string)durationTypeValue7);
+                                                        retentionDurationInstance7.DurationType = durationTypeInstance7;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken weeklyScheduleValue2 = retentionPolicyValue2["weeklySchedule"];
+                                            if (weeklyScheduleValue2 != null && weeklyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                WeeklyRetentionSchedule weeklyScheduleInstance2 = new WeeklyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.WeeklySchedule = weeklyScheduleInstance2;
+                                                
+                                                JToken daysOfTheWeekArray4 = weeklyScheduleValue2["daysOfTheWeek"];
+                                                if (daysOfTheWeekArray4 != null && daysOfTheWeekArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken daysOfTheWeekValue4 in ((JArray)daysOfTheWeekArray4))
+                                                    {
+                                                        weeklyScheduleInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue4));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray6 = weeklyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray6 != null && retentionTimesArray6.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue6 in ((JArray)retentionTimesArray6))
+                                                    {
+                                                        weeklyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue6));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue8 = weeklyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue8 != null && retentionDurationValue8.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance8 = new RetentionDuration();
+                                                    weeklyScheduleInstance2.RetentionDuration = retentionDurationInstance8;
+                                                    
+                                                    JToken countValue8 = retentionDurationValue8["count"];
+                                                    if (countValue8 != null && countValue8.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance8 = ((int)countValue8);
+                                                        retentionDurationInstance8.Count = countInstance8;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue8 = retentionDurationValue8["durationType"];
+                                                    if (durationTypeValue8 != null && durationTypeValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance8 = ((string)durationTypeValue8);
+                                                        retentionDurationInstance8.DurationType = durationTypeInstance8;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken monthlyScheduleValue2 = retentionPolicyValue2["monthlySchedule"];
+                                            if (monthlyScheduleValue2 != null && monthlyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                MonthlyRetentionSchedule monthlyScheduleInstance2 = new MonthlyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.MonthlySchedule = monthlyScheduleInstance2;
+                                                
+                                                JToken retentionScheduleFormatTypeValue3 = monthlyScheduleValue2["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue3 != null && retentionScheduleFormatTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string retentionScheduleFormatTypeInstance3 = ((string)retentionScheduleFormatTypeValue3);
+                                                    monthlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance3;
+                                                }
+                                                
+                                                JToken retentionScheduleDailyValue3 = monthlyScheduleValue2["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue3 != null && retentionScheduleDailyValue3.Type != JTokenType.Null)
+                                                {
+                                                    DailyRetentionFormat retentionScheduleDailyInstance3 = new DailyRetentionFormat();
+                                                    monthlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance3;
+                                                    
+                                                    JToken daysOfTheMonthArray3 = retentionScheduleDailyValue3["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray3 != null && daysOfTheMonthArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheMonthValue3 in ((JArray)daysOfTheMonthArray3))
+                                                        {
+                                                            Day dayInstance3 = new Day();
+                                                            retentionScheduleDailyInstance3.DaysOfTheMonth.Add(dayInstance3);
+                                                            
+                                                            JToken dateValue3 = daysOfTheMonthValue3["date"];
+                                                            if (dateValue3 != null && dateValue3.Type != JTokenType.Null)
+                                                            {
+                                                                int dateInstance3 = ((int)dateValue3);
+                                                                dayInstance3.Date = dateInstance3;
+                                                            }
+                                                            
+                                                            JToken isLastValue3 = daysOfTheMonthValue3["isLast"];
+                                                            if (isLastValue3 != null && isLastValue3.Type != JTokenType.Null)
+                                                            {
+                                                                bool isLastInstance3 = ((bool)isLastValue3);
+                                                                dayInstance3.IsLast = isLastInstance3;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleWeeklyValue3 = monthlyScheduleValue2["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue3 != null && retentionScheduleWeeklyValue3.Type != JTokenType.Null)
+                                                {
+                                                    WeeklyRetentionFormat retentionScheduleWeeklyInstance3 = new WeeklyRetentionFormat();
+                                                    monthlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance3;
+                                                    
+                                                    JToken daysOfTheWeekArray5 = retentionScheduleWeeklyValue3["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray5 != null && daysOfTheWeekArray5.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheWeekValue5 in ((JArray)daysOfTheWeekArray5))
+                                                        {
+                                                            retentionScheduleWeeklyInstance3.DaysOfTheWeek.Add(((string)daysOfTheWeekValue5));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeksOfTheMonthArray3 = retentionScheduleWeeklyValue3["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray3 != null && weeksOfTheMonthArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken weeksOfTheMonthValue3 in ((JArray)weeksOfTheMonthArray3))
+                                                        {
+                                                            retentionScheduleWeeklyInstance3.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue3));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray7 = monthlyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray7 != null && retentionTimesArray7.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue7 in ((JArray)retentionTimesArray7))
+                                                    {
+                                                        monthlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue7));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue9 = monthlyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue9 != null && retentionDurationValue9.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance9 = new RetentionDuration();
+                                                    monthlyScheduleInstance2.RetentionDuration = retentionDurationInstance9;
+                                                    
+                                                    JToken countValue9 = retentionDurationValue9["count"];
+                                                    if (countValue9 != null && countValue9.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance9 = ((int)countValue9);
+                                                        retentionDurationInstance9.Count = countInstance9;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue9 = retentionDurationValue9["durationType"];
+                                                    if (durationTypeValue9 != null && durationTypeValue9.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance9 = ((string)durationTypeValue9);
+                                                        retentionDurationInstance9.DurationType = durationTypeInstance9;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken yearlyScheduleValue2 = retentionPolicyValue2["yearlySchedule"];
+                                            if (yearlyScheduleValue2 != null && yearlyScheduleValue2.Type != JTokenType.Null)
+                                            {
+                                                YearlyRetentionSchedule yearlyScheduleInstance2 = new YearlyRetentionSchedule();
+                                                longTermRetentionPolicyInstance2.YearlySchedule = yearlyScheduleInstance2;
+                                                
+                                                JToken retentionScheduleFormatTypeValue4 = yearlyScheduleValue2["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue4 != null && retentionScheduleFormatTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string retentionScheduleFormatTypeInstance4 = ((string)retentionScheduleFormatTypeValue4);
+                                                    yearlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance4;
+                                                }
+                                                
+                                                JToken monthsOfYearArray2 = yearlyScheduleValue2["monthsOfYear"];
+                                                if (monthsOfYearArray2 != null && monthsOfYearArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken monthsOfYearValue2 in ((JArray)monthsOfYearArray2))
+                                                    {
+                                                        yearlyScheduleInstance2.MonthsOfYear.Add(((string)monthsOfYearValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleDailyValue4 = yearlyScheduleValue2["retentionScheduleDaily"];
+                                                if (retentionScheduleDailyValue4 != null && retentionScheduleDailyValue4.Type != JTokenType.Null)
+                                                {
+                                                    DailyRetentionFormat retentionScheduleDailyInstance4 = new DailyRetentionFormat();
+                                                    yearlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance4;
+                                                    
+                                                    JToken daysOfTheMonthArray4 = retentionScheduleDailyValue4["daysOfTheMonth"];
+                                                    if (daysOfTheMonthArray4 != null && daysOfTheMonthArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheMonthValue4 in ((JArray)daysOfTheMonthArray4))
+                                                        {
+                                                            Day dayInstance4 = new Day();
+                                                            retentionScheduleDailyInstance4.DaysOfTheMonth.Add(dayInstance4);
+                                                            
+                                                            JToken dateValue4 = daysOfTheMonthValue4["date"];
+                                                            if (dateValue4 != null && dateValue4.Type != JTokenType.Null)
+                                                            {
+                                                                int dateInstance4 = ((int)dateValue4);
+                                                                dayInstance4.Date = dateInstance4;
+                                                            }
+                                                            
+                                                            JToken isLastValue4 = daysOfTheMonthValue4["isLast"];
+                                                            if (isLastValue4 != null && isLastValue4.Type != JTokenType.Null)
+                                                            {
+                                                                bool isLastInstance4 = ((bool)isLastValue4);
+                                                                dayInstance4.IsLast = isLastInstance4;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionScheduleWeeklyValue4 = yearlyScheduleValue2["retentionScheduleWeekly"];
+                                                if (retentionScheduleWeeklyValue4 != null && retentionScheduleWeeklyValue4.Type != JTokenType.Null)
+                                                {
+                                                    WeeklyRetentionFormat retentionScheduleWeeklyInstance4 = new WeeklyRetentionFormat();
+                                                    yearlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance4;
+                                                    
+                                                    JToken daysOfTheWeekArray6 = retentionScheduleWeeklyValue4["daysOfTheWeek"];
+                                                    if (daysOfTheWeekArray6 != null && daysOfTheWeekArray6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken daysOfTheWeekValue6 in ((JArray)daysOfTheWeekArray6))
+                                                        {
+                                                            retentionScheduleWeeklyInstance4.DaysOfTheWeek.Add(((string)daysOfTheWeekValue6));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeksOfTheMonthArray4 = retentionScheduleWeeklyValue4["weeksOfTheMonth"];
+                                                    if (weeksOfTheMonthArray4 != null && weeksOfTheMonthArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken weeksOfTheMonthValue4 in ((JArray)weeksOfTheMonthArray4))
+                                                        {
+                                                            retentionScheduleWeeklyInstance4.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue4));
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken retentionTimesArray8 = yearlyScheduleValue2["retentionTimes"];
+                                                if (retentionTimesArray8 != null && retentionTimesArray8.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken retentionTimesValue8 in ((JArray)retentionTimesArray8))
+                                                    {
+                                                        yearlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue8));
+                                                    }
+                                                }
+                                                
+                                                JToken retentionDurationValue10 = yearlyScheduleValue2["retentionDuration"];
+                                                if (retentionDurationValue10 != null && retentionDurationValue10.Type != JTokenType.Null)
+                                                {
+                                                    RetentionDuration retentionDurationInstance10 = new RetentionDuration();
+                                                    yearlyScheduleInstance2.RetentionDuration = retentionDurationInstance10;
+                                                    
+                                                    JToken countValue10 = retentionDurationValue10["count"];
+                                                    if (countValue10 != null && countValue10.Type != JTokenType.Null)
+                                                    {
+                                                        int countInstance10 = ((int)countValue10);
+                                                        retentionDurationInstance10.Count = countInstance10;
+                                                    }
+                                                    
+                                                    JToken durationTypeValue10 = retentionDurationValue10["durationType"];
+                                                    if (durationTypeValue10 != null && durationTypeValue10.Type != JTokenType.Null)
+                                                    {
+                                                        string durationTypeInstance10 = ((string)durationTypeValue10);
+                                                        retentionDurationInstance10.DurationType = durationTypeInstance10;
+                                                    }
+                                                }
+                                            }
+                                            azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                        azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                    }
+                                    
+                                    JToken protectedItemsCountValue3 = propertiesValue["protectedItemsCount"];
+                                    if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                    {
+                                        int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                        azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
+                                    }
+                                    itemInstance.Properties = azureSqlProtectionPolicyInstance;
                                 }
                             }
                             
@@ -3444,6 +5214,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 if (typeName3 == "SimpleRetentionPolicy")
                                                 {
                                                     SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
+                                                    
+                                                    JToken retentionDurationValue = retentionPolicyValue["retentionDuration"];
+                                                    if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
+                                                    {
+                                                        RetentionDuration retentionDurationInstance = new RetentionDuration();
+                                                        simpleRetentionPolicyInstance.RetentionDuration = retentionDurationInstance;
+                                                        
+                                                        JToken countValue = retentionDurationValue["count"];
+                                                        if (countValue != null && countValue.Type != JTokenType.Null)
+                                                        {
+                                                            int countInstance = ((int)countValue);
+                                                            retentionDurationInstance.Count = countInstance;
+                                                        }
+                                                        
+                                                        JToken durationTypeValue = retentionDurationValue["durationType"];
+                                                        if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                        {
+                                                            string durationTypeInstance = ((string)durationTypeValue);
+                                                            retentionDurationInstance.DurationType = durationTypeInstance;
+                                                        }
+                                                    }
                                                     azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                                 }
                                                 if (typeName3 == "LongTermRetentionPolicy")
@@ -3465,24 +5256,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             }
                                                         }
                                                         
-                                                        JToken retentionDurationValue = dailyScheduleValue["retentionDuration"];
-                                                        if (retentionDurationValue != null && retentionDurationValue.Type != JTokenType.Null)
+                                                        JToken retentionDurationValue2 = dailyScheduleValue["retentionDuration"];
+                                                        if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
                                                         {
-                                                            RetentionDuration retentionDurationInstance = new RetentionDuration();
-                                                            dailyScheduleInstance.RetentionDuration = retentionDurationInstance;
+                                                            RetentionDuration retentionDurationInstance2 = new RetentionDuration();
+                                                            dailyScheduleInstance.RetentionDuration = retentionDurationInstance2;
                                                             
-                                                            JToken countValue = retentionDurationValue["count"];
-                                                            if (countValue != null && countValue.Type != JTokenType.Null)
+                                                            JToken countValue2 = retentionDurationValue2["count"];
+                                                            if (countValue2 != null && countValue2.Type != JTokenType.Null)
                                                             {
-                                                                int countInstance = ((int)countValue);
-                                                                retentionDurationInstance.Count = countInstance;
+                                                                int countInstance2 = ((int)countValue2);
+                                                                retentionDurationInstance2.Count = countInstance2;
                                                             }
                                                             
-                                                            JToken durationTypeValue = retentionDurationValue["durationType"];
-                                                            if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
+                                                            JToken durationTypeValue2 = retentionDurationValue2["durationType"];
+                                                            if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                             {
-                                                                string durationTypeInstance = ((string)durationTypeValue);
-                                                                retentionDurationInstance.DurationType = durationTypeInstance;
+                                                                string durationTypeInstance2 = ((string)durationTypeValue2);
+                                                                retentionDurationInstance2.DurationType = durationTypeInstance2;
                                                             }
                                                         }
                                                     }
@@ -3511,24 +5302,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             }
                                                         }
                                                         
-                                                        JToken retentionDurationValue2 = weeklyScheduleValue["retentionDuration"];
-                                                        if (retentionDurationValue2 != null && retentionDurationValue2.Type != JTokenType.Null)
+                                                        JToken retentionDurationValue3 = weeklyScheduleValue["retentionDuration"];
+                                                        if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
                                                         {
-                                                            RetentionDuration retentionDurationInstance2 = new RetentionDuration();
-                                                            weeklyScheduleInstance.RetentionDuration = retentionDurationInstance2;
+                                                            RetentionDuration retentionDurationInstance3 = new RetentionDuration();
+                                                            weeklyScheduleInstance.RetentionDuration = retentionDurationInstance3;
                                                             
-                                                            JToken countValue2 = retentionDurationValue2["count"];
-                                                            if (countValue2 != null && countValue2.Type != JTokenType.Null)
+                                                            JToken countValue3 = retentionDurationValue3["count"];
+                                                            if (countValue3 != null && countValue3.Type != JTokenType.Null)
                                                             {
-                                                                int countInstance2 = ((int)countValue2);
-                                                                retentionDurationInstance2.Count = countInstance2;
+                                                                int countInstance3 = ((int)countValue3);
+                                                                retentionDurationInstance3.Count = countInstance3;
                                                             }
                                                             
-                                                            JToken durationTypeValue2 = retentionDurationValue2["durationType"];
-                                                            if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
+                                                            JToken durationTypeValue3 = retentionDurationValue3["durationType"];
+                                                            if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
                                                             {
-                                                                string durationTypeInstance2 = ((string)durationTypeValue2);
-                                                                retentionDurationInstance2.DurationType = durationTypeInstance2;
+                                                                string durationTypeInstance3 = ((string)durationTypeValue3);
+                                                                retentionDurationInstance3.DurationType = durationTypeInstance3;
                                                             }
                                                         }
                                                     }
@@ -3611,24 +5402,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             }
                                                         }
                                                         
-                                                        JToken retentionDurationValue3 = monthlyScheduleValue["retentionDuration"];
-                                                        if (retentionDurationValue3 != null && retentionDurationValue3.Type != JTokenType.Null)
+                                                        JToken retentionDurationValue4 = monthlyScheduleValue["retentionDuration"];
+                                                        if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
                                                         {
-                                                            RetentionDuration retentionDurationInstance3 = new RetentionDuration();
-                                                            monthlyScheduleInstance.RetentionDuration = retentionDurationInstance3;
+                                                            RetentionDuration retentionDurationInstance4 = new RetentionDuration();
+                                                            monthlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
                                                             
-                                                            JToken countValue3 = retentionDurationValue3["count"];
-                                                            if (countValue3 != null && countValue3.Type != JTokenType.Null)
+                                                            JToken countValue4 = retentionDurationValue4["count"];
+                                                            if (countValue4 != null && countValue4.Type != JTokenType.Null)
                                                             {
-                                                                int countInstance3 = ((int)countValue3);
-                                                                retentionDurationInstance3.Count = countInstance3;
+                                                                int countInstance4 = ((int)countValue4);
+                                                                retentionDurationInstance4.Count = countInstance4;
                                                             }
                                                             
-                                                            JToken durationTypeValue3 = retentionDurationValue3["durationType"];
-                                                            if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
+                                                            JToken durationTypeValue4 = retentionDurationValue4["durationType"];
+                                                            if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                             {
-                                                                string durationTypeInstance3 = ((string)durationTypeValue3);
-                                                                retentionDurationInstance3.DurationType = durationTypeInstance3;
+                                                                string durationTypeInstance4 = ((string)durationTypeValue4);
+                                                                retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                             }
                                                         }
                                                     }
@@ -3720,24 +5511,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             }
                                                         }
                                                         
-                                                        JToken retentionDurationValue4 = yearlyScheduleValue["retentionDuration"];
-                                                        if (retentionDurationValue4 != null && retentionDurationValue4.Type != JTokenType.Null)
+                                                        JToken retentionDurationValue5 = yearlyScheduleValue["retentionDuration"];
+                                                        if (retentionDurationValue5 != null && retentionDurationValue5.Type != JTokenType.Null)
                                                         {
-                                                            RetentionDuration retentionDurationInstance4 = new RetentionDuration();
-                                                            yearlyScheduleInstance.RetentionDuration = retentionDurationInstance4;
+                                                            RetentionDuration retentionDurationInstance5 = new RetentionDuration();
+                                                            yearlyScheduleInstance.RetentionDuration = retentionDurationInstance5;
                                                             
-                                                            JToken countValue4 = retentionDurationValue4["count"];
-                                                            if (countValue4 != null && countValue4.Type != JTokenType.Null)
+                                                            JToken countValue5 = retentionDurationValue5["count"];
+                                                            if (countValue5 != null && countValue5.Type != JTokenType.Null)
                                                             {
-                                                                int countInstance4 = ((int)countValue4);
-                                                                retentionDurationInstance4.Count = countInstance4;
+                                                                int countInstance5 = ((int)countValue5);
+                                                                retentionDurationInstance5.Count = countInstance5;
                                                             }
                                                             
-                                                            JToken durationTypeValue4 = retentionDurationValue4["durationType"];
-                                                            if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
+                                                            JToken durationTypeValue5 = retentionDurationValue5["durationType"];
+                                                            if (durationTypeValue5 != null && durationTypeValue5.Type != JTokenType.Null)
                                                             {
-                                                                string durationTypeInstance4 = ((string)durationTypeValue4);
-                                                                retentionDurationInstance4.DurationType = durationTypeInstance4;
+                                                                string durationTypeInstance5 = ((string)durationTypeValue5);
+                                                                retentionDurationInstance5.DurationType = durationTypeInstance5;
                                                             }
                                                         }
                                                     }
@@ -3759,6 +5550,354 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 azureIaaSVMProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance2;
                                             }
                                             protectionPolicyResourceInstance.Properties = azureIaaSVMProtectionPolicyInstance;
+                                        }
+                                        if (typeName == "AzureSql")
+                                        {
+                                            AzureSqlProtectionPolicy azureSqlProtectionPolicyInstance = new AzureSqlProtectionPolicy();
+                                            
+                                            JToken retentionPolicyValue2 = propertiesValue["retentionPolicy"];
+                                            if (retentionPolicyValue2 != null && retentionPolicyValue2.Type != JTokenType.Null)
+                                            {
+                                                string typeName4 = ((string)retentionPolicyValue2["retentionPolicyType"]);
+                                                if (typeName4 == "SimpleRetentionPolicy")
+                                                {
+                                                    SimpleRetentionPolicy simpleRetentionPolicyInstance2 = new SimpleRetentionPolicy();
+                                                    
+                                                    JToken retentionDurationValue6 = retentionPolicyValue2["retentionDuration"];
+                                                    if (retentionDurationValue6 != null && retentionDurationValue6.Type != JTokenType.Null)
+                                                    {
+                                                        RetentionDuration retentionDurationInstance6 = new RetentionDuration();
+                                                        simpleRetentionPolicyInstance2.RetentionDuration = retentionDurationInstance6;
+                                                        
+                                                        JToken countValue6 = retentionDurationValue6["count"];
+                                                        if (countValue6 != null && countValue6.Type != JTokenType.Null)
+                                                        {
+                                                            int countInstance6 = ((int)countValue6);
+                                                            retentionDurationInstance6.Count = countInstance6;
+                                                        }
+                                                        
+                                                        JToken durationTypeValue6 = retentionDurationValue6["durationType"];
+                                                        if (durationTypeValue6 != null && durationTypeValue6.Type != JTokenType.Null)
+                                                        {
+                                                            string durationTypeInstance6 = ((string)durationTypeValue6);
+                                                            retentionDurationInstance6.DurationType = durationTypeInstance6;
+                                                        }
+                                                    }
+                                                    azureSqlProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance2;
+                                                }
+                                                if (typeName4 == "LongTermRetentionPolicy")
+                                                {
+                                                    LongTermRetentionPolicy longTermRetentionPolicyInstance2 = new LongTermRetentionPolicy();
+                                                    
+                                                    JToken dailyScheduleValue2 = retentionPolicyValue2["dailySchedule"];
+                                                    if (dailyScheduleValue2 != null && dailyScheduleValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DailyRetentionSchedule dailyScheduleInstance2 = new DailyRetentionSchedule();
+                                                        longTermRetentionPolicyInstance2.DailySchedule = dailyScheduleInstance2;
+                                                        
+                                                        JToken retentionTimesArray5 = dailyScheduleValue2["retentionTimes"];
+                                                        if (retentionTimesArray5 != null && retentionTimesArray5.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken retentionTimesValue5 in ((JArray)retentionTimesArray5))
+                                                            {
+                                                                dailyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue5));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionDurationValue7 = dailyScheduleValue2["retentionDuration"];
+                                                        if (retentionDurationValue7 != null && retentionDurationValue7.Type != JTokenType.Null)
+                                                        {
+                                                            RetentionDuration retentionDurationInstance7 = new RetentionDuration();
+                                                            dailyScheduleInstance2.RetentionDuration = retentionDurationInstance7;
+                                                            
+                                                            JToken countValue7 = retentionDurationValue7["count"];
+                                                            if (countValue7 != null && countValue7.Type != JTokenType.Null)
+                                                            {
+                                                                int countInstance7 = ((int)countValue7);
+                                                                retentionDurationInstance7.Count = countInstance7;
+                                                            }
+                                                            
+                                                            JToken durationTypeValue7 = retentionDurationValue7["durationType"];
+                                                            if (durationTypeValue7 != null && durationTypeValue7.Type != JTokenType.Null)
+                                                            {
+                                                                string durationTypeInstance7 = ((string)durationTypeValue7);
+                                                                retentionDurationInstance7.DurationType = durationTypeInstance7;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken weeklyScheduleValue2 = retentionPolicyValue2["weeklySchedule"];
+                                                    if (weeklyScheduleValue2 != null && weeklyScheduleValue2.Type != JTokenType.Null)
+                                                    {
+                                                        WeeklyRetentionSchedule weeklyScheduleInstance2 = new WeeklyRetentionSchedule();
+                                                        longTermRetentionPolicyInstance2.WeeklySchedule = weeklyScheduleInstance2;
+                                                        
+                                                        JToken daysOfTheWeekArray4 = weeklyScheduleValue2["daysOfTheWeek"];
+                                                        if (daysOfTheWeekArray4 != null && daysOfTheWeekArray4.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken daysOfTheWeekValue4 in ((JArray)daysOfTheWeekArray4))
+                                                            {
+                                                                weeklyScheduleInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue4));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionTimesArray6 = weeklyScheduleValue2["retentionTimes"];
+                                                        if (retentionTimesArray6 != null && retentionTimesArray6.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken retentionTimesValue6 in ((JArray)retentionTimesArray6))
+                                                            {
+                                                                weeklyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue6));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionDurationValue8 = weeklyScheduleValue2["retentionDuration"];
+                                                        if (retentionDurationValue8 != null && retentionDurationValue8.Type != JTokenType.Null)
+                                                        {
+                                                            RetentionDuration retentionDurationInstance8 = new RetentionDuration();
+                                                            weeklyScheduleInstance2.RetentionDuration = retentionDurationInstance8;
+                                                            
+                                                            JToken countValue8 = retentionDurationValue8["count"];
+                                                            if (countValue8 != null && countValue8.Type != JTokenType.Null)
+                                                            {
+                                                                int countInstance8 = ((int)countValue8);
+                                                                retentionDurationInstance8.Count = countInstance8;
+                                                            }
+                                                            
+                                                            JToken durationTypeValue8 = retentionDurationValue8["durationType"];
+                                                            if (durationTypeValue8 != null && durationTypeValue8.Type != JTokenType.Null)
+                                                            {
+                                                                string durationTypeInstance8 = ((string)durationTypeValue8);
+                                                                retentionDurationInstance8.DurationType = durationTypeInstance8;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken monthlyScheduleValue2 = retentionPolicyValue2["monthlySchedule"];
+                                                    if (monthlyScheduleValue2 != null && monthlyScheduleValue2.Type != JTokenType.Null)
+                                                    {
+                                                        MonthlyRetentionSchedule monthlyScheduleInstance2 = new MonthlyRetentionSchedule();
+                                                        longTermRetentionPolicyInstance2.MonthlySchedule = monthlyScheduleInstance2;
+                                                        
+                                                        JToken retentionScheduleFormatTypeValue3 = monthlyScheduleValue2["retentionScheduleFormatType"];
+                                                        if (retentionScheduleFormatTypeValue3 != null && retentionScheduleFormatTypeValue3.Type != JTokenType.Null)
+                                                        {
+                                                            string retentionScheduleFormatTypeInstance3 = ((string)retentionScheduleFormatTypeValue3);
+                                                            monthlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance3;
+                                                        }
+                                                        
+                                                        JToken retentionScheduleDailyValue3 = monthlyScheduleValue2["retentionScheduleDaily"];
+                                                        if (retentionScheduleDailyValue3 != null && retentionScheduleDailyValue3.Type != JTokenType.Null)
+                                                        {
+                                                            DailyRetentionFormat retentionScheduleDailyInstance3 = new DailyRetentionFormat();
+                                                            monthlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance3;
+                                                            
+                                                            JToken daysOfTheMonthArray3 = retentionScheduleDailyValue3["daysOfTheMonth"];
+                                                            if (daysOfTheMonthArray3 != null && daysOfTheMonthArray3.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken daysOfTheMonthValue3 in ((JArray)daysOfTheMonthArray3))
+                                                                {
+                                                                    Day dayInstance3 = new Day();
+                                                                    retentionScheduleDailyInstance3.DaysOfTheMonth.Add(dayInstance3);
+                                                                    
+                                                                    JToken dateValue3 = daysOfTheMonthValue3["date"];
+                                                                    if (dateValue3 != null && dateValue3.Type != JTokenType.Null)
+                                                                    {
+                                                                        int dateInstance3 = ((int)dateValue3);
+                                                                        dayInstance3.Date = dateInstance3;
+                                                                    }
+                                                                    
+                                                                    JToken isLastValue3 = daysOfTheMonthValue3["isLast"];
+                                                                    if (isLastValue3 != null && isLastValue3.Type != JTokenType.Null)
+                                                                    {
+                                                                        bool isLastInstance3 = ((bool)isLastValue3);
+                                                                        dayInstance3.IsLast = isLastInstance3;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionScheduleWeeklyValue3 = monthlyScheduleValue2["retentionScheduleWeekly"];
+                                                        if (retentionScheduleWeeklyValue3 != null && retentionScheduleWeeklyValue3.Type != JTokenType.Null)
+                                                        {
+                                                            WeeklyRetentionFormat retentionScheduleWeeklyInstance3 = new WeeklyRetentionFormat();
+                                                            monthlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance3;
+                                                            
+                                                            JToken daysOfTheWeekArray5 = retentionScheduleWeeklyValue3["daysOfTheWeek"];
+                                                            if (daysOfTheWeekArray5 != null && daysOfTheWeekArray5.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken daysOfTheWeekValue5 in ((JArray)daysOfTheWeekArray5))
+                                                                {
+                                                                    retentionScheduleWeeklyInstance3.DaysOfTheWeek.Add(((string)daysOfTheWeekValue5));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken weeksOfTheMonthArray3 = retentionScheduleWeeklyValue3["weeksOfTheMonth"];
+                                                            if (weeksOfTheMonthArray3 != null && weeksOfTheMonthArray3.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken weeksOfTheMonthValue3 in ((JArray)weeksOfTheMonthArray3))
+                                                                {
+                                                                    retentionScheduleWeeklyInstance3.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue3));
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionTimesArray7 = monthlyScheduleValue2["retentionTimes"];
+                                                        if (retentionTimesArray7 != null && retentionTimesArray7.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken retentionTimesValue7 in ((JArray)retentionTimesArray7))
+                                                            {
+                                                                monthlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue7));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionDurationValue9 = monthlyScheduleValue2["retentionDuration"];
+                                                        if (retentionDurationValue9 != null && retentionDurationValue9.Type != JTokenType.Null)
+                                                        {
+                                                            RetentionDuration retentionDurationInstance9 = new RetentionDuration();
+                                                            monthlyScheduleInstance2.RetentionDuration = retentionDurationInstance9;
+                                                            
+                                                            JToken countValue9 = retentionDurationValue9["count"];
+                                                            if (countValue9 != null && countValue9.Type != JTokenType.Null)
+                                                            {
+                                                                int countInstance9 = ((int)countValue9);
+                                                                retentionDurationInstance9.Count = countInstance9;
+                                                            }
+                                                            
+                                                            JToken durationTypeValue9 = retentionDurationValue9["durationType"];
+                                                            if (durationTypeValue9 != null && durationTypeValue9.Type != JTokenType.Null)
+                                                            {
+                                                                string durationTypeInstance9 = ((string)durationTypeValue9);
+                                                                retentionDurationInstance9.DurationType = durationTypeInstance9;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken yearlyScheduleValue2 = retentionPolicyValue2["yearlySchedule"];
+                                                    if (yearlyScheduleValue2 != null && yearlyScheduleValue2.Type != JTokenType.Null)
+                                                    {
+                                                        YearlyRetentionSchedule yearlyScheduleInstance2 = new YearlyRetentionSchedule();
+                                                        longTermRetentionPolicyInstance2.YearlySchedule = yearlyScheduleInstance2;
+                                                        
+                                                        JToken retentionScheduleFormatTypeValue4 = yearlyScheduleValue2["retentionScheduleFormatType"];
+                                                        if (retentionScheduleFormatTypeValue4 != null && retentionScheduleFormatTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string retentionScheduleFormatTypeInstance4 = ((string)retentionScheduleFormatTypeValue4);
+                                                            yearlyScheduleInstance2.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken monthsOfYearArray2 = yearlyScheduleValue2["monthsOfYear"];
+                                                        if (monthsOfYearArray2 != null && monthsOfYearArray2.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken monthsOfYearValue2 in ((JArray)monthsOfYearArray2))
+                                                            {
+                                                                yearlyScheduleInstance2.MonthsOfYear.Add(((string)monthsOfYearValue2));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionScheduleDailyValue4 = yearlyScheduleValue2["retentionScheduleDaily"];
+                                                        if (retentionScheduleDailyValue4 != null && retentionScheduleDailyValue4.Type != JTokenType.Null)
+                                                        {
+                                                            DailyRetentionFormat retentionScheduleDailyInstance4 = new DailyRetentionFormat();
+                                                            yearlyScheduleInstance2.RetentionScheduleDaily = retentionScheduleDailyInstance4;
+                                                            
+                                                            JToken daysOfTheMonthArray4 = retentionScheduleDailyValue4["daysOfTheMonth"];
+                                                            if (daysOfTheMonthArray4 != null && daysOfTheMonthArray4.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken daysOfTheMonthValue4 in ((JArray)daysOfTheMonthArray4))
+                                                                {
+                                                                    Day dayInstance4 = new Day();
+                                                                    retentionScheduleDailyInstance4.DaysOfTheMonth.Add(dayInstance4);
+                                                                    
+                                                                    JToken dateValue4 = daysOfTheMonthValue4["date"];
+                                                                    if (dateValue4 != null && dateValue4.Type != JTokenType.Null)
+                                                                    {
+                                                                        int dateInstance4 = ((int)dateValue4);
+                                                                        dayInstance4.Date = dateInstance4;
+                                                                    }
+                                                                    
+                                                                    JToken isLastValue4 = daysOfTheMonthValue4["isLast"];
+                                                                    if (isLastValue4 != null && isLastValue4.Type != JTokenType.Null)
+                                                                    {
+                                                                        bool isLastInstance4 = ((bool)isLastValue4);
+                                                                        dayInstance4.IsLast = isLastInstance4;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionScheduleWeeklyValue4 = yearlyScheduleValue2["retentionScheduleWeekly"];
+                                                        if (retentionScheduleWeeklyValue4 != null && retentionScheduleWeeklyValue4.Type != JTokenType.Null)
+                                                        {
+                                                            WeeklyRetentionFormat retentionScheduleWeeklyInstance4 = new WeeklyRetentionFormat();
+                                                            yearlyScheduleInstance2.RetentionScheduleWeekly = retentionScheduleWeeklyInstance4;
+                                                            
+                                                            JToken daysOfTheWeekArray6 = retentionScheduleWeeklyValue4["daysOfTheWeek"];
+                                                            if (daysOfTheWeekArray6 != null && daysOfTheWeekArray6.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken daysOfTheWeekValue6 in ((JArray)daysOfTheWeekArray6))
+                                                                {
+                                                                    retentionScheduleWeeklyInstance4.DaysOfTheWeek.Add(((string)daysOfTheWeekValue6));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken weeksOfTheMonthArray4 = retentionScheduleWeeklyValue4["weeksOfTheMonth"];
+                                                            if (weeksOfTheMonthArray4 != null && weeksOfTheMonthArray4.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken weeksOfTheMonthValue4 in ((JArray)weeksOfTheMonthArray4))
+                                                                {
+                                                                    retentionScheduleWeeklyInstance4.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue4));
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionTimesArray8 = yearlyScheduleValue2["retentionTimes"];
+                                                        if (retentionTimesArray8 != null && retentionTimesArray8.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken retentionTimesValue8 in ((JArray)retentionTimesArray8))
+                                                            {
+                                                                yearlyScheduleInstance2.RetentionTimes.Add(((DateTime)retentionTimesValue8));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken retentionDurationValue10 = yearlyScheduleValue2["retentionDuration"];
+                                                        if (retentionDurationValue10 != null && retentionDurationValue10.Type != JTokenType.Null)
+                                                        {
+                                                            RetentionDuration retentionDurationInstance10 = new RetentionDuration();
+                                                            yearlyScheduleInstance2.RetentionDuration = retentionDurationInstance10;
+                                                            
+                                                            JToken countValue10 = retentionDurationValue10["count"];
+                                                            if (countValue10 != null && countValue10.Type != JTokenType.Null)
+                                                            {
+                                                                int countInstance10 = ((int)countValue10);
+                                                                retentionDurationInstance10.Count = countInstance10;
+                                                            }
+                                                            
+                                                            JToken durationTypeValue10 = retentionDurationValue10["durationType"];
+                                                            if (durationTypeValue10 != null && durationTypeValue10.Type != JTokenType.Null)
+                                                            {
+                                                                string durationTypeInstance10 = ((string)durationTypeValue10);
+                                                                retentionDurationInstance10.DurationType = durationTypeInstance10;
+                                                            }
+                                                        }
+                                                    }
+                                                    azureSqlProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance2;
+                                                }
+                                            }
+                                            
+                                            JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                                azureSqlProtectionPolicyInstance.BackupManagementType = backupManagementTypeInstance3;
+                                            }
+                                            
+                                            JToken protectedItemsCountValue3 = propertiesValue["protectedItemsCount"];
+                                            if (protectedItemsCountValue3 != null && protectedItemsCountValue3.Type != JTokenType.Null)
+                                            {
+                                                int protectedItemsCountInstance3 = ((int)protectedItemsCountValue3);
+                                                azureSqlProtectionPolicyInstance.ProtectedItemsCount = protectedItemsCountInstance3;
+                                            }
+                                            protectionPolicyResourceInstance.Properties = azureSqlProtectionPolicyInstance;
                                         }
                                     }
                                     

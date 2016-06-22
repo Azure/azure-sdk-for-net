@@ -1,0 +1,888 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7d2c9604-9f84-41ae-bbbe-146b76bc35e1"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"name\": \"idcdlslbRSVault3\",\r\n  \"etag\": \"3c35fe83-d677-4061-a823-7d354722a6c7\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3\",\r\n  \"type\": \"Microsoft.RecoveryServicesBVTD/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"standard\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "359"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9b5cdbfe-f539-4f2a-8b89-4becf574aab3"
+        ],
+        "x-ms-client-request-id": [
+          "7d2c9604-9f84-41ae-bbbe-146b76bc35e1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14674"
+        ],
+        "x-ms-correlation-request-id": [
+          "9b5cdbfe-f539-4f2a-8b89-4becf574aab3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221551Z:9b5cdbfe-f539-4f2a-8b89-4becf574aab3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:15:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupPolicies/DefaultPolicy?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwUG9saWNpZXMvRGVmYXVsdFBvbGljeT9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3030245f-669b-4bad-a4c8-13cc58f7503f"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupPolicies/DefaultPolicy\",\r\n  \"name\": \"DefaultPolicy\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n  \"properties\": {\r\n    \"backupManagementType\": \"AzureIaasVM\",\r\n    \"schedulePolicy\": {\r\n      \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n      \"scheduleRunFrequency\": \"Daily\",\r\n      \"scheduleRunTimes\": [\r\n        \"2016-06-21T22:30:00Z\"\r\n      ],\r\n      \"scheduleWeeklyFrequency\": 0\r\n    },\r\n    \"retentionPolicy\": {\r\n      \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n      \"dailySchedule\": {\r\n        \"retentionTimes\": [\r\n          \"2016-06-21T22:30:00Z\"\r\n        ],\r\n        \"retentionDuration\": {\r\n          \"count\": 30,\r\n          \"durationType\": \"Days\"\r\n        }\r\n      }\r\n    },\r\n    \"protectedItemsCount\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "682"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "52ce1e0b-3504-4c09-b97c-a78b1f5c0236"
+        ],
+        "x-ms-client-request-id": [
+          "3030245f-669b-4bad-a4c8-13cc58f7503f",
+          "3030245f-669b-4bad-a4c8-13cc58f7503f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14672"
+        ],
+        "x-ms-correlation-request-id": [
+          "52ce1e0b-3504-4c09-b97c-a78b1f5c0236"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221553Z:52ce1e0b-3504-4c09-b97c-a78b1f5c0236"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:15:53 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer%3Biaasvmcontainerv2%3Barpittestresourcegroup%3Bvkencryrestore/protectedItems/vm%3Biaasvmcontainerv2%3Barpittestresourcegroup%3Bvkencryrestore?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXIlM0JpYWFzdm1jb250YWluZXJ2MiUzQmFycGl0dGVzdHJlc291cmNlZ3JvdXAlM0J2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bSUzQmlhYXN2bWNvbnRhaW5lcnYyJTNCYXJwaXR0ZXN0cmVzb3VyY2Vncm91cCUzQnZrZW5jcnlyZXN0b3JlP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"protectedItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n    \"policyId\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupPolicies/DefaultPolicy\"\r\n  },\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "300"
+        ],
+        "x-ms-client-request-id": [
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/0ba82a0c-cc53-41d8-bae5-23e4cb900002?api-version=2016-05-01"
+        ],
+        "x-ms-request-id": [
+          "ef091a6f-055f-4cc7-b6f7-9bcc26757599"
+        ],
+        "x-ms-client-request-id": [
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5",
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-correlation-request-id": [
+          "ef091a6f-055f-4cc7-b6f7-9bcc26757599"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221555Z:ef091a6f-055f-4cc7-b6f7-9bcc26757599"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:15:55 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/0ba82a0c-cc53-41d8-bae5-23e4cb900002?api-version=2016-05-01"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/0ba82a0c-cc53-41d8-bae5-23e4cb900002?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvblJlc3VsdHMvMGJhODJhMGMtY2M1My00MWQ4LWJhZTUtMjNlNGNiOTAwMDAyP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/0ba82a0c-cc53-41d8-bae5-23e4cb900002?api-version=2016-05-01"
+        ],
+        "x-ms-request-id": [
+          "7a17967f-522a-4e1a-8ca2-3239a3f09d8e"
+        ],
+        "x-ms-client-request-id": [
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5",
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14671"
+        ],
+        "x-ms-correlation-request-id": [
+          "7a17967f-522a-4e1a-8ca2-3239a3f09d8e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221556Z:7a17967f-522a-4e1a-8ca2-3239a3f09d8e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:15:55 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/0ba82a0c-cc53-41d8-bae5-23e4cb900002?api-version=2016-05-01"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/0ba82a0c-cc53-41d8-bae5-23e4cb900002?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvblJlc3VsdHMvMGJhODJhMGMtY2M1My00MWQ4LWJhZTUtMjNlNGNiOTAwMDAyP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/VM;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore\",\r\n  \"name\": \"iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n  \"properties\": {\r\n    \"friendlyName\": \"vkencryrestore\",\r\n    \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/arpittestresourcegroup/providers/Microsoft.Compute/virtualMachines/vkencryrestore\",\r\n    \"protectionStatus\": \"Healthy\",\r\n    \"protectionState\": \"IRPending\",\r\n    \"lastBackupStatus\": \"Cancelled\",\r\n    \"lastBackupTime\": \"2016-06-21T21:43:52.3601324Z\",\r\n    \"extendedInfo\": {\r\n      \"recoveryPointCount\": 0,\r\n      \"policyInconsistent\": false\r\n    },\r\n    \"protectedItemType\": \"Microsoft.Compute/virtualMachines\",\r\n    \"backupManagementType\": \"AzureIaasVM\",\r\n    \"workloadType\": \"VM\",\r\n    \"containerName\": \"iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore\",\r\n    \"policyId\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupPolicies/DefaultPolicy\",\r\n    \"policyName\": \"DefaultPolicy\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1311"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f1c737cd-0990-4208-8ef8-862e2692ba9c"
+        ],
+        "x-ms-client-request-id": [
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5",
+          "1d8c0af7-381e-430a-9a9e-1689b2c7bcd5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14670"
+        ],
+        "x-ms-correlation-request-id": [
+          "f1c737cd-0990-4208-8ef8-862e2692ba9c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221601Z:f1c737cd-0990-4208-8ef8-862e2692ba9c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:01 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/0ba82a0c-cc53-41d8-bae5-23e4cb900002?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvbnNTdGF0dXMvMGJhODJhMGMtY2M1My00MWQ4LWJhZTUtMjNlNGNiOTAwMDAyP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f4c183ff-f240-4926-a5c5-3ae9dcff604a"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"0ba82a0c-cc53-41d8-bae5-23e4cb900002\",\r\n  \"name\": \"0ba82a0c-cc53-41d8-bae5-23e4cb900002\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-06-21T22:15:54.8092905Z\",\r\n  \"endTime\": \"2016-06-21T22:15:54.8092905Z\",\r\n  \"properties\": {\r\n    \"objectType\": \"OperationStatusJobExtendedInfo\",\r\n    \"jobId\": \"f66a649e-f07b-443b-b2ed-f1fb5b2dcb52\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "304"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "594d9370-7c63-45cc-89ff-6ac87ff35664"
+        ],
+        "x-ms-client-request-id": [
+          "f4c183ff-f240-4926-a5c5-3ae9dcff604a",
+          "f4c183ff-f240-4926-a5c5-3ae9dcff604a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14669"
+        ],
+        "x-ms-correlation-request-id": [
+          "594d9370-7c63-45cc-89ff-6ac87ff35664"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221602Z:594d9370-7c63-45cc-89ff-6ac87ff35664"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:02 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer%3Biaasvmcontainerv2%3Barpittestresourcegroup%3Bvkencryrestore/protectedItems/vm%3Biaasvmcontainerv2%3Barpittestresourcegroup%3Bvkencryrestore/backup?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZUlhYXNWTS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXIlM0JpYWFzdm1jb250YWluZXJ2MiUzQmFycGl0dGVzdHJlc291cmNlZ3JvdXAlM0J2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bSUzQmlhYXN2bWNvbnRhaW5lcnYyJTNCYXJwaXR0ZXN0cmVzb3VyY2Vncm91cCUzQnZrZW5jcnlyZXN0b3JlL2JhY2t1cD9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"objectType\": \"IaasVMBackupRequest\",\r\n    \"recoveryPointExpiryTimeInUTC\": \"2016-06-23T22:16:02.7569427Z\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "138"
+        ],
+        "x-ms-client-request-id": [
+          "e71e94cc-496f-40c3-8958-6b4752defc03"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76?api-version=2016-05-01"
+        ],
+        "x-ms-request-id": [
+          "2adbaee4-8e84-424d-90f4-a024ba0090b1"
+        ],
+        "x-ms-client-request-id": [
+          "e71e94cc-496f-40c3-8958-6b4752defc03",
+          "e71e94cc-496f-40c3-8958-6b4752defc03"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1187"
+        ],
+        "x-ms-correlation-request-id": [
+          "2adbaee4-8e84-424d-90f4-a024ba0090b1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221603Z:2adbaee4-8e84-424d-90f4-a024ba0090b1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:03 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76?api-version=2016-05-01"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZUlhYXNWTS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvblJlc3VsdHMvMTVjYzJlZGItMTVhNC00ZmJiLWEwZmYtYzY1NWIyZWMxYTc2P2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5dc9eb23-729e-479c-9b88-cd828fdfb194"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76?api-version=2016-05-01"
+        ],
+        "x-ms-request-id": [
+          "9a130586-2ccc-4b72-8a4f-43c59d21a3f8"
+        ],
+        "x-ms-client-request-id": [
+          "5dc9eb23-729e-479c-9b88-cd828fdfb194",
+          "5dc9eb23-729e-479c-9b88-cd828fdfb194"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14667"
+        ],
+        "x-ms-correlation-request-id": [
+          "9a130586-2ccc-4b72-8a4f-43c59d21a3f8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221604Z:9a130586-2ccc-4b72-8a4f-43c59d21a3f8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:04 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76?api-version=2016-05-01"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZUlhYXNWTS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvblJlc3VsdHMvMTVjYzJlZGItMTVhNC00ZmJiLWEwZmYtYzY1NWIyZWMxYTc2P2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c9bb87f3-a275-4cdc-b234-bdc31c913508"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76?api-version=2016-05-01"
+        ],
+        "x-ms-request-id": [
+          "dfb4e1b9-5995-4080-b754-59c8c06b3d30"
+        ],
+        "x-ms-client-request-id": [
+          "c9bb87f3-a275-4cdc-b234-bdc31c913508",
+          "c9bb87f3-a275-4cdc-b234-bdc31c913508"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14664"
+        ],
+        "x-ms-correlation-request-id": [
+          "dfb4e1b9-5995-4080-b754-59c8c06b3d30"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221610Z:dfb4e1b9-5995-4080-b754-59c8c06b3d30"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:09 GMT"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/AzureIaasVM/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZUlhYXNWTS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvbnNTdGF0dXMvMTVjYzJlZGItMTVhNC00ZmJiLWEwZmYtYzY1NWIyZWMxYTc2P2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "54b9a916-bea7-47b0-806b-ea867e97763c"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76\",\r\n  \"name\": \"15cc2edb-15a4-4fbb-a0ff-c655b2ec1a76\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-06-21T22:16:03.5356116Z\",\r\n  \"endTime\": \"2016-06-21T22:16:03.5356116Z\",\r\n  \"properties\": {\r\n    \"objectType\": \"OperationStatusJobExtendedInfo\",\r\n    \"jobId\": \"b9e3e04d-d9f5-4808-879a-336d9bd22d1c\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "304"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6552661b-1e8a-4eff-917a-5b370290280c"
+        ],
+        "x-ms-client-request-id": [
+          "54b9a916-bea7-47b0-806b-ea867e97763c",
+          "54b9a916-bea7-47b0-806b-ea867e97763c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13892"
+        ],
+        "x-ms-correlation-request-id": [
+          "6552661b-1e8a-4eff-917a-5b370290280c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221613Z:6552661b-1e8a-4eff-917a-5b370290280c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:13 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupJobs/b9e3e04d-d9f5-4808-879a-336d9bd22d1c?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwSm9icy9iOWUzZTA0ZC1kOWY1LTQ4MDgtODc5YS0zMzZkOWJkMjJkMWM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "051a2198-f80a-4338-862b-3558f0b2ffbe"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupJobs/b9e3e04d-d9f5-4808-879a-336d9bd22d1c\",\r\n  \"name\": \"b9e3e04d-d9f5-4808-879a-336d9bd22d1c\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupJobs\",\r\n  \"properties\": {\r\n    \"jobType\": \"AzureIaaSVMJob\",\r\n    \"duration\": \"00:00:08.4788271\",\r\n    \"actionsInfo\": [\r\n      1\r\n    ],\r\n    \"virtualMachineVersion\": \"Compute\",\r\n    \"extendedInfo\": {\r\n      \"tasksList\": [\r\n        {\r\n          \"taskId\": \"Take Snapshot\",\r\n          \"duration\": \"00:00:00\",\r\n          \"status\": \"InProgress\"\r\n        },\r\n        {\r\n          \"taskId\": \"Transfer data to vault\",\r\n          \"duration\": \"00:00:00\",\r\n          \"status\": \"NotStarted\"\r\n        }\r\n      ],\r\n      \"propertyBag\": {\r\n        \"VM Name\": \"vkencryrestore\"\r\n      }\r\n    },\r\n    \"entityFriendlyName\": \"vkencryrestore\",\r\n    \"backupManagementType\": \"AzureIaasVM\",\r\n    \"operation\": \"Backup\",\r\n    \"status\": \"InProgress\",\r\n    \"startTime\": \"2016-06-21T22:16:03.5356116Z\",\r\n    \"activityId\": \"e71e94cc-496f-40c3-8958-6b4752defc03\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "857"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "24e28c30-22e8-4507-8ea9-05442bbabbc9"
+        ],
+        "x-ms-client-request-id": [
+          "051a2198-f80a-4338-862b-3558f0b2ffbe",
+          "051a2198-f80a-4338-862b-3558f0b2ffbe"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13891"
+        ],
+        "x-ms-correlation-request-id": [
+          "24e28c30-22e8-4507-8ea9-05442bbabbc9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221614Z:24e28c30-22e8-4507-8ea9-05442bbabbc9"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:14 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupJobs/b9e3e04d-d9f5-4808-879a-336d9bd22d1c/cancel?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwSm9icy9iOWUzZTA0ZC1kOWY1LTQ4MDgtODc5YS0zMzZkOWJkMjJkMWMvY2FuY2VsP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3bdc6df6-4a30-4fde-a556-edaa0ed3e5d5"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-ms-request-id": [
+          "26c2d23f-c178-4e3d-8569-4709c2e815d3"
+        ],
+        "x-ms-client-request-id": [
+          "3bdc6df6-4a30-4fde-a556-edaa0ed3e5d5",
+          "3bdc6df6-4a30-4fde-a556-edaa0ed3e5d5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "26c2d23f-c178-4e3d-8569-4709c2e815d3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221615Z:26c2d23f-c178-4e3d-8569-4709c2e815d3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:14 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupJobs/b9e3e04d-d9f5-4808-879a-336d9bd22d1c/operationResults/dbfd6ac4-1438-4e55-86b4-a4b624762fd1?api-version=2016-05-01"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupJobs/b9e3e04d-d9f5-4808-879a-336d9bd22d1c/operationResults/dbfd6ac4-1438-4e55-86b4-a4b624762fd1?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwSm9icy9iOWUzZTA0ZC1kOWY1LTQ4MDgtODc5YS0zMzZkOWJkMjJkMWMvb3BlcmF0aW9uUmVzdWx0cy9kYmZkNmFjNC0xNDM4LTRlNTUtODZiNC1hNGI2MjQ3NjJmZDE/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bcfd235b-ee5e-4086-b913-13cce890230e"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a0cba11a-661e-4d28-8b0f-50336e61db2b"
+        ],
+        "x-ms-client-request-id": [
+          "bcfd235b-ee5e-4086-b913-13cce890230e",
+          "bcfd235b-ee5e-4086-b913-13cce890230e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13890"
+        ],
+        "x-ms-correlation-request-id": [
+          "a0cba11a-661e-4d28-8b0f-50336e61db2b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221615Z:a0cba11a-661e-4d28-8b0f-50336e61db2b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:15 GMT"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupJobs/b9e3e04d-d9f5-4808-879a-336d9bd22d1c/operationResults/dbfd6ac4-1438-4e55-86b4-a4b624762fd1?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwSm9icy9iOWUzZTA0ZC1kOWY1LTQ4MDgtODc5YS0zMzZkOWJkMjJkMWMvb3BlcmF0aW9uUmVzdWx0cy9kYmZkNmFjNC0xNDM4LTRlNTUtODZiNC1hNGI2MjQ3NjJmZDE/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a9d2bdee-f9c9-40e6-ac07-46f31bb785cc"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9532a41a-e0a1-477f-9d83-e92aa63d0e3d"
+        ],
+        "x-ms-client-request-id": [
+          "a9d2bdee-f9c9-40e6-ac07-46f31bb785cc",
+          "a9d2bdee-f9c9-40e6-ac07-46f31bb785cc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13889"
+        ],
+        "x-ms-correlation-request-id": [
+          "9532a41a-e0a1-477f-9d83-e92aa63d0e3d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T221616Z:9532a41a-e0a1-477f-9d83-e92aa63d0e3d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 22:16:16 GMT"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "fc74b460-0edc-41b5-81b3-baddc1fc4257"
+  }
+}

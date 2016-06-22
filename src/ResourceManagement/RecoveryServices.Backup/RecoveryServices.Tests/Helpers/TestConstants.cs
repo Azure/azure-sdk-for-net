@@ -13,13 +13,8 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RecoveryServices.Tests.Helpers
+namespace RecoveryServices.Backup.Tests.Helpers
 {
     public class TestConstants
     {
@@ -31,5 +26,11 @@ namespace RecoveryServices.Tests.Helpers
         public static string RsVaultIaasV1ContainerUniqueName = "RsVaultIaasV1ContainerUniqueName";
         public static string RsVaultMabContainerUniqueName = "MabContainerName";
         public static string RsVaultDpmContainerUniqueName = "DpmBackupEngineName";
+        public static string ProviderTypeAzureSql = "ProviderTypeAzureSql";
+        public static string WorkloadTypeAzureSqlDb = "WorkloadTypeAzureSqlDb";
+        public static string ContainerTypeAzureSql = "ContainerTypeAzureSql";
+        public static string AzureSqlItemName = "AzureSqlItemName";
+        public static string AzureSqlContainerName = "AzureSqlContainerName";
+        public static string AzureSqlRpId = "AzureSqlRpId";
     }
 }

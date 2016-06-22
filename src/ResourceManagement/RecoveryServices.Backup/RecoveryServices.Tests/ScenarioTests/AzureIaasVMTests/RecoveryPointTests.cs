@@ -13,26 +13,18 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using Microsoft.Azure;
+using RecoveryServices.Backup.Tests.Helpers;
+using System;
+using System.Configuration;
+using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class RecoveryPointTests : RecoveryServicesTestsBase
+    public class RecoveryPointTests : RecoveryServicesBackupTestsBase
     {
-        [Fact]
         public void ListRecoveryPointTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -40,44 +32,55 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
-                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
-
                 string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
                 string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
-                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
-
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                // TODO: Create VM instead of taking these parameters from config
                 string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
-                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
-                string containerUri = containeType + ";" + containerUniqueName;
-
                 string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
+                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+                string containerUri = containeType + ";" + containerUniqueName;
                 string itemUri = itemType + ";" + itemUniqueName;
-
-                DateTime startTime = new DateTime(2016, 4, 17, 15, 25, 9, DateTimeKind.Utc);
-                DateTime endTime = new DateTime(2016, 4, 18, 19, 25, 9, DateTimeKind.Utc);
-
-                RecoveryPointQueryParameters queryFilter = new RecoveryPointQueryParameters();
-                queryFilter.StartDate = startTime.ToString("yyyy-MM-dd hh:mm:ss tt");
-                queryFilter.EndDate = endTime.ToString("yyyy-MM-dd hh:mm:ss tt");
-
-                var response = client.RecoveryPoints.List(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
-                    fabricName, containerUri, itemUri, queryFilter);
+                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                string utcDateTimeFormat = ConfigurationManager.AppSettings["UTCDateTimeFormat"];
                 
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                // 2. Get default policy
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+                string policyId = policyTestHelper.GetDefaultPolicyId(resourceGroupName, resourceName);
+
+                // 3. Enable protection
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
+                protectedItemTestHelper.EnableProtection(resourceGroupName, resourceName, policyId, containerUri, itemUri);
+
+                // 4. Trigger backup and wait for completion
+                BackupTestHelpers backupTestHelper = new BackupTestHelpers(client);
+                DateTime backupStartTime = DateTime.UtcNow;
+                string jobId = backupTestHelper.BackupProtectedItem(resourceGroupName, resourceName, containerUri, itemUri);
+                JobTestHelpers jobTestHelper = new JobTestHelpers(client);
+                jobTestHelper.WaitForJob(resourceGroupName, resourceName, jobId);
+                DateTime backupEndTime = DateTime.UtcNow;
+
+                // ACTION: Fetch RP
+                RecoveryPointQueryParameters queryFilter = new RecoveryPointQueryParameters();
+                queryFilter.StartDate = backupStartTime.ToString(utcDateTimeFormat);
+                queryFilter.EndDate = backupEndTime.ToString(utcDateTimeFormat);
+                var response = client.RecoveryPoints.List(
+                    resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(), fabricName, containerUri, itemUri, queryFilter);
+
+                // VALIDATION: Should be only one RP
                 Assert.NotNull(response.RecoveryPointList);
                 Assert.NotNull(response.RecoveryPointList.RecoveryPoints);
-
-                foreach (var rpo in response.RecoveryPointList.RecoveryPoints)
-                {
-                    Assert.True(!string.IsNullOrEmpty(rpo.Name), "RP Id cant be null");
-                    RecoveryPoint rp = rpo.Properties as RecoveryPoint;
-                    Assert.True(!string.IsNullOrEmpty(rp.RecoveryPointTime), "RecoveryPointTime can't be null or empty");
-                    Assert.True(!string.IsNullOrEmpty(rp.SourceVMStorageType), "SourceVMStorageType can't be null or empty");
-                }
+                Assert.Equal(1, response.RecoveryPointList.RecoveryPoints.Count);
             }
         }
 
-        [Fact]
         public void GetRecoveryPointDetailTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -87,27 +90,57 @@ namespace RecoveryServices.Tests
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
+                // 1. Create vault
                 string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
-                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"]; string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
 
+                // 2. Get default policy
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+                string policyId = policyTestHelper.GetDefaultPolicyId(resourceGroupName, resourceName);
+
+                // 3. Enable protection
+                // TODO: Create VM instead of taking these parameters from config
                 string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
-                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
-                string containerUri = containeType + ";" + containerUniqueName;
-
                 string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
+                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+                string containerUri = containeType + ";" + containerUniqueName;
                 string itemUri = itemType + ";" + itemUniqueName;
-                string rpId = ConfigurationManager.AppSettings["RecoveryPointNameRP"];
-                
-                var response = client.RecoveryPoints.Get(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
-                    fabricName, containerUri, itemUri, rpId);
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
+                protectedItemTestHelper.EnableProtection(resourceGroupName, resourceName, policyId, containerUri, itemUri);
 
-                var rpo = response.RecPoint;
-                Assert.NotNull(rpo);
-                Assert.True(!string.IsNullOrEmpty(rpo.Name), "RP Id cant be null");
-                RecoveryPoint rp = rpo.Properties as RecoveryPoint;
-                Assert.True(!string.IsNullOrEmpty(rp.RecoveryPointTime), "RecoveryPointTime can't be null or empty");
-                Assert.True(!string.IsNullOrEmpty(rp.SourceVMStorageType), "SourceVMStorageType can't be null or empty");
+                // 4. Trigger backup and wait for completion
+                BackupTestHelpers backupTestHelper = new BackupTestHelpers(client);
+                DateTime backupStartTime = DateTime.UtcNow;
+                string jobId = backupTestHelper.BackupProtectedItem(resourceGroupName, resourceName, containerUri, itemUri);
+                JobTestHelpers jobTestHelper = new JobTestHelpers(client);
+                jobTestHelper.WaitForJob(resourceGroupName, resourceName, jobId);
+                DateTime backupEndTime = DateTime.UtcNow;
+
+                // 5. Get latest RP
+                RecoveryPointTestHelpers recoveryPointTestHelper = new RecoveryPointTestHelpers(client);
+                var recoveryPoints = recoveryPointTestHelper.ListRecoveryPoints(
+                    resourceGroupName, resourceName, containerUri, itemUri, backupStartTime, backupEndTime);
+                var recoveryPointResource = recoveryPoints[0];
+                var recoveryPoint = (RecoveryPoint)recoveryPointResource.Properties;
+
+                // ACTION: Get RP details
+                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                var response = client.RecoveryPoints.Get(
+                    resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
+                    fabricName, containerUri, itemUri, recoveryPointResource.Name);
+
+                // VALIDATION: Should be valid RP
+                Assert.NotNull(response);
+                Assert.NotNull(response.RecPoint);
+                Assert.True(!string.IsNullOrEmpty(response.RecPoint.Name), "RP Id cant be null");
+                Assert.True(!string.IsNullOrEmpty(((RecoveryPoint)response.RecPoint.Properties).RecoveryPointTime),
+                    "RecoveryPointTime can't be null or empty");
+                Assert.True(!string.IsNullOrEmpty(((RecoveryPoint)response.RecPoint.Properties).SourceVMStorageType),
+                    "SourceVMStorageType can't be null or empty");
             }
         }
     }
