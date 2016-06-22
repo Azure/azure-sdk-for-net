@@ -16,14 +16,15 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure Resource Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure resource management operations including Resource Groups.")]
+[assembly: AssemblyTitle("Microsoft Azure Power BI Embedded Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Power BI Embedded management functions for managing the Microsoft Azure Power BI Embedded.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.1.4.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
+
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Azure .NET SDK")]
+[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

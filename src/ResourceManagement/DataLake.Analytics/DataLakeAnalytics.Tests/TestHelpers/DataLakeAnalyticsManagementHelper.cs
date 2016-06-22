@@ -152,7 +152,7 @@ namespace DataLakeAnalytics.Tests
             {
                 Location = location,
                 Kind = Kind.Storage,
-                Sku = new Sku
+                Sku = new Microsoft.Azure.Management.Storage.Models.Sku
                 {
                     Name = SkuName.StandardGRS
                 }
