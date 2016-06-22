@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.DataLake.Store.Models;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
 {
@@ -158,14 +159,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (isDownload)
             {
-                var task = _client.FileSystem.OpenAsync(_accountName, streamPath, length, offset, cancellationToken: _token);
+                var task = _client.FileSystem.OpenWithHttpMessagesAsync(_accountName, streamPath, length, offset, cancellationToken: _token);
 
-                if (!task.Wait(PerRequestTimeoutMs))
+                if (!task.Wait(PerRequestTimeoutMs * 3)) // reads take longer in general, so we give the read thrice as much time to complete.
                 {
-                    throw new TaskCanceledException(string.Format("Reading stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
+                    throw new TaskCanceledException(string.Format("Reading stream operation did not complete after {0} milliseconds. TraceId: {1}", PerRequestTimeoutMs * 3, task.Result.RequestId));
                 }
 
-                return task.GetAwaiter().GetResult();
+                return task.GetAwaiter().GetResult().Body;
             }
             else
             {
@@ -293,6 +294,36 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         }
 
         /// <summary>
+        /// Lists the Data Lake Store directory specified.
+        /// </summary>
+        /// <param name="directoryPath">The directory path.</param>
+        /// <param name="recursive">if set to <c>true</c> [recursive].</param>
+        /// <returns>
+        /// The list of string paths and their corresponding file sizes, in bytes.
+        /// </returns>
+        public IDictionary<string, long> ListDirectory(string directoryPath, bool recursive)
+        {
+            Dictionary<string, long> toReturn = new Dictionary<string, long>();
+            var files = _client.FileSystem.ListFileStatus(_accountName, directoryPath).FileStatuses.FileStatus;
+            foreach(var file in files)
+            {
+                if (file.Type == FileType.FILE)
+                {
+                    toReturn.Add(string.Format("{0}/{1}", directoryPath, file.PathSuffix), file.Length.GetValueOrDefault());
+                }
+                else if(recursive)
+                {
+                    foreach (var entry in ListDirectory(string.Format("{0}/{1}", directoryPath, file.PathSuffix), true))
+                    {
+                        toReturn.Add(entry.Key, entry.Value);
+                    }
+                }
+            }
+
+            return toReturn;
+        }
+
+        /// <summary>
         /// Concatenates the given input streams (in order) into the given target stream.
         /// At the end of this operation, input streams will be deleted.
         /// </summary>
@@ -316,10 +347,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 }
 
                 // clean up all the files only in the event of success.
-                foreach (var inputPath in inputStreamPaths)
-                {
-                    File.Delete(inputPath);
-                }
+                var toDelete = Path.GetDirectoryName(inputStreamPaths[0]);
+                Directory.Delete(toDelete, true);
             }
             else
             {
