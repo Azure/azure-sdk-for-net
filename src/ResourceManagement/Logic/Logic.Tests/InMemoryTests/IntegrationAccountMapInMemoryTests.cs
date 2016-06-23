@@ -278,11 +278,11 @@ namespace Test.Azure.Management.Logic
             Assert.Equal("Microsoft.Logic/integrationAccounts/maps", map.Type);
 
             Assert.Equal(MapType.Xslt, map.MapType);
-            Assert.Equal("https://flowprodcu04cqsn01.blob.core.windows.net/integrationaccounts66a9c3077d054dfd8c148d5f15967a9a/99D1E_XSLT_INTEGRATIONACCOUNTMAP1-E47AA5C58CB44AFF922AA9CF531647C8?sv=2014-02-14&sr=b&sig=9pc0dNbfb55wHmFt0Ck0aenhtZUVtJdxzNik4OXG15E%3D&se=2016-02-26T04%3A12%3A48Z&sp=r", map.ContentLink.Uri);
+            Assert.NotNull(map.ContentLink.Uri);
             Assert.Equal("\"0x8D33E418F1236A3\"", map.ContentLink.ContentVersion);
             Assert.Equal(3056, map.ContentLink.ContentSize);
             Assert.Equal("md5", map.ContentLink.ContentHash.Algorithm);
-            Assert.Equal("A2avz/M0ov2FPI3+Je8vDw==", map.ContentLink.ContentHash.Value);
+            Assert.NotNull(map.ContentLink.ContentHash.Value);
 
 
             //"2016-02-26T00:12:48.7095746Z"

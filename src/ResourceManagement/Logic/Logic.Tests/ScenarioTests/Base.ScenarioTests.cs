@@ -88,9 +88,9 @@ namespace Test.Azure.Management.Logic
             'defaultValue':{
                 'type':'ActiveDirectoryOAuth',
                 'audience':'https://management.azure.com/',
-                'tenant':'72f988bf-86f1-41af-91ab-2d7cd011db47',
-                'clientId':'64011f29-3932-4168-b73d-adc835a56732',
-                'secret':'q8Wf7SwoM4iSVgaHZdghScLX8xDxMMUATWvRalclJjo='
+                'tenant':'00000000-0000-0000-0000-000000000000',
+                'clientId':'00000000-0000-0000-0000-000000000000',
+                'secret':'Dummy'
             },
             'type':'Object'
         }

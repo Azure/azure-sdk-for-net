@@ -279,11 +279,11 @@ namespace Test.Azure.Management.Logic
 
             Assert.Equal(SchemaType.Xml, schema.SchemaType);
             Assert.Equal("http://Inbound_EDI.OrderFile", schema.TargetNamespace);
-            Assert.Equal("https://flowprodcu07cqsn01.blob.core.windows.net/integrationaccounts08bf100f2ec642e38c495de3e1bfe4ae/3839E_XML_INTEGRATIONACCOUNTSCHEMA2147-364D7868BE6D48148B4883A05D570F3A?sv=2014-02-14&sr=b&sig=HHP2Y2BREe7%2B5J0hua2dJ70icNETc1qIYTITJwtZHCI%3D&se=2016-02-26T01%3A57%3A21Z&sp=r", schema.ContentLink.Uri);
+            Assert.NotNull(schema.ContentLink.Uri);
             Assert.Equal("\"0x8D33E2EA259B235\"", schema.ContentLink.ContentVersion);
             Assert.Equal(7901, schema.ContentLink.ContentSize);
             Assert.Equal("md5", schema.ContentLink.ContentHash.Algorithm);
-            Assert.Equal("a+4ZnOsIm8I/Mr0aKJIK6w==", schema.ContentLink.ContentHash.Value);
+            Assert.NotNull(schema.ContentLink.ContentHash.Value);
 
 
             //"2016-02-25T21:57:21.3956457Z"
