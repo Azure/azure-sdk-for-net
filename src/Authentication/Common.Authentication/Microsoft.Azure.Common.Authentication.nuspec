@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Common.Authentication</id>
@@ -16,9 +16,9 @@
     <tags>Microsoft "Microsoft Azure" Azure cloud REST HTTP client core common azureofficial windowsazureofficial</tags>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
-      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="[2.18.206251556]" />
+      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="[2.18.206251556,3.0)" />
       <dependency id="Microsoft.Rest.ClientRuntime" version="[2.0.1,3.0)" />
-      <dependency id="Microsoft.Rest.ClientRuntime.Azure.Authentication" version="2.0.1-preview" />
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure.Authentication" version="[2.0.1-preview,3.0)" />
     </dependencies>
   </metadata>
   <files>
