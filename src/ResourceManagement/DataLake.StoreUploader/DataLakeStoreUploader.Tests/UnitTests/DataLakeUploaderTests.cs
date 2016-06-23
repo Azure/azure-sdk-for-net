@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             uploader.DeleteMetadataFile();
 
             Assert.Throws<AggregateException>(() => uploader.Execute());
-            Assert.False(frontEnd.StreamExists(up.TargetStreamPath), "Target stream should not have been created");
+            Assert.Equal(1, frontEnd.ListDirectory(up.TargetStreamPath, false).Keys.Count);
             Assert.Equal(1, backingFrontEnd.StreamCount);
 
             //resume the upload but point it to the real back-end, which doesn't throw exceptions
