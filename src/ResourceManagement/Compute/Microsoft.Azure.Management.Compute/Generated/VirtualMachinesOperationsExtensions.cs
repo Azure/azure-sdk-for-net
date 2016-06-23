@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class VirtualMachinesOperationsExtensions
     {
             /// <summary>
-            /// Captures the VM by copying VirtualHardDisks of the VM and outputs a
+            /// Captures the VM by copying virtual hard disks of the VM and outputs a
             /// template that can be used to create similar VMs.
             /// </summary>
             /// <param name='operations'>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Captures the VM by copying VirtualHardDisks of the VM and outputs a
+            /// Captures the VM by copying virtual hard disks of the VM and outputs a
             /// template that can be used to create similar VMs.
             /// </summary>
             /// <param name='operations'>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Captures the VM by copying VirtualHardDisks of the VM and outputs a
+            /// Captures the VM by copying virtual hard disks of the VM and outputs a
             /// template that can be used to create similar VMs.
             /// </summary>
             /// <param name='operations'>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Captures the VM by copying VirtualHardDisks of the VM and outputs a
+            /// Captures the VM by copying virtual hard disks of the VM and outputs a
             /// template that can be used to create similar VMs.
             /// </summary>
             /// <param name='operations'>
@@ -286,9 +286,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation.
+            /// The expand expression to apply on the operation. Possible values for this
+            /// parameter include: 'instanceView'
             /// </param>
-            public static VirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, string expand = default(string))
+            public static VirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).GetAsync(resourceGroupName, vmName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -306,12 +307,13 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation.
+            /// The expand expression to apply on the operation. Possible values for this
+            /// parameter include: 'instanceView'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachine> GetAsync( this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachine> GetAsync( this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, InstanceViewTypes? expand = default(InstanceViewTypes?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmName, expand, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
@@ -495,7 +497,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available to be used for a virtual machine.
+            /// Lists all available virtual machine sizes it can be resized to for a
+            /// virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -512,7 +515,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available to be used for a virtual machine.
+            /// Lists all available virtual machine sizes it can be resized to for a
+            /// virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -755,6 +759,80 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to redeploy a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static void Redeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).RedeployAsync(resourceGroupName, vmName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to redeploy a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RedeployAsync( this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.RedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// The operation to redeploy a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static void BeginRedeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginRedeployAsync(resourceGroupName, vmName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to redeploy a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRedeployAsync( this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginRedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// The operation to list virtual machines under a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -823,7 +901,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available to be used for a virtual machine.
+            /// Lists all available virtual machine sizes it can be resized to for a
+            /// virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -837,7 +916,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists virtual-machine-sizes available to be used for a virtual machine.
+            /// Lists all available virtual machine sizes it can be resized to for a
+            /// virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetVM class.
         /// </summary>
-        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), bool? latestModelApplied = default(bool?), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string))
+        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), bool? latestModelApplied = default(bool?), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiagnosticsProfile = diagnosticsProfile;
             AvailabilitySet = availabilitySet;
             ProvisioningState = provisioningState;
+            LicenseType = licenseType;
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference Id of the availailbity set to which
+        /// Gets or sets the reference Id of the availability set to which
         /// this virtual machine belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
@@ -128,6 +129,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the license type, which is for bring your own license
+        /// scenario.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.licenseType")]
+        public string LicenseType { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

@@ -29,13 +29,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSet class.
         /// </summary>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string))
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overProvision = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
             UpgradePolicy = upgradePolicy;
             VirtualMachineProfile = virtualMachineProfile;
             ProvisioningState = provisioningState;
+            OverProvision = overProvision;
         }
 
         /// <summary>
@@ -62,6 +63,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Specifies whether the Virtual Machine Scale Set should be
+        /// overprovisioned.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.overProvision")]
+        public bool? OverProvision { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

@@ -29,9 +29,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineExtension class.
         /// </summary>
-        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
+        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
             : base(location, id, name, type, tags)
         {
+            ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             VirtualMachineExtensionType = virtualMachineExtensionType;
             TypeHandlerVersion = typeHandlerVersion;
@@ -41,6 +42,13 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
         }
+
+        /// <summary>
+        /// Gets or sets how the extension handler should be forced to update
+        /// even if the extension configuration has not changed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.forceUpdateTag")]
+        public string ForceUpdateTag { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the extension handler publisher.

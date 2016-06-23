@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineScaleSetOSDisk
         /// class.
         /// </summary>
-        public VirtualMachineScaleSetOSDisk(string name, string createOption, string caching = default(string), string osType = default(string), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>))
+        public VirtualMachineScaleSetOSDisk(string name, DiskCreateOptionTypes? createOption, CachingTypes? caching = default(CachingTypes?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>))
         {
             Name = name;
             Caching = caching;
@@ -52,21 +52,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// include: 'None', 'ReadOnly', 'ReadWrite'.
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
-        public string Caching { get; set; }
+        public CachingTypes? Caching { get; set; }
 
         /// <summary>
         /// Gets or sets the create option. Possible values for this property
         /// include: 'fromImage', 'empty', 'attach'.
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
-        public string CreateOption { get; set; }
+        public DiskCreateOptionTypes? CreateOption { get; set; }
 
         /// <summary>
         /// Gets or sets the Operating System type. Possible values for this
         /// property include: 'Windows', 'Linux'.
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
-        public string OsType { get; set; }
+        public OperatingSystemTypes? OsType { get; set; }
 
         /// <summary>
         /// Gets or sets the Source User Image VirtualHardDisk. This

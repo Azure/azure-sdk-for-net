@@ -13,18 +13,12 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ComputeOperationStatus.
+    /// Defines values for InstanceViewTypes.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ComputeOperationStatus
+    public enum InstanceViewTypes
     {
-        [EnumMember(Value = "InProgress")]
-        InProgress,
-        [EnumMember(Value = "Failed")]
-        Failed,
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
-        [EnumMember(Value = "Preempted")]
-        Preempted
+        [EnumMember(Value = "instanceView")]
+        InstanceView
     }
 }

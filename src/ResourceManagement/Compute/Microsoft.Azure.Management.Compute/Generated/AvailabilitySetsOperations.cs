@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)_statusCode != 204 && (int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 ex.Request = _httpRequest;
@@ -662,7 +662,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists virtual-machine-sizes available to be used for an availability set.
+        /// Lists all available virtual machine sizes that can be used to create a new
+        /// virtual machine in an existing availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -955,7 +956,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists virtual-machine-sizes available to be used for an availability set.
+        /// Lists all available virtual machine sizes that can be used to create a new
+        /// virtual machine in an existing availability set.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

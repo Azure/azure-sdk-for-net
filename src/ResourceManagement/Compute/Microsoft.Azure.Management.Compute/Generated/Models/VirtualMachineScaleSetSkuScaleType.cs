@@ -15,9 +15,12 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for VirtualMachineScaleSetSkuScaleType.
     /// </summary>
-    public static class VirtualMachineScaleSetSkuScaleType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum VirtualMachineScaleSetSkuScaleType
     {
-        public const string Automatic = "Automatic";
-        public const string None = "None";
+        [EnumMember(Value = "Automatic")]
+        Automatic,
+        [EnumMember(Value = "None")]
+        None
     }
 }

@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets whether VM Agent should be provisioned on the Virtual
-        /// Machine.
+        /// Gets or sets whether boot diagnostics should be enabled on the
+        /// Virtual Machine.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }

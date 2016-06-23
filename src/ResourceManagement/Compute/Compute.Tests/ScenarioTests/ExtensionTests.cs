@@ -90,7 +90,7 @@ namespace Compute.Tests
                     ValidateVMExtension(vmExtension, getVMResponse.Resources.FirstOrDefault());
 
                     // Validate the extension instance view in the VM instance-view
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name, "instanceView");
+                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name, InstanceViewTypes.InstanceView);
                     ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.InstanceView.Extensions.FirstOrDefault());
 
                     // Validate the extension delete API
