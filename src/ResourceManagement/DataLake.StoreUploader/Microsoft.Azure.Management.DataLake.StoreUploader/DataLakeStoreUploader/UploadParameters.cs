@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.InputFilePath = inputFilePath;
             this.TargetStreamPath = targetStreamPath;
             this.PerFileThreadCount = perFileThreadCount;
-            this.ConcurentFileCount = concurrentFileCount;
+            this.ConcurrentFileCount = concurrentFileCount;
             this.AccountName = accountName;
             this.IsOverwrite = isOverwrite;
             this.IsResume = isResume;
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         public string TargetStreamPath { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the name of the account to upload to.
+        /// Gets a value indicating the name of the account to upload to or download from.
         /// </summary>
         /// <value>
         /// The name of the account.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         public string AccountName { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the maximum number of parallel threads to use for a single file upload.
+        /// Gets a value indicating the maximum number of parallel threads to use for a single file upload or download.
         /// </summary>
         /// <value>
         /// The file thread count.
@@ -129,12 +129,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
 
         /// <summary>
-        /// Gets the parallel file count, which indicates how many files in a folder will be uploaded in parallel
+        /// Gets the parallel file count, which indicates how many files in a folder will be uploaded or downloaded in parallel
         /// </summary>
         /// <value>
-        /// The folder thread count.
+        /// The number of files to upload or download at once.
         /// </value>
-        public int ConcurentFileCount { get; internal set; }
+        public int ConcurrentFileCount { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether to overwrite the target stream if it already exists.
