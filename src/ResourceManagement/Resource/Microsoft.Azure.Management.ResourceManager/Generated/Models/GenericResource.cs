@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the GenericResource class.
         /// </summary>
-        public GenericResource(string location, string id = default(string), string name = default(string), string type = default(string), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
-            : base(location, id, name, type, createdTime, changedTime, tags)
+        public GenericResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
+            : base(location, id, name, type, tags)
         {
             Plan = plan;
             Properties = properties;
