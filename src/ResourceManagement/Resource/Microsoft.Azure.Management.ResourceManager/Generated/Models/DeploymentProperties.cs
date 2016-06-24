@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentProperties class.
         /// </summary>
-        public DeploymentProperties(object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting))
+        public DeploymentProperties(DeploymentMode? mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting))
         {
             Template = template;
             TemplateLink = templateLink;
@@ -85,6 +85,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         public virtual void Validate()
         {
+            if (Mode == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Mode");
+            }
             if (this.TemplateLink != null)
             {
                 this.TemplateLink.Validate();
