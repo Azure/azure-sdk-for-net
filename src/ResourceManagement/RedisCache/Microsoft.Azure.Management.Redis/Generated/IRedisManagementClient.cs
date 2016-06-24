@@ -78,5 +78,10 @@ namespace Microsoft.Azure.Management.Redis
         /// </summary>
         IRedisOperations Redis { get; }
 
+        /// <summary>
+        /// Gets the IPatchSchedulesOperations.
+        /// </summary>
+        IPatchSchedulesOperations PatchSchedules { get; }
+
     }
 }

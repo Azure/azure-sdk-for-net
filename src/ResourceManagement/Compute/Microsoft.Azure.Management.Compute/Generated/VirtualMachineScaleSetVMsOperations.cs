@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The operation to re-image a virtual machine scale set instance.
+        /// Allows you to re-image(update the version of the installed operating
+        /// system) a virtual machine scale set instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -77,7 +78,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to re-image a virtual machine scale set instance.
+        /// Allows you to re-image(update the version of the installed operating
+        /// system) a virtual machine scale set instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -235,7 +237,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to deallocate a virtual machine scale set.
+        /// Allows you to deallocate a virtual machine scale set virtual machine.
+        /// Shuts down the virtual machine and releases the compute resources. You
+        /// are not billed for the compute resources that this virtual machine uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -261,7 +265,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to deallocate a virtual machine scale set.
+        /// Allows you to deallocate a virtual machine scale set virtual machine.
+        /// Shuts down the virtual machine and releases the compute resources. You
+        /// are not billed for the compute resources that this virtual machine uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -419,7 +425,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to delete a virtual machine scale set.
+        /// Allows you to delete a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -445,7 +451,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to delete a virtual machine scale set.
+        /// Allows you to delete a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -603,7 +609,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to get a virtual machine scale set virtual machine.
+        /// Displays information about a virtual machine scale set virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -792,7 +798,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to get a virtual machine scale set virtual machine.
+        /// Displays the status of a virtual machine scale set virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -981,7 +987,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list virtual machine scale sets VMs.
+        /// Lists all virtual machines in a VM scale sets.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1181,7 +1187,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to power off (stop) a virtual machine scale set.
+        /// Allows you to power off (stop) a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1207,7 +1213,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to power off (stop) a virtual machine scale set.
+        /// Allows you to power off (stop) a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1365,7 +1371,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to restart a virtual machine scale set.
+        /// Allows you to restart a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1391,7 +1397,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to restart a virtual machine scale set.
+        /// Allows you to restart a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1549,7 +1555,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to start a virtual machine scale set.
+        /// Allows you to start a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1575,7 +1581,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to start a virtual machine scale set.
+        /// Allows you to start a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1733,7 +1739,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list virtual machine scale sets VMs.
+        /// Lists all virtual machines in a VM scale sets.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

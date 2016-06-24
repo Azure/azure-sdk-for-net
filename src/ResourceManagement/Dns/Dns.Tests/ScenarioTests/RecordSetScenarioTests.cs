@@ -59,7 +59,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return new RecordSet
                 {
                     Name = recordSetName,
-                    Location = this.Location,
                     Etag = null,
                     TTL = ttl,
                 };
@@ -86,7 +85,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     context,
                     testContext.ResourcesHandler);
             testContext.ZoneName =
-                TestUtilities.GenerateName("hydratestdnszone.com");
+                TestUtilities.GenerateName("hydratest.dnszone.com");
             testContext.RecordSetName =
                 TestUtilities.GenerateName("hydratestdnsrec");
             testContext.Location =
