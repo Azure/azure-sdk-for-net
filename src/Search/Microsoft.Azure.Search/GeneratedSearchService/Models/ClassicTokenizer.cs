@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// Grammar-based tokenizer that is suitable for processing most
     /// European-language documents. This tokenizer is implemented using
     /// Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/ClassicTokenizer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ClassicTokenizer")]
     public partial class ClassicTokenizer : Tokenizer
@@ -46,8 +47,11 @@ namespace Microsoft.Azure.Search.Models
         public int? MaxTokenLength { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

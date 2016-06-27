@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Decomposes compound words found in many Germanic languages. This token
     /// filter is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/compound/DictionaryCompoundWordTokenFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter")]
     public partial class DictionaryDecompounderTokenFilter : TokenFilter
@@ -78,8 +79,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? OnlyLongestMatch { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

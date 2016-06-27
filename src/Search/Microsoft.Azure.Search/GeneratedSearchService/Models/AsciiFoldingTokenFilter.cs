@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Search.Models
     /// are not in the first 127 ASCII characters (the "Basic Latin" Unicode
     /// block) into their ASCII equivalents, if such equivalents exist. This
     /// token filter is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.AsciiFoldingTokenFilter")]
     public partial class AsciiFoldingTokenFilter : TokenFilter
@@ -47,8 +48,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? PreserveOriginal { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

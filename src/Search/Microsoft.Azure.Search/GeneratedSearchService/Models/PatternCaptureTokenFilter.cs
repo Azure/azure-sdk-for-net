@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// Uses Java regexes to emit multiple tokens - one for each capture group
     /// in one or more patterns. This token filter is implemented using
     /// Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternCaptureGroupTokenFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PatternCaptureTokenFilter")]
     public partial class PatternCaptureTokenFilter : TokenFilter
@@ -53,8 +54,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? PreserveOriginal { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

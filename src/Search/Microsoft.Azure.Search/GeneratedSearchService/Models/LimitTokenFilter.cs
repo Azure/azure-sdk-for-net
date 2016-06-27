@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Limits the number of tokens while indexing. This token filter is
     /// implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/LimitTokenCountFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.LimitTokenFilter")]
     public partial class LimitTokenFilter : TokenFilter
@@ -53,8 +54,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? ConsumeAllTokens { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

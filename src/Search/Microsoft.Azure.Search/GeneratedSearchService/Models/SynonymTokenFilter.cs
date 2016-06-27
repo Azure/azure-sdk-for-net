@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Matches single or multi-word synonyms in a token stream. This token
     /// filter is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/synonym/SynonymFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.SynonymTokenFilter")]
     public partial class SynonymTokenFilter : TokenFilter
@@ -73,8 +74,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? Expand { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

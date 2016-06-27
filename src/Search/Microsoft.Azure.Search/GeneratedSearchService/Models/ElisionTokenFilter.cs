@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// Removes elisions. For example, "l'avion" (the plane) will be converted
     /// to "avion" (plane). This token filter is implemented using Apache
     /// Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ElisionTokenFilter")]
     public partial class ElisionTokenFilter : TokenFilter
@@ -45,8 +46,11 @@ namespace Microsoft.Azure.Search.Models
         public IList<string> Articles { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

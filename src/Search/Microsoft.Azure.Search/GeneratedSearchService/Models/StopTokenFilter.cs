@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Removes stop words from a token stream. This token filter is
     /// implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StopTokenFilter")]
     public partial class StopTokenFilter : TokenFilter
@@ -70,8 +71,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? RemoveTrailingStopWords { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

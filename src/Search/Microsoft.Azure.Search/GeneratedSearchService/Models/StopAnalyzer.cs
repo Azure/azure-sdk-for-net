@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Divides text at non-letters; Applies the lowercase and stopword token
     /// filters. This analyzer is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StopAnalyzer")]
     public partial class StopAnalyzer : Analyzer
@@ -44,8 +45,11 @@ namespace Microsoft.Azure.Search.Models
         public IList<string> Stopwords { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

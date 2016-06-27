@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Standard Apache Lucene analyzer; Composed of the standard tokenizer,
     /// lowercase filter and stop filter.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardAnalyzer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StandardAnalyzer")]
     public partial class StandardAnalyzer : Analyzer
@@ -52,8 +53,11 @@ namespace Microsoft.Azure.Search.Models
         public IList<string> Stopwords { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();
