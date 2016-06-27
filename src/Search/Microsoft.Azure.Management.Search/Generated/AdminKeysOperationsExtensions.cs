@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Returns the primary and secondary API keys for the given Azure Search
             /// service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832685.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Returns the primary and secondary API keys for the given Azure Search
             /// service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832685.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
