@@ -81,7 +81,7 @@ namespace Compute.Tests
                             Caching = CachingTypes.None,
                             CreateOption = DiskCreateOptionTypes.FromImage,
                             Name = "test",
-                            VhdContainers = new List<string>{ vhdContainer }
+                            VhdContainers = new List<string> { vhdContainer }
                         },
                     },
                     OsProfile = new VirtualMachineScaleSetOSProfile()
@@ -120,9 +120,9 @@ namespace Compute.Tests
         }
 
         protected VirtualMachineScaleSet CreateVMScaleSet_NoAsyncTracking(
-            string rgName, 
+            string rgName,
             string vmssName,
-            StorageAccount storageAccount, 
+            StorageAccount storageAccount,
             ImageReference imageRef,
             out VirtualMachineScaleSet inputVMScaleSet,
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
@@ -134,9 +134,9 @@ namespace Compute.Tests
             {
                 var createOrUpdateResponse = CreateVMScaleSetAndGetOperationResponse(rgName,
                                                                                      vmssName,
-                                                                                     storageAccount, 
-                                                                                     imageRef, 
-                                                                                     out inputVMScaleSet, 
+                                                                                     storageAccount,
+                                                                                     imageRef,
+                                                                                     out inputVMScaleSet,
                                                                                      extensionProfile,
                                                                                      vmScaleSetCustomizer,
                                                                                      createWithPublicIpAddress,
@@ -156,7 +156,7 @@ namespace Compute.Tests
         protected VirtualMachineScaleSet CreateVMScaleSet(
             string rgName,
             string vmssName,
-            StorageAccount storageAccount, 
+            StorageAccount storageAccount,
             ImageReference imageRef,
             out VirtualMachineScaleSet inputVMScaleSet,
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
@@ -311,7 +311,7 @@ namespace Compute.Tests
                                 nc => string.Equals(nc.Name, nicconfig.Name, StringComparison.OrdinalIgnoreCase));
                         Assert.NotNull(outnicconfig);
                         CompareVmssNicConfig(nicconfig, outnicconfig);
-                    } 
+                    }
                 }
             }
             else
@@ -344,7 +344,7 @@ namespace Compute.Tests
             }
         }
 
-        protected void CompareIpConfigApplicationGatewayPools(VirtualMachineScaleSetIPConfiguration ipconfig , VirtualMachineScaleSetIPConfiguration outipconfig )
+        protected void CompareIpConfigApplicationGatewayPools(VirtualMachineScaleSetIPConfiguration ipconfig, VirtualMachineScaleSetIPConfiguration outipconfig)
         {
             if (ipconfig.ApplicationGatewayBackendAddressPools != null && ipconfig.ApplicationGatewayBackendAddressPools.Count > 0)
             {

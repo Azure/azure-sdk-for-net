@@ -140,7 +140,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_ListBySubscription_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -154,7 +154,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_ListBySubscription_Success()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -180,7 +180,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_ListBySubscriptionNext_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -195,7 +195,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_ListBySubscriptionNext_Success()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -221,7 +221,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_ListByResourceGroup_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -237,7 +237,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_ListByResourceGroup_Success()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -263,7 +263,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_ListByResourceGroupNext_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -278,7 +278,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_ListByResourceGroupNext_Success()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -304,7 +304,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_CreateOrUpdate_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -322,7 +322,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_CreateOrUpdate_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -344,7 +344,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_CreateOrUpdate_Created()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -370,7 +370,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Delete_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -386,7 +386,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Delete_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -404,7 +404,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Delete_NoContent()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -426,7 +426,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Get_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -443,7 +443,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Get_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -469,7 +469,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Update_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -487,7 +487,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Update_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -518,7 +518,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Run_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -536,7 +536,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Run_Success()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             var accepted = new HttpResponseMessage()
             {
@@ -573,7 +573,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Disable_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -589,7 +589,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Disable_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -611,7 +611,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Enable_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -627,7 +627,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Enable_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -649,7 +649,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Validate_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -666,7 +666,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Validate_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {

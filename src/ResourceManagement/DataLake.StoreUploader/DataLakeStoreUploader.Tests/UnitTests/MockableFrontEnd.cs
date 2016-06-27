@@ -12,6 +12,7 @@ using System.IO;
 namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.Azure.Management.DataLake.StoreUploader;
 
@@ -35,6 +36,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         {
         }
 
+        public InMemoryFrontEnd BaseAdapter { get; set; }
+
         /// <summary>
         /// Constructor with base front end.
         /// </summary>
@@ -48,6 +51,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             this.GetStreamLengthImplementation = baseAdapter.GetStreamLength;
             this.StreamExistsImplementation = baseAdapter.StreamExists;
             this.ReadStreamImplementation = baseAdapter.ReadStream;
+            this.IsDirectoryImplementation = baseAdapter.IsDirectory;
+            this.ListDirectoryImplementation = baseAdapter.ListDirectory;
+
+            BaseAdapter = baseAdapter as InMemoryFrontEnd;
         }
 
         public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
@@ -100,9 +107,18 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
         public bool IsDirectory(string streamPath)
         {
-            // no directory download tests yet.
-            return false;
+            return this.IsDirectoryImplementation(streamPath);
         }
+
+        public Func<string, bool> IsDirectoryImplementation { get; set; }
+
+        public IDictionary<string, long> ListDirectory(string directoryPath, bool recursive)
+        {
+            // download folder not currently tested here.
+            return this.ListDirectoryImplementation(directoryPath, recursive);
+        }
+
+        public Func<string, bool, IDictionary<string, long>> ListDirectoryImplementation { get; set; }
 
         public Func<string, long, long, bool, Stream> ReadStreamImplementation { get; set; }
     }

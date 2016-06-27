@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the NetworkInterfaceIPConfiguration
         /// class.
         /// </summary>
-        public NetworkInterfaceIPConfiguration(string id = default(string), string name = default(string), string etag = default(string), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), string provisioningState = default(string))
+        public NetworkInterfaceIPConfiguration(string id = default(string), string name = default(string), string etag = default(string), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), string provisioningState = default(string))
             : base(id)
         {
             Name = name;
@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             PrivateIPAddressVersion = privateIPAddressVersion;
             Subnet = subnet;
+            Primary = primary;           
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
         }
@@ -99,6 +100,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
         public string PrivateIPAddressVersion { get; set; }
+
+        /// <summary>
+        /// Gets or Sets primary flag for Ip configuration on network interface
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.primary")]
+        public bool? Primary { get; set; }
 
         /// <summary>
         /// </summary>

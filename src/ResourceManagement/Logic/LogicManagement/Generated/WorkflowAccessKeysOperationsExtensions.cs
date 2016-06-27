@@ -270,12 +270,13 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='accessKeyName'>
             /// The workflow access key name.
             /// </param>
-            /// <param name='parameters'>
-            /// The parameters.
+            /// <param name='keyType'>
+            /// Gets or sets the key type. Possible values include: 'NotSpecified',
+            /// 'Primary', 'Secondary'
             /// </param>
-            public static WorkflowSecretKeys RegenerateSecretKey(this IWorkflowAccessKeysOperations operations, string resourceGroupName, string workflowName, string accessKeyName, RegenerateSecretKeyParameters parameters)
+            public static WorkflowSecretKeys RegenerateSecretKey(this IWorkflowAccessKeysOperations operations, string resourceGroupName, string workflowName, string accessKeyName, KeyType? keyType = default(KeyType?))
             {
-                return Task.Factory.StartNew(s => ((IWorkflowAccessKeysOperations)s).RegenerateSecretKeyAsync(resourceGroupName, workflowName, accessKeyName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IWorkflowAccessKeysOperations)s).RegenerateSecretKeyAsync(resourceGroupName, workflowName, accessKeyName, keyType), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -293,15 +294,16 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='accessKeyName'>
             /// The workflow access key name.
             /// </param>
-            /// <param name='parameters'>
-            /// The parameters.
+            /// <param name='keyType'>
+            /// Gets or sets the key type. Possible values include: 'NotSpecified',
+            /// 'Primary', 'Secondary'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WorkflowSecretKeys> RegenerateSecretKeyAsync(this IWorkflowAccessKeysOperations operations, string resourceGroupName, string workflowName, string accessKeyName, RegenerateSecretKeyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WorkflowSecretKeys> RegenerateSecretKeyAsync(this IWorkflowAccessKeysOperations operations, string resourceGroupName, string workflowName, string accessKeyName, KeyType? keyType = default(KeyType?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegenerateSecretKeyWithHttpMessagesAsync(resourceGroupName, workflowName, accessKeyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegenerateSecretKeyWithHttpMessagesAsync(resourceGroupName, workflowName, accessKeyName, keyType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -63,13 +64,27 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.InputFolderPath = uploadParameters.InputFilePath;
             this.TargetStreamFolderPath = uploadParameters.TargetStreamPath.TrimEnd('/');
             this.IsRecursive = uploadParameters.IsRecursive;
-
             // get this list of all files in the source directory, depending on if this is recursive or not.
-            var allFiles = this.IsRecursive ? Directory.EnumerateFiles(this.InputFolderPath, "*.*", SearchOption.AllDirectories) : 
-                Directory.EnumerateFiles(this.InputFolderPath, "*.*", SearchOption.TopDirectoryOnly);
+            IEnumerable<string> allFiles;
+            Dictionary<string, long> downloadFiles = new Dictionary<string, long>();
+            if (uploadParameters.IsDownload)
+            {
+                foreach (var entry in frontend.ListDirectory(uploadParameters.InputFilePath, uploadParameters.IsRecursive))
+                {
+                    downloadFiles.Add(entry.Key, entry.Value);
+                }
+
+                allFiles = downloadFiles.Keys;
+                this.TotalFileBytes = downloadFiles.Values.Sum();
+            }
+            else
+            {
+                allFiles = this.IsRecursive ? Directory.EnumerateFiles(this.InputFolderPath, "*.*", SearchOption.AllDirectories) :
+                    Directory.EnumerateFiles(this.InputFolderPath, "*.*", SearchOption.TopDirectoryOnly);
+                this.TotalFileBytes = GetByteCountInDirectory(this.InputFolderPath, uploadParameters.IsRecursive);
+            }
 
             this.FileCount = allFiles.Count();
-            this.TotalFileBytes = GetByteCountInDirectory(this.InputFolderPath, uploadParameters.IsRecursive);
             this.Files = new UploadMetadata[this.FileCount];
             Parallel.For(0, this.FileCount, i =>
             {
@@ -82,10 +97,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 var paramsPerFile = new UploadParameters
                 (
                     curFile,
-                    String.Format("{0}/{1}", this.TargetStreamFolderPath, relativeFilePath),
+                    String.Format("{0}{1}{2}", this.TargetStreamFolderPath, uploadParameters.IsDownload ? "\\" : "/", relativeFilePath),
                     uploadParameters.AccountName,
                     uploadParameters.PerFileThreadCount,
-                    uploadParameters.ConcurentFileCount,
+                    uploadParameters.ConcurrentFileCount,
                     uploadParameters.IsOverwrite,
                     uploadParameters.IsResume,
                     uploadParameters.IsBinary,
@@ -94,9 +109,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     uploadParameters.MaxSegementLength,
                     uploadParameters.LocalMetadataLocation
                 );
-                
+
+                long size = -1;
+                if (uploadParameters.IsDownload && downloadFiles != null)
+                {
+                    size = downloadFiles[curFile];
+                }
                 var uploadMetadataPath = Path.Combine(uploadParameters.LocalMetadataLocation, string.Format("{0}.upload.xml", Path.GetFileName(curFile)));
-                this.Files[i] = new UploadMetadata(uploadMetadataPath, paramsPerFile, frontend);
+                this.Files[i] = new UploadMetadata(uploadMetadataPath, paramsPerFile, frontend, size);
             });
         }
 
@@ -290,9 +310,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <returns></returns>
         internal long GetByteCountInDirectory(string directory, bool recursive)
         {
+            long count = 0;
             directory = directory.TrimEnd('\\');
             directory += "\\";
-            long count = 0;
             foreach (var entry in Directory.GetFileSystemEntries(directory))
             {
                 if (Directory.Exists(entry))
