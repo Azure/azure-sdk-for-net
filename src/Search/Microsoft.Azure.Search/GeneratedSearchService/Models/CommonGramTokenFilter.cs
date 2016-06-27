@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// Construct bigrams for frequently occurring terms while indexing.
     /// Single terms are still indexed too, with bigrams overlaid. This token
     /// filter is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/commongrams/CommonGramsFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.CommonGramTokenFilter")]
     public partial class CommonGramTokenFilter : TokenFilter
@@ -63,8 +64,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? UseQueryMode { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

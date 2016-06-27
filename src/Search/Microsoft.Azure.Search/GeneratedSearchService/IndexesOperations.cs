@@ -35,6 +35,9 @@ namespace Microsoft.Azure.Search
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         internal IndexesOperations(SearchServiceClient client)
         {
             if (client == null) 
@@ -51,6 +54,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Creates a new Azure Search index.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798941.aspx" />
         /// </summary>
         /// <param name='index'>
         /// The definition of the index to create.
@@ -64,6 +68,15 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
@@ -118,7 +131,7 @@ namespace Microsoft.Azure.Search
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -245,6 +258,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Lists all indexes available for an Azure Search service.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx" />
         /// </summary>
         /// <param name='select'>
         /// Selects which properties of the index definitions to retrieve. Specified
@@ -260,6 +274,15 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
@@ -310,7 +333,7 @@ namespace Microsoft.Azure.Search
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -431,6 +454,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Creates a new Azure Search index or updates an index if it already exists.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn800964.aspx" />
         /// </summary>
         /// <param name='indexName'>
         /// The definition of the index to create or update.
@@ -454,6 +478,15 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
@@ -519,7 +552,7 @@ namespace Microsoft.Azure.Search
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -664,6 +697,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Deletes an Azure Search index and all the documents it contains.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798926.aspx" />
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index to delete.
@@ -677,6 +711,12 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
@@ -728,7 +768,7 @@ namespace Microsoft.Azure.Search
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -783,7 +823,12 @@ namespace Microsoft.Azure.Search
             if ((int)_statusCode != 204 && (int)_statusCode != 404)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (_httpResponse.Content != null) {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                else {
+                    _responseContent = string.Empty;
+                }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("request-id"))
@@ -818,6 +863,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves an index definition from Azure Search.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798939.aspx" />
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index to retrieve.
@@ -831,6 +877,15 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
@@ -882,7 +937,7 @@ namespace Microsoft.Azure.Search
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1004,6 +1059,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Returns statistics for the given index, including a document count and
         /// storage usage.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn798942.aspx" />
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index for which to retrieve statistics.
@@ -1017,6 +1073,15 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
@@ -1068,7 +1133,7 @@ namespace Microsoft.Azure.Search
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {

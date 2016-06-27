@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Language specific stemming filter. This token filter is implemented
     /// using Apache Lucene.
+    /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx#TokenFilters" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StemmerTokenFilter")]
     public partial class StemmerTokenFilter : TokenFilter
@@ -57,8 +58,11 @@ namespace Microsoft.Azure.Search.Models
         public StemmerTokenFilterLanguage Language { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

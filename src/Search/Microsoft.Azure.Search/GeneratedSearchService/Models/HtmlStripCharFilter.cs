@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// A character filter that attempts to strip out HTML constructs. This
     /// character filter is implemented using Apache Lucene.
+    /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/HTMLStripCharFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.HtmlStripCharFilter")]
     public partial class HtmlStripCharFilter : CharFilter
@@ -37,8 +38,11 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

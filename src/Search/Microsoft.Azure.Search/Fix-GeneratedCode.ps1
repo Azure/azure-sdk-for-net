@@ -12,7 +12,3 @@ Replace-InFile $generatedFolder\IDocumentsProxyOperations.cs "public partial int
 # Change the public property on ISearchIndexClient and SearchIndexClient to refer to our public interface instead of the internal one.
 Replace-InFile $generatedFolder\ISearchIndexClient.cs "DocumentsProxy" "Documents"
 Replace-InFile $generatedFolder\SearchIndexClient.cs "DocumentsProxy" "Documents"
-
-# Inject initialization method into SearchIndexClient. This is a workaround for this issue in AutoRest: https://github.com/Azure/autorest/issues/1087
-Replace-InFile $generatedFolder\SearchIndexClient.cs "private void Initialize()" "partial void CustomInitialize();`r`n`r`n        private void Initialize()"
-Replace-InFile $generatedFolder\SearchIndexClient.cs "DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());" "DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());`r`n            CustomInitialize();"

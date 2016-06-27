@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// A token filter that only keeps tokens with text contained in a
     /// specified list of words. This token filter is implemented using
     /// Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/KeepWordFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeepTokenFilter")]
     public partial class KeepTokenFilter : TokenFilter
@@ -53,8 +54,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? LowerCaseKeepWords { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

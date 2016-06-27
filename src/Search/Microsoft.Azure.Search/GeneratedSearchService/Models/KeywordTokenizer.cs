@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Emits the entire input as a single token. This tokenizer is
     /// implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeywordTokenizer")]
     public partial class KeywordTokenizer : Tokenizer
@@ -44,8 +45,11 @@ namespace Microsoft.Azure.Search.Models
         public int? BufferSize { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

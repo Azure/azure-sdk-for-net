@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// Normalizes CJK width differences. Folds fullwidth ASCII variants into
     /// the equivalent basic Latin, and half-width Katakana variants into the
     /// equivalent Kana. This token filter is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKWidthFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.CjkWidthTokenFilter")]
     public partial class CjkWidthTokenFilter : TokenFilter
@@ -38,8 +39,11 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();
