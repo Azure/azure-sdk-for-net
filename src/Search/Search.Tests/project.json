@@ -3,7 +3,6 @@
   "description": "Search.Tests Class Library",
   "authors": [ "Microsoft Corporation" ],
 
-
   "packOptions": {
     "tags": [ "" ],
     "projectUrl": "",
@@ -21,7 +20,7 @@
   "frameworks": {
     "netcoreapp1.0": {
       "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": ["dnxcore50", "portable-net45+win8"]
+      "imports": [ "dnxcore50", "portable-net45+win8" ]
     }
   },
   "dependencies": {
@@ -29,8 +28,10 @@
     "Microsoft.Azure.Search": "2.0.0-preview",
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.0-rc2-*"
+      "version": "1.0.0-rc2-3002702"
     },
-    "Search.Management.Tests": "1.0.0"
+    "Search.Management.Tests": "1.0.0",
+    "xunit": "2.1.0",
+    "dotnet-test-xunit": "1.0.0-rc2-build10025"
   }
 }

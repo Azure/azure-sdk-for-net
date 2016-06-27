@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// A token filter that applies the Arabic normalizer to normalize the
     /// orthography. This token filter is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ar/ArabicNormalizationFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ArabicNormalizationTokenFilter")]
     public partial class ArabicNormalizationTokenFilter : TokenFilter
@@ -39,8 +40,11 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

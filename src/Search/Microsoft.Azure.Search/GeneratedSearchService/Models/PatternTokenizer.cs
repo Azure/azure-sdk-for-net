@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Tokenizer that uses regex pattern matching to construct distinct
     /// tokens. This tokenizer is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PatternTokenizer")]
     public partial class PatternTokenizer : Tokenizer
@@ -63,8 +64,11 @@ namespace Microsoft.Azure.Search.Models
         public int? Group { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

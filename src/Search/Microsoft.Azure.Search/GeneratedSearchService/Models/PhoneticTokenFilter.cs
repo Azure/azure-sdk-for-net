@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Create tokens for phonetic matches. This token filter is implemented
     /// using Apache Lucene.
+    /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-phonetic/org/apache/lucene/analysis/phonetic/package-tree.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PhoneticTokenFilter")]
     public partial class PhoneticTokenFilter : TokenFilter
@@ -57,8 +58,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? ReplaceOriginalTokens { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

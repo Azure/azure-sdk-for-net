@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Defines a function that boosts scores based on distance from a
     /// geographic location.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn798928.aspx" />
     /// </summary>
     [JsonObject("distance")]
     public partial class DistanceScoringFunction : ScoringFunction
@@ -44,8 +45,11 @@ namespace Microsoft.Azure.Search.Models
         public DistanceScoringParameters Parameters { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

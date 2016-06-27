@@ -20,9 +20,10 @@ namespace Microsoft.Azure.Search.Models
     /// A character filter that replaces characters in the input string. It
     /// uses a regular expression to identify character sequences to preserve
     /// and a replacement pattern to identify characters to replace. For
-    /// example, given the input text "aa bb aa bb", pattern
-    /// "(aa)\\\\s+(bb)", and replacement "$1#$2", the result would be "aa#bb
-    /// aa#bb". This character filter is implemented using Apache Lucene.
+    /// example, given the input text "aa bb aa bb", pattern "(aa)\s+(bb)",
+    /// and replacement "$1#$2", the result would be "aa#bb aa#bb". This
+    /// character filter is implemented using Apache Lucene.
+    /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternReplaceCharFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PatternReplaceCharFilter")]
     public partial class PatternReplaceCharFilter : CharFilter
@@ -55,8 +56,11 @@ namespace Microsoft.Azure.Search.Models
         public string Replacement { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

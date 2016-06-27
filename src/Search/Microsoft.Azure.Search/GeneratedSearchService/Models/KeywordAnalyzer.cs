@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// Treats the entire content of a field as a single token. This is useful
     /// for data like zip codes, ids, and some product names. This analyzer
     /// is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeywordAnalyzer")]
     public partial class KeywordAnalyzer : Analyzer
@@ -38,8 +39,11 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();
