@@ -21,8 +21,8 @@ namespace Test.Azure.Management.Logic
             using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowRunsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
                     resourceGroupName: this.resourceGroupName,
@@ -30,7 +30,10 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = this.sku,
+                        Sku = new Sku()
+                        {
+                            Name = SkuName.Basic
+                        },
                         State = WorkflowState.Enabled,
                         Definition = JToken.Parse(this.simpleDefinition)
                     });

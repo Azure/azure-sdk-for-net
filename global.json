@@ -14,6 +14,7 @@
     "src/ResourceManagement/DataLake.StoreUploader/Microsoft.Azure.Management.DataLake.StoreUploader",
     "src/ResourceManagement/Microsoft.Azure.Management.RemoteApp",
     "src/ResourceManagement/DevTestLabs/Microsoft.Azure.Management.DevTestLabs",
-    "src/ResourceManagement/MachineLearning/Microsoft.Azure.Management.MachineLearning"
+    "src/ResourceManagement/MachineLearning/Microsoft.Azure.Management.MachineLearning",
+    "src/ResourceManagement/PowerBIEmbedded/Microsoft.Azure.Management.PowerBIEmbedded"
   ]
 }

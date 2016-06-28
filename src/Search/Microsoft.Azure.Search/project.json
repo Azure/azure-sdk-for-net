@@ -20,7 +20,6 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)",
     "Microsoft.Spatial": "[6.15.0,7.0)"
   },
 
@@ -32,6 +31,9 @@
         "System.Runtime": "",
         "System.Runtime.Serialization": "",
         "System.Threading.Tasks": "",
+      },
+      "dependencies": {
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
       }
     },
     "netstandard1.5": {
@@ -69,7 +71,8 @@
         "System.Xml.ReaderWriter": "4.0.11-rc2-24027",
         "System.Xml.XDocument": "4.0.11-rc2-24027",
         "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
-        "System.Dynamic.Runtime": "4.0.11-rc2-24027"
+        "System.Dynamic.Runtime": "4.0.11-rc2-24027",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
       }
     },
     "netstandard1.1": {
@@ -78,7 +81,8 @@
       "dependencies": {
         "NETStandard.Library": "1.5.0-rc2-24027",
         "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
-        "System.Dynamic.Runtime": "4.0.11-rc2-24027"
+        "System.Dynamic.Runtime": "4.0.11-rc2-24027",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
       }
     }
   }

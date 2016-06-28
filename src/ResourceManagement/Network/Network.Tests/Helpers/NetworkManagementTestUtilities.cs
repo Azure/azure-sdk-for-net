@@ -28,9 +28,36 @@ namespace Networks.Tests.Helpers
         /// <param name="client">The resource management client</param>
         /// <param name="resourceType">The type of resource to create</param>
         /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static string GetResourceLocation(ResourceManagementClient client, string resourceType)
+        public static string GetResourceLocation(ResourceManagementClient client, string resourceType, Network.Tests.Helpers.FeaturesInfo.Type feature = Network.Tests.Helpers.FeaturesInfo.Type.Default)
         {
-            var supportedLocations = new HashSet<string>(new[] { "East US", "West US", "Central US", "West Europe" }, StringComparer.OrdinalIgnoreCase);            
+            HashSet<string> supportedLocations = null;
+
+            switch (feature)
+            {
+                case Network.Tests.Helpers.FeaturesInfo.Type.Default:
+                    {
+                        supportedLocations = Network.Tests.Helpers.FeaturesInfo.defaultLocations;
+                        break;
+                    }
+
+                case Network.Tests.Helpers.FeaturesInfo.Type.All:
+                    {
+                        supportedLocations = Network.Tests.Helpers.FeaturesInfo.allFeaturesSupportedLocations;
+                        break;
+                    }
+
+                case Network.Tests.Helpers.FeaturesInfo.Type.Ipv6:
+                    {
+                        supportedLocations = Network.Tests.Helpers.FeaturesInfo.ipv6SupportedLocations;
+                        break;
+                    }
+
+                case Network.Tests.Helpers.FeaturesInfo.Type.MultiCA:
+                    {
+                        supportedLocations = Network.Tests.Helpers.FeaturesInfo.defaultLocations;
+                        break;
+                    }
+            }
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
             var provider = client.Providers.Get(providerName);

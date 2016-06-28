@@ -7,7 +7,7 @@
     "summary": "DataLakeAnalytics.Tests Tests.",
     "tags": [ "" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE"
   },
 
   "buildOptions": {
@@ -27,18 +27,18 @@
     }
   },
   "dependencies": {
-    "Microsoft.NETCore.App": { 
-      "type": "platform", 
-      "version": "1.0.0-rc2-*" 
-    }, 
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0-rc2-*"
+    },
     "Microsoft.Azure.Test.HttpRecorder": "[1.6.2-preview,2.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.3-preview,2.0.0)",
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)",
     "Microsoft.Rest.ClientRuntime": "[2.3.0,3.0.0)" ,
-    "Microsoft.Azure.Management.Storage": "[4.1.0-preview]",
-    "Microsoft.Azure.ResourceManager": "1.0.0-preview",
+    "Microsoft.Azure.Management.Storage": "[5.0.2-preview]",
+    "Microsoft.Azure.Management.ResourceManager": "1.1.3-preview",
     "Microsoft.Azure.Management.DataLake.Analytics": "[0.11.5-preview,1.0)",
-    "Microsoft.Azure.Management.DataLake.Store": "0.13.0-preview",
+    "Microsoft.Azure.Management.DataLake.Store": "0.12.2-preview",
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-build10015"
   }
