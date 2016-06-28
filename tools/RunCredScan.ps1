@@ -6,7 +6,7 @@ $logMatchFile = $logFile + "-matches.tsv"
 
 #Check if CredentialScanner exists on machine
 if (-not (Test-Path $credentialScannerLocation)) {
-    throw "Credential Scanner does not exist on the machine. Please install it before running."
+    throw "Credential scanner does not exist on the machine. Please install it before running."
 }
 
 #Check if source location mentioned in the arguments exists
@@ -22,15 +22,33 @@ If (Test-Path $logMatchFile){
 	Remove-Item $logMatchFile
 }
 
+Write-Host "Running credential scanner from location: " $credentialScannerLocation
+Write-Host "Source location for credential scanner: " $sourceLocation
+Write-Host "Searcher file location for credential scanner: " $searcherFile
+
 $proc = Start-Process -FilePath $credentialScannerLocation -ArgumentList $sourceLocation, $searcherFile, $logFile -NoNewWindow -Wait -PassThru
 
 #Check process exit code after running credential scanner
 if ($proc.ExitCode -ne 0) {
+   Write-Host $proc.StandardError
    throw "While running credential scanner, process exited with status code $($proc.ExitCode)"
 }
 
-# Skip the first line in the logMatchFile since it has headings even if there are no matches. If a match is found, throw an exception
-if (([string[]](Get-Content $logMatchFile))[1])
+$matchesLog = [string[]](Get-Content -Path $logMatchFile)
+
+# logMatchFile contains headings always even if there are no matches. Hence check if line count is greater than 1. If a match is found, throw an exception
+if ($matchesLog.Count -gt 1)
 {
-    throw "Credential scanner found matches"
+    #Write all matches to console
+    Write-Host "Credential scanner matches"
+    foreach ($matchLine in $matchesLog)
+    {
+        Write-Host $matchLine
+    }
+    throw "Credential scanner match found exception!"
 }
+else
+{
+    Write-Host "Finished running credential scanner tool. No matches found!"
+}
+

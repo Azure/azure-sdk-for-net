@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The operation to create or update a virtual machine scale set.
+        /// Allows you to create or update a virtual machine scale set by providing
+        /// parameters or a path to pre-configured parameter file.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -78,7 +79,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to create or update a virtual machine scale set.
+        /// Allows you to create or update a virtual machine scale set by providing
+        /// parameters or a path to pre-configured parameter file.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -294,8 +296,10 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to deallocate virtual machines in a virtual machine scale
-        /// set.
+        /// Allows you to deallocate virtual machines in a virtual machine scale set.
+        /// Shuts down the virtual machines and releases the compute resources. You
+        /// are not billed for the compute resources that this virtual machine scale
+        /// set uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -321,8 +325,10 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to deallocate virtual machines in a virtual machine scale
-        /// set.
+        /// Allows you to deallocate virtual machines in a virtual machine scale set.
+        /// Shuts down the virtual machines and releases the compute resources. You
+        /// are not billed for the compute resources that this virtual machine scale
+        /// set uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -487,7 +493,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to delete a virtual machine scale set.
+        /// Allows you to delete a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -510,7 +516,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to delete a virtual machine scale set.
+        /// Allows you to delete a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -659,7 +665,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to get a virtual machine scale set.
+        /// Display information about a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -839,7 +845,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to delete virtual machines in a virtual machine scale set.
+        /// Allows you to delete virtual machines in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -865,7 +871,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to delete virtual machines in a virtual machine scale set.
+        /// Allows you to delete virtual machines in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1033,7 +1039,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to get a virtual machine scale set instance view.
+        /// Displays status of a virtual machine scale set instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1213,7 +1219,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list virtual machine scale sets under a resource group.
+        /// Lists all virtual machine scale sets under a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1384,10 +1390,10 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets the list of Virtual Machine Scale Sets in the subscription. Use
-        /// nextLink property in the response to get the next page of Virtual Machine
-        /// Scale Sets. Do this till nextLink is not null to fetch all the Virtual
-        /// Machine Scale Sets.
+        /// Lists all Virtual Machine Scale Sets in the subscription. Use nextLink
+        /// property in the response to get the next page of Virtual Machine Scale
+        /// Sets. Do this till nextLink is not null to fetch all the Virtual Machine
+        /// Scale Sets.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1549,7 +1555,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list available skus for a virtual machine scale set.
+        /// Displays available skus for your virtual machine scale set including the
+        /// minimum and maximum vm instances allowed for a particular sku.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1729,8 +1736,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to power off (stop) virtual machines in a virtual machine
-        /// scale set.
+        /// Allows you to power off (stop) virtual machines in a virtual machine scale
+        /// set. Note that resources are still attached and you are getting charged
+        /// for the resources. Use deallocate to release resources.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1756,8 +1764,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to power off (stop) virtual machines in a virtual machine
-        /// scale set.
+        /// Allows you to power off (stop) virtual machines in a virtual machine scale
+        /// set. Note that resources are still attached and you are getting charged
+        /// for the resources. Use deallocate to release resources.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1922,7 +1931,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to restart virtual machines in a virtual machine scale set.
+        /// Allows you to restart virtual machines in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1948,7 +1957,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to restart virtual machines in a virtual machine scale set.
+        /// Allows you to restart virtual machines in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2113,7 +2122,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to start virtual machines in a virtual machine scale set.
+        /// Allows you to start virtual machines in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2139,7 +2148,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to start virtual machines in a virtual machine scale set.
+        /// Allows you to start virtual machines in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2304,8 +2313,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to manually upgrade virtual machines in a virtual machine
-        /// scale set.
+        /// Allows you to manually upgrade virtual machines in a virtual machine scale
+        /// set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2331,8 +2340,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to manually upgrade virtual machines in a virtual machine
-        /// scale set.
+        /// Allows you to manually upgrade virtual machines in a virtual machine scale
+        /// set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2500,7 +2509,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to re-image virtual machines in a virtual machine scale set.
+        /// Allows you to re-image(update the version of the installed operating
+        /// system) virtual machines in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2523,7 +2533,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to re-image virtual machines in a virtual machine scale set.
+        /// Allows you to re-image(update the version of the installed operating
+        /// system) virtual machines in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2672,7 +2683,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list virtual machine scale sets under a resource group.
+        /// Lists all virtual machine scale sets under a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2831,10 +2842,10 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets the list of Virtual Machine Scale Sets in the subscription. Use
-        /// nextLink property in the response to get the next page of Virtual Machine
-        /// Scale Sets. Do this till nextLink is not null to fetch all the Virtual
-        /// Machine Scale Sets.
+        /// Lists all Virtual Machine Scale Sets in the subscription. Use nextLink
+        /// property in the response to get the next page of Virtual Machine Scale
+        /// Sets. Do this till nextLink is not null to fetch all the Virtual Machine
+        /// Scale Sets.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2993,7 +3004,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list available skus for a virtual machine scale set.
+        /// Displays available skus for your virtual machine scale set including the
+        /// minimum and maximum vm instances allowed for a particular sku.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

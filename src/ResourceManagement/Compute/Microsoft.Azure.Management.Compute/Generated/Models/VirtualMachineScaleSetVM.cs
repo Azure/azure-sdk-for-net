@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the license type, which is for bring your own license
