@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.AzureStack.Management;
 using Microsoft.AzureStack.Management.Models;
 using Xunit;
