@@ -216,6 +216,11 @@ namespace Network.Tests
             testOperations.Add(testOperation);
         }
 
+        public XrpMigrationValidateVirtualNetworkResponse ValidateVnetMigration(string virtualNetworkName)
+        {
+            return this.networkClient.Networks.ValidateMigration(virtualNetworkName);
+        }
+
         public OperationStatusResponse PrepareVnetMigration(string virtualNetworkName)
         {
             return this.networkClient.Networks.PrepareMigration(virtualNetworkName);
