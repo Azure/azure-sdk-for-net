@@ -33,15 +33,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class XrpMigrationValidateDeploymentResponse : AzureOperationResponse, IEnumerable<XrpMigrationValidateDeploymentMessage>
     {
-        private IList<XrpMigrationValidateDeploymentMessage> _validateStorageMessages;
+        private IList<XrpMigrationValidateDeploymentMessage> _validateDeploymentMessages;
         
         /// <summary>
         /// Optional. Validation messages for the deployment to be migrated.
         /// </summary>
-        public IList<XrpMigrationValidateDeploymentMessage> ValidateStorageMessages
+        public IList<XrpMigrationValidateDeploymentMessage> ValidateDeploymentMessages
         {
-            get { return this._validateStorageMessages; }
-            set { this._validateStorageMessages = value; }
+            get { return this._validateDeploymentMessages; }
+            set { this._validateDeploymentMessages = value; }
         }
         
         /// <summary>
@@ -50,19 +50,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public XrpMigrationValidateDeploymentResponse()
         {
-            this.ValidateStorageMessages = new LazyList<XrpMigrationValidateDeploymentMessage>();
+            this.ValidateDeploymentMessages = new LazyList<XrpMigrationValidateDeploymentMessage>();
         }
         
         /// <summary>
-        /// Gets the sequence of ValidateStorageMessages.
+        /// Gets the sequence of ValidateDeploymentMessages.
         /// </summary>
         public IEnumerator<XrpMigrationValidateDeploymentMessage> GetEnumerator()
         {
-            return this.ValidateStorageMessages.GetEnumerator();
+            return this.ValidateDeploymentMessages.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of ValidateStorageMessages.
+        /// Gets the sequence of ValidateDeploymentMessages.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
