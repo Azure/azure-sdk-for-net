@@ -1390,8 +1390,8 @@ namespace Networks.Tests
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
                 Assert.Equal(0, getListNicResponse.Count());
 
-                // Delete NSG
-                networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
+                // Delete routetable
+                networkManagementClient.RouteTables.Delete(resourceGroupName, routeTableName);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
