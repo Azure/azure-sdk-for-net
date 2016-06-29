@@ -12818,7 +12818,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             foreach (XElement validationMessagesElement in validationMessagesSequenceElement.Elements(XName.Get("ValidationMessage", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 XrpMigrationValidateDeploymentMessage validationMessageInstance = new XrpMigrationValidateDeploymentMessage();
-                                result.ValidateStorageMessages.Add(validationMessageInstance);
+                                result.ValidateDeploymentMessages.Add(validationMessageInstance);
                                 
                                 XElement resourceTypeElement = validationMessagesElement.Element(XName.Get("ResourceType", "http://schemas.microsoft.com/windowsazure"));
                                 if (resourceTypeElement != null)
