@@ -536,5 +536,47 @@ namespace Microsoft.WindowsAzure.Management.Network
         {
             return operations.SetConfigurationAsync(parameters, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Prepare Virtual Network migration api validates the given virtual
+        /// network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// Required. Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Virtual Network Migration operation response.
+        /// </returns>
+        public static XrpMigrationValidateVirtualNetworkResponse ValidateMigration(this INetworkOperations operations, string virtualNetworkName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INetworkOperations)s).ValidateMigrationAsync(virtualNetworkName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Prepare Virtual Network migration api validates the given virtual
+        /// network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// Required. Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Virtual Network Migration operation response.
+        /// </returns>
+        public static Task<XrpMigrationValidateVirtualNetworkResponse> ValidateMigrationAsync(this INetworkOperations operations, string virtualNetworkName)
+        {
+            return operations.ValidateMigrationAsync(virtualNetworkName, CancellationToken.None);
+        }
     }
 }

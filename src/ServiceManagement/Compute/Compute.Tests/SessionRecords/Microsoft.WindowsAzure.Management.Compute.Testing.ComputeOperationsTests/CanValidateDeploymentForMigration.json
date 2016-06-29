@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/f3dc4aaa-f836-4cef-91af-8764f035bfa9/services/hostedservices/azsmnet4064/deployments/azsmnet5683/migration?comp=validate",
+      "EncodedRequestUri": "L2YzZGM0YWFhLWY4MzYtNGNlZi05MWFmLTg3NjRmMDM1YmZhOS9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0NDA2NC9kZXBsb3ltZW50cy9henNtbmV0NTY4My9taWdyYXRpb24/Y29tcD12YWxpZGF0ZQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "<DeploymentNetworkResource xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ResourceGroupName></ResourceGroupName>\r\n  <VirtualNetworkName></VirtualNetworkName>\r\n  <SubNetName></SubNetName>\r\n  <DestinationVirtualNetwork>New</DestinationVirtualNetwork>\r\n</DeploymentNetworkResource>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "286"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ValidationMessages xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ValidationMessage>\r\n    <ResourceType>Deployment</ResourceType>\r\n    <ResourceName>azsmnet5683</ResourceName>\r\n    <Category>Error</Category>\r\n    <Message>The deployment name 'azsmnet5683' does not exist.</Message>\r\n  </ValidationMessage>\r\n</ValidationMessages>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "355"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b964661dd647a3e9b94eda97cae902c5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 29 Jun 2016 19:21:45 GMT"
+        ],
+        "Server": [
+          "1.0.6198.397",
+          "(rd_rdfe_stable.160624-1024)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanValidateDeploymentForMigration": [
+      "azsmnet4064",
+      "azsmnet5683"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "f3dc4aaa-f836-4cef-91af-8764f035bfa9"
+  }
+}

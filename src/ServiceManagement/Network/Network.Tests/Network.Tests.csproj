@@ -93,6 +93,9 @@
     <None Include="SessionRecords\Network.Tests.Networks.VnetMigrationTests\MigrateSimpleVNetConfiguration.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Network.Tests.Networks.VnetMigrationTests\ValidateVNetForMigration.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\SimpleMigrationNetworkConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
