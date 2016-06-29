@@ -464,8 +464,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
 
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.NotNull(response.ValidateStorageMessages);
-                Assert.Equal(1, response.ValidateStorageMessages.Count);
+                Assert.NotNull(response.ValidateDeploymentMessages);
+                Assert.Equal(1, response.ValidateDeploymentMessages.Count);
+                Assert.Equal(string.Format("The deployment name '{0}' does not exist.", deploymentName), response.ValidateDeploymentMessages[0].Message);
             }
         }
 
