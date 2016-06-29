@@ -1449,5 +1449,192 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             return result;
         }
+        
+        /// <summary>
+        /// Prepare Virtual Network migration api validates the given virtual
+        /// network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// Required. Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Validate Virtual Network Migration operation response.
+        /// </returns>
+        public async Task<XrpMigrationValidateVirtualNetworkResponse> ValidateMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException("virtualNetworkName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                TracingAdapter.Enter(invocationId, this, "ValidateMigrationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetwork/";
+            url = url + Uri.EscapeDataString(virtualNetworkName);
+            url = url + "/migration";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=validate");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    XrpMigrationValidateVirtualNetworkResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new XrpMigrationValidateVirtualNetworkResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement validationMessagesSequenceElement = responseDoc.Element(XName.Get("ValidationMessages", "http://schemas.microsoft.com/windowsazure"));
+                        if (validationMessagesSequenceElement != null)
+                        {
+                            foreach (XElement validationMessagesElement in validationMessagesSequenceElement.Elements(XName.Get("ValidationMessage", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                XrpMigrationValidateVirtualNetworkMessage validationMessageInstance = new XrpMigrationValidateVirtualNetworkMessage();
+                                result.ValidateVirtualNetworkMessages.Add(validationMessageInstance);
+                                
+                                XElement resourceTypeElement = validationMessagesElement.Element(XName.Get("ResourceType", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceTypeElement != null)
+                                {
+                                    string resourceTypeInstance = resourceTypeElement.Value;
+                                    validationMessageInstance.ResourceType = resourceTypeInstance;
+                                }
+                                
+                                XElement resourceNameElement = validationMessagesElement.Element(XName.Get("ResourceName", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceNameElement != null)
+                                {
+                                    string resourceNameInstance = resourceNameElement.Value;
+                                    validationMessageInstance.ResourceName = resourceNameInstance;
+                                }
+                                
+                                XElement categoryElement = validationMessagesElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                                if (categoryElement != null)
+                                {
+                                    string categoryInstance = categoryElement.Value;
+                                    validationMessageInstance.Category = categoryInstance;
+                                }
+                                
+                                XElement messageElement = validationMessagesElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    validationMessageInstance.Message = messageInstance;
+                                }
+                                
+                                XElement virtualMachineElement = validationMessagesElement.Element(XName.Get("VirtualMachine", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachineElement != null)
+                                {
+                                    string virtualMachineInstance = virtualMachineElement.Value;
+                                    validationMessageInstance.VirtualMachineName = virtualMachineInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
     }
 }

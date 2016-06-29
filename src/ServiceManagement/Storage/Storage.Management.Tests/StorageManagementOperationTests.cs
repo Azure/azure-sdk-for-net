@@ -16,6 +16,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.WindowsAzure.Management.Storage;
@@ -129,6 +131,46 @@ namespace Microsoft.WindowsAzure.Management.Storage.Testing
 
                     Assert.True(!storage.StorageAccounts.List()
                                 .StorageAccounts.Any(s => s.Name == storageAccountName));
+                }
+                finally
+                {
+                    undoContext.Dispose();
+                    mgmt.Dispose();
+                    storage.Dispose();
+                    TestLogTracingInterceptor.Current.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void CanValidateStorageAccountForMigration()
+        {
+            TestLogTracingInterceptor.Current.Start();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var mgmt = TestBase.GetServiceClient<ManagementClient>();
+                var storage = TestBase.GetServiceClient<StorageManagementClient>();
+
+                try
+                {
+                    var location = mgmt.GetDefaultLocation("Storage");
+                    const string westUS = "West US";
+                    if (mgmt.Locations.List().Any(
+                        c => string.Equals(c.Name, westUS, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        location = westUS;
+                    }
+
+                    var storageAccountName = "foo";
+                    var response = storage.StorageAccounts.ValidateMigration(storageAccountName);
+
+                    Assert.NotNull(response);
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.NotNull(response.ValidateStorageMessages);
+                    Assert.Equal(1, response.ValidateStorageMessages.Count);
+                    Assert.Equal(string.Format("The storage account '{0}' was not found.", storageAccountName), response.ValidateStorageMessages[0].Message);
                 }
                 finally
                 {
