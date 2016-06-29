@@ -1,0 +1,65 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/ea841058-b4bc-4534-b5f0-f5eb5286de2f/resourceGroups/WIRunnersProd/providers/Microsoft.Sql/servers/wi-runner-australia-east/advisors/CreateIndex?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWE4NDEwNTgtYjRiYy00NTM0LWI1ZjAtZjVlYjUyODZkZTJmL3Jlc291cmNlR3JvdXBzL1dJUnVubmVyc1Byb2QvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy93aS1ydW5uZXItYXVzdHJhbGlhLWVhc3QvYWR2aXNvcnMvQ3JlYXRlSW5kZXg/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"autoExecuteStatus\": \"Disabled\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "65"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClientV2/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ea841058-b4bc-4534-b5f0-f5eb5286de2f/resourceGroups/WIRunnersProd/providers/Microsoft.Sql/servers/wi-runner-australia-east/advisors/CreateIndex\",\r\n  \"name\": \"CreateIndex\",\r\n  \"type\": \"Microsoft.Sql/servers/advisors\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"\",\r\n  \"properties\": {\r\n    \"advisorStatus\": \"GA\",\r\n    \"autoExecuteStatus\": \"Disabled\",\r\n    \"autoExecuteStatusInheritedFrom\": \"Database\",\r\n    \"recommendationsStatus\": \"Ok\",\r\n    \"lastChecked\": \"2016-06-23T03:57:09Z\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "375"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b211f2c5-c41f-4ef4-a54b-257f0aa75583"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "53d5d94e-3d00-4a70-b4d9-012a28f0c164"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20160623T111515Z:53d5d94e-3d00-4a70-b4d9-012a28f0c164"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 23 Jun 2016 11:15:15 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "ea841058-b4bc-4534-b5f0-f5eb5286de2f"
+  }
+}
