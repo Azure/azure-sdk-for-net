@@ -419,7 +419,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9532a63e-f2eb-4649-bb23-5ed01077ce80/resourceGroups/csmrg4235/providers/Microsoft.Network/virtualnetworks/azsmnet4236?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/9532a63e-f2eb-4649-bb23-5ed01077ce80/resourceGroups/csmrg4235/providers/Microsoft.Network/virtualNetworks/azsmnet4236?api-version=2016-06-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"azsmnet761\",\r\n        \"properties\": {\r\n          \"addressPrefix\": \"10.0.0.0/24\",\r\n          \"routeTable\": {\r\n            \"id\": \"/subscriptions/9532a63e-f2eb-4649-bb23-5ed01077ce80/resourceGroups/csmrg4235/providers/Microsoft.Network/routeTables/azsmnet293\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
@@ -542,7 +542,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9532a63e-f2eb-4649-bb23-5ed01077ce80/resourceGroups/csmrg4235/providers/Microsoft.Network/virtualnetworks/azsmnet4236?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/9532a63e-f2eb-4649-bb23-5ed01077ce80/resourceGroups/csmrg4235/providers/Microsoft.Network/virtualNetworks/azsmnet4236?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -599,7 +599,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9532a63e-f2eb-4649-bb23-5ed01077ce80/resourceGroups/csmrg4235/providers/Microsoft.Network/virtualnetworks/azsmnet4236/subnets/azsmnet761?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/9532a63e-f2eb-4649-bb23-5ed01077ce80/resourceGroups/csmrg4235/providers/Microsoft.Network/virtualNetworks/azsmnet4236/subnets/azsmnet761?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

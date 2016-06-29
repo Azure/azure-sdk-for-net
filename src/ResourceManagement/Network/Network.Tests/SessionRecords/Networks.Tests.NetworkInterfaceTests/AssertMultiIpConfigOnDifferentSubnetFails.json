@@ -115,7 +115,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a083c30e-d4e5-4dc1-b310-02aaf36b316a/resourceGroups/csmrg8122/providers/Microsoft.Network/virtualnetworks/azsmnet7657?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/a083c30e-d4e5-4dc1-b310-02aaf36b316a/resourceGroups/csmrg8122/providers/Microsoft.Network/virtualNetworks/azsmnet7657?api-version=2016-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTA4M2MzMGUtZDRlNS00ZGMxLWIzMTAtMDJhYWYzNmIzMTZhL3Jlc291cmNlR3JvdXBzL2NzbXJnODEyMi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdmlydHVhbG5ldHdvcmtzL2F6c21uZXQ3NjU3P2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"azsmnet8249\",\r\n        \"properties\": {\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"azsmnet2177\",\r\n        \"properties\": {\r\n          \"addressPrefix\": \"10.0.1.0/24\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -240,7 +240,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a083c30e-d4e5-4dc1-b310-02aaf36b316a/resourceGroups/csmrg8122/providers/Microsoft.Network/virtualnetworks/azsmnet7657?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/a083c30e-d4e5-4dc1-b310-02aaf36b316a/resourceGroups/csmrg8122/providers/Microsoft.Network/virtualNetworks/azsmnet7657?api-version=2016-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTA4M2MzMGUtZDRlNS00ZGMxLWIzMTAtMDJhYWYzNmIzMTZhL3Jlc291cmNlR3JvdXBzL2NzbXJnODEyMi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdmlydHVhbG5ldHdvcmtzL2F6c21uZXQ3NjU3P2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -298,7 +298,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a083c30e-d4e5-4dc1-b310-02aaf36b316a/resourceGroups/csmrg8122/providers/Microsoft.Network/virtualnetworks/azsmnet7657/subnets/azsmnet8249?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/a083c30e-d4e5-4dc1-b310-02aaf36b316a/resourceGroups/csmrg8122/providers/Microsoft.Network/virtualNetworks/azsmnet7657/subnets/azsmnet8249?api-version=2016-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTA4M2MzMGUtZDRlNS00ZGMxLWIzMTAtMDJhYWYzNmIzMTZhL3Jlc291cmNlR3JvdXBzL2NzbXJnODEyMi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdmlydHVhbG5ldHdvcmtzL2F6c21uZXQ3NjU3L3N1Ym5ldHMvYXpzbW5ldDgyNDk/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -362,7 +362,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a083c30e-d4e5-4dc1-b310-02aaf36b316a/resourceGroups/csmrg8122/providers/Microsoft.Network/virtualnetworks/azsmnet7657/subnets/azsmnet2177?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/a083c30e-d4e5-4dc1-b310-02aaf36b316a/resourceGroups/csmrg8122/providers/Microsoft.Network/virtualNetworks/azsmnet7657/subnets/azsmnet2177?api-version=2016-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTA4M2MzMGUtZDRlNS00ZGMxLWIzMTAtMDJhYWYzNmIzMTZhL3Jlc291cmNlR3JvdXBzL2NzbXJnODEyMi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvdmlydHVhbG5ldHdvcmtzL2F6c21uZXQ3NjU3L3N1Ym5ldHMvYXpzbW5ldDIxNzc/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
