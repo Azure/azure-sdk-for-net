@@ -581,7 +581,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworks/azsmnet8152?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworks/azsmnet8152?api-version=2016-06-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"GatewaySubnet\",\r\n        \"properties\": {\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
@@ -752,7 +752,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworks/azsmnet8152?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworks/azsmnet8152?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -806,7 +806,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworks/azsmnet8152?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworks/azsmnet8152?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -866,7 +866,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworks/azsmnet8152/subnets/GatewaySubnet?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworks/azsmnet8152/subnets/GatewaySubnet?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -926,7 +926,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworkgateways/azsmnet4830?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworkGateways/azsmnet4830?api-version=2016-06-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"azsmnet6576\",\r\n        \"properties\": {\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworks/azsmnet8152/subnets/GatewaySubnet\"\r\n          },\r\n          \"publicIPAddress\": {\r\n            \"id\": \"/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/publicIPAddresses/azsmnet7350\"\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"gatewayType\": \"Vpn\",\r\n    \"vpnType\": \"RouteBased\",\r\n    \"enableBgp\": false,\r\n    \"gatewayDefaultSite\": {\r\n      \"id\": \"/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/localNetworkGateways/azsmnet3822\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -995,7 +995,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworkgateways/azsmnet4830?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworkGateways/azsmnet4830?api-version=2016-06-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"etag\": \"W/\\\"9d6086d8-0a89-4464-bddd-e24d11773f63\\\"\",\r\n  \"id\": \"/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworkGateways/azsmnet4830\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"azsmnet6576\",\r\n        \"etag\": \"W/\\\"9d6086d8-0a89-4464-bddd-e24d11773f63\\\"\",\r\n        \"id\": \"/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworkGateways/azsmnet4830/ipConfigurations/azsmnet6576\",\r\n        \"properties\": {\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworks/azsmnet8152/subnets/GatewaySubnet\"\r\n          },\r\n          \"publicIPAddress\": {\r\n            \"id\": \"/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/publicIPAddresses/azsmnet7350\"\r\n          },\r\n          \"provisioningState\": \"Succeeded\"\r\n        }\r\n      }\r\n    ],\r\n    \"gatewayType\": \"Vpn\",\r\n    \"vpnType\": \"RouteBased\",\r\n    \"enableBgp\": false,\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"tier\": \"Basic\"\r\n    },\r\n    \"vpnClientConfiguration\": {\r\n      \"vpnClientRootCertificates\": [],\r\n      \"vpnClientRevokedCertificates\": []\r\n    },\r\n    \"resourceGuid\": \"5d2295b2-4708-43ff-bf9d-4a2ac1dfe04c\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -3818,7 +3818,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworkgateways/azsmnet4830?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworkGateways/azsmnet4830?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3869,7 +3869,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworkgateways/azsmnet4830?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworkGateways/azsmnet4830?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3926,7 +3926,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworkgateways/azsmnet4830?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworkGateways/azsmnet4830?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -3977,7 +3977,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualnetworkgateways/azsmnet4830?api-version=2016-06-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/resourceGroups/csmrg7047/providers/Microsoft.Network/virtualNetworkGateways/azsmnet4830?api-version=2016-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
