@@ -38,7 +38,7 @@
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",
     "Microsoft.Azure.Management.Storage": "4.1.0-preview",
     "Microsoft.Azure.Management.Compute": "[13.0.3-prerelease,14.0.0)",
-    "Microsoft.Azure.Management.Network": "[4.5.1-preview,5.0.0)",
+    "Microsoft.Azure.Management.Network": "[5.0.0,6.0.0)",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   },
