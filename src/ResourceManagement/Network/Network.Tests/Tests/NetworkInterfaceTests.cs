@@ -988,5 +988,414 @@ namespace Networks.Tests
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
             }
         }
+
+        [Fact]
+        public void NetworkInterfaceNetworkSecurityGroupTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                // Create Vnet
+                // Populate parameter for Put Vnet
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = TestUtilities.GenerateName();
+                string networkSecurityGroupName = TestUtilities.GenerateName();
+                string securityRule1 = TestUtilities.GenerateName();
+                string securityRule2 = TestUtilities.GenerateName();
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                    {
+                        "10.0.0.0/16",
+                    }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                    {
+                        "10.1.1.1",
+                        "10.1.2.4"
+                    }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.0.0/24",
+                        }
+                    }
+                };
+
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+
+                // Create network security group
+                string destinationPortRange = "123-3500";
+                var networkSecurityGroup = new NetworkSecurityGroup()
+                {
+                    Location = location,
+                    SecurityRules = new List<SecurityRule>()
+                                    {
+                                        new SecurityRule()
+                                            {
+                                                Name = securityRule1,
+                                                Access = SecurityRuleAccess.Allow,
+                                                Description = "Test security rule",
+                                                DestinationAddressPrefix = "*",
+                                                DestinationPortRange = destinationPortRange,
+                                                Direction = SecurityRuleDirection.Inbound,
+                                                Priority = 500,
+                                                Protocol = SecurityRuleProtocol.Tcp,
+                                                SourceAddressPrefix = "*",
+                                                SourcePortRange = "655"
+                                            }
+                                    }
+                };
+
+                // Put Nsg
+                var putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
+                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
+
+                // Create Nic
+                string nicName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+
+                var nicParameters = new NetworkInterface()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                        {
+                           {"key","value"}
+                        },
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                    {
+                        new NetworkInterfaceIPConfiguration()
+                        {
+                             Name = ipConfigName,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             Subnet = new Subnet()
+                             {
+                                 Id = putVnetResponse.Subnets[0].Id
+                             }
+                        }
+                    },
+                    NetworkSecurityGroup = putNsgResponse
+                };
+
+                // Test NIC apis
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+
+                var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
+                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+
+                var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
+
+                // Verify nic - nsg association
+                Assert.Equal(getNicResponse.NetworkSecurityGroup.Id, getNsgResponse.Id);
+                Assert.Equal(getNsgResponse.NetworkInterfaces[0].Id, getNicResponse.Id);
+
+                // Delete Nic
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+
+                var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
+                Assert.Equal(0, getListNicResponse.Count());
+
+                // Delete NSG
+                networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
+
+                // Delete VirtualNetwork
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+            }
+        }
+
+        [Fact(Skip = "Need server side feature registration for subscriptions")]
+        public void NetworkInterfaceEffectiveNetworkSecurityGroupTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                // Create Vnet
+                // Populate parameter for Put Vnet
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = TestUtilities.GenerateName();
+                string networkSecurityGroupName = TestUtilities.GenerateName();
+                string securityRule1 = TestUtilities.GenerateName();
+                string securityRule2 = TestUtilities.GenerateName();
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                    {
+                        "10.0.0.0/16",
+                    }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                    {
+                        "10.1.1.1",
+                        "10.1.2.4"
+                    }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.0.0/24",
+                        }
+                    }
+                };
+
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+
+                // Create network security group
+                string destinationPortRange = "123-3500";
+                var networkSecurityGroup = new NetworkSecurityGroup()
+                {
+                    Location = location,
+                    SecurityRules = new List<SecurityRule>()
+                                    {
+                                        new SecurityRule()
+                                            {
+                                                Name = securityRule1,
+                                                Access = SecurityRuleAccess.Allow,
+                                                Description = "Test security rule",
+                                                DestinationAddressPrefix = "*",
+                                                DestinationPortRange = destinationPortRange,
+                                                Direction = SecurityRuleDirection.Inbound,
+                                                Priority = 500,
+                                                Protocol = SecurityRuleProtocol.Tcp,
+                                                SourceAddressPrefix = "*",
+                                                SourcePortRange = "655"
+                                            }
+                                    }
+                };
+
+                // Put Nsg
+                var putNsgResponse = networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
+                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
+
+                // Create Nic
+                string nicName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+
+                var nicParameters = new NetworkInterface()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                        {
+                           {"key","value"}
+                        },
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                    {
+                        new NetworkInterfaceIPConfiguration()
+                        {
+                             Name = ipConfigName,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             Subnet = new Subnet()
+                             {
+                                 Id = putVnetResponse.Subnets[0].Id
+                             }
+                        }
+                    },
+                    NetworkSecurityGroup = putNsgResponse
+                };
+
+                // Test NIC apis
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+
+                var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
+                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+
+                var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
+
+                // Verify nic - nsg association
+                Assert.Equal(getNicResponse.NetworkSecurityGroup.Id, getNsgResponse.Id);
+                Assert.Equal(getNsgResponse.NetworkInterfaces[0].Id, getNicResponse.Id);
+
+                // Get effective NSGs
+                var effectiveNsgs = networkManagementClient.NetworkInterfaces.ListEffectiveNetworkSecurityGroups(resourceGroupName, nicName);
+                Assert.NotNull(effectiveNsgs);
+
+                // Delete Nic
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+
+                var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
+                Assert.Equal(0, getListNicResponse.Count());
+
+                // Delete NSG
+                networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
+
+                // Delete VirtualNetwork
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+            }
+        }
+
+        [Fact(Skip = "Need server side feature registration for subscriptions")]
+        public void NetworkInterfaceEffectiveRouteTableTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                // Create Vnet
+                // Populate parameter for Put Vnet
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = TestUtilities.GenerateName();
+                string routeTableName = TestUtilities.GenerateName();
+                string route1Name = TestUtilities.GenerateName();
+
+                var routeTable = new RouteTable() { Location = location, };
+                routeTable.Routes = new List<Route>();
+
+                var route1 = new Route()
+                {
+                    AddressPrefix = "192.168.1.0/24",
+                    Name = route1Name,
+                    NextHopIpAddress = "23.108.1.1",
+                    NextHopType = RouteNextHopType.VirtualAppliance
+                };
+
+                routeTable.Routes.Add(route1);
+
+                // Put RouteTable
+                var putRouteTableResponse = networkManagementClient.RouteTables.CreateOrUpdate(resourceGroupName, routeTableName, routeTable);
+
+                Assert.Equal("Succeeded", putRouteTableResponse.ProvisioningState);
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                    {
+                        "10.0.0.0/16",
+                    }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                    {
+                        "10.1.1.1",
+                        "10.1.2.4"
+                    }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.0.0/24",
+                            RouteTable = putRouteTableResponse
+                        }
+                    }
+                };
+
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+
+                // Create Nic
+                string nicName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+
+                var nicParameters = new NetworkInterface()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                        {
+                           {"key","value"}
+                        },
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                    {
+                        new NetworkInterfaceIPConfiguration()
+                        {
+                             Name = ipConfigName,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             Subnet = new Subnet()
+                             {
+                                 Id = putVnetResponse.Subnets[0].Id
+                             }
+                        }
+                    }
+                };
+
+                // Test NIC apis
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+
+                var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
+                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+
+                // Get effective NSGs
+                var effectiveRouteTable = networkManagementClient.NetworkInterfaces.GetEffectiveRouteTable(resourceGroupName, nicName);
+                Assert.NotNull(effectiveRouteTable);
+
+                // Delete Nic
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+
+                var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
+                Assert.Equal(0, getListNicResponse.Count());
+
+                // Delete routetable
+                networkManagementClient.RouteTables.Delete(resourceGroupName, routeTableName);
+
+                // Delete VirtualNetwork
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+            }
+        }
     }
 }

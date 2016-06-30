@@ -27,7 +27,7 @@
   "dependencies": {
     "Microsoft.NETCore.App": { 
       "type": "platform", 
-      "version": "1.0.0-rc2-*" 
+      "version": "1.0.0" 
     }, 
     "Search.Management.Tests": "1.0.0",
     "Microsoft.Azure.Search": "3.0.0-preview",

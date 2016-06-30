@@ -1,11 +1,11 @@
 {
-  "version": "0.12.2-preview",
+  "version": "0.12.3-preview",
   "description": "Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
     "summary": "Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.",
-    "iconUrl": "https://cdn.rawgit.com/Azure/AutoRest/7c1576dfb56974176223545cfac5762d168ded5f/Documentation/images/autorest-small-flat.png",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Data Lake Store management", "DataLakeStore", "Data Lake Store management", "REST HTTP client", "windowsazureofficial" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
@@ -31,21 +31,20 @@
       "imports": ["dnxcore50"],
       "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027",
-        "Microsoft.NETCore.Runtime": "1.0.2-rc2-24027",
-        "System.Diagnostics.Tools": "4.0.1-rc2-24027",
-        "System.Net.Http": "4.0.1-rc2-24027",
-        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
-        "System.Threading.Tasks": "4.0.11-rc2-24027",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Net.Http": "4.1.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Threading.Tasks": "4.0.11",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
       }
     },
     "netstandard1.1": {
       "imports": [ "dnxcore50" ],
       "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
       }
     }
   }
