@@ -301,6 +301,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='streamContents'>
         /// The file contents to include when appending to the file.
         /// </param>
+        /// <param name='offset'>
+        /// The optional offset in the stream to begin the append operation.
+        /// Default is to append at the end of the stream.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -313,7 +317,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a file with optionally specified content.
         /// </summary>

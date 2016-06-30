@@ -277,6 +277,28 @@ namespace DataLakeStore.Tests
             }
         }
 
+        [Fact]
+        public void DataLakeStoreFileSystemAppendToFileWithOffset()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAdd.Length);
+
+                    // Append to the file that we created, but starting at the beginning of the file, which should wipe out the data.
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.Append(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)), 0);
+
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
+                        fileContentsToAdd.Length);
+                }
+            }
+        }
+
         //[Fact]
         public void DataLakeStoreFileSystemConcurrentAppendToFile()
         {
