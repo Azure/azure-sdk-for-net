@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the LUN number for a data disk.This value is used to identify
-        /// data disk image inside the VMImage therefore it must be unique
-        /// for each data disk.The allowed character for the value is digit.
+        /// the LUN number for a data disk.This value is used to identify data
+        /// disk image inside the VMImage therefore it must be unique for
+        /// each data disk.The allowed character for the value is digit.
         /// </summary>
         [JsonProperty(PropertyName = "lun")]
         public int? Lun { get; private set; }

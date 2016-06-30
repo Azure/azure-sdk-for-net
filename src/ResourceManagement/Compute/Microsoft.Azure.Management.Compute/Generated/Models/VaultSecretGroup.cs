@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the Relative URL of the Key Vault containing all of
-        /// the certificates in VaultCertificates.
+        /// the Relative URL of the Key Vault containing all of the
+        /// certificates in VaultCertificates.
         /// </summary>
         [JsonProperty(PropertyName = "sourceVault")]
         public SubResource SourceVault { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of key vault references in SourceVault which
-        /// contain certificates
+        /// the list of key vault references in SourceVault which contain
+        /// certificates
         /// </summary>
         [JsonProperty(PropertyName = "vaultCertificates")]
         public IList<VaultCertificate> VaultCertificates { get; set; }

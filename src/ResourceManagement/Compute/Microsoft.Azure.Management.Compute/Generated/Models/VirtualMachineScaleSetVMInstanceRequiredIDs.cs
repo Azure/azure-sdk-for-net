@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </summary>
         [JsonProperty(PropertyName = "instanceIds")]
         public IList<string> InstanceIds { get; set; }

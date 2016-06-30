@@ -38,19 +38,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the publisher ID.
+        /// the publisher ID.
         /// </summary>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets the plan ID.
+        /// the plan ID.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the product ID.
+        /// the product ID.
         /// </summary>
         [JsonProperty(PropertyName = "product")]
         public string Product { get; set; }

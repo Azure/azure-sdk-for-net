@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the extension name.
+        /// the extension name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the extensions information.
+        /// the extensions information.
         /// </summary>
         [JsonProperty(PropertyName = "statusesSummary")]
         public IList<VirtualMachineStatusCodeCount> StatusesSummary { get; private set; }

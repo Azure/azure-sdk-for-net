@@ -44,25 +44,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the current value of the usage.
+        /// the current value of the usage.
         /// </summary>
         [JsonProperty(PropertyName = "currentValue")]
         public int CurrentValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the limit of usage.
+        /// the limit of usage.
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
         public long Limit { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the type of usage.
+        /// the name of the type of usage.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public UsageName Name { get; set; }
 
         /// <summary>
-        /// Gets or sets an enum describing the unit of measurement.
+        /// an enum describing the unit of measurement.
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public static string Unit { get; private set; }
