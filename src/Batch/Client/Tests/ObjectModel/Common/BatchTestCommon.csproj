@@ -12,7 +12,7 @@
     <AutoRestProjects>true</AutoRestProjects>
     <TestProject>true</TestProject>
   </PropertyGroup>
-  <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\..\..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>

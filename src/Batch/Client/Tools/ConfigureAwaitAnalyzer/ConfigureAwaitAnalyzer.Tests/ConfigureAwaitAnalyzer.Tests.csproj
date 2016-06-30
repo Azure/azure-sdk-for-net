@@ -19,7 +19,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
     <DocumentationFile>bin\Net45-Debug\ConfigureAwaitAnalyzer.Tests.xml</DocumentationFile>
   </PropertyGroup>
-  <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\..\..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
   <ItemGroup>

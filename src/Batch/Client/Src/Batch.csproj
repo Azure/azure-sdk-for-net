@@ -12,7 +12,7 @@
     <DocumentationFile>$(ProjectDir)$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <AutoRestProjects>true</AutoRestProjects>
   </PropertyGroup>
-  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Analyzer Include="..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\$(OutputPath)\ConfigureAwaitAnalyzer.dll" />
   </ItemGroup>

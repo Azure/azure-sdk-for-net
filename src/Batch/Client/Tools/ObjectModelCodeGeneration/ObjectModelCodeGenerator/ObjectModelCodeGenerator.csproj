@@ -13,7 +13,7 @@
     <AutoRestProjects>true</AutoRestProjects>
     <TestProject>true</TestProject>
   </PropertyGroup>
-  <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\..\..\..\..\..\tools\Library.Settings.targets" />
   <PropertyGroup>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>

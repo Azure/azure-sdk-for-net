@@ -14,7 +14,7 @@
     <AutoRestProjects>true</AutoRestProjects>
     <TestProject>true</TestProject>
   </PropertyGroup>
-  <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\..\..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Analyzer Include="$(LibraryNugetPackageFolder)\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="$(LibraryNugetPackageFolder)\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
