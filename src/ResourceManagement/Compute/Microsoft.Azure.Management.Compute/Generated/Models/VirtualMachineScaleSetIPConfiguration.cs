@@ -44,31 +44,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the IP configuration name.
+        /// the IP configuration name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the subnet.
+        /// the subnet.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public ApiEntityReference Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets the application gateway backend address pools.
+        /// the application gateway backend address pools.
         /// </summary>
         [JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
         public IList<SubResource> ApplicationGatewayBackendAddressPools { get; set; }
 
         /// <summary>
-        /// Gets or sets the load balancer backend address pools.
+        /// the load balancer backend address pools.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
         public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
-        /// Gets or sets the load balancer inbound nat pools.
+        /// the load balancer inbound nat pools.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerInboundNatPools")]
         public IList<SubResource> LoadBalancerInboundNatPools { get; set; }

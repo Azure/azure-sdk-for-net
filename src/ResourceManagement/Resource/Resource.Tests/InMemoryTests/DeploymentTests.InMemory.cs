@@ -656,6 +656,23 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void DeploymentTestsWithoutModeThrowsExceptions()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = GetResourceManagementClient(handler);
+
+            var deployment = new Deployment
+            {
+                Properties = new DeploymentProperties
+                {
+                    Template = "{foo:1}",
+                    Parameters = "{bar:1}"
+                }
+            };
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Deployments.CreateOrUpdate("foo", "bar", deployment));
+        }
+
+        [Fact]
         public void DeploymentTestsGetValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)

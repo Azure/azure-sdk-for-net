@@ -38,15 +38,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets whether VM Diagnostic Agent should be provisioned on
-        /// the Virtual Machine.
+        /// whether VM Diagnostic Agent should be provisioned on the Virtual
+        /// Machine.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets whether VM Diagnostic Agent should be provisioned on
-        /// the Virtual Machine.
+        /// whether VM Diagnostic Agent should be provisioned on the Virtual
+        /// Machine.
         /// </summary>
         [JsonProperty(PropertyName = "storageUri")]
         public string StorageUri { get; private set; }

@@ -67,13 +67,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
         }
 
-        public void DeleteStream(string streamPath, bool recurse = false)
+        public void DeleteStream(string streamPath, bool recurse = false, bool isDownload = false)
         {
-            if (!StreamExists(streamPath))
+            if (isDownload)
             {
-                throw new Exception("stream does not exist");
+                File.Delete(streamPath);
             }
-            _streams.Remove(streamPath);
+            else
+            {
+                if (!StreamExists(streamPath, isDownload))
+                {
+                    throw new Exception("stream does not exist");
+                }
+                _streams.Remove(streamPath);
+            }
         }
 
         public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
@@ -101,13 +108,40 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             stream.Append(toAppend);
         }
 
-        public bool StreamExists(string streamPath)
+        public bool StreamExists(string streamPath, bool isDownload = false)
         {
-            return _streams.ContainsKey(streamPath);
+            if (isDownload)
+            {
+                return File.Exists(streamPath) || Directory.Exists(streamPath);
+            }
+            else
+            {
+                bool result = _streams.ContainsKey(streamPath);
+                if(!result)
+                {
+                    // check to see if it is a folder by splitting on "/"
+                    // because we only support (currently) one level of folders
+                    // we will check the first index and if we find the folder return true.
+                    foreach(var entry in _streams.Keys)
+                    {
+                        if (entry.Split('/')[0].Equals(streamPath, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return result;
+            }
         }
 
-        public long GetStreamLength(string streamPath)
+        public long GetStreamLength(string streamPath, bool isDownload = false)
         {
+            if(isDownload)
+            {
+                return new FileInfo(streamPath).Length;
+            }
+
             if (!StreamExists(streamPath))
             {
                 throw new Exception("stream does not exist");
@@ -116,50 +150,110 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             return _streams[streamPath].Length;            
         }
 
-        public void Concatenate(string targetStreamPath, string[] inputStreamPaths)
+        public void Concatenate(string targetStreamPath, string[] inputStreamPaths, bool isDownload = false)
         {
-            if (StreamExists(targetStreamPath))
+            if (isDownload)
             {
-                throw new Exception("target stream exists");
-            }
-
-            const int bufferSize = 4 * 1024 * 1024;
-            byte[] buffer = new byte[bufferSize];
-
-            try
-            {
-                CreateStream(targetStreamPath, true, null, 0);
-                var targetStream = _streams[targetStreamPath];
-
-                foreach (var inputStreamPath in inputStreamPaths)
+                using (var targetStream = new FileStream(targetStreamPath, FileMode.CreateNew))
                 {
-                    if (!StreamExists(inputStreamPath))
+                    foreach (var inputPath in inputStreamPaths)
                     {
-                        throw new Exception("input stream does not exist");
-                    }
-
-                    var stream = _streams[inputStreamPath];
-                    foreach (var chunk in stream.GetDataChunks())
-                    {
-                        targetStream.Append(chunk);
+                        using (var inputStream = File.OpenRead(inputPath))
+                        {
+                            inputStream.CopyTo(targetStream);
+                        }
                     }
                 }
+
+                // clean up all the files only in the event of success.
+                foreach (var inputPath in inputStreamPaths)
+                {
+                    File.Delete(inputPath);
+                }
             }
-            catch
+            else
             {
                 if (StreamExists(targetStreamPath))
                 {
-                    DeleteStream(targetStreamPath);
+                    throw new Exception("target stream exists");
                 }
-                throw;
-            }
 
-            foreach (var inputStreamPath in inputStreamPaths)
-            {
-                DeleteStream(inputStreamPath);
+                const int bufferSize = 4 * 1024 * 1024;
+                byte[] buffer = new byte[bufferSize];
+
+                try
+                {
+                    CreateStream(targetStreamPath, true, null, 0);
+                    var targetStream = _streams[targetStreamPath];
+
+                    foreach (var inputStreamPath in inputStreamPaths)
+                    {
+                        if (!StreamExists(inputStreamPath))
+                        {
+                            throw new Exception("input stream does not exist");
+                        }
+
+                        var stream = _streams[inputStreamPath];
+                        foreach (var chunk in stream.GetDataChunks())
+                        {
+                            targetStream.Append(chunk);
+                        }
+                    }
+                }
+                catch
+                {
+                    if (StreamExists(targetStreamPath))
+                    {
+                        DeleteStream(targetStreamPath);
+                    }
+                    throw;
+                }
+
+                foreach (var inputStreamPath in inputStreamPaths)
+                {
+                    DeleteStream(inputStreamPath);
+                }
             }
         }
 
+        public Stream ReadStream(string streamPath, long offset, long length, bool isDownload = false)
+        {
+            if (!isDownload)
+            {
+                // note that length is not used here since we will automatically stop reading once we reach the end of the stream.
+                var stream = new FileStream(streamPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+                if (offset >= stream.Length)
+                {
+                    throw new ArgumentException("StartOffset is beyond the end of the input file", "StartOffset");
+                }
+
+                stream.Seek(offset, SeekOrigin.Begin);
+                return stream;
+            }
+            else
+            {
+                if (!StreamExists(streamPath))
+                {
+                    throw new Exception("stream does not exist");
+                }
+                
+                if(offset > _streams[streamPath].Length || offset + length > _streams[streamPath].Length)
+                {
+                    throw new Exception(string.Format("Offset: {0} and Length: {1} results in going out of bounds of the current stream of length: {2}", offset, length, _streams[streamPath].Length));
+                }
+
+                var bytes = new List<byte>();
+                foreach(var chunk in _streams[streamPath].GetDataChunks())
+                {
+                    bytes.AddRange(chunk);
+                }
+
+                return new MemoryStream(bytes.ToArray(), (int)offset, (int)length);
+            }
+        }
+
+        #region helper methods
         public IEnumerable<byte[]> GetAppendBlocks(string streamPath)
         {
             if (!StreamExists(streamPath))
@@ -171,11 +265,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             return sd.GetDataChunks();
         }
 
-        public byte[] GetStreamContents(string streamPath)
+        public byte[] GetStreamContents(string streamPath, bool isDownload = false)
         {
-            if (!StreamExists(streamPath))
+            if (!StreamExists(streamPath, isDownload))
             {
                 throw new Exception("stream does not exist");
+            }
+
+            if(isDownload)
+            {
+                return File.ReadAllBytes(streamPath);
             }
 
             var sd = _streams[streamPath];
@@ -196,10 +295,32 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             return result;
         }
 
+        public bool IsDirectory(string streamPath)
+        {
+            // no directory download tests by default.
+            // if running directory download tests this
+            // needs to be overwritten by the mock.
+            return false;
+        }
+
+        public IDictionary<string, long> ListDirectory(string directoryPath, bool recursive)
+        {
+            // TODO: support recursive tests.
+            var toReturn = new Dictionary<string, long>();
+            foreach (var entry in _streams)
+            {
+                toReturn.Add(entry.Key, entry.Value.Length);
+            }
+
+            return toReturn;
+        }
+
         public int StreamCount
         {
             get { return _streams.Count; }
         }
+
+        #endregion
 
         private class StreamData
         {
