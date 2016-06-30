@@ -1,3 +1,3 @@
 {
-  "projects": [ "../TestFramework", "Microsoft.Azure.Search", "Search.Management.Tests", "Search.Tests" ]
+  "projects": [ "Microsoft.Azure.Search", "Microsoft.Azure.Management.Search", "Search.Management.Tests", "Search.Tests" ]
 }
