@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class JobProperties : JobPropertiesBase
     {
+        private Guid _jobScheduleId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of job schedule.
+        /// </summary>
+        public Guid JobScheduleId
+        {
+            get { return this._jobScheduleId; }
+            set { this._jobScheduleId = value; }
+        }
+        
         private RunbookAssociationProperty _runbook;
         
         /// <summary>
@@ -51,6 +62,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._runOn; }
             set { this._runOn = value; }
+        }
+        
+        private ScheduleAssociationProperty _schedule;
+        
+        /// <summary>
+        /// Optional. Gets or sets the schedule.
+        /// </summary>
+        public ScheduleAssociationProperty Schedule
+        {
+            get { return this._schedule; }
+            set { this._schedule = value; }
         }
         
         private string _startedBy;

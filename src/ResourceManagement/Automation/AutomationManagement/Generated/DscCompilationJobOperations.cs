@@ -210,6 +210,11 @@ namespace Microsoft.Azure.Management.Automation
                     }
                 }
                 
+                if (parameters.Properties.RunOn != null)
+                {
+                    propertiesValue["runOn"] = parameters.Properties.RunOn;
+                }
+                
                 if (parameters.Name != null)
                 {
                     dscCompilationJobCreateParametersValue["name"] = parameters.Name;
@@ -313,6 +318,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     string startedByInstance = ((string)startedByValue);
                                     propertiesInstance.StartedBy = startedByInstance;
+                                }
+                                
+                                JToken runOnValue = propertiesValue2["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                                 
                                 JToken jobIdValue = propertiesValue2["jobId"];
@@ -597,6 +609,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     string startedByInstance = ((string)startedByValue);
                                     propertiesInstance.StartedBy = startedByInstance;
+                                }
+                                
+                                JToken runOnValue = propertiesValue["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                                 
                                 JToken jobIdValue = propertiesValue["jobId"];
@@ -1152,6 +1171,13 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.StartedBy = startedByInstance;
                                         }
                                         
+                                        JToken runOnValue = propertiesValue["runOn"];
+                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                        {
+                                            string runOnInstance = ((string)runOnValue);
+                                            propertiesInstance.RunOn = runOnInstance;
+                                        }
+                                        
                                         JToken jobIdValue = propertiesValue["jobId"];
                                         if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
                                         {
@@ -1411,6 +1437,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             string startedByInstance = ((string)startedByValue);
                                             propertiesInstance.StartedBy = startedByInstance;
+                                        }
+                                        
+                                        JToken runOnValue = propertiesValue["runOn"];
+                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                        {
+                                            string runOnInstance = ((string)runOnValue);
+                                            propertiesInstance.RunOn = runOnInstance;
                                         }
                                         
                                         JToken jobIdValue = propertiesValue["jobId"];

@@ -312,6 +312,27 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
+                                JToken scheduleValue = propertiesValue2["schedule"];
+                                if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                {
+                                    ScheduleAssociationProperty scheduleInstance = new ScheduleAssociationProperty();
+                                    propertiesInstance.Schedule = scheduleInstance;
+                                    
+                                    JToken nameValue2 = scheduleValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        scheduleInstance.Name = nameInstance2;
+                                    }
+                                }
+                                
+                                JToken jobScheduleIdValue = propertiesValue2["jobScheduleId"];
+                                if (jobScheduleIdValue != null && jobScheduleIdValue.Type != JTokenType.Null)
+                                {
+                                    Guid jobScheduleIdInstance = Guid.Parse(((string)jobScheduleIdValue));
+                                    propertiesInstance.JobScheduleId = jobScheduleIdInstance;
+                                }
+                                
                                 JToken startedByValue = propertiesValue2["startedBy"];
                                 if (startedByValue != null && startedByValue.Type != JTokenType.Null)
                                 {
@@ -600,6 +621,27 @@ namespace Microsoft.Azure.Management.Automation
                                         string nameInstance = ((string)nameValue);
                                         runbookInstance.Name = nameInstance;
                                     }
+                                }
+                                
+                                JToken scheduleValue = propertiesValue["schedule"];
+                                if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                {
+                                    ScheduleAssociationProperty scheduleInstance = new ScheduleAssociationProperty();
+                                    propertiesInstance.Schedule = scheduleInstance;
+                                    
+                                    JToken nameValue2 = scheduleValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        scheduleInstance.Name = nameInstance2;
+                                    }
+                                }
+                                
+                                JToken jobScheduleIdValue = propertiesValue["jobScheduleId"];
+                                if (jobScheduleIdValue != null && jobScheduleIdValue.Type != JTokenType.Null)
+                                {
+                                    Guid jobScheduleIdInstance = Guid.Parse(((string)jobScheduleIdValue));
+                                    propertiesInstance.JobScheduleId = jobScheduleIdInstance;
                                 }
                                 
                                 JToken startedByValue = propertiesValue["startedBy"];
@@ -1132,6 +1174,10 @@ namespace Microsoft.Azure.Management.Automation
             {
                 odataFilter.Add("properties/runbook/name eq '" + Uri.EscapeDataString(parameters.RunbookName) + "'");
             }
+            if (parameters != null && parameters.ScheduleName != null)
+            {
+                odataFilter.Add("properties/schedule/name eq '" + Uri.EscapeDataString(parameters.ScheduleName) + "'");
+            }
             if (odataFilter.Count > 0)
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
@@ -1246,6 +1292,27 @@ namespace Microsoft.Azure.Management.Automation
                                                 string nameInstance = ((string)nameValue);
                                                 runbookInstance.Name = nameInstance;
                                             }
+                                        }
+                                        
+                                        JToken scheduleValue = propertiesValue["schedule"];
+                                        if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                        {
+                                            ScheduleAssociationProperty scheduleInstance = new ScheduleAssociationProperty();
+                                            propertiesInstance.Schedule = scheduleInstance;
+                                            
+                                            JToken nameValue2 = scheduleValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance2 = ((string)nameValue2);
+                                                scheduleInstance.Name = nameInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken jobScheduleIdValue = propertiesValue["jobScheduleId"];
+                                        if (jobScheduleIdValue != null && jobScheduleIdValue.Type != JTokenType.Null)
+                                        {
+                                            Guid jobScheduleIdInstance = Guid.Parse(((string)jobScheduleIdValue));
+                                            propertiesInstance.JobScheduleId = jobScheduleIdInstance;
                                         }
                                         
                                         JToken startedByValue = propertiesValue["startedBy"];
@@ -1514,6 +1581,27 @@ namespace Microsoft.Azure.Management.Automation
                                                 string nameInstance = ((string)nameValue);
                                                 runbookInstance.Name = nameInstance;
                                             }
+                                        }
+                                        
+                                        JToken scheduleValue = propertiesValue["schedule"];
+                                        if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
+                                        {
+                                            ScheduleAssociationProperty scheduleInstance = new ScheduleAssociationProperty();
+                                            propertiesInstance.Schedule = scheduleInstance;
+                                            
+                                            JToken nameValue2 = scheduleValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance2 = ((string)nameValue2);
+                                                scheduleInstance.Name = nameInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken jobScheduleIdValue = propertiesValue["jobScheduleId"];
+                                        if (jobScheduleIdValue != null && jobScheduleIdValue.Type != JTokenType.Null)
+                                        {
+                                            Guid jobScheduleIdInstance = Guid.Parse(((string)jobScheduleIdValue));
+                                            propertiesInstance.JobScheduleId = jobScheduleIdInstance;
                                         }
                                         
                                         JToken startedByValue = propertiesValue["startedBy"];
