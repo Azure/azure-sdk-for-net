@@ -17,26 +17,24 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A WebHDFS exception thrown indicating that one more arguments is
-    /// incorrect. Thrown when a 400 error response code is returned (bad
-    /// request).
+    /// A WebHDFS exception thrown indicating the append or read is from a bad
+    /// offset. Thrown when a 400 error response code is returned for append
+    /// and open operations (Bad request).
     /// </summary>
-    [JsonObject("IllegalArgumentException")]
-    public partial class AdlsIllegalArgumentException : AdlsRemoteException
+    [JsonObject("BadOffsetException")]
+    public partial class AdlsBadOffsetException : AdlsRemoteException
     {
         /// <summary>
-        /// Initializes a new instance of the AdlsIllegalArgumentException
-        /// class.
+        /// Initializes a new instance of the AdlsBadOffsetException class.
         /// </summary>
-        public AdlsIllegalArgumentException() { }
+        public AdlsBadOffsetException() { }
 
         /// <summary>
-        /// Initializes a new instance of the AdlsIllegalArgumentException
-        /// class.
+        /// Initializes a new instance of the AdlsBadOffsetException class.
         /// </summary>
         /// <param name="javaClassName">the full class package name for the exception thrown, such as 'java.lang.IllegalArgumentException'.</param>
         /// <param name="message">the message associated with the exception that was thrown, such as 'Invalid value for webhdfs parameter "permission":...'.</param>
-        public AdlsIllegalArgumentException(string javaClassName = default(string), string message = default(string))
+        public AdlsBadOffsetException(string javaClassName = default(string), string message = default(string))
             : base(javaClassName, message)
         {
         }

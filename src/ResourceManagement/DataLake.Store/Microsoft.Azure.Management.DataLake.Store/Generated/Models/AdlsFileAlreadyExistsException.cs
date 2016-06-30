@@ -17,26 +17,25 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A WebHDFS exception thrown indicating that one more arguments is
-    /// incorrect. Thrown when a 400 error response code is returned (bad
-    /// request).
+    /// A WebHDFS exception thrown indicating the file or folder already
+    /// exists. Thrown when a 403 error response code is returned (forbidden).
     /// </summary>
-    [JsonObject("IllegalArgumentException")]
-    public partial class AdlsIllegalArgumentException : AdlsRemoteException
+    [JsonObject("FileAlreadyExistsException")]
+    public partial class AdlsFileAlreadyExistsException : AdlsRemoteException
     {
         /// <summary>
-        /// Initializes a new instance of the AdlsIllegalArgumentException
+        /// Initializes a new instance of the AdlsFileAlreadyExistsException
         /// class.
         /// </summary>
-        public AdlsIllegalArgumentException() { }
+        public AdlsFileAlreadyExistsException() { }
 
         /// <summary>
-        /// Initializes a new instance of the AdlsIllegalArgumentException
+        /// Initializes a new instance of the AdlsFileAlreadyExistsException
         /// class.
         /// </summary>
         /// <param name="javaClassName">the full class package name for the exception thrown, such as 'java.lang.IllegalArgumentException'.</param>
         /// <param name="message">the message associated with the exception that was thrown, such as 'Invalid value for webhdfs parameter "permission":...'.</param>
-        public AdlsIllegalArgumentException(string javaClassName = default(string), string message = default(string))
+        public AdlsFileAlreadyExistsException(string javaClassName = default(string), string message = default(string))
             : base(javaClassName, message)
         {
         }
