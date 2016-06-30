@@ -3,6 +3,7 @@
     "src/TestFramework/Microsoft.Azure.Test.HttpRecorder",
     "src/TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework",
     "src/Search/Microsoft.Azure.Search",
+    "src/Search/Microsoft.Azure.Management.Search",
     "src/ResourceManagement/Graph.RBAC/Microsoft.Azure.Graph.RBAC",
     "src/ResourceManagement/Authorization/Microsoft.Azure.Management.Authorization",
     "src/ResourceManagement/Cdn/Microsoft.Azure.Management.Cdn",
@@ -20,7 +21,6 @@
     "src/ResourceManagement/Storage/Microsoft.Azure.Management.Storage",
     "src/ResourceManagement/TrafficManager/Microsoft.Azure.Management.TrafficManager",
     "src/ResourceManagement/Websites/Microsoft.Azure.Management.Websites",
-    
-    "src/ResourceManagement/DataLake.StoreUploader/Microsoft.Azure.Management.DataLake.StoreUploader",
+    "src/ResourceManagement/DataLake.StoreUploader/Microsoft.Azure.Management.DataLake.StoreUploader"
   ]
 }
