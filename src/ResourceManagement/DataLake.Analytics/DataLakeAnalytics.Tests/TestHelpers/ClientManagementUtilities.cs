@@ -15,7 +15,7 @@
 //
 using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Store;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 

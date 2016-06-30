@@ -20,7 +20,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Compute Resources.")]
 
 [assembly: AssemblyVersion("13.0.0.0")]
-[assembly: AssemblyFileVersion("13.0.3.0")]
+[assembly: AssemblyFileVersion("13.0.4.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

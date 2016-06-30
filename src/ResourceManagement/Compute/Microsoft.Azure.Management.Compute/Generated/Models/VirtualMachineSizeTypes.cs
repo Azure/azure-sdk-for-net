@@ -51,6 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string StandardD12V2 = "Standard_D12_v2";
         public const string StandardD13V2 = "Standard_D13_v2";
         public const string StandardD14V2 = "Standard_D14_v2";
+        public const string StandardD15V2 = "Standard_D15_v2";
         public const string StandardDS1 = "Standard_DS1";
         public const string StandardDS2 = "Standard_DS2";
         public const string StandardDS3 = "Standard_DS3";
@@ -59,6 +60,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string StandardDS12 = "Standard_DS12";
         public const string StandardDS13 = "Standard_DS13";
         public const string StandardDS14 = "Standard_DS14";
+        public const string StandardDS1V2 = "Standard_DS1_v2";
+        public const string StandardDS2V2 = "Standard_DS2_v2";
+        public const string StandardDS3V2 = "Standard_DS3_v2";
+        public const string StandardDS4V2 = "Standard_DS4_v2";
+        public const string StandardDS5V2 = "Standard_DS5_v2";
+        public const string StandardDS11V2 = "Standard_DS11_v2";
+        public const string StandardDS12V2 = "Standard_DS12_v2";
+        public const string StandardDS13V2 = "Standard_DS13_v2";
+        public const string StandardDS14V2 = "Standard_DS14_v2";
+        public const string StandardDS15V2 = "Standard_DS15_v2";
         public const string StandardG1 = "Standard_G1";
         public const string StandardG2 = "Standard_G2";
         public const string StandardG3 = "Standard_G3";

@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 retryCount++;
                 try
                 {
-                    remoteLength = _frontEnd.GetStreamLength(_segmentMetadata.Path);
+                    remoteLength = _frontEnd.GetStreamLength(_segmentMetadata.Path, _metadata.IsDownload);
                     break;
                 }
                 catch (Exception)
@@ -347,15 +347,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <exception cref="System.ArgumentException">StartOffset is beyond the end of the input file;StartOffset</exception>
         private Stream OpenInputStream()
         {
-            var stream = new FileStream(_metadata.InputFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            
-            if (_segmentMetadata.Offset >= stream.Length)
-            {
-                throw new ArgumentException("StartOffset is beyond the end of the input file", "StartOffset");
-            }
-
-            stream.Seek(_segmentMetadata.Offset, SeekOrigin.Begin);
-            return stream;
+            return _frontEnd.ReadStream(_metadata.InputFilePath, _segmentMetadata.Offset, _segmentMetadata.Length, _metadata.IsDownload);
         }
 
         /// <summary>

@@ -36,15 +36,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets whether boot diagnostics should be enabled on the
-        /// Virtual Machine.
+        /// whether boot diagnostics should be enabled on the Virtual Machine.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the boot diagnostics storage Uri. It should be a
-        /// valid Uri
+        /// the boot diagnostics storage Uri. It should be a valid Uri
         /// </summary>
         [JsonProperty(PropertyName = "storageUri")]
         public string StorageUri { get; set; }

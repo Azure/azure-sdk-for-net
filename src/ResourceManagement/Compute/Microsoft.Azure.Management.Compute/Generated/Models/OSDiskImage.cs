@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the operating system of the osDiskImage. Possible
-        /// values include: 'Windows', 'Linux'
+        /// the operating system of the osDiskImage. Possible values include:
+        /// 'Windows', 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "operatingSystem")]
         public OperatingSystemTypes? OperatingSystem { get; set; }

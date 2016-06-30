@@ -39,20 +39,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the captured VirtualHardDisk's name prefix.
+        /// the captured VirtualHardDisk's name prefix.
         /// </summary>
         [JsonProperty(PropertyName = "vhdPrefix")]
         public string VhdPrefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the destination container name.
+        /// the destination container name.
         /// </summary>
         [JsonProperty(PropertyName = "destinationContainerName")]
         public string DestinationContainerName { get; set; }
 
         /// <summary>
-        /// Gets or sets whether it overwrites destination VirtualHardDisk if
-        /// true, in case of conflict.
+        /// whether it overwrites destination VirtualHardDisk if true, in case
+        /// of conflict.
         /// </summary>
         [JsonProperty(PropertyName = "overwriteVhds")]
         public bool OverwriteVhds { get; set; }

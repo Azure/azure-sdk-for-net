@@ -132,8 +132,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='accessKeyName'>
         /// The workflow access key name.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters.
+        /// <param name='keyType'>
+        /// Gets or sets the key type. Possible values include:
+        /// 'NotSpecified', 'Primary', 'Secondary'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -141,7 +142,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<WorkflowSecretKeys>> RegenerateSecretKeyWithHttpMessagesAsync(string resourceGroupName, string workflowName, string accessKeyName, RegenerateSecretKeyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WorkflowSecretKeys>> RegenerateSecretKeyWithHttpMessagesAsync(string resourceGroupName, string workflowName, string accessKeyName, KeyType? keyType = default(KeyType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of workflow access keys.
         /// </summary>
