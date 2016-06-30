@@ -39,19 +39,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the VM Agent full version.
+        /// the VM Agent full version.
         /// </summary>
         [JsonProperty(PropertyName = "vmAgentVersion")]
         public string VmAgentVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine extension handler instance view.
+        /// the virtual machine extension handler instance view.
         /// </summary>
         [JsonProperty(PropertyName = "extensionHandlers")]
         public IList<VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource status information.
+        /// the resource status information.
         /// </summary>
         [JsonProperty(PropertyName = "statuses")]
         public IList<InstanceViewStatus> Statuses { get; set; }

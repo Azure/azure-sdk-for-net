@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the boot diagnostics.
+        /// the boot diagnostics.
         /// </summary>
         [JsonProperty(PropertyName = "bootDiagnostics")]
         public BootDiagnostics BootDiagnostics { get; set; }

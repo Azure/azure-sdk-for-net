@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the virtual machine scale set child extension resources.
+        /// the virtual machine scale set child extension resources.
         /// </summary>
         [JsonProperty(PropertyName = "extensions")]
         public IList<VirtualMachineScaleSetExtension> Extensions { get; set; }

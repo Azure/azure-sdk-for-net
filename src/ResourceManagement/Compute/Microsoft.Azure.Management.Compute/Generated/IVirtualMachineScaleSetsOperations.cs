@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// Gets or sets the virtual machine scale set instance ids.
+        /// the virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

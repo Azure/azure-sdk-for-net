@@ -37,19 +37,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the sku name.
+        /// the sku name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku tier.
+        /// the sku tier.
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku capacity.
+        /// the sku capacity.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public long? Capacity { get; set; }

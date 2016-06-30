@@ -40,26 +40,26 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets Update Domain count.
+        /// Update Domain count.
         /// </summary>
         [JsonProperty(PropertyName = "properties.platformUpdateDomainCount")]
         public int? PlatformUpdateDomainCount { get; set; }
 
         /// <summary>
-        /// Gets or sets Fault Domain count.
+        /// Fault Domain count.
         /// </summary>
         [JsonProperty(PropertyName = "properties.platformFaultDomainCount")]
         public int? PlatformFaultDomainCount { get; set; }
 
         /// <summary>
-        /// Gets or sets a list containing reference to all Virtual Machines
-        /// created under this Availability Set.
+        /// a list containing reference to all Virtual Machines created under
+        /// this Availability Set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachines")]
         public IList<SubResource> VirtualMachines { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource status information.
+        /// the resource status information.
         /// </summary>
         [JsonProperty(PropertyName = "properties.statuses")]
         public IList<InstanceViewStatus> Statuses { get; set; }

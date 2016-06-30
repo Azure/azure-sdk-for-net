@@ -37,20 +37,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the disk encryption key which is a KeyVault Secret.
+        /// the disk encryption key which is a KeyVault Secret.
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionKey")]
         public KeyVaultSecretReference DiskEncryptionKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the key encryption key which is KeyVault Key.
+        /// the key encryption key which is KeyVault Key.
         /// </summary>
         [JsonProperty(PropertyName = "keyEncryptionKey")]
         public KeyVaultKeyReference KeyEncryptionKey { get; set; }
 
         /// <summary>
-        /// Gets or sets whether disk encryption should be enabled on the
-        /// Virtual Machine.
+        /// whether disk encryption should be enabled on the Virtual Machine.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
