@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._parameters = value; }
         }
         
+        private string _runOn;
+        
+        /// <summary>
+        /// Optional. Gets or sets the hybrid worker group name for the job.
+        /// </summary>
+        public string RunOn
+        {
+            get { return this._runOn; }
+            set { this._runOn = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the DscCompilationJobCreateProperties
         /// class.

@@ -53,6 +53,18 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._runbookName = value; }
         }
         
+        private string _scheduleName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the schedule name that is used for job
+        /// creation
+        /// </summary>
+        public string ScheduleName
+        {
+            get { return this._scheduleName; }
+            set { this._scheduleName = value; }
+        }
+        
         private string _startTime;
         
         /// <summary>
