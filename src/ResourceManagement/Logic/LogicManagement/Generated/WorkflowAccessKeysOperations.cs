@@ -84,10 +84,7 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workflowName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -97,6 +94,7 @@ namespace Microsoft.Azure.Management.Logic
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workflowName", workflowName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
@@ -108,9 +106,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{workflowName}", Uri.EscapeDataString(workflowName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -278,10 +276,7 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accessKeyName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -292,6 +287,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workflowName", workflowName);
                 tracingParameters.Add("accessKeyName", accessKeyName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -303,9 +299,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{workflowName}", Uri.EscapeDataString(workflowName));
             _url = _url.Replace("{accessKeyName}", Uri.EscapeDataString(accessKeyName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -472,14 +468,11 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accessKeyName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (workflowAccesskey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workflowAccesskey");
             }
+            string apiVersion = "2015-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -490,6 +483,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workflowName", workflowName);
                 tracingParameters.Add("accessKeyName", accessKeyName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("workflowAccesskey", workflowAccesskey);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
@@ -502,9 +496,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{workflowName}", Uri.EscapeDataString(workflowName));
             _url = _url.Replace("{accessKeyName}", Uri.EscapeDataString(accessKeyName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -689,10 +683,7 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accessKeyName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -703,6 +694,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workflowName", workflowName);
                 tracingParameters.Add("accessKeyName", accessKeyName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -714,9 +706,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{workflowName}", Uri.EscapeDataString(workflowName));
             _url = _url.Replace("{accessKeyName}", Uri.EscapeDataString(accessKeyName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -848,10 +840,7 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accessKeyName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -862,6 +851,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workflowName", workflowName);
                 tracingParameters.Add("accessKeyName", accessKeyName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSecretKeys", tracingParameters);
             }
@@ -873,9 +863,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{workflowName}", Uri.EscapeDataString(workflowName));
             _url = _url.Replace("{accessKeyName}", Uri.EscapeDataString(accessKeyName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1012,8 +1002,9 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='accessKeyName'>
         /// The workflow access key name.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters.
+        /// <param name='keyType'>
+        /// Gets or sets the key type. Possible values include: 'NotSpecified',
+        /// 'Primary', 'Secondary'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1024,7 +1015,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<WorkflowSecretKeys>> RegenerateSecretKeyWithHttpMessagesAsync(string resourceGroupName, string workflowName, string accessKeyName, RegenerateSecretKeyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WorkflowSecretKeys>> RegenerateSecretKeyWithHttpMessagesAsync(string resourceGroupName, string workflowName, string accessKeyName, KeyType? keyType = default(KeyType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -1042,14 +1033,10 @@ namespace Microsoft.Azure.Management.Logic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accessKeyName");
             }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
+            string apiVersion = "2015-02-01-preview";
+            RegenerateSecretKeyParameters parameters = default(RegenerateSecretKeyParameters);
+            parameters = new RegenerateSecretKeyParameters();
+            parameters.KeyType = keyType;
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1060,6 +1047,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workflowName", workflowName);
                 tracingParameters.Add("accessKeyName", accessKeyName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RegenerateSecretKey", tracingParameters);
@@ -1072,9 +1060,9 @@ namespace Microsoft.Azure.Management.Logic
             _url = _url.Replace("{workflowName}", Uri.EscapeDataString(workflowName));
             _url = _url.Replace("{accessKeyName}", Uri.EscapeDataString(accessKeyName));
             List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

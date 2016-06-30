@@ -1334,7 +1334,7 @@ namespace Networks.Tests
              }
         }
 
-        [Fact(Skip ="CORECLR: Rerecord after adding subscription to Ip6 resources")]
+        [Fact]
         public void LoadBalancerOutboundNatRuleTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

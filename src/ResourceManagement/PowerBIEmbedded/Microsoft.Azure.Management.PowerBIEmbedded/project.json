@@ -1,5 +1,5 @@
 {
-    "version": "1.0.5-preview",
+    "version": "1.0.6-preview",
     "description": "Microsoft Azure Management Power BI Embedded Library",
     "authors": [
         "Microsoft"
@@ -35,23 +35,22 @@
             "imports": [ "dnxcore50" ],
             "buildOptions": { "define": [ "PORTABLE" ] },
             "dependencies": {
-                "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
-                "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027",
-                "Microsoft.NETCore.Runtime": "1.0.2-rc2-24027",
-                "System.Diagnostics.Tools": "4.0.1-rc2-24027",
-                "System.Net.Http": "4.0.1-rc2-24027",
-                "System.Resources.ResourceManager": "4.0.1-rc2-24027",
-                "System.Runtime": "4.1.0-rc2-24027",
-                "System.Threading.Tasks": "4.0.11-rc2-24027",
-                "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
+                "System.Runtime.Serialization.Primitives": "4.1.1",
+                "Microsoft.NETCore.Platforms": "1.0.1",
+                        "System.Diagnostics.Tools": "4.0.1",
+                "System.Net.Http": "4.1.0",
+                "System.Resources.ResourceManager": "4.0.1",
+                "System.Runtime": "4.1.0",
+                "System.Threading.Tasks": "4.0.11",
+                "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
             }
         },
         "netstandard1.1": {
             "imports": [ "dnxcore50" ],
             "buildOptions": { "define": [ "PORTABLE" ] },
             "dependencies": {
-                "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
-                "Microsoft.Rest.ClientRuntime.Azure": "[3.3.0,4.0.0)"
+                "System.Runtime.Serialization.Primitives": "4.1.1",
+                "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
             }
         }
     }

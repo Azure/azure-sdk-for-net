@@ -28,13 +28,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
             Type = type;
-            CreatedTime = createdTime;
-            ChangedTime = changedTime;
             Location = location;
             Tags = tags;
         }
@@ -56,18 +54,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
-
-        /// <summary>
-        /// Created time of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "createdTime")]
-        public DateTime? CreatedTime { get; private set; }
-
-        /// <summary>
-        /// Changed time of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "changedTime")]
-        public DateTime? ChangedTime { get; private set; }
 
         /// <summary>
         /// Resource location
