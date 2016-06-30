@@ -5,9 +5,6 @@
     <AssemblyName>AzureStackAdmin.Tests</AssemblyName>
     <RootNamespace>Microsoft.AzureStack.AzureStackStorageAdmin.Tests</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Debug'">
-    <DocumentationFile>bin\Net40-Debug\AzureStackAdmin.Tests.xml</DocumentationFile>
-  </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
@@ -22,9 +19,6 @@
       <Project>{0f495f37-c031-4827-9ea6-3e19a4930a70}</Project>
       <Name>AzureStackManagement</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OfferTests.cs" />
