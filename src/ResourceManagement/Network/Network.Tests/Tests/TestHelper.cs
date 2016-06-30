@@ -76,6 +76,10 @@ namespace Networks.Tests
             
             var getNicResponse = client.NetworkInterfaces.Get(resourceGroupName, name);
             Assert.Equal(getNicResponse.Name, name);
+
+            // because its a single CA nic, primaryOnCA is always true
+            Assert.Equal(getNicResponse.IpConfigurations[0].Primary, true);
+
             Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
 
             return getNicResponse;

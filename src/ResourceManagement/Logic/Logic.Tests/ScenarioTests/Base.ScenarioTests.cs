@@ -2,6 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System.Globalization;
+using Newtonsoft.Json.Linq;
+
 namespace Test.Azure.Management.Logic
 {
     using Microsoft.Azure.Management.Logic;
@@ -10,21 +13,57 @@ namespace Test.Azure.Management.Logic
 
     public class BaseScenarioTests : TestBase
     {
+        /// <summary>
+        /// Default serviceplan Resource id 
+        /// </summary>
+        protected string ServicePlanResourceId
+        {
+            get
+            {
+                var val = string.Format(CultureInfo.InvariantCulture,
+                    "/subscriptions/{0}/resourcegroups/{1}/providers/{2}/{3}",
+                    Constants.DefaultSubscription,
+                    Constants.DefaultResourceGroup,
+                    "microsoft.web/serverfarms",
+                    Constants.DefaultServicePlan);
+                return val;
+            }
+        }
+
+        protected LogicManagementClient GetIntegrationAccountClient(MockContext context)
+        {
+            var client = context.GetServiceClient<LogicManagementClient>();
+            return client;
+        }
+
+        /// <summary>
+        /// Creates an Integartion account.
+        /// </summary>
+        /// <param name="integrationAccountName">Integration AccountName</param>        
+        /// <returns>IntegrationAccount instance</returns>
+        protected IntegrationAccount CreateIntegrationAccountInstance(string integrationAccountName)
+        {
+            var createdAccount = new IntegrationAccount
+            {                
+                Sku = new IntegrationAccountSku()
+                {
+                    Name = SkuName.Standard
+                },                
+                Properties = new JObject(),
+                Name = integrationAccountName,
+                Location = Constants.DefaultLocation
+            };
+            return createdAccount;
+        }
+
         protected string resourceGroupName = "flowrg";
+
         protected string location = "westus";
 
-        protected Sku sku = new Sku
+        protected LogicManagementClient GetWorkflowClient(MockContext context)
         {
-            Name = SkuName.Standard,
-            Plan = new ResourceReference
-            {
-                Id = "/subscriptions/402177bc-c2ea-4a5d-98b3-7623eee7f0a1/resourceGroups/Default-SQL-EastAsia/providers/Microsoft.Web/serverFarms/Plan"
-            }
-        };
-
-        protected LogicManagementClient GetLogicManagementClient(MockContext context)
-        {
-            return context.GetServiceClient<LogicManagementClient>();
+            var client = context.GetServiceClient<LogicManagementClient>();
+            return client;
         }
 
         #region Data
@@ -49,9 +88,9 @@ namespace Test.Azure.Management.Logic
             'defaultValue':{
                 'type':'ActiveDirectoryOAuth',
                 'audience':'https://management.azure.com/',
-                'tenant':'66666666-6666-6666-6666-666666666666',
-                'clientId':'66666666-6666-6666-6666-666666666666',
-                'secret':'<placeholder>'
+                'tenant':'00000000-0000-0000-0000-000000000000',
+                'clientId':'00000000-0000-0000-0000-000000000000',
+                'secret':'Dummy'
             },
             'type':'Object'
         }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the list of Windows Remote Management listeners
+        /// the list of Windows Remote Management listeners
         /// </summary>
         [JsonProperty(PropertyName = "listeners")]
         public IList<WinRMListener> Listeners { get; set; }

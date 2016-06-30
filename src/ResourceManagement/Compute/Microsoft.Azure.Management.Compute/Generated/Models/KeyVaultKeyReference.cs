@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the URL referencing a key in a Key Vault.
+        /// the URL referencing a key in a Key Vault.
         /// </summary>
         [JsonProperty(PropertyName = "keyUrl")]
         public string KeyUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the Relative URL of the Key Vault containing the key
+        /// the Relative URL of the Key Vault containing the key
         /// </summary>
         [JsonProperty(PropertyName = "sourceVault")]
         public SubResource SourceVault { get; set; }

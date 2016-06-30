@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets whether this is a primary NIC on a virtual machine
+        /// whether this is a primary NIC on a virtual machine
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }

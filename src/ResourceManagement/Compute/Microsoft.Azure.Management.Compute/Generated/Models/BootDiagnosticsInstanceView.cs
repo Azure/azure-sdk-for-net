@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the console screenshot blob Uri.
+        /// the console screenshot blob Uri.
         /// </summary>
         [JsonProperty(PropertyName = "consoleScreenshotBlobUri")]
         public string ConsoleScreenshotBlobUri { get; set; }
 
         /// <summary>
-        /// Gets or sets the Linux serial console log blob Uri.
+        /// the Linux serial console log blob Uri.
         /// </summary>
         [JsonProperty(PropertyName = "serialConsoleLogBlobUri")]
         public string SerialConsoleLogBlobUri { get; set; }

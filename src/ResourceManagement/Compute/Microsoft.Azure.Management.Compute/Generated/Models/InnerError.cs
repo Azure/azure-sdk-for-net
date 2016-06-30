@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the exception type.
+        /// the exception type.
         /// </summary>
         [JsonProperty(PropertyName = "exceptiontype")]
         public string Exceptiontype { get; set; }
 
         /// <summary>
-        /// Gets or sets the internal error message or exception dump.
+        /// the internal error message or exception dump.
         /// </summary>
         [JsonProperty(PropertyName = "errordetail")]
         public string Errordetail { get; set; }
