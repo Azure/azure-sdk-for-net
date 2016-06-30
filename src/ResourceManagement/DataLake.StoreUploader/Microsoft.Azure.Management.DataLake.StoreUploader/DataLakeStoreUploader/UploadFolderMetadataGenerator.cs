@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         #region Private
 
         private readonly UploadParameters _parameters;
+        private readonly IFrontEndAdapter _frontend;
 
         #endregion
 
@@ -34,10 +35,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <summary>
         /// Creates a new instance of the UploadMetadataGenerator with the given parameters and the given maximum append length.
         /// </summary>
-        /// <param name="parameters"></param>
-        public UploadFolderMetadataGenerator(UploadParameters parameters)
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="frontend">The frontend used when generating fresh metadata.</param>
+        public UploadFolderMetadataGenerator(UploadParameters parameters, IFrontEndAdapter frontend)
         {
             _parameters = parameters;
+            _frontend = frontend;
         }
 
         #endregion
@@ -64,7 +67,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         public UploadFolderMetadata CreateNewMetadata(string metadataFilePath)
         {
             //create metadata
-            var metadata = new UploadFolderMetadata(metadataFilePath, _parameters);
+            var metadata = new UploadFolderMetadata(metadataFilePath, _parameters, _frontend);
 
             //save the initial version
             metadata.Save();

@@ -39,20 +39,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the instance view status summary for the virtual machine
-        /// scale set.
+        /// the instance view status summary for the virtual machine scale set.
         /// </summary>
         [JsonProperty(PropertyName = "virtualMachine")]
         public VirtualMachineScaleSetInstanceViewStatusesSummary VirtualMachine { get; private set; }
 
         /// <summary>
-        /// Gets the extensions information.
+        /// the extensions information.
         /// </summary>
         [JsonProperty(PropertyName = "extensions")]
         public IList<VirtualMachineScaleSetVMExtensionsSummary> Extensions { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource status information.
+        /// the resource status information.
         /// </summary>
         [JsonProperty(PropertyName = "statuses")]
         public IList<InstanceViewStatus> Statuses { get; set; }

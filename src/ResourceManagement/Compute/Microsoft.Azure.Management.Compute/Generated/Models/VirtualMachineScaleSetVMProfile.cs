@@ -40,25 +40,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set OS profile.
+        /// the virtual machine scale set OS profile.
         /// </summary>
         [JsonProperty(PropertyName = "osProfile")]
         public VirtualMachineScaleSetOSProfile OsProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set storage profile.
+        /// the virtual machine scale set storage profile.
         /// </summary>
         [JsonProperty(PropertyName = "storageProfile")]
         public VirtualMachineScaleSetStorageProfile StorageProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set network profile.
+        /// the virtual machine scale set network profile.
         /// </summary>
         [JsonProperty(PropertyName = "networkProfile")]
         public VirtualMachineScaleSetNetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
-        /// Gets the virtual machine scale set extension profile.
+        /// the virtual machine scale set extension profile.
         /// </summary>
         [JsonProperty(PropertyName = "extensionProfile")]
         public VirtualMachineScaleSetExtensionProfile ExtensionProfile { get; set; }

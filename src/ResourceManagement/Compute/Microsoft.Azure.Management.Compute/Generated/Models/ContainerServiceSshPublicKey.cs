@@ -37,9 +37,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets Certificate public key used to authenticate with VM
-        /// through SSH. The certificate must be in Pem format with or
-        /// without headers.
+        /// Certificate public key used to authenticate with VM through SSH.
+        /// The certificate must be in Pem format with or without headers.
         /// </summary>
         [JsonProperty(PropertyName = "keyData")]
         public string KeyData { get; set; }

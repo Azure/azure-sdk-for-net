@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the image reference.
+        /// the image reference.
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
-        /// Gets or sets the OS disk.
+        /// the OS disk.
         /// </summary>
         [JsonProperty(PropertyName = "osDisk")]
         public VirtualMachineScaleSetOSDisk OsDisk { get; set; }

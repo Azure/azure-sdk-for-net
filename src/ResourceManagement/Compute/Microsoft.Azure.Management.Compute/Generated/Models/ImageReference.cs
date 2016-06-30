@@ -38,28 +38,27 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the image publisher.
+        /// the image publisher.
         /// </summary>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets the image offer.
+        /// the image offer.
         /// </summary>
         [JsonProperty(PropertyName = "offer")]
         public string Offer { get; set; }
 
         /// <summary>
-        /// Gets or sets the image sku.
+        /// the image sku.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the image version. The allowed formats are
-        /// Major.Minor.Build or 'latest'. Major, Minor and Build being
-        /// decimal numbers. Specify 'latest' to use the latest version of
-        /// image.
+        /// the image version. The allowed formats are Major.Minor.Build or
+        /// 'latest'. Major, Minor and Build being decimal numbers. Specify
+        /// 'latest' to use the latest version of image.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }

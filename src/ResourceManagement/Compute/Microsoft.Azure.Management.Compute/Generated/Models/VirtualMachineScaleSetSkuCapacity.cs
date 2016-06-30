@@ -40,26 +40,26 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the minimum capacity.
+        /// the minimum capacity.
         /// </summary>
         [JsonProperty(PropertyName = "minimum")]
         public long? Minimum { get; private set; }
 
         /// <summary>
-        /// Gets the maximum capacity that can be set.
+        /// the maximum capacity that can be set.
         /// </summary>
         [JsonProperty(PropertyName = "maximum")]
         public long? Maximum { get; private set; }
 
         /// <summary>
-        /// Gets the default capacity.
+        /// the default capacity.
         /// </summary>
         [JsonProperty(PropertyName = "defaultCapacity")]
         public long? DefaultCapacity { get; private set; }
 
         /// <summary>
-        /// Gets the scale type applicable to the sku. Possible values
-        /// include: 'Automatic', 'None'
+        /// the scale type applicable to the sku. Possible values include:
+        /// 'Automatic', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "scaleType")]
         public VirtualMachineScaleSetSkuScaleType? ScaleType { get; private set; }

@@ -39,33 +39,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the status Code.
+        /// the status Code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the level Code. Possible values include: 'Info',
-        /// 'Warning', 'Error'
+        /// the level Code. Possible values include: 'Info', 'Warning', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "level")]
         public StatusLevelTypes? Level { get; set; }
 
         /// <summary>
-        /// Gets or sets the short localizable label for the status.
+        /// the short localizable label for the status.
         /// </summary>
         [JsonProperty(PropertyName = "displayStatus")]
         public string DisplayStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets the detailed Message, including for alerts and error
-        /// messages.
+        /// the detailed Message, including for alerts and error messages.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets the time of the status.
+        /// the time of the status.
         /// </summary>
         [JsonProperty(PropertyName = "time")]
         public DateTime? Time { get; set; }

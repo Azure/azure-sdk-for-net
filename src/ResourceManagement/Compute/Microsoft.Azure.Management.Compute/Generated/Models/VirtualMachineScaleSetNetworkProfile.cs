@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the list of network configurations.
+        /// the list of network configurations.
         /// </summary>
         [JsonProperty(PropertyName = "networkInterfaceConfigurations")]
         public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get; set; }
