@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.DataFactories
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.DataFactories">
-      <PackageVersion>4.9.0</PackageVersion>
+      <PackageVersion>4.9.1</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>
