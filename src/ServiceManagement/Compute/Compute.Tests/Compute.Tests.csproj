@@ -54,6 +54,9 @@
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.ComputeOperationsTests\CanMigrateVirtualMachineDeployment.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.ComputeOperationsTests\CanValidateDeploymentForMigration.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.ComputeOperationsTests\DNSServerOperationsTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

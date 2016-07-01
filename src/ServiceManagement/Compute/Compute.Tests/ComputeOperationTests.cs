@@ -444,6 +444,33 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
         }
 
         [Fact]
+        public void CanValidateDeploymentForMigration()
+        {
+            TestUtilities.StartTest();
+            using (fixture.ComputeClient = fixture.GetComputeManagementClient())
+            {
+                var serviceName = TestUtilities.GenerateName();
+                var deploymentName = TestUtilities.GenerateName();
+
+                var prepareParameters = new PrepareDeploymentMigrationParameters
+                {
+                    DestinationVirtualNetwork = "New",
+                    ResourceGroupName = string.Empty,
+                    SubNetName = string.Empty,
+                    VirtualNetworkName = string.Empty
+                };
+
+                var response = fixture.ComputeClient.Deployments.ValidateMigration(serviceName, deploymentName, prepareParameters);
+
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.NotNull(response.ValidateDeploymentMessages);
+                Assert.Equal(1, response.ValidateDeploymentMessages.Count);
+                Assert.Equal(string.Format("The deployment name '{0}' does not exist.", deploymentName), response.ValidateDeploymentMessages[0].Message);
+            }
+        }
+
+        [Fact]
         public void CanMigrateVirtualMachineDeployment()
         {
             TestUtilities.StartTest();
