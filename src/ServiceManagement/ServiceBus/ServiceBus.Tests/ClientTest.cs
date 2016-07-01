@@ -20,6 +20,7 @@ using System.Net;
 using System.Threading;
 using Hyak.Common;
 using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 using Xunit;
@@ -56,7 +57,11 @@ namespace ServiceBus.Tests
                 int retries = 0;
                 while (true)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(4));
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
+                        Thread.Sleep(TimeSpan.FromSeconds(4));
+                    }
+
                     var description = sbClient.Namespaces.GetAsync(namespaceName, CancellationToken.None).Result;
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                     if (description.Namespace.Status.Equals("Active", StringComparison.InvariantCultureIgnoreCase))
@@ -99,7 +104,11 @@ namespace ServiceBus.Tests
                 int retries = 0;
                 while (true)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(4));
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
+                        Thread.Sleep(TimeSpan.FromSeconds(4));
+                    }
+
                     var description = sbClient.Namespaces.GetAsync(namespaceName, CancellationToken.None).Result;
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                     if (description.Namespace.Status.Equals("Active", StringComparison.InvariantCultureIgnoreCase))
