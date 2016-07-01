@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the virtual hard disk's uri. It should be a valid Uri
-        /// to a virtual hard disk.
+        /// the virtual hard disk's uri. It should be a valid Uri to a virtual
+        /// hard disk.
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }

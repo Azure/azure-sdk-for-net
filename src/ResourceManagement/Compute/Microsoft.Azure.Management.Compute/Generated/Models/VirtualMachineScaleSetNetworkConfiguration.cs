@@ -42,19 +42,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the network configuration name.
+        /// the network configuration name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets whether this is a primary NIC on a virtual machine.
+        /// whether this is a primary NIC on a virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set IP Configuration.
+        /// the virtual machine scale set IP Configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; set; }

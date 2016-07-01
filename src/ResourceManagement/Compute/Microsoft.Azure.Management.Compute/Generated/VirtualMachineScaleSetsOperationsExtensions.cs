@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void Deallocate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void BeginDeallocate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void DeleteInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds)
             {
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void BeginDeleteInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds)
             {
@@ -406,7 +406,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -581,7 +581,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void PowerOff(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
@@ -603,7 +603,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -628,7 +628,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void BeginPowerOff(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
@@ -650,7 +650,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -673,7 +673,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void Restart(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
@@ -693,7 +693,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -716,7 +716,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void BeginRestart(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
@@ -736,7 +736,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -759,7 +759,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void Start(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
@@ -779,7 +779,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -802,7 +802,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void BeginStart(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
             {
@@ -822,7 +822,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -846,7 +846,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void UpdateInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds)
             {
@@ -867,7 +867,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -891,7 +891,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             public static void BeginUpdateInstances(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds)
             {
@@ -912,7 +912,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine scale set.
             /// </param>
             /// <param name='instanceIds'>
-            /// Gets or sets the virtual machine scale set instance ids.
+            /// the virtual machine scale set instance ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

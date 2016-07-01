@@ -41,26 +41,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set sku.
+        /// the virtual machine scale set sku.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the upgrade policy.
+        /// the upgrade policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgradePolicy")]
         public UpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine profile.
+        /// the virtual machine profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachineProfile")]
         public VirtualMachineScaleSetVMProfile VirtualMachineProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state, which only appears in the
-        /// response.
+        /// the provisioning state, which only appears in the response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

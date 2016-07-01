@@ -48,77 +48,75 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the purchase plan when deploying virtual machine from
-        /// VM Marketplace images.
+        /// the purchase plan when deploying virtual machine from VM
+        /// Marketplace images.
         /// </summary>
         [JsonProperty(PropertyName = "plan")]
         public Plan Plan { get; set; }
 
         /// <summary>
-        /// Gets or sets the hardware profile.
+        /// the hardware profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hardwareProfile")]
         public HardwareProfile HardwareProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage profile.
+        /// the storage profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageProfile")]
         public StorageProfile StorageProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the OS profile.
+        /// the OS profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.osProfile")]
         public OSProfile OsProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the network profile.
+        /// the network profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkProfile")]
         public NetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the diagnostics profile.
+        /// the diagnostics profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.diagnosticsProfile")]
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference Id of the availability set to which
-        /// this virtual machine belongs.
+        /// the reference Id of the availability set to which this virtual
+        /// machine belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state, which only appears in the
-        /// response.
+        /// the provisioning state, which only appears in the response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the virtual machine instance view.
+        /// the virtual machine instance view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
         public VirtualMachineInstanceView InstanceView { get; private set; }
 
         /// <summary>
-        /// Gets or sets the license type, which is for bring your own license
-        /// scenario.
+        /// the license type, which is for bring your own license scenario.
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
         public string LicenseType { get; set; }
 
         /// <summary>
-        /// Gets the virtual machine unique id.
+        /// the virtual machine unique id.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmId")]
         public string VmId { get; private set; }
 
         /// <summary>
-        /// Gets the virtual machine child extension resources.
+        /// the virtual machine child extension resources.
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
         public IList<VirtualMachineExtension> Resources { get; private set; }
