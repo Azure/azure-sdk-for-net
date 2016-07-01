@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Search
     {
             /// <summary>
             /// Resets the change tracking state associated with an Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946897.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Resets the change tracking state associated with an Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946897.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Runs an Azure Search indexer on-demand.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946885.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,6 +81,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Runs an Azure Search indexer on-demand.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946885.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -99,6 +103,7 @@ namespace Microsoft.Azure.Search
             /// <summary>
             /// Creates a new Azure Search indexer or updates an indexer if it already
             /// exists.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -120,6 +125,7 @@ namespace Microsoft.Azure.Search
             /// <summary>
             /// Creates a new Azure Search indexer or updates an indexer if it already
             /// exists.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -146,6 +152,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Deletes an Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946898.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -163,6 +170,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Deletes an Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946898.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -183,6 +191,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Retrieves an indexer definition from Azure Search.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946874.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -200,6 +209,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Retrieves an indexer definition from Azure Search.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946874.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -223,6 +233,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all indexers available for an Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946883.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -237,6 +248,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all indexers available for an Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946883.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -257,6 +269,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -274,6 +287,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -297,6 +311,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Returns the current status and execution history of an indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946884.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -314,6 +329,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Returns the current status and execution history of an indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946884.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
