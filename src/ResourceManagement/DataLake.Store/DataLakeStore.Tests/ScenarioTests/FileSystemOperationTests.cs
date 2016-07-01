@@ -291,10 +291,10 @@ namespace DataLakeStore.Tests
 
                     // Append to the file that we created, but starting at the beginning of the file, which should wipe out the data.
                     commonData.DataLakeStoreFileSystemClient.FileSystem.Append(commonData.DataLakeStoreFileSystemAccountName, filePath,
-                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)), 0);
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)), fileContentsToAdd.Length);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
-                        fileContentsToAdd.Length);
+                        fileContentsToAdd.Length*2);
                 }
             }
         }
