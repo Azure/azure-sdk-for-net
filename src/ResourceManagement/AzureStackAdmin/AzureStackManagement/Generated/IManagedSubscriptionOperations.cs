@@ -80,7 +80,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the subscription get operation
         /// </returns>
         Task<ManagedSubscriptionGetResult> GetAsync(string subscriptionId, CancellationToken cancellationToken);
         

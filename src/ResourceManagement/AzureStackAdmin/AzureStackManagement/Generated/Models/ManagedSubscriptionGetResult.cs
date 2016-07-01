@@ -27,14 +27,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the subscription get operation
     /// </summary>
     public partial class ManagedSubscriptionGetResult : AzureOperationResponse
     {
         private AdminSubscriptionDefinition _subscription;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Admin suscription definition
         /// </summary>
         public AdminSubscriptionDefinition Subscription
         {

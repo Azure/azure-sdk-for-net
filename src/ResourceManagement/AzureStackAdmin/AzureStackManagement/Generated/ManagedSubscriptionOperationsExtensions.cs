@@ -134,7 +134,7 @@ namespace Microsoft.AzureStack.Management
         /// Required. Subscription Id
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the subscription get operation
         /// </returns>
         public static ManagedSubscriptionGetResult Get(this IManagedSubscriptionOperations operations, string subscriptionId)
         {
@@ -158,7 +158,7 @@ namespace Microsoft.AzureStack.Management
         /// Required. Subscription Id
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the subscription get operation
         /// </returns>
         public static Task<ManagedSubscriptionGetResult> GetAsync(this IManagedSubscriptionOperations operations, string subscriptionId)
         {

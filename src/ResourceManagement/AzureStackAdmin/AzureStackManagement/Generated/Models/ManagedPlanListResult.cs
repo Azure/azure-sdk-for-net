@@ -29,7 +29,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the plan llist operation
     /// </summary>
     public partial class ManagedPlanListResult : AzureOperationResponse
     {
@@ -47,7 +47,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<AdminPlanModel> _plans;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. List of plan model
         /// </summary>
         public IList<AdminPlanModel> Plans
         {

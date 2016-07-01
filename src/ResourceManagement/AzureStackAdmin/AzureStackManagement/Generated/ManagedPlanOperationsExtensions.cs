@@ -323,7 +323,7 @@ namespace Microsoft.AzureStack.Management
         /// Required. Flag to specify whether to include details
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the plan llist operation
         /// </returns>
         public static ManagedPlanListResult List(this IManagedPlanOperations operations, string resourceGroupName, bool includeDetails)
         {
@@ -350,103 +350,11 @@ namespace Microsoft.AzureStack.Management
         /// Required. Flag to specify whether to include details
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the plan llist operation
         /// </returns>
         public static Task<ManagedPlanListResult> ListAsync(this IManagedPlanOperations operations, string resourceGroupName, bool includeDetails)
         {
             return operations.ListAsync(resourceGroupName, includeDetails, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedPlanOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedPlanListResult ListNext(this IManagedPlanOperations operations, string nextLink)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedPlanOperations)s).ListNextAsync(nextLink);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedPlanOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedPlanListResult> ListNextAsync(this IManagedPlanOperations operations, string nextLink)
-        {
-            return operations.ListNextAsync(nextLink, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedPlanOperations.
-        /// </param>
-        /// <param name='includeDetails'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedPlanListResult ListWithoutResourceGroup(this IManagedPlanOperations operations, bool includeDetails)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedPlanOperations)s).ListWithoutResourceGroupAsync(includeDetails);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedPlanOperations.
-        /// </param>
-        /// <param name='includeDetails'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedPlanListResult> ListWithoutResourceGroupAsync(this IManagedPlanOperations operations, bool includeDetails)
-        {
-            return operations.ListWithoutResourceGroupAsync(includeDetails, CancellationToken.None);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<string> _apiVersions;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Supported Apiversions
         /// </summary>
         public IList<string> ApiVersions
         {

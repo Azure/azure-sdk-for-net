@@ -102,7 +102,7 @@ namespace Microsoft.AzureStack.Management.Models
         private RoutingType _routingType;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the routing type of the resource
         /// </summary>
         public RoutingType RoutingType
         {

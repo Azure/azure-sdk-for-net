@@ -110,37 +110,6 @@ namespace Microsoft.AzureStack.Management
         Task<ProviderRegistrationListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Lists the registerd provider manifest with the next link  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='nextLink'>
-        /// Next link of registered provider manifest  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Result of the resource provider manifest list operation
-        /// </returns>
-        Task<ProviderRegistrationListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Lists the registered provider manifests  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Result of the resource provider manifest list operation
-        /// </returns>
-        Task<ProviderRegistrationListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Validate provider registration.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
