@@ -29,41 +29,41 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Administrator Operations on the offer  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
     public partial interface IManagedOfferOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
+        /// Returns the created or updated offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Your documentation here.
+        /// Offer properties
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update operation of offer
         /// </returns>
         Task<ManagedOfferCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ManagedOfferCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Your documentation here.
+        /// Offer name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -75,15 +75,15 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string offerId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the administrator view of the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Your documentation here.
+        /// Offer name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

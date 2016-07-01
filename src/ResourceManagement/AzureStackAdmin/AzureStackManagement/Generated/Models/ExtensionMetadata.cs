@@ -27,14 +27,14 @@ using Hyak.Common;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Extension Metadata
     /// </summary>
     public partial class ExtensionMetadata
     {
         private string _endpointUri;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the endpoint Uri
         /// </summary>
         public string EndpointUri
         {
@@ -45,7 +45,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the location of the extension
         /// </summary>
         public string Location
         {
@@ -56,7 +56,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the name of the extension
         /// </summary>
         public string Name
         {
@@ -67,7 +67,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<string> _namespaces;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the list of Namespaces
         /// </summary>
         public IList<string> Namespaces
         {

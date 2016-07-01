@@ -99,7 +99,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -284,7 +284,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -563,7 +563,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -721,7 +721,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1105,7 +1105,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }

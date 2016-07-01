@@ -28,25 +28,25 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Operations on the plan  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
     public partial interface IPlanOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the plan for a given plan id  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='planId'>
-        /// Your documentation here.
+        /// Id of the plan
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Resul of the plan get operation
         /// </returns>
         Task<PlanGetResult> GetAsync(string planId, CancellationToken cancellationToken);
         

@@ -28,14 +28,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Operations on the curation items  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
     public partial interface ICurationOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the curation results  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -43,7 +43,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the curation list operation
         /// </returns>
         Task<CurationListResult> ListAsync(CancellationToken cancellationToken);
     }

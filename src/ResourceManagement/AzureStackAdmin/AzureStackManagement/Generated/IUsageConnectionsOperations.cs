@@ -29,7 +29,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Usage connection operations  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -58,15 +58,15 @@ namespace Microsoft.AzureStack.Management
         Task<UsageConnectionsCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, string usageConnectionId, UsageConnectionsCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the usage connection  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='usageConnectionId'>
-        /// Your documentation here.
+        /// usage connection id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -78,7 +78,8 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string usageConnectionId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the usage connection details given the id and resource group
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -97,12 +98,12 @@ namespace Microsoft.AzureStack.Management
         Task<UsageConnectionsGetResult> GetAsync(string resourceGroupName, string usageConnectionId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the usage connections under a resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -111,36 +112,5 @@ namespace Microsoft.AzureStack.Management
         /// Your documentation here.
         /// </returns>
         Task<UsageConnectionsListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='nextLink'>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<UsageConnectionsListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<UsageConnectionsListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken);
     }
 }

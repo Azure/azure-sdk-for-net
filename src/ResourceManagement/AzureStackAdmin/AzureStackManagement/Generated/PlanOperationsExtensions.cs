@@ -31,7 +31,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class PlanOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the plan for a given plan id  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -39,10 +39,10 @@ namespace Microsoft.AzureStack.Management
         /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
         /// </param>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Id of the plan
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Resul of the plan get operation
         /// </returns>
         public static PlanGetResult Get(this IPlanOperations operations, string planId)
         {
@@ -54,7 +54,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the plan for a given plan id  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -62,10 +62,10 @@ namespace Microsoft.AzureStack.Management
         /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
         /// </param>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Id of the plan
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Resul of the plan get operation
         /// </returns>
         public static Task<PlanGetResult> GetAsync(this IPlanOperations operations, string planId)
         {

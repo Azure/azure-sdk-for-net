@@ -26,7 +26,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -38,7 +37,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Gallery item operations.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -67,18 +66,12 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Creates or updates the Gallery Item  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item Upload parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -87,32 +80,16 @@ namespace Microsoft.AzureStack.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string galleryItemId, GalleryItemCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateAsync(GalleryItemCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (galleryItemId == null)
-            {
-                throw new ArgumentNullException("galleryItemId");
-            }
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.GalleryItem == null)
+            if (parameters.GalleryItemUri == null)
             {
-                throw new ArgumentNullException("parameters.GalleryItem");
+                throw new ArgumentNullException("parameters.GalleryItemUri");
             }
             
             // Tracing
@@ -122,8 +99,6 @@ namespace Microsoft.AzureStack.Management
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("galleryItemId", galleryItemId);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
@@ -135,10 +110,7 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Gallery.Admin/galleryitems/";
-            url = url + Uri.EscapeDataString(galleryItemId);
+            url = url + "/providers/Microsoft.Gallery.Admin/galleryitems";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             if (queryParameters.Count > 0)
@@ -163,7 +135,7 @@ namespace Microsoft.AzureStack.Management
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
+                httpRequest.Method = HttpMethod.Post;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -179,47 +151,9 @@ namespace Microsoft.AzureStack.Management
                 JObject galleryItemCreateOrUpdateParametersValue = new JObject();
                 requestDoc = galleryItemCreateOrUpdateParametersValue;
                 
-                if (parameters.GalleryItem.Properties != null)
+                if (parameters.GalleryItemUri.GalleryItemUri != null)
                 {
-                    JObject propertiesValue = new JObject();
-                    galleryItemCreateOrUpdateParametersValue["properties"] = propertiesValue;
-                    
-                    if (parameters.GalleryItem.Properties.GalleryItemUri != null)
-                    {
-                        propertiesValue["galleryItemUri"] = parameters.GalleryItem.Properties.GalleryItemUri;
-                    }
-                }
-                
-                if (parameters.GalleryItem.Id != null)
-                {
-                    galleryItemCreateOrUpdateParametersValue["id"] = parameters.GalleryItem.Id;
-                }
-                
-                if (parameters.GalleryItem.Name != null)
-                {
-                    galleryItemCreateOrUpdateParametersValue["name"] = parameters.GalleryItem.Name;
-                }
-                
-                if (parameters.GalleryItem.Type != null)
-                {
-                    galleryItemCreateOrUpdateParametersValue["type"] = parameters.GalleryItem.Type;
-                }
-                
-                if (parameters.GalleryItem.Location != null)
-                {
-                    galleryItemCreateOrUpdateParametersValue["location"] = parameters.GalleryItem.Location;
-                }
-                
-                if (parameters.GalleryItem.Tags != null)
-                {
-                    JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.GalleryItem.Tags)
-                    {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
-                    }
-                    galleryItemCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                    galleryItemCreateOrUpdateParametersValue["galleryItemUri"] = parameters.GalleryItemUri.GalleryItemUri;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -282,15 +216,12 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gallery item Delete operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item identity.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -299,21 +230,9 @@ namespace Microsoft.AzureStack.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string galleryItemId, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string galleryItemId, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
             if (galleryItemId == null)
             {
                 throw new ArgumentNullException("galleryItemId");
@@ -326,7 +245,6 @@ namespace Microsoft.AzureStack.Management
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("galleryItemId", galleryItemId);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
@@ -338,8 +256,6 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.Gallery.Admin/galleryitems/";
             url = url + Uri.EscapeDataString(galleryItemId);
             List<string> queryParameters = new List<string>();
@@ -431,37 +347,22 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gallery item Get operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item identity.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item Get operation result.
         /// </returns>
-        public async Task<GalleryItemGetResult> GetAsync(string resourceGroupName, string galleryItemId, CancellationToken cancellationToken)
+        public async Task<GalleryItemGetResult> GetAsync(string galleryItemId, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
             if (galleryItemId == null)
             {
                 throw new ArgumentNullException("galleryItemId");
@@ -474,7 +375,6 @@ namespace Microsoft.AzureStack.Management
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("galleryItemId", galleryItemId);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
@@ -486,8 +386,6 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.Gallery.Admin/galleryitems/";
             url = url + Uri.EscapeDataString(galleryItemId);
             List<string> queryParameters = new List<string>();
@@ -649,34 +547,19 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gallery items List operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item List operation result.
         /// </returns>
-        public async Task<GalleryItemListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
+        public async Task<GalleryItemListResult> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -685,7 +568,6 @@ namespace Microsoft.AzureStack.Management
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -696,8 +578,6 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.Gallery.Admin/galleryitems";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -872,20 +752,20 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gallery items List operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// Required. Gets or sets the URL to get the next set of results.
+        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item List operation result.
         /// </returns>
         public async Task<GalleryItemListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {
@@ -909,211 +789,6 @@ namespace Microsoft.AzureStack.Management
             // Construct URL
             string url = "";
             url = url + Uri.EscapeDataString(nextLink);
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    GalleryItemListResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new GalleryItemListResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    GalleryItemModel galleryItemModelInstance = new GalleryItemModel();
-                                    result.GalleryItems.Add(galleryItemModelInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
-                                        galleryItemModelInstance.Properties = propertiesInstance;
-                                        
-                                        JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
-                                        if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
-                                        {
-                                            string galleryItemUriInstance = ((string)galleryItemUriValue);
-                                            propertiesInstance.GalleryItemUri = galleryItemUriInstance;
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        galleryItemModelInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        galleryItemModelInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        galleryItemModelInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        galleryItemModelInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            galleryItemModelInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                            {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public async Task<GalleryItemListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                TracingAdapter.Enter(invocationId, this, "ListWithoutResourceGroupAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/providers/Microsoft.Gallery.Admin/galleryitems";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
             url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects

@@ -63,64 +63,16 @@ namespace Microsoft.AzureStack.Management
             set { this._credentials = value; }
         }
         
-        private ICloudOperations _clouds;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual ICloudOperations Clouds
-        {
-            get { return this._clouds; }
-        }
-        
         private ICurationOperations _curation;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the curation items  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
         public virtual ICurationOperations Curation
         {
             get { return this._curation; }
-        }
-        
-        private IDelegatedOfferOperations _delegatedOffers;
-        
-        /// <summary>
-        /// Operations for delegated offers.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IDelegatedOfferOperations DelegatedOffers
-        {
-            get { return this._delegatedOffers; }
-        }
-        
-        private IDelegatedProviderConfigurationOperations _delegatedProviderConfiguration;
-        
-        /// <summary>
-        /// Operations for delegated provider configuration.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IDelegatedProviderConfigurationOperations DelegatedProviderConfiguration
-        {
-            get { return this._delegatedProviderConfiguration; }
-        }
-        
-        private IEventTypesOperations _eventTypes;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IEventTypesOperations EventTypes
-        {
-            get { return this._eventTypes; }
         }
         
         private IExtensionMetadataOperations _extensionsMetadata;
@@ -138,25 +90,13 @@ namespace Microsoft.AzureStack.Management
         private IGalleryItemOperations _galleryItem;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gallery item operations.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
         public virtual IGalleryItemOperations GalleryItem
         {
             get { return this._galleryItem; }
-        }
-        
-        private IImportedSubscriptionOperations _importedSubscriptions;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IImportedSubscriptionOperations ImportedSubscriptions
-        {
-            get { return this._importedSubscriptions; }
         }
         
         private IManagedLocationOperations _managedLocations;
@@ -174,7 +114,7 @@ namespace Microsoft.AzureStack.Management
         private IManagedOfferOperations _managedOffers;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator Operations on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -186,7 +126,7 @@ namespace Microsoft.AzureStack.Management
         private IManagedPlanOperations _managedPlans;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator operations on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -198,7 +138,7 @@ namespace Microsoft.AzureStack.Management
         private IManagedSubscriptionOperations _managedSubscriptions;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator Operations on the subscription  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -210,7 +150,7 @@ namespace Microsoft.AzureStack.Management
         private IOfferOperations _offers;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -222,7 +162,7 @@ namespace Microsoft.AzureStack.Management
         private IPlanOperations _plans;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -234,7 +174,7 @@ namespace Microsoft.AzureStack.Management
         private IProviderRegistrationOperations _providerRegistrations;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Resource provider manifest registration operations  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -246,7 +186,7 @@ namespace Microsoft.AzureStack.Management
         private IPublicGalleryItemOperations _publicGalleryItem;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Public gallery items operations.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -318,7 +258,7 @@ namespace Microsoft.AzureStack.Management
         private IUsageConnectionsOperations _usageConnections;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Usage connection operations  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -333,14 +273,9 @@ namespace Microsoft.AzureStack.Management
         public AzureStackClient()
             : base()
         {
-            this._clouds = new CloudOperations(this);
             this._curation = new CurationOperations(this);
-            this._delegatedOffers = new DelegatedOfferOperations(this);
-            this._delegatedProviderConfiguration = new DelegatedProviderConfigurationOperations(this);
-            this._eventTypes = new EventTypesOperations(this);
             this._extensionsMetadata = new ExtensionMetadataOperations(this);
             this._galleryItem = new GalleryItemOperations(this);
-            this._importedSubscriptions = new ImportedSubscriptionOperations(this);
             this._managedLocations = new ManagedLocationOperations(this);
             this._managedOffers = new ManagedOfferOperations(this);
             this._managedPlans = new ManagedPlanOperations(this);
@@ -401,14 +336,9 @@ namespace Microsoft.AzureStack.Management
         public AzureStackClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._clouds = new CloudOperations(this);
             this._curation = new CurationOperations(this);
-            this._delegatedOffers = new DelegatedOfferOperations(this);
-            this._delegatedProviderConfiguration = new DelegatedProviderConfigurationOperations(this);
-            this._eventTypes = new EventTypesOperations(this);
             this._extensionsMetadata = new ExtensionMetadataOperations(this);
             this._galleryItem = new GalleryItemOperations(this);
-            this._importedSubscriptions = new ImportedSubscriptionOperations(this);
             this._managedLocations = new ManagedLocationOperations(this);
             this._managedOffers = new ManagedOfferOperations(this);
             this._managedPlans = new ManagedPlanOperations(this);

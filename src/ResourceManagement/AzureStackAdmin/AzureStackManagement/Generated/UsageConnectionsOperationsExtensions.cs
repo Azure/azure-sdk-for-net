@@ -88,7 +88,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the usage connection  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -97,10 +97,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IUsageConnectionsOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='usageConnectionId'>
-        /// Required. Your documentation here.
+        /// Required. usage connection id
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -116,7 +116,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the usage connection  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -125,10 +125,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IUsageConnectionsOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='usageConnectionId'>
-        /// Required. Your documentation here.
+        /// Required. usage connection id
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -140,7 +140,8 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the usage connection details given the id and resource group
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -167,7 +168,8 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the usage connection details given the id and resource group
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -190,7 +192,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the usage connections under a resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -199,7 +201,7 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IUsageConnectionsOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <returns>
         /// Your documentation here.
@@ -214,7 +216,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the usage connections under a resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -223,7 +225,7 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IUsageConnectionsOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <returns>
         /// Your documentation here.
@@ -231,92 +233,6 @@ namespace Microsoft.AzureStack.Management
         public static Task<UsageConnectionsListResult> ListAsync(this IUsageConnectionsOperations operations, string resourceGroupName)
         {
             return operations.ListAsync(resourceGroupName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IUsageConnectionsOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static UsageConnectionsListResult ListNext(this IUsageConnectionsOperations operations, string nextLink)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IUsageConnectionsOperations)s).ListNextAsync(nextLink);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IUsageConnectionsOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<UsageConnectionsListResult> ListNextAsync(this IUsageConnectionsOperations operations, string nextLink)
-        {
-            return operations.ListNextAsync(nextLink, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IUsageConnectionsOperations.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static UsageConnectionsListResult ListWithoutResourceGroup(this IUsageConnectionsOperations operations)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IUsageConnectionsOperations)s).ListWithoutResourceGroupAsync();
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IUsageConnectionsOperations.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<UsageConnectionsListResult> ListWithoutResourceGroupAsync(this IUsageConnectionsOperations operations)
-        {
-            return operations.ListWithoutResourceGroupAsync(CancellationToken.None);
         }
     }
 }

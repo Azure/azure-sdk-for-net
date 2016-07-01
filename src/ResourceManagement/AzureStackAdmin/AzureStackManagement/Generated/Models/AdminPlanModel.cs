@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Administrator view of the plan
     /// </summary>
     public partial class AdminPlanModel : ResourceBase
     {
         private AdminPlanPropertiesDefinition _properties;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Plan properties in Administrator view
         /// </summary>
         public AdminPlanPropertiesDefinition Properties
         {

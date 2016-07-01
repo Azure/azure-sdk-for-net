@@ -38,7 +38,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Usage connection operations  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -93,7 +93,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -423,15 +423,15 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the usage connection  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='usageConnectionId'>
-        /// Required. Your documentation here.
+        /// Required. usage connection id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -447,7 +447,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -572,7 +572,8 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the usage connection details given the id and resource group
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -595,7 +596,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -832,12 +833,12 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the usage connections under a resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -852,7 +853,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -881,488 +882,6 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Commerce.Providers/usageConnections";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    UsageConnectionsListResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new UsageConnectionsListResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    UsageConnectionModel usageConnectionModelInstance = new UsageConnectionModel();
-                                    result.UsageConnections.Add(usageConnectionModelInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        UsageConnection propertiesInstance = new UsageConnection();
-                                        usageConnectionModelInstance.Properties = propertiesInstance;
-                                        
-                                        JToken providerLocationValue = propertiesValue["providerLocation"];
-                                        if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
-                                        {
-                                            string providerLocationInstance = ((string)providerLocationValue);
-                                            propertiesInstance.ProviderLocation = providerLocationInstance;
-                                        }
-                                        
-                                        JToken providerNamespaceValue = propertiesValue["providerNamespace"];
-                                        if (providerNamespaceValue != null && providerNamespaceValue.Type != JTokenType.Null)
-                                        {
-                                            string providerNamespaceInstance = ((string)providerNamespaceValue);
-                                            propertiesInstance.ProviderNamespace = providerNamespaceInstance;
-                                        }
-                                        
-                                        JToken usageStorageConnectionStringValue = propertiesValue["usageStorageConnectionString"];
-                                        if (usageStorageConnectionStringValue != null && usageStorageConnectionStringValue.Type != JTokenType.Null)
-                                        {
-                                            string usageStorageConnectionStringInstance = ((string)usageStorageConnectionStringValue);
-                                            propertiesInstance.UsageStorageConnectionString = usageStorageConnectionStringInstance;
-                                        }
-                                        
-                                        JToken usageReportingQueueValue = propertiesValue["usageReportingQueue"];
-                                        if (usageReportingQueueValue != null && usageReportingQueueValue.Type != JTokenType.Null)
-                                        {
-                                            string usageReportingQueueInstance = ((string)usageReportingQueueValue);
-                                            propertiesInstance.UsageReportingQueue = usageReportingQueueInstance;
-                                        }
-                                        
-                                        JToken usageReportingTableValue = propertiesValue["usageReportingTable"];
-                                        if (usageReportingTableValue != null && usageReportingTableValue.Type != JTokenType.Null)
-                                        {
-                                            string usageReportingTableInstance = ((string)usageReportingTableValue);
-                                            propertiesInstance.UsageReportingTable = usageReportingTableInstance;
-                                        }
-                                        
-                                        JToken errorReportingQueueValue = propertiesValue["errorReportingQueue"];
-                                        if (errorReportingQueueValue != null && errorReportingQueueValue.Type != JTokenType.Null)
-                                        {
-                                            string errorReportingQueueInstance = ((string)errorReportingQueueValue);
-                                            propertiesInstance.ErrorReportingQueue = errorReportingQueueInstance;
-                                        }
-                                        
-                                        JToken errorReportingTableValue = propertiesValue["errorReportingTable"];
-                                        if (errorReportingTableValue != null && errorReportingTableValue.Type != JTokenType.Null)
-                                        {
-                                            string errorReportingTableInstance = ((string)errorReportingTableValue);
-                                            propertiesInstance.ErrorReportingTable = errorReportingTableInstance;
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        usageConnectionModelInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        usageConnectionModelInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        usageConnectionModelInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        usageConnectionModelInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            usageConnectionModelInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                            {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public async Task<UsageConnectionsListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + Uri.EscapeDataString(nextLink);
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    UsageConnectionsListResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new UsageConnectionsListResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    UsageConnectionModel usageConnectionModelInstance = new UsageConnectionModel();
-                                    result.UsageConnections.Add(usageConnectionModelInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        UsageConnection propertiesInstance = new UsageConnection();
-                                        usageConnectionModelInstance.Properties = propertiesInstance;
-                                        
-                                        JToken providerLocationValue = propertiesValue["providerLocation"];
-                                        if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
-                                        {
-                                            string providerLocationInstance = ((string)providerLocationValue);
-                                            propertiesInstance.ProviderLocation = providerLocationInstance;
-                                        }
-                                        
-                                        JToken providerNamespaceValue = propertiesValue["providerNamespace"];
-                                        if (providerNamespaceValue != null && providerNamespaceValue.Type != JTokenType.Null)
-                                        {
-                                            string providerNamespaceInstance = ((string)providerNamespaceValue);
-                                            propertiesInstance.ProviderNamespace = providerNamespaceInstance;
-                                        }
-                                        
-                                        JToken usageStorageConnectionStringValue = propertiesValue["usageStorageConnectionString"];
-                                        if (usageStorageConnectionStringValue != null && usageStorageConnectionStringValue.Type != JTokenType.Null)
-                                        {
-                                            string usageStorageConnectionStringInstance = ((string)usageStorageConnectionStringValue);
-                                            propertiesInstance.UsageStorageConnectionString = usageStorageConnectionStringInstance;
-                                        }
-                                        
-                                        JToken usageReportingQueueValue = propertiesValue["usageReportingQueue"];
-                                        if (usageReportingQueueValue != null && usageReportingQueueValue.Type != JTokenType.Null)
-                                        {
-                                            string usageReportingQueueInstance = ((string)usageReportingQueueValue);
-                                            propertiesInstance.UsageReportingQueue = usageReportingQueueInstance;
-                                        }
-                                        
-                                        JToken usageReportingTableValue = propertiesValue["usageReportingTable"];
-                                        if (usageReportingTableValue != null && usageReportingTableValue.Type != JTokenType.Null)
-                                        {
-                                            string usageReportingTableInstance = ((string)usageReportingTableValue);
-                                            propertiesInstance.UsageReportingTable = usageReportingTableInstance;
-                                        }
-                                        
-                                        JToken errorReportingQueueValue = propertiesValue["errorReportingQueue"];
-                                        if (errorReportingQueueValue != null && errorReportingQueueValue.Type != JTokenType.Null)
-                                        {
-                                            string errorReportingQueueInstance = ((string)errorReportingQueueValue);
-                                            propertiesInstance.ErrorReportingQueue = errorReportingQueueInstance;
-                                        }
-                                        
-                                        JToken errorReportingTableValue = propertiesValue["errorReportingTable"];
-                                        if (errorReportingTableValue != null && errorReportingTableValue.Type != JTokenType.Null)
-                                        {
-                                            string errorReportingTableInstance = ((string)errorReportingTableValue);
-                                            propertiesInstance.ErrorReportingTable = errorReportingTableInstance;
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        usageConnectionModelInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        usageConnectionModelInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        usageConnectionModelInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        usageConnectionModelInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            usageConnectionModelInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                            {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public async Task<UsageConnectionsListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                TracingAdapter.Enter(invocationId, this, "ListWithoutResourceGroupAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
             url = url + "/providers/Microsoft.Commerce.Providers/usageConnections";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));

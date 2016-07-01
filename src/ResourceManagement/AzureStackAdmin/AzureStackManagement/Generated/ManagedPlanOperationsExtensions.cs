@@ -32,7 +32,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class ManagedPlanOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
+        /// Return the created or updated plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -41,13 +41,13 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedPlanOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Plan properties
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result for the create or update operation of the plan
         /// </returns>
         public static ManagedPlanCreateOrUpdateResult CreateOrUpdate(this IManagedPlanOperations operations, string resourceGroupName, ManagedPlanCreateOrUpdateParameters parameters)
         {
@@ -59,7 +59,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Return the created or updated plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -68,13 +68,13 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedPlanOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Plan properties
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result for the create or update operation of the plan
         /// </returns>
         public static Task<ManagedPlanCreateOrUpdateResult> CreateOrUpdateAsync(this IManagedPlanOperations operations, string resourceGroupName, ManagedPlanCreateOrUpdateParameters parameters)
         {
@@ -82,7 +82,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -91,10 +91,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedPlanOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Plan name
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -110,7 +110,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -119,10 +119,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedPlanOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Plan name
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -134,7 +134,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the administrator view of the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -143,10 +143,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedPlanOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Plan name
         /// </param>
         /// <returns>
         /// Your documentation here.
@@ -161,7 +161,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the administrator view of the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -170,10 +170,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedPlanOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Plan name
         /// </param>
         /// <returns>
         /// Your documentation here.
@@ -308,7 +308,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists all the plans under the resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -317,10 +317,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedPlanOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='includeDetails'>
-        /// Required. Your documentation here.
+        /// Required. Flag to specify whether to include details
         /// </param>
         /// <returns>
         /// Your documentation here.
@@ -335,7 +335,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists all the plans under the resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -344,10 +344,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedPlanOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='includeDetails'>
-        /// Required. Your documentation here.
+        /// Required. Flag to specify whether to include details
         /// </param>
         /// <returns>
         /// Your documentation here.

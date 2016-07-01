@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Subscription Registration States
     /// </summary>
     public enum SubscriptionRegistrationState
     {

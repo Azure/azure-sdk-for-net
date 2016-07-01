@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Admin view of the offer
     /// </summary>
     public partial class AdminOfferModel : ResourceBase
     {
         private AdminOfferPropertiesDefinition _properties;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Admin offer properties
         /// </summary>
         public AdminOfferPropertiesDefinition Properties
         {

@@ -32,7 +32,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class ManagedOfferOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
+        /// Returns the created or updated offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -41,13 +41,13 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Offer properties
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update operation of offer
         /// </returns>
         public static ManagedOfferCreateOrUpdateResult CreateOrUpdate(this IManagedOfferOperations operations, string resourceGroupName, ManagedOfferCreateOrUpdateParameters parameters)
         {
@@ -59,7 +59,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Returns the created or updated offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -68,13 +68,13 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Offer properties
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update operation of offer
         /// </returns>
         public static Task<ManagedOfferCreateOrUpdateResult> CreateOrUpdateAsync(this IManagedOfferOperations operations, string resourceGroupName, ManagedOfferCreateOrUpdateParameters parameters)
         {
@@ -82,7 +82,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -91,10 +91,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -110,7 +110,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -119,10 +119,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -134,7 +134,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the administrator view of the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -143,10 +143,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <returns>
         /// Your documentation here.
@@ -161,7 +161,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the administrator view of the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -170,10 +170,10 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <returns>
         /// Your documentation here.

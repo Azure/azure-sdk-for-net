@@ -26,19 +26,20 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Gallery item Upload parameters.
     /// </summary>
     public partial class GalleryItemCreateOrUpdateParameters
     {
-        private GalleryItemModel _galleryItem;
+        private GalleryItemUriPayload _galleryItemUri;
         
         /// <summary>
-        /// Required. Your documentation here.
+        /// Required. Gallery item Uri referenced to a public storage from
+        /// where the gallery item package will be uploaded.
         /// </summary>
-        public GalleryItemModel GalleryItem
+        public GalleryItemUriPayload GalleryItemUri
         {
-            get { return this._galleryItem; }
-            set { this._galleryItem = value; }
+            get { return this._galleryItemUri; }
+            set { this._galleryItemUri = value; }
         }
         
         /// <summary>
@@ -53,14 +54,14 @@ namespace Microsoft.AzureStack.Management.Models
         /// Initializes a new instance of the
         /// GalleryItemCreateOrUpdateParameters class with required arguments.
         /// </summary>
-        public GalleryItemCreateOrUpdateParameters(GalleryItemModel galleryItem)
+        public GalleryItemCreateOrUpdateParameters(GalleryItemUriPayload galleryItemUri)
             : this()
         {
-            if (galleryItem == null)
+            if (galleryItemUri == null)
             {
-                throw new ArgumentNullException("galleryItem");
+                throw new ArgumentNullException("galleryItemUri");
             }
-            this.GalleryItem = galleryItem;
+            this.GalleryItemUri = galleryItemUri;
         }
     }
 }

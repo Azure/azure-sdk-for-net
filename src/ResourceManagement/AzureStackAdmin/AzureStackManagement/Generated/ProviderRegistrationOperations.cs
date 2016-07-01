@@ -40,7 +40,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Resource provider manifest registration operations  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -70,21 +70,21 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Registers a resource provider manifest  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest definition
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update of resource provider manifest
         /// </returns>
         public async Task<ProviderRegistrationCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ProviderRegistrationCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -93,7 +93,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -832,15 +832,15 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Deletes the resource provider registration  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -856,7 +856,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -986,16 +986,16 @@ namespace Microsoft.AzureStack.Management
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider registration Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Get result of the resource provider manifest registration
         /// </returns>
         public async Task<ProviderRegistrationGetResult> GetAsync(string resourceGroupName, string providerregistrationId, CancellationToken cancellationToken)
         {
@@ -1004,7 +1004,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1461,18 +1461,18 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the registered provider manifest given a resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource provider manifest list operation
         /// </returns>
         public async Task<ProviderRegistrationListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
@@ -1481,7 +1481,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1946,12 +1946,12 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the registerd provider manifest with the next link  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
+        /// Required. Next link of registered provider manifest  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </param>
@@ -1959,7 +1959,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource provider manifest list operation
         /// </returns>
         public async Task<ProviderRegistrationListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {
@@ -2401,7 +2401,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the registered provider manifests  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -2409,7 +2409,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource provider manifest list operation
         /// </returns>
         public async Task<ProviderRegistrationListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken)
         {
@@ -2879,7 +2879,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource provider manifest validation
         /// </returns>
         public async Task<ProviderRegistrationValidateResult> ValidateAsync(ProviderRegistrationValidateParameters parameters, CancellationToken cancellationToken)
         {

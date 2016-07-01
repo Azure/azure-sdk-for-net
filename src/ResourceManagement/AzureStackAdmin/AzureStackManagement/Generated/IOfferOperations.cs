@@ -28,7 +28,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Operations on the offer  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -81,17 +81,17 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         Task<OfferListResult> ListAsync(string providerIdentifier, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the offer with the next link  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='nextLink'>
-        /// Your documentation here.  (see
+        /// Next link for the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </param>
@@ -99,7 +99,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         Task<OfferListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
@@ -112,7 +112,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         Task<OfferListResult> ListUnderRootProviderAsync(CancellationToken cancellationToken);
     }

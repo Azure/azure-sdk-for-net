@@ -27,14 +27,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the resource provider manifest validation
     /// </summary>
     public partial class ProviderRegistrationValidateResult : AzureOperationResponse
     {
         private ProviderRegistrationValidationError _error;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Error definition of resource provider validation
         /// </summary>
         public ProviderRegistrationValidationError Error
         {

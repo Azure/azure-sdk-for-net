@@ -28,14 +28,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Public gallery items operations.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
     public partial interface IPublicGalleryItemOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
+        /// Public gallery items list.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -43,7 +43,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Public gallery items list result.
         /// </returns>
         Task<PublicGalleryItemListResult> ListAllAsync(CancellationToken cancellationToken);
     }

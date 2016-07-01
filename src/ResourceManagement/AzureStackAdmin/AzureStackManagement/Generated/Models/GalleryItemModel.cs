@@ -26,14 +26,15 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Gallery item set of the parameters including GalleryItemUri.
     /// </summary>
     public partial class GalleryItemModel : ResourceBase
     {
         private GalleryItemUriPayload _properties;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gallery item Uri referenced to a public storage from
+        /// where the gallery item package will be uploaded.
         /// </summary>
         public GalleryItemUriPayload Properties
         {

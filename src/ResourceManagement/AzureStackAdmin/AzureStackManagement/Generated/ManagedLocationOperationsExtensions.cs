@@ -41,7 +41,7 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedLocationOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Location properties
         /// </param>
         /// <returns>
         /// The location update result.
@@ -65,7 +65,7 @@ namespace Microsoft.AzureStack.Management
         /// Microsoft.AzureStack.Management.IManagedLocationOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Location properties
         /// </param>
         /// <returns>
         /// The location update result.

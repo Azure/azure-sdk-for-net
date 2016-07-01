@@ -39,7 +39,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Administrator operations on the plan  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -68,21 +68,21 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Return the created or updated plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Plan properties
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result for the create or update operation of the plan
         /// </returns>
         public async Task<ManagedPlanCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ManagedPlanCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -91,7 +91,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -439,15 +439,15 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Plan name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -463,7 +463,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -588,15 +588,15 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the administrator view of the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Plan name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -611,7 +611,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -881,7 +881,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1136,7 +1136,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1411,15 +1411,15 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists all the plans under the resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='includeDetails'>
-        /// Required. Your documentation here.
+        /// Required. Flag to specify whether to include details
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1434,7 +1434,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }

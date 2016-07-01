@@ -29,41 +29,41 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Administrator operations on the plan  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
     public partial interface IManagedPlanOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
+        /// Return the created or updated plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Your documentation here.
+        /// Plan properties
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result for the create or update operation of the plan
         /// </returns>
         Task<ManagedPlanCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ManagedPlanCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='planId'>
-        /// Your documentation here.
+        /// Plan name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -75,15 +75,15 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string planId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the administrator view of the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='planId'>
-        /// Your documentation here.
+        /// Plan name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -144,15 +144,15 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedPlanGetMetricsResult> GetMetricsAsync(string resourceGroupName, string planId, string metricId, string filter, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists all the plans under the resource group  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='includeDetails'>
-        /// Your documentation here.
+        /// Flag to specify whether to include details
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

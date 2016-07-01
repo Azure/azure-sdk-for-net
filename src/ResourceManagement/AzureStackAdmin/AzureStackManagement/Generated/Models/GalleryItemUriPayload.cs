@@ -25,14 +25,16 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Gallery item Uri referenced to a public storage from where the gallery
+    /// item package will be uploaded.
     /// </summary>
     public partial class GalleryItemUriPayload
     {
         private string _galleryItemUri;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gallery item Uri referenced to a public storage from
+        /// where the gallery item package will be uploaded.
         /// </summary>
         public string GalleryItemUri
         {

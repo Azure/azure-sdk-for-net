@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Offer contract
     /// </summary>
     public partial class OfferDefinition
     {

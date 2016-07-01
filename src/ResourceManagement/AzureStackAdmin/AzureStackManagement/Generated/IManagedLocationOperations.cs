@@ -41,7 +41,7 @@ namespace Microsoft.AzureStack.Management
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Your documentation here.
+        /// Location properties
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -44,7 +44,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _externalReferenceId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the External Reference Id
         /// </summary>
         public string ExternalReferenceId
         {

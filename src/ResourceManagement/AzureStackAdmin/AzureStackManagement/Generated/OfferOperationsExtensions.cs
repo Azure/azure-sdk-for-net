@@ -132,7 +132,7 @@ namespace Microsoft.AzureStack.Management
         /// that provider.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         public static OfferListResult List(this IOfferOperations operations, string providerIdentifier)
         {
@@ -157,7 +157,7 @@ namespace Microsoft.AzureStack.Management
         /// that provider.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         public static Task<OfferListResult> ListAsync(this IOfferOperations operations, string providerIdentifier)
         {
@@ -165,7 +165,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the offer with the next link  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -173,12 +173,12 @@ namespace Microsoft.AzureStack.Management
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
+        /// Required. Next link for the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         public static OfferListResult ListNext(this IOfferOperations operations, string nextLink)
         {
@@ -190,7 +190,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Lists the offer with the next link  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
@@ -198,12 +198,12 @@ namespace Microsoft.AzureStack.Management
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
+        /// Required. Next link for the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         public static Task<OfferListResult> ListNextAsync(this IOfferOperations operations, string nextLink)
         {
@@ -219,7 +219,7 @@ namespace Microsoft.AzureStack.Management
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         public static OfferListResult ListUnderRootProvider(this IOfferOperations operations)
         {
@@ -239,7 +239,7 @@ namespace Microsoft.AzureStack.Management
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer
         /// </returns>
         public static Task<OfferListResult> ListUnderRootProviderAsync(this IOfferOperations operations)
         {

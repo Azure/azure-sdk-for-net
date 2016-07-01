@@ -39,7 +39,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Administrator Operations on the offer  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -68,21 +68,21 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Returns the created or updated offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Offer properties
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update operation of offer
         /// </returns>
         public async Task<ManagedOfferCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ManagedOfferCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -91,7 +91,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -486,15 +486,15 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Delete operation on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -510,7 +510,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -635,15 +635,15 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gets the administrator view of the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
         /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -658,7 +658,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -957,7 +957,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1212,7 +1212,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1513,7 +1513,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1839,7 +1839,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -2698,7 +2698,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
