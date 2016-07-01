@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Defines parameters for an Azure Search index that influence scoring in
     /// search queries.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn798928.aspx" />
     /// </summary>
     public partial class ScoringProfile
     {
@@ -68,8 +69,11 @@ namespace Microsoft.Azure.Search.Models
         public ScoringFunctionAggregation? FunctionAggregation { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
