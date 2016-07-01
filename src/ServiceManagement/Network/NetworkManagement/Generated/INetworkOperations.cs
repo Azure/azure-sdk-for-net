@@ -223,5 +223,20 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Prepare Virtual Network migration api validates the given virtual
+        /// network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Validate Virtual Network Migration operation response.
+        /// </returns>
+        Task<XrpMigrationValidateVirtualNetworkResponse> ValidateMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
     }
 }

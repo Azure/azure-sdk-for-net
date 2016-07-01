@@ -317,5 +317,20 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// request ID.
         /// </returns>
         Task<AzureOperationResponse> UpdateAsync(string accountName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Validate storage account migration api validates the given storage
+        /// account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='storageAccountName'>
+        /// Name of storage account to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Validate Storage Account Migration operation response.
+        /// </returns>
+        Task<XrpMigrationValidateStorageResponse> ValidateMigrationAsync(string storageAccountName, CancellationToken cancellationToken);
     }
 }

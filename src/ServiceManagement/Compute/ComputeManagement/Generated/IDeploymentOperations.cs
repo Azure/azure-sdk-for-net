@@ -1890,6 +1890,27 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationStatusResponse> UpgradeBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Validate Deployment Operation validates your deployment for
+        /// IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Deployment Network resource parameters for migration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Validate Deployment Migration operation response.
+        /// </returns>
+        Task<XrpMigrationValidateDeploymentResponse> ValidateMigrationAsync(string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Walk Upgrade Domain By Deployment Name operation specifies an
         /// update domain in which a role instance must be updated. For more
         /// information about updating role instances, see Update an Azure
