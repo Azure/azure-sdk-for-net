@@ -103,9 +103,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         
         /// <summary>
         /// Optional. Specifies the targeted region in which the namespace
-        /// should be created. It can be any of the following values: East
-        /// AsiaNorth EuropeWest EuropeEast USSoutheast AsiaNorth Central
-        /// USWest USSouth Central US  (see
+        /// should be created. It can be any of the following values:  Central
+        /// US, East US, East US 2, North Central US, South Central US, West
+        /// US, North Europe, West Europe, East Asia, Southeast Asia, Brazil
+        /// South, Canada Central, Canada East, Japan East, Japan West  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
         /// for more information)
         /// </summary>
