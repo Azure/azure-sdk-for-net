@@ -1,0 +1,162 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/1a2109e3-9da0-455b-b937-e35e36c1163c/services/servicebus/regions",
+      "EncodedRequestUri": "LzFhMjEwOWUzLTlkYTAtNDU1Yi1iOTM3LWUzNWUzNmMxMTYzYy9zZXJ2aWNlcy9zZXJ2aWNlYnVzL3JlZ2lvbnM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/atom+xml"
+        ],
+        "x-ms-version": [
+          "2013-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ServiceBus.ServiceBusManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<feed xmlns=\"http://www.w3.org/2005/Atom\">\r\n  <title type=\"text\"></title>\r\n  <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861391</id>\r\n  <updated>2016-07-01T01:50:09Z</updated>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861392</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Central US</Code>\r\n        <FullName>Central US</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861393</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>East US</Code>\r\n        <FullName>East US</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861394</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>East US 2</Code>\r\n        <FullName>East US 2</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861395</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>North Central US</Code>\r\n        <FullName>North Central US</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861396</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>South Central US</Code>\r\n        <FullName>South Central US</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861397</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>West US</Code>\r\n        <FullName>West US</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861398</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>North Europe</Code>\r\n        <FullName>North Europe</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861399</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>West Europe</Code>\r\n        <FullName>West Europe</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861400</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>East Asia</Code>\r\n        <FullName>East Asia</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861401</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Southeast Asia</Code>\r\n        <FullName>Southeast Asia</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861402</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Brazil South</Code>\r\n        <FullName>Brazil South</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861403</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Japan East</Code>\r\n        <FullName>Japan East</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861404</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Japan West</Code>\r\n        <FullName>Japan West</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861405</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Central India</Code>\r\n        <FullName>Central India</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861406</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>South India</Code>\r\n        <FullName>South India</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861407</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>West India</Code>\r\n        <FullName>West India</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861408</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Canada Central</Code>\r\n        <FullName>Canada Central</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861409</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Canada East</Code>\r\n        <FullName>Canada East</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861410</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Australia East</Code>\r\n        <FullName>Australia East</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n  <entry>\r\n    <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861411</id>\r\n    <title type=\"text\"></title>\r\n    <updated>2016-07-01T01:50:09Z</updated>\r\n    <content type=\"application/xml\">\r\n      <RegionCodeDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <Code>Australia Southeast</Code>\r\n        <FullName>Australia Southeast</FullName>\r\n      </RegionCodeDescription>\r\n    </content>\r\n  </entry>\r\n</feed>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "8565"
+        ],
+        "Content-Type": [
+          "application/atom+xml; type=feed; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-request-id": [
+          "4ca48b55b213abb29acbb0b2100cbdfb"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Jul 2016 01:50:08 GMT"
+        ],
+        "Server": [
+          "1.0.6198.397",
+          "(rd_rdfe_stable.160624-1024)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a2109e3-9da0-455b-b937-e35e36c1163c/services/servicebus/namespaces/testeventHubNS1603",
+      "EncodedRequestUri": "LzFhMjEwOWUzLTlkYTAtNDU1Yi1iOTM3LWUzNWUzNmMxMTYzYy9zZXJ2aWNlcy9zZXJ2aWNlYnVzL25hbWVzcGFjZXMvdGVzdGV2ZW50SHViTlMxNjAz",
+      "RequestMethod": "PUT",
+      "RequestBody": "<entry xmlns=\"http://www.w3.org/2005/Atom\">\r\n  <content type=\"application/atom+xml;type=entry;charset=utf-8\">\r\n    <NamespaceDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\">\r\n      <Region>Central US</Region>\r\n      <CreateACSNamespace>false</CreateACSNamespace>\r\n      <NamespaceType>EventHub</NamespaceType>\r\n    </NamespaceDescription>\r\n  </content>\r\n</entry>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/atom+xml"
+        ],
+        "Content-Length": [
+          "402"
+        ],
+        "Accept": [
+          "application/atom+xml"
+        ],
+        "type": [
+          "entry"
+        ],
+        "x-ms-version": [
+          "2014-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ServiceBus.ServiceBusManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<entry xmlns=\"http://www.w3.org/2005/Atom\">\r\n  <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861412</id>\r\n  <title type=\"text\"></title>\r\n  <updated>2016-07-01T01:50:10Z</updated>\r\n  <content type=\"application/xml\">\r\n    <NamespaceDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n      <Name>testeventHubNS1603</Name>\r\n      <Region>Central US</Region>\r\n      <Status>Activating</Status>\r\n      <CreatedAt>2016-07-01T01:50:11.11Z</CreatedAt>\r\n      <ServiceBusEndpoint>https://testeventhubns1603.servicebus.windows.net/</ServiceBusEndpoint>\r\n      <SubscriptionId>1a2109e39da0455bb937e35e36c1163c</SubscriptionId>\r\n      <Enabled>true</Enabled>\r\n      <Critical>false</Critical>\r\n      <EventHubEnabled>true</EventHubEnabled>\r\n      <NamespaceType>EventHub</NamespaceType>\r\n      <ResourceGroup>Default-ServiceBus-CentralUS</ResourceGroup>\r\n    </NamespaceDescription>\r\n  </content>\r\n</entry>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "905"
+        ],
+        "Content-Type": [
+          "application/atom+xml; type=entry; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-request-id": [
+          "b71fd2374847ab048997688c671f3b53"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Jul 2016 01:50:09 GMT"
+        ],
+        "Server": [
+          "1.0.6198.397",
+          "(rd_rdfe_stable.160624-1024)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1a2109e3-9da0-455b-b937-e35e36c1163c/services/servicebus/namespaces/testeventHubNS1603",
+      "EncodedRequestUri": "LzFhMjEwOWUzLTlkYTAtNDU1Yi1iOTM3LWUzNWUzNmMxMTYzYy9zZXJ2aWNlcy9zZXJ2aWNlYnVzL25hbWVzcGFjZXMvdGVzdGV2ZW50SHViTlMxNjAz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/atom+xml"
+        ],
+        "x-ms-version": [
+          "2013-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ServiceBus.ServiceBusManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<entry xmlns=\"http://www.w3.org/2005/Atom\">\r\n  <id>uuid:93e3033a-5815-4587-9adb-10484db4cf5c;id=12861956</id>\r\n  <title type=\"text\"></title>\r\n  <updated>2016-07-01T01:50:33Z</updated>\r\n  <content type=\"application/xml\">\r\n    <NamespaceDescription xmlns=\"http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n      <Name>testeventHubNS1603</Name>\r\n      <Region>Central US</Region>\r\n      <Status>Active</Status>\r\n      <CreatedAt>2016-07-01T01:50:11.11Z</CreatedAt>\r\n      <ServiceBusEndpoint>https://testeventhubns1603.servicebus.windows.net/</ServiceBusEndpoint>\r\n      <SubscriptionId>1a2109e39da0455bb937e35e36c1163c</SubscriptionId>\r\n      <Enabled>true</Enabled>\r\n      <Critical>false</Critical>\r\n      <UpdatedAt>2016-07-01T01:50:14.21Z</UpdatedAt>\r\n      <EventHubEnabled>true</EventHubEnabled>\r\n      <NamespaceType>EventHub</NamespaceType>\r\n      <MessagingSku>2</MessagingSku>\r\n      <ResourceGroup>Default-ServiceBus-CentralUS</ResourceGroup>\r\n    </NamespaceDescription>\r\n  </content>\r\n</entry>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "977"
+        ],
+        "Content-Type": [
+          "application/atom+xml; type=entry; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-request-id": [
+          "a5bef980e2bda0e4a1ec8040a66540d5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Jul 2016 01:50:32 GMT"
+        ],
+        "Server": [
+          "1.0.6198.397",
+          "(rd_rdfe_stable.160624-1024)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCreateEventHubNamespace": [
+      "testeventHubNS1603"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "1a2109e3-9da0-455b-b937-e35e36c1163c"
+  }
+}
