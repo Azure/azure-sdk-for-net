@@ -436,8 +436,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             url: ""http://myhost.com/"",
             authenticationType: ""Basic"",
             username: ""microsoft"",
-            password: ""fakepassword"",
-            apiKey: ""mykey""            
+            password: ""fakepassword""   
         }
     }
 }";

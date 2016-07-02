@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
@@ -22,7 +24,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public class WebLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>
-        /// Required. Type of authentication used to connect to the web table source. Possible values are: Anonymous, Basic, and WebApi.
+        /// Required. Type of authentication used to connect to the web table source. Possible values are: Anonymous and Basic.
         /// </summary>
         [AdfRequired]
         public string AuthenticationType { get; set; }
@@ -44,8 +46,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string Password { get; set; }
 
         /// <summary>
-        /// Optional. API key for Web API authentication.
+        /// Obsolete. WebApi-based authentication has been deprecated.
         /// </summary>
+        [Obsolete]
         public string ApiKey { get; set; }
 
         public WebLinkedService()
