@@ -36,9 +36,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IManagedOfferOperations
     {
         /// <summary>
-        /// Returns the created or updated offer  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Returns the created or updated offer
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -55,9 +53,7 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedOfferCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ManagedOfferCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Delete operation on the offer  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the offer
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -75,9 +71,7 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string offerId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the administrator view of the offer  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the offer
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -89,155 +83,25 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer Get operation
         /// </returns>
         Task<ManagedOfferGetResult> GetAsync(string resourceGroupName, string offerId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the offers under the specified resource group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='offerId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='metricDefinitionId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<ManagedOfferGetMetricDefinitionsResult> GetMetricDefinitionsAsync(string resourceGroupName, string offerId, string metricDefinitionId, string filter, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='offerId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='metricId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<ManagedOfferGetMetricsResult> GetMetricsAsync(string resourceGroupName, string offerId, string metricId, string filter, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='offerName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='parameters'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<ManagedOfferLinkResult> LinkAsync(string resourceGroupName, string offerName, ManagedOfferLinkParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='includeDetails'>
-        /// Your documentation here.
+        /// Flag to specify whether to include details
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer list operation
         /// </returns>
         Task<ManagedOfferListResult> ListAsync(string resourceGroupName, bool includeDetails, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='nextLink'>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<ManagedOfferListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='includeDetails'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<ManagedOfferListResult> ListWithoutResourceGroupAsync(bool includeDetails, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='offerName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='parameters'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<ManagedOfferUnlinkResult> UnlinkAsync(string resourceGroupName, string offerName, ManagedOfferUnlinkParameters parameters, CancellationToken cancellationToken);
     }
 }

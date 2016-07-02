@@ -36,9 +36,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IProviderRegistrationOperations
     {
         /// <summary>
-        /// Registers a resource provider manifest  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Registers a resource provider manifest
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -55,9 +53,7 @@ namespace Microsoft.AzureStack.Management
         Task<ProviderRegistrationCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ProviderRegistrationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Deletes the resource provider registration  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Deletes the resource provider registration
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -75,15 +71,14 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string providerregistrationId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the manifest registration for the specified manifest
+        /// registration id
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Resource provider registration Id
+        /// Resource provider manifest registration Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -94,9 +89,7 @@ namespace Microsoft.AzureStack.Management
         Task<ProviderRegistrationGetResult> GetAsync(string resourceGroupName, string providerregistrationId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Lists the registered provider manifest given a resource group  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the registered provider manifest given a resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -108,21 +101,5 @@ namespace Microsoft.AzureStack.Management
         /// Result of the resource provider manifest list operation
         /// </returns>
         Task<ProviderRegistrationListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Validate provider registration.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='parameters'>
-        /// Provider registration validation parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Result of the resource provider manifest validation
-        /// </returns>
-        Task<ProviderRegistrationValidateResult> ValidateAsync(ProviderRegistrationValidateParameters parameters, CancellationToken cancellationToken);
     }
 }

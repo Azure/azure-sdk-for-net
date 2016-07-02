@@ -36,9 +36,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IManagedSubscriptionOperations
     {
         /// <summary>
-        /// Result of the create or update operation of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the subscription
         /// </summary>
         /// <param name='parameters'>
         /// Subscription update parameters
@@ -52,9 +50,7 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedSubscriptionCreateOrUpdateResult> CreateOrUpdateAsync(ManagedSubscriptionCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Delete operation of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation of the subscription
         /// </summary>
         /// <param name='subscriptionId'>
         /// Subscription Id
@@ -69,9 +65,7 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string subscriptionId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the administrator view of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the subscription
         /// </summary>
         /// <param name='subscriptionId'>
         /// Subscription Id
@@ -85,9 +79,7 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedSubscriptionGetResult> GetAsync(string subscriptionId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Lists the subscriptions  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscriptions
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -98,14 +90,10 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedSubscriptionListResult> ListAsync(bool includeDetails, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Lists the subscription with the next link  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscription with the next link
         /// </summary>
         /// <param name='nextLink'>
-        /// Next link for the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// The URL pointing to get the next set of subscriptions
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

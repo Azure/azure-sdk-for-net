@@ -29,7 +29,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of subscription list operation
     /// </summary>
     public partial class SubscriptionListResult : AzureOperationResponse
     {
@@ -47,7 +47,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<SubscriptionDefinition> _subscriptions;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. List of subscription definitions
         /// </summary>
         public IList<SubscriptionDefinition> Subscriptions
         {

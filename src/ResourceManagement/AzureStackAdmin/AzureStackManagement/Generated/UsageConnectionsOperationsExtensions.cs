@@ -32,9 +32,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class UsageConnectionsOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the usage connection
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -62,9 +60,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the usage connection
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -88,9 +84,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete operation on the usage connection  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the usage connection
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -116,9 +110,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete operation on the usage connection  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the usage connection
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -141,9 +133,6 @@ namespace Microsoft.AzureStack.Management
         
         /// <summary>
         /// Gets the usage connection details given the id and resource group
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -169,9 +158,6 @@ namespace Microsoft.AzureStack.Management
         
         /// <summary>
         /// Gets the usage connection details given the id and resource group
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -192,9 +178,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the usage connections under a resource group  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the usage connections under a resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -204,7 +188,7 @@ namespace Microsoft.AzureStack.Management
         /// Required. Resource group name
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// List of usage connections
         /// </returns>
         public static UsageConnectionsListResult List(this IUsageConnectionsOperations operations, string resourceGroupName)
         {
@@ -216,9 +200,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the usage connections under a resource group  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the usage connections under a resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -228,7 +210,7 @@ namespace Microsoft.AzureStack.Management
         /// Required. Resource group name
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// List of usage connections
         /// </returns>
         public static Task<UsageConnectionsListResult> ListAsync(this IUsageConnectionsOperations operations, string resourceGroupName)
         {

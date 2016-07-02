@@ -37,7 +37,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Operations on the subscription as a tenant  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -66,18 +66,16 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the subscription as a tenant
         /// </summary>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Parameters for creating or updating the subscription
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Subscription definition object after create or update operation
         /// </returns>
         public async Task<SubscriptionCreateOrUpdateResult> CreateOrUpdateAsync(SubscriptionCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -298,12 +296,10 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation of the subscription
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Required. Your documentation here.
+        /// Required. Subscription Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -424,9 +420,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the subscription given the id
         /// </summary>
         /// <param name='subscriptionId'>
         /// Optional.
@@ -435,7 +429,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of subscription get operation
         /// </returns>
         public async Task<SubscriptionGetResult> GetAsync(string subscriptionId, CancellationToken cancellationToken)
         {
@@ -607,9 +601,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscriptions under the user account
         /// </summary>
         /// <param name='includeDetails'>
         /// Required.
@@ -618,7 +610,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of subscription list operation
         /// </returns>
         public async Task<SubscriptionListResult> ListAsync(bool includeDetails, CancellationToken cancellationToken)
         {
@@ -801,20 +793,16 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the next set of subscriptions
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. URL to get the next set of results
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of subscription list operation
         /// </returns>
         public async Task<SubscriptionListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {

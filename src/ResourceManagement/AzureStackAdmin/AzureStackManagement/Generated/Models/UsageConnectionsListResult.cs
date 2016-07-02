@@ -29,7 +29,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// List of usage connections
     /// </summary>
     public partial class UsageConnectionsListResult : AzureOperationResponse
     {
@@ -47,7 +47,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<UsageConnectionModel> _usageConnections;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. List of usage connections
         /// </summary>
         public IList<UsageConnectionModel> UsageConnections
         {

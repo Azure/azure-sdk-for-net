@@ -29,7 +29,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IAzureStackClient : IDisposable
     {
         /// <summary>
-        /// Your documentation here.
+        /// Apiversion of the endpoint
         /// </summary>
         string ApiVersion
         {
@@ -37,7 +37,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.
+        /// Resource Manager endpoint
         /// </summary>
         Uri BaseUri
         {
@@ -45,7 +45,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.
+        /// Credentials to access resource manager endpoint
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
@@ -163,9 +163,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
+        /// Operations on the resource group
         /// </summary>
         IResourceGroupOperations ResourceGroups
         {
@@ -173,37 +171,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IResourceOperations Resources
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IResourceProviderOperations ResourceProviders
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IShallowResourceOperations ShallowResources
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the subscription as a tenant  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>

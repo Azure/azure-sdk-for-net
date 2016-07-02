@@ -35,9 +35,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface ICurationOperations
     {
         /// <summary>
-        /// Lists the curation results  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the curation results
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -32,9 +32,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class ManagedSubscriptionOperationsExtensions
     {
         /// <summary>
-        /// Result of the create or update operation of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -56,9 +54,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Result of the create or update operation of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -76,9 +72,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete operation of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation of the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -101,9 +95,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete operation of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation of the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -122,9 +114,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the administrator view of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -146,9 +136,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the administrator view of the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -166,9 +154,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the subscriptions  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscriptions
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -190,9 +176,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the subscriptions  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscriptions
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -210,18 +194,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the subscription with the next link  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscription with the next link
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Next link for the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL pointing to get the next set of subscriptions
         /// </param>
         /// <returns>
         /// Result of the list operations
@@ -236,18 +216,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the subscription with the next link  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscription with the next link
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Next link for the subscription  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL pointing to get the next set of subscriptions
         /// </param>
         /// <returns>
         /// Result of the list operations

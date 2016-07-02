@@ -70,9 +70,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Registers a resource provider manifest  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Registers a resource provider manifest
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource group name
@@ -832,9 +830,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Deletes the resource provider registration  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Deletes the resource provider registration
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource group name
@@ -981,15 +977,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the manifest registration for the specified manifest
+        /// registration id
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Resource provider registration Id
+        /// Required. Resource provider manifest registration Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1461,9 +1456,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the registered provider manifest given a resource group  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the registered provider manifest given a resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource group name
@@ -1916,246 +1909,6 @@ namespace Microsoft.AzureStack.Management
                             {
                                 string odatanextLinkInstance = ((string)odatanextLinkValue);
                                 result.NextLink = odatanextLinkInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Validate provider registration.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='parameters'>
-        /// Required. Provider registration validation parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Result of the resource provider manifest validation
-        /// </returns>
-        public async Task<ProviderRegistrationValidateResult> ValidateAsync(ProviderRegistrationValidateParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ProviderRegistration == null)
-            {
-                throw new ArgumentNullException("parameters.ProviderRegistration");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "ValidateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/providers/Microsoft.Subscriptions.Providers/validateManifest";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject providerRegistrationValidateParametersValue = new JObject();
-                requestDoc = providerRegistrationValidateParametersValue;
-                
-                if (parameters.ProviderRegistration.Name != null)
-                {
-                    providerRegistrationValidateParametersValue["name"] = parameters.ProviderRegistration.Name;
-                }
-                
-                if (parameters.ProviderRegistration.DisplayName != null)
-                {
-                    providerRegistrationValidateParametersValue["displayName"] = parameters.ProviderRegistration.DisplayName;
-                }
-                
-                if (parameters.ProviderRegistration.Location != null)
-                {
-                    providerRegistrationValidateParametersValue["location"] = parameters.ProviderRegistration.Location;
-                }
-                
-                if (parameters.ProviderRegistration.ManifestEndpoint != null)
-                {
-                    JObject manifestEndpointValue = new JObject();
-                    providerRegistrationValidateParametersValue["manifestEndpoint"] = manifestEndpointValue;
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.ApiVersions != null)
-                    {
-                        if (parameters.ProviderRegistration.ManifestEndpoint.ApiVersions is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.ManifestEndpoint.ApiVersions).IsInitialized)
-                        {
-                            JArray apiVersionsArray = new JArray();
-                            foreach (string apiVersionsItem in parameters.ProviderRegistration.ManifestEndpoint.ApiVersions)
-                            {
-                                apiVersionsArray.Add(apiVersionsItem);
-                            }
-                            manifestEndpointValue["apiVersions"] = apiVersionsArray;
-                        }
-                    }
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.ApiVersion != null)
-                    {
-                        manifestEndpointValue["apiVersion"] = parameters.ProviderRegistration.ManifestEndpoint.ApiVersion;
-                    }
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.Enabled != null)
-                    {
-                        manifestEndpointValue["enabled"] = parameters.ProviderRegistration.ManifestEndpoint.Enabled.Value;
-                    }
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.EndpointUri != null)
-                    {
-                        manifestEndpointValue["endpointUri"] = parameters.ProviderRegistration.ManifestEndpoint.EndpointUri;
-                    }
-                    
-                    manifestEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.ManifestEndpoint.Timeout);
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.AuthenticationUsername != null)
-                    {
-                        manifestEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.ManifestEndpoint.AuthenticationUsername;
-                    }
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.AuthenticationPassword != null)
-                    {
-                        manifestEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.ManifestEndpoint.AuthenticationPassword;
-                    }
-                }
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.BadRequest && statusCode != HttpStatusCode.Conflict)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ProviderRegistrationValidateResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.BadRequest || statusCode == HttpStatusCode.Conflict)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ProviderRegistrationValidateResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken errorValue = responseDoc["error"];
-                            if (errorValue != null && errorValue.Type != JTokenType.Null)
-                            {
-                                ProviderRegistrationValidationError errorInstance = new ProviderRegistrationValidationError();
-                                result.Error = errorInstance;
-                                
-                                JToken codeValue = errorValue["code"];
-                                if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                {
-                                    string codeInstance = ((string)codeValue);
-                                    errorInstance.Code = codeInstance;
-                                }
-                                
-                                JToken messageValue = errorValue["message"];
-                                if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                {
-                                    string messageInstance = ((string)messageValue);
-                                    errorInstance.Message = messageInstance;
-                                }
                             }
                         }
                         

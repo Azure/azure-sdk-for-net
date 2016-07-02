@@ -36,9 +36,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IGalleryItemOperations
     {
         /// <summary>
-        /// Creates or updates the Gallery Item  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the Gallery Item
         /// </summary>
         /// <param name='parameters'>
         /// Gallery item Upload parameters.
@@ -53,9 +51,7 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> CreateOrUpdateAsync(GalleryItemCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gallery item Delete operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Delete operation.
         /// </summary>
         /// <param name='galleryItemId'>
         /// Gallery item identity.
@@ -70,9 +66,7 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string galleryItemId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gallery item Get operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Get operation.
         /// </summary>
         /// <param name='galleryItemId'>
         /// Gallery item identity.
@@ -86,9 +80,7 @@ namespace Microsoft.AzureStack.Management
         Task<GalleryItemGetResult> GetAsync(string galleryItemId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gallery items List operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -99,14 +91,10 @@ namespace Microsoft.AzureStack.Management
         Task<GalleryItemListResult> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gallery items List operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='nextLink'>
-        /// Gets or sets the URL to get the next set of results.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets or sets the URL to get the next set of results.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

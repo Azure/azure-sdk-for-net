@@ -35,9 +35,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IPublicGalleryItemOperations
     {
         /// <summary>
-        /// Public gallery items list.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Public gallery items list.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

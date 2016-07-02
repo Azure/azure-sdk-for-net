@@ -31,9 +31,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class CurationOperationsExtensions
     {
         /// <summary>
-        /// Lists the curation results  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the curation results
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -52,9 +50,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the curation results  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the curation results
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

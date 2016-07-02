@@ -31,9 +31,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class OfferOperationsExtensions
     {
         /// <summary>
-        /// Get an offer given its Id.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets an offer given its Id.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
@@ -55,9 +53,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get an offer given its Id.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets an offer given its Id.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
@@ -75,9 +71,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the price of the offer.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the price of the offer.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
@@ -99,9 +93,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the price of the offer.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the price of the offer.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
@@ -120,9 +112,7 @@ namespace Microsoft.AzureStack.Management
         
         /// <summary>
         /// Gets the public offers under the provider which has the given
-        /// provider identifier  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// provider identifier
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
@@ -145,9 +135,7 @@ namespace Microsoft.AzureStack.Management
         
         /// <summary>
         /// Gets the public offers under the provider which has the given
-        /// provider identifier  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// provider identifier
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
@@ -165,17 +153,13 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the offer with the next link  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the offer with the next link
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Next link for the offer  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL to get the next set of offers
         /// </param>
         /// <returns>
         /// Result of the offer
@@ -190,17 +174,13 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the offer with the next link  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the offer with the next link
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Next link for the offer  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL to get the next set of offers
         /// </param>
         /// <returns>
         /// Result of the offer
@@ -211,9 +191,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the public offers under the zero day (root) provider  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the public offers under the zero day (root) provider
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.
@@ -231,9 +209,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the public offers under the zero day (root) provider  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the public offers under the zero day (root) provider
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IOfferOperations.

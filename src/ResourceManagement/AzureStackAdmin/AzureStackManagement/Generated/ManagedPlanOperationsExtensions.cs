@@ -32,9 +32,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class ManagedPlanOperationsExtensions
     {
         /// <summary>
-        /// Return the created or updated plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the plan
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -59,9 +57,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Return the created or updated plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the plan
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -82,9 +78,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete operation on the plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the plan
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -110,9 +104,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete operation on the plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the plan
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -134,9 +126,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the administrator view of the plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the plan
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -149,7 +139,7 @@ namespace Microsoft.AzureStack.Management
         /// Required. Plan name
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Administrator view of plan for the get operation
         /// </returns>
         public static ManagedPlanGetResult Get(this IManagedPlanOperations operations, string resourceGroupName, string planId)
         {
@@ -161,9 +151,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the administrator view of the plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the plan
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -176,7 +164,7 @@ namespace Microsoft.AzureStack.Management
         /// Required. Plan name
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Administrator view of plan for the get operation
         /// </returns>
         public static Task<ManagedPlanGetResult> GetAsync(this IManagedPlanOperations operations, string resourceGroupName, string planId)
         {
@@ -184,133 +172,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedPlanOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='planId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='metricDefinitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedPlanGetMetricDefinitionsResult GetMetricDefinitions(this IManagedPlanOperations operations, string resourceGroupName, string planId, string metricDefinitionId, string filter)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedPlanOperations)s).GetMetricDefinitionsAsync(resourceGroupName, planId, metricDefinitionId, filter);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedPlanOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='planId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='metricDefinitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedPlanGetMetricDefinitionsResult> GetMetricDefinitionsAsync(this IManagedPlanOperations operations, string resourceGroupName, string planId, string metricDefinitionId, string filter)
-        {
-            return operations.GetMetricDefinitionsAsync(resourceGroupName, planId, metricDefinitionId, filter, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedPlanOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='planId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='metricId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedPlanGetMetricsResult GetMetrics(this IManagedPlanOperations operations, string resourceGroupName, string planId, string metricId, string filter)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedPlanOperations)s).GetMetricsAsync(resourceGroupName, planId, metricId, filter);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedPlanOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='planId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='metricId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedPlanGetMetricsResult> GetMetricsAsync(this IManagedPlanOperations operations, string resourceGroupName, string planId, string metricId, string filter)
-        {
-            return operations.GetMetricsAsync(resourceGroupName, planId, metricId, filter, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Lists all the plans under the resource group  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists all the plans under the resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -335,9 +197,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists all the plans under the resource group  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists all the plans under the resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

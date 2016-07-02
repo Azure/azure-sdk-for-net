@@ -32,9 +32,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class GalleryItemOperationsExtensions
     {
         /// <summary>
-        /// Creates or updates the Gallery Item  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the Gallery Item
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -57,9 +55,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Creates or updates the Gallery Item  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the Gallery Item
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -78,9 +74,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gallery item Delete operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Delete operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -103,9 +97,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gallery item Delete operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Delete operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -124,9 +116,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gallery item Get operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Get operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -148,9 +138,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gallery item Get operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Get operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -168,9 +156,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gallery items List operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -189,9 +175,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gallery items List operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -206,9 +190,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gallery items List operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -216,8 +198,6 @@ namespace Microsoft.AzureStack.Management
         /// </param>
         /// <param name='nextLink'>
         /// Required. Gets or sets the URL to get the next set of results.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
         /// </param>
         /// <returns>
         /// Gallery item List operation result.
@@ -232,9 +212,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gallery items List operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -242,8 +220,6 @@ namespace Microsoft.AzureStack.Management
         /// </param>
         /// <param name='nextLink'>
         /// Required. Gets or sets the URL to get the next set of results.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
         /// </param>
         /// <returns>
         /// Gallery item List operation result.

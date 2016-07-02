@@ -29,7 +29,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the resource group list operation
     /// </summary>
     public partial class ResourceGroupListResult : AzureOperationResponse
     {
@@ -47,7 +47,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<ResourceGroupDefinition> _resourceGroups;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. List of resource group definitions
         /// </summary>
         public IList<ResourceGroupDefinition> ResourceGroups
         {

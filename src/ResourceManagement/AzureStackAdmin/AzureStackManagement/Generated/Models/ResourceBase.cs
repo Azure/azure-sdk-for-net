@@ -27,14 +27,14 @@ using Hyak.Common;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Resource Base for all the ARM resources
     /// </summary>
     public partial class ResourceBase
     {
         private string _id;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Resource Id
         /// </summary>
         public string Id
         {
@@ -45,7 +45,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Location of the resource
         /// </summary>
         public string Location
         {
@@ -56,7 +56,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Name of the resource
         /// </summary>
         public string Name
         {
@@ -67,7 +67,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Tags associated with the resource
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -78,7 +78,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _type;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Type of the resource
         /// </summary>
         public string Type
         {

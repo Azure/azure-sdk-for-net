@@ -63,9 +63,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get an offer given its Id.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets an offer given its Id.
         /// </summary>
         /// <param name='offerId'>
         /// Required. The full offer Id in format
@@ -233,9 +231,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the price of the offer.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the price of the offer.
         /// </summary>
         /// <param name='offerId'>
         /// Required. the full offer ID
@@ -398,9 +394,7 @@ namespace Microsoft.AzureStack.Management
         
         /// <summary>
         /// Gets the public offers under the provider which has the given
-        /// provider identifier  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// provider identifier
         /// </summary>
         /// <param name='providerIdentifier'>
         /// Required. The provider identifier, we get the public offers under
@@ -584,14 +578,10 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the offer with the next link  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the offer with the next link
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. Next link for the offer  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL to get the next set of offers
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -752,9 +742,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the public offers under the zero day (root) provider  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the public offers under the zero day (root) provider
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

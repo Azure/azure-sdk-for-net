@@ -67,9 +67,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the usage connection
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource Group Name
@@ -423,9 +421,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete operation on the usage connection  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the usage connection
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource group name
@@ -573,9 +569,6 @@ namespace Microsoft.AzureStack.Management
         
         /// <summary>
         /// Gets the usage connection details given the id and resource group
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource Group name for usage connection information
@@ -833,9 +826,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Lists the usage connections under a resource group  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the usage connections under a resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. Resource group name
@@ -844,7 +835,7 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// List of usage connections
         /// </returns>
         public async Task<UsageConnectionsListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
         {

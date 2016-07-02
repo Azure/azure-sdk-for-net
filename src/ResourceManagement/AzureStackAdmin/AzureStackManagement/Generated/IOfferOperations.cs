@@ -35,9 +35,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IOfferOperations
     {
         /// <summary>
-        /// Get an offer given its Id.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets an offer given its Id.
         /// </summary>
         /// <param name='offerId'>
         /// The full offer Id in format
@@ -52,9 +50,7 @@ namespace Microsoft.AzureStack.Management
         Task<OfferGetResult> GetAsync(string offerId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the price of the offer.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the price of the offer.
         /// </summary>
         /// <param name='offerId'>
         /// the full offer ID /delegatedProviders/{providerId}/offers/{offerId}.
@@ -69,9 +65,7 @@ namespace Microsoft.AzureStack.Management
         
         /// <summary>
         /// Gets the public offers under the provider which has the given
-        /// provider identifier  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// provider identifier
         /// </summary>
         /// <param name='providerIdentifier'>
         /// The provider identifier, we get the public offers under that
@@ -86,14 +80,10 @@ namespace Microsoft.AzureStack.Management
         Task<OfferListResult> ListAsync(string providerIdentifier, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Lists the offer with the next link  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the offer with the next link
         /// </summary>
         /// <param name='nextLink'>
-        /// Next link for the offer  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// The URL to get the next set of offers
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -104,9 +94,7 @@ namespace Microsoft.AzureStack.Management
         Task<OfferListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the public offers under the zero day (root) provider  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the public offers under the zero day (root) provider
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

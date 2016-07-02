@@ -31,9 +31,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class PublicGalleryItemOperationsExtensions
     {
         /// <summary>
-        /// Public gallery items list.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Public gallery items list.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -52,9 +50,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Public gallery items list.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Public gallery items list.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

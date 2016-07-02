@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Management
         private string _apiVersion;
         
         /// <summary>
-        /// Your documentation here.
+        /// Apiversion of the endpoint
         /// </summary>
         public string ApiVersion
         {
@@ -44,7 +44,7 @@ namespace Microsoft.AzureStack.Management
         private Uri _baseUri;
         
         /// <summary>
-        /// Your documentation here.
+        /// Resource Manager endpoint
         /// </summary>
         public Uri BaseUri
         {
@@ -55,7 +55,7 @@ namespace Microsoft.AzureStack.Management
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Your documentation here.
+        /// Credentials to access resource manager endpoint
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -198,55 +198,17 @@ namespace Microsoft.AzureStack.Management
         private IResourceGroupOperations _resourceGroups;
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
+        /// Operations on the resource group
         /// </summary>
         public virtual IResourceGroupOperations ResourceGroups
         {
             get { return this._resourceGroups; }
         }
         
-        private IResourceOperations _resources;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IResourceOperations Resources
-        {
-            get { return this._resources; }
-        }
-        
-        private IResourceProviderOperations _resourceProviders;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IResourceProviderOperations ResourceProviders
-        {
-            get { return this._resourceProviders; }
-        }
-        
-        private IShallowResourceOperations _shallowResources;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IShallowResourceOperations ShallowResources
-        {
-            get { return this._shallowResources; }
-        }
-        
         private ISubscriptionOperations _subscriptions;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the subscription as a tenant  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -285,9 +247,6 @@ namespace Microsoft.AzureStack.Management
             this._providerRegistrations = new ProviderRegistrationOperations(this);
             this._publicGalleryItem = new PublicGalleryItemOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
-            this._resources = new ResourceOperations(this);
-            this._resourceProviders = new ResourceProviderOperations(this);
-            this._shallowResources = new ShallowResourceOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
             this._usageConnections = new UsageConnectionsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -297,13 +256,13 @@ namespace Microsoft.AzureStack.Management
         /// Initializes a new instance of the AzureStackClient class.
         /// </summary>
         /// <param name='baseUri'>
-        /// Required. Your documentation here.
+        /// Required. Resource Manager endpoint
         /// </param>
         /// <param name='credentials'>
-        /// Required. Your documentation here.
+        /// Required. Credentials to access resource manager endpoint
         /// </param>
         /// <param name='apiVersion'>
-        /// Required. Your documentation here.
+        /// Required. Apiversion of the endpoint
         /// </param>
         public AzureStackClient(Uri baseUri, SubscriptionCloudCredentials credentials, string apiVersion)
             : this()
@@ -348,9 +307,6 @@ namespace Microsoft.AzureStack.Management
             this._providerRegistrations = new ProviderRegistrationOperations(this);
             this._publicGalleryItem = new PublicGalleryItemOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
-            this._resources = new ResourceOperations(this);
-            this._resourceProviders = new ResourceProviderOperations(this);
-            this._shallowResources = new ShallowResourceOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
             this._usageConnections = new UsageConnectionsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -360,13 +316,13 @@ namespace Microsoft.AzureStack.Management
         /// Initializes a new instance of the AzureStackClient class.
         /// </summary>
         /// <param name='baseUri'>
-        /// Required. Your documentation here.
+        /// Required. Resource Manager endpoint
         /// </param>
         /// <param name='credentials'>
-        /// Required. Your documentation here.
+        /// Required. Credentials to access resource manager endpoint
         /// </param>
         /// <param name='apiVersion'>
-        /// Required. Your documentation here.
+        /// Required. Apiversion of the endpoint
         /// </param>
         /// <param name='httpClient'>
         /// The Http client

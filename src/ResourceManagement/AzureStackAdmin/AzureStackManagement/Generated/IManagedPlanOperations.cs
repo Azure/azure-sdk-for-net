@@ -36,9 +36,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IManagedPlanOperations
     {
         /// <summary>
-        /// Return the created or updated plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the plan
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -55,9 +53,7 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedPlanCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ManagedPlanCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Delete operation on the plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the plan
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -75,9 +71,7 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string planId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the administrator view of the plan  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the plan
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -89,64 +83,12 @@ namespace Microsoft.AzureStack.Management
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Administrator view of plan for the get operation
         /// </returns>
         Task<ManagedPlanGetResult> GetAsync(string resourceGroupName, string planId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='planId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='metricDefinitionId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<ManagedPlanGetMetricDefinitionsResult> GetMetricDefinitionsAsync(string resourceGroupName, string planId, string metricDefinitionId, string filter, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='planId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='metricId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<ManagedPlanGetMetricsResult> GetMetricsAsync(string resourceGroupName, string planId, string metricId, string filter, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Lists all the plans under the resource group  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists all the plans under the resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Resource group name

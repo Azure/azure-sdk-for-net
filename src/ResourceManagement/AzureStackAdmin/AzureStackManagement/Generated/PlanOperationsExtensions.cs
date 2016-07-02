@@ -31,9 +31,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class PlanOperationsExtensions
     {
         /// <summary>
-        /// Gets the plan for a given plan id  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the plan for a given plan id
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
@@ -54,9 +52,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Gets the plan for a given plan id  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the plan for a given plan id
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
@@ -73,93 +69,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get the availability of the plan.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
-        /// </param>
-        /// <param name='planName'>
-        /// Required. The plan name.
-        /// </param>
-        /// <returns>
-        /// The plan availability result.
-        /// </returns>
-        public static PlanGetAvailabilityResult GetAvailability(this IPlanOperations operations, string planName)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IPlanOperations)s).GetAvailabilityAsync(planName);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Get the availability of the plan.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
-        /// </param>
-        /// <param name='planName'>
-        /// Required. The plan name.
-        /// </param>
-        /// <returns>
-        /// The plan availability result.
-        /// </returns>
-        public static Task<PlanGetAvailabilityResult> GetAvailabilityAsync(this IPlanOperations operations, string planName)
-        {
-            return operations.GetAvailabilityAsync(planName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Gets the plan price.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
-        /// </param>
-        /// <param name='planName'>
-        /// Required. the plan name
-        /// </param>
-        /// <returns>
-        /// Plan get price result.
-        /// </returns>
-        public static PlanGetPriceResult GetPrice(this IPlanOperations operations, string planName)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IPlanOperations)s).GetPriceAsync(planName);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Gets the plan price.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
-        /// </param>
-        /// <param name='planName'>
-        /// Required. the plan name
-        /// </param>
-        /// <returns>
-        /// Plan get price result.
-        /// </returns>
-        public static Task<PlanGetPriceResult> GetPriceAsync(this IPlanOperations operations, string planName)
-        {
-            return operations.GetPriceAsync(planName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Add on plans available for that subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Add on plans available for that subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.
@@ -177,9 +87,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Add on plans available for that subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Add on plans available for that subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.AzureStack.Management.IPlanOperations.

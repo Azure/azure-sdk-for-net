@@ -31,9 +31,7 @@ namespace Microsoft.AzureStack.Management
     public static partial class ExtensionMetadataOperationsExtensions
     {
         /// <summary>
-        /// Returns list of extensions the user has access to  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Returns list of extensions the user has access to
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -52,9 +50,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Returns list of extensions the user has access to  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Returns list of extensions the user has access to
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
