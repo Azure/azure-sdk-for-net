@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Management
         private string _apiVersion;
         
         /// <summary>
-        /// Your documentation here.
+        /// Apiversion of the endpoint
         /// </summary>
         public string ApiVersion
         {
@@ -44,7 +44,7 @@ namespace Microsoft.AzureStack.Management
         private Uri _baseUri;
         
         /// <summary>
-        /// Your documentation here.
+        /// Resource Manager endpoint
         /// </summary>
         public Uri BaseUri
         {
@@ -55,7 +55,7 @@ namespace Microsoft.AzureStack.Management
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Your documentation here.
+        /// Credentials to access resource manager endpoint
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -63,64 +63,16 @@ namespace Microsoft.AzureStack.Management
             set { this._credentials = value; }
         }
         
-        private ICloudOperations _clouds;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual ICloudOperations Clouds
-        {
-            get { return this._clouds; }
-        }
-        
         private ICurationOperations _curation;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the curation items  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
         public virtual ICurationOperations Curation
         {
             get { return this._curation; }
-        }
-        
-        private IDelegatedOfferOperations _delegatedOffers;
-        
-        /// <summary>
-        /// Operations for delegated offers.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IDelegatedOfferOperations DelegatedOffers
-        {
-            get { return this._delegatedOffers; }
-        }
-        
-        private IDelegatedProviderConfigurationOperations _delegatedProviderConfiguration;
-        
-        /// <summary>
-        /// Operations for delegated provider configuration.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IDelegatedProviderConfigurationOperations DelegatedProviderConfiguration
-        {
-            get { return this._delegatedProviderConfiguration; }
-        }
-        
-        private IEventTypesOperations _eventTypes;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IEventTypesOperations EventTypes
-        {
-            get { return this._eventTypes; }
         }
         
         private IExtensionMetadataOperations _extensionsMetadata;
@@ -138,25 +90,13 @@ namespace Microsoft.AzureStack.Management
         private IGalleryItemOperations _galleryItem;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gallery item operations.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
         public virtual IGalleryItemOperations GalleryItem
         {
             get { return this._galleryItem; }
-        }
-        
-        private IImportedSubscriptionOperations _importedSubscriptions;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IImportedSubscriptionOperations ImportedSubscriptions
-        {
-            get { return this._importedSubscriptions; }
         }
         
         private IManagedLocationOperations _managedLocations;
@@ -174,7 +114,7 @@ namespace Microsoft.AzureStack.Management
         private IManagedOfferOperations _managedOffers;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator Operations on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -186,7 +126,7 @@ namespace Microsoft.AzureStack.Management
         private IManagedPlanOperations _managedPlans;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator operations on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -198,7 +138,7 @@ namespace Microsoft.AzureStack.Management
         private IManagedSubscriptionOperations _managedSubscriptions;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator Operations on the subscription  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -210,7 +150,7 @@ namespace Microsoft.AzureStack.Management
         private IOfferOperations _offers;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -219,22 +159,10 @@ namespace Microsoft.AzureStack.Management
             get { return this._offers; }
         }
         
-        private IPackageOperations _package;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IPackageOperations Package
-        {
-            get { return this._package; }
-        }
-        
         private IPlanOperations _plans;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -246,7 +174,7 @@ namespace Microsoft.AzureStack.Management
         private IProviderRegistrationOperations _providerRegistrations;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Resource provider manifest registration operations  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -258,7 +186,7 @@ namespace Microsoft.AzureStack.Management
         private IPublicGalleryItemOperations _publicGalleryItem;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Public gallery items operations.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -270,55 +198,17 @@ namespace Microsoft.AzureStack.Management
         private IResourceGroupOperations _resourceGroups;
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
+        /// Operations on the resource group
         /// </summary>
         public virtual IResourceGroupOperations ResourceGroups
         {
             get { return this._resourceGroups; }
         }
         
-        private IResourceOperations _resources;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IResourceOperations Resources
-        {
-            get { return this._resources; }
-        }
-        
-        private IResourceProviderOperations _resourceProviders;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IResourceProviderOperations ResourceProviders
-        {
-            get { return this._resourceProviders; }
-        }
-        
-        private IShallowResourceOperations _shallowResources;
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        public virtual IShallowResourceOperations ShallowResources
-        {
-            get { return this._shallowResources; }
-        }
-        
         private ISubscriptionOperations _subscriptions;
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the subscription as a tenant  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -327,34 +217,38 @@ namespace Microsoft.AzureStack.Management
             get { return this._subscriptions; }
         }
         
+        private IUsageConnectionsOperations _usageConnections;
+        
+        /// <summary>
+        /// Usage connection operations  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        public virtual IUsageConnectionsOperations UsageConnections
+        {
+            get { return this._usageConnections; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AzureStackClient class.
         /// </summary>
         public AzureStackClient()
             : base()
         {
-            this._clouds = new CloudOperations(this);
             this._curation = new CurationOperations(this);
-            this._delegatedOffers = new DelegatedOfferOperations(this);
-            this._delegatedProviderConfiguration = new DelegatedProviderConfigurationOperations(this);
-            this._eventTypes = new EventTypesOperations(this);
             this._extensionsMetadata = new ExtensionMetadataOperations(this);
             this._galleryItem = new GalleryItemOperations(this);
-            this._importedSubscriptions = new ImportedSubscriptionOperations(this);
             this._managedLocations = new ManagedLocationOperations(this);
             this._managedOffers = new ManagedOfferOperations(this);
             this._managedPlans = new ManagedPlanOperations(this);
             this._managedSubscriptions = new ManagedSubscriptionOperations(this);
             this._offers = new OfferOperations(this);
-            this._package = new PackageOperations(this);
             this._plans = new PlanOperations(this);
             this._providerRegistrations = new ProviderRegistrationOperations(this);
             this._publicGalleryItem = new PublicGalleryItemOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
-            this._resources = new ResourceOperations(this);
-            this._resourceProviders = new ResourceProviderOperations(this);
-            this._shallowResources = new ShallowResourceOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
+            this._usageConnections = new UsageConnectionsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -362,13 +256,13 @@ namespace Microsoft.AzureStack.Management
         /// Initializes a new instance of the AzureStackClient class.
         /// </summary>
         /// <param name='baseUri'>
-        /// Required. Your documentation here.
+        /// Required. Resource Manager endpoint
         /// </param>
         /// <param name='credentials'>
-        /// Required. Your documentation here.
+        /// Required. Credentials to access resource manager endpoint
         /// </param>
         /// <param name='apiVersion'>
-        /// Required. Your documentation here.
+        /// Required. Apiversion of the endpoint
         /// </param>
         public AzureStackClient(Uri baseUri, SubscriptionCloudCredentials credentials, string apiVersion)
             : this()
@@ -401,28 +295,20 @@ namespace Microsoft.AzureStack.Management
         public AzureStackClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._clouds = new CloudOperations(this);
             this._curation = new CurationOperations(this);
-            this._delegatedOffers = new DelegatedOfferOperations(this);
-            this._delegatedProviderConfiguration = new DelegatedProviderConfigurationOperations(this);
-            this._eventTypes = new EventTypesOperations(this);
             this._extensionsMetadata = new ExtensionMetadataOperations(this);
             this._galleryItem = new GalleryItemOperations(this);
-            this._importedSubscriptions = new ImportedSubscriptionOperations(this);
             this._managedLocations = new ManagedLocationOperations(this);
             this._managedOffers = new ManagedOfferOperations(this);
             this._managedPlans = new ManagedPlanOperations(this);
             this._managedSubscriptions = new ManagedSubscriptionOperations(this);
             this._offers = new OfferOperations(this);
-            this._package = new PackageOperations(this);
             this._plans = new PlanOperations(this);
             this._providerRegistrations = new ProviderRegistrationOperations(this);
             this._publicGalleryItem = new PublicGalleryItemOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
-            this._resources = new ResourceOperations(this);
-            this._resourceProviders = new ResourceProviderOperations(this);
-            this._shallowResources = new ShallowResourceOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
+            this._usageConnections = new UsageConnectionsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -430,13 +316,13 @@ namespace Microsoft.AzureStack.Management
         /// Initializes a new instance of the AzureStackClient class.
         /// </summary>
         /// <param name='baseUri'>
-        /// Required. Your documentation here.
+        /// Required. Resource Manager endpoint
         /// </param>
         /// <param name='credentials'>
-        /// Required. Your documentation here.
+        /// Required. Credentials to access resource manager endpoint
         /// </param>
         /// <param name='apiVersion'>
-        /// Required. Your documentation here.
+        /// Required. Apiversion of the endpoint
         /// </param>
         /// <param name='httpClient'>
         /// The Http client

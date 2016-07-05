@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{FAD6191D-9246-4066-89F3-DF5552BB4E16}</ProjectGuid>
+    <AssemblyName>AzureStackAdmin.Tests</AssemblyName>
+    <RootNamespace>Microsoft.AzureStack.AzureStackStorageAdmin.Tests</RootNamespace>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AzureStackManagement\AzureStackManagement.csproj">
+      <Project>{0f495f37-c031-4827-9ea6-3e19a4930a70}</Project>
+      <Name>AzureStackManagement</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="OfferTests.cs" />
+    <Compile Include="LocationTests.cs" />
+    <Compile Include="ResourceProviderManifest.cs" />
+    <Compile Include="SubscriptionTests.cs" />
+    <Compile Include="PlanTests.cs" />
+    <Compile Include="RecordedDelegatingHandler.cs" />
+  </ItemGroup>
+</Project>

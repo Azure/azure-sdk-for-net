@@ -27,14 +27,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the create or update operation of offer
     /// </summary>
     public partial class ManagedOfferCreateOrUpdateResult : AzureOperationResponse
     {
         private AdminOfferModel _offer;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Administrator view of offer properties
         /// </summary>
         public AdminOfferModel Offer
         {

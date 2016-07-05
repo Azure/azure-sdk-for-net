@@ -20,19 +20,21 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The resource provider endpoint definition.
     /// </summary>
     public partial class ResourceProviderEndpoint
     {
         private string _apiVersion;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the API versions supported by the endpoint.
         /// </summary>
         public string ApiVersion
         {
@@ -40,10 +42,22 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._apiVersion = value; }
         }
         
+        private IList<string> _apiVersions;
+        
+        /// <summary>
+        /// Optional. Supported Apiversions
+        /// </summary>
+        public IList<string> ApiVersions
+        {
+            get { return this._apiVersions; }
+            set { this._apiVersions = value; }
+        }
+        
         private string _authenticationPassword;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the case-sensitive authentication password
+        /// (basic authentication).
         /// </summary>
         public string AuthenticationPassword
         {
@@ -54,7 +68,8 @@ namespace Microsoft.AzureStack.Management.Models
         private string _authenticationUsername;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the case-insensitive authentication username
+        /// (basic authentication).
         /// </summary>
         public string AuthenticationUsername
         {
@@ -65,7 +80,7 @@ namespace Microsoft.AzureStack.Management.Models
         private bool? _enabled;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional.  Gets or sets the enabled.
         /// </summary>
         public bool? Enabled
         {
@@ -76,7 +91,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _endpointUri;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the endpoint uri.
         /// </summary>
         public string EndpointUri
         {
@@ -87,7 +102,7 @@ namespace Microsoft.AzureStack.Management.Models
         private TimeSpan _timeout;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the timeout.
         /// </summary>
         public TimeSpan Timeout
         {
@@ -100,6 +115,7 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public ResourceProviderEndpoint()
         {
+            this.ApiVersions = new LazyList<string>();
         }
     }
 }

@@ -40,7 +40,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Resource provider manifest registration operations  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -70,21 +70,19 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Registers a resource provider manifest
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest definition
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update of resource provider manifest
         /// </returns>
         public async Task<ProviderRegistrationCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ProviderRegistrationCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -93,7 +91,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -131,7 +129,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/providerregistrations/";
+            url = url + "/providers/Microsoft.Subscriptions.Providers/manifests/";
             if (parameters.ProviderRegistration.Name != null)
             {
                 url = url + Uri.EscapeDataString(parameters.ProviderRegistration.Name);
@@ -181,19 +179,19 @@ namespace Microsoft.AzureStack.Management
                     JObject propertiesValue = new JObject();
                     providerRegistrationCreateOrUpdateParametersValue["properties"] = propertiesValue;
                     
-                    if (parameters.ProviderRegistration.Properties.Name != null)
-                    {
-                        propertiesValue["name"] = parameters.ProviderRegistration.Properties.Name;
-                    }
-                    
                     if (parameters.ProviderRegistration.Properties.DisplayName != null)
                     {
                         propertiesValue["displayName"] = parameters.ProviderRegistration.Properties.DisplayName;
                     }
                     
-                    if (parameters.ProviderRegistration.Properties.Location != null)
+                    if (parameters.ProviderRegistration.Properties.Namespace != null)
                     {
-                        propertiesValue["location"] = parameters.ProviderRegistration.Properties.Location;
+                        propertiesValue["namespace"] = parameters.ProviderRegistration.Properties.Namespace;
+                    }
+                    
+                    if (parameters.ProviderRegistration.Properties.ProviderLocation != null)
+                    {
+                        propertiesValue["providerLocation"] = parameters.ProviderRegistration.Properties.ProviderLocation;
                     }
                     
                     if (parameters.ProviderRegistration.Properties.Enabled != null)
@@ -205,6 +203,19 @@ namespace Microsoft.AzureStack.Management
                     {
                         JObject manifestEndpointValue = new JObject();
                         propertiesValue["manifestEndpoint"] = manifestEndpointValue;
+                        
+                        if (parameters.ProviderRegistration.Properties.ManifestEndpoint.ApiVersions != null)
+                        {
+                            if (parameters.ProviderRegistration.Properties.ManifestEndpoint.ApiVersions is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.ManifestEndpoint.ApiVersions).IsInitialized)
+                            {
+                                JArray apiVersionsArray = new JArray();
+                                foreach (string apiVersionsItem in parameters.ProviderRegistration.Properties.ManifestEndpoint.ApiVersions)
+                                {
+                                    apiVersionsArray.Add(apiVersionsItem);
+                                }
+                                manifestEndpointValue["apiVersions"] = apiVersionsArray;
+                            }
+                        }
                         
                         if (parameters.ProviderRegistration.Properties.ManifestEndpoint.ApiVersion != null)
                         {
@@ -234,430 +245,164 @@ namespace Microsoft.AzureStack.Management
                         }
                     }
                     
-                    if (parameters.ProviderRegistration.Properties.Manifest != null)
+                    if (parameters.ProviderRegistration.Properties.ProviderAuthorization != null)
                     {
-                        JObject manifestValue = new JObject();
-                        propertiesValue["manifest"] = manifestValue;
+                        JObject providerAuthorizationValue = new JObject();
+                        propertiesValue["providerAuthorization"] = providerAuthorizationValue;
                         
-                        if (parameters.ProviderRegistration.Properties.Manifest.Namespace != null)
+                        if (parameters.ProviderRegistration.Properties.ProviderAuthorization.ApplicationId != null)
                         {
-                            manifestValue["namespace"] = parameters.ProviderRegistration.Properties.Manifest.Namespace;
+                            providerAuthorizationValue["applicationId"] = parameters.ProviderRegistration.Properties.ProviderAuthorization.ApplicationId;
                         }
                         
-                        if (parameters.ProviderRegistration.Properties.Manifest.ProviderVersion != null)
+                        if (parameters.ProviderRegistration.Properties.ProviderAuthorization.RoleDefinitionId != null)
                         {
-                            manifestValue["providerVersion"] = parameters.ProviderRegistration.Properties.Manifest.ProviderVersion;
+                            providerAuthorizationValue["roleDefinitionId"] = parameters.ProviderRegistration.Properties.ProviderAuthorization.RoleDefinitionId;
                         }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.TenantResourceTypes != null)
+                    }
+                    
+                    if (parameters.ProviderRegistration.Properties.ExtensionName != null)
+                    {
+                        propertiesValue["extensionName"] = parameters.ProviderRegistration.Properties.ExtensionName;
+                    }
+                    
+                    if (parameters.ProviderRegistration.Properties.ExtensionUri != null)
+                    {
+                        propertiesValue["extensionUri"] = parameters.ProviderRegistration.Properties.ExtensionUri;
+                    }
+                    
+                    if (parameters.ProviderRegistration.Properties.Extensions != null)
+                    {
+                        if (parameters.ProviderRegistration.Properties.Extensions is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.Extensions).IsInitialized)
                         {
-                            if (parameters.ProviderRegistration.Properties.Manifest.TenantResourceTypes is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.Manifest.TenantResourceTypes).IsInitialized)
+                            JArray resourceTypesArray = new JArray();
+                            foreach (Extension resourceTypesItem in parameters.ProviderRegistration.Properties.Extensions)
                             {
-                                JArray tenantResourceTypesArray = new JArray();
-                                foreach (ResourceType tenantResourceTypesItem in parameters.ProviderRegistration.Properties.Manifest.TenantResourceTypes)
+                                JObject extensionValue = new JObject();
+                                resourceTypesArray.Add(extensionValue);
+                                
+                                if (resourceTypesItem.Name != null)
                                 {
-                                    JObject resourceTypeValue = new JObject();
-                                    tenantResourceTypesArray.Add(resourceTypeValue);
-                                    
-                                    if (tenantResourceTypesItem.Name != null)
+                                    extensionValue["name"] = resourceTypesItem.Name;
+                                }
+                                
+                                if (resourceTypesItem.Uri != null)
+                                {
+                                    extensionValue["uri"] = resourceTypesItem.Uri;
+                                }
+                            }
+                            propertiesValue["resourceTypes"] = resourceTypesArray;
+                        }
+                    }
+                    
+                    if (parameters.ProviderRegistration.Properties.ResourceTypes != null)
+                    {
+                        if (parameters.ProviderRegistration.Properties.ResourceTypes is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.ResourceTypes).IsInitialized)
+                        {
+                            JArray resourceTypesArray2 = new JArray();
+                            foreach (ResourceType resourceTypesItem2 in parameters.ProviderRegistration.Properties.ResourceTypes)
+                            {
+                                JObject resourceTypeValue = new JObject();
+                                resourceTypesArray2.Add(resourceTypeValue);
+                                
+                                if (resourceTypesItem2.Name != null)
+                                {
+                                    resourceTypeValue["name"] = resourceTypesItem2.Name;
+                                }
+                                
+                                resourceTypeValue["routingType"] = resourceTypesItem2.RoutingType.ToString();
+                                
+                                resourceTypeValue["resourceDeletionPolicy"] = resourceTypesItem2.ResourceDeletionPolicy.ToString();
+                                
+                                if (resourceTypesItem2.AllowedUnauthorizedActions != null)
+                                {
+                                    if (resourceTypesItem2.AllowedUnauthorizedActions is ILazyCollection == false || ((ILazyCollection)resourceTypesItem2.AllowedUnauthorizedActions).IsInitialized)
                                     {
-                                        resourceTypeValue["name"] = tenantResourceTypesItem.Name;
-                                    }
-                                    
-                                    resourceTypeValue["isProxyOnly"] = tenantResourceTypesItem.IsProxyOnly;
-                                    
-                                    resourceTypeValue["isHostBasedRouting"] = tenantResourceTypesItem.IsHostBasedRouting;
-                                    
-                                    resourceTypeValue["resourceGroupDeletionPolicy"] = tenantResourceTypesItem.ResourceGroupDeletionPolicy.ToString();
-                                    
-                                    resourceTypeValue["resourceDeletionPolicy"] = tenantResourceTypesItem.ResourceDeletionPolicy.ToString();
-                                    
-                                    if (tenantResourceTypesItem.Endpoints != null)
-                                    {
-                                        if (tenantResourceTypesItem.Endpoints is ILazyCollection == false || ((ILazyCollection)tenantResourceTypesItem.Endpoints).IsInitialized)
+                                        JArray allowedUnauthorizedActionsArray = new JArray();
+                                        foreach (string allowedUnauthorizedActionsItem in resourceTypesItem2.AllowedUnauthorizedActions)
                                         {
-                                            JArray endpointsArray = new JArray();
-                                            foreach (ResourceProviderEndpoint endpointsItem in tenantResourceTypesItem.Endpoints)
-                                            {
-                                                JObject resourceProviderEndpointValue = new JObject();
-                                                endpointsArray.Add(resourceProviderEndpointValue);
-                                                
-                                                if (endpointsItem.ApiVersion != null)
-                                                {
-                                                    resourceProviderEndpointValue["apiVersion"] = endpointsItem.ApiVersion;
-                                                }
-                                                
-                                                if (endpointsItem.Enabled != null)
-                                                {
-                                                    resourceProviderEndpointValue["enabled"] = endpointsItem.Enabled.Value;
-                                                }
-                                                
-                                                if (endpointsItem.EndpointUri != null)
-                                                {
-                                                    resourceProviderEndpointValue["endpointUri"] = endpointsItem.EndpointUri;
-                                                }
-                                                
-                                                resourceProviderEndpointValue["timeout"] = XmlConvert.ToString(endpointsItem.Timeout);
-                                                
-                                                if (endpointsItem.AuthenticationUsername != null)
-                                                {
-                                                    resourceProviderEndpointValue["authenticationUsername"] = endpointsItem.AuthenticationUsername;
-                                                }
-                                                
-                                                if (endpointsItem.AuthenticationPassword != null)
-                                                {
-                                                    resourceProviderEndpointValue["authenticationPassword"] = endpointsItem.AuthenticationPassword;
-                                                }
-                                            }
-                                            resourceTypeValue["endpoints"] = endpointsArray;
+                                            allowedUnauthorizedActionsArray.Add(allowedUnauthorizedActionsItem);
                                         }
+                                        resourceTypeValue["allowedUnauthorizedActions"] = allowedUnauthorizedActionsArray;
                                     }
                                 }
-                                manifestValue["tenantResourceTypes"] = tenantResourceTypesArray;
-                            }
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.AdminResourceTypes != null)
-                        {
-                            if (parameters.ProviderRegistration.Properties.Manifest.AdminResourceTypes is ILazyCollection == false || ((ILazyCollection)parameters.ProviderRegistration.Properties.Manifest.AdminResourceTypes).IsInitialized)
-                            {
-                                JArray adminResourceTypesArray = new JArray();
-                                foreach (ResourceType adminResourceTypesItem in parameters.ProviderRegistration.Properties.Manifest.AdminResourceTypes)
+                                
+                                if (resourceTypesItem2.MeteredResourceIds != null)
                                 {
-                                    JObject resourceTypeValue2 = new JObject();
-                                    adminResourceTypesArray.Add(resourceTypeValue2);
-                                    
-                                    if (adminResourceTypesItem.Name != null)
+                                    if (resourceTypesItem2.MeteredResourceIds is ILazyCollection == false || ((ILazyCollection)resourceTypesItem2.MeteredResourceIds).IsInitialized)
                                     {
-                                        resourceTypeValue2["name"] = adminResourceTypesItem.Name;
-                                    }
-                                    
-                                    resourceTypeValue2["isProxyOnly"] = adminResourceTypesItem.IsProxyOnly;
-                                    
-                                    resourceTypeValue2["isHostBasedRouting"] = adminResourceTypesItem.IsHostBasedRouting;
-                                    
-                                    resourceTypeValue2["resourceGroupDeletionPolicy"] = adminResourceTypesItem.ResourceGroupDeletionPolicy.ToString();
-                                    
-                                    resourceTypeValue2["resourceDeletionPolicy"] = adminResourceTypesItem.ResourceDeletionPolicy.ToString();
-                                    
-                                    if (adminResourceTypesItem.Endpoints != null)
-                                    {
-                                        if (adminResourceTypesItem.Endpoints is ILazyCollection == false || ((ILazyCollection)adminResourceTypesItem.Endpoints).IsInitialized)
+                                        JArray meteredResourceIdsArray = new JArray();
+                                        foreach (string meteredResourceIdsItem in resourceTypesItem2.MeteredResourceIds)
                                         {
-                                            JArray endpointsArray2 = new JArray();
-                                            foreach (ResourceProviderEndpoint endpointsItem2 in adminResourceTypesItem.Endpoints)
-                                            {
-                                                JObject resourceProviderEndpointValue2 = new JObject();
-                                                endpointsArray2.Add(resourceProviderEndpointValue2);
-                                                
-                                                if (endpointsItem2.ApiVersion != null)
-                                                {
-                                                    resourceProviderEndpointValue2["apiVersion"] = endpointsItem2.ApiVersion;
-                                                }
-                                                
-                                                if (endpointsItem2.Enabled != null)
-                                                {
-                                                    resourceProviderEndpointValue2["enabled"] = endpointsItem2.Enabled.Value;
-                                                }
-                                                
-                                                if (endpointsItem2.EndpointUri != null)
-                                                {
-                                                    resourceProviderEndpointValue2["endpointUri"] = endpointsItem2.EndpointUri;
-                                                }
-                                                
-                                                resourceProviderEndpointValue2["timeout"] = XmlConvert.ToString(endpointsItem2.Timeout);
-                                                
-                                                if (endpointsItem2.AuthenticationUsername != null)
-                                                {
-                                                    resourceProviderEndpointValue2["authenticationUsername"] = endpointsItem2.AuthenticationUsername;
-                                                }
-                                                
-                                                if (endpointsItem2.AuthenticationPassword != null)
-                                                {
-                                                    resourceProviderEndpointValue2["authenticationPassword"] = endpointsItem2.AuthenticationPassword;
-                                                }
-                                            }
-                                            resourceTypeValue2["endpoints"] = endpointsArray2;
+                                            meteredResourceIdsArray.Add(meteredResourceIdsItem);
                                         }
+                                        resourceTypeValue["meteredResourceIds"] = meteredResourceIdsArray;
                                     }
                                 }
-                                manifestValue["adminResourceTypes"] = adminResourceTypesArray;
+                                
+                                resourceTypeValue["marketplaceType"] = resourceTypesItem2.MarketplaceType.ToString();
+                                
+                                if (resourceTypesItem2.Endpoints != null)
+                                {
+                                    if (resourceTypesItem2.Endpoints is ILazyCollection == false || ((ILazyCollection)resourceTypesItem2.Endpoints).IsInitialized)
+                                    {
+                                        JArray endpointsArray = new JArray();
+                                        foreach (ResourceProviderEndpoint endpointsItem in resourceTypesItem2.Endpoints)
+                                        {
+                                            JObject resourceProviderEndpointValue = new JObject();
+                                            endpointsArray.Add(resourceProviderEndpointValue);
+                                            
+                                            if (endpointsItem.ApiVersions != null)
+                                            {
+                                                if (endpointsItem.ApiVersions is ILazyCollection == false || ((ILazyCollection)endpointsItem.ApiVersions).IsInitialized)
+                                                {
+                                                    JArray apiVersionsArray2 = new JArray();
+                                                    foreach (string apiVersionsItem2 in endpointsItem.ApiVersions)
+                                                    {
+                                                        apiVersionsArray2.Add(apiVersionsItem2);
+                                                    }
+                                                    resourceProviderEndpointValue["apiVersions"] = apiVersionsArray2;
+                                                }
+                                            }
+                                            
+                                            if (endpointsItem.ApiVersion != null)
+                                            {
+                                                resourceProviderEndpointValue["apiVersion"] = endpointsItem.ApiVersion;
+                                            }
+                                            
+                                            if (endpointsItem.Enabled != null)
+                                            {
+                                                resourceProviderEndpointValue["enabled"] = endpointsItem.Enabled.Value;
+                                            }
+                                            
+                                            if (endpointsItem.EndpointUri != null)
+                                            {
+                                                resourceProviderEndpointValue["endpointUri"] = endpointsItem.EndpointUri;
+                                            }
+                                            
+                                            resourceProviderEndpointValue["timeout"] = XmlConvert.ToString(endpointsItem.Timeout);
+                                            
+                                            if (endpointsItem.AuthenticationUsername != null)
+                                            {
+                                                resourceProviderEndpointValue["authenticationUsername"] = endpointsItem.AuthenticationUsername;
+                                            }
+                                            
+                                            if (endpointsItem.AuthenticationPassword != null)
+                                            {
+                                                resourceProviderEndpointValue["authenticationPassword"] = endpointsItem.AuthenticationPassword;
+                                            }
+                                        }
+                                        resourceTypeValue["endpoints"] = endpointsArray;
+                                    }
+                                }
                             }
+                            propertiesValue["resourceTypes"] = resourceTypesArray2;
                         }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint != null)
-                        {
-                            JObject baseTenantApiEndpointValue = new JObject();
-                            manifestValue["baseTenantApiEndpoint"] = baseTenantApiEndpointValue;
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.ApiVersion != null)
-                            {
-                                baseTenantApiEndpointValue["apiVersion"] = parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.ApiVersion;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.Enabled != null)
-                            {
-                                baseTenantApiEndpointValue["enabled"] = parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.Enabled.Value;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.EndpointUri != null)
-                            {
-                                baseTenantApiEndpointValue["endpointUri"] = parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.EndpointUri;
-                            }
-                            
-                            baseTenantApiEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.Timeout);
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.AuthenticationUsername != null)
-                            {
-                                baseTenantApiEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.AuthenticationUsername;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.AuthenticationPassword != null)
-                            {
-                                baseTenantApiEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.Properties.Manifest.BaseTenantApiEndpoint.AuthenticationPassword;
-                            }
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint != null)
-                        {
-                            JObject baseAdminApiEndpointValue = new JObject();
-                            manifestValue["baseAdminApiEndpoint"] = baseAdminApiEndpointValue;
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.ApiVersion != null)
-                            {
-                                baseAdminApiEndpointValue["apiVersion"] = parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.ApiVersion;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.Enabled != null)
-                            {
-                                baseAdminApiEndpointValue["enabled"] = parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.Enabled.Value;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.EndpointUri != null)
-                            {
-                                baseAdminApiEndpointValue["endpointUri"] = parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.EndpointUri;
-                            }
-                            
-                            baseAdminApiEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.Timeout);
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.AuthenticationUsername != null)
-                            {
-                                baseAdminApiEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.AuthenticationUsername;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.AuthenticationPassword != null)
-                            {
-                                baseAdminApiEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.Properties.Manifest.BaseAdminApiEndpoint.AuthenticationPassword;
-                            }
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint != null)
-                        {
-                            JObject quotaApiEndpointValue = new JObject();
-                            manifestValue["quotaApiEndpoint"] = quotaApiEndpointValue;
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.ApiVersion != null)
-                            {
-                                quotaApiEndpointValue["apiVersion"] = parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.ApiVersion;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.Enabled != null)
-                            {
-                                quotaApiEndpointValue["enabled"] = parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.Enabled.Value;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.EndpointUri != null)
-                            {
-                                quotaApiEndpointValue["endpointUri"] = parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.EndpointUri;
-                            }
-                            
-                            quotaApiEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.Timeout);
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.AuthenticationUsername != null)
-                            {
-                                quotaApiEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.AuthenticationUsername;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.AuthenticationPassword != null)
-                            {
-                                quotaApiEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.Properties.Manifest.QuotaApiEndpoint.AuthenticationPassword;
-                            }
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint != null)
-                        {
-                            JObject eventApiEndpointValue = new JObject();
-                            manifestValue["eventApiEndpoint"] = eventApiEndpointValue;
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.ApiVersion != null)
-                            {
-                                eventApiEndpointValue["apiVersion"] = parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.ApiVersion;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.Enabled != null)
-                            {
-                                eventApiEndpointValue["enabled"] = parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.Enabled.Value;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.EndpointUri != null)
-                            {
-                                eventApiEndpointValue["endpointUri"] = parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.EndpointUri;
-                            }
-                            
-                            eventApiEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.Timeout);
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.AuthenticationUsername != null)
-                            {
-                                eventApiEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.AuthenticationUsername;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.AuthenticationPassword != null)
-                            {
-                                eventApiEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.Properties.Manifest.EventApiEndpoint.AuthenticationPassword;
-                            }
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint != null)
-                        {
-                            JObject usageApiEndpointValue = new JObject();
-                            manifestValue["usageApiEndpoint"] = usageApiEndpointValue;
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.ApiVersion != null)
-                            {
-                                usageApiEndpointValue["apiVersion"] = parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.ApiVersion;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.Enabled != null)
-                            {
-                                usageApiEndpointValue["enabled"] = parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.Enabled.Value;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.EndpointUri != null)
-                            {
-                                usageApiEndpointValue["endpointUri"] = parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.EndpointUri;
-                            }
-                            
-                            usageApiEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.Timeout);
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.AuthenticationUsername != null)
-                            {
-                                usageApiEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.AuthenticationUsername;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.AuthenticationPassword != null)
-                            {
-                                usageApiEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.Properties.Manifest.UsageApiEndpoint.AuthenticationPassword;
-                            }
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint != null)
-                        {
-                            JObject tenantExtensionEndpointValue = new JObject();
-                            manifestValue["tenantExtensionEndpoint"] = tenantExtensionEndpointValue;
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.ApiVersion != null)
-                            {
-                                tenantExtensionEndpointValue["apiVersion"] = parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.ApiVersion;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.Enabled != null)
-                            {
-                                tenantExtensionEndpointValue["enabled"] = parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.Enabled.Value;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.EndpointUri != null)
-                            {
-                                tenantExtensionEndpointValue["endpointUri"] = parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.EndpointUri;
-                            }
-                            
-                            tenantExtensionEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.Timeout);
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.AuthenticationUsername != null)
-                            {
-                                tenantExtensionEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.AuthenticationUsername;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.AuthenticationPassword != null)
-                            {
-                                tenantExtensionEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.Properties.Manifest.TenantExtensionEndpoint.AuthenticationPassword;
-                            }
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.TenantExtensionName != null)
-                        {
-                            manifestValue["tenantExtensionName"] = parameters.ProviderRegistration.Properties.Manifest.TenantExtensionName;
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint != null)
-                        {
-                            JObject adminExtensionEndpointValue = new JObject();
-                            manifestValue["adminExtensionEndpoint"] = adminExtensionEndpointValue;
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.ApiVersion != null)
-                            {
-                                adminExtensionEndpointValue["apiVersion"] = parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.ApiVersion;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.Enabled != null)
-                            {
-                                adminExtensionEndpointValue["enabled"] = parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.Enabled.Value;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.EndpointUri != null)
-                            {
-                                adminExtensionEndpointValue["endpointUri"] = parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.EndpointUri;
-                            }
-                            
-                            adminExtensionEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.Timeout);
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.AuthenticationUsername != null)
-                            {
-                                adminExtensionEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.AuthenticationUsername;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.AuthenticationPassword != null)
-                            {
-                                adminExtensionEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.Properties.Manifest.AdminExtensionEndpoint.AuthenticationPassword;
-                            }
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.AdminExtensionName != null)
-                        {
-                            manifestValue["adminExtensionName"] = parameters.ProviderRegistration.Properties.Manifest.AdminExtensionName;
-                        }
-                        
-                        if (parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint != null)
-                        {
-                            JObject galleryApiEndpointValue = new JObject();
-                            manifestValue["galleryApiEndpoint"] = galleryApiEndpointValue;
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.ApiVersion != null)
-                            {
-                                galleryApiEndpointValue["apiVersion"] = parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.ApiVersion;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.Enabled != null)
-                            {
-                                galleryApiEndpointValue["enabled"] = parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.Enabled.Value;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.EndpointUri != null)
-                            {
-                                galleryApiEndpointValue["endpointUri"] = parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.EndpointUri;
-                            }
-                            
-                            galleryApiEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.Timeout);
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.AuthenticationUsername != null)
-                            {
-                                galleryApiEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.AuthenticationUsername;
-                            }
-                            
-                            if (parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.AuthenticationPassword != null)
-                            {
-                                galleryApiEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.Properties.Manifest.GalleryApiEndpoint.AuthenticationPassword;
-                            }
-                        }
+                    }
+                    
+                    if (parameters.ProviderRegistration.Properties.ProvisioningState != null)
+                    {
+                        propertiesValue["ProvisioningState"] = parameters.ProviderRegistration.Properties.ProvisioningState.Value.ToString();
                     }
                 }
                 
@@ -745,15 +490,8 @@ namespace Microsoft.AzureStack.Management
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                ProviderRegistrationDefinition propertiesInstance = new ProviderRegistrationDefinition();
+                                ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                 providerRegistrationInstance.Properties = propertiesInstance;
-                                
-                                JToken nameValue = propertiesValue2["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    propertiesInstance.Name = nameInstance;
-                                }
                                 
                                 JToken displayNameValue = propertiesValue2["displayName"];
                                 if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
@@ -762,11 +500,18 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.DisplayName = displayNameInstance;
                                 }
                                 
-                                JToken locationValue = propertiesValue2["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                JToken namespaceValue = propertiesValue2["namespace"];
+                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                 {
-                                    string locationInstance = ((string)locationValue);
-                                    propertiesInstance.Location = locationInstance;
+                                    string namespaceInstance = ((string)namespaceValue);
+                                    propertiesInstance.Namespace = namespaceInstance;
+                                }
+                                
+                                JToken providerLocationValue = propertiesValue2["providerLocation"];
+                                if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
+                                {
+                                    string providerLocationInstance = ((string)providerLocationValue);
+                                    propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
                                 JToken enabledValue = propertiesValue2["enabled"];
@@ -781,6 +526,15 @@ namespace Microsoft.AzureStack.Management
                                 {
                                     ResourceProviderEndpoint manifestEndpointInstance = new ResourceProviderEndpoint();
                                     propertiesInstance.ManifestEndpoint = manifestEndpointInstance;
+                                    
+                                    JToken apiVersionsArray3 = manifestEndpointValue2["apiVersions"];
+                                    if (apiVersionsArray3 != null && apiVersionsArray3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray3))
+                                        {
+                                            manifestEndpointInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                        }
+                                    }
                                     
                                     JToken apiVersionValue = manifestEndpointValue2["apiVersion"];
                                     if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
@@ -825,625 +579,187 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
-                                JToken manifestValue2 = propertiesValue2["manifest"];
-                                if (manifestValue2 != null && manifestValue2.Type != JTokenType.Null)
+                                JToken providerAuthorizationValue2 = propertiesValue2["providerAuthorization"];
+                                if (providerAuthorizationValue2 != null && providerAuthorizationValue2.Type != JTokenType.Null)
                                 {
-                                    ResourceProviderManifest manifestInstance = new ResourceProviderManifest();
-                                    propertiesInstance.Manifest = manifestInstance;
+                                    ResourceProviderAuthorization providerAuthorizationInstance = new ResourceProviderAuthorization();
+                                    propertiesInstance.ProviderAuthorization = providerAuthorizationInstance;
                                     
-                                    JToken namespaceValue = manifestValue2["namespace"];
-                                    if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                    JToken applicationIdValue = providerAuthorizationValue2["applicationId"];
+                                    if (applicationIdValue != null && applicationIdValue.Type != JTokenType.Null)
                                     {
-                                        string namespaceInstance = ((string)namespaceValue);
-                                        manifestInstance.Namespace = namespaceInstance;
+                                        string applicationIdInstance = ((string)applicationIdValue);
+                                        providerAuthorizationInstance.ApplicationId = applicationIdInstance;
                                     }
                                     
-                                    JToken providerVersionValue = manifestValue2["providerVersion"];
-                                    if (providerVersionValue != null && providerVersionValue.Type != JTokenType.Null)
+                                    JToken roleDefinitionIdValue = providerAuthorizationValue2["roleDefinitionId"];
+                                    if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
                                     {
-                                        string providerVersionInstance = ((string)providerVersionValue);
-                                        manifestInstance.ProviderVersion = providerVersionInstance;
+                                        string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                        providerAuthorizationInstance.RoleDefinitionId = roleDefinitionIdInstance;
                                     }
-                                    
-                                    JToken tenantResourceTypesArray2 = manifestValue2["tenantResourceTypes"];
-                                    if (tenantResourceTypesArray2 != null && tenantResourceTypesArray2.Type != JTokenType.Null)
+                                }
+                                
+                                JToken extensionNameValue = propertiesValue2["extensionName"];
+                                if (extensionNameValue != null && extensionNameValue.Type != JTokenType.Null)
+                                {
+                                    string extensionNameInstance = ((string)extensionNameValue);
+                                    propertiesInstance.ExtensionName = extensionNameInstance;
+                                }
+                                
+                                JToken extensionUriValue = propertiesValue2["extensionUri"];
+                                if (extensionUriValue != null && extensionUriValue.Type != JTokenType.Null)
+                                {
+                                    string extensionUriInstance = ((string)extensionUriValue);
+                                    propertiesInstance.ExtensionUri = extensionUriInstance;
+                                }
+                                
+                                JToken resourceTypesArray3 = propertiesValue2["resourceTypes"];
+                                if (resourceTypesArray3 != null && resourceTypesArray3.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray3))
                                     {
-                                        foreach (JToken tenantResourceTypesValue in ((JArray)tenantResourceTypesArray2))
+                                        Extension extensionInstance = new Extension();
+                                        propertiesInstance.Extensions.Add(extensionInstance);
+                                        
+                                        JToken nameValue = resourceTypesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            ResourceType resourceTypeInstance = new ResourceType();
-                                            manifestInstance.TenantResourceTypes.Add(resourceTypeInstance);
-                                            
-                                            JToken nameValue2 = tenantResourceTypesValue["name"];
-                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            string nameInstance = ((string)nameValue);
+                                            extensionInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken uriValue = resourceTypesValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            string uriInstance = ((string)uriValue);
+                                            extensionInstance.Uri = uriInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken resourceTypesArray4 = propertiesValue2["resourceTypes"];
+                                if (resourceTypesArray4 != null && resourceTypesArray4.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken resourceTypesValue2 in ((JArray)resourceTypesArray4))
+                                    {
+                                        ResourceType resourceTypeInstance = new ResourceType();
+                                        propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                        
+                                        JToken nameValue2 = resourceTypesValue2["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            resourceTypeInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken routingTypeValue = resourceTypesValue2["routingType"];
+                                        if (routingTypeValue != null && routingTypeValue.Type != JTokenType.Null)
+                                        {
+                                            RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
+                                            resourceTypeInstance.RoutingType = routingTypeInstance;
+                                        }
+                                        
+                                        JToken resourceDeletionPolicyValue = resourceTypesValue2["resourceDeletionPolicy"];
+                                        if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
+                                        {
+                                            ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
+                                            resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
+                                        }
+                                        
+                                        JToken allowedUnauthorizedActionsArray2 = resourceTypesValue2["allowedUnauthorizedActions"];
+                                        if (allowedUnauthorizedActionsArray2 != null && allowedUnauthorizedActionsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken allowedUnauthorizedActionsValue in ((JArray)allowedUnauthorizedActionsArray2))
                                             {
-                                                string nameInstance2 = ((string)nameValue2);
-                                                resourceTypeInstance.Name = nameInstance2;
+                                                resourceTypeInstance.AllowedUnauthorizedActions.Add(((string)allowedUnauthorizedActionsValue));
                                             }
-                                            
-                                            JToken isProxyOnlyValue = tenantResourceTypesValue["isProxyOnly"];
-                                            if (isProxyOnlyValue != null && isProxyOnlyValue.Type != JTokenType.Null)
+                                        }
+                                        
+                                        JToken meteredResourceIdsArray2 = resourceTypesValue2["meteredResourceIds"];
+                                        if (meteredResourceIdsArray2 != null && meteredResourceIdsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken meteredResourceIdsValue in ((JArray)meteredResourceIdsArray2))
                                             {
-                                                bool isProxyOnlyInstance = ((bool)isProxyOnlyValue);
-                                                resourceTypeInstance.IsProxyOnly = isProxyOnlyInstance;
+                                                resourceTypeInstance.MeteredResourceIds.Add(((string)meteredResourceIdsValue));
                                             }
-                                            
-                                            JToken isHostBasedRoutingValue = tenantResourceTypesValue["isHostBasedRouting"];
-                                            if (isHostBasedRoutingValue != null && isHostBasedRoutingValue.Type != JTokenType.Null)
+                                        }
+                                        
+                                        JToken marketplaceTypeValue = resourceTypesValue2["marketplaceType"];
+                                        if (marketplaceTypeValue != null && marketplaceTypeValue.Type != JTokenType.Null)
+                                        {
+                                            MarketplaceType marketplaceTypeInstance = ((MarketplaceType)Enum.Parse(typeof(MarketplaceType), ((string)marketplaceTypeValue), true));
+                                            resourceTypeInstance.MarketplaceType = marketplaceTypeInstance;
+                                        }
+                                        
+                                        JToken endpointsArray2 = resourceTypesValue2["endpoints"];
+                                        if (endpointsArray2 != null && endpointsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken endpointsValue in ((JArray)endpointsArray2))
                                             {
-                                                bool isHostBasedRoutingInstance = ((bool)isHostBasedRoutingValue);
-                                                resourceTypeInstance.IsHostBasedRouting = isHostBasedRoutingInstance;
-                                            }
-                                            
-                                            JToken resourceGroupDeletionPolicyValue = tenantResourceTypesValue["resourceGroupDeletionPolicy"];
-                                            if (resourceGroupDeletionPolicyValue != null && resourceGroupDeletionPolicyValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue), true));
-                                                resourceTypeInstance.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance;
-                                            }
-                                            
-                                            JToken resourceDeletionPolicyValue = tenantResourceTypesValue["resourceDeletionPolicy"];
-                                            if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
-                                                resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
-                                            }
-                                            
-                                            JToken endpointsArray3 = tenantResourceTypesValue["endpoints"];
-                                            if (endpointsArray3 != null && endpointsArray3.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken endpointsValue in ((JArray)endpointsArray3))
+                                                ResourceProviderEndpoint resourceProviderEndpointInstance = new ResourceProviderEndpoint();
+                                                resourceTypeInstance.Endpoints.Add(resourceProviderEndpointInstance);
+                                                
+                                                JToken apiVersionsArray4 = endpointsValue["apiVersions"];
+                                                if (apiVersionsArray4 != null && apiVersionsArray4.Type != JTokenType.Null)
                                                 {
-                                                    ResourceProviderEndpoint resourceProviderEndpointInstance = new ResourceProviderEndpoint();
-                                                    resourceTypeInstance.Endpoints.Add(resourceProviderEndpointInstance);
-                                                    
-                                                    JToken apiVersionValue2 = endpointsValue["apiVersion"];
-                                                    if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                    foreach (JToken apiVersionsValue2 in ((JArray)apiVersionsArray4))
                                                     {
-                                                        string apiVersionInstance2 = ((string)apiVersionValue2);
-                                                        resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                        resourceProviderEndpointInstance.ApiVersions.Add(((string)apiVersionsValue2));
                                                     }
-                                                    
-                                                    JToken enabledValue3 = endpointsValue["enabled"];
-                                                    if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
-                                                    {
-                                                        bool enabledInstance3 = ((bool)enabledValue3);
-                                                        resourceProviderEndpointInstance.Enabled = enabledInstance3;
-                                                    }
-                                                    
-                                                    JToken endpointUriValue2 = endpointsValue["endpointUri"];
-                                                    if (endpointUriValue2 != null && endpointUriValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string endpointUriInstance2 = ((string)endpointUriValue2);
-                                                        resourceProviderEndpointInstance.EndpointUri = endpointUriInstance2;
-                                                    }
-                                                    
-                                                    JToken timeoutValue2 = endpointsValue["timeout"];
-                                                    if (timeoutValue2 != null && timeoutValue2.Type != JTokenType.Null)
-                                                    {
-                                                        TimeSpan timeoutInstance2 = XmlConvert.ToTimeSpan(((string)timeoutValue2));
-                                                        resourceProviderEndpointInstance.Timeout = timeoutInstance2;
-                                                    }
-                                                    
-                                                    JToken authenticationUsernameValue2 = endpointsValue["authenticationUsername"];
-                                                    if (authenticationUsernameValue2 != null && authenticationUsernameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string authenticationUsernameInstance2 = ((string)authenticationUsernameValue2);
-                                                        resourceProviderEndpointInstance.AuthenticationUsername = authenticationUsernameInstance2;
-                                                    }
-                                                    
-                                                    JToken authenticationPasswordValue2 = endpointsValue["authenticationPassword"];
-                                                    if (authenticationPasswordValue2 != null && authenticationPasswordValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string authenticationPasswordInstance2 = ((string)authenticationPasswordValue2);
-                                                        resourceProviderEndpointInstance.AuthenticationPassword = authenticationPasswordInstance2;
-                                                    }
+                                                }
+                                                
+                                                JToken apiVersionValue2 = endpointsValue["apiVersion"];
+                                                if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                {
+                                                    string apiVersionInstance2 = ((string)apiVersionValue2);
+                                                    resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                }
+                                                
+                                                JToken enabledValue3 = endpointsValue["enabled"];
+                                                if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
+                                                {
+                                                    bool enabledInstance3 = ((bool)enabledValue3);
+                                                    resourceProviderEndpointInstance.Enabled = enabledInstance3;
+                                                }
+                                                
+                                                JToken endpointUriValue2 = endpointsValue["endpointUri"];
+                                                if (endpointUriValue2 != null && endpointUriValue2.Type != JTokenType.Null)
+                                                {
+                                                    string endpointUriInstance2 = ((string)endpointUriValue2);
+                                                    resourceProviderEndpointInstance.EndpointUri = endpointUriInstance2;
+                                                }
+                                                
+                                                JToken timeoutValue2 = endpointsValue["timeout"];
+                                                if (timeoutValue2 != null && timeoutValue2.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan timeoutInstance2 = XmlConvert.ToTimeSpan(((string)timeoutValue2));
+                                                    resourceProviderEndpointInstance.Timeout = timeoutInstance2;
+                                                }
+                                                
+                                                JToken authenticationUsernameValue2 = endpointsValue["authenticationUsername"];
+                                                if (authenticationUsernameValue2 != null && authenticationUsernameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string authenticationUsernameInstance2 = ((string)authenticationUsernameValue2);
+                                                    resourceProviderEndpointInstance.AuthenticationUsername = authenticationUsernameInstance2;
+                                                }
+                                                
+                                                JToken authenticationPasswordValue2 = endpointsValue["authenticationPassword"];
+                                                if (authenticationPasswordValue2 != null && authenticationPasswordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string authenticationPasswordInstance2 = ((string)authenticationPasswordValue2);
+                                                    resourceProviderEndpointInstance.AuthenticationPassword = authenticationPasswordInstance2;
                                                 }
                                             }
                                         }
                                     }
-                                    
-                                    JToken adminResourceTypesArray2 = manifestValue2["adminResourceTypes"];
-                                    if (adminResourceTypesArray2 != null && adminResourceTypesArray2.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken adminResourceTypesValue in ((JArray)adminResourceTypesArray2))
-                                        {
-                                            ResourceType resourceTypeInstance2 = new ResourceType();
-                                            manifestInstance.AdminResourceTypes.Add(resourceTypeInstance2);
-                                            
-                                            JToken nameValue3 = adminResourceTypesValue["name"];
-                                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                                            {
-                                                string nameInstance3 = ((string)nameValue3);
-                                                resourceTypeInstance2.Name = nameInstance3;
-                                            }
-                                            
-                                            JToken isProxyOnlyValue2 = adminResourceTypesValue["isProxyOnly"];
-                                            if (isProxyOnlyValue2 != null && isProxyOnlyValue2.Type != JTokenType.Null)
-                                            {
-                                                bool isProxyOnlyInstance2 = ((bool)isProxyOnlyValue2);
-                                                resourceTypeInstance2.IsProxyOnly = isProxyOnlyInstance2;
-                                            }
-                                            
-                                            JToken isHostBasedRoutingValue2 = adminResourceTypesValue["isHostBasedRouting"];
-                                            if (isHostBasedRoutingValue2 != null && isHostBasedRoutingValue2.Type != JTokenType.Null)
-                                            {
-                                                bool isHostBasedRoutingInstance2 = ((bool)isHostBasedRoutingValue2);
-                                                resourceTypeInstance2.IsHostBasedRouting = isHostBasedRoutingInstance2;
-                                            }
-                                            
-                                            JToken resourceGroupDeletionPolicyValue2 = adminResourceTypesValue["resourceGroupDeletionPolicy"];
-                                            if (resourceGroupDeletionPolicyValue2 != null && resourceGroupDeletionPolicyValue2.Type != JTokenType.Null)
-                                            {
-                                                ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance2 = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue2), true));
-                                                resourceTypeInstance2.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance2;
-                                            }
-                                            
-                                            JToken resourceDeletionPolicyValue2 = adminResourceTypesValue["resourceDeletionPolicy"];
-                                            if (resourceDeletionPolicyValue2 != null && resourceDeletionPolicyValue2.Type != JTokenType.Null)
-                                            {
-                                                ResourceDeletionPolicy resourceDeletionPolicyInstance2 = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue2), true));
-                                                resourceTypeInstance2.ResourceDeletionPolicy = resourceDeletionPolicyInstance2;
-                                            }
-                                            
-                                            JToken endpointsArray4 = adminResourceTypesValue["endpoints"];
-                                            if (endpointsArray4 != null && endpointsArray4.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken endpointsValue2 in ((JArray)endpointsArray4))
-                                                {
-                                                    ResourceProviderEndpoint resourceProviderEndpointInstance2 = new ResourceProviderEndpoint();
-                                                    resourceTypeInstance2.Endpoints.Add(resourceProviderEndpointInstance2);
-                                                    
-                                                    JToken apiVersionValue3 = endpointsValue2["apiVersion"];
-                                                    if (apiVersionValue3 != null && apiVersionValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string apiVersionInstance3 = ((string)apiVersionValue3);
-                                                        resourceProviderEndpointInstance2.ApiVersion = apiVersionInstance3;
-                                                    }
-                                                    
-                                                    JToken enabledValue4 = endpointsValue2["enabled"];
-                                                    if (enabledValue4 != null && enabledValue4.Type != JTokenType.Null)
-                                                    {
-                                                        bool enabledInstance4 = ((bool)enabledValue4);
-                                                        resourceProviderEndpointInstance2.Enabled = enabledInstance4;
-                                                    }
-                                                    
-                                                    JToken endpointUriValue3 = endpointsValue2["endpointUri"];
-                                                    if (endpointUriValue3 != null && endpointUriValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string endpointUriInstance3 = ((string)endpointUriValue3);
-                                                        resourceProviderEndpointInstance2.EndpointUri = endpointUriInstance3;
-                                                    }
-                                                    
-                                                    JToken timeoutValue3 = endpointsValue2["timeout"];
-                                                    if (timeoutValue3 != null && timeoutValue3.Type != JTokenType.Null)
-                                                    {
-                                                        TimeSpan timeoutInstance3 = XmlConvert.ToTimeSpan(((string)timeoutValue3));
-                                                        resourceProviderEndpointInstance2.Timeout = timeoutInstance3;
-                                                    }
-                                                    
-                                                    JToken authenticationUsernameValue3 = endpointsValue2["authenticationUsername"];
-                                                    if (authenticationUsernameValue3 != null && authenticationUsernameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string authenticationUsernameInstance3 = ((string)authenticationUsernameValue3);
-                                                        resourceProviderEndpointInstance2.AuthenticationUsername = authenticationUsernameInstance3;
-                                                    }
-                                                    
-                                                    JToken authenticationPasswordValue3 = endpointsValue2["authenticationPassword"];
-                                                    if (authenticationPasswordValue3 != null && authenticationPasswordValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string authenticationPasswordInstance3 = ((string)authenticationPasswordValue3);
-                                                        resourceProviderEndpointInstance2.AuthenticationPassword = authenticationPasswordInstance3;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken baseTenantApiEndpointValue2 = manifestValue2["baseTenantApiEndpoint"];
-                                    if (baseTenantApiEndpointValue2 != null && baseTenantApiEndpointValue2.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint baseTenantApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.BaseTenantApiEndpoint = baseTenantApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue4 = baseTenantApiEndpointValue2["apiVersion"];
-                                        if (apiVersionValue4 != null && apiVersionValue4.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance4 = ((string)apiVersionValue4);
-                                            baseTenantApiEndpointInstance.ApiVersion = apiVersionInstance4;
-                                        }
-                                        
-                                        JToken enabledValue5 = baseTenantApiEndpointValue2["enabled"];
-                                        if (enabledValue5 != null && enabledValue5.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance5 = ((bool)enabledValue5);
-                                            baseTenantApiEndpointInstance.Enabled = enabledInstance5;
-                                        }
-                                        
-                                        JToken endpointUriValue4 = baseTenantApiEndpointValue2["endpointUri"];
-                                        if (endpointUriValue4 != null && endpointUriValue4.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance4 = ((string)endpointUriValue4);
-                                            baseTenantApiEndpointInstance.EndpointUri = endpointUriInstance4;
-                                        }
-                                        
-                                        JToken timeoutValue4 = baseTenantApiEndpointValue2["timeout"];
-                                        if (timeoutValue4 != null && timeoutValue4.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance4 = XmlConvert.ToTimeSpan(((string)timeoutValue4));
-                                            baseTenantApiEndpointInstance.Timeout = timeoutInstance4;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue4 = baseTenantApiEndpointValue2["authenticationUsername"];
-                                        if (authenticationUsernameValue4 != null && authenticationUsernameValue4.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance4 = ((string)authenticationUsernameValue4);
-                                            baseTenantApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance4;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue4 = baseTenantApiEndpointValue2["authenticationPassword"];
-                                        if (authenticationPasswordValue4 != null && authenticationPasswordValue4.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance4 = ((string)authenticationPasswordValue4);
-                                            baseTenantApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance4;
-                                        }
-                                    }
-                                    
-                                    JToken baseAdminApiEndpointValue2 = manifestValue2["baseAdminApiEndpoint"];
-                                    if (baseAdminApiEndpointValue2 != null && baseAdminApiEndpointValue2.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint baseAdminApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.BaseAdminApiEndpoint = baseAdminApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue5 = baseAdminApiEndpointValue2["apiVersion"];
-                                        if (apiVersionValue5 != null && apiVersionValue5.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance5 = ((string)apiVersionValue5);
-                                            baseAdminApiEndpointInstance.ApiVersion = apiVersionInstance5;
-                                        }
-                                        
-                                        JToken enabledValue6 = baseAdminApiEndpointValue2["enabled"];
-                                        if (enabledValue6 != null && enabledValue6.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance6 = ((bool)enabledValue6);
-                                            baseAdminApiEndpointInstance.Enabled = enabledInstance6;
-                                        }
-                                        
-                                        JToken endpointUriValue5 = baseAdminApiEndpointValue2["endpointUri"];
-                                        if (endpointUriValue5 != null && endpointUriValue5.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance5 = ((string)endpointUriValue5);
-                                            baseAdminApiEndpointInstance.EndpointUri = endpointUriInstance5;
-                                        }
-                                        
-                                        JToken timeoutValue5 = baseAdminApiEndpointValue2["timeout"];
-                                        if (timeoutValue5 != null && timeoutValue5.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance5 = XmlConvert.ToTimeSpan(((string)timeoutValue5));
-                                            baseAdminApiEndpointInstance.Timeout = timeoutInstance5;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue5 = baseAdminApiEndpointValue2["authenticationUsername"];
-                                        if (authenticationUsernameValue5 != null && authenticationUsernameValue5.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance5 = ((string)authenticationUsernameValue5);
-                                            baseAdminApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance5;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue5 = baseAdminApiEndpointValue2["authenticationPassword"];
-                                        if (authenticationPasswordValue5 != null && authenticationPasswordValue5.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance5 = ((string)authenticationPasswordValue5);
-                                            baseAdminApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance5;
-                                        }
-                                    }
-                                    
-                                    JToken quotaApiEndpointValue2 = manifestValue2["quotaApiEndpoint"];
-                                    if (quotaApiEndpointValue2 != null && quotaApiEndpointValue2.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint quotaApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.QuotaApiEndpoint = quotaApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue6 = quotaApiEndpointValue2["apiVersion"];
-                                        if (apiVersionValue6 != null && apiVersionValue6.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance6 = ((string)apiVersionValue6);
-                                            quotaApiEndpointInstance.ApiVersion = apiVersionInstance6;
-                                        }
-                                        
-                                        JToken enabledValue7 = quotaApiEndpointValue2["enabled"];
-                                        if (enabledValue7 != null && enabledValue7.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance7 = ((bool)enabledValue7);
-                                            quotaApiEndpointInstance.Enabled = enabledInstance7;
-                                        }
-                                        
-                                        JToken endpointUriValue6 = quotaApiEndpointValue2["endpointUri"];
-                                        if (endpointUriValue6 != null && endpointUriValue6.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance6 = ((string)endpointUriValue6);
-                                            quotaApiEndpointInstance.EndpointUri = endpointUriInstance6;
-                                        }
-                                        
-                                        JToken timeoutValue6 = quotaApiEndpointValue2["timeout"];
-                                        if (timeoutValue6 != null && timeoutValue6.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance6 = XmlConvert.ToTimeSpan(((string)timeoutValue6));
-                                            quotaApiEndpointInstance.Timeout = timeoutInstance6;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue6 = quotaApiEndpointValue2["authenticationUsername"];
-                                        if (authenticationUsernameValue6 != null && authenticationUsernameValue6.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance6 = ((string)authenticationUsernameValue6);
-                                            quotaApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance6;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue6 = quotaApiEndpointValue2["authenticationPassword"];
-                                        if (authenticationPasswordValue6 != null && authenticationPasswordValue6.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance6 = ((string)authenticationPasswordValue6);
-                                            quotaApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance6;
-                                        }
-                                    }
-                                    
-                                    JToken eventApiEndpointValue2 = manifestValue2["eventApiEndpoint"];
-                                    if (eventApiEndpointValue2 != null && eventApiEndpointValue2.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint eventApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.EventApiEndpoint = eventApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue7 = eventApiEndpointValue2["apiVersion"];
-                                        if (apiVersionValue7 != null && apiVersionValue7.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance7 = ((string)apiVersionValue7);
-                                            eventApiEndpointInstance.ApiVersion = apiVersionInstance7;
-                                        }
-                                        
-                                        JToken enabledValue8 = eventApiEndpointValue2["enabled"];
-                                        if (enabledValue8 != null && enabledValue8.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance8 = ((bool)enabledValue8);
-                                            eventApiEndpointInstance.Enabled = enabledInstance8;
-                                        }
-                                        
-                                        JToken endpointUriValue7 = eventApiEndpointValue2["endpointUri"];
-                                        if (endpointUriValue7 != null && endpointUriValue7.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance7 = ((string)endpointUriValue7);
-                                            eventApiEndpointInstance.EndpointUri = endpointUriInstance7;
-                                        }
-                                        
-                                        JToken timeoutValue7 = eventApiEndpointValue2["timeout"];
-                                        if (timeoutValue7 != null && timeoutValue7.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance7 = XmlConvert.ToTimeSpan(((string)timeoutValue7));
-                                            eventApiEndpointInstance.Timeout = timeoutInstance7;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue7 = eventApiEndpointValue2["authenticationUsername"];
-                                        if (authenticationUsernameValue7 != null && authenticationUsernameValue7.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance7 = ((string)authenticationUsernameValue7);
-                                            eventApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance7;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue7 = eventApiEndpointValue2["authenticationPassword"];
-                                        if (authenticationPasswordValue7 != null && authenticationPasswordValue7.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance7 = ((string)authenticationPasswordValue7);
-                                            eventApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance7;
-                                        }
-                                    }
-                                    
-                                    JToken usageApiEndpointValue2 = manifestValue2["usageApiEndpoint"];
-                                    if (usageApiEndpointValue2 != null && usageApiEndpointValue2.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint usageApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.UsageApiEndpoint = usageApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue8 = usageApiEndpointValue2["apiVersion"];
-                                        if (apiVersionValue8 != null && apiVersionValue8.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance8 = ((string)apiVersionValue8);
-                                            usageApiEndpointInstance.ApiVersion = apiVersionInstance8;
-                                        }
-                                        
-                                        JToken enabledValue9 = usageApiEndpointValue2["enabled"];
-                                        if (enabledValue9 != null && enabledValue9.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance9 = ((bool)enabledValue9);
-                                            usageApiEndpointInstance.Enabled = enabledInstance9;
-                                        }
-                                        
-                                        JToken endpointUriValue8 = usageApiEndpointValue2["endpointUri"];
-                                        if (endpointUriValue8 != null && endpointUriValue8.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance8 = ((string)endpointUriValue8);
-                                            usageApiEndpointInstance.EndpointUri = endpointUriInstance8;
-                                        }
-                                        
-                                        JToken timeoutValue8 = usageApiEndpointValue2["timeout"];
-                                        if (timeoutValue8 != null && timeoutValue8.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance8 = XmlConvert.ToTimeSpan(((string)timeoutValue8));
-                                            usageApiEndpointInstance.Timeout = timeoutInstance8;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue8 = usageApiEndpointValue2["authenticationUsername"];
-                                        if (authenticationUsernameValue8 != null && authenticationUsernameValue8.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance8 = ((string)authenticationUsernameValue8);
-                                            usageApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance8;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue8 = usageApiEndpointValue2["authenticationPassword"];
-                                        if (authenticationPasswordValue8 != null && authenticationPasswordValue8.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance8 = ((string)authenticationPasswordValue8);
-                                            usageApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance8;
-                                        }
-                                    }
-                                    
-                                    JToken tenantExtensionEndpointValue2 = manifestValue2["tenantExtensionEndpoint"];
-                                    if (tenantExtensionEndpointValue2 != null && tenantExtensionEndpointValue2.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint tenantExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.TenantExtensionEndpoint = tenantExtensionEndpointInstance;
-                                        
-                                        JToken apiVersionValue9 = tenantExtensionEndpointValue2["apiVersion"];
-                                        if (apiVersionValue9 != null && apiVersionValue9.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance9 = ((string)apiVersionValue9);
-                                            tenantExtensionEndpointInstance.ApiVersion = apiVersionInstance9;
-                                        }
-                                        
-                                        JToken enabledValue10 = tenantExtensionEndpointValue2["enabled"];
-                                        if (enabledValue10 != null && enabledValue10.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance10 = ((bool)enabledValue10);
-                                            tenantExtensionEndpointInstance.Enabled = enabledInstance10;
-                                        }
-                                        
-                                        JToken endpointUriValue9 = tenantExtensionEndpointValue2["endpointUri"];
-                                        if (endpointUriValue9 != null && endpointUriValue9.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance9 = ((string)endpointUriValue9);
-                                            tenantExtensionEndpointInstance.EndpointUri = endpointUriInstance9;
-                                        }
-                                        
-                                        JToken timeoutValue9 = tenantExtensionEndpointValue2["timeout"];
-                                        if (timeoutValue9 != null && timeoutValue9.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance9 = XmlConvert.ToTimeSpan(((string)timeoutValue9));
-                                            tenantExtensionEndpointInstance.Timeout = timeoutInstance9;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue9 = tenantExtensionEndpointValue2["authenticationUsername"];
-                                        if (authenticationUsernameValue9 != null && authenticationUsernameValue9.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance9 = ((string)authenticationUsernameValue9);
-                                            tenantExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance9;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue9 = tenantExtensionEndpointValue2["authenticationPassword"];
-                                        if (authenticationPasswordValue9 != null && authenticationPasswordValue9.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance9 = ((string)authenticationPasswordValue9);
-                                            tenantExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance9;
-                                        }
-                                    }
-                                    
-                                    JToken tenantExtensionNameValue = manifestValue2["tenantExtensionName"];
-                                    if (tenantExtensionNameValue != null && tenantExtensionNameValue.Type != JTokenType.Null)
-                                    {
-                                        string tenantExtensionNameInstance = ((string)tenantExtensionNameValue);
-                                        manifestInstance.TenantExtensionName = tenantExtensionNameInstance;
-                                    }
-                                    
-                                    JToken adminExtensionEndpointValue2 = manifestValue2["adminExtensionEndpoint"];
-                                    if (adminExtensionEndpointValue2 != null && adminExtensionEndpointValue2.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint adminExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.AdminExtensionEndpoint = adminExtensionEndpointInstance;
-                                        
-                                        JToken apiVersionValue10 = adminExtensionEndpointValue2["apiVersion"];
-                                        if (apiVersionValue10 != null && apiVersionValue10.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance10 = ((string)apiVersionValue10);
-                                            adminExtensionEndpointInstance.ApiVersion = apiVersionInstance10;
-                                        }
-                                        
-                                        JToken enabledValue11 = adminExtensionEndpointValue2["enabled"];
-                                        if (enabledValue11 != null && enabledValue11.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance11 = ((bool)enabledValue11);
-                                            adminExtensionEndpointInstance.Enabled = enabledInstance11;
-                                        }
-                                        
-                                        JToken endpointUriValue10 = adminExtensionEndpointValue2["endpointUri"];
-                                        if (endpointUriValue10 != null && endpointUriValue10.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance10 = ((string)endpointUriValue10);
-                                            adminExtensionEndpointInstance.EndpointUri = endpointUriInstance10;
-                                        }
-                                        
-                                        JToken timeoutValue10 = adminExtensionEndpointValue2["timeout"];
-                                        if (timeoutValue10 != null && timeoutValue10.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance10 = XmlConvert.ToTimeSpan(((string)timeoutValue10));
-                                            adminExtensionEndpointInstance.Timeout = timeoutInstance10;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue10 = adminExtensionEndpointValue2["authenticationUsername"];
-                                        if (authenticationUsernameValue10 != null && authenticationUsernameValue10.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance10 = ((string)authenticationUsernameValue10);
-                                            adminExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance10;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue10 = adminExtensionEndpointValue2["authenticationPassword"];
-                                        if (authenticationPasswordValue10 != null && authenticationPasswordValue10.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance10 = ((string)authenticationPasswordValue10);
-                                            adminExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance10;
-                                        }
-                                    }
-                                    
-                                    JToken adminExtensionNameValue = manifestValue2["adminExtensionName"];
-                                    if (adminExtensionNameValue != null && adminExtensionNameValue.Type != JTokenType.Null)
-                                    {
-                                        string adminExtensionNameInstance = ((string)adminExtensionNameValue);
-                                        manifestInstance.AdminExtensionName = adminExtensionNameInstance;
-                                    }
-                                    
-                                    JToken galleryApiEndpointValue2 = manifestValue2["galleryApiEndpoint"];
-                                    if (galleryApiEndpointValue2 != null && galleryApiEndpointValue2.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint galleryApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.GalleryApiEndpoint = galleryApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue11 = galleryApiEndpointValue2["apiVersion"];
-                                        if (apiVersionValue11 != null && apiVersionValue11.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance11 = ((string)apiVersionValue11);
-                                            galleryApiEndpointInstance.ApiVersion = apiVersionInstance11;
-                                        }
-                                        
-                                        JToken enabledValue12 = galleryApiEndpointValue2["enabled"];
-                                        if (enabledValue12 != null && enabledValue12.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance12 = ((bool)enabledValue12);
-                                            galleryApiEndpointInstance.Enabled = enabledInstance12;
-                                        }
-                                        
-                                        JToken endpointUriValue11 = galleryApiEndpointValue2["endpointUri"];
-                                        if (endpointUriValue11 != null && endpointUriValue11.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance11 = ((string)endpointUriValue11);
-                                            galleryApiEndpointInstance.EndpointUri = endpointUriInstance11;
-                                        }
-                                        
-                                        JToken timeoutValue11 = galleryApiEndpointValue2["timeout"];
-                                        if (timeoutValue11 != null && timeoutValue11.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance11 = XmlConvert.ToTimeSpan(((string)timeoutValue11));
-                                            galleryApiEndpointInstance.Timeout = timeoutInstance11;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue11 = galleryApiEndpointValue2["authenticationUsername"];
-                                        if (authenticationUsernameValue11 != null && authenticationUsernameValue11.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance11 = ((string)authenticationUsernameValue11);
-                                            galleryApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance11;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue11 = galleryApiEndpointValue2["authenticationPassword"];
-                                        if (authenticationPasswordValue11 != null && authenticationPasswordValue11.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance11 = ((string)authenticationPasswordValue11);
-                                            galleryApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance11;
-                                        }
-                                    }
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue2["ProvisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    ProvisioningState provisioningStateInstance = ((ProvisioningState)Enum.Parse(typeof(ProvisioningState), ((string)provisioningStateValue), true));
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
                             }
                             
@@ -1454,11 +770,11 @@ namespace Microsoft.AzureStack.Management
                                 providerRegistrationInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue4 = responseDoc["name"];
-                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance4 = ((string)nameValue4);
-                                providerRegistrationInstance.Name = nameInstance4;
+                                string nameInstance3 = ((string)nameValue3);
+                                providerRegistrationInstance.Name = nameInstance3;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -1468,11 +784,11 @@ namespace Microsoft.AzureStack.Management
                                 providerRegistrationInstance.Type = typeInstance;
                             }
                             
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string locationInstance2 = ((string)locationValue2);
-                                providerRegistrationInstance.Location = locationInstance2;
+                                string locationInstance = ((string)locationValue);
+                                providerRegistrationInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -1514,15 +830,13 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Deletes the resource provider registration
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1538,7 +852,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1572,7 +886,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/providerregistrations/";
+            url = url + "/providers/Microsoft.Subscriptions.Providers/manifests/";
             url = url + Uri.EscapeDataString(providerregistrationId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -1663,21 +977,20 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the manifest registration for the specified manifest
+        /// registration id
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest registration Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Get result of the resource provider manifest registration
         /// </returns>
         public async Task<ProviderRegistrationGetResult> GetAsync(string resourceGroupName, string providerregistrationId, CancellationToken cancellationToken)
         {
@@ -1686,7 +999,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -1720,7 +1033,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/providerregistrations/";
+            url = url + "/providers/Microsoft.Subscriptions.Providers/manifests/";
             url = url + Uri.EscapeDataString(providerregistrationId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -1803,15 +1116,8 @@ namespace Microsoft.AzureStack.Management
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                ProviderRegistrationDefinition propertiesInstance = new ProviderRegistrationDefinition();
+                                ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                 providerRegistrationInstance.Properties = propertiesInstance;
-                                
-                                JToken nameValue = propertiesValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    propertiesInstance.Name = nameInstance;
-                                }
                                 
                                 JToken displayNameValue = propertiesValue["displayName"];
                                 if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
@@ -1820,11 +1126,18 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.DisplayName = displayNameInstance;
                                 }
                                 
-                                JToken locationValue = propertiesValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                JToken namespaceValue = propertiesValue["namespace"];
+                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                 {
-                                    string locationInstance = ((string)locationValue);
-                                    propertiesInstance.Location = locationInstance;
+                                    string namespaceInstance = ((string)namespaceValue);
+                                    propertiesInstance.Namespace = namespaceInstance;
+                                }
+                                
+                                JToken providerLocationValue = propertiesValue["providerLocation"];
+                                if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
+                                {
+                                    string providerLocationInstance = ((string)providerLocationValue);
+                                    propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
                                 JToken enabledValue = propertiesValue["enabled"];
@@ -1839,6 +1152,15 @@ namespace Microsoft.AzureStack.Management
                                 {
                                     ResourceProviderEndpoint manifestEndpointInstance = new ResourceProviderEndpoint();
                                     propertiesInstance.ManifestEndpoint = manifestEndpointInstance;
+                                    
+                                    JToken apiVersionsArray = manifestEndpointValue["apiVersions"];
+                                    if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                        {
+                                            manifestEndpointInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                        }
+                                    }
                                     
                                     JToken apiVersionValue = manifestEndpointValue["apiVersion"];
                                     if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
@@ -1883,625 +1205,187 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
-                                JToken manifestValue = propertiesValue["manifest"];
-                                if (manifestValue != null && manifestValue.Type != JTokenType.Null)
+                                JToken providerAuthorizationValue = propertiesValue["providerAuthorization"];
+                                if (providerAuthorizationValue != null && providerAuthorizationValue.Type != JTokenType.Null)
                                 {
-                                    ResourceProviderManifest manifestInstance = new ResourceProviderManifest();
-                                    propertiesInstance.Manifest = manifestInstance;
+                                    ResourceProviderAuthorization providerAuthorizationInstance = new ResourceProviderAuthorization();
+                                    propertiesInstance.ProviderAuthorization = providerAuthorizationInstance;
                                     
-                                    JToken namespaceValue = manifestValue["namespace"];
-                                    if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                    JToken applicationIdValue = providerAuthorizationValue["applicationId"];
+                                    if (applicationIdValue != null && applicationIdValue.Type != JTokenType.Null)
                                     {
-                                        string namespaceInstance = ((string)namespaceValue);
-                                        manifestInstance.Namespace = namespaceInstance;
+                                        string applicationIdInstance = ((string)applicationIdValue);
+                                        providerAuthorizationInstance.ApplicationId = applicationIdInstance;
                                     }
                                     
-                                    JToken providerVersionValue = manifestValue["providerVersion"];
-                                    if (providerVersionValue != null && providerVersionValue.Type != JTokenType.Null)
+                                    JToken roleDefinitionIdValue = providerAuthorizationValue["roleDefinitionId"];
+                                    if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
                                     {
-                                        string providerVersionInstance = ((string)providerVersionValue);
-                                        manifestInstance.ProviderVersion = providerVersionInstance;
+                                        string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                        providerAuthorizationInstance.RoleDefinitionId = roleDefinitionIdInstance;
                                     }
-                                    
-                                    JToken tenantResourceTypesArray = manifestValue["tenantResourceTypes"];
-                                    if (tenantResourceTypesArray != null && tenantResourceTypesArray.Type != JTokenType.Null)
+                                }
+                                
+                                JToken extensionNameValue = propertiesValue["extensionName"];
+                                if (extensionNameValue != null && extensionNameValue.Type != JTokenType.Null)
+                                {
+                                    string extensionNameInstance = ((string)extensionNameValue);
+                                    propertiesInstance.ExtensionName = extensionNameInstance;
+                                }
+                                
+                                JToken extensionUriValue = propertiesValue["extensionUri"];
+                                if (extensionUriValue != null && extensionUriValue.Type != JTokenType.Null)
+                                {
+                                    string extensionUriInstance = ((string)extensionUriValue);
+                                    propertiesInstance.ExtensionUri = extensionUriInstance;
+                                }
+                                
+                                JToken resourceTypesArray = propertiesValue["resourceTypes"];
+                                if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                     {
-                                        foreach (JToken tenantResourceTypesValue in ((JArray)tenantResourceTypesArray))
+                                        Extension extensionInstance = new Extension();
+                                        propertiesInstance.Extensions.Add(extensionInstance);
+                                        
+                                        JToken nameValue = resourceTypesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            ResourceType resourceTypeInstance = new ResourceType();
-                                            manifestInstance.TenantResourceTypes.Add(resourceTypeInstance);
-                                            
-                                            JToken nameValue2 = tenantResourceTypesValue["name"];
-                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            string nameInstance = ((string)nameValue);
+                                            extensionInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken uriValue = resourceTypesValue["uri"];
+                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                        {
+                                            string uriInstance = ((string)uriValue);
+                                            extensionInstance.Uri = uriInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken resourceTypesArray2 = propertiesValue["resourceTypes"];
+                                if (resourceTypesArray2 != null && resourceTypesArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken resourceTypesValue2 in ((JArray)resourceTypesArray2))
+                                    {
+                                        ResourceType resourceTypeInstance = new ResourceType();
+                                        propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                        
+                                        JToken nameValue2 = resourceTypesValue2["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            resourceTypeInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken routingTypeValue = resourceTypesValue2["routingType"];
+                                        if (routingTypeValue != null && routingTypeValue.Type != JTokenType.Null)
+                                        {
+                                            RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
+                                            resourceTypeInstance.RoutingType = routingTypeInstance;
+                                        }
+                                        
+                                        JToken resourceDeletionPolicyValue = resourceTypesValue2["resourceDeletionPolicy"];
+                                        if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
+                                        {
+                                            ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
+                                            resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
+                                        }
+                                        
+                                        JToken allowedUnauthorizedActionsArray = resourceTypesValue2["allowedUnauthorizedActions"];
+                                        if (allowedUnauthorizedActionsArray != null && allowedUnauthorizedActionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken allowedUnauthorizedActionsValue in ((JArray)allowedUnauthorizedActionsArray))
                                             {
-                                                string nameInstance2 = ((string)nameValue2);
-                                                resourceTypeInstance.Name = nameInstance2;
+                                                resourceTypeInstance.AllowedUnauthorizedActions.Add(((string)allowedUnauthorizedActionsValue));
                                             }
-                                            
-                                            JToken isProxyOnlyValue = tenantResourceTypesValue["isProxyOnly"];
-                                            if (isProxyOnlyValue != null && isProxyOnlyValue.Type != JTokenType.Null)
+                                        }
+                                        
+                                        JToken meteredResourceIdsArray = resourceTypesValue2["meteredResourceIds"];
+                                        if (meteredResourceIdsArray != null && meteredResourceIdsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken meteredResourceIdsValue in ((JArray)meteredResourceIdsArray))
                                             {
-                                                bool isProxyOnlyInstance = ((bool)isProxyOnlyValue);
-                                                resourceTypeInstance.IsProxyOnly = isProxyOnlyInstance;
+                                                resourceTypeInstance.MeteredResourceIds.Add(((string)meteredResourceIdsValue));
                                             }
-                                            
-                                            JToken isHostBasedRoutingValue = tenantResourceTypesValue["isHostBasedRouting"];
-                                            if (isHostBasedRoutingValue != null && isHostBasedRoutingValue.Type != JTokenType.Null)
+                                        }
+                                        
+                                        JToken marketplaceTypeValue = resourceTypesValue2["marketplaceType"];
+                                        if (marketplaceTypeValue != null && marketplaceTypeValue.Type != JTokenType.Null)
+                                        {
+                                            MarketplaceType marketplaceTypeInstance = ((MarketplaceType)Enum.Parse(typeof(MarketplaceType), ((string)marketplaceTypeValue), true));
+                                            resourceTypeInstance.MarketplaceType = marketplaceTypeInstance;
+                                        }
+                                        
+                                        JToken endpointsArray = resourceTypesValue2["endpoints"];
+                                        if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken endpointsValue in ((JArray)endpointsArray))
                                             {
-                                                bool isHostBasedRoutingInstance = ((bool)isHostBasedRoutingValue);
-                                                resourceTypeInstance.IsHostBasedRouting = isHostBasedRoutingInstance;
-                                            }
-                                            
-                                            JToken resourceGroupDeletionPolicyValue = tenantResourceTypesValue["resourceGroupDeletionPolicy"];
-                                            if (resourceGroupDeletionPolicyValue != null && resourceGroupDeletionPolicyValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue), true));
-                                                resourceTypeInstance.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance;
-                                            }
-                                            
-                                            JToken resourceDeletionPolicyValue = tenantResourceTypesValue["resourceDeletionPolicy"];
-                                            if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
-                                                resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
-                                            }
-                                            
-                                            JToken endpointsArray = tenantResourceTypesValue["endpoints"];
-                                            if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken endpointsValue in ((JArray)endpointsArray))
+                                                ResourceProviderEndpoint resourceProviderEndpointInstance = new ResourceProviderEndpoint();
+                                                resourceTypeInstance.Endpoints.Add(resourceProviderEndpointInstance);
+                                                
+                                                JToken apiVersionsArray2 = endpointsValue["apiVersions"];
+                                                if (apiVersionsArray2 != null && apiVersionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    ResourceProviderEndpoint resourceProviderEndpointInstance = new ResourceProviderEndpoint();
-                                                    resourceTypeInstance.Endpoints.Add(resourceProviderEndpointInstance);
-                                                    
-                                                    JToken apiVersionValue2 = endpointsValue["apiVersion"];
-                                                    if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                    foreach (JToken apiVersionsValue2 in ((JArray)apiVersionsArray2))
                                                     {
-                                                        string apiVersionInstance2 = ((string)apiVersionValue2);
-                                                        resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                        resourceProviderEndpointInstance.ApiVersions.Add(((string)apiVersionsValue2));
                                                     }
-                                                    
-                                                    JToken enabledValue3 = endpointsValue["enabled"];
-                                                    if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
-                                                    {
-                                                        bool enabledInstance3 = ((bool)enabledValue3);
-                                                        resourceProviderEndpointInstance.Enabled = enabledInstance3;
-                                                    }
-                                                    
-                                                    JToken endpointUriValue2 = endpointsValue["endpointUri"];
-                                                    if (endpointUriValue2 != null && endpointUriValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string endpointUriInstance2 = ((string)endpointUriValue2);
-                                                        resourceProviderEndpointInstance.EndpointUri = endpointUriInstance2;
-                                                    }
-                                                    
-                                                    JToken timeoutValue2 = endpointsValue["timeout"];
-                                                    if (timeoutValue2 != null && timeoutValue2.Type != JTokenType.Null)
-                                                    {
-                                                        TimeSpan timeoutInstance2 = XmlConvert.ToTimeSpan(((string)timeoutValue2));
-                                                        resourceProviderEndpointInstance.Timeout = timeoutInstance2;
-                                                    }
-                                                    
-                                                    JToken authenticationUsernameValue2 = endpointsValue["authenticationUsername"];
-                                                    if (authenticationUsernameValue2 != null && authenticationUsernameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string authenticationUsernameInstance2 = ((string)authenticationUsernameValue2);
-                                                        resourceProviderEndpointInstance.AuthenticationUsername = authenticationUsernameInstance2;
-                                                    }
-                                                    
-                                                    JToken authenticationPasswordValue2 = endpointsValue["authenticationPassword"];
-                                                    if (authenticationPasswordValue2 != null && authenticationPasswordValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string authenticationPasswordInstance2 = ((string)authenticationPasswordValue2);
-                                                        resourceProviderEndpointInstance.AuthenticationPassword = authenticationPasswordInstance2;
-                                                    }
+                                                }
+                                                
+                                                JToken apiVersionValue2 = endpointsValue["apiVersion"];
+                                                if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                {
+                                                    string apiVersionInstance2 = ((string)apiVersionValue2);
+                                                    resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                }
+                                                
+                                                JToken enabledValue3 = endpointsValue["enabled"];
+                                                if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
+                                                {
+                                                    bool enabledInstance3 = ((bool)enabledValue3);
+                                                    resourceProviderEndpointInstance.Enabled = enabledInstance3;
+                                                }
+                                                
+                                                JToken endpointUriValue2 = endpointsValue["endpointUri"];
+                                                if (endpointUriValue2 != null && endpointUriValue2.Type != JTokenType.Null)
+                                                {
+                                                    string endpointUriInstance2 = ((string)endpointUriValue2);
+                                                    resourceProviderEndpointInstance.EndpointUri = endpointUriInstance2;
+                                                }
+                                                
+                                                JToken timeoutValue2 = endpointsValue["timeout"];
+                                                if (timeoutValue2 != null && timeoutValue2.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan timeoutInstance2 = XmlConvert.ToTimeSpan(((string)timeoutValue2));
+                                                    resourceProviderEndpointInstance.Timeout = timeoutInstance2;
+                                                }
+                                                
+                                                JToken authenticationUsernameValue2 = endpointsValue["authenticationUsername"];
+                                                if (authenticationUsernameValue2 != null && authenticationUsernameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string authenticationUsernameInstance2 = ((string)authenticationUsernameValue2);
+                                                    resourceProviderEndpointInstance.AuthenticationUsername = authenticationUsernameInstance2;
+                                                }
+                                                
+                                                JToken authenticationPasswordValue2 = endpointsValue["authenticationPassword"];
+                                                if (authenticationPasswordValue2 != null && authenticationPasswordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string authenticationPasswordInstance2 = ((string)authenticationPasswordValue2);
+                                                    resourceProviderEndpointInstance.AuthenticationPassword = authenticationPasswordInstance2;
                                                 }
                                             }
                                         }
                                     }
-                                    
-                                    JToken adminResourceTypesArray = manifestValue["adminResourceTypes"];
-                                    if (adminResourceTypesArray != null && adminResourceTypesArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken adminResourceTypesValue in ((JArray)adminResourceTypesArray))
-                                        {
-                                            ResourceType resourceTypeInstance2 = new ResourceType();
-                                            manifestInstance.AdminResourceTypes.Add(resourceTypeInstance2);
-                                            
-                                            JToken nameValue3 = adminResourceTypesValue["name"];
-                                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                                            {
-                                                string nameInstance3 = ((string)nameValue3);
-                                                resourceTypeInstance2.Name = nameInstance3;
-                                            }
-                                            
-                                            JToken isProxyOnlyValue2 = adminResourceTypesValue["isProxyOnly"];
-                                            if (isProxyOnlyValue2 != null && isProxyOnlyValue2.Type != JTokenType.Null)
-                                            {
-                                                bool isProxyOnlyInstance2 = ((bool)isProxyOnlyValue2);
-                                                resourceTypeInstance2.IsProxyOnly = isProxyOnlyInstance2;
-                                            }
-                                            
-                                            JToken isHostBasedRoutingValue2 = adminResourceTypesValue["isHostBasedRouting"];
-                                            if (isHostBasedRoutingValue2 != null && isHostBasedRoutingValue2.Type != JTokenType.Null)
-                                            {
-                                                bool isHostBasedRoutingInstance2 = ((bool)isHostBasedRoutingValue2);
-                                                resourceTypeInstance2.IsHostBasedRouting = isHostBasedRoutingInstance2;
-                                            }
-                                            
-                                            JToken resourceGroupDeletionPolicyValue2 = adminResourceTypesValue["resourceGroupDeletionPolicy"];
-                                            if (resourceGroupDeletionPolicyValue2 != null && resourceGroupDeletionPolicyValue2.Type != JTokenType.Null)
-                                            {
-                                                ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance2 = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue2), true));
-                                                resourceTypeInstance2.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance2;
-                                            }
-                                            
-                                            JToken resourceDeletionPolicyValue2 = adminResourceTypesValue["resourceDeletionPolicy"];
-                                            if (resourceDeletionPolicyValue2 != null && resourceDeletionPolicyValue2.Type != JTokenType.Null)
-                                            {
-                                                ResourceDeletionPolicy resourceDeletionPolicyInstance2 = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue2), true));
-                                                resourceTypeInstance2.ResourceDeletionPolicy = resourceDeletionPolicyInstance2;
-                                            }
-                                            
-                                            JToken endpointsArray2 = adminResourceTypesValue["endpoints"];
-                                            if (endpointsArray2 != null && endpointsArray2.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken endpointsValue2 in ((JArray)endpointsArray2))
-                                                {
-                                                    ResourceProviderEndpoint resourceProviderEndpointInstance2 = new ResourceProviderEndpoint();
-                                                    resourceTypeInstance2.Endpoints.Add(resourceProviderEndpointInstance2);
-                                                    
-                                                    JToken apiVersionValue3 = endpointsValue2["apiVersion"];
-                                                    if (apiVersionValue3 != null && apiVersionValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string apiVersionInstance3 = ((string)apiVersionValue3);
-                                                        resourceProviderEndpointInstance2.ApiVersion = apiVersionInstance3;
-                                                    }
-                                                    
-                                                    JToken enabledValue4 = endpointsValue2["enabled"];
-                                                    if (enabledValue4 != null && enabledValue4.Type != JTokenType.Null)
-                                                    {
-                                                        bool enabledInstance4 = ((bool)enabledValue4);
-                                                        resourceProviderEndpointInstance2.Enabled = enabledInstance4;
-                                                    }
-                                                    
-                                                    JToken endpointUriValue3 = endpointsValue2["endpointUri"];
-                                                    if (endpointUriValue3 != null && endpointUriValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string endpointUriInstance3 = ((string)endpointUriValue3);
-                                                        resourceProviderEndpointInstance2.EndpointUri = endpointUriInstance3;
-                                                    }
-                                                    
-                                                    JToken timeoutValue3 = endpointsValue2["timeout"];
-                                                    if (timeoutValue3 != null && timeoutValue3.Type != JTokenType.Null)
-                                                    {
-                                                        TimeSpan timeoutInstance3 = XmlConvert.ToTimeSpan(((string)timeoutValue3));
-                                                        resourceProviderEndpointInstance2.Timeout = timeoutInstance3;
-                                                    }
-                                                    
-                                                    JToken authenticationUsernameValue3 = endpointsValue2["authenticationUsername"];
-                                                    if (authenticationUsernameValue3 != null && authenticationUsernameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string authenticationUsernameInstance3 = ((string)authenticationUsernameValue3);
-                                                        resourceProviderEndpointInstance2.AuthenticationUsername = authenticationUsernameInstance3;
-                                                    }
-                                                    
-                                                    JToken authenticationPasswordValue3 = endpointsValue2["authenticationPassword"];
-                                                    if (authenticationPasswordValue3 != null && authenticationPasswordValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string authenticationPasswordInstance3 = ((string)authenticationPasswordValue3);
-                                                        resourceProviderEndpointInstance2.AuthenticationPassword = authenticationPasswordInstance3;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken baseTenantApiEndpointValue = manifestValue["baseTenantApiEndpoint"];
-                                    if (baseTenantApiEndpointValue != null && baseTenantApiEndpointValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint baseTenantApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.BaseTenantApiEndpoint = baseTenantApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue4 = baseTenantApiEndpointValue["apiVersion"];
-                                        if (apiVersionValue4 != null && apiVersionValue4.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance4 = ((string)apiVersionValue4);
-                                            baseTenantApiEndpointInstance.ApiVersion = apiVersionInstance4;
-                                        }
-                                        
-                                        JToken enabledValue5 = baseTenantApiEndpointValue["enabled"];
-                                        if (enabledValue5 != null && enabledValue5.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance5 = ((bool)enabledValue5);
-                                            baseTenantApiEndpointInstance.Enabled = enabledInstance5;
-                                        }
-                                        
-                                        JToken endpointUriValue4 = baseTenantApiEndpointValue["endpointUri"];
-                                        if (endpointUriValue4 != null && endpointUriValue4.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance4 = ((string)endpointUriValue4);
-                                            baseTenantApiEndpointInstance.EndpointUri = endpointUriInstance4;
-                                        }
-                                        
-                                        JToken timeoutValue4 = baseTenantApiEndpointValue["timeout"];
-                                        if (timeoutValue4 != null && timeoutValue4.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance4 = XmlConvert.ToTimeSpan(((string)timeoutValue4));
-                                            baseTenantApiEndpointInstance.Timeout = timeoutInstance4;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue4 = baseTenantApiEndpointValue["authenticationUsername"];
-                                        if (authenticationUsernameValue4 != null && authenticationUsernameValue4.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance4 = ((string)authenticationUsernameValue4);
-                                            baseTenantApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance4;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue4 = baseTenantApiEndpointValue["authenticationPassword"];
-                                        if (authenticationPasswordValue4 != null && authenticationPasswordValue4.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance4 = ((string)authenticationPasswordValue4);
-                                            baseTenantApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance4;
-                                        }
-                                    }
-                                    
-                                    JToken baseAdminApiEndpointValue = manifestValue["baseAdminApiEndpoint"];
-                                    if (baseAdminApiEndpointValue != null && baseAdminApiEndpointValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint baseAdminApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.BaseAdminApiEndpoint = baseAdminApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue5 = baseAdminApiEndpointValue["apiVersion"];
-                                        if (apiVersionValue5 != null && apiVersionValue5.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance5 = ((string)apiVersionValue5);
-                                            baseAdminApiEndpointInstance.ApiVersion = apiVersionInstance5;
-                                        }
-                                        
-                                        JToken enabledValue6 = baseAdminApiEndpointValue["enabled"];
-                                        if (enabledValue6 != null && enabledValue6.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance6 = ((bool)enabledValue6);
-                                            baseAdminApiEndpointInstance.Enabled = enabledInstance6;
-                                        }
-                                        
-                                        JToken endpointUriValue5 = baseAdminApiEndpointValue["endpointUri"];
-                                        if (endpointUriValue5 != null && endpointUriValue5.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance5 = ((string)endpointUriValue5);
-                                            baseAdminApiEndpointInstance.EndpointUri = endpointUriInstance5;
-                                        }
-                                        
-                                        JToken timeoutValue5 = baseAdminApiEndpointValue["timeout"];
-                                        if (timeoutValue5 != null && timeoutValue5.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance5 = XmlConvert.ToTimeSpan(((string)timeoutValue5));
-                                            baseAdminApiEndpointInstance.Timeout = timeoutInstance5;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue5 = baseAdminApiEndpointValue["authenticationUsername"];
-                                        if (authenticationUsernameValue5 != null && authenticationUsernameValue5.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance5 = ((string)authenticationUsernameValue5);
-                                            baseAdminApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance5;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue5 = baseAdminApiEndpointValue["authenticationPassword"];
-                                        if (authenticationPasswordValue5 != null && authenticationPasswordValue5.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance5 = ((string)authenticationPasswordValue5);
-                                            baseAdminApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance5;
-                                        }
-                                    }
-                                    
-                                    JToken quotaApiEndpointValue = manifestValue["quotaApiEndpoint"];
-                                    if (quotaApiEndpointValue != null && quotaApiEndpointValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint quotaApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.QuotaApiEndpoint = quotaApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue6 = quotaApiEndpointValue["apiVersion"];
-                                        if (apiVersionValue6 != null && apiVersionValue6.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance6 = ((string)apiVersionValue6);
-                                            quotaApiEndpointInstance.ApiVersion = apiVersionInstance6;
-                                        }
-                                        
-                                        JToken enabledValue7 = quotaApiEndpointValue["enabled"];
-                                        if (enabledValue7 != null && enabledValue7.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance7 = ((bool)enabledValue7);
-                                            quotaApiEndpointInstance.Enabled = enabledInstance7;
-                                        }
-                                        
-                                        JToken endpointUriValue6 = quotaApiEndpointValue["endpointUri"];
-                                        if (endpointUriValue6 != null && endpointUriValue6.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance6 = ((string)endpointUriValue6);
-                                            quotaApiEndpointInstance.EndpointUri = endpointUriInstance6;
-                                        }
-                                        
-                                        JToken timeoutValue6 = quotaApiEndpointValue["timeout"];
-                                        if (timeoutValue6 != null && timeoutValue6.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance6 = XmlConvert.ToTimeSpan(((string)timeoutValue6));
-                                            quotaApiEndpointInstance.Timeout = timeoutInstance6;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue6 = quotaApiEndpointValue["authenticationUsername"];
-                                        if (authenticationUsernameValue6 != null && authenticationUsernameValue6.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance6 = ((string)authenticationUsernameValue6);
-                                            quotaApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance6;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue6 = quotaApiEndpointValue["authenticationPassword"];
-                                        if (authenticationPasswordValue6 != null && authenticationPasswordValue6.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance6 = ((string)authenticationPasswordValue6);
-                                            quotaApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance6;
-                                        }
-                                    }
-                                    
-                                    JToken eventApiEndpointValue = manifestValue["eventApiEndpoint"];
-                                    if (eventApiEndpointValue != null && eventApiEndpointValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint eventApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.EventApiEndpoint = eventApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue7 = eventApiEndpointValue["apiVersion"];
-                                        if (apiVersionValue7 != null && apiVersionValue7.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance7 = ((string)apiVersionValue7);
-                                            eventApiEndpointInstance.ApiVersion = apiVersionInstance7;
-                                        }
-                                        
-                                        JToken enabledValue8 = eventApiEndpointValue["enabled"];
-                                        if (enabledValue8 != null && enabledValue8.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance8 = ((bool)enabledValue8);
-                                            eventApiEndpointInstance.Enabled = enabledInstance8;
-                                        }
-                                        
-                                        JToken endpointUriValue7 = eventApiEndpointValue["endpointUri"];
-                                        if (endpointUriValue7 != null && endpointUriValue7.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance7 = ((string)endpointUriValue7);
-                                            eventApiEndpointInstance.EndpointUri = endpointUriInstance7;
-                                        }
-                                        
-                                        JToken timeoutValue7 = eventApiEndpointValue["timeout"];
-                                        if (timeoutValue7 != null && timeoutValue7.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance7 = XmlConvert.ToTimeSpan(((string)timeoutValue7));
-                                            eventApiEndpointInstance.Timeout = timeoutInstance7;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue7 = eventApiEndpointValue["authenticationUsername"];
-                                        if (authenticationUsernameValue7 != null && authenticationUsernameValue7.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance7 = ((string)authenticationUsernameValue7);
-                                            eventApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance7;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue7 = eventApiEndpointValue["authenticationPassword"];
-                                        if (authenticationPasswordValue7 != null && authenticationPasswordValue7.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance7 = ((string)authenticationPasswordValue7);
-                                            eventApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance7;
-                                        }
-                                    }
-                                    
-                                    JToken usageApiEndpointValue = manifestValue["usageApiEndpoint"];
-                                    if (usageApiEndpointValue != null && usageApiEndpointValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint usageApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.UsageApiEndpoint = usageApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue8 = usageApiEndpointValue["apiVersion"];
-                                        if (apiVersionValue8 != null && apiVersionValue8.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance8 = ((string)apiVersionValue8);
-                                            usageApiEndpointInstance.ApiVersion = apiVersionInstance8;
-                                        }
-                                        
-                                        JToken enabledValue9 = usageApiEndpointValue["enabled"];
-                                        if (enabledValue9 != null && enabledValue9.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance9 = ((bool)enabledValue9);
-                                            usageApiEndpointInstance.Enabled = enabledInstance9;
-                                        }
-                                        
-                                        JToken endpointUriValue8 = usageApiEndpointValue["endpointUri"];
-                                        if (endpointUriValue8 != null && endpointUriValue8.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance8 = ((string)endpointUriValue8);
-                                            usageApiEndpointInstance.EndpointUri = endpointUriInstance8;
-                                        }
-                                        
-                                        JToken timeoutValue8 = usageApiEndpointValue["timeout"];
-                                        if (timeoutValue8 != null && timeoutValue8.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance8 = XmlConvert.ToTimeSpan(((string)timeoutValue8));
-                                            usageApiEndpointInstance.Timeout = timeoutInstance8;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue8 = usageApiEndpointValue["authenticationUsername"];
-                                        if (authenticationUsernameValue8 != null && authenticationUsernameValue8.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance8 = ((string)authenticationUsernameValue8);
-                                            usageApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance8;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue8 = usageApiEndpointValue["authenticationPassword"];
-                                        if (authenticationPasswordValue8 != null && authenticationPasswordValue8.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance8 = ((string)authenticationPasswordValue8);
-                                            usageApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance8;
-                                        }
-                                    }
-                                    
-                                    JToken tenantExtensionEndpointValue = manifestValue["tenantExtensionEndpoint"];
-                                    if (tenantExtensionEndpointValue != null && tenantExtensionEndpointValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint tenantExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.TenantExtensionEndpoint = tenantExtensionEndpointInstance;
-                                        
-                                        JToken apiVersionValue9 = tenantExtensionEndpointValue["apiVersion"];
-                                        if (apiVersionValue9 != null && apiVersionValue9.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance9 = ((string)apiVersionValue9);
-                                            tenantExtensionEndpointInstance.ApiVersion = apiVersionInstance9;
-                                        }
-                                        
-                                        JToken enabledValue10 = tenantExtensionEndpointValue["enabled"];
-                                        if (enabledValue10 != null && enabledValue10.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance10 = ((bool)enabledValue10);
-                                            tenantExtensionEndpointInstance.Enabled = enabledInstance10;
-                                        }
-                                        
-                                        JToken endpointUriValue9 = tenantExtensionEndpointValue["endpointUri"];
-                                        if (endpointUriValue9 != null && endpointUriValue9.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance9 = ((string)endpointUriValue9);
-                                            tenantExtensionEndpointInstance.EndpointUri = endpointUriInstance9;
-                                        }
-                                        
-                                        JToken timeoutValue9 = tenantExtensionEndpointValue["timeout"];
-                                        if (timeoutValue9 != null && timeoutValue9.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance9 = XmlConvert.ToTimeSpan(((string)timeoutValue9));
-                                            tenantExtensionEndpointInstance.Timeout = timeoutInstance9;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue9 = tenantExtensionEndpointValue["authenticationUsername"];
-                                        if (authenticationUsernameValue9 != null && authenticationUsernameValue9.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance9 = ((string)authenticationUsernameValue9);
-                                            tenantExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance9;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue9 = tenantExtensionEndpointValue["authenticationPassword"];
-                                        if (authenticationPasswordValue9 != null && authenticationPasswordValue9.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance9 = ((string)authenticationPasswordValue9);
-                                            tenantExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance9;
-                                        }
-                                    }
-                                    
-                                    JToken tenantExtensionNameValue = manifestValue["tenantExtensionName"];
-                                    if (tenantExtensionNameValue != null && tenantExtensionNameValue.Type != JTokenType.Null)
-                                    {
-                                        string tenantExtensionNameInstance = ((string)tenantExtensionNameValue);
-                                        manifestInstance.TenantExtensionName = tenantExtensionNameInstance;
-                                    }
-                                    
-                                    JToken adminExtensionEndpointValue = manifestValue["adminExtensionEndpoint"];
-                                    if (adminExtensionEndpointValue != null && adminExtensionEndpointValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint adminExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.AdminExtensionEndpoint = adminExtensionEndpointInstance;
-                                        
-                                        JToken apiVersionValue10 = adminExtensionEndpointValue["apiVersion"];
-                                        if (apiVersionValue10 != null && apiVersionValue10.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance10 = ((string)apiVersionValue10);
-                                            adminExtensionEndpointInstance.ApiVersion = apiVersionInstance10;
-                                        }
-                                        
-                                        JToken enabledValue11 = adminExtensionEndpointValue["enabled"];
-                                        if (enabledValue11 != null && enabledValue11.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance11 = ((bool)enabledValue11);
-                                            adminExtensionEndpointInstance.Enabled = enabledInstance11;
-                                        }
-                                        
-                                        JToken endpointUriValue10 = adminExtensionEndpointValue["endpointUri"];
-                                        if (endpointUriValue10 != null && endpointUriValue10.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance10 = ((string)endpointUriValue10);
-                                            adminExtensionEndpointInstance.EndpointUri = endpointUriInstance10;
-                                        }
-                                        
-                                        JToken timeoutValue10 = adminExtensionEndpointValue["timeout"];
-                                        if (timeoutValue10 != null && timeoutValue10.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance10 = XmlConvert.ToTimeSpan(((string)timeoutValue10));
-                                            adminExtensionEndpointInstance.Timeout = timeoutInstance10;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue10 = adminExtensionEndpointValue["authenticationUsername"];
-                                        if (authenticationUsernameValue10 != null && authenticationUsernameValue10.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance10 = ((string)authenticationUsernameValue10);
-                                            adminExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance10;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue10 = adminExtensionEndpointValue["authenticationPassword"];
-                                        if (authenticationPasswordValue10 != null && authenticationPasswordValue10.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance10 = ((string)authenticationPasswordValue10);
-                                            adminExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance10;
-                                        }
-                                    }
-                                    
-                                    JToken adminExtensionNameValue = manifestValue["adminExtensionName"];
-                                    if (adminExtensionNameValue != null && adminExtensionNameValue.Type != JTokenType.Null)
-                                    {
-                                        string adminExtensionNameInstance = ((string)adminExtensionNameValue);
-                                        manifestInstance.AdminExtensionName = adminExtensionNameInstance;
-                                    }
-                                    
-                                    JToken galleryApiEndpointValue = manifestValue["galleryApiEndpoint"];
-                                    if (galleryApiEndpointValue != null && galleryApiEndpointValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceProviderEndpoint galleryApiEndpointInstance = new ResourceProviderEndpoint();
-                                        manifestInstance.GalleryApiEndpoint = galleryApiEndpointInstance;
-                                        
-                                        JToken apiVersionValue11 = galleryApiEndpointValue["apiVersion"];
-                                        if (apiVersionValue11 != null && apiVersionValue11.Type != JTokenType.Null)
-                                        {
-                                            string apiVersionInstance11 = ((string)apiVersionValue11);
-                                            galleryApiEndpointInstance.ApiVersion = apiVersionInstance11;
-                                        }
-                                        
-                                        JToken enabledValue12 = galleryApiEndpointValue["enabled"];
-                                        if (enabledValue12 != null && enabledValue12.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance12 = ((bool)enabledValue12);
-                                            galleryApiEndpointInstance.Enabled = enabledInstance12;
-                                        }
-                                        
-                                        JToken endpointUriValue11 = galleryApiEndpointValue["endpointUri"];
-                                        if (endpointUriValue11 != null && endpointUriValue11.Type != JTokenType.Null)
-                                        {
-                                            string endpointUriInstance11 = ((string)endpointUriValue11);
-                                            galleryApiEndpointInstance.EndpointUri = endpointUriInstance11;
-                                        }
-                                        
-                                        JToken timeoutValue11 = galleryApiEndpointValue["timeout"];
-                                        if (timeoutValue11 != null && timeoutValue11.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan timeoutInstance11 = XmlConvert.ToTimeSpan(((string)timeoutValue11));
-                                            galleryApiEndpointInstance.Timeout = timeoutInstance11;
-                                        }
-                                        
-                                        JToken authenticationUsernameValue11 = galleryApiEndpointValue["authenticationUsername"];
-                                        if (authenticationUsernameValue11 != null && authenticationUsernameValue11.Type != JTokenType.Null)
-                                        {
-                                            string authenticationUsernameInstance11 = ((string)authenticationUsernameValue11);
-                                            galleryApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance11;
-                                        }
-                                        
-                                        JToken authenticationPasswordValue11 = galleryApiEndpointValue["authenticationPassword"];
-                                        if (authenticationPasswordValue11 != null && authenticationPasswordValue11.Type != JTokenType.Null)
-                                        {
-                                            string authenticationPasswordInstance11 = ((string)authenticationPasswordValue11);
-                                            galleryApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance11;
-                                        }
-                                    }
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue["ProvisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    ProvisioningState provisioningStateInstance = ((ProvisioningState)Enum.Parse(typeof(ProvisioningState), ((string)provisioningStateValue), true));
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
                             }
                             
@@ -2512,11 +1396,11 @@ namespace Microsoft.AzureStack.Management
                                 providerRegistrationInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue4 = responseDoc["name"];
-                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance4 = ((string)nameValue4);
-                                providerRegistrationInstance.Name = nameInstance4;
+                                string nameInstance3 = ((string)nameValue3);
+                                providerRegistrationInstance.Name = nameInstance3;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -2526,11 +1410,11 @@ namespace Microsoft.AzureStack.Management
                                 providerRegistrationInstance.Type = typeInstance;
                             }
                             
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string locationInstance2 = ((string)locationValue2);
-                                providerRegistrationInstance.Location = locationInstance2;
+                                string locationInstance = ((string)locationValue);
+                                providerRegistrationInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -2572,18 +1456,16 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the registered provider manifest given a resource group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource provider manifest list operation
         /// </returns>
         public async Task<ProviderRegistrationListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
@@ -2592,7 +1474,7 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            if (resourceGroupName != null && resourceGroupName.Length > 80)
             {
                 throw new ArgumentOutOfRangeException("resourceGroupName");
             }
@@ -2621,7 +1503,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/providerregistrations";
+            url = url + "/providers/Microsoft.Subscriptions.Providers/manifests";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             if (queryParameters.Count > 0)
@@ -2708,15 +1590,8 @@ namespace Microsoft.AzureStack.Management
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ProviderRegistrationDefinition propertiesInstance = new ProviderRegistrationDefinition();
+                                        ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                         providerRegistrationModelInstance.Properties = propertiesInstance;
-                                        
-                                        JToken nameValue = propertiesValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            propertiesInstance.Name = nameInstance;
-                                        }
                                         
                                         JToken displayNameValue = propertiesValue["displayName"];
                                         if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
@@ -2725,11 +1600,18 @@ namespace Microsoft.AzureStack.Management
                                             propertiesInstance.DisplayName = displayNameInstance;
                                         }
                                         
-                                        JToken locationValue = propertiesValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                        JToken namespaceValue = propertiesValue["namespace"];
+                                        if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                         {
-                                            string locationInstance = ((string)locationValue);
-                                            propertiesInstance.Location = locationInstance;
+                                            string namespaceInstance = ((string)namespaceValue);
+                                            propertiesInstance.Namespace = namespaceInstance;
+                                        }
+                                        
+                                        JToken providerLocationValue = propertiesValue["providerLocation"];
+                                        if (providerLocationValue != null && providerLocationValue.Type != JTokenType.Null)
+                                        {
+                                            string providerLocationInstance = ((string)providerLocationValue);
+                                            propertiesInstance.ProviderLocation = providerLocationInstance;
                                         }
                                         
                                         JToken enabledValue = propertiesValue["enabled"];
@@ -2744,6 +1626,15 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             ResourceProviderEndpoint manifestEndpointInstance = new ResourceProviderEndpoint();
                                             propertiesInstance.ManifestEndpoint = manifestEndpointInstance;
+                                            
+                                            JToken apiVersionsArray = manifestEndpointValue["apiVersions"];
+                                            if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                {
+                                                    manifestEndpointInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                }
+                                            }
                                             
                                             JToken apiVersionValue = manifestEndpointValue["apiVersion"];
                                             if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
@@ -2788,625 +1679,187 @@ namespace Microsoft.AzureStack.Management
                                             }
                                         }
                                         
-                                        JToken manifestValue = propertiesValue["manifest"];
-                                        if (manifestValue != null && manifestValue.Type != JTokenType.Null)
+                                        JToken providerAuthorizationValue = propertiesValue["providerAuthorization"];
+                                        if (providerAuthorizationValue != null && providerAuthorizationValue.Type != JTokenType.Null)
                                         {
-                                            ResourceProviderManifest manifestInstance = new ResourceProviderManifest();
-                                            propertiesInstance.Manifest = manifestInstance;
+                                            ResourceProviderAuthorization providerAuthorizationInstance = new ResourceProviderAuthorization();
+                                            propertiesInstance.ProviderAuthorization = providerAuthorizationInstance;
                                             
-                                            JToken namespaceValue = manifestValue["namespace"];
-                                            if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                            JToken applicationIdValue = providerAuthorizationValue["applicationId"];
+                                            if (applicationIdValue != null && applicationIdValue.Type != JTokenType.Null)
                                             {
-                                                string namespaceInstance = ((string)namespaceValue);
-                                                manifestInstance.Namespace = namespaceInstance;
+                                                string applicationIdInstance = ((string)applicationIdValue);
+                                                providerAuthorizationInstance.ApplicationId = applicationIdInstance;
                                             }
                                             
-                                            JToken providerVersionValue = manifestValue["providerVersion"];
-                                            if (providerVersionValue != null && providerVersionValue.Type != JTokenType.Null)
+                                            JToken roleDefinitionIdValue = providerAuthorizationValue["roleDefinitionId"];
+                                            if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
                                             {
-                                                string providerVersionInstance = ((string)providerVersionValue);
-                                                manifestInstance.ProviderVersion = providerVersionInstance;
+                                                string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                                providerAuthorizationInstance.RoleDefinitionId = roleDefinitionIdInstance;
                                             }
-                                            
-                                            JToken tenantResourceTypesArray = manifestValue["tenantResourceTypes"];
-                                            if (tenantResourceTypesArray != null && tenantResourceTypesArray.Type != JTokenType.Null)
+                                        }
+                                        
+                                        JToken extensionNameValue = propertiesValue["extensionName"];
+                                        if (extensionNameValue != null && extensionNameValue.Type != JTokenType.Null)
+                                        {
+                                            string extensionNameInstance = ((string)extensionNameValue);
+                                            propertiesInstance.ExtensionName = extensionNameInstance;
+                                        }
+                                        
+                                        JToken extensionUriValue = propertiesValue["extensionUri"];
+                                        if (extensionUriValue != null && extensionUriValue.Type != JTokenType.Null)
+                                        {
+                                            string extensionUriInstance = ((string)extensionUriValue);
+                                            propertiesInstance.ExtensionUri = extensionUriInstance;
+                                        }
+                                        
+                                        JToken resourceTypesArray = propertiesValue["resourceTypes"];
+                                        if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                             {
-                                                foreach (JToken tenantResourceTypesValue in ((JArray)tenantResourceTypesArray))
+                                                Extension extensionInstance = new Extension();
+                                                propertiesInstance.Extensions.Add(extensionInstance);
+                                                
+                                                JToken nameValue = resourceTypesValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    ResourceType resourceTypeInstance = new ResourceType();
-                                                    manifestInstance.TenantResourceTypes.Add(resourceTypeInstance);
-                                                    
-                                                    JToken nameValue2 = tenantResourceTypesValue["name"];
-                                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                    string nameInstance = ((string)nameValue);
+                                                    extensionInstance.Name = nameInstance;
+                                                }
+                                                
+                                                JToken uriValue = resourceTypesValue["uri"];
+                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                                {
+                                                    string uriInstance = ((string)uriValue);
+                                                    extensionInstance.Uri = uriInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken resourceTypesArray2 = propertiesValue["resourceTypes"];
+                                        if (resourceTypesArray2 != null && resourceTypesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken resourceTypesValue2 in ((JArray)resourceTypesArray2))
+                                            {
+                                                ResourceType resourceTypeInstance = new ResourceType();
+                                                propertiesInstance.ResourceTypes.Add(resourceTypeInstance);
+                                                
+                                                JToken nameValue2 = resourceTypesValue2["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    resourceTypeInstance.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken routingTypeValue = resourceTypesValue2["routingType"];
+                                                if (routingTypeValue != null && routingTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    RoutingType routingTypeInstance = ((RoutingType)Enum.Parse(typeof(RoutingType), ((string)routingTypeValue), true));
+                                                    resourceTypeInstance.RoutingType = routingTypeInstance;
+                                                }
+                                                
+                                                JToken resourceDeletionPolicyValue = resourceTypesValue2["resourceDeletionPolicy"];
+                                                if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
+                                                {
+                                                    ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
+                                                    resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
+                                                }
+                                                
+                                                JToken allowedUnauthorizedActionsArray = resourceTypesValue2["allowedUnauthorizedActions"];
+                                                if (allowedUnauthorizedActionsArray != null && allowedUnauthorizedActionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken allowedUnauthorizedActionsValue in ((JArray)allowedUnauthorizedActionsArray))
                                                     {
-                                                        string nameInstance2 = ((string)nameValue2);
-                                                        resourceTypeInstance.Name = nameInstance2;
+                                                        resourceTypeInstance.AllowedUnauthorizedActions.Add(((string)allowedUnauthorizedActionsValue));
                                                     }
-                                                    
-                                                    JToken isProxyOnlyValue = tenantResourceTypesValue["isProxyOnly"];
-                                                    if (isProxyOnlyValue != null && isProxyOnlyValue.Type != JTokenType.Null)
+                                                }
+                                                
+                                                JToken meteredResourceIdsArray = resourceTypesValue2["meteredResourceIds"];
+                                                if (meteredResourceIdsArray != null && meteredResourceIdsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken meteredResourceIdsValue in ((JArray)meteredResourceIdsArray))
                                                     {
-                                                        bool isProxyOnlyInstance = ((bool)isProxyOnlyValue);
-                                                        resourceTypeInstance.IsProxyOnly = isProxyOnlyInstance;
+                                                        resourceTypeInstance.MeteredResourceIds.Add(((string)meteredResourceIdsValue));
                                                     }
-                                                    
-                                                    JToken isHostBasedRoutingValue = tenantResourceTypesValue["isHostBasedRouting"];
-                                                    if (isHostBasedRoutingValue != null && isHostBasedRoutingValue.Type != JTokenType.Null)
+                                                }
+                                                
+                                                JToken marketplaceTypeValue = resourceTypesValue2["marketplaceType"];
+                                                if (marketplaceTypeValue != null && marketplaceTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    MarketplaceType marketplaceTypeInstance = ((MarketplaceType)Enum.Parse(typeof(MarketplaceType), ((string)marketplaceTypeValue), true));
+                                                    resourceTypeInstance.MarketplaceType = marketplaceTypeInstance;
+                                                }
+                                                
+                                                JToken endpointsArray = resourceTypesValue2["endpoints"];
+                                                if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken endpointsValue in ((JArray)endpointsArray))
                                                     {
-                                                        bool isHostBasedRoutingInstance = ((bool)isHostBasedRoutingValue);
-                                                        resourceTypeInstance.IsHostBasedRouting = isHostBasedRoutingInstance;
-                                                    }
-                                                    
-                                                    JToken resourceGroupDeletionPolicyValue = tenantResourceTypesValue["resourceGroupDeletionPolicy"];
-                                                    if (resourceGroupDeletionPolicyValue != null && resourceGroupDeletionPolicyValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue), true));
-                                                        resourceTypeInstance.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance;
-                                                    }
-                                                    
-                                                    JToken resourceDeletionPolicyValue = tenantResourceTypesValue["resourceDeletionPolicy"];
-                                                    if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
-                                                        resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
-                                                    }
-                                                    
-                                                    JToken endpointsArray = tenantResourceTypesValue["endpoints"];
-                                                    if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken endpointsValue in ((JArray)endpointsArray))
+                                                        ResourceProviderEndpoint resourceProviderEndpointInstance = new ResourceProviderEndpoint();
+                                                        resourceTypeInstance.Endpoints.Add(resourceProviderEndpointInstance);
+                                                        
+                                                        JToken apiVersionsArray2 = endpointsValue["apiVersions"];
+                                                        if (apiVersionsArray2 != null && apiVersionsArray2.Type != JTokenType.Null)
                                                         {
-                                                            ResourceProviderEndpoint resourceProviderEndpointInstance = new ResourceProviderEndpoint();
-                                                            resourceTypeInstance.Endpoints.Add(resourceProviderEndpointInstance);
-                                                            
-                                                            JToken apiVersionValue2 = endpointsValue["apiVersion"];
-                                                            if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                            foreach (JToken apiVersionsValue2 in ((JArray)apiVersionsArray2))
                                                             {
-                                                                string apiVersionInstance2 = ((string)apiVersionValue2);
-                                                                resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                                resourceProviderEndpointInstance.ApiVersions.Add(((string)apiVersionsValue2));
                                                             }
-                                                            
-                                                            JToken enabledValue3 = endpointsValue["enabled"];
-                                                            if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
-                                                            {
-                                                                bool enabledInstance3 = ((bool)enabledValue3);
-                                                                resourceProviderEndpointInstance.Enabled = enabledInstance3;
-                                                            }
-                                                            
-                                                            JToken endpointUriValue2 = endpointsValue["endpointUri"];
-                                                            if (endpointUriValue2 != null && endpointUriValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string endpointUriInstance2 = ((string)endpointUriValue2);
-                                                                resourceProviderEndpointInstance.EndpointUri = endpointUriInstance2;
-                                                            }
-                                                            
-                                                            JToken timeoutValue2 = endpointsValue["timeout"];
-                                                            if (timeoutValue2 != null && timeoutValue2.Type != JTokenType.Null)
-                                                            {
-                                                                TimeSpan timeoutInstance2 = XmlConvert.ToTimeSpan(((string)timeoutValue2));
-                                                                resourceProviderEndpointInstance.Timeout = timeoutInstance2;
-                                                            }
-                                                            
-                                                            JToken authenticationUsernameValue2 = endpointsValue["authenticationUsername"];
-                                                            if (authenticationUsernameValue2 != null && authenticationUsernameValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationUsernameInstance2 = ((string)authenticationUsernameValue2);
-                                                                resourceProviderEndpointInstance.AuthenticationUsername = authenticationUsernameInstance2;
-                                                            }
-                                                            
-                                                            JToken authenticationPasswordValue2 = endpointsValue["authenticationPassword"];
-                                                            if (authenticationPasswordValue2 != null && authenticationPasswordValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationPasswordInstance2 = ((string)authenticationPasswordValue2);
-                                                                resourceProviderEndpointInstance.AuthenticationPassword = authenticationPasswordInstance2;
-                                                            }
+                                                        }
+                                                        
+                                                        JToken apiVersionValue2 = endpointsValue["apiVersion"];
+                                                        if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string apiVersionInstance2 = ((string)apiVersionValue2);
+                                                            resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                        }
+                                                        
+                                                        JToken enabledValue3 = endpointsValue["enabled"];
+                                                        if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
+                                                        {
+                                                            bool enabledInstance3 = ((bool)enabledValue3);
+                                                            resourceProviderEndpointInstance.Enabled = enabledInstance3;
+                                                        }
+                                                        
+                                                        JToken endpointUriValue2 = endpointsValue["endpointUri"];
+                                                        if (endpointUriValue2 != null && endpointUriValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string endpointUriInstance2 = ((string)endpointUriValue2);
+                                                            resourceProviderEndpointInstance.EndpointUri = endpointUriInstance2;
+                                                        }
+                                                        
+                                                        JToken timeoutValue2 = endpointsValue["timeout"];
+                                                        if (timeoutValue2 != null && timeoutValue2.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan timeoutInstance2 = XmlConvert.ToTimeSpan(((string)timeoutValue2));
+                                                            resourceProviderEndpointInstance.Timeout = timeoutInstance2;
+                                                        }
+                                                        
+                                                        JToken authenticationUsernameValue2 = endpointsValue["authenticationUsername"];
+                                                        if (authenticationUsernameValue2 != null && authenticationUsernameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string authenticationUsernameInstance2 = ((string)authenticationUsernameValue2);
+                                                            resourceProviderEndpointInstance.AuthenticationUsername = authenticationUsernameInstance2;
+                                                        }
+                                                        
+                                                        JToken authenticationPasswordValue2 = endpointsValue["authenticationPassword"];
+                                                        if (authenticationPasswordValue2 != null && authenticationPasswordValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string authenticationPasswordInstance2 = ((string)authenticationPasswordValue2);
+                                                            resourceProviderEndpointInstance.AuthenticationPassword = authenticationPasswordInstance2;
                                                         }
                                                     }
                                                 }
                                             }
-                                            
-                                            JToken adminResourceTypesArray = manifestValue["adminResourceTypes"];
-                                            if (adminResourceTypesArray != null && adminResourceTypesArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken adminResourceTypesValue in ((JArray)adminResourceTypesArray))
-                                                {
-                                                    ResourceType resourceTypeInstance2 = new ResourceType();
-                                                    manifestInstance.AdminResourceTypes.Add(resourceTypeInstance2);
-                                                    
-                                                    JToken nameValue3 = adminResourceTypesValue["name"];
-                                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string nameInstance3 = ((string)nameValue3);
-                                                        resourceTypeInstance2.Name = nameInstance3;
-                                                    }
-                                                    
-                                                    JToken isProxyOnlyValue2 = adminResourceTypesValue["isProxyOnly"];
-                                                    if (isProxyOnlyValue2 != null && isProxyOnlyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        bool isProxyOnlyInstance2 = ((bool)isProxyOnlyValue2);
-                                                        resourceTypeInstance2.IsProxyOnly = isProxyOnlyInstance2;
-                                                    }
-                                                    
-                                                    JToken isHostBasedRoutingValue2 = adminResourceTypesValue["isHostBasedRouting"];
-                                                    if (isHostBasedRoutingValue2 != null && isHostBasedRoutingValue2.Type != JTokenType.Null)
-                                                    {
-                                                        bool isHostBasedRoutingInstance2 = ((bool)isHostBasedRoutingValue2);
-                                                        resourceTypeInstance2.IsHostBasedRouting = isHostBasedRoutingInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceGroupDeletionPolicyValue2 = adminResourceTypesValue["resourceGroupDeletionPolicy"];
-                                                    if (resourceGroupDeletionPolicyValue2 != null && resourceGroupDeletionPolicyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance2 = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue2), true));
-                                                        resourceTypeInstance2.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceDeletionPolicyValue2 = adminResourceTypesValue["resourceDeletionPolicy"];
-                                                    if (resourceDeletionPolicyValue2 != null && resourceDeletionPolicyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceDeletionPolicy resourceDeletionPolicyInstance2 = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue2), true));
-                                                        resourceTypeInstance2.ResourceDeletionPolicy = resourceDeletionPolicyInstance2;
-                                                    }
-                                                    
-                                                    JToken endpointsArray2 = adminResourceTypesValue["endpoints"];
-                                                    if (endpointsArray2 != null && endpointsArray2.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken endpointsValue2 in ((JArray)endpointsArray2))
-                                                        {
-                                                            ResourceProviderEndpoint resourceProviderEndpointInstance2 = new ResourceProviderEndpoint();
-                                                            resourceTypeInstance2.Endpoints.Add(resourceProviderEndpointInstance2);
-                                                            
-                                                            JToken apiVersionValue3 = endpointsValue2["apiVersion"];
-                                                            if (apiVersionValue3 != null && apiVersionValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string apiVersionInstance3 = ((string)apiVersionValue3);
-                                                                resourceProviderEndpointInstance2.ApiVersion = apiVersionInstance3;
-                                                            }
-                                                            
-                                                            JToken enabledValue4 = endpointsValue2["enabled"];
-                                                            if (enabledValue4 != null && enabledValue4.Type != JTokenType.Null)
-                                                            {
-                                                                bool enabledInstance4 = ((bool)enabledValue4);
-                                                                resourceProviderEndpointInstance2.Enabled = enabledInstance4;
-                                                            }
-                                                            
-                                                            JToken endpointUriValue3 = endpointsValue2["endpointUri"];
-                                                            if (endpointUriValue3 != null && endpointUriValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string endpointUriInstance3 = ((string)endpointUriValue3);
-                                                                resourceProviderEndpointInstance2.EndpointUri = endpointUriInstance3;
-                                                            }
-                                                            
-                                                            JToken timeoutValue3 = endpointsValue2["timeout"];
-                                                            if (timeoutValue3 != null && timeoutValue3.Type != JTokenType.Null)
-                                                            {
-                                                                TimeSpan timeoutInstance3 = XmlConvert.ToTimeSpan(((string)timeoutValue3));
-                                                                resourceProviderEndpointInstance2.Timeout = timeoutInstance3;
-                                                            }
-                                                            
-                                                            JToken authenticationUsernameValue3 = endpointsValue2["authenticationUsername"];
-                                                            if (authenticationUsernameValue3 != null && authenticationUsernameValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationUsernameInstance3 = ((string)authenticationUsernameValue3);
-                                                                resourceProviderEndpointInstance2.AuthenticationUsername = authenticationUsernameInstance3;
-                                                            }
-                                                            
-                                                            JToken authenticationPasswordValue3 = endpointsValue2["authenticationPassword"];
-                                                            if (authenticationPasswordValue3 != null && authenticationPasswordValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationPasswordInstance3 = ((string)authenticationPasswordValue3);
-                                                                resourceProviderEndpointInstance2.AuthenticationPassword = authenticationPasswordInstance3;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken baseTenantApiEndpointValue = manifestValue["baseTenantApiEndpoint"];
-                                            if (baseTenantApiEndpointValue != null && baseTenantApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint baseTenantApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.BaseTenantApiEndpoint = baseTenantApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue4 = baseTenantApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue4 != null && apiVersionValue4.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance4 = ((string)apiVersionValue4);
-                                                    baseTenantApiEndpointInstance.ApiVersion = apiVersionInstance4;
-                                                }
-                                                
-                                                JToken enabledValue5 = baseTenantApiEndpointValue["enabled"];
-                                                if (enabledValue5 != null && enabledValue5.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance5 = ((bool)enabledValue5);
-                                                    baseTenantApiEndpointInstance.Enabled = enabledInstance5;
-                                                }
-                                                
-                                                JToken endpointUriValue4 = baseTenantApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue4 != null && endpointUriValue4.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance4 = ((string)endpointUriValue4);
-                                                    baseTenantApiEndpointInstance.EndpointUri = endpointUriInstance4;
-                                                }
-                                                
-                                                JToken timeoutValue4 = baseTenantApiEndpointValue["timeout"];
-                                                if (timeoutValue4 != null && timeoutValue4.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance4 = XmlConvert.ToTimeSpan(((string)timeoutValue4));
-                                                    baseTenantApiEndpointInstance.Timeout = timeoutInstance4;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue4 = baseTenantApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue4 != null && authenticationUsernameValue4.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance4 = ((string)authenticationUsernameValue4);
-                                                    baseTenantApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance4;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue4 = baseTenantApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue4 != null && authenticationPasswordValue4.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance4 = ((string)authenticationPasswordValue4);
-                                                    baseTenantApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance4;
-                                                }
-                                            }
-                                            
-                                            JToken baseAdminApiEndpointValue = manifestValue["baseAdminApiEndpoint"];
-                                            if (baseAdminApiEndpointValue != null && baseAdminApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint baseAdminApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.BaseAdminApiEndpoint = baseAdminApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue5 = baseAdminApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue5 != null && apiVersionValue5.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance5 = ((string)apiVersionValue5);
-                                                    baseAdminApiEndpointInstance.ApiVersion = apiVersionInstance5;
-                                                }
-                                                
-                                                JToken enabledValue6 = baseAdminApiEndpointValue["enabled"];
-                                                if (enabledValue6 != null && enabledValue6.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance6 = ((bool)enabledValue6);
-                                                    baseAdminApiEndpointInstance.Enabled = enabledInstance6;
-                                                }
-                                                
-                                                JToken endpointUriValue5 = baseAdminApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue5 != null && endpointUriValue5.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance5 = ((string)endpointUriValue5);
-                                                    baseAdminApiEndpointInstance.EndpointUri = endpointUriInstance5;
-                                                }
-                                                
-                                                JToken timeoutValue5 = baseAdminApiEndpointValue["timeout"];
-                                                if (timeoutValue5 != null && timeoutValue5.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance5 = XmlConvert.ToTimeSpan(((string)timeoutValue5));
-                                                    baseAdminApiEndpointInstance.Timeout = timeoutInstance5;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue5 = baseAdminApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue5 != null && authenticationUsernameValue5.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance5 = ((string)authenticationUsernameValue5);
-                                                    baseAdminApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance5;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue5 = baseAdminApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue5 != null && authenticationPasswordValue5.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance5 = ((string)authenticationPasswordValue5);
-                                                    baseAdminApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance5;
-                                                }
-                                            }
-                                            
-                                            JToken quotaApiEndpointValue = manifestValue["quotaApiEndpoint"];
-                                            if (quotaApiEndpointValue != null && quotaApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint quotaApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.QuotaApiEndpoint = quotaApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue6 = quotaApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue6 != null && apiVersionValue6.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance6 = ((string)apiVersionValue6);
-                                                    quotaApiEndpointInstance.ApiVersion = apiVersionInstance6;
-                                                }
-                                                
-                                                JToken enabledValue7 = quotaApiEndpointValue["enabled"];
-                                                if (enabledValue7 != null && enabledValue7.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance7 = ((bool)enabledValue7);
-                                                    quotaApiEndpointInstance.Enabled = enabledInstance7;
-                                                }
-                                                
-                                                JToken endpointUriValue6 = quotaApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue6 != null && endpointUriValue6.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance6 = ((string)endpointUriValue6);
-                                                    quotaApiEndpointInstance.EndpointUri = endpointUriInstance6;
-                                                }
-                                                
-                                                JToken timeoutValue6 = quotaApiEndpointValue["timeout"];
-                                                if (timeoutValue6 != null && timeoutValue6.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance6 = XmlConvert.ToTimeSpan(((string)timeoutValue6));
-                                                    quotaApiEndpointInstance.Timeout = timeoutInstance6;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue6 = quotaApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue6 != null && authenticationUsernameValue6.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance6 = ((string)authenticationUsernameValue6);
-                                                    quotaApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance6;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue6 = quotaApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue6 != null && authenticationPasswordValue6.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance6 = ((string)authenticationPasswordValue6);
-                                                    quotaApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance6;
-                                                }
-                                            }
-                                            
-                                            JToken eventApiEndpointValue = manifestValue["eventApiEndpoint"];
-                                            if (eventApiEndpointValue != null && eventApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint eventApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.EventApiEndpoint = eventApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue7 = eventApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue7 != null && apiVersionValue7.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance7 = ((string)apiVersionValue7);
-                                                    eventApiEndpointInstance.ApiVersion = apiVersionInstance7;
-                                                }
-                                                
-                                                JToken enabledValue8 = eventApiEndpointValue["enabled"];
-                                                if (enabledValue8 != null && enabledValue8.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance8 = ((bool)enabledValue8);
-                                                    eventApiEndpointInstance.Enabled = enabledInstance8;
-                                                }
-                                                
-                                                JToken endpointUriValue7 = eventApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue7 != null && endpointUriValue7.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance7 = ((string)endpointUriValue7);
-                                                    eventApiEndpointInstance.EndpointUri = endpointUriInstance7;
-                                                }
-                                                
-                                                JToken timeoutValue7 = eventApiEndpointValue["timeout"];
-                                                if (timeoutValue7 != null && timeoutValue7.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance7 = XmlConvert.ToTimeSpan(((string)timeoutValue7));
-                                                    eventApiEndpointInstance.Timeout = timeoutInstance7;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue7 = eventApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue7 != null && authenticationUsernameValue7.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance7 = ((string)authenticationUsernameValue7);
-                                                    eventApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance7;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue7 = eventApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue7 != null && authenticationPasswordValue7.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance7 = ((string)authenticationPasswordValue7);
-                                                    eventApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance7;
-                                                }
-                                            }
-                                            
-                                            JToken usageApiEndpointValue = manifestValue["usageApiEndpoint"];
-                                            if (usageApiEndpointValue != null && usageApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint usageApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.UsageApiEndpoint = usageApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue8 = usageApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue8 != null && apiVersionValue8.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance8 = ((string)apiVersionValue8);
-                                                    usageApiEndpointInstance.ApiVersion = apiVersionInstance8;
-                                                }
-                                                
-                                                JToken enabledValue9 = usageApiEndpointValue["enabled"];
-                                                if (enabledValue9 != null && enabledValue9.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance9 = ((bool)enabledValue9);
-                                                    usageApiEndpointInstance.Enabled = enabledInstance9;
-                                                }
-                                                
-                                                JToken endpointUriValue8 = usageApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue8 != null && endpointUriValue8.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance8 = ((string)endpointUriValue8);
-                                                    usageApiEndpointInstance.EndpointUri = endpointUriInstance8;
-                                                }
-                                                
-                                                JToken timeoutValue8 = usageApiEndpointValue["timeout"];
-                                                if (timeoutValue8 != null && timeoutValue8.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance8 = XmlConvert.ToTimeSpan(((string)timeoutValue8));
-                                                    usageApiEndpointInstance.Timeout = timeoutInstance8;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue8 = usageApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue8 != null && authenticationUsernameValue8.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance8 = ((string)authenticationUsernameValue8);
-                                                    usageApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance8;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue8 = usageApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue8 != null && authenticationPasswordValue8.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance8 = ((string)authenticationPasswordValue8);
-                                                    usageApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance8;
-                                                }
-                                            }
-                                            
-                                            JToken tenantExtensionEndpointValue = manifestValue["tenantExtensionEndpoint"];
-                                            if (tenantExtensionEndpointValue != null && tenantExtensionEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint tenantExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.TenantExtensionEndpoint = tenantExtensionEndpointInstance;
-                                                
-                                                JToken apiVersionValue9 = tenantExtensionEndpointValue["apiVersion"];
-                                                if (apiVersionValue9 != null && apiVersionValue9.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance9 = ((string)apiVersionValue9);
-                                                    tenantExtensionEndpointInstance.ApiVersion = apiVersionInstance9;
-                                                }
-                                                
-                                                JToken enabledValue10 = tenantExtensionEndpointValue["enabled"];
-                                                if (enabledValue10 != null && enabledValue10.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance10 = ((bool)enabledValue10);
-                                                    tenantExtensionEndpointInstance.Enabled = enabledInstance10;
-                                                }
-                                                
-                                                JToken endpointUriValue9 = tenantExtensionEndpointValue["endpointUri"];
-                                                if (endpointUriValue9 != null && endpointUriValue9.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance9 = ((string)endpointUriValue9);
-                                                    tenantExtensionEndpointInstance.EndpointUri = endpointUriInstance9;
-                                                }
-                                                
-                                                JToken timeoutValue9 = tenantExtensionEndpointValue["timeout"];
-                                                if (timeoutValue9 != null && timeoutValue9.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance9 = XmlConvert.ToTimeSpan(((string)timeoutValue9));
-                                                    tenantExtensionEndpointInstance.Timeout = timeoutInstance9;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue9 = tenantExtensionEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue9 != null && authenticationUsernameValue9.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance9 = ((string)authenticationUsernameValue9);
-                                                    tenantExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance9;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue9 = tenantExtensionEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue9 != null && authenticationPasswordValue9.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance9 = ((string)authenticationPasswordValue9);
-                                                    tenantExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance9;
-                                                }
-                                            }
-                                            
-                                            JToken tenantExtensionNameValue = manifestValue["tenantExtensionName"];
-                                            if (tenantExtensionNameValue != null && tenantExtensionNameValue.Type != JTokenType.Null)
-                                            {
-                                                string tenantExtensionNameInstance = ((string)tenantExtensionNameValue);
-                                                manifestInstance.TenantExtensionName = tenantExtensionNameInstance;
-                                            }
-                                            
-                                            JToken adminExtensionEndpointValue = manifestValue["adminExtensionEndpoint"];
-                                            if (adminExtensionEndpointValue != null && adminExtensionEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint adminExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.AdminExtensionEndpoint = adminExtensionEndpointInstance;
-                                                
-                                                JToken apiVersionValue10 = adminExtensionEndpointValue["apiVersion"];
-                                                if (apiVersionValue10 != null && apiVersionValue10.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance10 = ((string)apiVersionValue10);
-                                                    adminExtensionEndpointInstance.ApiVersion = apiVersionInstance10;
-                                                }
-                                                
-                                                JToken enabledValue11 = adminExtensionEndpointValue["enabled"];
-                                                if (enabledValue11 != null && enabledValue11.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance11 = ((bool)enabledValue11);
-                                                    adminExtensionEndpointInstance.Enabled = enabledInstance11;
-                                                }
-                                                
-                                                JToken endpointUriValue10 = adminExtensionEndpointValue["endpointUri"];
-                                                if (endpointUriValue10 != null && endpointUriValue10.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance10 = ((string)endpointUriValue10);
-                                                    adminExtensionEndpointInstance.EndpointUri = endpointUriInstance10;
-                                                }
-                                                
-                                                JToken timeoutValue10 = adminExtensionEndpointValue["timeout"];
-                                                if (timeoutValue10 != null && timeoutValue10.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance10 = XmlConvert.ToTimeSpan(((string)timeoutValue10));
-                                                    adminExtensionEndpointInstance.Timeout = timeoutInstance10;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue10 = adminExtensionEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue10 != null && authenticationUsernameValue10.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance10 = ((string)authenticationUsernameValue10);
-                                                    adminExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance10;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue10 = adminExtensionEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue10 != null && authenticationPasswordValue10.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance10 = ((string)authenticationPasswordValue10);
-                                                    adminExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance10;
-                                                }
-                                            }
-                                            
-                                            JToken adminExtensionNameValue = manifestValue["adminExtensionName"];
-                                            if (adminExtensionNameValue != null && adminExtensionNameValue.Type != JTokenType.Null)
-                                            {
-                                                string adminExtensionNameInstance = ((string)adminExtensionNameValue);
-                                                manifestInstance.AdminExtensionName = adminExtensionNameInstance;
-                                            }
-                                            
-                                            JToken galleryApiEndpointValue = manifestValue["galleryApiEndpoint"];
-                                            if (galleryApiEndpointValue != null && galleryApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint galleryApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.GalleryApiEndpoint = galleryApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue11 = galleryApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue11 != null && apiVersionValue11.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance11 = ((string)apiVersionValue11);
-                                                    galleryApiEndpointInstance.ApiVersion = apiVersionInstance11;
-                                                }
-                                                
-                                                JToken enabledValue12 = galleryApiEndpointValue["enabled"];
-                                                if (enabledValue12 != null && enabledValue12.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance12 = ((bool)enabledValue12);
-                                                    galleryApiEndpointInstance.Enabled = enabledInstance12;
-                                                }
-                                                
-                                                JToken endpointUriValue11 = galleryApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue11 != null && endpointUriValue11.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance11 = ((string)endpointUriValue11);
-                                                    galleryApiEndpointInstance.EndpointUri = endpointUriInstance11;
-                                                }
-                                                
-                                                JToken timeoutValue11 = galleryApiEndpointValue["timeout"];
-                                                if (timeoutValue11 != null && timeoutValue11.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance11 = XmlConvert.ToTimeSpan(((string)timeoutValue11));
-                                                    galleryApiEndpointInstance.Timeout = timeoutInstance11;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue11 = galleryApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue11 != null && authenticationUsernameValue11.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance11 = ((string)authenticationUsernameValue11);
-                                                    galleryApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance11;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue11 = galleryApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue11 != null && authenticationPasswordValue11.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance11 = ((string)authenticationPasswordValue11);
-                                                    galleryApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance11;
-                                                }
-                                            }
+                                        }
+                                        
+                                        JToken provisioningStateValue = propertiesValue["ProvisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            ProvisioningState provisioningStateInstance = ((ProvisioningState)Enum.Parse(typeof(ProvisioningState), ((string)provisioningStateValue), true));
+                                            propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
                                     }
                                     
@@ -3417,11 +1870,11 @@ namespace Microsoft.AzureStack.Management
                                         providerRegistrationModelInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue4 = valueValue["name"];
-                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                    JToken nameValue3 = valueValue["name"];
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                     {
-                                        string nameInstance4 = ((string)nameValue4);
-                                        providerRegistrationModelInstance.Name = nameInstance4;
+                                        string nameInstance3 = ((string)nameValue3);
+                                        providerRegistrationModelInstance.Name = nameInstance3;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -3431,11 +1884,11 @@ namespace Microsoft.AzureStack.Management
                                         providerRegistrationModelInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken locationValue2 = valueValue["location"];
-                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        string locationInstance2 = ((string)locationValue2);
-                                        providerRegistrationModelInstance.Location = locationInstance2;
+                                        string locationInstance = ((string)locationValue);
+                                        providerRegistrationModelInstance.Location = locationInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -3456,2013 +1909,6 @@ namespace Microsoft.AzureStack.Management
                             {
                                 string odatanextLinkInstance = ((string)odatanextLinkValue);
                                 result.NextLink = odatanextLinkInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public async Task<ProviderRegistrationListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + Uri.EscapeDataString(nextLink);
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ProviderRegistrationListResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ProviderRegistrationListResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    ProviderRegistrationModel providerRegistrationModelInstance = new ProviderRegistrationModel();
-                                    result.ProviderRegistrations.Add(providerRegistrationModelInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        ProviderRegistrationDefinition propertiesInstance = new ProviderRegistrationDefinition();
-                                        providerRegistrationModelInstance.Properties = propertiesInstance;
-                                        
-                                        JToken nameValue = propertiesValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            propertiesInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken displayNameValue = propertiesValue["displayName"];
-                                        if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string displayNameInstance = ((string)displayNameValue);
-                                            propertiesInstance.DisplayName = displayNameInstance;
-                                        }
-                                        
-                                        JToken locationValue = propertiesValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance = ((string)locationValue);
-                                            propertiesInstance.Location = locationInstance;
-                                        }
-                                        
-                                        JToken enabledValue = propertiesValue["enabled"];
-                                        if (enabledValue != null && enabledValue.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance = ((bool)enabledValue);
-                                            propertiesInstance.Enabled = enabledInstance;
-                                        }
-                                        
-                                        JToken manifestEndpointValue = propertiesValue["manifestEndpoint"];
-                                        if (manifestEndpointValue != null && manifestEndpointValue.Type != JTokenType.Null)
-                                        {
-                                            ResourceProviderEndpoint manifestEndpointInstance = new ResourceProviderEndpoint();
-                                            propertiesInstance.ManifestEndpoint = manifestEndpointInstance;
-                                            
-                                            JToken apiVersionValue = manifestEndpointValue["apiVersion"];
-                                            if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
-                                            {
-                                                string apiVersionInstance = ((string)apiVersionValue);
-                                                manifestEndpointInstance.ApiVersion = apiVersionInstance;
-                                            }
-                                            
-                                            JToken enabledValue2 = manifestEndpointValue["enabled"];
-                                            if (enabledValue2 != null && enabledValue2.Type != JTokenType.Null)
-                                            {
-                                                bool enabledInstance2 = ((bool)enabledValue2);
-                                                manifestEndpointInstance.Enabled = enabledInstance2;
-                                            }
-                                            
-                                            JToken endpointUriValue = manifestEndpointValue["endpointUri"];
-                                            if (endpointUriValue != null && endpointUriValue.Type != JTokenType.Null)
-                                            {
-                                                string endpointUriInstance = ((string)endpointUriValue);
-                                                manifestEndpointInstance.EndpointUri = endpointUriInstance;
-                                            }
-                                            
-                                            JToken timeoutValue = manifestEndpointValue["timeout"];
-                                            if (timeoutValue != null && timeoutValue.Type != JTokenType.Null)
-                                            {
-                                                TimeSpan timeoutInstance = XmlConvert.ToTimeSpan(((string)timeoutValue));
-                                                manifestEndpointInstance.Timeout = timeoutInstance;
-                                            }
-                                            
-                                            JToken authenticationUsernameValue = manifestEndpointValue["authenticationUsername"];
-                                            if (authenticationUsernameValue != null && authenticationUsernameValue.Type != JTokenType.Null)
-                                            {
-                                                string authenticationUsernameInstance = ((string)authenticationUsernameValue);
-                                                manifestEndpointInstance.AuthenticationUsername = authenticationUsernameInstance;
-                                            }
-                                            
-                                            JToken authenticationPasswordValue = manifestEndpointValue["authenticationPassword"];
-                                            if (authenticationPasswordValue != null && authenticationPasswordValue.Type != JTokenType.Null)
-                                            {
-                                                string authenticationPasswordInstance = ((string)authenticationPasswordValue);
-                                                manifestEndpointInstance.AuthenticationPassword = authenticationPasswordInstance;
-                                            }
-                                        }
-                                        
-                                        JToken manifestValue = propertiesValue["manifest"];
-                                        if (manifestValue != null && manifestValue.Type != JTokenType.Null)
-                                        {
-                                            ResourceProviderManifest manifestInstance = new ResourceProviderManifest();
-                                            propertiesInstance.Manifest = manifestInstance;
-                                            
-                                            JToken namespaceValue = manifestValue["namespace"];
-                                            if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
-                                            {
-                                                string namespaceInstance = ((string)namespaceValue);
-                                                manifestInstance.Namespace = namespaceInstance;
-                                            }
-                                            
-                                            JToken providerVersionValue = manifestValue["providerVersion"];
-                                            if (providerVersionValue != null && providerVersionValue.Type != JTokenType.Null)
-                                            {
-                                                string providerVersionInstance = ((string)providerVersionValue);
-                                                manifestInstance.ProviderVersion = providerVersionInstance;
-                                            }
-                                            
-                                            JToken tenantResourceTypesArray = manifestValue["tenantResourceTypes"];
-                                            if (tenantResourceTypesArray != null && tenantResourceTypesArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken tenantResourceTypesValue in ((JArray)tenantResourceTypesArray))
-                                                {
-                                                    ResourceType resourceTypeInstance = new ResourceType();
-                                                    manifestInstance.TenantResourceTypes.Add(resourceTypeInstance);
-                                                    
-                                                    JToken nameValue2 = tenantResourceTypesValue["name"];
-                                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string nameInstance2 = ((string)nameValue2);
-                                                        resourceTypeInstance.Name = nameInstance2;
-                                                    }
-                                                    
-                                                    JToken isProxyOnlyValue = tenantResourceTypesValue["isProxyOnly"];
-                                                    if (isProxyOnlyValue != null && isProxyOnlyValue.Type != JTokenType.Null)
-                                                    {
-                                                        bool isProxyOnlyInstance = ((bool)isProxyOnlyValue);
-                                                        resourceTypeInstance.IsProxyOnly = isProxyOnlyInstance;
-                                                    }
-                                                    
-                                                    JToken isHostBasedRoutingValue = tenantResourceTypesValue["isHostBasedRouting"];
-                                                    if (isHostBasedRoutingValue != null && isHostBasedRoutingValue.Type != JTokenType.Null)
-                                                    {
-                                                        bool isHostBasedRoutingInstance = ((bool)isHostBasedRoutingValue);
-                                                        resourceTypeInstance.IsHostBasedRouting = isHostBasedRoutingInstance;
-                                                    }
-                                                    
-                                                    JToken resourceGroupDeletionPolicyValue = tenantResourceTypesValue["resourceGroupDeletionPolicy"];
-                                                    if (resourceGroupDeletionPolicyValue != null && resourceGroupDeletionPolicyValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue), true));
-                                                        resourceTypeInstance.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance;
-                                                    }
-                                                    
-                                                    JToken resourceDeletionPolicyValue = tenantResourceTypesValue["resourceDeletionPolicy"];
-                                                    if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
-                                                        resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
-                                                    }
-                                                    
-                                                    JToken endpointsArray = tenantResourceTypesValue["endpoints"];
-                                                    if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken endpointsValue in ((JArray)endpointsArray))
-                                                        {
-                                                            ResourceProviderEndpoint resourceProviderEndpointInstance = new ResourceProviderEndpoint();
-                                                            resourceTypeInstance.Endpoints.Add(resourceProviderEndpointInstance);
-                                                            
-                                                            JToken apiVersionValue2 = endpointsValue["apiVersion"];
-                                                            if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string apiVersionInstance2 = ((string)apiVersionValue2);
-                                                                resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
-                                                            }
-                                                            
-                                                            JToken enabledValue3 = endpointsValue["enabled"];
-                                                            if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
-                                                            {
-                                                                bool enabledInstance3 = ((bool)enabledValue3);
-                                                                resourceProviderEndpointInstance.Enabled = enabledInstance3;
-                                                            }
-                                                            
-                                                            JToken endpointUriValue2 = endpointsValue["endpointUri"];
-                                                            if (endpointUriValue2 != null && endpointUriValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string endpointUriInstance2 = ((string)endpointUriValue2);
-                                                                resourceProviderEndpointInstance.EndpointUri = endpointUriInstance2;
-                                                            }
-                                                            
-                                                            JToken timeoutValue2 = endpointsValue["timeout"];
-                                                            if (timeoutValue2 != null && timeoutValue2.Type != JTokenType.Null)
-                                                            {
-                                                                TimeSpan timeoutInstance2 = XmlConvert.ToTimeSpan(((string)timeoutValue2));
-                                                                resourceProviderEndpointInstance.Timeout = timeoutInstance2;
-                                                            }
-                                                            
-                                                            JToken authenticationUsernameValue2 = endpointsValue["authenticationUsername"];
-                                                            if (authenticationUsernameValue2 != null && authenticationUsernameValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationUsernameInstance2 = ((string)authenticationUsernameValue2);
-                                                                resourceProviderEndpointInstance.AuthenticationUsername = authenticationUsernameInstance2;
-                                                            }
-                                                            
-                                                            JToken authenticationPasswordValue2 = endpointsValue["authenticationPassword"];
-                                                            if (authenticationPasswordValue2 != null && authenticationPasswordValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationPasswordInstance2 = ((string)authenticationPasswordValue2);
-                                                                resourceProviderEndpointInstance.AuthenticationPassword = authenticationPasswordInstance2;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken adminResourceTypesArray = manifestValue["adminResourceTypes"];
-                                            if (adminResourceTypesArray != null && adminResourceTypesArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken adminResourceTypesValue in ((JArray)adminResourceTypesArray))
-                                                {
-                                                    ResourceType resourceTypeInstance2 = new ResourceType();
-                                                    manifestInstance.AdminResourceTypes.Add(resourceTypeInstance2);
-                                                    
-                                                    JToken nameValue3 = adminResourceTypesValue["name"];
-                                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string nameInstance3 = ((string)nameValue3);
-                                                        resourceTypeInstance2.Name = nameInstance3;
-                                                    }
-                                                    
-                                                    JToken isProxyOnlyValue2 = adminResourceTypesValue["isProxyOnly"];
-                                                    if (isProxyOnlyValue2 != null && isProxyOnlyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        bool isProxyOnlyInstance2 = ((bool)isProxyOnlyValue2);
-                                                        resourceTypeInstance2.IsProxyOnly = isProxyOnlyInstance2;
-                                                    }
-                                                    
-                                                    JToken isHostBasedRoutingValue2 = adminResourceTypesValue["isHostBasedRouting"];
-                                                    if (isHostBasedRoutingValue2 != null && isHostBasedRoutingValue2.Type != JTokenType.Null)
-                                                    {
-                                                        bool isHostBasedRoutingInstance2 = ((bool)isHostBasedRoutingValue2);
-                                                        resourceTypeInstance2.IsHostBasedRouting = isHostBasedRoutingInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceGroupDeletionPolicyValue2 = adminResourceTypesValue["resourceGroupDeletionPolicy"];
-                                                    if (resourceGroupDeletionPolicyValue2 != null && resourceGroupDeletionPolicyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance2 = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue2), true));
-                                                        resourceTypeInstance2.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceDeletionPolicyValue2 = adminResourceTypesValue["resourceDeletionPolicy"];
-                                                    if (resourceDeletionPolicyValue2 != null && resourceDeletionPolicyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceDeletionPolicy resourceDeletionPolicyInstance2 = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue2), true));
-                                                        resourceTypeInstance2.ResourceDeletionPolicy = resourceDeletionPolicyInstance2;
-                                                    }
-                                                    
-                                                    JToken endpointsArray2 = adminResourceTypesValue["endpoints"];
-                                                    if (endpointsArray2 != null && endpointsArray2.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken endpointsValue2 in ((JArray)endpointsArray2))
-                                                        {
-                                                            ResourceProviderEndpoint resourceProviderEndpointInstance2 = new ResourceProviderEndpoint();
-                                                            resourceTypeInstance2.Endpoints.Add(resourceProviderEndpointInstance2);
-                                                            
-                                                            JToken apiVersionValue3 = endpointsValue2["apiVersion"];
-                                                            if (apiVersionValue3 != null && apiVersionValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string apiVersionInstance3 = ((string)apiVersionValue3);
-                                                                resourceProviderEndpointInstance2.ApiVersion = apiVersionInstance3;
-                                                            }
-                                                            
-                                                            JToken enabledValue4 = endpointsValue2["enabled"];
-                                                            if (enabledValue4 != null && enabledValue4.Type != JTokenType.Null)
-                                                            {
-                                                                bool enabledInstance4 = ((bool)enabledValue4);
-                                                                resourceProviderEndpointInstance2.Enabled = enabledInstance4;
-                                                            }
-                                                            
-                                                            JToken endpointUriValue3 = endpointsValue2["endpointUri"];
-                                                            if (endpointUriValue3 != null && endpointUriValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string endpointUriInstance3 = ((string)endpointUriValue3);
-                                                                resourceProviderEndpointInstance2.EndpointUri = endpointUriInstance3;
-                                                            }
-                                                            
-                                                            JToken timeoutValue3 = endpointsValue2["timeout"];
-                                                            if (timeoutValue3 != null && timeoutValue3.Type != JTokenType.Null)
-                                                            {
-                                                                TimeSpan timeoutInstance3 = XmlConvert.ToTimeSpan(((string)timeoutValue3));
-                                                                resourceProviderEndpointInstance2.Timeout = timeoutInstance3;
-                                                            }
-                                                            
-                                                            JToken authenticationUsernameValue3 = endpointsValue2["authenticationUsername"];
-                                                            if (authenticationUsernameValue3 != null && authenticationUsernameValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationUsernameInstance3 = ((string)authenticationUsernameValue3);
-                                                                resourceProviderEndpointInstance2.AuthenticationUsername = authenticationUsernameInstance3;
-                                                            }
-                                                            
-                                                            JToken authenticationPasswordValue3 = endpointsValue2["authenticationPassword"];
-                                                            if (authenticationPasswordValue3 != null && authenticationPasswordValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationPasswordInstance3 = ((string)authenticationPasswordValue3);
-                                                                resourceProviderEndpointInstance2.AuthenticationPassword = authenticationPasswordInstance3;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken baseTenantApiEndpointValue = manifestValue["baseTenantApiEndpoint"];
-                                            if (baseTenantApiEndpointValue != null && baseTenantApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint baseTenantApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.BaseTenantApiEndpoint = baseTenantApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue4 = baseTenantApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue4 != null && apiVersionValue4.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance4 = ((string)apiVersionValue4);
-                                                    baseTenantApiEndpointInstance.ApiVersion = apiVersionInstance4;
-                                                }
-                                                
-                                                JToken enabledValue5 = baseTenantApiEndpointValue["enabled"];
-                                                if (enabledValue5 != null && enabledValue5.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance5 = ((bool)enabledValue5);
-                                                    baseTenantApiEndpointInstance.Enabled = enabledInstance5;
-                                                }
-                                                
-                                                JToken endpointUriValue4 = baseTenantApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue4 != null && endpointUriValue4.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance4 = ((string)endpointUriValue4);
-                                                    baseTenantApiEndpointInstance.EndpointUri = endpointUriInstance4;
-                                                }
-                                                
-                                                JToken timeoutValue4 = baseTenantApiEndpointValue["timeout"];
-                                                if (timeoutValue4 != null && timeoutValue4.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance4 = XmlConvert.ToTimeSpan(((string)timeoutValue4));
-                                                    baseTenantApiEndpointInstance.Timeout = timeoutInstance4;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue4 = baseTenantApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue4 != null && authenticationUsernameValue4.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance4 = ((string)authenticationUsernameValue4);
-                                                    baseTenantApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance4;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue4 = baseTenantApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue4 != null && authenticationPasswordValue4.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance4 = ((string)authenticationPasswordValue4);
-                                                    baseTenantApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance4;
-                                                }
-                                            }
-                                            
-                                            JToken baseAdminApiEndpointValue = manifestValue["baseAdminApiEndpoint"];
-                                            if (baseAdminApiEndpointValue != null && baseAdminApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint baseAdminApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.BaseAdminApiEndpoint = baseAdminApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue5 = baseAdminApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue5 != null && apiVersionValue5.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance5 = ((string)apiVersionValue5);
-                                                    baseAdminApiEndpointInstance.ApiVersion = apiVersionInstance5;
-                                                }
-                                                
-                                                JToken enabledValue6 = baseAdminApiEndpointValue["enabled"];
-                                                if (enabledValue6 != null && enabledValue6.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance6 = ((bool)enabledValue6);
-                                                    baseAdminApiEndpointInstance.Enabled = enabledInstance6;
-                                                }
-                                                
-                                                JToken endpointUriValue5 = baseAdminApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue5 != null && endpointUriValue5.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance5 = ((string)endpointUriValue5);
-                                                    baseAdminApiEndpointInstance.EndpointUri = endpointUriInstance5;
-                                                }
-                                                
-                                                JToken timeoutValue5 = baseAdminApiEndpointValue["timeout"];
-                                                if (timeoutValue5 != null && timeoutValue5.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance5 = XmlConvert.ToTimeSpan(((string)timeoutValue5));
-                                                    baseAdminApiEndpointInstance.Timeout = timeoutInstance5;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue5 = baseAdminApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue5 != null && authenticationUsernameValue5.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance5 = ((string)authenticationUsernameValue5);
-                                                    baseAdminApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance5;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue5 = baseAdminApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue5 != null && authenticationPasswordValue5.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance5 = ((string)authenticationPasswordValue5);
-                                                    baseAdminApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance5;
-                                                }
-                                            }
-                                            
-                                            JToken quotaApiEndpointValue = manifestValue["quotaApiEndpoint"];
-                                            if (quotaApiEndpointValue != null && quotaApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint quotaApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.QuotaApiEndpoint = quotaApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue6 = quotaApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue6 != null && apiVersionValue6.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance6 = ((string)apiVersionValue6);
-                                                    quotaApiEndpointInstance.ApiVersion = apiVersionInstance6;
-                                                }
-                                                
-                                                JToken enabledValue7 = quotaApiEndpointValue["enabled"];
-                                                if (enabledValue7 != null && enabledValue7.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance7 = ((bool)enabledValue7);
-                                                    quotaApiEndpointInstance.Enabled = enabledInstance7;
-                                                }
-                                                
-                                                JToken endpointUriValue6 = quotaApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue6 != null && endpointUriValue6.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance6 = ((string)endpointUriValue6);
-                                                    quotaApiEndpointInstance.EndpointUri = endpointUriInstance6;
-                                                }
-                                                
-                                                JToken timeoutValue6 = quotaApiEndpointValue["timeout"];
-                                                if (timeoutValue6 != null && timeoutValue6.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance6 = XmlConvert.ToTimeSpan(((string)timeoutValue6));
-                                                    quotaApiEndpointInstance.Timeout = timeoutInstance6;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue6 = quotaApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue6 != null && authenticationUsernameValue6.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance6 = ((string)authenticationUsernameValue6);
-                                                    quotaApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance6;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue6 = quotaApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue6 != null && authenticationPasswordValue6.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance6 = ((string)authenticationPasswordValue6);
-                                                    quotaApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance6;
-                                                }
-                                            }
-                                            
-                                            JToken eventApiEndpointValue = manifestValue["eventApiEndpoint"];
-                                            if (eventApiEndpointValue != null && eventApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint eventApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.EventApiEndpoint = eventApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue7 = eventApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue7 != null && apiVersionValue7.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance7 = ((string)apiVersionValue7);
-                                                    eventApiEndpointInstance.ApiVersion = apiVersionInstance7;
-                                                }
-                                                
-                                                JToken enabledValue8 = eventApiEndpointValue["enabled"];
-                                                if (enabledValue8 != null && enabledValue8.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance8 = ((bool)enabledValue8);
-                                                    eventApiEndpointInstance.Enabled = enabledInstance8;
-                                                }
-                                                
-                                                JToken endpointUriValue7 = eventApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue7 != null && endpointUriValue7.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance7 = ((string)endpointUriValue7);
-                                                    eventApiEndpointInstance.EndpointUri = endpointUriInstance7;
-                                                }
-                                                
-                                                JToken timeoutValue7 = eventApiEndpointValue["timeout"];
-                                                if (timeoutValue7 != null && timeoutValue7.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance7 = XmlConvert.ToTimeSpan(((string)timeoutValue7));
-                                                    eventApiEndpointInstance.Timeout = timeoutInstance7;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue7 = eventApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue7 != null && authenticationUsernameValue7.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance7 = ((string)authenticationUsernameValue7);
-                                                    eventApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance7;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue7 = eventApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue7 != null && authenticationPasswordValue7.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance7 = ((string)authenticationPasswordValue7);
-                                                    eventApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance7;
-                                                }
-                                            }
-                                            
-                                            JToken usageApiEndpointValue = manifestValue["usageApiEndpoint"];
-                                            if (usageApiEndpointValue != null && usageApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint usageApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.UsageApiEndpoint = usageApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue8 = usageApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue8 != null && apiVersionValue8.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance8 = ((string)apiVersionValue8);
-                                                    usageApiEndpointInstance.ApiVersion = apiVersionInstance8;
-                                                }
-                                                
-                                                JToken enabledValue9 = usageApiEndpointValue["enabled"];
-                                                if (enabledValue9 != null && enabledValue9.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance9 = ((bool)enabledValue9);
-                                                    usageApiEndpointInstance.Enabled = enabledInstance9;
-                                                }
-                                                
-                                                JToken endpointUriValue8 = usageApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue8 != null && endpointUriValue8.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance8 = ((string)endpointUriValue8);
-                                                    usageApiEndpointInstance.EndpointUri = endpointUriInstance8;
-                                                }
-                                                
-                                                JToken timeoutValue8 = usageApiEndpointValue["timeout"];
-                                                if (timeoutValue8 != null && timeoutValue8.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance8 = XmlConvert.ToTimeSpan(((string)timeoutValue8));
-                                                    usageApiEndpointInstance.Timeout = timeoutInstance8;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue8 = usageApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue8 != null && authenticationUsernameValue8.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance8 = ((string)authenticationUsernameValue8);
-                                                    usageApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance8;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue8 = usageApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue8 != null && authenticationPasswordValue8.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance8 = ((string)authenticationPasswordValue8);
-                                                    usageApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance8;
-                                                }
-                                            }
-                                            
-                                            JToken tenantExtensionEndpointValue = manifestValue["tenantExtensionEndpoint"];
-                                            if (tenantExtensionEndpointValue != null && tenantExtensionEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint tenantExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.TenantExtensionEndpoint = tenantExtensionEndpointInstance;
-                                                
-                                                JToken apiVersionValue9 = tenantExtensionEndpointValue["apiVersion"];
-                                                if (apiVersionValue9 != null && apiVersionValue9.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance9 = ((string)apiVersionValue9);
-                                                    tenantExtensionEndpointInstance.ApiVersion = apiVersionInstance9;
-                                                }
-                                                
-                                                JToken enabledValue10 = tenantExtensionEndpointValue["enabled"];
-                                                if (enabledValue10 != null && enabledValue10.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance10 = ((bool)enabledValue10);
-                                                    tenantExtensionEndpointInstance.Enabled = enabledInstance10;
-                                                }
-                                                
-                                                JToken endpointUriValue9 = tenantExtensionEndpointValue["endpointUri"];
-                                                if (endpointUriValue9 != null && endpointUriValue9.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance9 = ((string)endpointUriValue9);
-                                                    tenantExtensionEndpointInstance.EndpointUri = endpointUriInstance9;
-                                                }
-                                                
-                                                JToken timeoutValue9 = tenantExtensionEndpointValue["timeout"];
-                                                if (timeoutValue9 != null && timeoutValue9.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance9 = XmlConvert.ToTimeSpan(((string)timeoutValue9));
-                                                    tenantExtensionEndpointInstance.Timeout = timeoutInstance9;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue9 = tenantExtensionEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue9 != null && authenticationUsernameValue9.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance9 = ((string)authenticationUsernameValue9);
-                                                    tenantExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance9;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue9 = tenantExtensionEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue9 != null && authenticationPasswordValue9.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance9 = ((string)authenticationPasswordValue9);
-                                                    tenantExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance9;
-                                                }
-                                            }
-                                            
-                                            JToken tenantExtensionNameValue = manifestValue["tenantExtensionName"];
-                                            if (tenantExtensionNameValue != null && tenantExtensionNameValue.Type != JTokenType.Null)
-                                            {
-                                                string tenantExtensionNameInstance = ((string)tenantExtensionNameValue);
-                                                manifestInstance.TenantExtensionName = tenantExtensionNameInstance;
-                                            }
-                                            
-                                            JToken adminExtensionEndpointValue = manifestValue["adminExtensionEndpoint"];
-                                            if (adminExtensionEndpointValue != null && adminExtensionEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint adminExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.AdminExtensionEndpoint = adminExtensionEndpointInstance;
-                                                
-                                                JToken apiVersionValue10 = adminExtensionEndpointValue["apiVersion"];
-                                                if (apiVersionValue10 != null && apiVersionValue10.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance10 = ((string)apiVersionValue10);
-                                                    adminExtensionEndpointInstance.ApiVersion = apiVersionInstance10;
-                                                }
-                                                
-                                                JToken enabledValue11 = adminExtensionEndpointValue["enabled"];
-                                                if (enabledValue11 != null && enabledValue11.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance11 = ((bool)enabledValue11);
-                                                    adminExtensionEndpointInstance.Enabled = enabledInstance11;
-                                                }
-                                                
-                                                JToken endpointUriValue10 = adminExtensionEndpointValue["endpointUri"];
-                                                if (endpointUriValue10 != null && endpointUriValue10.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance10 = ((string)endpointUriValue10);
-                                                    adminExtensionEndpointInstance.EndpointUri = endpointUriInstance10;
-                                                }
-                                                
-                                                JToken timeoutValue10 = adminExtensionEndpointValue["timeout"];
-                                                if (timeoutValue10 != null && timeoutValue10.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance10 = XmlConvert.ToTimeSpan(((string)timeoutValue10));
-                                                    adminExtensionEndpointInstance.Timeout = timeoutInstance10;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue10 = adminExtensionEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue10 != null && authenticationUsernameValue10.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance10 = ((string)authenticationUsernameValue10);
-                                                    adminExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance10;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue10 = adminExtensionEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue10 != null && authenticationPasswordValue10.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance10 = ((string)authenticationPasswordValue10);
-                                                    adminExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance10;
-                                                }
-                                            }
-                                            
-                                            JToken adminExtensionNameValue = manifestValue["adminExtensionName"];
-                                            if (adminExtensionNameValue != null && adminExtensionNameValue.Type != JTokenType.Null)
-                                            {
-                                                string adminExtensionNameInstance = ((string)adminExtensionNameValue);
-                                                manifestInstance.AdminExtensionName = adminExtensionNameInstance;
-                                            }
-                                            
-                                            JToken galleryApiEndpointValue = manifestValue["galleryApiEndpoint"];
-                                            if (galleryApiEndpointValue != null && galleryApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint galleryApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.GalleryApiEndpoint = galleryApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue11 = galleryApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue11 != null && apiVersionValue11.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance11 = ((string)apiVersionValue11);
-                                                    galleryApiEndpointInstance.ApiVersion = apiVersionInstance11;
-                                                }
-                                                
-                                                JToken enabledValue12 = galleryApiEndpointValue["enabled"];
-                                                if (enabledValue12 != null && enabledValue12.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance12 = ((bool)enabledValue12);
-                                                    galleryApiEndpointInstance.Enabled = enabledInstance12;
-                                                }
-                                                
-                                                JToken endpointUriValue11 = galleryApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue11 != null && endpointUriValue11.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance11 = ((string)endpointUriValue11);
-                                                    galleryApiEndpointInstance.EndpointUri = endpointUriInstance11;
-                                                }
-                                                
-                                                JToken timeoutValue11 = galleryApiEndpointValue["timeout"];
-                                                if (timeoutValue11 != null && timeoutValue11.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance11 = XmlConvert.ToTimeSpan(((string)timeoutValue11));
-                                                    galleryApiEndpointInstance.Timeout = timeoutInstance11;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue11 = galleryApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue11 != null && authenticationUsernameValue11.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance11 = ((string)authenticationUsernameValue11);
-                                                    galleryApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance11;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue11 = galleryApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue11 != null && authenticationPasswordValue11.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance11 = ((string)authenticationPasswordValue11);
-                                                    galleryApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance11;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        providerRegistrationModelInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue4 = valueValue["name"];
-                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance4 = ((string)nameValue4);
-                                        providerRegistrationModelInstance.Name = nameInstance4;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        providerRegistrationModelInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue2 = valueValue["location"];
-                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance2 = ((string)locationValue2);
-                                        providerRegistrationModelInstance.Location = locationInstance2;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            providerRegistrationModelInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                            {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public async Task<ProviderRegistrationListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                TracingAdapter.Enter(invocationId, this, "ListWithoutResourceGroupAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/providers/Microsoft.Subscriptions/providerregistrations";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ProviderRegistrationListResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ProviderRegistrationListResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    ProviderRegistrationModel providerRegistrationModelInstance = new ProviderRegistrationModel();
-                                    result.ProviderRegistrations.Add(providerRegistrationModelInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        ProviderRegistrationDefinition propertiesInstance = new ProviderRegistrationDefinition();
-                                        providerRegistrationModelInstance.Properties = propertiesInstance;
-                                        
-                                        JToken nameValue = propertiesValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            propertiesInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken displayNameValue = propertiesValue["displayName"];
-                                        if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string displayNameInstance = ((string)displayNameValue);
-                                            propertiesInstance.DisplayName = displayNameInstance;
-                                        }
-                                        
-                                        JToken locationValue = propertiesValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance = ((string)locationValue);
-                                            propertiesInstance.Location = locationInstance;
-                                        }
-                                        
-                                        JToken enabledValue = propertiesValue["enabled"];
-                                        if (enabledValue != null && enabledValue.Type != JTokenType.Null)
-                                        {
-                                            bool enabledInstance = ((bool)enabledValue);
-                                            propertiesInstance.Enabled = enabledInstance;
-                                        }
-                                        
-                                        JToken manifestEndpointValue = propertiesValue["manifestEndpoint"];
-                                        if (manifestEndpointValue != null && manifestEndpointValue.Type != JTokenType.Null)
-                                        {
-                                            ResourceProviderEndpoint manifestEndpointInstance = new ResourceProviderEndpoint();
-                                            propertiesInstance.ManifestEndpoint = manifestEndpointInstance;
-                                            
-                                            JToken apiVersionValue = manifestEndpointValue["apiVersion"];
-                                            if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
-                                            {
-                                                string apiVersionInstance = ((string)apiVersionValue);
-                                                manifestEndpointInstance.ApiVersion = apiVersionInstance;
-                                            }
-                                            
-                                            JToken enabledValue2 = manifestEndpointValue["enabled"];
-                                            if (enabledValue2 != null && enabledValue2.Type != JTokenType.Null)
-                                            {
-                                                bool enabledInstance2 = ((bool)enabledValue2);
-                                                manifestEndpointInstance.Enabled = enabledInstance2;
-                                            }
-                                            
-                                            JToken endpointUriValue = manifestEndpointValue["endpointUri"];
-                                            if (endpointUriValue != null && endpointUriValue.Type != JTokenType.Null)
-                                            {
-                                                string endpointUriInstance = ((string)endpointUriValue);
-                                                manifestEndpointInstance.EndpointUri = endpointUriInstance;
-                                            }
-                                            
-                                            JToken timeoutValue = manifestEndpointValue["timeout"];
-                                            if (timeoutValue != null && timeoutValue.Type != JTokenType.Null)
-                                            {
-                                                TimeSpan timeoutInstance = XmlConvert.ToTimeSpan(((string)timeoutValue));
-                                                manifestEndpointInstance.Timeout = timeoutInstance;
-                                            }
-                                            
-                                            JToken authenticationUsernameValue = manifestEndpointValue["authenticationUsername"];
-                                            if (authenticationUsernameValue != null && authenticationUsernameValue.Type != JTokenType.Null)
-                                            {
-                                                string authenticationUsernameInstance = ((string)authenticationUsernameValue);
-                                                manifestEndpointInstance.AuthenticationUsername = authenticationUsernameInstance;
-                                            }
-                                            
-                                            JToken authenticationPasswordValue = manifestEndpointValue["authenticationPassword"];
-                                            if (authenticationPasswordValue != null && authenticationPasswordValue.Type != JTokenType.Null)
-                                            {
-                                                string authenticationPasswordInstance = ((string)authenticationPasswordValue);
-                                                manifestEndpointInstance.AuthenticationPassword = authenticationPasswordInstance;
-                                            }
-                                        }
-                                        
-                                        JToken manifestValue = propertiesValue["manifest"];
-                                        if (manifestValue != null && manifestValue.Type != JTokenType.Null)
-                                        {
-                                            ResourceProviderManifest manifestInstance = new ResourceProviderManifest();
-                                            propertiesInstance.Manifest = manifestInstance;
-                                            
-                                            JToken namespaceValue = manifestValue["namespace"];
-                                            if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
-                                            {
-                                                string namespaceInstance = ((string)namespaceValue);
-                                                manifestInstance.Namespace = namespaceInstance;
-                                            }
-                                            
-                                            JToken providerVersionValue = manifestValue["providerVersion"];
-                                            if (providerVersionValue != null && providerVersionValue.Type != JTokenType.Null)
-                                            {
-                                                string providerVersionInstance = ((string)providerVersionValue);
-                                                manifestInstance.ProviderVersion = providerVersionInstance;
-                                            }
-                                            
-                                            JToken tenantResourceTypesArray = manifestValue["tenantResourceTypes"];
-                                            if (tenantResourceTypesArray != null && tenantResourceTypesArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken tenantResourceTypesValue in ((JArray)tenantResourceTypesArray))
-                                                {
-                                                    ResourceType resourceTypeInstance = new ResourceType();
-                                                    manifestInstance.TenantResourceTypes.Add(resourceTypeInstance);
-                                                    
-                                                    JToken nameValue2 = tenantResourceTypesValue["name"];
-                                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string nameInstance2 = ((string)nameValue2);
-                                                        resourceTypeInstance.Name = nameInstance2;
-                                                    }
-                                                    
-                                                    JToken isProxyOnlyValue = tenantResourceTypesValue["isProxyOnly"];
-                                                    if (isProxyOnlyValue != null && isProxyOnlyValue.Type != JTokenType.Null)
-                                                    {
-                                                        bool isProxyOnlyInstance = ((bool)isProxyOnlyValue);
-                                                        resourceTypeInstance.IsProxyOnly = isProxyOnlyInstance;
-                                                    }
-                                                    
-                                                    JToken isHostBasedRoutingValue = tenantResourceTypesValue["isHostBasedRouting"];
-                                                    if (isHostBasedRoutingValue != null && isHostBasedRoutingValue.Type != JTokenType.Null)
-                                                    {
-                                                        bool isHostBasedRoutingInstance = ((bool)isHostBasedRoutingValue);
-                                                        resourceTypeInstance.IsHostBasedRouting = isHostBasedRoutingInstance;
-                                                    }
-                                                    
-                                                    JToken resourceGroupDeletionPolicyValue = tenantResourceTypesValue["resourceGroupDeletionPolicy"];
-                                                    if (resourceGroupDeletionPolicyValue != null && resourceGroupDeletionPolicyValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue), true));
-                                                        resourceTypeInstance.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance;
-                                                    }
-                                                    
-                                                    JToken resourceDeletionPolicyValue = tenantResourceTypesValue["resourceDeletionPolicy"];
-                                                    if (resourceDeletionPolicyValue != null && resourceDeletionPolicyValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceDeletionPolicy resourceDeletionPolicyInstance = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue), true));
-                                                        resourceTypeInstance.ResourceDeletionPolicy = resourceDeletionPolicyInstance;
-                                                    }
-                                                    
-                                                    JToken endpointsArray = tenantResourceTypesValue["endpoints"];
-                                                    if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken endpointsValue in ((JArray)endpointsArray))
-                                                        {
-                                                            ResourceProviderEndpoint resourceProviderEndpointInstance = new ResourceProviderEndpoint();
-                                                            resourceTypeInstance.Endpoints.Add(resourceProviderEndpointInstance);
-                                                            
-                                                            JToken apiVersionValue2 = endpointsValue["apiVersion"];
-                                                            if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string apiVersionInstance2 = ((string)apiVersionValue2);
-                                                                resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
-                                                            }
-                                                            
-                                                            JToken enabledValue3 = endpointsValue["enabled"];
-                                                            if (enabledValue3 != null && enabledValue3.Type != JTokenType.Null)
-                                                            {
-                                                                bool enabledInstance3 = ((bool)enabledValue3);
-                                                                resourceProviderEndpointInstance.Enabled = enabledInstance3;
-                                                            }
-                                                            
-                                                            JToken endpointUriValue2 = endpointsValue["endpointUri"];
-                                                            if (endpointUriValue2 != null && endpointUriValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string endpointUriInstance2 = ((string)endpointUriValue2);
-                                                                resourceProviderEndpointInstance.EndpointUri = endpointUriInstance2;
-                                                            }
-                                                            
-                                                            JToken timeoutValue2 = endpointsValue["timeout"];
-                                                            if (timeoutValue2 != null && timeoutValue2.Type != JTokenType.Null)
-                                                            {
-                                                                TimeSpan timeoutInstance2 = XmlConvert.ToTimeSpan(((string)timeoutValue2));
-                                                                resourceProviderEndpointInstance.Timeout = timeoutInstance2;
-                                                            }
-                                                            
-                                                            JToken authenticationUsernameValue2 = endpointsValue["authenticationUsername"];
-                                                            if (authenticationUsernameValue2 != null && authenticationUsernameValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationUsernameInstance2 = ((string)authenticationUsernameValue2);
-                                                                resourceProviderEndpointInstance.AuthenticationUsername = authenticationUsernameInstance2;
-                                                            }
-                                                            
-                                                            JToken authenticationPasswordValue2 = endpointsValue["authenticationPassword"];
-                                                            if (authenticationPasswordValue2 != null && authenticationPasswordValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationPasswordInstance2 = ((string)authenticationPasswordValue2);
-                                                                resourceProviderEndpointInstance.AuthenticationPassword = authenticationPasswordInstance2;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken adminResourceTypesArray = manifestValue["adminResourceTypes"];
-                                            if (adminResourceTypesArray != null && adminResourceTypesArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken adminResourceTypesValue in ((JArray)adminResourceTypesArray))
-                                                {
-                                                    ResourceType resourceTypeInstance2 = new ResourceType();
-                                                    manifestInstance.AdminResourceTypes.Add(resourceTypeInstance2);
-                                                    
-                                                    JToken nameValue3 = adminResourceTypesValue["name"];
-                                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string nameInstance3 = ((string)nameValue3);
-                                                        resourceTypeInstance2.Name = nameInstance3;
-                                                    }
-                                                    
-                                                    JToken isProxyOnlyValue2 = adminResourceTypesValue["isProxyOnly"];
-                                                    if (isProxyOnlyValue2 != null && isProxyOnlyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        bool isProxyOnlyInstance2 = ((bool)isProxyOnlyValue2);
-                                                        resourceTypeInstance2.IsProxyOnly = isProxyOnlyInstance2;
-                                                    }
-                                                    
-                                                    JToken isHostBasedRoutingValue2 = adminResourceTypesValue["isHostBasedRouting"];
-                                                    if (isHostBasedRoutingValue2 != null && isHostBasedRoutingValue2.Type != JTokenType.Null)
-                                                    {
-                                                        bool isHostBasedRoutingInstance2 = ((bool)isHostBasedRoutingValue2);
-                                                        resourceTypeInstance2.IsHostBasedRouting = isHostBasedRoutingInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceGroupDeletionPolicyValue2 = adminResourceTypesValue["resourceGroupDeletionPolicy"];
-                                                    if (resourceGroupDeletionPolicyValue2 != null && resourceGroupDeletionPolicyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceGroupDeletionPolicy resourceGroupDeletionPolicyInstance2 = ((ResourceGroupDeletionPolicy)Enum.Parse(typeof(ResourceGroupDeletionPolicy), ((string)resourceGroupDeletionPolicyValue2), true));
-                                                        resourceTypeInstance2.ResourceGroupDeletionPolicy = resourceGroupDeletionPolicyInstance2;
-                                                    }
-                                                    
-                                                    JToken resourceDeletionPolicyValue2 = adminResourceTypesValue["resourceDeletionPolicy"];
-                                                    if (resourceDeletionPolicyValue2 != null && resourceDeletionPolicyValue2.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceDeletionPolicy resourceDeletionPolicyInstance2 = ((ResourceDeletionPolicy)Enum.Parse(typeof(ResourceDeletionPolicy), ((string)resourceDeletionPolicyValue2), true));
-                                                        resourceTypeInstance2.ResourceDeletionPolicy = resourceDeletionPolicyInstance2;
-                                                    }
-                                                    
-                                                    JToken endpointsArray2 = adminResourceTypesValue["endpoints"];
-                                                    if (endpointsArray2 != null && endpointsArray2.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken endpointsValue2 in ((JArray)endpointsArray2))
-                                                        {
-                                                            ResourceProviderEndpoint resourceProviderEndpointInstance2 = new ResourceProviderEndpoint();
-                                                            resourceTypeInstance2.Endpoints.Add(resourceProviderEndpointInstance2);
-                                                            
-                                                            JToken apiVersionValue3 = endpointsValue2["apiVersion"];
-                                                            if (apiVersionValue3 != null && apiVersionValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string apiVersionInstance3 = ((string)apiVersionValue3);
-                                                                resourceProviderEndpointInstance2.ApiVersion = apiVersionInstance3;
-                                                            }
-                                                            
-                                                            JToken enabledValue4 = endpointsValue2["enabled"];
-                                                            if (enabledValue4 != null && enabledValue4.Type != JTokenType.Null)
-                                                            {
-                                                                bool enabledInstance4 = ((bool)enabledValue4);
-                                                                resourceProviderEndpointInstance2.Enabled = enabledInstance4;
-                                                            }
-                                                            
-                                                            JToken endpointUriValue3 = endpointsValue2["endpointUri"];
-                                                            if (endpointUriValue3 != null && endpointUriValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string endpointUriInstance3 = ((string)endpointUriValue3);
-                                                                resourceProviderEndpointInstance2.EndpointUri = endpointUriInstance3;
-                                                            }
-                                                            
-                                                            JToken timeoutValue3 = endpointsValue2["timeout"];
-                                                            if (timeoutValue3 != null && timeoutValue3.Type != JTokenType.Null)
-                                                            {
-                                                                TimeSpan timeoutInstance3 = XmlConvert.ToTimeSpan(((string)timeoutValue3));
-                                                                resourceProviderEndpointInstance2.Timeout = timeoutInstance3;
-                                                            }
-                                                            
-                                                            JToken authenticationUsernameValue3 = endpointsValue2["authenticationUsername"];
-                                                            if (authenticationUsernameValue3 != null && authenticationUsernameValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationUsernameInstance3 = ((string)authenticationUsernameValue3);
-                                                                resourceProviderEndpointInstance2.AuthenticationUsername = authenticationUsernameInstance3;
-                                                            }
-                                                            
-                                                            JToken authenticationPasswordValue3 = endpointsValue2["authenticationPassword"];
-                                                            if (authenticationPasswordValue3 != null && authenticationPasswordValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string authenticationPasswordInstance3 = ((string)authenticationPasswordValue3);
-                                                                resourceProviderEndpointInstance2.AuthenticationPassword = authenticationPasswordInstance3;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken baseTenantApiEndpointValue = manifestValue["baseTenantApiEndpoint"];
-                                            if (baseTenantApiEndpointValue != null && baseTenantApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint baseTenantApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.BaseTenantApiEndpoint = baseTenantApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue4 = baseTenantApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue4 != null && apiVersionValue4.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance4 = ((string)apiVersionValue4);
-                                                    baseTenantApiEndpointInstance.ApiVersion = apiVersionInstance4;
-                                                }
-                                                
-                                                JToken enabledValue5 = baseTenantApiEndpointValue["enabled"];
-                                                if (enabledValue5 != null && enabledValue5.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance5 = ((bool)enabledValue5);
-                                                    baseTenantApiEndpointInstance.Enabled = enabledInstance5;
-                                                }
-                                                
-                                                JToken endpointUriValue4 = baseTenantApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue4 != null && endpointUriValue4.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance4 = ((string)endpointUriValue4);
-                                                    baseTenantApiEndpointInstance.EndpointUri = endpointUriInstance4;
-                                                }
-                                                
-                                                JToken timeoutValue4 = baseTenantApiEndpointValue["timeout"];
-                                                if (timeoutValue4 != null && timeoutValue4.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance4 = XmlConvert.ToTimeSpan(((string)timeoutValue4));
-                                                    baseTenantApiEndpointInstance.Timeout = timeoutInstance4;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue4 = baseTenantApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue4 != null && authenticationUsernameValue4.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance4 = ((string)authenticationUsernameValue4);
-                                                    baseTenantApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance4;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue4 = baseTenantApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue4 != null && authenticationPasswordValue4.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance4 = ((string)authenticationPasswordValue4);
-                                                    baseTenantApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance4;
-                                                }
-                                            }
-                                            
-                                            JToken baseAdminApiEndpointValue = manifestValue["baseAdminApiEndpoint"];
-                                            if (baseAdminApiEndpointValue != null && baseAdminApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint baseAdminApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.BaseAdminApiEndpoint = baseAdminApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue5 = baseAdminApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue5 != null && apiVersionValue5.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance5 = ((string)apiVersionValue5);
-                                                    baseAdminApiEndpointInstance.ApiVersion = apiVersionInstance5;
-                                                }
-                                                
-                                                JToken enabledValue6 = baseAdminApiEndpointValue["enabled"];
-                                                if (enabledValue6 != null && enabledValue6.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance6 = ((bool)enabledValue6);
-                                                    baseAdminApiEndpointInstance.Enabled = enabledInstance6;
-                                                }
-                                                
-                                                JToken endpointUriValue5 = baseAdminApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue5 != null && endpointUriValue5.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance5 = ((string)endpointUriValue5);
-                                                    baseAdminApiEndpointInstance.EndpointUri = endpointUriInstance5;
-                                                }
-                                                
-                                                JToken timeoutValue5 = baseAdminApiEndpointValue["timeout"];
-                                                if (timeoutValue5 != null && timeoutValue5.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance5 = XmlConvert.ToTimeSpan(((string)timeoutValue5));
-                                                    baseAdminApiEndpointInstance.Timeout = timeoutInstance5;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue5 = baseAdminApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue5 != null && authenticationUsernameValue5.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance5 = ((string)authenticationUsernameValue5);
-                                                    baseAdminApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance5;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue5 = baseAdminApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue5 != null && authenticationPasswordValue5.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance5 = ((string)authenticationPasswordValue5);
-                                                    baseAdminApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance5;
-                                                }
-                                            }
-                                            
-                                            JToken quotaApiEndpointValue = manifestValue["quotaApiEndpoint"];
-                                            if (quotaApiEndpointValue != null && quotaApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint quotaApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.QuotaApiEndpoint = quotaApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue6 = quotaApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue6 != null && apiVersionValue6.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance6 = ((string)apiVersionValue6);
-                                                    quotaApiEndpointInstance.ApiVersion = apiVersionInstance6;
-                                                }
-                                                
-                                                JToken enabledValue7 = quotaApiEndpointValue["enabled"];
-                                                if (enabledValue7 != null && enabledValue7.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance7 = ((bool)enabledValue7);
-                                                    quotaApiEndpointInstance.Enabled = enabledInstance7;
-                                                }
-                                                
-                                                JToken endpointUriValue6 = quotaApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue6 != null && endpointUriValue6.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance6 = ((string)endpointUriValue6);
-                                                    quotaApiEndpointInstance.EndpointUri = endpointUriInstance6;
-                                                }
-                                                
-                                                JToken timeoutValue6 = quotaApiEndpointValue["timeout"];
-                                                if (timeoutValue6 != null && timeoutValue6.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance6 = XmlConvert.ToTimeSpan(((string)timeoutValue6));
-                                                    quotaApiEndpointInstance.Timeout = timeoutInstance6;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue6 = quotaApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue6 != null && authenticationUsernameValue6.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance6 = ((string)authenticationUsernameValue6);
-                                                    quotaApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance6;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue6 = quotaApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue6 != null && authenticationPasswordValue6.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance6 = ((string)authenticationPasswordValue6);
-                                                    quotaApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance6;
-                                                }
-                                            }
-                                            
-                                            JToken eventApiEndpointValue = manifestValue["eventApiEndpoint"];
-                                            if (eventApiEndpointValue != null && eventApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint eventApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.EventApiEndpoint = eventApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue7 = eventApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue7 != null && apiVersionValue7.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance7 = ((string)apiVersionValue7);
-                                                    eventApiEndpointInstance.ApiVersion = apiVersionInstance7;
-                                                }
-                                                
-                                                JToken enabledValue8 = eventApiEndpointValue["enabled"];
-                                                if (enabledValue8 != null && enabledValue8.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance8 = ((bool)enabledValue8);
-                                                    eventApiEndpointInstance.Enabled = enabledInstance8;
-                                                }
-                                                
-                                                JToken endpointUriValue7 = eventApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue7 != null && endpointUriValue7.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance7 = ((string)endpointUriValue7);
-                                                    eventApiEndpointInstance.EndpointUri = endpointUriInstance7;
-                                                }
-                                                
-                                                JToken timeoutValue7 = eventApiEndpointValue["timeout"];
-                                                if (timeoutValue7 != null && timeoutValue7.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance7 = XmlConvert.ToTimeSpan(((string)timeoutValue7));
-                                                    eventApiEndpointInstance.Timeout = timeoutInstance7;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue7 = eventApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue7 != null && authenticationUsernameValue7.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance7 = ((string)authenticationUsernameValue7);
-                                                    eventApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance7;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue7 = eventApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue7 != null && authenticationPasswordValue7.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance7 = ((string)authenticationPasswordValue7);
-                                                    eventApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance7;
-                                                }
-                                            }
-                                            
-                                            JToken usageApiEndpointValue = manifestValue["usageApiEndpoint"];
-                                            if (usageApiEndpointValue != null && usageApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint usageApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.UsageApiEndpoint = usageApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue8 = usageApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue8 != null && apiVersionValue8.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance8 = ((string)apiVersionValue8);
-                                                    usageApiEndpointInstance.ApiVersion = apiVersionInstance8;
-                                                }
-                                                
-                                                JToken enabledValue9 = usageApiEndpointValue["enabled"];
-                                                if (enabledValue9 != null && enabledValue9.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance9 = ((bool)enabledValue9);
-                                                    usageApiEndpointInstance.Enabled = enabledInstance9;
-                                                }
-                                                
-                                                JToken endpointUriValue8 = usageApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue8 != null && endpointUriValue8.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance8 = ((string)endpointUriValue8);
-                                                    usageApiEndpointInstance.EndpointUri = endpointUriInstance8;
-                                                }
-                                                
-                                                JToken timeoutValue8 = usageApiEndpointValue["timeout"];
-                                                if (timeoutValue8 != null && timeoutValue8.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance8 = XmlConvert.ToTimeSpan(((string)timeoutValue8));
-                                                    usageApiEndpointInstance.Timeout = timeoutInstance8;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue8 = usageApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue8 != null && authenticationUsernameValue8.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance8 = ((string)authenticationUsernameValue8);
-                                                    usageApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance8;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue8 = usageApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue8 != null && authenticationPasswordValue8.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance8 = ((string)authenticationPasswordValue8);
-                                                    usageApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance8;
-                                                }
-                                            }
-                                            
-                                            JToken tenantExtensionEndpointValue = manifestValue["tenantExtensionEndpoint"];
-                                            if (tenantExtensionEndpointValue != null && tenantExtensionEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint tenantExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.TenantExtensionEndpoint = tenantExtensionEndpointInstance;
-                                                
-                                                JToken apiVersionValue9 = tenantExtensionEndpointValue["apiVersion"];
-                                                if (apiVersionValue9 != null && apiVersionValue9.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance9 = ((string)apiVersionValue9);
-                                                    tenantExtensionEndpointInstance.ApiVersion = apiVersionInstance9;
-                                                }
-                                                
-                                                JToken enabledValue10 = tenantExtensionEndpointValue["enabled"];
-                                                if (enabledValue10 != null && enabledValue10.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance10 = ((bool)enabledValue10);
-                                                    tenantExtensionEndpointInstance.Enabled = enabledInstance10;
-                                                }
-                                                
-                                                JToken endpointUriValue9 = tenantExtensionEndpointValue["endpointUri"];
-                                                if (endpointUriValue9 != null && endpointUriValue9.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance9 = ((string)endpointUriValue9);
-                                                    tenantExtensionEndpointInstance.EndpointUri = endpointUriInstance9;
-                                                }
-                                                
-                                                JToken timeoutValue9 = tenantExtensionEndpointValue["timeout"];
-                                                if (timeoutValue9 != null && timeoutValue9.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance9 = XmlConvert.ToTimeSpan(((string)timeoutValue9));
-                                                    tenantExtensionEndpointInstance.Timeout = timeoutInstance9;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue9 = tenantExtensionEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue9 != null && authenticationUsernameValue9.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance9 = ((string)authenticationUsernameValue9);
-                                                    tenantExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance9;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue9 = tenantExtensionEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue9 != null && authenticationPasswordValue9.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance9 = ((string)authenticationPasswordValue9);
-                                                    tenantExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance9;
-                                                }
-                                            }
-                                            
-                                            JToken tenantExtensionNameValue = manifestValue["tenantExtensionName"];
-                                            if (tenantExtensionNameValue != null && tenantExtensionNameValue.Type != JTokenType.Null)
-                                            {
-                                                string tenantExtensionNameInstance = ((string)tenantExtensionNameValue);
-                                                manifestInstance.TenantExtensionName = tenantExtensionNameInstance;
-                                            }
-                                            
-                                            JToken adminExtensionEndpointValue = manifestValue["adminExtensionEndpoint"];
-                                            if (adminExtensionEndpointValue != null && adminExtensionEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint adminExtensionEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.AdminExtensionEndpoint = adminExtensionEndpointInstance;
-                                                
-                                                JToken apiVersionValue10 = adminExtensionEndpointValue["apiVersion"];
-                                                if (apiVersionValue10 != null && apiVersionValue10.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance10 = ((string)apiVersionValue10);
-                                                    adminExtensionEndpointInstance.ApiVersion = apiVersionInstance10;
-                                                }
-                                                
-                                                JToken enabledValue11 = adminExtensionEndpointValue["enabled"];
-                                                if (enabledValue11 != null && enabledValue11.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance11 = ((bool)enabledValue11);
-                                                    adminExtensionEndpointInstance.Enabled = enabledInstance11;
-                                                }
-                                                
-                                                JToken endpointUriValue10 = adminExtensionEndpointValue["endpointUri"];
-                                                if (endpointUriValue10 != null && endpointUriValue10.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance10 = ((string)endpointUriValue10);
-                                                    adminExtensionEndpointInstance.EndpointUri = endpointUriInstance10;
-                                                }
-                                                
-                                                JToken timeoutValue10 = adminExtensionEndpointValue["timeout"];
-                                                if (timeoutValue10 != null && timeoutValue10.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance10 = XmlConvert.ToTimeSpan(((string)timeoutValue10));
-                                                    adminExtensionEndpointInstance.Timeout = timeoutInstance10;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue10 = adminExtensionEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue10 != null && authenticationUsernameValue10.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance10 = ((string)authenticationUsernameValue10);
-                                                    adminExtensionEndpointInstance.AuthenticationUsername = authenticationUsernameInstance10;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue10 = adminExtensionEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue10 != null && authenticationPasswordValue10.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance10 = ((string)authenticationPasswordValue10);
-                                                    adminExtensionEndpointInstance.AuthenticationPassword = authenticationPasswordInstance10;
-                                                }
-                                            }
-                                            
-                                            JToken adminExtensionNameValue = manifestValue["adminExtensionName"];
-                                            if (adminExtensionNameValue != null && adminExtensionNameValue.Type != JTokenType.Null)
-                                            {
-                                                string adminExtensionNameInstance = ((string)adminExtensionNameValue);
-                                                manifestInstance.AdminExtensionName = adminExtensionNameInstance;
-                                            }
-                                            
-                                            JToken galleryApiEndpointValue = manifestValue["galleryApiEndpoint"];
-                                            if (galleryApiEndpointValue != null && galleryApiEndpointValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceProviderEndpoint galleryApiEndpointInstance = new ResourceProviderEndpoint();
-                                                manifestInstance.GalleryApiEndpoint = galleryApiEndpointInstance;
-                                                
-                                                JToken apiVersionValue11 = galleryApiEndpointValue["apiVersion"];
-                                                if (apiVersionValue11 != null && apiVersionValue11.Type != JTokenType.Null)
-                                                {
-                                                    string apiVersionInstance11 = ((string)apiVersionValue11);
-                                                    galleryApiEndpointInstance.ApiVersion = apiVersionInstance11;
-                                                }
-                                                
-                                                JToken enabledValue12 = galleryApiEndpointValue["enabled"];
-                                                if (enabledValue12 != null && enabledValue12.Type != JTokenType.Null)
-                                                {
-                                                    bool enabledInstance12 = ((bool)enabledValue12);
-                                                    galleryApiEndpointInstance.Enabled = enabledInstance12;
-                                                }
-                                                
-                                                JToken endpointUriValue11 = galleryApiEndpointValue["endpointUri"];
-                                                if (endpointUriValue11 != null && endpointUriValue11.Type != JTokenType.Null)
-                                                {
-                                                    string endpointUriInstance11 = ((string)endpointUriValue11);
-                                                    galleryApiEndpointInstance.EndpointUri = endpointUriInstance11;
-                                                }
-                                                
-                                                JToken timeoutValue11 = galleryApiEndpointValue["timeout"];
-                                                if (timeoutValue11 != null && timeoutValue11.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan timeoutInstance11 = XmlConvert.ToTimeSpan(((string)timeoutValue11));
-                                                    galleryApiEndpointInstance.Timeout = timeoutInstance11;
-                                                }
-                                                
-                                                JToken authenticationUsernameValue11 = galleryApiEndpointValue["authenticationUsername"];
-                                                if (authenticationUsernameValue11 != null && authenticationUsernameValue11.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationUsernameInstance11 = ((string)authenticationUsernameValue11);
-                                                    galleryApiEndpointInstance.AuthenticationUsername = authenticationUsernameInstance11;
-                                                }
-                                                
-                                                JToken authenticationPasswordValue11 = galleryApiEndpointValue["authenticationPassword"];
-                                                if (authenticationPasswordValue11 != null && authenticationPasswordValue11.Type != JTokenType.Null)
-                                                {
-                                                    string authenticationPasswordInstance11 = ((string)authenticationPasswordValue11);
-                                                    galleryApiEndpointInstance.AuthenticationPassword = authenticationPasswordInstance11;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        providerRegistrationModelInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue4 = valueValue["name"];
-                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance4 = ((string)nameValue4);
-                                        providerRegistrationModelInstance.Name = nameInstance4;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        providerRegistrationModelInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue2 = valueValue["location"];
-                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance2 = ((string)locationValue2);
-                                        providerRegistrationModelInstance.Location = locationInstance2;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            providerRegistrationModelInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                            {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Validate provider registration.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='parameters'>
-        /// Required. Provider registration validation parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public async Task<ProviderRegistrationValidateResult> ValidateAsync(ProviderRegistrationValidateParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ProviderRegistration == null)
-            {
-                throw new ArgumentNullException("parameters.ProviderRegistration");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "ValidateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/providers/Microsoft.Subscriptions/validateProviderRegistration";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject providerRegistrationValidateParametersValue = new JObject();
-                requestDoc = providerRegistrationValidateParametersValue;
-                
-                if (parameters.ProviderRegistration.Name != null)
-                {
-                    providerRegistrationValidateParametersValue["name"] = parameters.ProviderRegistration.Name;
-                }
-                
-                if (parameters.ProviderRegistration.DisplayName != null)
-                {
-                    providerRegistrationValidateParametersValue["displayName"] = parameters.ProviderRegistration.DisplayName;
-                }
-                
-                if (parameters.ProviderRegistration.Location != null)
-                {
-                    providerRegistrationValidateParametersValue["location"] = parameters.ProviderRegistration.Location;
-                }
-                
-                if (parameters.ProviderRegistration.ManifestEndpoint != null)
-                {
-                    JObject manifestEndpointValue = new JObject();
-                    providerRegistrationValidateParametersValue["manifestEndpoint"] = manifestEndpointValue;
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.ApiVersion != null)
-                    {
-                        manifestEndpointValue["apiVersion"] = parameters.ProviderRegistration.ManifestEndpoint.ApiVersion;
-                    }
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.Enabled != null)
-                    {
-                        manifestEndpointValue["enabled"] = parameters.ProviderRegistration.ManifestEndpoint.Enabled.Value;
-                    }
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.EndpointUri != null)
-                    {
-                        manifestEndpointValue["endpointUri"] = parameters.ProviderRegistration.ManifestEndpoint.EndpointUri;
-                    }
-                    
-                    manifestEndpointValue["timeout"] = XmlConvert.ToString(parameters.ProviderRegistration.ManifestEndpoint.Timeout);
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.AuthenticationUsername != null)
-                    {
-                        manifestEndpointValue["authenticationUsername"] = parameters.ProviderRegistration.ManifestEndpoint.AuthenticationUsername;
-                    }
-                    
-                    if (parameters.ProviderRegistration.ManifestEndpoint.AuthenticationPassword != null)
-                    {
-                        manifestEndpointValue["authenticationPassword"] = parameters.ProviderRegistration.ManifestEndpoint.AuthenticationPassword;
-                    }
-                }
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.BadRequest && statusCode != HttpStatusCode.Conflict)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ProviderRegistrationValidateResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.BadRequest || statusCode == HttpStatusCode.Conflict)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ProviderRegistrationValidateResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken errorValue = responseDoc["error"];
-                            if (errorValue != null && errorValue.Type != JTokenType.Null)
-                            {
-                                ProviderRegistrationValidationError errorInstance = new ProviderRegistrationValidationError();
-                                result.Error = errorInstance;
-                                
-                                JToken codeValue = errorValue["code"];
-                                if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                {
-                                    string codeInstance = ((string)codeValue);
-                                    errorInstance.Code = codeInstance;
-                                }
-                                
-                                JToken messageValue = errorValue["message"];
-                                if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                {
-                                    string messageInstance = ((string)messageValue);
-                                    errorInstance.Message = messageInstance;
-                                }
                             }
                         }
                         

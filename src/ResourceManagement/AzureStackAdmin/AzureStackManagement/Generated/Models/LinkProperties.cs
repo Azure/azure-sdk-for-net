@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Link properties.
     /// </summary>
     public partial class LinkProperties
     {
         private string _displayName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Display name.
         /// </summary>
         public string DisplayName
         {
@@ -43,7 +43,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Identity.
         /// </summary>
         public string Id
         {
@@ -54,7 +54,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _uri;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Link Uri.
         /// </summary>
         public string Uri
         {

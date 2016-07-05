@@ -27,14 +27,15 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Gallery item Get operation result.
     /// </summary>
     public partial class GalleryItemGetResult : AzureOperationResponse
     {
         private GalleryItemModel _galleryItem;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gallery item set of the parameters including
+        /// GalleryItemUri.
         /// </summary>
         public GalleryItemModel GalleryItem
         {

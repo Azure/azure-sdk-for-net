@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Subscription States
     /// </summary>
     public enum SubscriptionState
     {
@@ -35,8 +35,10 @@ namespace Microsoft.AzureStack.Management.Models
         
         Warned = 2,
         
-        Disabled = 3,
+        PastDue = 3,
         
-        Deleted = 4,
+        Disabled = 4,
+        
+        Deleted = 5,
     }
 }

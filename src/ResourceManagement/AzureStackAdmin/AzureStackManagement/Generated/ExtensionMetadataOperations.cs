@@ -63,9 +63,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Returns list of extensions the user has access to  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Returns list of extensions the user has access to
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -173,11 +171,13 @@ namespace Microsoft.AzureStack.Management
                                     ExtensionMetadata extensionMetadataInstance = new ExtensionMetadata();
                                     result.ExtensionsMetadata.Add(extensionMetadataInstance);
                                     
-                                    JToken namespaceValue = valueValue["namespace"];
-                                    if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                    JToken namespacesArray = valueValue["namespaces"];
+                                    if (namespacesArray != null && namespacesArray.Type != JTokenType.Null)
                                     {
-                                        string namespaceInstance = ((string)namespaceValue);
-                                        extensionMetadataInstance.Namespace = namespaceInstance;
+                                        foreach (JToken namespacesValue in ((JArray)namespacesArray))
+                                        {
+                                            extensionMetadataInstance.Namespaces.Add(((string)namespacesValue));
+                                        }
                                     }
                                     
                                     JToken locationValue = valueValue["location"];

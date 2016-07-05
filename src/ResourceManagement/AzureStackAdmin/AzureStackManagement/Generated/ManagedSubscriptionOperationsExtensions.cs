@@ -32,19 +32,17 @@ namespace Microsoft.AzureStack.Management
     public static partial class ManagedSubscriptionOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Subscription update parameters
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or the update operation of the subscription
         /// </returns>
         public static ManagedSubscriptionCreateOrUpdateResult CreateOrUpdate(this IManagedSubscriptionOperations operations, ManagedSubscriptionCreateOrUpdateParameters parameters)
         {
@@ -56,19 +54,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Subscription update parameters
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or the update operation of the subscription
         /// </returns>
         public static Task<ManagedSubscriptionCreateOrUpdateResult> CreateOrUpdateAsync(this IManagedSubscriptionOperations operations, ManagedSubscriptionCreateOrUpdateParameters parameters)
         {
@@ -76,16 +72,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation of the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='subscriptionId'>
-        /// Required. Your documentation here.
+        /// Required. Subscription Id
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -101,16 +95,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation of the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='subscriptionId'>
-        /// Required. Your documentation here.
+        /// Required. Subscription Id
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -122,19 +114,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='subscriptionId'>
-        /// Required. Your documentation here.
+        /// Required. Subscription Id
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the subscription get operation
         /// </returns>
         public static ManagedSubscriptionGetResult Get(this IManagedSubscriptionOperations operations, string subscriptionId)
         {
@@ -146,19 +136,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='subscriptionId'>
-        /// Required. Your documentation here.
+        /// Required. Subscription Id
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the subscription get operation
         /// </returns>
         public static Task<ManagedSubscriptionGetResult> GetAsync(this IManagedSubscriptionOperations operations, string subscriptionId)
         {
@@ -166,9 +154,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscriptions
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -178,7 +164,7 @@ namespace Microsoft.AzureStack.Management
         /// Required.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the list operations
         /// </returns>
         public static ManagedSubscriptionListResult List(this IManagedSubscriptionOperations operations, bool includeDetails)
         {
@@ -190,9 +176,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscriptions
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -202,7 +186,7 @@ namespace Microsoft.AzureStack.Management
         /// Required.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the list operations
         /// </returns>
         public static Task<ManagedSubscriptionListResult> ListAsync(this IManagedSubscriptionOperations operations, bool includeDetails)
         {
@@ -210,21 +194,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscription with the next link
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL pointing to get the next set of subscriptions
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the list operations
         /// </returns>
         public static ManagedSubscriptionListResult ListNext(this IManagedSubscriptionOperations operations, string nextLink)
         {
@@ -236,21 +216,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscription with the next link
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedSubscriptionOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL pointing to get the next set of subscriptions
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the list operations
         /// </returns>
         public static Task<ManagedSubscriptionListResult> ListNextAsync(this IManagedSubscriptionOperations operations, string nextLink)
         {

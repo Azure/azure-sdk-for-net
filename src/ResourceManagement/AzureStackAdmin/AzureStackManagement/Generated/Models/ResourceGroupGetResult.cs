@@ -27,14 +27,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the resource group get operation
     /// </summary>
     public partial class ResourceGroupGetResult : AzureOperationResponse
     {
         private ResourceGroupDefinition _resourceGroup;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Resource group definition
         /// </summary>
         public ResourceGroupDefinition ResourceGroup
         {

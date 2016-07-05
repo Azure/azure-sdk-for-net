@@ -8,7 +8,7 @@
     <authors>Microsoft, Azure Stack Team</authors>
     <owners>azure-sdk, Microsoft</owners>
     <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
-    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net-pr</projectUrl>
+    <projectUrl>https://github.com/azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Microsoft Confidential, Azure Stack Preview </description>
