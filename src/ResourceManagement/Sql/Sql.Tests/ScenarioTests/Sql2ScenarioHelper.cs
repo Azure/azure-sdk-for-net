@@ -20,6 +20,7 @@ using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test;
 using System;
 using System.Net.Http;
+using Sql.Tests;
 
 namespace Sql2.Tests.ScenarioTests
 {
@@ -242,7 +243,6 @@ namespace Sql2.Tests.ScenarioTests
             string databaseCollation = "Japanese_Bushu_Kakusu_100_CS_AS_KS_WS";
             string databaseEdition = "Basic";
             long databaseMaxSize = 1L * 1024L * 1024L * 1024L; // 1 GB
-            Guid dbSloBasic = new Guid("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"); // Basic
 
             //////////////////////////////////////////////////////////////////////
             // Create database for test.
@@ -255,7 +255,7 @@ namespace Sql2.Tests.ScenarioTests
                     Collation = databaseCollation,
                     Edition = databaseEdition,
                     MaxSizeBytes = databaseMaxSize,
-                    RequestedServiceObjectiveId = dbSloBasic,
+                    RequestedServiceObjectiveId = SqlConstants.DbSloBasic,
                 },
             }).Database;
             test(sqlClient, resGroupName, server, database);

@@ -9,9 +9,11 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Helpers\BasicDelegatingHandler.cs" />
+    <Compile Include="Helpers\SqlConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\Sql2.BackupScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ImportExportScenarioTest.cs" />
+    <Compile Include="ScenarioTests\Sql2.JobAccountScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.SecurityAlertScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.ElasticPoolScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.LocationCapabilitiesTests.cs" />
@@ -90,6 +92,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ElasticPoolScenarioTests\ElasticPoolDatabaseOperations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2JobAccountScenarioTest\JobAccountCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2RecommendedElasticPoolScenarioTests\GetDatabasesForPool.json">
