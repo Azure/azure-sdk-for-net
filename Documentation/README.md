@@ -34,6 +34,6 @@ The following services use Hyak
 - SQL
 - Stream Analytics
 
-Please look at [Azure documentation](https://azure.microsoft.com/en-us/documentation/api/) for more details
+Please see at [Azure documentation](https://azure.microsoft.com/en-us/documentation/api/) for more details
 
 
