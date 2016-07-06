@@ -25,7 +25,14 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the VaultProperties class.
         /// </summary>
-        public VaultProperties(string vaultUri = default(string), Guid? tenantId = default(Guid?), Sku sku = default(Sku), IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?))
+        /// <param name="tenantId">Tenant ID</param>
+        /// <param name="sku">SKU details</param>
+        /// <param name="accessPolicies">Access policies for one or more principals</param>
+        /// <param name="vaultUri">URL of the vault</param>
+        /// <param name="enabledForDeployment">Enabled or disabled for deployment</param>
+        /// <param name="enabledForDiskEncryption">Enabled or disabled for disk encryption</param>
+        /// <param name="enabledForTemplateDeployment">Enabled or disabled for Azure Resource Manager template deployment</param>
+        public VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies, string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?))
         {
             VaultUri = vaultUri;
             TenantId = tenantId;
@@ -46,7 +53,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Gets or sets tenant ID
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets SKU details
@@ -79,5 +86,26 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         [JsonProperty(PropertyName = "enabledForTemplateDeployment")]
         public bool? EnabledForTemplateDeployment { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (AccessPolicies == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AccessPolicies");
+            }
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
+        }
     }
 }

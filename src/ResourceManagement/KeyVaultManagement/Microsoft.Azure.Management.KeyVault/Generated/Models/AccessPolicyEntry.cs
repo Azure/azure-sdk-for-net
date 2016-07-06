@@ -22,6 +22,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the AccessPolicyEntry class.
         /// </summary>
+        /// <param name="tenantId">Tenant ID of the principal</param>
+        /// <param name="objectId">Object ID of the principal</param>
+        /// <param name="applicationId"> Application ID of the client making request on behalf of a principal</param>
+        /// <param name="permissions">Permissions that the principal has for this vault</param>
         public AccessPolicyEntry(Guid? tenantId = default(Guid?), Guid? objectId = default(Guid?), Guid? applicationId = default(Guid?), Permissions permissions = default(Permissions))
         {
             TenantId = tenantId;

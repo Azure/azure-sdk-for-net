@@ -51,7 +51,7 @@ namespace KeyVault.Management.Tests
                             EnabledForDeployment = true,
                             EnabledForDiskEncryption = true,
                             EnabledForTemplateDeployment = true,
-                            Sku = new Sku { Family = "A", Name = "Standard" },
+                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = "Standard" },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
                             AccessPolicies = new[]
@@ -180,7 +180,7 @@ namespace KeyVault.Management.Tests
                             EnabledForDeployment = true,
                             EnabledForDiskEncryption = true,
                             EnabledForTemplateDeployment = true,
-                            Sku = new Sku { Family = "A", Name = "Standard" },
+                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = "Standard" },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
                             AccessPolicies = new[]
@@ -344,7 +344,7 @@ namespace KeyVault.Management.Tests
                                 EnabledForDeployment = true,
                                 EnabledForDiskEncryption = true,
                                 EnabledForTemplateDeployment = true,
-                                Sku = new Sku { Family = "A", Name = "Standard" },
+                                Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = "Standard" },
                                 TenantId = tenantIdGuid,
                                 VaultUri = "",
                                 AccessPolicies = new[]

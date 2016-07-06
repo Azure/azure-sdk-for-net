@@ -2119,6 +2119,68 @@ namespace KeyVault.Tests
             }
         }
 
+        [Fact]
+        public void KeyVaultCertificateCreateManualEnrolledTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetKeyVaultClient();
+
+                const string certificateName = "manualCert01";
+
+                const string certificateMimeType = "application/x-pkcs12";
+                const string certificateSubjectName = "CN=*.microsoft.com";
+
+                var certificateOperation = client.CreateCertificateAsync(_vaultAddress, certificateName, new CertificatePolicy
+                {
+                    KeyProperties = new KeyProperties
+                    {
+                        Exportable = true,
+                        KeySize = 2048,
+                        Kty = "RSA",
+                        ReuseKey = false
+                    },
+                    SecretProperties = new SecretProperties
+                    {
+                        ContentType = certificateMimeType
+                    },
+                    IssuerReference = new IssuerReference
+                    {
+                        Name = WellKnownIssuers.Unknown
+                    },
+                    X509CertificateProperties = new X509CertificateProperties
+                    {
+                        Subject = certificateSubjectName,
+                        SubjectAlternativeNames = new SubjectAlternativeNames
+                        {
+                            DnsNames = new[]
+                            {
+                                "onedrive.microsoft.com",
+                                "xbox.microsoft.com"
+                            }
+                        }
+                    }
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(certificateOperation);
+                Assert.NotNull(certificateOperation.Csr);
+
+                try
+                {
+                    // CSR can also be obtained directly
+                    var pendingVersionCsr = client.GetPendingCertificateSigningRequestAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+                    Assert.True(0 == string.CompareOrdinal(pendingVersionCsr, Convert.ToBase64String(certificateOperation.Csr)));
+                }
+                finally
+                {
+                    var certificateBundleDeleted =
+                        client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
+                    Assert.NotNull(certificateBundleDeleted);
+                }
+            }
+        }
+
         #endregion
 
         #region Helper Methods

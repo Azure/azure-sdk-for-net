@@ -22,6 +22,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Permissions class.
         /// </summary>
+        /// <param name="keys">Permissions to keys</param>
+        /// <param name="secrets">Permissions to secrets</param>
+        /// <param name="certificates">Permissions to certificates</param>
         public Permissions(IList<string> keys = default(IList<string>), IList<string> secrets = default(IList<string>), IList<string> certificates = default(IList<string>))
         {
             Keys = keys;

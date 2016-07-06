@@ -12,10 +12,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// Parameters to create or update a vault
-    /// </summary>
-    public partial class VaultCreateOrUpdateParameters : Resource
+    public partial class VaultCreateOrUpdateParameters : IResource
     {
         /// <summary>
         /// Initializes a new instance of the VaultCreateOrUpdateParameters
@@ -27,14 +24,30 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Initializes a new instance of the VaultCreateOrUpdateParameters
         /// class.
         /// </summary>
-        public VaultCreateOrUpdateParameters(string location, VaultProperties properties, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(location, id, name, type, tags)
+        /// <param name="location">Resource location</param>
+        /// <param name="properties">Properties of the vault</param>
+        /// <param name="tags">Resource tags</param>
+        public VaultCreateOrUpdateParameters(string location, VaultProperties properties, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Location = location;
+            Tags = tags;
             Properties = properties;
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the properties of the vault.
+        /// Gets or sets resource location
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of the vault
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public VaultProperties Properties { get; set; }
@@ -45,12 +58,19 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
             if (Properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
             }
         }
     }

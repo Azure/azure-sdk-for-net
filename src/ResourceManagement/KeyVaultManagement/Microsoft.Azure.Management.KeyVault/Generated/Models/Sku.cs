@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        public Sku(string family = default(string), string name = default(string))
+        /// <param name="family">SKU family name</param>
+        /// <param name="name">SKU name</param>
+        public Sku(string family, string name)
         {
             Family = family;
             Name = name;
@@ -40,5 +42,22 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Family == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Family");
+            }
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

@@ -22,7 +22,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="name">Resource name</param>
+        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
+        public Resource(string name, string location, string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -38,10 +43,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets or sets resource name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets resource type
@@ -69,6 +74,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");

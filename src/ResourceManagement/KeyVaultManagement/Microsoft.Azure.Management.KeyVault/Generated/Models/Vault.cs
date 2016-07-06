@@ -25,8 +25,14 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Vault class.
         /// </summary>
-        public Vault(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VaultProperties properties = default(VaultProperties))
-            : base(location, id, name, type, tags)
+        /// <param name="name">Resource name</param>
+        /// <param name="location">Resource location</param>
+        /// <param name="properties">Properties of the vault</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
+        public Vault(string name, string location, VaultProperties properties, string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(name, location, id, type, tags)
         {
             Properties = properties;
         }
@@ -46,6 +52,14 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public override void Validate()
         {
             base.Validate();
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
+            }
         }
     }
 }

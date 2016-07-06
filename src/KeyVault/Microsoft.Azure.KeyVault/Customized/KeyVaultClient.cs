@@ -66,7 +66,7 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Gets the certificate operation response.
+        /// Gets the pending certificate signing request response.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, e.g. https://myvault.vault.azure.net
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.KeyVault
                 tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
                 tracingParameters.Add("certificateName", certificateName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetCertificateOperation", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetPendingCertificateSigningRequest", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.BaseUri;
