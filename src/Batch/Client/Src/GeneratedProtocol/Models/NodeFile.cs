@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeFile class.
         /// </summary>
+        /// <param name="name">The file path.</param>
+        /// <param name="url">The URL of the file.</param>
+        /// <param name="isDirectory">Whether the object represents a directory.</param>
+        /// <param name="properties">The file properties.</param>
         public NodeFile(string name = default(string), string url = default(string), bool? isDirectory = default(bool?), FileProperties properties = default(FileProperties))
         {
             Name = name;

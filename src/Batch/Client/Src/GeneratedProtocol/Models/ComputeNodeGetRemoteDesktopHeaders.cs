@@ -41,6 +41,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// ComputeNodeGetRemoteDesktopHeaders class.
         /// </summary>
+        /// <param name="clientRequestId">The ClientRequestId provided by the client during the request, if present and requested to be returned.</param>
+        /// <param name="requestId">The value that uniquely identifies a request.</param>
+        /// <param name="eTag">The content of the ETag HTTP response header.</param>
+        /// <param name="lastModified">The content of the Last-Modified HTTP response header.</param>
         public ComputeNodeGetRemoteDesktopHeaders(string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?))
         {
             ClientRequestId = clientRequestId;

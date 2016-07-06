@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<bool?> InterComputeNodeCommunicationEnabledProperty;
             public readonly PropertyAccessor<int?> MaxTasksPerComputeNodeProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
+            public readonly PropertyAccessor<NetworkConfiguration> NetworkConfigurationProperty;
             public readonly PropertyAccessor<TimeSpan?> ResizeTimeoutProperty;
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
             public readonly PropertyAccessor<int?> TargetDedicatedProperty;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.Batch
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>("InterComputeNodeCommunicationEnabled", BindingAccess.Read | BindingAccess.Write);
                 this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor<int?>("MaxTasksPerComputeNode", BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
+                this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>("NetworkConfiguration", BindingAccess.Read | BindingAccess.Write);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor<TimeSpan?>("ResizeTimeout", BindingAccess.Read | BindingAccess.Write);
                 this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>("StartTask", BindingAccess.Read | BindingAccess.Write);
                 this.TargetDedicatedProperty = this.CreatePropertyAccessor<int?>("TargetDedicated", BindingAccess.Read | BindingAccess.Write);
@@ -86,7 +88,7 @@ namespace Microsoft.Azure.Batch
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor(
                     protocolObject.EnableInterNodeCommunication,
                     "InterComputeNodeCommunicationEnabled",
-                    BindingAccess.Read | BindingAccess.Write);
+                    BindingAccess.Read);
                 this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor(
                     protocolObject.MaxTasksPerNode,
                     "MaxTasksPerComputeNode",
@@ -95,6 +97,10 @@ namespace Microsoft.Azure.Batch
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
                     "Metadata",
                     BindingAccess.Read | BindingAccess.Write);
+                this.NetworkConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new NetworkConfiguration(o).Freeze()),
+                    "NetworkConfiguration",
+                    BindingAccess.Read);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor(
                     protocolObject.ResizeTimeout,
                     "ResizeTimeout",
@@ -230,8 +236,12 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets whether the pool permits direct communication between compute nodes.
+        /// Gets or sets whether the pool permits direct communication between its compute nodes.
         /// </summary>
+        /// <remarks>
+        /// Enabling inter-node communication limits the maximum size of the pool due to deployment restrictions on the nodes 
+        /// of the pool. This may result in the pool not reaching its desired size.
+        /// </remarks>
         public bool? InterComputeNodeCommunicationEnabled
         {
             get { return this.propertyContainer.InterComputeNodeCommunicationEnabledProperty.Value; }
@@ -261,6 +271,15 @@ namespace Microsoft.Azure.Batch
             {
                 this.propertyContainer.MetadataProperty.Value = ConcurrentChangeTrackedModifiableList<MetadataItem>.TransformEnumerableToConcurrentModifiableList(value);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the network configuration of the pool.
+        /// </summary>
+        public NetworkConfiguration NetworkConfiguration
+        {
+            get { return this.propertyContainer.NetworkConfigurationProperty.Value; }
+            set { this.propertyContainer.NetworkConfigurationProperty.Value = value; }
         }
 
         /// <summary>
@@ -374,6 +393,7 @@ namespace Microsoft.Azure.Batch
                 EnableInterNodeCommunication = this.InterComputeNodeCommunicationEnabled,
                 MaxTasksPerNode = this.MaxTasksPerComputeNode,
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
+                NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
                 ResizeTimeout = this.ResizeTimeout,
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),
                 TargetDedicated = this.TargetDedicated,

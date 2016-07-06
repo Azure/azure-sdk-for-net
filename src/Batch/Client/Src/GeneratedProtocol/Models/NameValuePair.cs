@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NameValuePair class.
         /// </summary>
+        /// <param name="name">The name in the name-value pair.</param>
+        /// <param name="value">The value in the name-value pair.</param>
         public NameValuePair(string name = default(string), string value = default(string))
         {
             Name = name;

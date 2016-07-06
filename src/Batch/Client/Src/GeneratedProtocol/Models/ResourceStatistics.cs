@@ -39,6 +39,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ResourceStatistics class.
         /// </summary>
+        /// <param name="startTime">The start time of the time range covered by the statistics.</param>
+        /// <param name="lastUpdateTime">The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime.</param>
+        /// <param name="avgCPUPercentage">The average CPU usage across all nodes in the pool (percentage per node).</param>
+        /// <param name="avgMemoryGiB">The average memory usage in GiB across all nodes in the pool.</param>
+        /// <param name="peakMemoryGiB">The peak memory usage in GiB across all nodes in the pool.</param>
+        /// <param name="avgDiskGiB">The average used disk space in GiB across all nodes in the pool.</param>
+        /// <param name="peakDiskGiB">The peak used disk space in GiB across all nodes in the pool.</param>
+        /// <param name="diskReadIOps">The total number of disk read operations across all nodes in the pool.</param>
+        /// <param name="diskWriteIOps">The total number of disk write operations across all nodes in the pool.</param>
+        /// <param name="diskReadGiB">The total amount of data in GiB of disk reads across all nodes in the pool.</param>
+        /// <param name="diskWriteGiB">The total amount of data in GiB of disk writes across all nodes in the pool.</param>
+        /// <param name="networkReadGiB">The total amount of data in GiB of network reads across all nodes in the pool.</param>
+        /// <param name="networkWriteGiB">The total amount of data in GiB of network writes across all nodes in the pool.</param>
         public ResourceStatistics(DateTime startTime, DateTime lastUpdateTime, double avgCPUPercentage, double avgMemoryGiB, double peakMemoryGiB, double avgDiskGiB, double peakDiskGiB, long diskReadIOps, long diskWriteIOps, double diskReadGiB, double diskWriteGiB, double networkReadGiB, double networkWriteGiB)
         {
             StartTime = startTime;

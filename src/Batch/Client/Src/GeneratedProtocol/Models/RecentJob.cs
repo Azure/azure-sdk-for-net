@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the RecentJob class.
         /// </summary>
+        /// <param name="id">The id of the job.</param>
+        /// <param name="url">The URL of the job.</param>
         public RecentJob(string id = default(string), string url = default(string))
         {
             Id = id;

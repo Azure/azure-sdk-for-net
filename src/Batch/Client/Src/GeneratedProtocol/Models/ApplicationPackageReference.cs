@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ApplicationPackageReference
         /// class.
         /// </summary>
+        /// <param name="applicationId">The id of the application to install.</param>
+        /// <param name="version">The version of the application to install. If omitted, the default version is installed.</param>
         public ApplicationPackageReference(string applicationId, string version = default(string))
         {
             ApplicationId = applicationId;

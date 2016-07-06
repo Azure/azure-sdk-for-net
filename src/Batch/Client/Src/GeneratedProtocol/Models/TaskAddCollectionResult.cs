@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionResult class.
         /// </summary>
+        /// <param name="value">The results of the add task collection operation.</param>
         public TaskAddCollectionResult(IList<TaskAddResult> value = default(IList<TaskAddResult>))
         {
             Value = value;

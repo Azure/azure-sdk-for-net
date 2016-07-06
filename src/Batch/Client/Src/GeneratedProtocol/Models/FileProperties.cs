@@ -39,6 +39,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the FileProperties class.
         /// </summary>
+        /// <param name="lastModified">The time at which the file was last modified.</param>
+        /// <param name="contentLength">The length of the file.</param>
+        /// <param name="creationTime">The file creation time.</param>
+        /// <param name="contentType">The content type of the file.</param>
+        /// <param name="fileMode">The file mode attribute in octal format.</param>
         public FileProperties(DateTime lastModified, long contentLength, DateTime? creationTime = default(DateTime?), string contentType = default(string), string fileMode = default(string))
         {
             CreationTime = creationTime;
@@ -73,9 +78,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the file mode attribute in octal format. This
-        /// property will be returned only from a Linux compute node.
+        /// Gets or sets the file mode attribute in octal format.
         /// </summary>
+        /// <remarks>
+        /// This property will be returned only from a Linux compute node.
+        /// </remarks>
         [JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }
 

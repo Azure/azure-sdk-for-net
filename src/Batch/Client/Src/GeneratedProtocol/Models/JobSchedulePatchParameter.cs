@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobSchedulePatchParameter class.
         /// </summary>
+        /// <param name="schedule">The schedule according to which jobs will be created.</param>
+        /// <param name="jobSpecification">The details of the jobs to be created on this schedule.</param>
+        /// <param name="metadata">A list of name-value pairs associated with the job schedule as metadata.</param>
         public JobSchedulePatchParameter(Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Schedule = schedule;
@@ -48,8 +51,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the schedule according to which jobs will be created.
-        /// If you do not specify this element, the existing schedule is not
-        /// modified.
         /// </summary>
         [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
@@ -79,6 +80,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.JobSpecification != null)
             {
                 this.JobSpecification.Validate();
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element in this.Metadata)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

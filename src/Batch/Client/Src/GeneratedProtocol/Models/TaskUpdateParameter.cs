@@ -39,15 +39,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskUpdateParameter class.
         /// </summary>
+        /// <param name="constraints">Constraints that apply to this task.</param>
         public TaskUpdateParameter(TaskConstraints constraints = default(TaskConstraints))
         {
             Constraints = constraints;
         }
 
         /// <summary>
-        /// Gets or sets constraints that apply to this task. If omitted, the
-        /// task is given the default constraints.
+        /// Gets or sets constraints that apply to this task.
         /// </summary>
+        /// <remarks>
+        /// If omitted, the task is given the default constraints.
+        /// </remarks>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 

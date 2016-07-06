@@ -625,6 +625,10 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             if (value != null)
             {
+                if (value.Count > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "value", 100);
+                }
                 foreach (var element in value)
                 {
                     if (element != null)

@@ -39,6 +39,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNodeInformation class.
         /// </summary>
+        /// <param name="affinityId">An identifier for the compute node on which the task ran, which can be passed when adding a task to request that the task be scheduled close to this compute node.</param>
+        /// <param name="nodeUrl">The URL of the node on which the task ran. </param>
+        /// <param name="poolId">The id of the pool on which the task ran.</param>
+        /// <param name="nodeId">The id of the node on which the task ran.</param>
+        /// <param name="taskRootDirectory">The root directory of the task on the compute node.</param>
+        /// <param name="taskRootDirectoryUrl">The URL to the root directory of the task on the compute node.</param>
         public ComputeNodeInformation(string affinityId = default(string), string nodeUrl = default(string), string poolId = default(string), string nodeId = default(string), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string))
         {
             AffinityId = affinityId;

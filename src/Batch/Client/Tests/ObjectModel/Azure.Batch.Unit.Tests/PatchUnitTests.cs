@@ -182,7 +182,7 @@
 
             var protoPool = new Protocol.Models.CloudPool(id: poolId);
 
-            Action<CloudPool> modificationFunction = pool => pool.StartTask = new StartTask() { CommandLine = newCommandLine };
+            Action<CloudPool> modificationFunction = pool => pool.StartTask = new StartTask(newCommandLine);
             Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
             {
                 Assert.Null(patchParameters.Metadata);

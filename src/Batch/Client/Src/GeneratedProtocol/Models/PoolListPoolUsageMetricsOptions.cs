@@ -41,6 +41,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolListPoolUsageMetricsOptions
         /// class.
         /// </summary>
+        /// <param name="startTime">The earliest time from which to include metrics. This must be at least two and a half hours before the current time.</param>
+        /// <param name="endTime">The latest time from which to include metrics. This must be at least two hours before the current time.</param>
+        /// <param name="filter">An OData $filter clause.</param>
+        /// <param name="maxResults">The maximum number of items to return in the response.</param>
+        /// <param name="timeout">The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.</param>
+        /// <param name="clientRequestId">The caller-generated request identity, in the form of a GUID with no decoration such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
+        /// <param name="returnClientRequestId">Whether the server should return the client-request-id identifier in the response.</param>
+        /// <param name="ocpDate">The time the request was issued. If not specified, this header will be automatically populated with the current system clock time.</param>
         public PoolListPoolUsageMetricsOptions(DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), string filter = default(string), int? maxResults = default(int?), int? timeout = default(int?), string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), DateTime? ocpDate = default(DateTime?))
         {
             StartTime = startTime;

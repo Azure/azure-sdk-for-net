@@ -40,6 +40,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CloudServiceConfiguration class.
         /// </summary>
+        /// <param name="osFamily">The Azure Guest OS family to be installed on the virtual machines in the pool.</param>
+        /// <param name="targetOSVersion">The Azure Guest OS version to be installed on the virtual machines in the pool.</param>
+        /// <param name="currentOSVersion">The Azure Guest OS Version currently installed on the virtual machines in the pool. This may differ from targetOSVersion if the pool state is Upgrading.</param>
         public CloudServiceConfiguration(string osFamily, string targetOSVersion = default(string), string currentOSVersion = default(string))
         {
             OsFamily = osFamily;
@@ -56,17 +59,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the Azure Guest OS version to be installed on the
-        /// virtual machines in the pool. The default value is * which
-        /// specifies the latest operating system version for the specified
-        /// OS family.
+        /// virtual machines in the pool.
         /// </summary>
+        /// <remarks>
+        /// The default value is * which specifies the latest operating system
+        /// version for the specified OS family.
+        /// </remarks>
         [JsonProperty(PropertyName = "targetOSVersion")]
         public string TargetOSVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the Azure Guest OS Version currently installed on the
         /// virtual machines in the pool. This may differ from
-        /// TargetOSVersion if the pool state is Upgrading.
+        /// targetOSVersion if the pool state is Upgrading.
         /// </summary>
         [JsonProperty(PropertyName = "currentOSVersion")]
         public string CurrentOSVersion { get; set; }

@@ -28,8 +28,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
     /// <summary>
     /// Settings which specify how to run a multi-instance task.
-    /// Multi-instance tasks are commonly used to support MPI tasks.
     /// </summary>
+    /// <remarks>
+    /// Multi-instance tasks are commonly used to support MPI tasks.
+    /// </remarks>
     public partial class MultiInstanceSettings
     {
         /// <summary>
@@ -40,6 +42,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the MultiInstanceSettings class.
         /// </summary>
+        /// <param name="numberOfInstances">The number of compute nodes required by the multi-instance task.</param>
+        /// <param name="coordinationCommandLine">The command to run on the compute node instances for coordinating among the subtasks.</param>
+        /// <param name="commonResourceFiles">A list of files that the Batch service will download before running the coordination command line.</param>
         public MultiInstanceSettings(int numberOfInstances, string coordinationCommandLine = default(string), IList<ResourceFile> commonResourceFiles = default(IList<ResourceFile>))
         {
             NumberOfInstances = numberOfInstances;
@@ -63,12 +68,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
-        /// before running the coordination command line. The difference
-        /// between common resource files and task resource files is that
-        /// common resource files are downloaded for all subtasks including
-        /// the primary, whereas task resource files are downloaded only for
-        /// the primary.
+        /// before running the coordination command line.
         /// </summary>
+        /// <remarks>
+        /// The difference between common resource files and task resource
+        /// files is that common resource files are downloaded for all
+        /// subtasks including the primary, whereas task resource files are
+        /// downloaded only for the primary.
+        /// </remarks>
         [JsonProperty(PropertyName = "commonResourceFiles")]
         public IList<ResourceFile> CommonResourceFiles { get; set; }
 
@@ -80,6 +87,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (this.CommonResourceFiles != null)
+            {
+                foreach (var element in this.CommonResourceFiles)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
         }
     }
 }

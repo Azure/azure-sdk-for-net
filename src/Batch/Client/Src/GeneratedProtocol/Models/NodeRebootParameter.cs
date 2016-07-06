@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeRebootParameter class.
         /// </summary>
+        /// <param name="nodeRebootOption">When to reboot the compute node and what to do with currently running tasks.</param>
         public NodeRebootParameter(ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?))
         {
             NodeRebootOption = nodeRebootOption;
@@ -46,10 +47,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets when to reboot the compute node and what to do with
-        /// currently running tasks. The default value is requeue. Possible
-        /// values include: 'requeue', 'terminate', 'taskcompletion',
-        /// 'retaineddata'
+        /// currently running tasks.
         /// </summary>
+        /// <remarks>
+        /// The default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'taskcompletion', 'retaineddata'
+        /// </remarks>
         [JsonProperty(PropertyName = "nodeRebootOption")]
         public ComputeNodeRebootOption? NodeRebootOption { get; set; }
 

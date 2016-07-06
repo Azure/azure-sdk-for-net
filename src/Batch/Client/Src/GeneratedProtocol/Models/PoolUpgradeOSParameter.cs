@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolUpgradeOSParameter class.
         /// </summary>
+        /// <param name="targetOSVersion">The Azure Guest OS version to be installed on the virtual machines in the pool.</param>
         public PoolUpgradeOSParameter(string targetOSVersion)
         {
             TargetOSVersion = targetOSVersion;

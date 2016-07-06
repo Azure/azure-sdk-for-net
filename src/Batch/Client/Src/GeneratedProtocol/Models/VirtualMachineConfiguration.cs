@@ -42,6 +42,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the VirtualMachineConfiguration
         /// class.
         /// </summary>
+        /// <param name="imageReference">A reference to the Azure Virtual Machines Marketplace image to use.</param>
+        /// <param name="nodeAgentSKUId">The SKU of Batch Node Agent to be provisioned on the compute node.</param>
+        /// <param name="windowsConfiguration">Windows operating system settings on the virtual machine.</param>
         public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
         {
             ImageReference = imageReference;
@@ -58,20 +61,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the SKU of Batch Node Agent to be provisioned on the
-        /// compute node. The Batch node agent is a program that runs on each
-        /// node in the pool, and provides the command-and-control interface
-        /// between the node and the Batch service. There are different
-        /// implementations of the node agent, known as SKUs, for different
-        /// operating systems.
+        /// compute node.
         /// </summary>
+        /// <remarks>
+        /// The Batch node agent is a program that runs on each node in the
+        /// pool, and provides the command-and-control interface between the
+        /// node and the Batch service. There are different implementations
+        /// of the node agent, known as SKUs, for different operating systems.
+        /// </remarks>
         [JsonProperty(PropertyName = "nodeAgentSKUId")]
         public string NodeAgentSKUId { get; set; }
 
         /// <summary>
         /// Gets or sets windows operating system settings on the virtual
-        /// machine. This property must not be specified if the
-        /// ImageReference property specifies a Linux OS image.
+        /// machine.
         /// </summary>
+        /// <remarks>
+        /// This property must not be specified if the imageReference property
+        /// specifies a Linux OS image.
+        /// </remarks>
         [JsonProperty(PropertyName = "windowsConfiguration")]
         public WindowsConfiguration WindowsConfiguration { get; set; }
 

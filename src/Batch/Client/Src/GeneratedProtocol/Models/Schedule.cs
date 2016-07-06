@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the Schedule class.
         /// </summary>
+        /// <param name="doNotRunUntil">The earliest time at which any job may be created under this job schedule.</param>
+        /// <param name="doNotRunAfter">A time after which no job will be created under this job schedule. The schedule will move to the completed state as soon as this deadline is past and there is no active job under this job schedule.</param>
+        /// <param name="startWindow">The time interval, starting from the time at which the schedule indicates a job should be created, within which a job must be created.</param>
+        /// <param name="recurrenceInterval">The time interval between the start times of two successive jobs under the job schedule. A job schedule can have at most one active job under it at any given time.</param>
         public Schedule(DateTime? doNotRunUntil = default(DateTime?), DateTime? doNotRunAfter = default(DateTime?), TimeSpan? startWindow = default(TimeSpan?), TimeSpan? recurrenceInterval = default(TimeSpan?))
         {
             DoNotRunUntil = doNotRunUntil;
@@ -49,9 +53,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the earliest time at which any job may be created
-        /// under this job schedule. If you do not specify a doNotRunUntil
-        /// time, the schedule becomes ready to create jobs immediately.
+        /// under this job schedule.
         /// </summary>
+        /// <remarks>
+        /// If you do not specify a doNotRunUntil time, the schedule becomes
+        /// ready to create jobs immediately.
+        /// </remarks>
         [JsonProperty(PropertyName = "doNotRunUntil")]
         public DateTime? DoNotRunUntil { get; set; }
 
@@ -67,10 +74,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the time interval, starting from the time at which
         /// the schedule indicates a job should be created, within which a
-        /// job must be created. If a job is not created within the
-        /// startWindow interval, then the 'opportunity' is lost; no job will
-        /// be created until the next recurrence of the schedule.
+        /// job must be created.
         /// </summary>
+        /// <remarks>
+        /// If a job is not created within the startWindow interval, then the
+        /// 'opportunity' is lost; no job will be created until the next
+        /// recurrence of the schedule.
+        /// </remarks>
         [JsonProperty(PropertyName = "startWindow")]
         public TimeSpan? StartWindow { get; set; }
 

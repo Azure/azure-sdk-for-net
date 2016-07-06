@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the UsageStatistics class.
         /// </summary>
+        /// <param name="startTime">The start time of the time range covered by the statistics.</param>
+        /// <param name="lastUpdateTime">The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime.</param>
+        /// <param name="dedicatedCoreTime">The aggregated wall-clock time of the dedicated compute node cores being part of the pool.</param>
         public UsageStatistics(DateTime startTime, DateTime lastUpdateTime, TimeSpan dedicatedCoreTime)
         {
             StartTime = startTime;

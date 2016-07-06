@@ -27,10 +27,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A name-value pair associated with a Batch service resource. The Batch
-    /// service does not assign any meaning to this metadata; it is solely
-    /// for the use of user code.
+    /// A name-value pair associated with a Batch service resource.
     /// </summary>
+    /// <remarks>
+    /// The Batch service does not assign any meaning to this metadata; it is
+    /// solely for the use of user code.
+    /// </remarks>
     public partial class MetadataItem
     {
         /// <summary>
@@ -41,7 +43,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the MetadataItem class.
         /// </summary>
-        public MetadataItem(string name = default(string), string value = default(string))
+        /// <param name="name">The name of the metadata item.</param>
+        /// <param name="value">The value of the metadata item.</param>
+        public MetadataItem(string name, string value)
         {
             Name = name;
             Value = value;
@@ -59,5 +63,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
+        }
     }
 }

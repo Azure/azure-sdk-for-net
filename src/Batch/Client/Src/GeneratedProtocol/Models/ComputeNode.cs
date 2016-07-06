@@ -39,6 +39,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNode class.
         /// </summary>
+        /// <param name="id">The id of the compute node.</param>
+        /// <param name="url">The URL of the compute node.</param>
+        /// <param name="state">The current state of the compute node.</param>
+        /// <param name="schedulingState">Whether the compute node should be available for task scheduling.</param>
+        /// <param name="stateTransitionTime">The time at which the compute node entered its current state.</param>
+        /// <param name="lastBootTime">The time at which the compute node was started.</param>
+        /// <param name="allocationTime">The time at which this compute node was allocated to the pool.</param>
+        /// <param name="ipAddress">The IP address that other compute nodes can use to communicate with this compute node.</param>
+        /// <param name="affinityId">An identifier which can be passed in the Add Task API to request that the task be scheduled close to this compute node.</param>
+        /// <param name="vmSize">The size of the virtual machine hosting the compute node.</param>
+        /// <param name="totalTasksRun">The total number of job tasks completed on the compute node. This includes Job Preparation, Job Release and Job Manager tasks, but not the pool start task.</param>
+        /// <param name="runningTasksCount">The total number of currently running job tasks on the compute node. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.</param>
+        /// <param name="totalTasksSucceeded">The total number of job tasks which completed successfully (with exitCode 0) on the compute node. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.</param>
+        /// <param name="recentTasks">The list of tasks that are currently running on the compute node.</param>
+        /// <param name="startTask">The task specified to run on the compute node as it joins the pool.</param>
+        /// <param name="startTaskInfo">Runtime information about the execution of the start task on the compute node.</param>
+        /// <param name="certificateReferences">The list of certificates installed on the compute node.</param>
+        /// <param name="errors">The list of errors that are currently being encountered by the compute node.</param>
         public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), DateTime? stateTransitionTime = default(DateTime?), DateTime? lastBootTime = default(DateTime?), DateTime? allocationTime = default(DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>))
         {
             Id = id;
@@ -74,18 +92,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the compute node. Possible
-        /// values include: 'idle', 'rebooting', 'reimaging', 'running',
-        /// 'unusable', 'creating', 'starting', 'waitingforstarttask',
-        /// 'starttaskfailed', 'unknown', 'leavingpool', 'offline'
+        /// Gets or sets the current state of the compute node.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'idle', 'rebooting', 'reimaging',
+        /// 'running', 'unusable', 'creating', 'starting',
+        /// 'waitingforstarttask', 'starttaskfailed', 'unknown',
+        /// 'leavingpool', 'offline'
+        /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public ComputeNodeState? State { get; set; }
 
         /// <summary>
         /// Gets or sets whether the compute node should be available for task
-        /// scheduling. Possible values include: 'enabled', 'disabled'
+        /// scheduling.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'enabled', 'disabled'
+        /// </remarks>
         [JsonProperty(PropertyName = "schedulingState")]
         public SchedulingState? SchedulingState { get; set; }
 
@@ -207,6 +231,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                         element.Validate();
                     }
                 }
+            }
+            if (this.StartTask != null)
+            {
+                this.StartTask.Validate();
             }
             if (this.StartTaskInfo != null)
             {

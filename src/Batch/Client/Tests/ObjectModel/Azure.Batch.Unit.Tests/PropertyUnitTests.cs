@@ -33,18 +33,17 @@
 
             this.proxyPropertyToObjectModelMapping = new List<ComparerPropertyMapping>()
             {
-                new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.CloudPool), "InterComputeNodeCommunicationEnabled", "EnableInterNodeCommunication"),
                 new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.CloudPool), "AutoScaleEnabled", "EnableAutoScale"),
                 new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.CloudPool), "VirtualMachineSize", "VmSize"),
                 new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.CloudPool), "MaxTasksPerComputeNode", "MaxTasksPerNode"),
                 new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.CloudPool), "Statistics", "Stats"),
+                new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.CloudPool), "InterComputeNodeCommunicationEnabled", "EnableInterNodeCommunication"),
 
                 new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.PoolAddParameter), "VirtualMachineSize", "VmSize"),
                 new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.PoolAddParameter), "AutoScaleEnabled", "EnableAutoScale"),
-                new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.PoolAddParameter), "InterComputeNodeCommunicationEnabled", "EnableInterNodeCommunication"),
                 new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.PoolAddParameter), "MaxTasksPerComputeNode", "MaxTasksPerNode"),
+                new ComparerPropertyMapping(typeof(CloudPool), typeof(Protocol.Models.PoolAddParameter), "InterComputeNodeCommunicationEnabled", "EnableInterNodeCommunication"),
 
-                new ComparerPropertyMapping(typeof(PoolSpecification), typeof(Protocol.Models.PoolSpecification), "InterComputeNodeCommunicationEnabled", "EnableInterComputeNodeCommunication"),
                 new ComparerPropertyMapping(typeof(PoolSpecification), typeof(Protocol.Models.PoolSpecification), "AutoScaleEnabled", "EnableAutoScale"),
                 new ComparerPropertyMapping(typeof(PoolSpecification), typeof(Protocol.Models.PoolSpecification), "VirtualMachineSize", "VmSize"),
                 new ComparerPropertyMapping(typeof(PoolSpecification), typeof(Protocol.Models.PoolSpecification), "MaxTasksPerComputeNode", "MaxTasksPerNode"),

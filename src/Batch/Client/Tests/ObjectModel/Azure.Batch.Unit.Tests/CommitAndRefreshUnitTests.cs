@@ -88,7 +88,10 @@
             {
                 const string id = "Bar";
                 const string displayName = "Baz";
-                var jobSpecification = new Protocol.Models.JobSpecification(displayName: displayName);
+                var jobSpecification = new Protocol.Models.JobSpecification()
+                    {
+                        DisplayName = displayName
+                    };
                 var protoJobSchedule = new Protocol.Models.CloudJobSchedule(
                     id: id,
                     displayName: displayName,

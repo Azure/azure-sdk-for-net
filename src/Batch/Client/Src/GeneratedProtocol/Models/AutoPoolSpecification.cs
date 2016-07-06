@@ -28,8 +28,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
     /// <summary>
     /// Specifies characteristics for a temporary 'auto pool'. The Batch
-    /// service will create this auto pool, run all the tasks for the job on
-    /// it, and will delete the pool once the job has completed.
+    /// service will create this auto pool when the job is submitted.
     /// </summary>
     public partial class AutoPoolSpecification
     {
@@ -41,6 +40,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AutoPoolSpecification class.
         /// </summary>
+        /// <param name="poolLifetimeOption">The minimum lifetime of created auto pools, and how multiple jobs on a schedule are assigned to pools.</param>
+        /// <param name="autoPoolIdPrefix">A prefix to be added to the unique identifier when a pool is automatically created.</param>
+        /// <param name="keepAlive">Whether to keep an auto pool alive after its lifetime expires.</param>
+        /// <param name="pool">The pool specification for the auto pool.</param>
         public AutoPoolSpecification(PoolLifetimeOption poolLifetimeOption, string autoPoolIdPrefix = default(string), bool? keepAlive = default(bool?), PoolSpecification pool = default(PoolSpecification))
         {
             AutoPoolIdPrefix = autoPoolIdPrefix;
@@ -51,17 +54,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a prefix to be added to the unique identifier when a
-        /// pool is automatically created. The prefix can be up to 20
-        /// characters long.
+        /// pool is automatically created.
         /// </summary>
+        /// <remarks>
+        /// The prefix can be up to 20 characters long.
+        /// </remarks>
         [JsonProperty(PropertyName = "autoPoolIdPrefix")]
         public string AutoPoolIdPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum lifetime of created auto pools, and how
-        /// multiple jobs on a schedule are assigned to pools. Possible
-        /// values include: 'jobschedule', 'job', 'unmapped'
+        /// multiple jobs on a schedule are assigned to pools.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'jobschedule', 'job', 'unmapped'
+        /// </remarks>
         [JsonProperty(PropertyName = "poolLifetimeOption")]
         public PoolLifetimeOption PoolLifetimeOption { get; set; }
 

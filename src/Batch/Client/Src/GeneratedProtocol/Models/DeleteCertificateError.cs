@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the DeleteCertificateError class.
         /// </summary>
+        /// <param name="code">An identifier for the certificate deletion error. Codes are invariant and are intended to be consumed programmatically.</param>
+        /// <param name="message">A message describing the certificate deletion error, intended to be suitable for display in a user interface.</param>
+        /// <param name="values">A list of additional error details related to the certificate deletion error.</param>
         public DeleteCertificateError(string code = default(string), string message = default(string), IList<NameValuePair> values = default(IList<NameValuePair>))
         {
             Code = code;

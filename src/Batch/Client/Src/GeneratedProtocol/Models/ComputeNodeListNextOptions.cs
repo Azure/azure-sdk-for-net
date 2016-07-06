@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNodeListNextOptions class.
         /// </summary>
+        /// <param name="clientRequestId">The caller-generated request identity, in the form of a GUID with no decoration such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
+        /// <param name="returnClientRequestId">Whether the server should return the client-request-id identifier in the response.</param>
+        /// <param name="ocpDate">The time the request was issued. If not specified, this header will be automatically populated with the current system clock time.</param>
         public ComputeNodeListNextOptions(string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), DateTime? ocpDate = default(DateTime?))
         {
             ClientRequestId = clientRequestId;

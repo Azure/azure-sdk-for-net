@@ -39,7 +39,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobManagerTask class.
         /// </summary>
-        public JobManagerTask(string id = default(string), string displayName = default(string), string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?))
+        /// <param name="id">A string that uniquely identifies the Job Manager task.</param>
+        /// <param name="commandLine">The command line of the Job Manager task.</param>
+        /// <param name="displayName">The display name of the Job Manager task.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
+        /// <param name="environmentSettings">A list of environment variable settings for the Job Manager task.</param>
+        /// <param name="constraints">Constraints that apply to the Job Manager task.</param>
+        /// <param name="killJobOnCompletion">Whether completion of the Job Manager task signifies completion of the entire job.</param>
+        /// <param name="runElevated">Whether to run the Job Manager task in elevated mode. The default value is false.</param>
+        /// <param name="runExclusive">Whether the Job Manager task requires exclusive use of the compute node where it runs.</param>
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?))
         {
             Id = id;
             DisplayName = displayName;
@@ -54,7 +63,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the Job Manager
-        /// task. A GUID is recommended.
+        /// task.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -68,6 +77,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the command line of the Job Manager task.
         /// </summary>
+        /// <remarks>
+        /// The command line does not run under a shell, and therefore cannot
+        /// take advantage of shell features such as environment variable
+        /// expansion. If you want to take advantage of such features, you
+        /// should invoke the shell in the command line, for example using
+        /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
@@ -107,15 +123,55 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets whether the Job Manager task requires exclusive use
-        /// of the compute node where it runs. If true, no other tasks will
-        /// run on the same compute node for as long as the Job Manager is
-        /// running. If false, other tasks can run simultaneously with the
-        /// Job Manager on a compute node. (The Job Manager task counts
-        /// normally against the node's concurrent task limit, so this is
-        /// only relevant if the node allows multiple concurrent tasks.)
+        /// of the compute node where it runs.
         /// </summary>
+        /// <remarks>
+        /// If true, no other tasks will run on the same compute node for as
+        /// long as the Job Manager is running. If false, other tasks can run
+        /// simultaneously with the Job Manager on a compute node. The Job
+        /// Manager task counts normally against the node's concurrent task
+        /// limit, so this is only relevant if the node allows multiple
+        /// concurrent tasks.
+        /// </remarks>
         [JsonProperty(PropertyName = "runExclusive")]
         public bool? RunExclusive { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+            if (CommandLine == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+            }
+            if (this.ResourceFiles != null)
+            {
+                foreach (var element in this.ResourceFiles)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.EnvironmentSettings != null)
+            {
+                foreach (var element1 in this.EnvironmentSettings)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+        }
     }
 }

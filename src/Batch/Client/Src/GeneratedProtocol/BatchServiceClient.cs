@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Gets Azure subscription credentials.
+        /// Credentials needed for the client to connect to Azure.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Initializes a new instance of the BatchServiceClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Initializes a new instance of the BatchServiceClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Batch.Protocol
             this.Task = new TaskOperations(this);
             this.ComputeNode = new ComputeNodeOperations(this);
             this.BaseUri = new Uri("https://batch.core.windows.net");
-            this.ApiVersion = "2016-02-01.3.0";
+            this.ApiVersion = "9999-09-09.99.99";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

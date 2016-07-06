@@ -92,6 +92,7 @@
     <Compile Include="BatchClientBehaviors.cs" />
     <Compile Include="ITransportObjectProvider.cs" />
     <Compile Include="BatchRequestTimeout.cs" />
+    <Compile Include="JobManagerTask.cs" />
     <Compile Include="JobOperations.cs" />
     <Compile Include="Common\ExponentialRetry.cs" />
     <Compile Include="Common\LinearRetry.cs" />
@@ -99,6 +100,9 @@
     <Compile Include="Common\RequestResult.cs" />
     <Compile Include="Common\RetryDecision.cs" />
     <Compile Include="Common\RetryPolicyCommon.cs" />
+    <Compile Include="JobPreparationTask.cs" />
+    <Compile Include="JobReleaseTask.cs" />
+    <Compile Include="JobSpecification.cs" />
     <Compile Include="NodeFile.cs" />
     <Compile Include="BatchClientParallelOptions.cs" />
     <Compile Include="BehaviorManager.cs" />
@@ -169,6 +173,7 @@
     <Compile Include="Common\Enumerations\StartTaskState.cs" />
     <Compile Include="Common\Enumerations\TaskState.cs" />
     <Compile Include="Protocol\ResponseInterceptor.cs" />
+    <Compile Include="StartTask.cs" />
     <Compile Include="SynchronousMethodExceptionBehavior.cs" />
     <Compile Include="TaskDependencies.cs" />
     <Compile Include="TaskIdRange.cs" />

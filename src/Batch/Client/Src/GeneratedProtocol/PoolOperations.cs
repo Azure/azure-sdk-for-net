@@ -336,10 +336,12 @@ namespace Microsoft.Azure.Batch.Protocol
 
         /// <summary>
         /// Gets lifetime summary statistics for all of the pools in the specified
-        /// account. Statistics are aggregated across all pools that have ever
-        /// existed in the account, from account creation to the last update time of
-        /// the statistics.
+        /// account.
         /// </summary>
+        /// <remarks>
+        /// Statistics are aggregated across all pools that have ever existed in the
+        /// account, from account creation to the last update time of the statistics.
+        /// </remarks>
         /// <param name='poolGetAllPoolsLifetimeStatisticsOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -3284,10 +3286,13 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
-        /// Stops an ongoing resize operation on the pool. This does not restore the
-        /// pool to its previous state before the resize operation: it only stops any
-        /// further changes being made, and the pool maintains its current state.
+        /// Stops an ongoing resize operation on the pool.
         /// </summary>
+        /// <remarks>
+        /// This does not restore the pool to its previous state before the resize
+        /// operation: it only stops any further changes being made, and the pool
+        /// maintains its current state.
+        /// </remarks>
         /// <param name='poolId'>
         /// The id of the pool whose resizing you want to stop.
         /// </param>

@@ -40,7 +40,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobReleaseTask class.
         /// </summary>
-        public JobReleaseTask(string id = default(string), string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TimeSpan? maxWallClockTime = default(TimeSpan?), TimeSpan? retentionTime = default(TimeSpan?), bool? runElevated = default(bool?))
+        /// <param name="commandLine">The command line of the Job Release task.</param>
+        /// <param name="id">A string that uniquely identifies the Job Release task within the job.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
+        /// <param name="environmentSettings">A list of environment variable settings for the Job Release task.</param>
+        /// <param name="maxWallClockTime">The maximum elapsed time that the Job Release task may run on a given compute node, measured from the time the task starts. If the task does not complete within the time limit, the Batch service terminates it. The default value is 15 minutes.</param>
+        /// <param name="retentionTime">The minimum time to retain the working directory for the Job Release task on the compute node. After this time, the Batch service may delete the working directory and all its contents.</param>
+        /// <param name="runElevated">Whether to run the Job Release task in elevated mode.</param>
+        public JobReleaseTask(string commandLine, string id = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TimeSpan? maxWallClockTime = default(TimeSpan?), TimeSpan? retentionTime = default(TimeSpan?), bool? runElevated = default(bool?))
         {
             Id = id;
             CommandLine = commandLine;
@@ -53,16 +60,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the Job Release
-        /// task within the job. The id can contain any combination of
-        /// alphanumeric characters including hyphens and underscores and
-        /// cannot contain more than 64 characters.
+        /// task within the job.
         /// </summary>
+        /// <remarks>
+        /// The id can contain any combination of alphanumeric characters
+        /// including hyphens and underscores and cannot contain more than 64
+        /// characters.
+        /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the command line of the Job Release task.
         /// </summary>
+        /// <remarks>
+        /// The command line does not run under a shell, and therefore cannot
+        /// take advantage of shell features such as environment variable
+        /// expansion. If you want to take advantage of such features, you
+        /// should invoke the shell in the command line, for example using
+        /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
@@ -93,17 +110,55 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the minimum time to retain the working directory for
         /// the Job Release task on the compute node. After this time, the
         /// Batch service may delete the working directory and all its
-        /// contents. The default is infinite.
+        /// contents.
         /// </summary>
+        /// <remarks>
+        /// The default is infinite.
+        /// </remarks>
         [JsonProperty(PropertyName = "retentionTime")]
         public TimeSpan? RetentionTime { get; set; }
 
         /// <summary>
         /// Gets or sets whether to run the Job Release task in elevated mode.
-        /// The default value is false.
         /// </summary>
+        /// <remarks>
+        /// The default value is false.
+        /// </remarks>
         [JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CommandLine == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+            }
+            if (this.ResourceFiles != null)
+            {
+                foreach (var element in this.ResourceFiles)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.EnvironmentSettings != null)
+            {
+                foreach (var element1 in this.EnvironmentSettings)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+        }
     }
 }

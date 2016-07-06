@@ -39,6 +39,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobStatistics class.
         /// </summary>
+        /// <param name="url">The URL of the statistics.</param>
+        /// <param name="startTime">The start time of the time range covered by the statistics.</param>
+        /// <param name="lastUpdateTime">The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime.</param>
+        /// <param name="userCPUTime">The total user mode CPU time (summed across all cores and all compute nodes) consumed by all tasks in the job.</param>
+        /// <param name="kernelCPUTime">The total kernel mode CPU time (summed across all cores and all compute nodes) consumed by all tasks in the job.</param>
+        /// <param name="wallClockTime">The total wall clock time of all tasks in the job.</param>
+        /// <param name="readIOps">The total number of disk read operations made by all tasks in the job.</param>
+        /// <param name="writeIOps">The total number of disk write operations made by all tasks in the job.</param>
+        /// <param name="readIOGiB">The total gibibytes read from disk by all tasks in the job.</param>
+        /// <param name="writeIOGiB">The total gibibytes written to disk by all tasks in the job.</param>
+        /// <param name="numSucceededTasks">The total number of tasks successfully completed in the job during the given time range.</param>
+        /// <param name="numFailedTasks">The total number of tasks in the job that failed during the given time range.</param>
+        /// <param name="numTaskRetries">The total number of retries on all the tasks in the job during the given time range.</param>
+        /// <param name="waitTime">The total wait time of all tasks in the job.</param>
         public JobStatistics(string url, DateTime startTime, DateTime lastUpdateTime, TimeSpan userCPUTime, TimeSpan kernelCPUTime, TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, TimeSpan waitTime)
         {
             Url = url;
@@ -148,12 +162,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public long NumTaskRetries { get; set; }
 
         /// <summary>
-        /// Gets or sets the total wait time of all tasks in the job. The wait
-        /// time for a task is defined as the elapsed time between the
-        /// creation of the task and the start of task execution. (If the
+        /// Gets or sets the total wait time of all tasks in the job.
+        /// </summary>
+        /// <remarks>
+        /// The wait time for a task is defined as the elapsed time between
+        /// the creation of the task and the start of task execution. (If the
         /// task is retried due to failures, the wait time is the time to the
         /// most recent task execution.)
-        /// </summary>
+        /// </remarks>
         [JsonProperty(PropertyName = "waitTime")]
         public TimeSpan WaitTime { get; set; }
 

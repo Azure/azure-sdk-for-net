@@ -64,10 +64,12 @@ namespace Microsoft.Azure.Batch.Protocol
 
         /// <summary>
         /// Gets lifetime summary statistics for all of the jobs in the specified
-        /// account. Statistics are aggregated across all jobs that have ever existed
-        /// in the account, from account creation to the last update time of the
-        /// statistics.
+        /// account.
         /// </summary>
+        /// <remarks>
+        /// Statistics are aggregated across all jobs that have ever existed in the
+        /// account, from account creation to the last update time of the statistics.
+        /// </remarks>
         /// <param name='jobGetAllJobsLifetimeStatisticsOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -638,6 +640,26 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 ocpDate = jobGetOptions.OcpDate;
             }
+            string ifMatch = default(string);
+            if (jobGetOptions != null)
+            {
+                ifMatch = jobGetOptions.IfMatch;
+            }
+            string ifNoneMatch = default(string);
+            if (jobGetOptions != null)
+            {
+                ifNoneMatch = jobGetOptions.IfNoneMatch;
+            }
+            DateTime? ifModifiedSince = default(DateTime?);
+            if (jobGetOptions != null)
+            {
+                ifModifiedSince = jobGetOptions.IfModifiedSince;
+            }
+            DateTime? ifUnmodifiedSince = default(DateTime?);
+            if (jobGetOptions != null)
+            {
+                ifUnmodifiedSince = jobGetOptions.IfUnmodifiedSince;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -652,6 +674,10 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
+                tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("ifNoneMatch", ifNoneMatch);
+                tracingParameters.Add("ifModifiedSince", ifModifiedSince);
+                tracingParameters.Add("ifUnmodifiedSince", ifUnmodifiedSince);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -721,6 +747,38 @@ namespace Microsoft.Azure.Batch.Protocol
                     _httpRequest.Headers.Remove("ocp-date");
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
+            }
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-None-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-None-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
+            }
+            if (ifModifiedSince != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Modified-Since"))
+                {
+                    _httpRequest.Headers.Remove("If-Modified-Since");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Modified-Since", SafeJsonConvert.SerializeObject(ifModifiedSince, new DateTimeRfc1123JsonConverter()).Trim('"'));
+            }
+            if (ifUnmodifiedSince != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Unmodified-Since"))
+                {
+                    _httpRequest.Headers.Remove("If-Unmodified-Since");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Unmodified-Since", SafeJsonConvert.SerializeObject(ifUnmodifiedSince, new DateTimeRfc1123JsonConverter()).Trim('"'));
             }
             if (customHeaders != null)
             {

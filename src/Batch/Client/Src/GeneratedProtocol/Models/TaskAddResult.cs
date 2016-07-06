@@ -40,6 +40,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddResult class.
         /// </summary>
+        /// <param name="status">The status of the add task request.</param>
+        /// <param name="taskId">The id of the task for which this is the result.</param>
+        /// <param name="eTag">The ETag of the task, if the task was successfully added.</param>
+        /// <param name="lastModified">The last modified time of the task.</param>
+        /// <param name="location">The URL of the task, if the task was successfully added.</param>
+        /// <param name="error">The error encountered while attempting to add the task.</param>
         public TaskAddResult(TaskAddStatus status, string taskId, string eTag = default(string), DateTime? lastModified = default(DateTime?), string location = default(string), BatchError error = default(BatchError))
         {
             Status = status;
@@ -51,9 +57,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the status of the add task request. Possible values
-        /// include: 'success', 'clienterror', 'servererror', 'unmapped'
+        /// Gets or sets the status of the add task request.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'success', 'clienterror', 'servererror',
+        /// 'unmapped'
+        /// </remarks>
         [JsonProperty(PropertyName = "status")]
         public TaskAddStatus Status { get; set; }
 

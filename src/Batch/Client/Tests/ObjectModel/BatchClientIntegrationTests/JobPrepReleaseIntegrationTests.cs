@@ -91,17 +91,14 @@
                         // create job schedule with prep/release
                         {
                             CloudJobSchedule unboundJobSchedule = client.JobScheduleOperations.CreateJobSchedule(jsId, null, null);
-                            unboundJobSchedule.JobSpecification = new JobSpecification();
-                            unboundJobSchedule.JobSpecification.PoolInformation = new PoolInformation();
+                            unboundJobSchedule.JobSpecification = new JobSpecification(new PoolInformation());
                             unboundJobSchedule.JobSpecification.PoolInformation.PoolId = this.poolFixture.PoolId;
                             unboundJobSchedule.Schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(3) };
 
                             // add the jobPrep task to the job schedule
                             {
-                                JobPreparationTask prep = new JobPreparationTask();
+                                JobPreparationTask prep = new JobPreparationTask(JobPrepCommandLine);
                                 unboundJobSchedule.JobSpecification.JobPreparationTask = prep;
-
-                                prep.CommandLine = JobPrepCommandLine;
 
                                 List<EnvironmentSetting> prepEnvSettings = new List<EnvironmentSetting>();
                                 prepEnvSettings.Add(JobPrepEnvSettingOM);
@@ -129,11 +126,9 @@
 
                             // add a jobRelease task to the job schedule
                             {
-                                JobReleaseTask relTask = new JobReleaseTask();
+                                JobReleaseTask relTask = new JobReleaseTask(JobReleaseTaskCommandLine);
                                 unboundJobSchedule.JobSpecification.JobReleaseTask = relTask;
-
-                                relTask.CommandLine = JobReleaseTaskCommandLine;
-
+                                
                                 List<EnvironmentSetting> relEnvSettings = new List<EnvironmentSetting>();
                                 relEnvSettings.Add(JobRelEnvSettingOM);
                                 relTask.EnvironmentSettings = relEnvSettings;
@@ -264,10 +259,8 @@
 
                             // add the jobPrep task to the job
                             {
-                                JobPreparationTask prep = new JobPreparationTask();
+                                JobPreparationTask prep = new JobPreparationTask("cmd /c echo JobPrep!!");
                                 unboundJob.JobPreparationTask = prep;
-
-                                prep.CommandLine = "cmd /c echo JobPrep!!";
 
                                 prep.WaitForSuccess = true; // be explicit even though this is the default.  need JP/JP to not run
                             }
@@ -275,10 +268,8 @@
 
                             // add a jobRelease task to the job
                             {
-                                JobReleaseTask relTask = new JobReleaseTask();
+                                JobReleaseTask relTask = new JobReleaseTask(JobReleaseTaskCommandLine);
                                 unboundJob.JobReleaseTask = relTask;
-
-                                relTask.CommandLine = JobReleaseTaskCommandLine;
                             }
 
                             // add the job to the service
@@ -327,10 +318,8 @@
                             CloudJob unboundJob = client.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = this.poolFixture.PoolId});
                             // add the jobPrep task to the job
                             {
-                                JobPreparationTask prep = new JobPreparationTask();
+                                JobPreparationTask prep = new JobPreparationTask("cmd /c JobPrep Task");
                                 unboundJob.JobPreparationTask = prep;
-
-                                prep.CommandLine = "cmd /c JobPrep Task";
 
                                 ResourceFile[] badResFiles = {new ResourceFile("https://127.0.0.1/foo/bar/baf", "bob.txt")};
 
@@ -413,21 +402,17 @@
 
                             // add the jobPrep task to the job
                             {
-                                JobPreparationTask prep = new JobPreparationTask();
+                                JobPreparationTask prep = new JobPreparationTask("cmd /c echo the quick job prep jumped over the...");
                                 unboundJob.JobPreparationTask = prep;
-
-                                prep.CommandLine = "cmd /c echo the quick job prep jumped over the...";
 
                                 prep.WaitForSuccess = false; // we don't really care but why not set this
                             }
 
                             // add a jobRelease task to the job
                             {
-                                JobReleaseTask relTask = new JobReleaseTask();
+                                JobReleaseTask relTask = new JobReleaseTask("cmd /c echo Job Release Task");
                                 unboundJob.JobReleaseTask = relTask;
-
-                                relTask.CommandLine = "cmd /c echo Job Release Task";
-
+                                
                                 ResourceFile[] badResFiles = {new ResourceFile("https://127.0.0.1/foo/bar/baf", "bob.txt")};
 
                                 relTask.ResourceFiles = badResFiles;

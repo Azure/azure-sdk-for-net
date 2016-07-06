@@ -40,19 +40,35 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AffinityInformation class.
         /// </summary>
-        public AffinityInformation(string affinityId = default(string))
+        /// <param name="affinityId">An opaque string representing the location of a compute node or a task that has run previously.</param>
+        public AffinityInformation(string affinityId)
         {
             AffinityId = affinityId;
         }
 
         /// <summary>
         /// Gets or sets an opaque string representing the location of a
-        /// compute node or a task that has run previously. You can pass the
-        /// AffinityId of a compute node or task to indicate that this task
-        /// needs to be placed close to the node or task.
+        /// compute node or a task that has run previously.
         /// </summary>
+        /// <remarks>
+        /// You can pass the affinityId of a compute node or task to indicate
+        /// that this task needs to be placed close to the node or task.
+        /// </remarks>
         [JsonProperty(PropertyName = "affinityId")]
         public string AffinityId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AffinityId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AffinityId");
+            }
+        }
     }
 }

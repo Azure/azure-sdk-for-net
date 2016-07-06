@@ -39,7 +39,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ResourceFile class.
         /// </summary>
-        public ResourceFile(string blobSource = default(string), string filePath = default(string), string fileMode = default(string))
+        /// <param name="blobSource">The URL of the file within Azure Blob Storage. This URL should include a shared access signature if the blob is not publicly readable.</param>
+        /// <param name="filePath">The location to which to download the file, relative to the task's working directory.</param>
+        /// <param name="fileMode">The file mode attribute in octal format.</param>
+        public ResourceFile(string blobSource, string filePath, string fileMode = default(string))
         {
             BlobSource = blobSource;
             FilePath = filePath;
@@ -62,12 +65,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string FilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the file mode attribute in octal format. This
-        /// property will be ignored if it is specified for a resourceFile
-        /// which will be downloaded to a Windows compute node.
+        /// Gets or sets the file mode attribute in octal format.
         /// </summary>
+        /// <remarks>
+        /// This property will be ignored if it is specified for a
+        /// resourceFile which will be downloaded to a Windows compute node.
+        /// </remarks>
         [JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (BlobSource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "BlobSource");
+            }
+            if (FilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FilePath");
+            }
+        }
     }
 }

@@ -41,6 +41,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the CloudTaskListSubtasksResult
         /// class.
         /// </summary>
+        /// <param name="value">The list of information of subtasks.</param>
         public CloudTaskListSubtasksResult(IList<SubtaskInformation> value = default(IList<SubtaskInformation>))
         {
             Value = value;

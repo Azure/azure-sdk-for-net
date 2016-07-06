@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeRemoveParameter class.
         /// </summary>
+        /// <param name="nodeList">A list containing the ids of the compute nodes to be removed from the specified pool.</param>
+        /// <param name="resizeTimeout">The timeout for removal of compute nodes to the pool.</param>
+        /// <param name="nodeDeallocationOption">When compute nodes may be removed from the pool.</param>
         public NodeRemoveParameter(IList<string> nodeList, TimeSpan? resizeTimeout = default(TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
             NodeList = nodeList;
@@ -47,7 +50,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets a list containing the id of the compute nodes to be
+        /// Gets or sets a list containing the ids of the compute nodes to be
         /// removed from the specified pool.
         /// </summary>
         [JsonProperty(PropertyName = "nodeList")]
@@ -55,16 +58,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the timeout for removal of compute nodes to the pool.
-        /// The default value is 10 minutes.
         /// </summary>
+        /// <remarks>
+        /// The default value is 10 minutes.
+        /// </remarks>
         [JsonProperty(PropertyName = "resizeTimeout")]
         public TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets when compute nodes may be removed from the pool.
-        /// Possible values include: 'requeue', 'terminate',
-        /// 'taskcompletion', 'retaineddata'
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'requeue', 'terminate', 'taskcompletion',
+        /// 'retaineddata'
+        /// </remarks>
         [JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }
 
@@ -79,6 +86,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (NodeList == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "NodeList");
+            }
+            if (this.NodeList != null)
+            {
+                if (this.NodeList.Count > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "NodeList", 100);
+                }
             }
         }
     }

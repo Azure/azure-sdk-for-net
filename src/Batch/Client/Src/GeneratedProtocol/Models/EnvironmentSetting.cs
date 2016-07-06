@@ -39,7 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the EnvironmentSetting class.
         /// </summary>
-        public EnvironmentSetting(string name = default(string), string value = default(string))
+        /// <param name="name">The name of the environment variable.</param>
+        /// <param name="value">The value of the environment variable.</param>
+        public EnvironmentSetting(string name, string value = default(string))
         {
             Name = name;
             Value = value;
@@ -57,5 +59,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

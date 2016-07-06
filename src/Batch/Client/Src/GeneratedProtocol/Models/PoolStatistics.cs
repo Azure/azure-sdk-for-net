@@ -40,6 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolStatistics class.
         /// </summary>
+        /// <param name="url">The URL for the statistics.</param>
+        /// <param name="startTime">The start time of the time range covered by the statistics.</param>
+        /// <param name="lastUpdateTime">The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime.</param>
+        /// <param name="usageStats">Statistics related to pool usage, such as the amount of core-time used.</param>
+        /// <param name="resourceStats">Statistics related to resource consumption by compute nodes in the pool.</param>
         public PoolStatistics(string url, DateTime startTime, DateTime lastUpdateTime, UsageStatistics usageStats = default(UsageStatistics), ResourceStatistics resourceStats = default(ResourceStatistics))
         {
             Url = url;

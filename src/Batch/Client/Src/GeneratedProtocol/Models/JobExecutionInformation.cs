@@ -40,6 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobExecutionInformation class.
         /// </summary>
+        /// <param name="startTime">The start time of the job.</param>
+        /// <param name="endTime">The completion time of the job.</param>
+        /// <param name="poolId">The id of the pool to which this job is assigned.</param>
+        /// <param name="schedulingError">Details of any error encountered by the service in starting the job.</param>
+        /// <param name="terminateReason">A string describing the reason the job ended.</param>
         public JobExecutionInformation(DateTime startTime, DateTime? endTime = default(DateTime?), string poolId = default(string), JobSchedulingError schedulingError = default(JobSchedulingError), string terminateReason = default(string))
         {
             StartTime = startTime;
@@ -56,9 +61,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the completion time of the job. This property is set
-        /// only if the job is in the completed state.
+        /// Gets or sets the completion time of the job.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the job is in the completed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 

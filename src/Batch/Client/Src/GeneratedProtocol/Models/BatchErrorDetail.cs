@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the BatchErrorDetail class.
         /// </summary>
+        /// <param name="key">An identifier specifying the meaning of the Value property.</param>
+        /// <param name="value">The additional information included with the error response.</param>
         public BatchErrorDetail(string key = default(string), string value = default(string))
         {
             Key = key;

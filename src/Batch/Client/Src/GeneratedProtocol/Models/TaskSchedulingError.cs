@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskSchedulingError class.
         /// </summary>
+        /// <param name="category">The category of the task scheduling error.</param>
+        /// <param name="code">An identifier for the task scheduling error. Codes are invariant and are intended to be consumed programmatically.</param>
+        /// <param name="message">A message describing the task scheduling error, intended to be suitable for display in a user interface.</param>
+        /// <param name="details">The list of additional error details related to the scheduling error.</param>
         public TaskSchedulingError(SchedulingErrorCategory category, string code = default(string), string message = default(string), IList<NameValuePair> details = default(IList<NameValuePair>))
         {
             Category = category;
@@ -48,9 +52,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the category of the task scheduling error. Possible
-        /// values include: 'usererror', 'servererror', 'unmapped'
+        /// Gets or sets the category of the task scheduling error.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'usererror', 'servererror', 'unmapped'
+        /// </remarks>
         [JsonProperty(PropertyName = "category")]
         public SchedulingErrorCategory Category { get; set; }
 

@@ -39,6 +39,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobAddParameter class.
         /// </summary>
+        /// <param name="id">A string that uniquely identifies the job within the account.</param>
+        /// <param name="poolInfo">The pool on which the Batch service runs the job's tasks.</param>
+        /// <param name="displayName">The display name for the job.</param>
+        /// <param name="priority">The priority of the job.</param>
+        /// <param name="constraints">The execution constraints for the job.</param>
+        /// <param name="jobManagerTask">Details of a Job Manager task to be launched when the job is started.</param>
+        /// <param name="jobPreparationTask">The Job Preparation task.</param>
+        /// <param name="jobReleaseTask">The Job Release task.</param>
+        /// <param name="commonEnvironmentSettings">The list of common environment variable settings. These environment variables are set for all tasks in the job (including the Job Manager, Job Preparation and Job Release tasks).</param>
+        /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
+        /// <param name="usesTaskDependencies">The flag that determines if this job will use tasks with dependencies.</param>
         public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
         {
             Id = id;
@@ -56,10 +67,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the job within the
-        /// account. The id can contain any combination of alphanumeric
-        /// characters including hyphens and underscores, and cannot contain
-        /// more than 64 characters. It is common to use a GUID for the id.
+        /// account.
         /// </summary>
+        /// <remarks>
+        /// The id can contain any combination of alphanumeric characters
+        /// including hyphens and underscores, and cannot contain more than
+        /// 64 characters. It is common to use a GUID for the id.
+        /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
@@ -70,10 +84,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the priority of the job. Priority values can range
-        /// from -1000 to 1000, with -1000 being the lowest priority and 1000
-        /// being the highest priority. The default value is 0.
+        /// Gets or sets the priority of the job.
         /// </summary>
+        /// <remarks>
+        /// Priority values can range from -1000 to 1000, with -1000 being
+        /// the lowest priority and 1000 being the highest priority. The
+        /// default value is 0.
+        /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
@@ -148,9 +165,41 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PoolInfo");
             }
+            if (this.JobManagerTask != null)
+            {
+                this.JobManagerTask.Validate();
+            }
+            if (this.JobPreparationTask != null)
+            {
+                this.JobPreparationTask.Validate();
+            }
+            if (this.JobReleaseTask != null)
+            {
+                this.JobReleaseTask.Validate();
+            }
+            if (this.CommonEnvironmentSettings != null)
+            {
+                foreach (var element in this.CommonEnvironmentSettings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (this.PoolInfo != null)
             {
                 this.PoolInfo.Validate();
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element1 in this.Metadata)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

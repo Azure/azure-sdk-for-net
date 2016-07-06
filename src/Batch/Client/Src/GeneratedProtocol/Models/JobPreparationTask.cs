@@ -40,7 +40,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobPreparationTask class.
         /// </summary>
-        public JobPreparationTask(string id = default(string), string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), bool? runElevated = default(bool?), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
+        /// <param name="commandLine">The command line of the Job Preparation task.</param>
+        /// <param name="id">A string that uniquely identifies the job preparation task within the job.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
+        /// <param name="environmentSettings">A list of environment variable settings for the Job Preparation task.</param>
+        /// <param name="constraints">Constraints that apply to the Job Preparation task.</param>
+        /// <param name="waitForSuccess">Whether the Batch service should wait for the Job Preparation task to complete successfully before scheduling any other tasks of the job on the compute node.</param>
+        /// <param name="runElevated">Whether to run the Job Preparation task in elevated mode. The default value is false.</param>
+        /// <param name="rerunOnNodeRebootAfterSuccess">Whether the Batch service should rerun the Job Preparation task after a compute node reboots.</param>
+        public JobPreparationTask(string commandLine, string id = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), bool? runElevated = default(bool?), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
         {
             Id = id;
             CommandLine = commandLine;
@@ -54,16 +62,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the job preparation
-        /// task within the job. The id can contain any combination of
-        /// alphanumeric characters including hyphens and underscores and
-        /// cannot contain more than 64 characters.
+        /// task within the job.
         /// </summary>
+        /// <remarks>
+        /// The id can contain any combination of alphanumeric characters
+        /// including hyphens and underscores and cannot contain more than 64
+        /// characters.
+        /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the command line of the Job Preparation task.
         /// </summary>
+        /// <remarks>
+        /// The command line does not run under a shell, and therefore cannot
+        /// take advantage of shell features such as environment variable
+        /// expansion. If you want to take advantage of such features, you
+        /// should invoke the shell in the command line, for example using
+        /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
@@ -104,13 +122,49 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets whether the Batch service should rerun the Job
-        /// Preparation task after a compute node reboots. Note that the Job
-        /// Preparation task should still be written to be idempotent because
-        /// it can be rerun if the compute node is rebooted while Job
-        /// Preparation task is still running. The default value is true.
+        /// Preparation task after a compute node reboots.
         /// </summary>
+        /// <remarks>
+        /// Note that the Job Preparation task should still be written to be
+        /// idempotent because it can be rerun if the compute node is
+        /// rebooted while Job Preparation task is still running. The default
+        /// value is true.
+        /// </remarks>
         [JsonProperty(PropertyName = "rerunOnNodeRebootAfterSuccess")]
         public bool? RerunOnNodeRebootAfterSuccess { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CommandLine == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+            }
+            if (this.ResourceFiles != null)
+            {
+                foreach (var element in this.ResourceFiles)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.EnvironmentSettings != null)
+            {
+                foreach (var element1 in this.EnvironmentSettings)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+        }
     }
 }

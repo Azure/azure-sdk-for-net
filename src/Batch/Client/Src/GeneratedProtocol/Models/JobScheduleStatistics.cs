@@ -39,6 +39,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobScheduleStatistics class.
         /// </summary>
+        /// <param name="url">The URL of the statistics.</param>
+        /// <param name="startTime">The start time of the time range covered by the statistics.</param>
+        /// <param name="lastUpdateTime">The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime.</param>
+        /// <param name="userCPUTime">The total user mode CPU time (summed across all cores and all compute nodes) consumed by all tasks in all jobs created under the schedule.</param>
+        /// <param name="kernelCPUTime">The total kernel mode CPU time (summed across all cores and all compute nodes) consumed by all tasks in all jobs created under the schedule.</param>
+        /// <param name="wallClockTime">The total wall clock time of all the tasks in all the jobs created under the schedule.</param>
+        /// <param name="readIOps">The total number of disk read operations made by all tasks in all jobs created under the schedule.</param>
+        /// <param name="writeIOps">The total number of disk write operations made by all tasks in all jobs created under the schedule.</param>
+        /// <param name="readIOGiB">The total gibibytes read from disk by all tasks in all jobs created under the schedule.</param>
+        /// <param name="writeIOGiB">The total gibibytes written to disk by all tasks in all jobs created under the schedule.</param>
+        /// <param name="numSucceededTasks">The total number of tasks successfully completed during the given time range in jobs created under the schedule. A task completes successfully if it returns exit code 0.</param>
+        /// <param name="numFailedTasks">The total number of tasks that failed during the given time range in jobs created under the schedule. A task fails if it exhausts its maximum retry count without returning exit code 0.</param>
+        /// <param name="numTaskRetries">The total number of retries during the given time range on all tasks in all jobs created under the schedule.</param>
+        /// <param name="waitTime">The total wait time of all tasks in all jobs created under the schedule. The wait time for a task is defined as the elapsed time between the creation of the task and the start of task execution. (If the task is retried due to failures, the wait time is the time to the most recent task execution.)</param>
         public JobScheduleStatistics(string url, DateTime startTime, DateTime lastUpdateTime, TimeSpan userCPUTime, TimeSpan kernelCPUTime, TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, TimeSpan waitTime)
         {
             Url = url;

@@ -39,6 +39,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskInformation class.
         /// </summary>
+        /// <param name="taskState">The current state of the task.</param>
+        /// <param name="taskUrl">The URL of the task.</param>
+        /// <param name="jobId">The id of the job to which the task belongs.</param>
+        /// <param name="taskId">The id of the task.</param>
+        /// <param name="subtaskId">The id of the subtask if the task is a multi-instance task.</param>
+        /// <param name="executionInfo">Information about the execution of the task.</param>
         public TaskInformation(TaskState taskState, string taskUrl = default(string), string jobId = default(string), string taskId = default(string), int? subtaskId = default(int?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation))
         {
             TaskUrl = taskUrl;
@@ -75,9 +81,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? SubtaskId { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the task. Possible values
-        /// include: 'active', 'preparing', 'running', 'completed'
+        /// Gets or sets the current state of the task.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'active', 'preparing', 'running',
+        /// 'completed'
+        /// </remarks>
         [JsonProperty(PropertyName = "taskState")]
         public TaskState TaskState { get; set; }
 

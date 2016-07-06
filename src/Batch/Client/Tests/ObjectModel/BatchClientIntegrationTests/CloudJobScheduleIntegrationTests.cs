@@ -47,17 +47,17 @@
                         CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
                         TimeSpan firstRecurrenceInterval = TimeSpan.FromMinutes(2);
                         jobSchedule.Schedule = new Schedule() { RecurrenceInterval = firstRecurrenceInterval };
-                        jobSchedule.JobSpecification = new JobSpecification()
-                        {
-                            Priority = jobSchedulePriority,
-                            JobManagerTask = new JobManagerTask() { Id = jobManagerId, CommandLine = jobManagerCommandLine }
-                        };
+                        PoolInformation poolInfo = new PoolInformation()
+                            {
+                                PoolId = this.poolFixture.PoolId
+                            };
 
-                        jobSchedule.JobSpecification.PoolInformation = new PoolInformation()
-                        {
-                            PoolId = this.poolFixture.PoolId
+                        jobSchedule.JobSpecification = new JobSpecification(poolInfo)
+                            {
+                                Priority = jobSchedulePriority,
+                                JobManagerTask = new JobManagerTask(jobManagerId, jobManagerCommandLine)
+                            };
 
-                        };
                         jobSchedule.Metadata = metadata;
 
                         this.testOutputHelper.WriteLine("Initial job schedule commit()");
@@ -221,17 +221,9 @@
                                 {
                                     RecurrenceInterval = TimeSpan.FromDays(1)
                                 },
-                            new JobSpecification()
+                            new JobSpecification(new PoolInformation() { PoolId = "DummyPool" })
                                 {
-                                    JobManagerTask = new JobManagerTask()
-                                        {
-                                            Id = "Foo",
-                                            CommandLine = "Foo"
-                                        },
-                                    PoolInformation = new PoolInformation()
-                                        {
-                                            PoolId = "DummyPool"
-                                        }
+                                    JobManagerTask = new JobManagerTask(id: "Foo", commandLine: "Foo")
                                 });
 
                         await jobSchedule.CommitAsync().ConfigureAwait(false);
@@ -301,17 +293,14 @@
                             JobSpecification jobSpec = newJobSchedule.JobSpecification;
                             Assert.Null(jobSpec);
 
-                            jobSpec = new JobSpecification();
-                            jobSpec.PoolInformation = poolInformation;
+                            jobSpec = new JobSpecification(poolInformation);
 
                             JobManagerTask jobMgr = jobSpec.JobManagerTask;
 
                             Assert.Null(jobMgr);
 
-                            jobMgr = new JobManagerTask();
+                            jobMgr = new JobManagerTask(TestUtilities.GetMyName() + "-JobManagerTest", "hostname");
 
-                            jobMgr.CommandLine = "hostname";
-                            jobMgr.Id = TestUtilities.GetMyName() + "-JobManagerTest";
                             jobMgr.KillJobOnCompletion = false;
 
                             // set the JobManagerTask on the JobSpecification
@@ -393,8 +382,7 @@
                         {
                             AutoPoolSpecification iaps = new AutoPoolSpecification();
                             PoolSpecification ips = new PoolSpecification();
-                            JobSpecification jobSpecification = new JobSpecification();
-                            jobSpecification.PoolInformation = new PoolInformation() { AutoPoolSpecification = iaps };
+                            JobSpecification jobSpecification = new JobSpecification(new PoolInformation() { AutoPoolSpecification = iaps });
                             iaps.PoolSpecification = ips;
 
                             iaps.AutoPoolIdPrefix = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName();
@@ -469,13 +457,10 @@
                             RecurrenceInterval = TimeSpan.FromMinutes(1)
                         };
 
-                        JobSpecification jobSpecification = new JobSpecification()
-                        {
-                            PoolInformation = new PoolInformation()
+                        JobSpecification jobSpecification = new JobSpecification(new PoolInformation()
                             {
                                 PoolId = "DummyPool"
-                            }
-                        };
+                            });
 
                         CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, schedule, jobSpecification);
                         unboundJobSchedule.Commit();
@@ -528,13 +513,10 @@
                             DoNotRunAfter = DateTime.UtcNow.Add(TimeSpan.FromDays(1))
                         };
 
-                        JobSpecification jobSpecification = new JobSpecification()
-                        {
-                            PoolInformation = new PoolInformation()
+                        JobSpecification jobSpecification = new JobSpecification(new PoolInformation()
                             {
                                 PoolId = "DummyPool"
-                            }
-                        };
+                            });
 
                         CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, schedule, jobSpecification);
                         unboundJobSchedule.Commit();

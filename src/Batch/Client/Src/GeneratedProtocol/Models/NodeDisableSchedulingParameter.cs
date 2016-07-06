@@ -41,6 +41,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the NodeDisableSchedulingParameter
         /// class.
         /// </summary>
+        /// <param name="nodeDisableSchedulingOption">What to do with currently running tasks when disable task scheduling on the compute node.</param>
         public NodeDisableSchedulingParameter(DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?))
         {
             NodeDisableSchedulingOption = nodeDisableSchedulingOption;
@@ -48,10 +49,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets what to do with currently running tasks when disable
-        /// task scheduling on the compute node. The default value is
-        /// requeue. Possible values include: 'requeue', 'terminate',
-        /// 'taskcompletion'
+        /// task scheduling on the compute node.
         /// </summary>
+        /// <remarks>
+        /// The default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'taskcompletion'
+        /// </remarks>
         [JsonProperty(PropertyName = "nodeDisableSchedulingOption")]
         public DisableComputeNodeSchedulingOption? NodeDisableSchedulingOption { get; set; }
 

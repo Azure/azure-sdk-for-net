@@ -17,6 +17,8 @@
             this.ParentPathVariables = new List<string>();
             this.CustomIncludes = new List<string>();
 
+            //By default, force the order of the constructor parameters to be the order specified in the specification
+            this.ForceConstructorOrder = true;
             this.IsConstructorPublic = true; //Default is public visibility
         }
 

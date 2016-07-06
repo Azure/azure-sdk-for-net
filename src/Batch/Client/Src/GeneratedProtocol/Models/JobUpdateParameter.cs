@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobUpdateParameter class.
         /// </summary>
+        /// <param name="poolInfo">The pool on which the Batch service runs the job's tasks.</param>
+        /// <param name="priority">The priority of the job.</param>
+        /// <param name="constraints">The execution constraints for the job.</param>
+        /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
         public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
@@ -48,32 +52,48 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the priority of the job. Priority values can range
-        /// from -1000 to 1000, with -1000 being the lowest priority and 1000
-        /// being the highest priority. If omitted, the priority of the job
-        /// is left unchanged.
+        /// Gets or sets the priority of the job.
         /// </summary>
+        /// <remarks>
+        /// Priority values can range from -1000 to 1000, with -1000 being the
+        /// lowest priority and 1000 being the highest priority. If omitted,
+        /// it is set to the default value 0.
+        /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution constraints for the job. If omitted,
-        /// the existing execution constraints are left unchanged.
+        /// Gets or sets the execution constraints for the job.
         /// </summary>
+        /// <remarks>
+        /// If omitted, the constraints are cleared.
+        /// </remarks>
         [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets the pool on which the Batch service runs the job's
-        /// tasks. If omitted, the job continues to run on its current pool.
+        /// tasks.
         /// </summary>
+        /// <remarks>
+        /// You may change the pool for a job only when the job is disabled.
+        /// The Update Job call will fail if you include the poolInfo element
+        /// and the job is not disabled. If you specify an
+        /// autoPoolSpecification specification in the poolInfo, only the
+        /// keepAlive property can be updated, and then only if the auto pool
+        /// has a poolLifetimeOption of job.
+        /// </remarks>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the job as
-        /// metadata. If omitted, the existing job metadata is left unchanged.
+        /// metadata.
         /// </summary>
+        /// <remarks>
+        /// If omitted, it takes the default value of an empty list; in
+        /// effect, any existing metadata is deleted.
+        /// </remarks>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
@@ -92,6 +112,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.PoolInfo != null)
             {
                 this.PoolInfo.Validate();
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element in this.Metadata)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

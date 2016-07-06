@@ -42,6 +42,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// JobReleaseTaskExecutionInformation class.
         /// </summary>
+        /// <param name="startTime">The time at which the task started running. Note that every time the task is restarted, this value is updated.</param>
+        /// <param name="state">The current state of the Job Release task.</param>
+        /// <param name="endTime">The time at which the Job Release task completed.</param>
+        /// <param name="taskRootDirectory">The root directory of the Job Release task on the compute node. You can use this path to retrieve files created by the task, such as log files.</param>
+        /// <param name="taskRootDirectoryUrl">The URL to the root directory of the Job Release task on the compute node.</param>
+        /// <param name="exitCode">The exit code of the Job Release task.</param>
+        /// <param name="schedulingError">The scheduling error encountered by the Batch service when starting the task.</param>
         public JobReleaseTaskExecutionInformation(DateTime startTime, JobReleaseTaskState state, DateTime? endTime = default(DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError))
         {
             StartTime = startTime;
@@ -62,15 +69,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the time at which the Job Release task completed.
-        /// This property is set only if the task is in the Completed state.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the task is in the Completed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the Job Release task. Possible
-        /// values include: 'running', 'completed'
+        /// Gets or sets the current state of the Job Release task.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'running', 'completed'
+        /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public JobReleaseTaskState State { get; set; }
 
@@ -90,9 +101,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string TaskRootDirectoryUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the exit code of the Job Release task. This property
-        /// is set only if the task is in the Completed state.
+        /// Gets or sets the exit code of the Job Release task.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the task is in the Completed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 

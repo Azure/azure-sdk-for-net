@@ -53,10 +53,7 @@
                         await pool.CommitAsync().ConfigureAwait(false);
                         await pool.RefreshAsync().ConfigureAwait(false);
 
-                        pool.StartTask = new StartTask()
-                            {
-                                CommandLine = startTaskCommandLine
-                            };
+                        pool.StartTask = new StartTask(startTaskCommandLine);
                         pool.Metadata = new List<MetadataItem>()
                             {
                                 new MetadataItem(metadataKey, metadataValue)
@@ -194,9 +191,7 @@
                         {
                             CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: 0);
 
-                            StartTask st = new StartTask();
-
-                            st.CommandLine = "dir";
+                            StartTask st = new StartTask("dir");
 
                             MakeResourceFiles(st, resourceFileSas, resourceFileValue);
                             AddEnviornmentSettingsToStartTask(st, envSettingName, envSettingValue);
@@ -267,10 +262,7 @@
                         {
                             CloudPool myPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: 0);
 
-                            StartTask st = new StartTask();
-
-                            st.CommandLine = "dir";
-
+                            StartTask st = new StartTask("dir");
                             // use the empty collections from above
                             st.ResourceFiles = emptyResfiles;
                             st.EnvironmentSettings = emptyEnvSettings;
@@ -377,8 +369,7 @@
                             // read it back and confirm value
                             Assert.Equal(PoolLifetimeOption.JobSchedule, iaps.PoolLifetimeOption);
 
-                            unboundJobSchedule.JobSpecification = new JobSpecification();
-                            unboundJobSchedule.JobSpecification.PoolInformation = new PoolInformation() { AutoPoolSpecification = iaps };
+                            unboundJobSchedule.JobSpecification = new JobSpecification(new PoolInformation() { AutoPoolSpecification = iaps });
 
                             // make ias viable for adding the wi
                             iaps.AutoPoolIdPrefix = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName();
@@ -737,6 +728,47 @@
             };
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestServerRejectsNonExistantVNetWithCorrectError()
+        {
+            Func<Task> test = async () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string poolId = "TestPoolVNet" + TestUtilities.GetMyName();
+                    const int targetDedicated = 0;
+                    string dummySubnetId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1",
+                        TestCommon.Configuration.BatchSubscription,
+                        TestCommon.Configuration.BatchAccountResourceGroup);
+                    try
+                    {
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new CloudServiceConfiguration(PoolFixture.OSFamily),
+                            targetDedicated);
+
+                        pool.NetworkConfiguration = new NetworkConfiguration()
+                            {
+                                SubnetId = dummySubnetId
+                            };
+
+                        BatchException exception = await TestUtilities.AssertThrowsAsync<BatchException>(async () => await pool.CommitAsync().ConfigureAwait(false)).ConfigureAwait(false);
+                        Assert.Equal(exception.RequestInformation.BatchError.Code, BatchErrorCodeStrings.InvalidPropertyValue);
+                        Assert.Equal(exception.RequestInformation.BatchError.Values.Single(value => value.Key == "Reason").Value, "The specified VNET either does not exist or Batch Service does not have access to it");
+                    }
+                    finally
+                    {
+                        //Delete the pool
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                    }
+                }
+            };
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         #region Test helpers

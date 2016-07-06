@@ -34,10 +34,12 @@ namespace Microsoft.Azure.Batch.Protocol
     {
             /// <summary>
             /// Gets lifetime summary statistics for all of the jobs in the specified
-            /// account. Statistics are aggregated across all jobs that have ever existed
-            /// in the account, from account creation to the last update time of the
-            /// statistics.
+            /// account.
             /// </summary>
+            /// <remarks>
+            /// Statistics are aggregated across all jobs that have ever existed in the
+            /// account, from account creation to the last update time of the statistics.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -51,10 +53,12 @@ namespace Microsoft.Azure.Batch.Protocol
 
             /// <summary>
             /// Gets lifetime summary statistics for all of the jobs in the specified
-            /// account. Statistics are aggregated across all jobs that have ever existed
-            /// in the account, from account creation to the last update time of the
-            /// statistics.
+            /// account.
             /// </summary>
+            /// <remarks>
+            /// Statistics are aggregated across all jobs that have ever existed in the
+            /// account, from account creation to the last update time of the statistics.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

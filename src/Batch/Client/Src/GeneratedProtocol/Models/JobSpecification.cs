@@ -39,7 +39,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobSpecification class.
         /// </summary>
-        public JobSpecification(int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="poolInfo">The pool on which the Batch service runs the tasks of jobs created under this schedule.</param>
+        /// <param name="priority">The priority of jobs created under this schedule.</param>
+        /// <param name="displayName">The display name for jobs created under this schedule.</param>
+        /// <param name="usesTaskDependencies">The flag that determines if this job will use tasks with dependencies.</param>
+        /// <param name="constraints">The execution constraints for jobs created under this schedule.</param>
+        /// <param name="jobManagerTask">The details of a Job Manager task to be launched when a job is started under this schedule.</param>
+        /// <param name="jobPreparationTask">The Job Preparation task for jobs created under this schedule.</param>
+        /// <param name="jobReleaseTask">The Job Release task for jobs created under this schedule.</param>
+        /// <param name="commonEnvironmentSettings">A list of common environment variable settings. These environment variables are set for all tasks in jobs created under this schedule (including the Job Manager, Job Preparation and Job Release tasks).</param>
+        /// <param name="metadata">A list of name-value pairs associated with each job created under this schedule as metadata.</param>
+        public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
             DisplayName = displayName;
@@ -55,18 +65,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the priority of jobs created under this schedule.
+        /// </summary>
+        /// <remarks>
         /// Priority values can range from -1000 to 1000, with -1000 being
         /// the lowest priority and 1000 being the highest priority. The
         /// default value is 0.
-        /// </summary>
+        /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name for jobs created under this
-        /// schedule. It need not be unique and can contain any Unicode
-        /// characters up to a maximum length of 1024.
+        /// Gets or sets the display name for jobs created under this schedule.
         /// </summary>
+        /// <remarks>
+        /// The name need not be unique and can contain any Unicode characters
+        /// up to a maximum length of 1024.
+        /// </remarks>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
@@ -136,9 +150,45 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (PoolInfo == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PoolInfo");
+            }
+            if (this.JobManagerTask != null)
+            {
+                this.JobManagerTask.Validate();
+            }
+            if (this.JobPreparationTask != null)
+            {
+                this.JobPreparationTask.Validate();
+            }
+            if (this.JobReleaseTask != null)
+            {
+                this.JobReleaseTask.Validate();
+            }
+            if (this.CommonEnvironmentSettings != null)
+            {
+                foreach (var element in this.CommonEnvironmentSettings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (this.PoolInfo != null)
             {
                 this.PoolInfo.Validate();
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element1 in this.Metadata)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

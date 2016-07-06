@@ -41,6 +41,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the FileGetFromComputeNodeHeaders
         /// class.
         /// </summary>
+        /// <param name="clientRequestId">The ClientRequestId provided by the client during the request, if present and requested to be returned.</param>
+        /// <param name="requestId">The value that uniquely identifies a request.</param>
+        /// <param name="eTag">The content of the ETag HTTP response header.</param>
+        /// <param name="lastModified">The content of the Last-Modified HTTP response header.</param>
+        /// <param name="ocpCreationTime">The file creation time.</param>
+        /// <param name="ocpBatchFileIsdirectory">Whether the object represents a directory.</param>
+        /// <param name="ocpBatchFileUrl">The URL of the file.</param>
+        /// <param name="ocpBatchFileMode">The file mode attribute in octal format.</param>
+        /// <param name="contentType">The content type of the file.</param>
+        /// <param name="contentLength">The length of the file.</param>
         public FileGetFromComputeNodeHeaders(string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? ocpCreationTime = default(DateTime?), bool? ocpBatchFileIsdirectory = default(bool?), string ocpBatchFileUrl = default(string), string ocpBatchFileMode = default(string), string contentType = default(string), long? contentLength = default(long?))
         {
             ClientRequestId = clientRequestId;

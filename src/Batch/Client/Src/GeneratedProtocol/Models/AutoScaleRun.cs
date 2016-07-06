@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AutoScaleRun class.
         /// </summary>
+        /// <param name="timestamp">The time at which the autoscale formula was last evaluated.</param>
+        /// <param name="results">The final values of all variables used in the evaluation of the autoscale formula.</param>
+        /// <param name="error">Details of the error encountered evaluating the autoscale formula on the pool, if the evaluation was unsuccessful.</param>
         public AutoScaleRun(DateTime timestamp, string results = default(string), AutoScaleRunError error = default(AutoScaleRunError))
         {
             Timestamp = timestamp;
@@ -55,10 +58,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the final values of all variables used in the
-        /// evaluation of the autoscale formula. Each variable value is
-        /// returned in the form $variable=value, and variables are separated
-        /// by semicolons.
+        /// evaluation of the autoscale formula.
         /// </summary>
+        /// <remarks>
+        /// Each variable value is returned in the form $variable=value, and
+        /// variables are separated by semicolons.
+        /// </remarks>
         [JsonProperty(PropertyName = "results")]
         public string Results { get; set; }
 

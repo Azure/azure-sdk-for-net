@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the FileDeleteFromComputeNodeHeaders
         /// class.
         /// </summary>
+        /// <param name="clientRequestId">The ClientRequestId provided by the client during the request, if present and requested to be returned.</param>
+        /// <param name="requestId">The value that uniquely identifies a request.</param>
         public FileDeleteFromComputeNodeHeaders(string clientRequestId = default(string), string requestId = default(string))
         {
             ClientRequestId = clientRequestId;

@@ -180,8 +180,7 @@
 
                                 poolInformation.PoolId = this.poolFixture.PoolId;
 
-                                unboundJobSchedule.JobSpecification = new JobSpecification();
-                                unboundJobSchedule.JobSpecification.PoolInformation = poolInformation;
+                                unboundJobSchedule.JobSpecification = new JobSpecification(poolInformation);
 
                                 unboundJobSchedule.Schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(5) };
 
@@ -477,11 +476,10 @@
                         // Create the job schedule
                         //
                         CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
-                        jobSchedule.JobSpecification = new JobSpecification();
-                        jobSchedule.JobSpecification.PoolInformation = new PoolInformation()
-                        {
-                            PoolId = this.poolFixture.PoolId
-                        };
+                        jobSchedule.JobSpecification = new JobSpecification(new PoolInformation()
+                            {
+                                PoolId = this.poolFixture.PoolId
+                            });
                         jobSchedule.Schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(1) };
 
                         this.testOutputHelper.WriteLine("Initial job schedule commit()");
@@ -592,8 +590,7 @@
                         CloudJobSchedule unboundJobSchedule = jobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
                         PoolInformation poolInformation = new PoolInformation();
                         poolInformation.PoolId = this.poolFixture.PoolId;
-                        unboundJobSchedule.JobSpecification = new JobSpecification();
-                        unboundJobSchedule.JobSpecification.PoolInformation = poolInformation;
+                        unboundJobSchedule.JobSpecification = new JobSpecification(poolInformation);
                         unboundJobSchedule.Schedule = new Schedule() { DoNotRunAfter = DateTime.UtcNow.AddDays(1) };
                         unboundJobSchedule.Commit();
 
@@ -761,11 +758,7 @@
                             unboundJobSchedule.Metadata = new List<MetadataItem>() { new MetadataItem("test", "test") };
 
                             //JobManagerTask
-                            JobManagerTask jm = new JobManagerTask()
-                            {
-                                CommandLine = "cmd /c dir",
-                                Id = "JobManagerTask",
-                            };
+                            JobManagerTask jm = new JobManagerTask(id: "JobManagerTask", commandLine: "cmd /c dir");
 
                             Assert.Null(jm.ResourceFiles);
                             Assert.Null(jm.EnvironmentSettings);
@@ -774,10 +767,7 @@
                             jm.EnvironmentSettings = new List<EnvironmentSetting> { new EnvironmentSetting("test", "Test") };
 
                             //StartTask
-                            StartTask startTask = new StartTask()
-                            {
-                                CommandLine = "cmd /c dir"
-                            };
+                            StartTask startTask = new StartTask("cmd /c dir");
 
                             Assert.Null(startTask.ResourceFiles);
                             Assert.Null(startTask.EnvironmentSettings);
@@ -799,18 +789,19 @@
 
                             poolSpecification.Metadata = new List<MetadataItem>() { new MetadataItem("test", "test") };
 
-                            unboundJobSchedule.JobSpecification = new JobSpecification()
+                            PoolInformation poolInformation = new PoolInformation()
+                            {
+                                AutoPoolSpecification = new AutoPoolSpecification()
+                                {
+                                    KeepAlive = false,
+                                    PoolSpecification = poolSpecification,
+                                    PoolLifetimeOption = PoolLifetimeOption.JobSchedule
+                                }
+                            };
+
+                            unboundJobSchedule.JobSpecification = new JobSpecification(poolInformation)
                             {
                                 JobManagerTask = jm,
-                                PoolInformation = new PoolInformation()
-                                {
-                                    AutoPoolSpecification = new AutoPoolSpecification()
-                                    {
-                                        KeepAlive = false,
-                                        PoolSpecification = poolSpecification,
-                                        PoolLifetimeOption = PoolLifetimeOption.JobSchedule
-                                    }
-                                }
                             };
 
                             unboundJobSchedule.Schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(6) };
@@ -977,10 +968,8 @@
 
                     Assert.Equal(originalDisplayName, unboundJobSchedule.DisplayName);
 
-                    JobManagerTask jobManager = new JobManagerTask();
-                    jobManager.CommandLine = "cmd /c echo hello";
+                    JobManagerTask jobManager = new JobManagerTask("JobManagerTask", "cmd /c echo hello");
                     jobManager.DisplayName = originalDisplayName;
-                    jobManager.Id = "JobManagerTask";
 
                     Assert.Equal(originalDisplayName, jobManager.DisplayName);
 
@@ -1002,13 +991,12 @@
                     PoolInformation poolInfo = new PoolInformation();
                     poolInfo.AutoPoolSpecification = autoPoolSpec;
 
-                    JobSpecification jobSpec = new JobSpecification();
+                    JobSpecification jobSpec = new JobSpecification(poolInfo);
                     jobSpec.DisplayName = originalDisplayName;
 
                     Assert.Equal(originalDisplayName, unboundJobSchedule.DisplayName);
 
                     jobSpec.JobManagerTask = jobManager;
-                    jobSpec.PoolInformation = poolInfo;
 
                     unboundJobSchedule.JobSpecification = jobSpec;
 

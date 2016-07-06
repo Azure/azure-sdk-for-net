@@ -27,12 +27,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A node agent SKU supported by the Batch service. The Batch node agent
-    /// is a program that runs on each node in the pool, and provides the
-    /// command-and-control interface between the node and the Batch service.
-    /// There are different implementations of the node agent, known as SKUs,
-    /// for different operating systems.
+    /// A node agent SKU supported by the Batch service.
     /// </summary>
+    /// <remarks>
+    /// The Batch node agent is a program that runs on each node in the pool,
+    /// and provides the command-and-control interface between the node and
+    /// the Batch service. There are different implementations of the node
+    /// agent, known as SKUs, for different operating systems.
+    /// </remarks>
     public partial class NodeAgentSku
     {
         /// <summary>
@@ -43,6 +45,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeAgentSku class.
         /// </summary>
+        /// <param name="id">The node agent SKU id.</param>
+        /// <param name="verifiedImageReferences">The list of images verified to be compatible with this node agent SKU.</param>
+        /// <param name="osType">The type of operating system compatible with the node agent SKU.</param>
         public NodeAgentSku(string id = default(string), IList<ImageReference> verifiedImageReferences = default(IList<ImageReference>), OSType? osType = default(OSType?))
         {
             Id = id;
@@ -58,16 +63,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the list of images verified to be compatible with
-        /// this node agent SKU. This collection is not exhaustive (the node
-        /// agent may be compatible with other images).
+        /// this node agent SKU.
         /// </summary>
+        /// <remarks>
+        /// This collection is not exhaustive (the node agent may be
+        /// compatible with other images).
+        /// </remarks>
         [JsonProperty(PropertyName = "verifiedImageReferences")]
         public IList<ImageReference> VerifiedImageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the type of operating system compatible with the node
-        /// agent SKU. Possible values include: 'linux', 'windows', 'unmapped'
+        /// agent SKU.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'linux', 'windows', 'unmapped'
+        /// </remarks>
         [JsonProperty(PropertyName = "osType")]
         public OSType? OsType { get; set; }
 

@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the BatchError class.
         /// </summary>
+        /// <param name="code">An identifier for the error. Codes are invariant and are intended to be consumed programmatically.</param>
+        /// <param name="message">A message describing the error, intended to be suitable for display in a user interface.</param>
+        /// <param name="values">A collection of key-value pairs containing additional details about the error.</param>
         public BatchError(string code = default(string), ErrorMessage message = default(ErrorMessage), IList<BatchErrorDetail> values = default(IList<BatchErrorDetail>))
         {
             Code = code;

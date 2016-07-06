@@ -40,6 +40,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the Certificate class.
         /// </summary>
+        /// <param name="thumbprint">The X.509 thumbprint of the certificate. This is a sequence of up to 40 hex digits (it may include spaces but these are removed).</param>
+        /// <param name="thumbprintAlgorithm">The algorithm used to derive the thumbprint. This must be sha1.</param>
+        /// <param name="url">The URL of the certificate.</param>
+        /// <param name="state">The current state of the certificate.</param>
+        /// <param name="stateTransitionTime">The time at which the certificate entered its current state.</param>
+        /// <param name="previousState">The previous state of the certificate.</param>
+        /// <param name="previousStateTransitionTime">The time at which the certificate entered its previous state.</param>
+        /// <param name="publicData">The public part of the certificate as a base-64 encoded .cer file.</param>
+        /// <param name="deleteCertificateError">The error that occurred on the last attempt to delete this certificate.</param>
         public Certificate(string thumbprint = default(string), string thumbprintAlgorithm = default(string), string url = default(string), CertificateState? state = default(CertificateState?), DateTime? stateTransitionTime = default(DateTime?), CertificateState? previousState = default(CertificateState?), DateTime? previousStateTransitionTime = default(DateTime?), string publicData = default(string), DeleteCertificateError deleteCertificateError = default(DeleteCertificateError))
         {
             Thumbprint = thumbprint;
@@ -75,9 +84,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the certificate. Possible values
-        /// include: 'active', 'deleting', 'deletefailed'
+        /// Gets or sets the current state of the certificate.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'active', 'deleting', 'deletefailed'
+        /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public CertificateState? State { get; set; }
 
@@ -89,18 +100,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the previous state of the certificate. This property
-        /// is not set if the certificate is in its initial Active state.
-        /// Possible values include: 'active', 'deleting', 'deletefailed'
+        /// Gets or sets the previous state of the certificate.
         /// </summary>
+        /// <remarks>
+        /// This property is not set if the certificate is in its initial
+        /// Active state. Possible values include: 'active', 'deleting',
+        /// 'deletefailed'
+        /// </remarks>
         [JsonProperty(PropertyName = "previousState")]
         public CertificateState? PreviousState { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the certificate entered its
-        /// previous state. This property is not set if the certificate is in
-        /// its initial Active state.
+        /// previous state.
         /// </summary>
+        /// <remarks>
+        /// This property is not set if the certificate is in its initial
+        /// Active state.
+        /// </remarks>
         [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public DateTime? PreviousStateTransitionTime { get; set; }
 
@@ -113,9 +130,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the error that occurred on the last attempt to delete
-        /// this certificate. This property is set only if the certificate is
-        /// in the deletefailed state.
+        /// this certificate.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the certificate is in the
+        /// DeleteFailed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "deleteCertificateError")]
         public DeleteCertificateError DeleteCertificateError { get; set; }
 

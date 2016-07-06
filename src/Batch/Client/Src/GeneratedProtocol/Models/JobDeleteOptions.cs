@@ -39,6 +39,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobDeleteOptions class.
         /// </summary>
+        /// <param name="timeout">The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.</param>
+        /// <param name="clientRequestId">The caller-generated request identity, in the form of a GUID with no decoration such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
+        /// <param name="returnClientRequestId">Whether the server should return the client-request-id identifier in the response.</param>
+        /// <param name="ocpDate">The time the request was issued. If not specified, this header will be automatically populated with the current system clock time.</param>
+        /// <param name="ifMatch">An ETag is specified. Specify this header to perform the operation only if the resource's ETag is an exact match as specified.</param>
+        /// <param name="ifNoneMatch">An ETag is specified. Specify this header to perform the operation only if the resource's ETag does not match the specified ETag.</param>
+        /// <param name="ifModifiedSince">Specify this header to perform the operation only if the resource has been modified since the specified date/time.</param>
+        /// <param name="ifUnmodifiedSince">Specify this header to perform the operation only if the resource has not been modified since the specified date/time.</param>
         public JobDeleteOptions(int? timeout = default(int?), string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), DateTime? ocpDate = default(DateTime?), string ifMatch = default(string), string ifNoneMatch = default(string), DateTime? ifModifiedSince = default(DateTime?), DateTime? ifUnmodifiedSince = default(DateTime?))
         {
             Timeout = timeout;

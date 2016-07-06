@@ -39,7 +39,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolSpecification class.
         /// </summary>
-        public PoolSpecification(string displayName = default(string), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), TimeSpan? resizeTimeout = default(TimeSpan?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), TimeSpan? autoScaleEvaluationInterval = default(TimeSpan?), bool? enableInterNodeCommunication = default(bool?), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="vmSize">The size of the virtual machines in the pool. All virtual machines in a pool are the same size.</param>
+        /// <param name="displayName">The display name for the pool.</param>
+        /// <param name="cloudServiceConfiguration">The cloud service configuration for the pool.</param>
+        /// <param name="virtualMachineConfiguration">The virtual machine configuration for the pool.</param>
+        /// <param name="maxTasksPerNode">The maximum number of tasks that can run concurrently on a single compute node in the pool.</param>
+        /// <param name="taskSchedulingPolicy">How tasks are distributed among compute nodes in the pool.</param>
+        /// <param name="resizeTimeout">The timeout for allocation of compute nodes to the pool.</param>
+        /// <param name="targetDedicated">The desired number of compute nodes in the pool.</param>
+        /// <param name="enableAutoScale">Whether the pool size should automatically adjust over time.</param>
+        /// <param name="autoScaleFormula">The formula for the desired number of compute nodes in the pool.</param>
+        /// <param name="autoScaleEvaluationInterval">A time interval for the desired AutoScale evaluation period in the pool.</param>
+        /// <param name="enableInterNodeCommunication">Whether the pool permits direct communication between nodes.</param>
+        /// <param name="networkConfiguration">The network configuration for the pool.</param>
+        /// <param name="startTask">A task to run on each compute node as it joins the pool. The task runs when the node is added to the pool or when the node is restarted.</param>
+        /// <param name="certificateReferences">A list of certificates to be installed on each compute node in the pool.</param>
+        /// <param name="applicationPackageReferences">The list of application packages to be installed on each compute node in the pool.</param>
+        /// <param name="metadata">A list of name-value pairs associated with the pool as metadata.</param>
+        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), TimeSpan? resizeTimeout = default(TimeSpan?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), TimeSpan? autoScaleEvaluationInterval = default(TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -53,6 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             AutoScaleFormula = autoScaleFormula;
             AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
             EnableInterNodeCommunication = enableInterNodeCommunication;
+            NetworkConfiguration = networkConfiguration;
             StartTask = startTask;
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
@@ -73,18 +91,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the cloud service configuration for the pool. This
-        /// property and VirtualMachineConfiguration are mutually exclusive
-        /// and one of the properties must be specified.
+        /// Gets or sets the cloud service configuration for the pool.
         /// </summary>
+        /// <remarks>
+        /// This property and VirtualMachineConfiguration are mutually
+        /// exclusive and one of the properties must be specified.
+        /// </remarks>
         [JsonProperty(PropertyName = "cloudServiceConfiguration")]
         public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine configuration for the pool. This
-        /// property and CloudServiceConfiguration are mutually exclusive and
-        /// one of the properties must be specified.
+        /// Gets or sets the virtual machine configuration for the pool.
         /// </summary>
+        /// <remarks>
+        /// This property and CloudServiceConfiguration are mutually exclusive
+        /// and one of the properties must be specified.
+        /// </remarks>
         [JsonProperty(PropertyName = "virtualMachineConfiguration")]
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
@@ -144,6 +166,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? EnableInterNodeCommunication { get; set; }
 
         /// <summary>
+        /// Gets or sets the network configuration for the pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkConfiguration")]
+        public NetworkConfiguration NetworkConfiguration { get; set; }
+
+        /// <summary>
         /// Gets or sets a task to run on each compute node as it joins the
         /// pool. The task runs when the node is added to the pool or when
         /// the node is restarted.
@@ -180,6 +208,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (VmSize == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VmSize");
+            }
             if (this.CloudServiceConfiguration != null)
             {
                 this.CloudServiceConfiguration.Validate();
@@ -191,6 +223,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.TaskSchedulingPolicy != null)
             {
                 this.TaskSchedulingPolicy.Validate();
+            }
+            if (this.StartTask != null)
+            {
+                this.StartTask.Validate();
             }
             if (this.CertificateReferences != null)
             {
@@ -209,6 +245,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element2 in this.Metadata)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

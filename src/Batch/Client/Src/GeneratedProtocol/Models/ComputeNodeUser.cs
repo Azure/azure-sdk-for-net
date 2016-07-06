@@ -39,6 +39,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNodeUser class.
         /// </summary>
+        /// <param name="name">The user name of the account.</param>
+        /// <param name="isAdmin">Whether the account should be an administrator on the compute node.</param>
+        /// <param name="expiryTime">The time at which the account should expire.</param>
+        /// <param name="password">The password of the account.</param>
+        /// <param name="sshPublicKey">The SSH public key that can be used for remote login to the compute node.</param>
         public ComputeNodeUser(string name, bool? isAdmin = default(bool?), DateTime? expiryTime = default(DateTime?), string password = default(string), string sshPublicKey = default(string))
         {
             Name = name;
@@ -62,9 +67,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? IsAdmin { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the account should expire. If
-        /// omitted, the default is 1 day from the current time.
+        /// Gets or sets the time at which the account should expire.
         /// </summary>
+        /// <remarks>
+        /// If omitted, the default is 1 day from the current time.
+        /// </remarks>
         [JsonProperty(PropertyName = "expiryTime")]
         public DateTime? ExpiryTime { get; set; }
 

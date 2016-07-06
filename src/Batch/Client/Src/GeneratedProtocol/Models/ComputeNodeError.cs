@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNodeError class.
         /// </summary>
+        /// <param name="code">An identifier for the compute node error. Codes are invariant and are intended to be consumed programmatically.</param>
+        /// <param name="message">A message describing the compute node error, intended to be suitable for display in a user interface.</param>
+        /// <param name="errorDetails">The list of additional error details related to the compute node error.</param>
         public ComputeNodeError(string code = default(string), string message = default(string), IList<NameValuePair> errorDetails = default(IList<NameValuePair>))
         {
             Code = code;

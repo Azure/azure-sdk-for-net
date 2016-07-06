@@ -209,13 +209,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<ComputeNodeReimageHeaders>> ReimageWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?), ComputeNodeReimageOptions computeNodeReimageOptions = default(ComputeNodeReimageOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Disable task scheduling of the specified compute node.
+        /// Disables task scheduling on the specified compute node.
         /// </summary>
         /// <param name='poolId'>
         /// The id of the pool that contains the compute node.
         /// </param>
         /// <param name='nodeId'>
-        /// The id of the compute node that you want to disable task
+        /// The id of the compute node on which you want to disable task
         /// scheduling.
         /// </param>
         /// <param name='nodeDisableSchedulingOption'>
@@ -240,13 +240,14 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<ComputeNodeDisableSchedulingHeaders>> DisableSchedulingWithHttpMessagesAsync(string poolId, string nodeId, DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?), ComputeNodeDisableSchedulingOptions computeNodeDisableSchedulingOptions = default(ComputeNodeDisableSchedulingOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Enable task scheduling of the specified compute node.
+        /// Enables task scheduling on the specified compute node.
         /// </summary>
         /// <param name='poolId'>
         /// The id of the pool that contains the compute node.
         /// </param>
         /// <param name='nodeId'>
-        /// The id of the compute node that you want to enable task scheduling.
+        /// The id of the compute node on which you want to enable task
+        /// scheduling.
         /// </param>
         /// <param name='computeNodeEnableSchedulingOptions'>
         /// Additional parameters for the operation

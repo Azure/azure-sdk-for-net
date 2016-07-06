@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationSummary class.
         /// </summary>
+        /// <param name="id">A string that uniquely identifies the application within the account.</param>
+        /// <param name="displayName">The display name for the application.</param>
+        /// <param name="versions">The versions of the application which are available.</param>
         public ApplicationSummary(string id, string displayName, IList<string> versions)
         {
             Id = id;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// Gets or sets the versions of the application which are available.
         /// </summary>
         [JsonProperty(PropertyName = "versions")]
         public IList<string> Versions { get; set; }

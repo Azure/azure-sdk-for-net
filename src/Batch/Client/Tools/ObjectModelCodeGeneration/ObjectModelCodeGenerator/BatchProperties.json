@@ -17,8 +17,8 @@
           },
           "Value": {
             "Type": "Models.TaskAddStatus",
-            "Name": "Status",
-          },
+            "Name": "Status"
+          }
         },
         {
           "Key": {
@@ -29,7 +29,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -40,7 +40,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -51,7 +51,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -62,7 +62,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -73,8 +73,8 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -93,8 +93,8 @@
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -110,9 +110,9 @@
             "SummaryComment": "The id of the application to be installed on the compute nodes. ",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -124,7 +124,7 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -140,9 +140,9 @@
             "SummaryComment": "The display name of the application.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -151,9 +151,9 @@
             "SummaryComment": "The id of the application.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -162,10 +162,10 @@
             "SummaryComment": "A readonly list of available versions of the application.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -206,7 +206,7 @@
           },
           "Value": {
             "Type": "Models.PoolSpecification",
-            "Name": "Pool",
+            "Name": "Pool"
           }
         },
         {
@@ -220,7 +220,7 @@
           },
           "Value": {
             "Type": "Models.PoolLifetimeOption",
-            "Name": "PoolLifetimeOption",
+            "Name": "PoolLifetimeOption"
           }
         }
       ]
@@ -238,9 +238,9 @@
             "SummaryComment": "A code for the autoscale error. See <see cref=\"Common.BatchErrorCodeStrings\"/> for possible values.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -249,9 +249,9 @@
             "SummaryComment": "A message describing the autoscale error, intended to be suitable for display in a user interface.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -260,10 +260,10 @@
             "SummaryComment": "A list of additional error details related to the autoscale error.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -279,7 +279,7 @@
             "SummaryComment": "The time at which the autoscale formula was last evaluated.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -290,9 +290,9 @@
             "SummaryComment": "The final values of all variables used in the evaluation of the autoscale formula. Each variable value is returned in the form $variable=value, and variables are separated by semicolons.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -301,10 +301,10 @@
             "SummaryComment": "Details of the error encountered evaluating the autoscale formula on the pool, if the evaluation was unsuccessful.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -320,9 +320,9 @@
             "SummaryComment": "A code for the error. See <see cref=\"Common.BatchErrorCodeStrings\"/> for possible values.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -331,9 +331,9 @@
             "SummaryComment": "A message describing the error, intended to be suitable for display in a user interface.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -342,10 +342,10 @@
             "SummaryComment": "A collection of key-value pairs containing additional details about the error.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -362,9 +362,9 @@
             "SummaryComment": "An identifier specifying the meaning of the <see cref=\"Value\"/> property.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -373,9 +373,9 @@
             "SummaryComment": "The additional information included with the <see cref=\"BatchError\"/>.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         }
       ]
     },
@@ -390,6 +390,19 @@
         {
           "Key": {
             "Type": "string",
+            "Name": "Data",
+            "SummaryComment": "The base64-encoded raw certificate data (contents of the .pfx or .cer file or data from which the <see cref=\"Certificate\"/> was created).",
+            "RemarksComment": "<para>This property is set when creating a new <see cref=\"Certificate\"/>. It is not defined for certificates retrieved from the Batch service.</para> <para>The maximum size is 10 KB.</para>",
+            "BoundAccess": "none",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
             "Name": "Thumbprint",
             "SummaryComment": "The thumbprint of the certificate. This is a sequence of up to 40 hex digits.",
             "RemarksComment": null,
@@ -398,7 +411,7 @@
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -435,8 +448,8 @@
           },
           "Value": {
             "Type": "Models.CertificateState?",
-            "Name": "State",
-          },
+            "Name": "State"
+          }
         },
         {
           "Key": {
@@ -460,8 +473,8 @@
           },
           "Value": {
             "Type": "Models.CertificateState?",
-            "Name": "PreviousState",
-          },
+            "Name": "PreviousState"
+          }
         },
         {
           "Key": {
@@ -471,19 +484,6 @@
             "RemarksComment": "If the certificate is in its initial <see cref=\"Common.CertificateState.Active\"/> state, the PreviousStateTransitionTime property is not defined.",
             "BoundAccess": "read",
             "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "Data",
-            "SummaryComment": "The base64-encoded raw certificate data (contents of the .pfx or .cer file or data from which the <see cref=\"Certificate\"/> was created).",
-            "RemarksComment": "<para>This property is set when creating a new <see cref=\"Certificate\"/>. It is not defined for certificates retrieved from the Batch service.</para> <para>The maximum size is 10 KB.</para>",
-            "BoundAccess": "none",
-            "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required",
-            "HideSetter": true
           },
           "Value": null
         },
@@ -500,7 +500,7 @@
           },
           "Value": {
             "Type": "Models.CertificateFormat?",
-            "Name": "CertificateFormat",
+            "Name": "CertificateFormat"
           }
         },
         {
@@ -537,7 +537,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -557,7 +557,7 @@
           },
           "Value": {
             "Type": "Models.CertificateStoreLocation?",
-            "Name": "StoreLocation",
+            "Name": "StoreLocation"
           }
 
         },
@@ -603,7 +603,7 @@
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
             "ProtocolToObjectModelMethod": "UtilitiesInternal.ParseCertificateVisibility",
-            "ObjectModelToProtocolMethod": "UtilitiesInternal.CertificateVisibilityToList",
+            "ObjectModelToProtocolMethod": "UtilitiesInternal.CertificateVisibilityToList"
           },
           "Value": null
         }
@@ -624,9 +624,9 @@
             "SummaryComment": "A list of common environment variable settings. These environment variables are set for all tasks in this <see cref=\"CloudJob\"/> (including the Job Manager, Job Preparation and Job Release tasks).",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -672,7 +672,7 @@
           },
           "Value": {
             "Type": "Models.JobExecutionInformation",
-            "Name": "ExecutionInfo",
+            "Name": "ExecutionInfo"
           }
         },
         {
@@ -763,7 +763,7 @@
           },
           "Value": {
             "Type": "Models.PoolInformation",
-            "Name": "PoolInfo",
+            "Name": "PoolInfo"
           }
         },
         {
@@ -777,7 +777,7 @@
           },
           "Value": {
             "Type": "Models.JobState?",
-            "Name": "PreviousState",
+            "Name": "PreviousState"
           }
         },
         {
@@ -838,7 +838,7 @@
           },
           "Value": {
             "Type": "Models.JobStatistics",
-            "Name": "Stats",
+            "Name": "Stats"
           }
         },
         {
@@ -862,7 +862,7 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -880,9 +880,9 @@
             "SummaryComment": "The creation time of the job schedule.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -917,7 +917,7 @@
           },
           "Value": {
             "Type": "Models.JobScheduleExecutionInformation",
-            "Name": "ExecutionInfo",
+            "Name": "ExecutionInfo"
           }
         },
         {
@@ -975,7 +975,7 @@
           },
           "Value": {
             "Type": "Models.JobScheduleState?",
-            "Name": "PreviousState",
+            "Name": "PreviousState"
           }
         },
         {
@@ -1011,7 +1011,7 @@
           },
           "Value": {
             "Type": "Models.JobScheduleState?",
-            "Name": "State",
+            "Name": "State"
           }
         },
         {
@@ -1036,7 +1036,7 @@
           },
           "Value": {
             "Type": "Models.JobScheduleStatistics",
-            "Name": "Stats",
+            "Name": "Stats"
           }
         },
         {
@@ -1049,7 +1049,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -1071,7 +1071,7 @@
           },
           "Value": {
             "Type": "Models.AllocationState?",
-            "Name": "AllocationState",
+            "Name": "AllocationState"
           }
         },
         {
@@ -1081,9 +1081,9 @@
             "SummaryComment": "The time at which the pool entered its current <see cref=\"AllocationState\"/>.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1092,9 +1092,9 @@
             "SummaryComment": "A list of application packages to be installed on each compute node in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1103,12 +1103,12 @@
             "SummaryComment": "Whether the pool size should automatically adjust according to the <see cref=\"AutoScaleFormula\"/>.",
             "RemarksComment": "<para>If false, the <see cref=\"TargetDedicated\"/> property is required, and <see cref=\"AutoScaleFormula\"/> must be null.</para> <para>If true, the <see cref=\"AutoScaleFormula\"/> property is required, and <see cref=\"TargetDedicated\"/> must be null. The pool automatically resizes according to the formula.</para><para>The default value is false.</para>",
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
           "Value": {
             "Type": "bool?",
-            "Name": "EnableAutoScale",
-          },
+            "Name": "EnableAutoScale"
+          }
         },
         {
           "Key": {
@@ -1117,9 +1117,9 @@
             "SummaryComment": "A time interval at which to automatically adjust the pool size according to the <see cref=\"AutoScaleFormula\"/>.",
             "RemarksComment": "The default value is 15 minutes. The minimum allowed value is 5 minutes.",
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1128,9 +1128,9 @@
             "SummaryComment": "A formula for the desired number of compute nodes in the pool.",
             "RemarksComment": "<para>For how to write autoscale formulas, see https://azure.microsoft.com/documentation/articles/batch-automatic-scaling/. This property is required if <see cref=\"AutoScaleEnabled\"/> is set to true. It must be null if AutoScaleEnabled is false.</para><para>The formula is checked for validity before the pool is created. If the formula is not valid, an exception is thrown when you try to commit the <see cref=\"CloudPool\"/>.</para>",
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1139,9 +1139,9 @@
             "SummaryComment": "The results and errors from the last execution of the <see cref=\"AutoScaleFormula\"/>.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1150,9 +1150,9 @@
             "SummaryComment": "A list of certificates to be installed on each compute node in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1161,9 +1161,9 @@
             "SummaryComment": "The <see cref=\"CloudServiceConfiguration\"/> for the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1172,9 +1172,9 @@
             "SummaryComment": "The creation time for the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1183,9 +1183,9 @@
             "SummaryComment": "The number of compute nodes currently in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1231,8 +1231,19 @@
           },
           "Value": {
             "Type": "bool?",
-            "Name": "EnableInterNodeCommunication",
+            "Name": "EnableInterNodeCommunication"
           }
+        },
+        {
+          "Key": {
+            "Type": "NetworkConfiguration",
+            "Name": "NetworkConfiguration",
+            "SummaryComment": "The network configuration of the pool.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
         },
         {
           "Key": {
@@ -1256,7 +1267,7 @@
           },
           "Value": {
             "Type": "int?",
-            "Name": "MaxTasksPerNode",
+            "Name": "MaxTasksPerNode"
           }
         },
         {
@@ -1325,7 +1336,7 @@
           },
           "Value": {
             "Type": "Models.PoolState?",
-            "Name": "State",
+            "Name": "State"
           }
         },
         {
@@ -1350,7 +1361,7 @@
           },
           "Value": {
             "Type": "Models.PoolStatistics",
-            "Name": "Stats",
+            "Name": "Stats"
           }
         },
         {
@@ -1397,9 +1408,9 @@
           },
           "Value": {
             "Type": "string",
-            "Name": "VmSize",
+            "Name": "VmSize"
           }
-        },
+        }
       ]
     },
     {
@@ -1424,7 +1435,7 @@
           },
           "Value": {
             "Type": "Models.AffinityInformation",
-            "Name": "AffinityInfo",
+            "Name": "AffinityInfo"
           }
         },
         {
@@ -1432,11 +1443,11 @@
             "Type": "string",
             "Name": "CommandLine",
             "SummaryComment": "The command line of the task.",
-            "RemarksComment": null,
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1445,12 +1456,12 @@
             "SummaryComment": "Information about the compute node on which the task ran.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "Models.NodeInformation",
-            "Name": "NodeInfo",
-          },
+            "Name": "NodeInfo"
+          }
         },
         {
           "Key": {
@@ -1459,7 +1470,7 @@
             "SummaryComment": "Information about how to run the multi-instance task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
           "Value": null
         },
@@ -1470,9 +1481,9 @@
             "SummaryComment": "The creation time of the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1481,9 +1492,9 @@
             "SummaryComment": "Any other tasks that this <see cref=\"CloudTask\"/> depends on. The task will not be scheduled until all depended-on tasks have completed successfully.",
             "RemarksComment": "The job must set <see cref=\"CloudJob.UsesTaskDependencies\"/> to true in order to use task dependencies. If UsesTaskDependencies is false (the default), adding a task with dependencies will fail with an error.",
             "BoundAccess": "read",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1541,7 +1552,7 @@
           },
           "Value": {
             "Type": "Models.TaskExecutionInformation",
-            "Name": "ExecutionInfo",
+            "Name": "ExecutionInfo"
           }
         },
         {
@@ -1577,7 +1588,7 @@
           },
           "Value": {
             "Type": "Models.TaskState?",
-            "Name": "PreviousState",
+            "Name": "PreviousState"
           }
         },
         {
@@ -1624,7 +1635,7 @@
           },
           "Value": {
             "Type": "Models.TaskState?",
-            "Name": "State",
+            "Name": "State"
           }
         },
         {
@@ -1649,7 +1660,7 @@
           },
           "Value": {
             "Type": "Models.TaskStatistics",
-            "Name": "Stats",
+            "Name": "Stats"
           }
         },
         {
@@ -1673,7 +1684,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -1689,11 +1700,11 @@
             "RemarksComment": "For more information about Guest OS families, see https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/.",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required",
+            "ConstructorArgumentType": "Required"
           },
           "Value": {
             "Name": "OsFamily"
-          },
+          }
         },
         {
           "Key": {
@@ -1703,7 +1714,7 @@
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional",
+            "ConstructorArgumentType": "Optional"
           },
           "Value": null
         },
@@ -1762,7 +1773,7 @@
           },
           "Value": {
             "Type": "Models.SchedulingState?",
-            "Name": "SchedulingState",
+            "Name": "SchedulingState"
           }
         },
         {
@@ -1776,7 +1787,7 @@
           },
           "Value": {
             "Type": "Models.ComputeNodeState?",
-            "Name": "State",
+            "Name": "State"
           }
         },
         {
@@ -1823,7 +1834,7 @@
           },
           "Value": {
             "Type": "string",
-            "Name": "IpAddress",
+            "Name": "IpAddress"
           }
         },
         {
@@ -1848,7 +1859,7 @@
           },
           "Value": {
             "Type": "string",
-            "Name": "VmSize",
+            "Name": "VmSize"
           }
         },
         {
@@ -1895,7 +1906,7 @@
           },
           "Value": {
             "Type": "StartTaskInformation",
-            "Name": "StartTaskInfo",
+            "Name": "StartTaskInfo"
           }
         },
         {
@@ -1941,7 +1952,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -1958,9 +1969,9 @@
             "SummaryComment": "A code for the compute node error. See <see cref=\"Common.BatchErrorCodeStrings\"/> for possible values.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1969,9 +1980,9 @@
             "SummaryComment": "A message describing the compute node error, intended to be suitable for display in a user interface.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -1980,10 +1991,10 @@
             "SummaryComment": "A list of additional error details related to the compute node error.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -1999,9 +2010,9 @@
             "SummaryComment": "An opaque string that contains information about the location of the compute node.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2010,12 +2021,12 @@
             "SummaryComment": "The compute node id.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "string",
-            "Name": "NodeId",
-          },
+            "Name": "NodeId"
+          }
         },
         {
           "Key": {
@@ -2024,12 +2035,12 @@
             "SummaryComment": "The URL of the compute node.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "string",
-            "Name": "NodeUrl",
-          },
+            "Name": "NodeUrl"
+          }
         },
         {
           "Key": {
@@ -2038,9 +2049,9 @@
             "SummaryComment": "The pool id.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2049,9 +2060,9 @@
             "SummaryComment": "The root directory of the current task on the compute node. You can use this path to retrieve files created by the task such as log files.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2060,10 +2071,10 @@
             "SummaryComment": "The URL to the root directory of the current task on the compute node.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -2081,9 +2092,9 @@
             "SummaryComment": "The name. If AddUser is specified for the commit operation, the value of this property is the name of the local Windows account created. If UpdateUser is specified for the commit operation, the value of this property selects the local Windows account to modify. Changing this property does not rename the local Windows account on the compute node.",
             "RemarksComment": null,
             "BoundAccess": "none",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2092,9 +2103,9 @@
             "SummaryComment": "The administrative privilege level of the user account. The value of this property is ignored when UpdateUser is specified for the commit operation.",
             "RemarksComment": null,
             "BoundAccess": "none",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2103,9 +2114,9 @@
             "SummaryComment": "The expiry time.",
             "RemarksComment": null,
             "BoundAccess": "none",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2114,9 +2125,9 @@
             "SummaryComment": "The password.",
             "RemarksComment": null,
             "BoundAccess": "none",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2125,10 +2136,10 @@
             "SummaryComment": "The SSH public key that can be used for remote login to the compute node.",
             "RemarksComment": "<para>The public key should be compatible with Open SSH encoding and should be base 64 encoded. This property can be specified only for Linux nodes. The Batch service will return an error if this property is set for pools created with <see cref=\"Microsoft.Azure.Batch.CloudServiceConfiguration\"/> or <see cref=\"Microsoft.Azure.Batch.VirtualMachineConfiguration\"/> with Windows compute nodes.</para>",
             "BoundAccess": "none",
-            "UnboundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -2144,9 +2155,9 @@
             "SummaryComment": "A code for the certificate deletion error. See <see cref=\"Common.BatchErrorCodeStrings\"/> for possible values.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2155,9 +2166,9 @@
             "SummaryComment": "A message describing the certificagte deletion error, intended to be suitable for display in a user interface.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2166,9 +2177,9 @@
             "SummaryComment": "A list of additional error details related to the certificate deletion error.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         }
       ]
     },
@@ -2189,7 +2200,7 @@
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2203,7 +2214,7 @@
             "HideSetter": true
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -2223,8 +2234,8 @@
           },
           "Value": {
             "Type": "string",
-            "Name": "Lang",
-          },
+            "Name": "Lang"
+          }
         },
         {
           "Key": {
@@ -2236,7 +2247,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -2299,7 +2310,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -2311,22 +2322,22 @@
         {
           "Key": {
             "Type": "string",
-            "Name": "Publisher",
-            "SummaryComment": "The publisher of the Azure Virtual Machines Marketplace image.",
-            "RemarksComment": "For example, Canonical or MicrosoftWindowsServer.",
+            "Name": "Offer",
+            "SummaryComment": "The offer type of the Azure Virtual Machines Marketplace image.",
+            "RemarksComment": "For example, UbuntuServer or WindowsServer.",
             "BoundAccess": "read",
             "UnboundAccess": "read,write",
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
             "Type": "string",
-            "Name": "Offer",
-            "SummaryComment": "The offer type of the Azure Virtual Machines Marketplace image.",
-            "RemarksComment": "For example, UbuntuServer or WindowsServer.",
+            "Name": "Publisher",
+            "SummaryComment": "The publisher of the Azure Virtual Machines Marketplace image.",
+            "RemarksComment": "For example, Canonical or MicrosoftWindowsServer.",
             "BoundAccess": "read",
             "UnboundAccess": "read,write",
             "ConstructorArgumentType": "Required",
@@ -2345,7 +2356,7 @@
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2359,14 +2370,13 @@
             "HideSetter": true
           },
           "Value": null
-        },
+        }
       ]
     },
     {
       "Name": "JobConstraints",
       "ProtocolName": "Models.JobConstraints",
       "Comment": "Specifies the execution constraints for a job.",
-      "ForceConstructorOrder": true,
       "Properties": [
         {
           "Key": {
@@ -2376,9 +2386,9 @@
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional",
+            "ConstructorArgumentType": "Optional"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2388,10 +2398,10 @@
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional",
+            "ConstructorArgumentType": "Optional"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -2454,7 +2464,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -2465,13 +2475,26 @@
         {
           "Key": {
             "Type": "string",
-            "Name": "CommandLine",
-            "SummaryComment": "The command-line to be used to launch the JobManager task.",
+            "Name": "Id",
+            "SummaryComment": "The id of the task.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
           },
-          "Value": null,
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "CommandLine",
+            "SummaryComment": "The command line of the task.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": null
         },
         {
           "Key": {
@@ -2495,19 +2518,8 @@
           },
           "Value": {
             "Type": "IList<Models.EnvironmentSetting>",
-            "Name": "EnvironmentSettings",
+            "Name": "EnvironmentSettings"
           }
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "Id",
-            "SummaryComment": "The id of the JobManager task.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
         },
         {
           "Key": {
@@ -2531,7 +2543,7 @@
           },
           "Value": {
             "Type": "IList<Models.ResourceFile>",
-            "Name": "ResourceFiles",
+            "Name": "ResourceFiles"
           }
         },
         {
@@ -2566,7 +2578,7 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -2586,8 +2598,8 @@
           },
           "Value": {
             "Type": "string",
-            "Name": "NodeId",
-          },
+            "Name": "NodeId"
+          }
         },
         {
           "Key": {
@@ -2600,7 +2612,7 @@
           },
           "Value": {
             "Type": "string",
-            "Name": "NodeUrl",
+            "Name": "NodeUrl"
           }
         },
         {
@@ -2614,7 +2626,7 @@
           },
           "Value": {
             "Type": "Models.JobPreparationTaskExecutionInformation",
-            "Name": "JobPreparationTaskExecutionInfo",
+            "Name": "JobPreparationTaskExecutionInfo"
           }
         },
         {
@@ -2628,7 +2640,7 @@
           },
           "Value": {
             "Type": "Models.JobReleaseTaskExecutionInformation",
-            "Name": "JobReleaseTaskExecutionInfo",
+            "Name": "JobReleaseTaskExecutionInfo"
           }
         },
         {
@@ -2641,7 +2653,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -2653,21 +2665,22 @@
           "Key": {
             "Type": "string",
             "Name": "Id",
-            "SummaryComment": "The id.",
+            "SummaryComment": "The id of the task.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
             "Type": "string",
             "Name": "CommandLine",
-            "SummaryComment": "The command line.",
-            "RemarksComment": null,
+            "SummaryComment": "The command line of the task.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
           },
           "Value": null
         },
@@ -2682,7 +2695,7 @@
           },
           "Value": {
             "Type": "IList<Models.ResourceFile>",
-            "Name": "ResourceFiles",
+            "Name": "ResourceFiles"
           }
         },
         {
@@ -2696,7 +2709,7 @@
           },
           "Value": {
             "Type": "IList<Models.EnvironmentSetting>",
-            "Name": "EnvironmentSettings",
+            "Name": "EnvironmentSettings"
           }
         },
         {
@@ -2719,7 +2732,7 @@
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2743,9 +2756,9 @@
           },
           "Value": {
             "Type": "bool?",
-            "Name": "RerunOnNodeRebootAfterSuccess",
+            "Name": "RerunOnNodeRebootAfterSuccess"
           }
-        },
+        }
       ]
     },
     {
@@ -2763,7 +2776,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2785,7 +2798,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2831,7 +2844,7 @@
           },
           "Value": {
             "Type": "Models.JobPreparationTaskState",
-            "Name": "State",
+            "Name": "State"
           }
         },
         {
@@ -2855,7 +2868,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -2867,21 +2880,22 @@
           "Key": {
             "Type": "string",
             "Name": "Id",
-            "SummaryComment": "The id.",
+            "SummaryComment": "The id of the task.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
             "Type": "string",
             "Name": "CommandLine",
-            "SummaryComment": "The command line.",
-            "RemarksComment": null,
+            "SummaryComment": "The command line of the task.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
           },
           "Value": null
         },
@@ -2896,7 +2910,7 @@
           },
           "Value": {
             "Type": "IList<Models.ResourceFile>",
-            "Name": "ResourceFiles",
+            "Name": "ResourceFiles"
           }
         },
         {
@@ -2910,7 +2924,7 @@
           },
           "Value": {
             "Type": "IList<Models.EnvironmentSetting>",
-            "Name": "EnvironmentSettings",
+            "Name": "EnvironmentSettings"
           }
         },
         {
@@ -2933,7 +2947,7 @@
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -2944,8 +2958,8 @@
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -2963,7 +2977,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -3009,7 +3023,7 @@
           },
           "Value": {
             "Type": "Models.JobReleaseTaskState",
-            "Name": "State",
+            "Name": "State"
           }
         },
         {
@@ -3033,7 +3047,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -3049,9 +3063,9 @@
             "SummaryComment": "The time at which the next job will be scheduled under this job schedule. This property is only returned for active job schedules.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -3060,9 +3074,9 @@
             "SummaryComment": "The completion time of the job schedule. This property is only returned for completed job schedules.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -3071,10 +3085,10 @@
             "SummaryComment": "The information about the most recent job under the job schedule. Note that this element is only returned if the job schedule contains at least one job under it.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -3094,8 +3108,8 @@
           },
           "Value": {
             "Type": "Models.SchedulingErrorCategory",
-            "Name": "Category",
-          },
+            "Name": "Category"
+          }
         },
         {
           "Key": {
@@ -3129,7 +3143,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -3148,8 +3162,8 @@
           },
           "Value": {
             "Type": "IList<Models.EnvironmentSetting>",
-            "Name": "CommonEnvironmentSettings",
-          },
+            "Name": "CommonEnvironmentSettings"
+          }
         },
         {
           "Key": {
@@ -3213,12 +3227,13 @@
             "SummaryComment": "The pool on which the Batch service runs the tasks of jobs created via this <see cref=\"JobSpecification\"/>.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
           },
           "Value": {
             "Type": "Models.PoolInformation",
-            "Name": "PoolInfo",
-          },
+            "Name": "PoolInfo"
+          }
         },
         {
           "Key": {
@@ -3231,8 +3246,8 @@
           },
           "Value": {
             "Type": "IList<Models.MetadataItem>",
-            "Name": "Metadata",
-          },
+            "Name": "Metadata"
+          }
         },
         {
           "Key": {
@@ -3255,7 +3270,7 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -3273,7 +3288,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -3308,7 +3323,7 @@
           },
           "Value": {
             "Type": "TimeSpan",
-            "Name": "UserCPUTime",
+            "Name": "UserCPUTime"
           }
         },
         {
@@ -3322,7 +3337,7 @@
           },
           "Value": {
             "Type": "TimeSpan",
-            "Name": "KernelCPUTime",
+            "Name": "KernelCPUTime"
           }
         },
         {
@@ -3391,7 +3406,7 @@
           },
           "Value": {
             "Type": "long",
-            "Name": "NumSucceededTasks",
+            "Name": "NumSucceededTasks"
           }
         },
         {
@@ -3405,7 +3420,7 @@
           },
           "Value": {
             "Type": "long",
-            "Name": "NumFailedTasks",
+            "Name": "NumFailedTasks"
           }
         },
         {
@@ -3419,7 +3434,7 @@
           },
           "Value": {
             "Type": "long",
-            "Name": "NumTaskRetries",
+            "Name": "NumTaskRetries"
           }
         },
         {
@@ -3432,7 +3447,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -3450,7 +3465,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -3485,7 +3500,7 @@
           },
           "Value": {
             "Type": "TimeSpan",
-            "Name": "UserCPUTime",
+            "Name": "UserCPUTime"
           }
         },
         {
@@ -3499,7 +3514,7 @@
           },
           "Value": {
             "Type": "TimeSpan",
-            "Name": "KernelCPUTime",
+            "Name": "KernelCPUTime"
           }
         },
         {
@@ -3568,7 +3583,7 @@
           },
           "Value": {
             "Type": "long",
-            "Name": "NumSucceededTasks",
+            "Name": "NumSucceededTasks"
           }
         },
         {
@@ -3582,7 +3597,7 @@
           },
           "Value": {
             "Type": "long",
-            "Name": "NumFailedTasks",
+            "Name": "NumFailedTasks"
           }
         },
         {
@@ -3596,7 +3611,7 @@
           },
           "Value": {
             "Type": "long",
-            "Name": "NumTaskRetries",
+            "Name": "NumTaskRetries"
           }
         },
         {
@@ -3609,7 +3624,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -3629,7 +3644,7 @@
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -3643,7 +3658,7 @@
             "HideSetter": true
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -3662,8 +3677,8 @@
           },
           "Value": {
             "Type": "IList<Models.ResourceFile>",
-            "Name": "CommonResourceFiles",
-          },
+            "Name": "CommonResourceFiles"
+          }
         },
         {
           "Key": {
@@ -3684,10 +3699,10 @@
             "RemarksComment": null,
             "BoundAccess": "read",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required",
+            "ConstructorArgumentType": "Required"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -3704,9 +3719,9 @@
             "SummaryComment": "The name in the name-value pair.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "read",
+            "UnboundAccess": "read"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -3718,7 +3733,25 @@
             "UnboundAccess": "read"
           },
           "Value": null
-        },
+        }
+      ]
+    },
+    {
+      "Name": "NetworkConfiguration",
+      "ProtocolName": "Models.NetworkConfiguration",
+      "Comment": "The network configuration for a pool.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "SubnetId",
+            "SummaryComment": "The ARM resource identifier of the virtual network subnet which the compute nodes of the pool will join.",
+            "RemarksComment": "The virtual network must be in the same region and subscription as the Azure Batch account, and the specified subnet should have enough spare IP addresses to accommodate the number of nodes in the pool. This property can only be specified for pools created with a <see cref=\"CloudPool.CloudServiceConfiguration\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        }
       ]
     },
     {
@@ -3760,9 +3793,9 @@
           },
           "Value": {
             "Type": "Models.OSType?",
-            "Name": "OsType",
+            "Name": "OsType"
           }
-        },
+        }
       ]
     },
     {
@@ -3779,7 +3812,7 @@
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -3791,7 +3824,7 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -3810,8 +3843,8 @@
           },
           "Value": {
             "Type": "bool?",
-            "Name": "EnableAutoScale",
-          },
+            "Name": "EnableAutoScale"
+          }
         },
         {
           "Key": {
@@ -3824,8 +3857,8 @@
           },
           "Value": {
             "Type": "IList<Models.ApplicationPackageReference>",
-            "Name": "ApplicationPackageReferences",
-          },
+            "Name": "ApplicationPackageReferences"
+          }
         },
         {
           "Key": {
@@ -3871,7 +3904,7 @@
           },
           "Value": {
             "Type": "IList<Models.CertificateReference>",
-            "Name": "CertificateReferences",
+            "Name": "CertificateReferences"
           }
         },
         {
@@ -3889,15 +3922,26 @@
           "Key": {
             "Type": "bool?",
             "Name": "InterComputeNodeCommunicationEnabled",
-            "SummaryComment": "Whether the pool permits direct communication between compute nodes.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
+            "SummaryComment": "Whether the pool permits direct communication between its compute nodes.",
+            "RemarksComment": "Enabling inter-node communication limits the maximum size of the pool due to deployment restrictions on the nodes of the pool. This may result in the pool not reaching its desired size.",
+            "BoundAccess": "read",
             "UnboundAccess": "read,write"
           },
           "Value": {
             "Type": "bool?",
-            "Name": "EnableInterNodeCommunication",
+            "Name": "EnableInterNodeCommunication"
+          }
+        },
+        {
+          "Key": {
+            "Type": "NetworkConfiguration",
+            "Name": "NetworkConfiguration",
+            "SummaryComment": "The network configuration of the pool.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
           },
+          "Value": null
         },
         {
           "Key": {
@@ -3910,8 +3954,8 @@
           },
           "Value": {
             "Type": "int?",
-            "Name": "MaxTasksPerNode",
-          },
+            "Name": "MaxTasksPerNode"
+          }
         },
         {
           "Key": {
@@ -3924,8 +3968,8 @@
           },
           "Value": {
             "Type": "IList<Models.MetadataItem>",
-            "Name": "Metadata",
-          },
+            "Name": "Metadata"
+          }
         },
         {
           "Key": {
@@ -3993,9 +4037,9 @@
           },
           "Value": {
             "Type": "string",
-            "Name": "VmSize",
+            "Name": "VmSize"
           }
-        },
+        }
       ]
     },
     {
@@ -4011,9 +4055,9 @@
             "SummaryComment": "The URL for the statistics.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -4022,7 +4066,7 @@
             "SummaryComment": "The start time of the time range covered by the statistics.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4033,7 +4077,7 @@
             "SummaryComment": "The time at which the statistics were last updated. All statistics are limited to the range between <see cref=\"StartTime\"/> and this value.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4044,12 +4088,12 @@
             "SummaryComment": "Statistics related to pool usage, such as the amount of core-time used.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "Models.UsageStatistics",
-            "Name": "UsageStats",
-          },
+            "Name": "UsageStats"
+          }
         },
         {
           "Key": {
@@ -4058,13 +4102,13 @@
             "SummaryComment": "Statistics related to resource consumption by compute nodes in the pool, such as average CPU utilization.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "Models.ResourceStatistics",
-            "Name": "ResourceStats",
-          },
-        },
+            "Name": "ResourceStats"
+          }
+        }
       ]
     },
     {
@@ -4080,12 +4124,12 @@
             "SummaryComment": "The cross data center network egress from the pool during this interval, in gibibytes.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "double",
-            "Name": "DataEgressGiB",
-          },
+            "Name": "DataEgressGiB"
+          }
         },
         {
           "Key": {
@@ -4094,12 +4138,12 @@
             "SummaryComment": "The cross data center network ingress to the pool during this interval, in gibibytes.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "double",
-            "Name": "DataIngressGiB",
-          },
+            "Name": "DataIngressGiB"
+          }
         },
         {
           "Key": {
@@ -4108,12 +4152,12 @@
             "SummaryComment": "The end time of the aggregation interval for this entry.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "DateTime",
-            "Name": "EndTime",
-          },
+            "Name": "EndTime"
+          }
         },
         {
           "Key": {
@@ -4122,9 +4166,9 @@
             "SummaryComment": "The id of the pool whose metrics are aggregated in this entry.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -4133,12 +4177,12 @@
             "SummaryComment": "The start time of the aggregation interval covered by this entry.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "DateTime",
-            "Name": "StartTime",
-          },
+            "Name": "StartTime"
+          }
         },
         {
           "Key": {
@@ -4147,12 +4191,12 @@
             "SummaryComment": "The total core hours used in the pool during this aggregation interval.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "double",
-            "Name": "TotalCoreHours",
-          },
+            "Name": "TotalCoreHours"
+          }
         },
         {
           "Key": {
@@ -4161,13 +4205,13 @@
             "SummaryComment": "The size of virtual machine in the pool. All virtual machines in a pool are the same size. Azure Batch supports all Azure virtual machine sizes except ExtraSmall.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "string",
-            "Name": "VmSize",
-          },
-        },
+            "Name": "VmSize"
+          }
+        }
       ]
     },
     {
@@ -4185,7 +4229,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -4197,7 +4241,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -4213,12 +4257,12 @@
             "SummaryComment": "The IP address used for remote login to the compute node.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "string",
-            "Name": "RemoteLoginIPAddress",
-          },
+            "Name": "RemoteLoginIPAddress"
+          }
         },
         {
           "Key": {
@@ -4231,9 +4275,9 @@
           },
           "Value": {
             "Type": "int",
-            "Name": "RemoteLoginPort",
+            "Name": "RemoteLoginPort"
           }
-        },
+        }
       ]
     },
     {
@@ -4274,7 +4318,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -4294,7 +4338,7 @@
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -4321,7 +4365,7 @@
             "HideSetter": true
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -4337,7 +4381,7 @@
             "SummaryComment": "The start time of the time range covered by the statistics.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4348,7 +4392,7 @@
             "SummaryComment": "The time at which the statistics were last updated. All statistics are limited to the range between <see cref=\"StartTime\"/> and this value.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4359,12 +4403,12 @@
             "SummaryComment": "The average CPU usage across all compute nodes in the pool (percentage per compute node).",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "double",
-            "Name": "AvgCPUPercentage",
-          },
+            "Name": "AvgCPUPercentage"
+          }
         },
         {
           "Key": {
@@ -4373,12 +4417,12 @@
             "SummaryComment": "The average memory usage in gibibytes across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "double",
-            "Name": "AvgMemoryGiB",
-          },
+            "Name": "AvgMemoryGiB"
+          }
         },
         {
           "Key": {
@@ -4387,7 +4431,7 @@
             "SummaryComment": "The peak memory usage in gibibytes across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4398,12 +4442,12 @@
             "SummaryComment": "The average used disk space in gibibytes across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "double",
-            "Name": "AvgDiskGiB",
-          },
+            "Name": "AvgDiskGiB"
+          }
         },
         {
           "Key": {
@@ -4412,7 +4456,7 @@
             "SummaryComment": "The peak used disk space in gibibytes across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4423,7 +4467,7 @@
             "SummaryComment": "The total number of disk read operations across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4434,7 +4478,7 @@
             "SummaryComment": "The total number of disk write operations across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4445,7 +4489,7 @@
             "SummaryComment": "The total amount of data in gibibytes of disk reads across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4456,7 +4500,7 @@
             "SummaryComment": "The total amount of data in gibibytes of disk writes across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4467,7 +4511,7 @@
             "SummaryComment": "The total amount of data in gibibytes of network reads across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4478,10 +4522,10 @@
             "SummaryComment": "The total amount of data in gibibytes of network writes across all compute nodes in the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -4498,7 +4542,7 @@
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -4532,7 +4576,7 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -4545,11 +4589,12 @@
             "Type": "string",
             "Name": "CommandLine",
             "SummaryComment": "The command line of the task.",
-            "RemarksComment": null,
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -4562,7 +4607,7 @@
           },
           "Value": {
             "Type": "IList<Models.EnvironmentSetting>",
-            "Name": "EnvironmentSettings",
+            "Name": "EnvironmentSettings"
           }
         },
         {
@@ -4587,7 +4632,7 @@
           },
           "Value": {
             "Type": "IList<Models.ResourceFile>",
-            "Name": "ResourceFiles",
+            "Name": "ResourceFiles"
           }
         },
         {
@@ -4610,8 +4655,8 @@
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     },
     {
@@ -4628,7 +4673,7 @@
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -4662,7 +4707,7 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -4678,12 +4723,12 @@
             "SummaryComment": "The current running state of the start task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "Models.StartTaskState",
-            "Name": "State",
-          },
+            "Name": "State"
+          }
         },
         {
           "Key": {
@@ -4692,7 +4737,7 @@
             "SummaryComment": "The time at which the task started running.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4703,7 +4748,7 @@
             "SummaryComment": "The time at which the task completed.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4714,7 +4759,7 @@
             "SummaryComment": "The exit code of the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4725,7 +4770,7 @@
             "SummaryComment": "The error encountered by the service when scheduling the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4736,7 +4781,7 @@
             "SummaryComment": "The number of times the start task has been retried by the Batch system.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4747,10 +4792,10 @@
             "SummaryComment": "The most recent time at which execution of the start task was retried by the Batch service.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -4766,12 +4811,12 @@
             "SummaryComment": "The information about the compute node on which the subtask ran.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "ComputeNodeInformation",
-            "Name": "NodeInfo",
-          },
+            "Name": "NodeInfo"
+          }
         },
         {
           "Key": {
@@ -4780,12 +4825,12 @@
             "SummaryComment": "The current state of the subtask.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "Models.TaskState?",
-            "Name": "State",
-          },
+            "Name": "State"
+          }
         },
         {
           "Key": {
@@ -4794,7 +4839,7 @@
             "SummaryComment": "The time at which the subtask entered its current state.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4805,7 +4850,7 @@
             "SummaryComment": "The time at which the subtask started running. If the subtask has been restarted or retried, this is the most recent time at which the subtask started running.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4816,7 +4861,7 @@
             "SummaryComment": "The time at which the subtask completed. This property is set only if the subtask is in the Completed state.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4827,7 +4872,7 @@
             "SummaryComment": "The exit code of the subtask. This property is set only if the subtask is in Completed state.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4838,7 +4883,7 @@
             "SummaryComment": "The details of any error encountered scheduling the subtask.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4849,7 +4894,7 @@
             "SummaryComment": "The id of the subtask.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4860,11 +4905,11 @@
             "SummaryComment": "The previous state of the subtask. This property is not set if the subtask is in its initial active state.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "Models.TaskState?",
-            "Name": "PreviousState",
+            "Name": "PreviousState"
           }
         },
         {
@@ -4874,17 +4919,16 @@
             "SummaryComment": "The time at which the subtask entered its previous state. This property is not set if the subtask is in its initial active state.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
       "Name": "TaskConstraints",
       "ProtocolName": "Models.TaskConstraints",
       "Comment": "Defines the constraints on a particular Azure Batch task.",
-      "ForceConstructorOrder": true,
       "Properties": [
         {
           "Key": {
@@ -4894,9 +4938,9 @@
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional",
+            "ConstructorArgumentType": "Optional"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -4906,7 +4950,7 @@
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional",
+            "ConstructorArgumentType": "Optional"
           },
           "Value": null
         },
@@ -4918,10 +4962,10 @@
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional",
+            "ConstructorArgumentType": "Optional"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -4938,12 +4982,12 @@
             "RemarksComment": null,
             "BoundAccess": "read",
             "UnboundAccess": "read,write",
-            "HideSetter": true,
+            "HideSetter": true
           },
           "Value": {
             "Type": "IList<Models.TaskIdRange>",
-            "Name": "TaskIdRanges",
-          },
+            "Name": "TaskIdRanges"
+          }
         },
         {
           "Key": {
@@ -4953,13 +4997,13 @@
             "RemarksComment": null,
             "BoundAccess": "read",
             "UnboundAccess": "read,write",
-            "HideSetter": true,
+            "HideSetter": true
           },
           "Value": {
             "Type": "IList<string>",
-            "Name": "TaskIds",
+            "Name": "TaskIds"
           }
-        },
+        }
       ]
     },
     {
@@ -4975,7 +5019,7 @@
             "SummaryComment": "The time at which the task started running.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4986,7 +5030,7 @@
             "SummaryComment": "The time at which the task completed.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -4997,7 +5041,7 @@
             "SummaryComment": "The exit code of the task. This parameter is only returned if the task is in completed state.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5008,7 +5052,7 @@
             "SummaryComment": "The error encountered by the service in starting the task. This parameter is only returned if there was an error in scheduling the task and it is now in completed state.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5019,7 +5063,7 @@
             "SummaryComment": "The number of times the task has been retried by the Batch service. Every time the task exits with a non-zero code, it is deemed as an application failure. The Batch service will retry the task up to the specified MaxTaskRetryCount.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5030,7 +5074,7 @@
             "SummaryComment": "The most recent time at which this task's execution was retried by the Batch service.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5041,7 +5085,7 @@
             "SummaryComment": "The number of times this task's execution was re-queued by the Batch service per user request.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5052,10 +5096,10 @@
             "SummaryComment": "The most recent time at which this task's execution was re-queued by the Batch service per user request.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -5075,7 +5119,7 @@
             "UnboundAccess": "read,write",
             "HideSetter": true
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -5088,7 +5132,7 @@
             "HideSetter": true
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -5107,7 +5151,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -5118,7 +5162,7 @@
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -5153,7 +5197,7 @@
           },
           "Value": {
             "Type": "Models.TaskState",
-            "Name": "TaskState",
+            "Name": "TaskState"
           }
         },
         {
@@ -5167,9 +5211,9 @@
           },
           "Value": {
             "Type": "TaskExecutionInformation",
-            "Name": "ExecutionInfo",
+            "Name": "ExecutionInfo"
           }
-        },
+        }
       ]
     },
     {
@@ -5189,8 +5233,8 @@
           },
           "Value": {
             "Type": "Models.SchedulingErrorCategory",
-            "Name": "Category",
-          },
+            "Name": "Category"
+          }
         },
         {
           "Key": {
@@ -5224,7 +5268,7 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -5241,13 +5285,13 @@
             "BoundAccess": "read",
             "UnboundAccess": "read,write",
             "HideSetter": true,
-            "ConstructorArgumentType": "Required",
+            "ConstructorArgumentType": "Required"
           },
           "Value": {
             "Type": "Models.ComputeNodeFillType",
-            "Name": "NodeFillType",
-          },
-        },
+            "Name": "NodeFillType"
+          }
+        }
       ]
     },
     {
@@ -5263,7 +5307,7 @@
             "SummaryComment": "The URL of the task statistics.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5274,7 +5318,7 @@
             "SummaryComment": "The start time of the time range covered by the statistics.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5285,7 +5329,7 @@
             "SummaryComment": "The time at which the statistics were last updated. All statistics are limited to the range between <see cref=\"StartTime\"/> and this value.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5296,11 +5340,11 @@
             "SummaryComment": "The total user mode CPU time (per core) consumed by the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "TimeSpan",
-            "Name": "UserCPUTime",
+            "Name": "UserCPUTime"
           }
         },
         {
@@ -5310,11 +5354,11 @@
             "SummaryComment": "The total kernel mode CPU time (per core) consumed by the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": {
             "Type": "TimeSpan",
-            "Name": "KernelCPUTime",
+            "Name": "KernelCPUTime"
           }
         },
         {
@@ -5324,7 +5368,7 @@
             "SummaryComment": "The wall clock time of the task execution.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5335,7 +5379,7 @@
             "SummaryComment": "The total number of disk read operations made by the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5346,7 +5390,7 @@
             "SummaryComment": "The total number of disk write operations made by the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5357,7 +5401,7 @@
             "SummaryComment": "The total gibibytes of I/O read from disk by the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5368,7 +5412,7 @@
             "SummaryComment": "The total gibibytes of I/O written to disk by the task.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5379,10 +5423,10 @@
             "SummaryComment": "The total wait time of the task. The wait time for a task is defined as the elapsed time between the creation of the task and the start of task execution. (If the task is retried due to failures, the wait time is the time to the most recent task execution.)",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -5398,7 +5442,7 @@
             "SummaryComment": "The start time of the time range covered by the statistics.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5409,7 +5453,7 @@
             "SummaryComment": "The time at which the statistics were last updated. All statistics are limited to the range between <see cref=\"StartTime\"/> and this value.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
         },
@@ -5420,10 +5464,10 @@
             "SummaryComment": "The aggregated wall-clock time of the dedicated compute nodes being part of the pool.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "none",
+            "UnboundAccess": "none"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -5439,9 +5483,9 @@
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required",
+            "ConstructorArgumentType": "Required"
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -5451,12 +5495,12 @@
             "RemarksComment": "The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems.",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required",
+            "ConstructorArgumentType": "Required"
           },
           "Value": {
             "Type": "string",
             "Name": "NodeAgentSKUId"
-          },
+          }
         },
         {
           "Key": {
@@ -5466,10 +5510,10 @@
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional",
+            "ConstructorArgumentType": "Optional"
           },
           "Value": null
-        },
+        }
       ]
     },
     {
@@ -5488,9 +5532,9 @@
             "ConstructorArgumentType": "Optional",
             "HideSetter": true
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
-    },
+    }
   ]
 }

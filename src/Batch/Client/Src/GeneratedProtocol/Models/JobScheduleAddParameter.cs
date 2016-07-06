@@ -40,6 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobScheduleAddParameter class.
         /// </summary>
+        /// <param name="id">A string that uniquely identifies the schedule within the account.</param>
+        /// <param name="schedule">The schedule according to which jobs will be created.</param>
+        /// <param name="jobSpecification">The details of the jobs to be created on this schedule.</param>
+        /// <param name="displayName">The display name for the schedule.</param>
+        /// <param name="metadata">A list of name-value pairs associated with the schedule as metadata.</param>
         public JobScheduleAddParameter(string id, Schedule schedule, JobSpecification jobSpecification, string displayName = default(string), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Id = id;
@@ -51,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the schedule within
-        /// the account. A GUID is recommended.
+        /// the account.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -105,6 +110,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.JobSpecification != null)
             {
                 this.JobSpecification.Validate();
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element in this.Metadata)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

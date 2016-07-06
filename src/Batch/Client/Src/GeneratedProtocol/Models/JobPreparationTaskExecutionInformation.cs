@@ -42,6 +42,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// JobPreparationTaskExecutionInformation class.
         /// </summary>
+        /// <param name="startTime">The time at which the task started running.</param>
+        /// <param name="state">The current state of the Job Preparation task.</param>
+        /// <param name="retryCount">The number of times the task has been retried by the Batch service. Every time the task exits with a non-zero exit code, it is deemed a task failure. The Batch service will retry the task up to the limit specified by the constraints.</param>
+        /// <param name="endTime">The time at which the Job Preparation task completed.</param>
+        /// <param name="taskRootDirectory">The root directory of the Job Preparation task on the compute node. You can use this path to retrieve files created by the task, such as log files.</param>
+        /// <param name="taskRootDirectoryUrl">The URL to the root directory of the Job Preparation task on the compute node.</param>
+        /// <param name="exitCode">The exit code of the Job Preparation task.</param>
+        /// <param name="schedulingError">The error encountered by the Batch service when starting the task.</param>
+        /// <param name="lastRetryTime">The most recent time at which a retry of the Job Preparation task started running.</param>
         public JobPreparationTaskExecutionInformation(DateTime startTime, JobPreparationTaskState state, int retryCount, DateTime? endTime = default(DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), DateTime? lastRetryTime = default(DateTime?))
         {
             StartTime = startTime;
@@ -56,23 +65,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the time at which the task started running. Note that
-        /// every time the task is restarted, this value is updated.
+        /// Gets or sets the time at which the task started running.
         /// </summary>
+        /// <remarks>
+        /// Note that every time the task is restarted, this value is updated.
+        /// </remarks>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the Job Preparation task completed.
-        /// This property is set only if the task is in the Completed state.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the task is in the Completed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the Job Preparation task.
-        /// Possible values include: 'running', 'completed'
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'running', 'completed'
+        /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public JobPreparationTaskState State { get; set; }
 
@@ -92,9 +107,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string TaskRootDirectoryUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the exit code of the Job Preparation task. This
-        /// property is set only if the task is in the Completed state.
+        /// Gets or sets the exit code of the Job Preparation task.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the task is in the Completed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
@@ -116,9 +133,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the most recent time at which a retry of the Job
-        /// Preparation task started running. This property is set only if
-        /// the task was retried (i.e. retryCount is nonzero).
+        /// Preparation task started running.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the task was retried (i.e. retryCount
+        /// is nonzero).
+        /// </remarks>
         [JsonProperty(PropertyName = "lastRetryTime")]
         public DateTime? LastRetryTime { get; set; }
 

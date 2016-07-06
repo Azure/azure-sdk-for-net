@@ -104,7 +104,7 @@
                         });
 
                 Microsoft.Azure.Batch.CloudJobSchedule cloudJobSchedule = client.JobScheduleOperations.CreateJobSchedule();
-                Microsoft.Azure.Batch.JobSpecification jobSpec = new Microsoft.Azure.Batch.JobSpecification { UsesTaskDependencies = usesTaskDependencies };
+                Microsoft.Azure.Batch.JobSpecification jobSpec = new Microsoft.Azure.Batch.JobSpecification(poolInformation: null) { UsesTaskDependencies = usesTaskDependencies };
                 cloudJobSchedule.JobSpecification = jobSpec;
                 cloudJobSchedule.Commit(new List<BatchClientBehavior> { interceptor });
 

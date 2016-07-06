@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the WindowsConfiguration class.
         /// </summary>
+        /// <param name="enableAutomaticUpdates">Whether automatic updates are enabled on the virtual machine.</param>
         public WindowsConfiguration(bool? enableAutomaticUpdates = default(bool?))
         {
             EnableAutomaticUpdates = enableAutomaticUpdates;
@@ -46,8 +47,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets whether automatic updates are enabled on the virtual
-        /// machine. If omitted, the default value is true.
+        /// machine.
         /// </summary>
+        /// <remarks>
+        /// If omitted, the default value is true.
+        /// </remarks>
         [JsonProperty(PropertyName = "enableAutomaticUpdates")]
         public bool? EnableAutomaticUpdates { get; set; }
 

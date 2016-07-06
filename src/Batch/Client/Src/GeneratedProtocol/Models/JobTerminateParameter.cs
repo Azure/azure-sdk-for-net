@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobTerminateParameter class.
         /// </summary>
+        /// <param name="terminateReason">The text you want to appear as the job's TerminateReason. The default is 'UserTerminate'.</param>
         public JobTerminateParameter(string terminateReason = default(string))
         {
             TerminateReason = terminateReason;

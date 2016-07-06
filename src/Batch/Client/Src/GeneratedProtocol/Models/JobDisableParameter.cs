@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobDisableParameter class.
         /// </summary>
+        /// <param name="disableTasks">What to do with active tasks associated with the job.</param>
         public JobDisableParameter(DisableJobOption disableTasks)
         {
             DisableTasks = disableTasks;
@@ -46,8 +47,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets what to do with active tasks associated with the job.
-        /// Possible values include: 'requeue', 'terminate', 'wait'
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'requeue', 'terminate', 'wait'
+        /// </remarks>
         [JsonProperty(PropertyName = "disableTasks")]
         public DisableJobOption DisableTasks { get; set; }
 

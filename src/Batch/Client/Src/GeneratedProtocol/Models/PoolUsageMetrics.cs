@@ -39,6 +39,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolUsageMetrics class.
         /// </summary>
+        /// <param name="poolId">The id of the pool whose metrics are being aggregated.</param>
+        /// <param name="startTime">The start time of the aggregation interval.</param>
+        /// <param name="endTime">The end time of the aggregation interval.</param>
+        /// <param name="vmSize">The size of virtual machines in the pool. All VMs in a pool are the same size.</param>
+        /// <param name="totalCoreHours">The total core hours used in the pool during this aggregation interval.</param>
+        /// <param name="dataIngressGiB">The cross data center network ingress in GiB to the pool during this interval.</param>
+        /// <param name="dataEgressGiB">The cross data center network egress in GiB from the pool during this interval.</param>
         public PoolUsageMetrics(string poolId, DateTime startTime, DateTime endTime, string vmSize, double totalCoreHours, double dataIngressGiB, double dataEgressGiB)
         {
             PoolId = poolId;

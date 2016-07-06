@@ -153,7 +153,7 @@
             };
 
             Schedule schedule = new Schedule { DoNotRunAfter = DateTime.UtcNow.AddMinutes(5), RecurrenceInterval = TimeSpan.FromMinutes(2) };
-            JobSpecification jobSpecification = new JobSpecification { PoolInformation = poolInformation };
+            JobSpecification jobSpecification = new JobSpecification(poolInformation);
 
             using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
             {

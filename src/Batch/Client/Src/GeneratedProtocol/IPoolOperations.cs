@@ -57,10 +57,13 @@ namespace Microsoft.Azure.Batch.Protocol
         Task<AzureOperationResponse<IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>> ListPoolUsageMetricsWithHttpMessagesAsync(PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets lifetime summary statistics for all of the pools in the
-        /// specified account. Statistics are aggregated across all pools
-        /// that have ever existed in the account, from account creation to
-        /// the last update time of the statistics.
+        /// specified account.
         /// </summary>
+        /// <remarks>
+        /// Statistics are aggregated across all pools that have ever existed
+        /// in the account, from account creation to the last update time of
+        /// the statistics.
+        /// </remarks>
         /// <param name='poolGetAllPoolsLifetimeStatisticsOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -321,11 +324,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolResizeHeaders>> ResizeWithHttpMessagesAsync(string poolId, PoolResizeParameter poolResizeParameter, PoolResizeOptions poolResizeOptions = default(PoolResizeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Stops an ongoing resize operation on the pool. This does not
-        /// restore the pool to its previous state before the resize
-        /// operation: it only stops any further changes being made, and the
-        /// pool maintains its current state.
+        /// Stops an ongoing resize operation on the pool.
         /// </summary>
+        /// <remarks>
+        /// This does not restore the pool to its previous state before the
+        /// resize operation: it only stops any further changes being made,
+        /// and the pool maintains its current state.
+        /// </remarks>
         /// <param name='poolId'>
         /// The id of the pool whose resizing you want to stop.
         /// </param>

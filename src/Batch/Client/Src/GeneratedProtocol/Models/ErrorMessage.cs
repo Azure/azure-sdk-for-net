@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ErrorMessage class.
         /// </summary>
+        /// <param name="lang">The language code of the error message</param>
+        /// <param name="value">The text of the message.</param>
         public ErrorMessage(string lang = default(string), string value = default(string))
         {
             Lang = lang;

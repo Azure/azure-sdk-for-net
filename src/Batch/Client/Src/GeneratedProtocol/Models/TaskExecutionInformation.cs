@@ -39,6 +39,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskExecutionInformation class.
         /// </summary>
+        /// <param name="retryCount">The number of times the task has been retried by the Batch service.</param>
+        /// <param name="requeueCount">The number of times the task has been requeued by the Batch service as the result of a user request.</param>
+        /// <param name="startTime">The time at which the task started running.</param>
+        /// <param name="endTime">The time at which the task completed.</param>
+        /// <param name="exitCode">The exit code of the task.</param>
+        /// <param name="schedulingError">Details of any error encountered scheduling the task.</param>
+        /// <param name="lastRetryTime">The most recent time at which a retry of the task started running.</param>
+        /// <param name="lastRequeueTime">The most recent time at which the task has been requeued by the Batch service as the result of a user request.</param>
         public TaskExecutionInformation(int retryCount, int requeueCount, DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), DateTime? lastRetryTime = default(DateTime?), DateTime? lastRequeueTime = default(DateTime?))
         {
             StartTime = startTime;
@@ -52,24 +60,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the time at which the task started running. If the
-        /// task has been restarted or retried, this is the most recent time
-        /// at which the task started running.
+        /// Gets or sets the time at which the task started running.
         /// </summary>
+        /// <remarks>
+        /// If the task has been restarted or retried, this is the most recent
+        /// time at which the task started running.
+        /// </remarks>
         [JsonProperty(PropertyName = "startTime")]
         public DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the task completed. This property
-        /// is set only if the task is in the Completed state.
+        /// Gets or sets the time at which the task completed.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the task is in the Completed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the exit code of the task. This property is set only
-        /// if the task is in completed state.
+        /// Gets or sets the exit code of the task.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the task is in Completed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 

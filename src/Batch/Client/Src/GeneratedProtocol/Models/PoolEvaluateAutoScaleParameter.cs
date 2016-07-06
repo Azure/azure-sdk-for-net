@@ -41,6 +41,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolEvaluateAutoScaleParameter
         /// class.
         /// </summary>
+        /// <param name="autoScaleFormula">A formula for the desired number of compute nodes in the pool.</param>
         public PoolEvaluateAutoScaleParameter(string autoScaleFormula)
         {
             AutoScaleFormula = autoScaleFormula;

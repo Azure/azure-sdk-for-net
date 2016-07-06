@@ -39,6 +39,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CloudJob class.
         /// </summary>
+        /// <param name="id">A string that uniquely identifies the job within the account.</param>
+        /// <param name="displayName">The display name for the job.</param>
+        /// <param name="usesTaskDependencies">The flag that determines if this job will use tasks with dependencies.</param>
+        /// <param name="url">The URL of the job.</param>
+        /// <param name="eTag">The ETag of the job.</param>
+        /// <param name="lastModified">The last modified time of the job.</param>
+        /// <param name="creationTime">The creation time of the job.</param>
+        /// <param name="state">The current state of the job.</param>
+        /// <param name="stateTransitionTime">The time at which the job entered its current state.</param>
+        /// <param name="previousState">The previous state of the job.</param>
+        /// <param name="previousStateTransitionTime">The time at which the job entered its previous state.</param>
+        /// <param name="priority">The priority of the job.</param>
+        /// <param name="constraints">The execution constraints for the job.</param>
+        /// <param name="jobManagerTask">Details of a Job Manager task to be launched when the job is started.</param>
+        /// <param name="jobPreparationTask">The Job Preparation task.</param>
+        /// <param name="jobReleaseTask">The Job Release task.</param>
+        /// <param name="commonEnvironmentSettings">The list of common environment variable settings. These environment variables are set for all tasks in the job (including the Job Manager, Job Preparation and Job Release tasks).</param>
+        /// <param name="poolInfo">The pool on which the Batch service runs the job's tasks.</param>
+        /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
+        /// <param name="executionInfo">The execution information for the job.</param>
+        /// <param name="stats">Resource usage statistics for the entire lifetime of the job.</param>
         public CloudJob(string id = default(string), string displayName = default(string), bool? usesTaskDependencies = default(bool?), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), JobState? state = default(JobState?), DateTime? stateTransitionTime = default(DateTime?), JobState? previousState = default(JobState?), DateTime? previousStateTransitionTime = default(DateTime?), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobExecutionInformation executionInfo = default(JobExecutionInformation), JobStatistics stats = default(JobStatistics))
         {
             Id = id;
@@ -66,10 +87,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the job within the
-        /// account. The id can contain any combination of alphanumeric
-        /// characters including hyphens and underscores, and cannot contain
-        /// more than 64 characters. It is common to use a GUID for the id.
+        /// account.
         /// </summary>
+        /// <remarks>
+        /// The id can contain any combination of alphanumeric characters
+        /// including hyphens and underscores, and cannot contain more than
+        /// 64 characters. It is common to use a GUID for the id.
+        /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
@@ -111,10 +135,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public DateTime? CreationTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the job. Possible values
-        /// include: 'active', 'disabling', 'disabled', 'enabling',
-        /// 'terminating', 'completed', 'deleting'
+        /// Gets or sets the current state of the job.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'active', 'disabling', 'disabled',
+        /// 'enabling', 'terminating', 'completed', 'deleting'
+        /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public JobState? State { get; set; }
 
@@ -125,27 +151,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the previous state of the job. This property is not
-        /// set if the job is in its initial Active state. Possible values
-        /// include: 'active', 'disabling', 'disabled', 'enabling',
-        /// 'terminating', 'completed', 'deleting'
+        /// Gets or sets the previous state of the job.
         /// </summary>
+        /// <remarks>
+        /// This property is not set if the job is in its initial Active
+        /// state. Possible values include: 'active', 'disabling',
+        /// 'disabled', 'enabling', 'terminating', 'completed', 'deleting'
+        /// </remarks>
         [JsonProperty(PropertyName = "previousState")]
         public JobState? PreviousState { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the job entered its previous state.
-        /// This property is not set if the job is in its initial Active
-        /// state.
         /// </summary>
+        /// <remarks>
+        /// This property is not set if the job is in its initial Active state.
+        /// </remarks>
         [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the priority of the job. Priority values can range
-        /// from -1000 to 1000, with -1000 being the lowest priority and 1000
-        /// being the highest priority. The default value is 0.
+        /// Gets or sets the priority of the job.
         /// </summary>
+        /// <remarks>
+        /// Priority values can range from -1000 to 1000, with -1000 being
+        /// the lowest priority and 1000 being the highest priority. The
+        /// default value is 0.
+        /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
@@ -218,9 +250,41 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (this.JobManagerTask != null)
+            {
+                this.JobManagerTask.Validate();
+            }
+            if (this.JobPreparationTask != null)
+            {
+                this.JobPreparationTask.Validate();
+            }
+            if (this.JobReleaseTask != null)
+            {
+                this.JobReleaseTask.Validate();
+            }
+            if (this.CommonEnvironmentSettings != null)
+            {
+                foreach (var element in this.CommonEnvironmentSettings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (this.PoolInfo != null)
             {
                 this.PoolInfo.Validate();
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element1 in this.Metadata)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
             if (this.ExecutionInfo != null)
             {

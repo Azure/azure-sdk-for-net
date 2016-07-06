@@ -81,9 +81,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="JobPreparationTask"/> class.
         /// </summary>
-        public JobPreparationTask()
+        /// <param name='commandLine'>The command line of the task.</param>
+        public JobPreparationTask(
+            string commandLine)
         {
             this.propertyContainer = new PropertyContainer();
+            this.CommandLine = commandLine;
         }
 
         internal JobPreparationTask(Models.JobPreparationTask protocolObject)
@@ -96,8 +99,13 @@ namespace Microsoft.Azure.Batch
         #region JobPreparationTask
 
         /// <summary>
-        /// Gets or sets the command line.
+        /// Gets or sets the command line of the task.
         /// </summary>
+        /// <remarks>
+        /// The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment 
+        /// variable expansion. If you want to take advantage of such features, you should invoke the shell in the command 
+        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// </remarks>
         public string CommandLine
         {
             get { return this.propertyContainer.CommandLineProperty.Value; }
@@ -126,7 +134,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the id.
+        /// Gets or sets the id of the task.
         /// </summary>
         public string Id
         {

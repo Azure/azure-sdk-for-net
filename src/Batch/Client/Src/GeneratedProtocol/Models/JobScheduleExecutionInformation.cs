@@ -42,6 +42,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobScheduleExecutionInformation
         /// class.
         /// </summary>
+        /// <param name="nextRunTime">The next time at which a job will be created under this schedule.</param>
+        /// <param name="recentJob">Information about the most recent job under the job schedule.</param>
+        /// <param name="endTime">The time at which the schedule ended.</param>
         public JobScheduleExecutionInformation(DateTime? nextRunTime = default(DateTime?), RecentJob recentJob = default(RecentJob), DateTime? endTime = default(DateTime?))
         {
             NextRunTime = nextRunTime;
@@ -64,9 +67,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public RecentJob RecentJob { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the schedule ended. This property
-        /// is set only if the job schedule is in the completed state.
+        /// Gets or sets the time at which the schedule ended.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the job schedule is in the completed
+        /// state.
+        /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 

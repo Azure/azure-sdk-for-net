@@ -28,10 +28,9 @@
                     passConfiguration,
                     targetDedicated: 1);
 
-                StartTask st = new StartTask();
+                StartTask st = new StartTask("cmd /c hostname");
 
                 // used for tests of StartTask(info)
-                st.CommandLine = "cmd /c hostname";
                 st.EnvironmentSettings = new List<EnvironmentSetting>
                     {
                         new EnvironmentSetting("key", "value")

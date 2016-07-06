@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
             public readonly PropertyAccessor<int?> MaxTasksPerComputeNodeProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
+            public readonly PropertyAccessor<NetworkConfiguration> NetworkConfigurationProperty;
             public readonly PropertyAccessor<ResizeError> ResizeErrorProperty;
             public readonly PropertyAccessor<TimeSpan?> ResizeTimeoutProperty;
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
@@ -66,6 +67,7 @@ namespace Microsoft.Azure.Batch
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>("LastModified", BindingAccess.None);
                 this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor<int?>("MaxTasksPerComputeNode", BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
+                this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>("NetworkConfiguration", BindingAccess.Read | BindingAccess.Write);
                 this.ResizeErrorProperty = this.CreatePropertyAccessor<ResizeError>("ResizeError", BindingAccess.None);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor<TimeSpan?>("ResizeTimeout", BindingAccess.Read | BindingAccess.Write);
                 this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>("StartTask", BindingAccess.Read | BindingAccess.Write);
@@ -153,6 +155,10 @@ namespace Microsoft.Azure.Batch
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
                     "Metadata",
                     BindingAccess.Read | BindingAccess.Write);
+                this.NetworkConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new NetworkConfiguration(o).Freeze()),
+                    "NetworkConfiguration",
+                    BindingAccess.Read);
                 this.ResizeErrorProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ResizeError, o => new ResizeError(o).Freeze()),
                     "ResizeError",
@@ -436,6 +442,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the network configuration of the pool.
+        /// </summary>
+        public NetworkConfiguration NetworkConfiguration
+        {
+            get { return this.propertyContainer.NetworkConfigurationProperty.Value; }
+            set { this.propertyContainer.NetworkConfigurationProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets the resize error encountered while performing the last resize on the <see cref="CloudPool"/>. This error 
         /// is returned only when the Batch service encountered an error while resizing the pool, and when the pool's <see 
         /// cref="CloudPool.AllocationState"/> is <see cref="AllocationState">Steady</see>.
@@ -586,6 +601,7 @@ namespace Microsoft.Azure.Batch
                 EnableInterNodeCommunication = this.InterComputeNodeCommunicationEnabled,
                 MaxTasksPerNode = this.MaxTasksPerComputeNode,
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
+                NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
                 ResizeTimeout = this.ResizeTimeout,
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),
                 TargetDedicated = this.TargetDedicated,

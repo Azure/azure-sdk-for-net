@@ -41,6 +41,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolUpdatePropertiesParameter
         /// class.
         /// </summary>
+        /// <param name="certificateReferences">A list of certificates to be installed on each compute node in the pool.</param>
+        /// <param name="applicationPackageReferences">A list of application packages to be installed on each compute node in the pool.</param>
+        /// <param name="metadata">A list of name-value pairs associated with the pool as metadata.</param>
+        /// <param name="startTask">A task to run on each compute node as it joins the pool.</param>
         public PoolUpdatePropertiesParameter(IList<CertificateReference> certificateReferences, IList<ApplicationPackageReference> applicationPackageReferences, IList<MetadataItem> metadata, StartTask startTask = default(StartTask))
         {
             StartTask = startTask;
@@ -51,34 +55,44 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a task to run on each compute node as it joins the
-        /// pool. If omitted, any existing start task is removed from the
         /// pool.
         /// </summary>
+        /// <remarks>
+        /// If omitted, any existing start task is removed from the pool.
+        /// </remarks>
         [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
         /// Gets or sets a list of certificates to be installed on each
-        /// compute node in the pool. If you specify an empty collection, any
-        /// existing certificate references are removed from the pool.
+        /// compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// If you specify an empty collection, any existing certificate
+        /// references are removed from the pool.
+        /// </remarks>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
         /// Gets or sets a list of application packages to be installed on
-        /// each compute node in the pool. If you specify an empty
-        /// collection, any existing application packages references are
-        /// removed from the pool.
+        /// each compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// If you specify an empty collection, any existing application
+        /// packages references are removed from the pool.
+        /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the pool
-        /// as metadata. If you specify an empty collection, any existing
-        /// metadata is removed from the pool.
+        /// as metadata.
         /// </summary>
+        /// <remarks>
+        /// If you specify an empty collection, any existing metadata is
+        /// removed from the pool.
+        /// </remarks>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
@@ -102,6 +116,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Metadata");
             }
+            if (this.StartTask != null)
+            {
+                this.StartTask.Validate();
+            }
             if (this.CertificateReferences != null)
             {
                 foreach (var element in this.CertificateReferences)
@@ -119,6 +137,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element2 in this.Metadata)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

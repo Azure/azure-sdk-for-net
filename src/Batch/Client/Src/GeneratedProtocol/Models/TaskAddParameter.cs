@@ -39,6 +39,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddParameter class.
         /// </summary>
+        /// <param name="id">A string that uniquely identifies the task within the job.</param>
+        /// <param name="commandLine">The command line of the task. For multi-instance tasks, the command line is executed on the primary subtask after all the subtasks have finished executing the coordianation command line.</param>
+        /// <param name="displayName">A display name for the task.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
+        /// <param name="environmentSettings">A list of environment variable settings for the task.</param>
+        /// <param name="affinityInfo">A locality hint that can be used by the Batch service to select a compute node on which to start the new task.</param>
+        /// <param name="constraints">The execution constraints that apply to this task.</param>
+        /// <param name="runElevated">Whether to run the task in elevated mode.</param>
+        /// <param name="multiInstanceSettings">Information about how to run the multi-instance task.</param>
+        /// <param name="dependsOn">Any other tasks that this task depends on.</param>
         public TaskAddParameter(string id, string commandLine, string displayName = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies))
         {
             Id = id;
@@ -55,10 +65,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the task within the
-        /// job. The id can contain any combination of alphanumeric
-        /// characters including hyphens and underscores, and cannot contain
-        /// more than 64 characters.
+        /// job.
         /// </summary>
+        /// <remarks>
+        /// The id can contain any combination of alphanumeric characters
+        /// including hyphens and underscores, and cannot contain more than
+        /// 64 characters. It is common to use a GUID for the id.
+        /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
@@ -74,15 +87,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// all the subtasks have finished executing the coordianation
         /// command line.
         /// </summary>
+        /// <remarks>
+        /// The command line does not run under a shell, and therefore cannot
+        /// take advantage of shell features such as environment variable
+        /// expansion. If you want to take advantage of such features, you
+        /// should invoke the shell in the command line, for example using
+        /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
-        /// to the compute node before running the command line. For
-        /// multi-instance tasks, the resource files will only be downloaded
-        /// to the compute node on which the primary subtask is executed.
+        /// to the compute node before running the command line.
         /// </summary>
+        /// <remarks>
+        /// For multi-instance tasks, the resource files will only be
+        /// downloaded to the compute node on which the primary subtask is
+        /// executed.
+        /// </remarks>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
 
@@ -138,6 +161,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (CommandLine == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+            }
+            if (this.ResourceFiles != null)
+            {
+                foreach (var element in this.ResourceFiles)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.EnvironmentSettings != null)
+            {
+                foreach (var element1 in this.EnvironmentSettings)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (this.AffinityInfo != null)
+            {
+                this.AffinityInfo.Validate();
             }
             if (this.MultiInstanceSettings != null)
             {

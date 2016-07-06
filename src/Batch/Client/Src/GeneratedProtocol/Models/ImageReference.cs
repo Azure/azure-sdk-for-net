@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ImageReference class.
         /// </summary>
+        /// <param name="publisher">The publisher of the Azure Virtual Machines Marketplace image.</param>
+        /// <param name="offer">The offer type of the Azure Virtual Machines Marketplace image.</param>
+        /// <param name="sku">The SKU of the Azure Virtual Machines Marketplace image.</param>
+        /// <param name="version">The version of the Azure Virtual Machines Marketplace image.</param>
         public ImageReference(string publisher, string offer, string sku, string version = default(string))
         {
             Publisher = publisher;
@@ -49,31 +53,42 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the publisher of the Azure Virtual Machines
-        /// Marketplace image. For example, Canonical or
-        /// MicrosoftWindowsServer.
+        /// Marketplace image.
         /// </summary>
+        /// <remarks>
+        /// For example, Canonical or MicrosoftWindowsServer.
+        /// </remarks>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
         /// Gets or sets the offer type of the Azure Virtual Machines
-        /// Marketplace image. For example, UbuntuServer or WindowsServer.
+        /// Marketplace image.
         /// </summary>
+        /// <remarks>
+        /// For example, UbuntuServer or WindowsServer.
+        /// </remarks>
         [JsonProperty(PropertyName = "offer")]
         public string Offer { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Azure Virtual Machines Marketplace
-        /// image. For example, 14.04.0-LTS or 2012-R2-Datacenter.
+        /// image.
         /// </summary>
+        /// <remarks>
+        /// For example, 14.04.0-LTS or 2012-R2-Datacenter.
+        /// </remarks>
         [JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the Azure Virtual Machines Marketplace
-        /// image. A value of 'latest' can be specified to select the latest
-        /// version of an image. If omitted, the default is 'latest'.
+        /// image.
         /// </summary>
+        /// <remarks>
+        /// A value of 'latest' can be specified to select the latest version
+        /// of an image. If omitted, the default is 'latest'.
+        /// </remarks>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 

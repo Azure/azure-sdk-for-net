@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskIdRange class.
         /// </summary>
+        /// <param name="start">The first task id in the range.</param>
+        /// <param name="end">The last task id in the range.</param>
         public TaskIdRange(int start, int end)
         {
             Start = start;

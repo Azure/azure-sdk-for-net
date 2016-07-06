@@ -40,6 +40,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CloudJobSchedule class.
         /// </summary>
+        /// <param name="id">A string that uniquely identifies the schedule within the account.</param>
+        /// <param name="displayName">The display name for the schedule.</param>
+        /// <param name="url">The URL of the job schedule.</param>
+        /// <param name="eTag">The ETag of the job schedule.</param>
+        /// <param name="lastModified">The last modified time of the job schedule.</param>
+        /// <param name="creationTime">The creation time of the job schedule.</param>
+        /// <param name="state">The current state of the job schedule.</param>
+        /// <param name="stateTransitionTime">The time at which the job schedule entered the current state.</param>
+        /// <param name="previousState">The previous state of the job schedule.</param>
+        /// <param name="previousStateTransitionTime">The time at which the job schedule entered its previous state.</param>
+        /// <param name="schedule">The schedule according to which jobs will be created.</param>
+        /// <param name="jobSpecification">The details of the jobs to be created on this schedule.</param>
+        /// <param name="executionInfo">Information about jobs that have been and will be run under this schedule.</param>
+        /// <param name="metadata">A list of name-value pairs associated with the schedule as metadata.</param>
+        /// <param name="stats">The lifetime resource usage statistics for the job schedule.</param>
         public CloudJobSchedule(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), JobScheduleState? state = default(JobScheduleState?), DateTime? stateTransitionTime = default(DateTime?), JobScheduleState? previousState = default(JobScheduleState?), DateTime? previousStateTransitionTime = default(DateTime?), Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), JobScheduleExecutionInformation executionInfo = default(JobScheduleExecutionInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobScheduleStatistics stats = default(JobScheduleStatistics))
         {
             Id = id;
@@ -61,8 +76,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the schedule within
-        /// the account. A GUID is recommended.
+        /// the account.
         /// </summary>
+        /// <remarks>
+        /// It is common to use a GUID for the id.
+        /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
@@ -97,10 +115,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public DateTime? CreationTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the job schedule. Possible
-        /// values include: 'active', 'completed', 'disabled', 'terminating',
-        /// 'deleting'
+        /// Gets or sets the current state of the job schedule.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'active', 'completed', 'disabled',
+        /// 'terminating', 'deleting'
+        /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public JobScheduleState? State { get; set; }
 
@@ -112,10 +132,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the previous state of the job schedule. Possible
-        /// values include: 'active', 'completed', 'disabled', 'terminating',
-        /// 'deleting'
+        /// Gets or sets the previous state of the job schedule.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'active', 'completed', 'disabled',
+        /// 'terminating', 'deleting'
+        /// </remarks>
         [JsonProperty(PropertyName = "previousState")]
         public JobScheduleState? PreviousState { get; set; }
 
@@ -171,6 +193,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.JobSpecification != null)
             {
                 this.JobSpecification.Validate();
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element in this.Metadata)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
             if (this.Stats != null)
             {

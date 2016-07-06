@@ -40,7 +40,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the StartTask class.
         /// </summary>
-        public StartTask(string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), bool? runElevated = default(bool?), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
+        /// <param name="commandLine">The command line of the start task.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
+        /// <param name="environmentSettings">A list of environment variable settings for the start task.</param>
+        /// <param name="runElevated">Whether to run the start task in elevated mode. The default value is false.</param>
+        /// <param name="maxTaskRetryCount">The maximum number of times the task may be retried.</param>
+        /// <param name="waitForSuccess">Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node.</param>
+        public StartTask(string commandLine, IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), bool? runElevated = default(bool?), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
         {
             CommandLine = commandLine;
             ResourceFiles = resourceFiles;
@@ -53,6 +59,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the command line of the start task.
         /// </summary>
+        /// <remarks>
+        /// The command line does not run under a shell, and therefore cannot
+        /// take advantage of shell features such as environment variable
+        /// expansion. If you want to take advantage of such features, you
+        /// should invoke the shell in the command line, for example using
+        /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
@@ -91,5 +104,38 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CommandLine == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+            }
+            if (this.ResourceFiles != null)
+            {
+                foreach (var element in this.ResourceFiles)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.EnvironmentSettings != null)
+            {
+                foreach (var element1 in this.EnvironmentSettings)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+        }
     }
 }

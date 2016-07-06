@@ -40,6 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CertificateReference class.
         /// </summary>
+        /// <param name="thumbprint">The thumbprint of the certificate.</param>
+        /// <param name="thumbprintAlgorithm">The algorithm with which the thumbprint is associated. This must be sha1.</param>
+        /// <param name="storeLocation">The location of the certificate store on the compute node into which to install the certificate.</param>
+        /// <param name="storeName">The name of the certificate store on the compute node into which to install the certificate.</param>
+        /// <param name="visibility">Which user accounts on the compute node should have access to the private data of the certificate.</param>
         public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), IList<CertificateVisibility?> visibility = default(IList<CertificateVisibility?>))
         {
             Thumbprint = thumbprint;
@@ -64,27 +69,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the location of the certificate store on the compute
-        /// node into which to install the certificate. The default value is
-        /// CurrentUser. Possible values include: 'currentuser',
-        /// 'localmachine', 'unmapped'
+        /// node into which to install the certificate.
         /// </summary>
+        /// <remarks>
+        /// The default value is CurrentUser. Possible values include:
+        /// 'currentuser', 'localmachine', 'unmapped'
+        /// </remarks>
         [JsonProperty(PropertyName = "storeLocation")]
         public CertificateStoreLocation? StoreLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the certificate store on the compute node
-        /// into which to install the certificate. The default value is My.
+        /// into which to install the certificate.
         /// </summary>
+        /// <remarks>
+        /// The default value is My.
+        /// </remarks>
         [JsonProperty(PropertyName = "storeName")]
         public string StoreName { get; set; }
 
         /// <summary>
         /// Gets or sets which user accounts on the compute node should have
-        /// access to the private data of the certificate. This may be any
-        /// subset of the values 'starttask', 'task' and 'remoteuser',
-        /// separated by commas. The default is all accounts, corresponding
-        /// to the string 'starttask,task,remoteuser'.
+        /// access to the private data of the certificate.
         /// </summary>
+        /// <remarks>
+        /// The default is all accounts.
+        /// </remarks>
         [JsonProperty(PropertyName = "visibility")]
         public IList<CertificateVisibility?> Visibility { get; set; }
 

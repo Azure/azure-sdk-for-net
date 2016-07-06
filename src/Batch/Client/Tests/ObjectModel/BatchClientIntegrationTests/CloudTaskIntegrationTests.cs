@@ -47,10 +47,9 @@
 
             newPool.InterComputeNodeCommunicationEnabled = true;
 
-            StartTask st = new StartTask();
+            StartTask st = new StartTask("cmd /c set & MSMpiSetup.exe -unattend -force");
 
             // used for tests of StartTask(info)
-            st.CommandLine = "cmd /c set & MSMpiSetup.exe -unattend -force";
             st.ResourceFiles = new List<ResourceFile> { new ResourceFile("https://manoj123.blob.core.windows.net/mpi/MSMpiSetup.exe", "MSMpiSetup.exe") };  // TODO: remove the dependency on magic blob.  bring this into project and use filestaging or something
             st.RunElevated = true;
             st.WaitForSuccess = true;

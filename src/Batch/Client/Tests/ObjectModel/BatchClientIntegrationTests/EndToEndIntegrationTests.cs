@@ -443,12 +443,12 @@
                                 // test setting osversion
                                 try
                                 {
-                                    CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId,
-                                        new Schedule() { RecurrenceInterval = TimeSpan.FromDays(7) },
-                                        new JobSpecification());
                                     AutoPoolSpecification aps = new AutoPoolSpecification();
                                     PoolSpecification ps = new PoolSpecification();
-
+                                    CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(
+                                        jobScheduleId,
+                                        new Schedule() { RecurrenceInterval = TimeSpan.FromDays(7) },
+                                        new JobSpecification(new PoolInformation() { AutoPoolSpecification = aps }));
 
                                     // test unbound set constraint
                                     ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, familyVersion0);
@@ -462,10 +462,7 @@
 
                                     aps.PoolSpecification = ps;
                                     aps.PoolLifetimeOption = PoolLifetimeOption.Job;
-
-                                    unboundJobSchedule.JobSpecification.PoolInformation = new PoolInformation();
-                                    unboundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification = aps;
-
+                                    
                                     unboundJobSchedule.Commit();
 
                                     // get bound job schedule

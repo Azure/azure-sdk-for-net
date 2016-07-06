@@ -70,9 +70,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="StartTask"/> class.
         /// </summary>
-        public StartTask()
+        /// <param name='commandLine'>The command line of the task.</param>
+        public StartTask(
+            string commandLine)
         {
             this.propertyContainer = new PropertyContainer();
+            this.CommandLine = commandLine;
         }
 
         internal StartTask(Models.StartTask protocolObject)
@@ -87,6 +90,11 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets or sets the command line of the task.
         /// </summary>
+        /// <remarks>
+        /// The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment 
+        /// variable expansion. If you want to take advantage of such features, you should invoke the shell in the command 
+        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// </remarks>
         public string CommandLine
         {
             get { return this.propertyContainer.CommandLineProperty.Value; }

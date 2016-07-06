@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// ComputeNodeGetRemoteLoginSettingsResult class.
         /// </summary>
+        /// <param name="remoteLoginIPAddress">The IP address used for remote login to the compute node.</param>
+        /// <param name="remoteLoginPort">The port used for remote login to the compute node.</param>
         public ComputeNodeGetRemoteLoginSettingsResult(string remoteLoginIPAddress, int remoteLoginPort)
         {
             RemoteLoginIPAddress = remoteLoginIPAddress;

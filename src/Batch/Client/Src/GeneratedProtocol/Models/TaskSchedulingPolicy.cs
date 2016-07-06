@@ -39,15 +39,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskSchedulingPolicy class.
         /// </summary>
+        /// <param name="nodeFillType">How tasks should be distributed across compute nodes</param>
         public TaskSchedulingPolicy(ComputeNodeFillType nodeFillType)
         {
             NodeFillType = nodeFillType;
         }
 
         /// <summary>
-        /// Gets or sets how tasks should be distributed across compute nodes.
-        /// Possible values include: 'spread', 'pack', 'unmapped'
+        /// Gets or sets how tasks should be distributed across compute nodes
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'spread', 'pack', 'unmapped'
+        /// </remarks>
         [JsonProperty(PropertyName = "nodeFillType")]
         public ComputeNodeFillType NodeFillType { get; set; }
 

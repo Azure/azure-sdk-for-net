@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskDependencies class.
         /// </summary>
+        /// <param name="taskIds">The list of task ids that must complete before this task can be scheduled.</param>
+        /// <param name="taskIdRanges">The list of task ranges that must complete before this task can be scheduled.</param>
         public TaskDependencies(IList<string> taskIds = default(IList<string>), IList<TaskIdRange> taskIdRanges = default(IList<TaskIdRange>))
         {
             TaskIds = taskIds;

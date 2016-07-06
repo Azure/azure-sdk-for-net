@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobScheduleUpdateParameter class.
         /// </summary>
+        /// <param name="schedule">The schedule according to which jobs will be created.</param>
+        /// <param name="jobSpecification">Details of the jobs to be created on this schedule.</param>
+        /// <param name="metadata">A list of name-value pairs associated with the job schedule as metadata.</param>
         public JobScheduleUpdateParameter(Schedule schedule, JobSpecification jobSpecification, IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Schedule = schedule;
@@ -48,10 +51,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the schedule according to which jobs will be created.
+        /// </summary>
+        /// <remarks>
         /// If you do not specify this element, it is equivalent to passing
         /// the default schedule: that is, a single job scheduled to run
         /// immediately.
-        /// </summary>
+        /// </remarks>
         [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
@@ -63,10 +68,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the job
-        /// schedule as metadata. If you do not specify this element, it
-        /// takes the default value of an empty list; in effect, any existing
-        /// metadata is deleted.
+        /// schedule as metadata.
         /// </summary>
+        /// <remarks>
+        /// If you do not specify this element, it takes the default value of
+        /// an empty list; in effect, any existing metadata is deleted.
+        /// </remarks>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
@@ -89,6 +96,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.JobSpecification != null)
             {
                 this.JobSpecification.Validate();
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element in this.Metadata)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

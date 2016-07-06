@@ -93,9 +93,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="JobSpecification"/> class.
         /// </summary>
-        public JobSpecification()
+        /// <param name='poolInformation'>The pool on which the Batch service runs the tasks of jobs created via this <see cref="JobSpecification"/>.</param>
+        public JobSpecification(
+            PoolInformation poolInformation)
         {
             this.propertyContainer = new PropertyContainer();
+            this.PoolInformation = poolInformation;
         }
 
         internal JobSpecification(Models.JobSpecification protocolObject)

@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionParameter class.
         /// </summary>
+        /// <param name="value">The collection of tasks to add.</param>
         public TaskAddCollectionParameter(IList<TaskAddParameter> value)
         {
             Value = value;
@@ -64,6 +65,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             }
             if (this.Value != null)
             {
+                if (this.Value.Count > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "Value", 100);
+                }
                 foreach (var element in this.Value)
                 {
                     if (element != null)

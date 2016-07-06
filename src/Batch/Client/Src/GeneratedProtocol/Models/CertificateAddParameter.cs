@@ -40,6 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CertificateAddParameter class.
         /// </summary>
+        /// <param name="thumbprint">The X.509 thumbprint of the certificate. This is a sequence of up to 40 hex digits (it may include spaces but these are removed).</param>
+        /// <param name="thumbprintAlgorithm">The algorithm used to derive the thumbprint. This must be sha1.</param>
+        /// <param name="data">The base64-encoded contents of the certificate. The maximum size is 10KB.</param>
+        /// <param name="certificateFormat">The format of the certificate data.</param>
+        /// <param name="password">The password to access the certificate's private key.</param>
         public CertificateAddParameter(string thumbprint, string thumbprintAlgorithm, string data, CertificateFormat? certificateFormat = default(CertificateFormat?), string password = default(string))
         {
             Thumbprint = thumbprint;
@@ -72,9 +77,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Data { get; set; }
 
         /// <summary>
-        /// Gets or sets the format of the certificate data. Possible values
-        /// include: 'pfx', 'cer', 'unmapped'
+        /// Gets or sets the format of the certificate data.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'pfx', 'cer', 'unmapped'
+        /// </remarks>
         [JsonProperty(PropertyName = "certificateFormat")]
         public CertificateFormat? CertificateFormat { get; set; }
 

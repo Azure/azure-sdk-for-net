@@ -39,6 +39,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the StartTaskInformation class.
         /// </summary>
+        /// <param name="state">The state of the start task on the compute node.</param>
+        /// <param name="startTime">The time at which the start task started running.</param>
+        /// <param name="retryCount">The number of times the task has been retried by the Batch service.</param>
+        /// <param name="endTime">The time at which the start task stopped running.</param>
+        /// <param name="exitCode">The exit code of the start task.</param>
+        /// <param name="schedulingError">Any error encountered scheduling the start task.</param>
+        /// <param name="lastRetryTime">The most recent time at which a retry of the task started running.</param>
         public StartTaskInformation(StartTaskState state, DateTime startTime, int retryCount, DateTime? endTime = default(DateTime?), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), DateTime? lastRetryTime = default(DateTime?))
         {
             State = state;
@@ -52,8 +59,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the state of the start task on the compute node.
-        /// Possible values include: 'running', 'completed'
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'running', 'completed'
+        /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public StartTaskState State { get; set; }
 

@@ -87,9 +87,15 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="JobManagerTask"/> class.
         /// </summary>
-        public JobManagerTask()
+        /// <param name='id'>The id of the task.</param>
+        /// <param name='commandLine'>The command line of the task.</param>
+        public JobManagerTask(
+            string id,
+            string commandLine)
         {
             this.propertyContainer = new PropertyContainer();
+            this.Id = id;
+            this.CommandLine = commandLine;
         }
 
         internal JobManagerTask(Models.JobManagerTask protocolObject)
@@ -102,8 +108,13 @@ namespace Microsoft.Azure.Batch
         #region JobManagerTask
 
         /// <summary>
-        /// Gets or sets the command-line to be used to launch the JobManager task.
+        /// Gets or sets the command line of the task.
         /// </summary>
+        /// <remarks>
+        /// The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment 
+        /// variable expansion. If you want to take advantage of such features, you should invoke the shell in the command 
+        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// </remarks>
         public string CommandLine
         {
             get { return this.propertyContainer.CommandLineProperty.Value; }
@@ -141,7 +152,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the id of the JobManager task.
+        /// Gets or sets the id of the task.
         /// </summary>
         public string Id
         {

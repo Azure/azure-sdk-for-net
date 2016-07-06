@@ -39,6 +39,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the SubtaskInformation class.
         /// </summary>
+        /// <param name="id">The id of the subtask.</param>
+        /// <param name="nodeInfo">Information about the compute node on which the subtask ran.</param>
+        /// <param name="startTime">The time at which the subtask started running. If the subtask has been restarted or retried, this is the most recent time at which the subtask started running.</param>
+        /// <param name="endTime">The time at which the subtask completed.</param>
+        /// <param name="exitCode">The exit code of the subtask.</param>
+        /// <param name="schedulingError">Details of any error encountered scheduling the subtask.</param>
+        /// <param name="state">The current state of the subtask.</param>
+        /// <param name="stateTransitionTime">The time at which the subtask entered its current state.</param>
+        /// <param name="previousState">The previous state of the subtask.</param>
+        /// <param name="previousStateTransitionTime">The time at which the subtask entered its previous state.</param>
         public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), TaskState? state = default(TaskState?), DateTime? stateTransitionTime = default(DateTime?), TaskState? previousState = default(TaskState?), DateTime? previousStateTransitionTime = default(DateTime?))
         {
             Id = id;
@@ -75,16 +85,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the subtask completed. This
-        /// property is set only if the subtask is in the Completed state.
+        /// Gets or sets the time at which the subtask completed.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the subtask is in the Completed state.
+        /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the exit code of the subtask. This property is set
-        /// only if the subtask is in the Completed state.
+        /// Gets or sets the exit code of the subtask.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the subtask is in the Completed
+        /// state.
+        /// </remarks>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
@@ -96,9 +111,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskSchedulingError SchedulingError { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the subtask. Possible values
-        /// include: 'active', 'preparing', 'running', 'completed'
+        /// Gets or sets the current state of the subtask.
         /// </summary>
+        /// <remarks>
+        /// Possible values include: 'active', 'preparing', 'running',
+        /// 'completed'
+        /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public TaskState? State { get; set; }
 
@@ -110,18 +128,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the previous state of the subtask. This property is
-        /// not set if the subtask is in its initial Active state. Possible
-        /// values include: 'active', 'preparing', 'running', 'completed'
+        /// Gets or sets the previous state of the subtask.
         /// </summary>
+        /// <remarks>
+        /// This property is not set if the subtask is in its initial Active
+        /// state. Possible values include: 'active', 'preparing', 'running',
+        /// 'completed'
+        /// </remarks>
         [JsonProperty(PropertyName = "previousState")]
         public TaskState? PreviousState { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the subtask entered its previous
-        /// state. This property is not set if the subtask is in its initial
-        /// Active state.
+        /// state.
         /// </summary>
+        /// <remarks>
+        /// This property is not set if the subtask is in its initial Active
+        /// state.
+        /// </remarks>
         [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public DateTime? PreviousStateTransitionTime { get; set; }
 
