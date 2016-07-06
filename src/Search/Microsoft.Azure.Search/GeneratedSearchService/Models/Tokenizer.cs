@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Abstract base class for tokenizers.
+    /// <see href="https://msdn.microsoft.com/library/mt605304.aspx" />
     /// </summary>
     public partial class Tokenizer
     {
@@ -40,8 +41,11 @@ namespace Microsoft.Azure.Search.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Name == null)

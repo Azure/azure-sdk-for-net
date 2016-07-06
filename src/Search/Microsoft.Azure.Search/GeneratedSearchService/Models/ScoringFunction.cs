@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Abstract base class for functions that can modify document scores
     /// during ranking.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn798928.aspx" />
     /// </summary>
     public partial class ScoringFunction
     {
@@ -60,8 +61,11 @@ namespace Microsoft.Azure.Search.Models
         public ScoringFunctionInterpolation? Interpolation { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (FieldName == null)

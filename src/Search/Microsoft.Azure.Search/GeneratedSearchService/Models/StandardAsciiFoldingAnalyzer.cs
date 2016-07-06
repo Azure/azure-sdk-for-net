@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Standard analyzer with ASCII folding filter. This analyzer is
     /// implemented using Apache Lucene.
+    /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt605304.aspx#Analyzers" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StandardAsciiFoldingAnalyzer")]
     public partial class StandardAsciiFoldingAnalyzer : Analyzer
@@ -39,8 +40,11 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

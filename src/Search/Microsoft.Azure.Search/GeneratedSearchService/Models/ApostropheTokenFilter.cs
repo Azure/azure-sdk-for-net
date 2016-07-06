@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Strips all characters after an apostrophe (including the apostrophe
     /// itself). This token filter is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/tr/ApostropheFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.ApostropheTokenFilter")]
     public partial class ApostropheTokenFilter : TokenFilter
@@ -37,8 +38,11 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

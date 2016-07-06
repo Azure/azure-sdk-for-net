@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Marks terms as keywords. This token filter is implemented using Apache
     /// Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/KeywordMarkerFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeywordMarkerTokenFilter")]
     public partial class KeywordMarkerTokenFilter : TokenFilter
@@ -52,8 +53,11 @@ namespace Microsoft.Azure.Search.Models
         public bool? IgnoreCase { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();

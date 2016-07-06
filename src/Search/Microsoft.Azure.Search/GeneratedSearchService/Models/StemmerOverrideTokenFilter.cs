@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Search.Models
     /// marked as keywords so that they will not be stemmed with stemmers
     /// down the chain. Must be placed before any stemming filters. This
     /// token filter is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/StemmerOverrideFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StemmerOverrideTokenFilter")]
     public partial class StemmerOverrideTokenFilter : TokenFilter
@@ -48,8 +49,11 @@ namespace Microsoft.Azure.Search.Models
         public IList<string> Rules { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public override void Validate()
         {
             base.Validate();
