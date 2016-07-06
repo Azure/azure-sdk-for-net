@@ -63,22 +63,18 @@ namespace Microsoft.Azure.Batch
         /// <param name="condition"></param>
         /// <param name="getName"></param>
         /// <param name="listObjects"></param>
-        /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <param name="detailLevel">Controls the detail level of the data returned by a call to the Azure Batch Service.</param>
         /// <param name="control"></param>
-        /// <param name="throwOnTimeout"></param>
         /// <returns></returns>
-        public static async Task<bool> WhenAllAsync<T>(
+        public static async Task WhenAllAsync<T>(
             IEnumerable<T> collectionToMonitor,
             Func<T, bool> condition,
             Func<T, string> getName,
             ListDelegate<T> listObjects,
-            TimeSpan timeout,
             CancellationToken cancellationToken,
             ODATADetailLevel detailLevel,
-            ODATAMonitorControl control,
-            bool throwOnTimeout) where T : IRefreshable
+            ODATAMonitorControl control) where T : IRefreshable
         {
             if (null == collectionToMonitor)
             {
@@ -90,7 +86,7 @@ namespace Microsoft.Azure.Batch
                 throw new ArgumentNullException("condition");
             }
 
-            RefreshViaODATAFilterList<T> odataRefresher = new RefreshViaODATAFilterList<T>(DateTime.UtcNow + timeout, cancellationToken, detailLevel, condition, listObjects, control);
+            RefreshViaODATAFilterList<T> odataRefresher = new RefreshViaODATAFilterList<T>(cancellationToken, detailLevel, condition, listObjects, control);
 
             // populate for first pass
             foreach (T curT in collectionToMonitor)
@@ -105,9 +101,7 @@ namespace Microsoft.Azure.Batch
             }
 
             // process the instances in the current pass... swap queues to begin next pass
-            while (
-                DateTime.UtcNow < odataRefresher.TimeoutPastThisUTC &&
-                !odataRefresher.CancellationToken.IsCancellationRequested &&
+            while (!odataRefresher.CancellationToken.IsCancellationRequested &&
                 odataRefresher.CurrentPassQueue.Count > 0)
             {
                 // get next instance
@@ -141,23 +135,6 @@ namespace Microsoft.Azure.Batch
 
             //Were we cancelled?
             odataRefresher.CancellationToken.ThrowIfCancellationRequested();
-
-            // did we time out?
-            if (DateTime.UtcNow > odataRefresher.TimeoutPastThisUTC)
-            {
-                if (throwOnTimeout)
-                {
-                    throw new TimeoutException();
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
         }
 
         /// <summary>
@@ -175,14 +152,12 @@ namespace Microsoft.Azure.Batch
             }
 
             internal RefreshViaODATAFilterList(
-                            DateTime timeoutPastThisUTC,
                             CancellationToken cancellationToken,
                             ODATADetailLevel odataDetail,
                             Func<T, bool> condition,
                             ListDelegate<T> listObjects,
                             ODATAMonitorControl odataMonitorControl)
             {
-                this.TimeoutPastThisUTC = timeoutPastThisUTC;
                 this.CancellationToken = cancellationToken;
                 _odataDetailLevel = odataDetail;
                 _condition = condition;
@@ -201,10 +176,7 @@ namespace Microsoft.Azure.Batch
             // queue that holds the instances that have been refreshed and failed the condition...
             // to be refreshed again on the next pass
             public Queue<MonitorLastCall<T>> NextPassQueue = new Queue<MonitorLastCall<T>>();
-
-            // The UtcNow after which we have timed out
-            public DateTime TimeoutPastThisUTC { get; private set; }
-
+            
             public CancellationToken CancellationToken { get; private set; }
 
             /// <summary>

@@ -140,12 +140,10 @@
                             Utilities utilities = batchCli.Utilities;
                             TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                            bool timedOut = taskStateMonitor.WaitAll(
+                            taskStateMonitor.WaitAll(
                                 boundJob.ListTasks(),
                                 Microsoft.Azure.Batch.Common.TaskState.Completed,
-                                new TimeSpan(1 /* hrs */, 3 /*min*/, 0));
-
-                            Assert.False(timedOut, "TSM timed out in BasicMultiInstanceTasks");
+                                TimeSpan.FromMinutes(3));
 
                             CloudTask myCompletedTask = new List<CloudTask>(boundJob.ListTasks())[0];
 
@@ -242,12 +240,10 @@
                             Utilities utilities = batchCli.Utilities;
                             TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                            bool timedOut = taskStateMonitor.WaitAll(
+                            taskStateMonitor.WaitAll(
                                 boundJob.ListTasks(),
                                 Microsoft.Azure.Batch.Common.TaskState.Completed,
-                                new TimeSpan(1 /* hrs */, 3 /*min*/, 0));
-
-                            Assert.False(timedOut, "TSM timed out in BasicMultiInstanceTasks");
+                                TimeSpan.FromMinutes(3));
 
                             CloudTask myCompletedTask = new List<CloudTask>(boundJob.ListTasks()).Single();
 
@@ -361,12 +357,10 @@
                             Utilities utilities = batchCli.Utilities;
                             TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                            bool timedOut = taskStateMonitor.WaitAll(
+                            taskStateMonitor.WaitAll(
                                 boundJob.ListTasks(),
                                 Microsoft.Azure.Batch.Common.TaskState.Completed,
-                                new TimeSpan(1 /* hrs */, 3 /*min*/, 0));
-
-                            Assert.False(timedOut, "TSM timed out in Bug1432830TaskEnvSettings");
+                                TimeSpan.FromMinutes(3));
 
                             CloudTask myCompletedTask = new List<CloudTask>(boundJob.ListTasks())[0];
 
@@ -474,7 +468,7 @@
 
                         CloudTask myTask = new CloudTask(id: "Bug1447214Task", commandline: @"hostname");
 
-                        TaskConstraints ts = new TaskConstraints(maxWallClockTime: new TimeSpan(1, 0, 0), retentionTime: new TimeSpan(1, 0, 0), maxTaskRetryCount: 99);
+                        TaskConstraints ts = new TaskConstraints(maxWallClockTime: TimeSpan.FromHours(1), retentionTime: TimeSpan.FromHours(1), maxTaskRetryCount: 99);
 
                         myTask.Constraints = ts;
 
@@ -485,13 +479,11 @@
                         Utilities utilities = batchCli.Utilities;
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                        bool timedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             boundJob.ListTasks(),
                             Microsoft.Azure.Batch.Common.TaskState.Completed,
-                            new TimeSpan(0, 3 /*min*/, 0));
-
-                        Assert.False(timedOut, "TSM timed out in Bug1447214TaskMissingExeInfoStatsAndConstraints");
-
+                            TimeSpan.FromMinutes(3));
+                        
                         CloudTask myCompletedTask = new List<CloudTask>(boundJob.ListTasks(null))[0];
 
                         string stdOut = myCompletedTask.GetNodeFile(Constants.StandardOutFileName).ReadAsString();
@@ -607,12 +599,10 @@
                         Utilities utilities = batchCli.Utilities;
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                        bool timedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             boundJob.ListTasks(),
                             Microsoft.Azure.Batch.Common.TaskState.Completed,
-                            new TimeSpan(0, 5 /*min*/, 0));
-
-                        Assert.False(timedOut, "TSM timed out in Bug1535329JobOperationsMissingAddTaskMethods");
+                            TimeSpan.FromMinutes(5));
 
                         foreach (CloudTask curTask in boundJob.ListTasks())
                         {
@@ -667,12 +657,10 @@
                         Utilities utilities = batchCli.Utilities;
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                        bool timedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             bndJob.ListTasks(),
                             Microsoft.Azure.Batch.Common.TaskState.Completed,
-                            new TimeSpan(0, 5 /*min*/, 0));
-
-                        Assert.False(timedOut, "TSM timed out in Bug1611592ComputeNodeInfoMissingOnTask");
+                            TimeSpan.FromMinutes(5));
 
                         foreach (CloudTask curTask in bndJob.ListTasks())
                         {
@@ -736,12 +724,11 @@
                             TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
 
                             //Wait for the task state to be running
-                            bool timedOut = taskStateMonitor.WaitAll(
+                            taskStateMonitor.WaitAll(
                                 tasks,
                                 TaskState.Running,
                                 TimeSpan.FromSeconds(30),
                                 new ODATAMonitorControl {DelayBetweenDataFetch = TimeSpan.FromSeconds(5)});
-                            Assert.False(timedOut, "TSM timed out in TestBoundTaskTerminateAndDelete");
 
                             //Terminate the running task
                             this.testOutputHelper.WriteLine("Terminating task {0}", taskId);
@@ -783,13 +770,12 @@
 
                             //Wait for the task state to be running
 
-                            bool timedOut = taskStateMonitor.WaitAll(
+                            taskStateMonitor.WaitAll(
                                 tasks,
                                 TaskState.Running,
                                 TimeSpan.FromSeconds(30),
                                 new ODATAMonitorControl { DelayBetweenDataFetch = TimeSpan.FromSeconds(5) });
-                            Assert.False(timedOut, "TSM timed out in TestBoundTaskTerminateAndDelete");
-
+                            
                             //Terminate the running task
                             this.testOutputHelper.WriteLine("Terminating task {0}", taskId);
                             CloudTask runningTask = batchCli.JobOperations.GetTask(jobId, taskId);

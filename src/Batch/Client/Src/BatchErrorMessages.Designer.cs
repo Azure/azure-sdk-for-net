@@ -178,6 +178,15 @@ namespace Microsoft.Azure.Batch {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Timed out waiting for resources after {0}..
+        /// </summary>
+        internal static string ODataMonitorTimedOut {
+            get {
+                return ResourceManager.GetString("ODataMonitorTimedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This operation is forbidden on bound objects..
         /// </summary>
         internal static string OperationForbiddenOnBoundObjects {

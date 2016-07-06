@@ -504,9 +504,8 @@
                         //Wait for the task to complete
 
                         TaskStateMonitor stateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
-                        bool timedOut = stateMonitor.WaitAll(new List<CloudTask> { boundTask }, TaskState.Completed, TimeSpan.FromMinutes(2));
-                        Assert.False(timedOut);
-
+                        stateMonitor.WaitAll(new List<CloudTask> { boundTask }, TaskState.Completed, TimeSpan.FromMinutes(2));
+                        
                         //Try to refresh the job schedule multiple times
                         this.testOutputHelper.WriteLine("Refreshing job schedule");
                         boundJobSchedule.Refresh();

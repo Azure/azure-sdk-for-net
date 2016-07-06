@@ -1,6 +1,9 @@
 ﻿namespace Azure.Batch.Unit.Tests.TestUtilities
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
+    using BatchTestCommon;
     using Microsoft.Rest.Azure;
     using Protocol=Microsoft.Azure.Batch.Protocol;
 
@@ -58,6 +61,14 @@
                 AzureOperationHeaderResponse<Protocol.Models.CertificateAddHeaders>>();
         }
 
+        public static Protocol.RequestInterceptor CreateListTasksRequestInterceptor(IEnumerable<Protocol.Models.CloudTask> tasksToReturn)
+        {
+            return CreateListRequestInterceptor<
+                Protocol.Models.TaskListOptions,
+                Protocol.Models.CloudTask,
+                Protocol.Models.TaskListHeaders>(tasksToReturn);
+        }
+
         public static Protocol.RequestInterceptor CreateAddRequestInterceptor<TBody, TOptions, TResponse>()
             where TOptions : Protocol.Models.IOptions, new()
             where TResponse : IAzureOperationResponse, new()
@@ -87,6 +98,25 @@
                     return Task.FromResult(new AzureOperationResponse<TResponse, TResponseHeaders>()
                     {
                         Body = valueToReturn
+                    });
+                };
+            });
+        }
+
+        public static Protocol.RequestInterceptor CreateListRequestInterceptor<TOptions, TResponse, TResponseHeaders>(IEnumerable<TResponse> valueToReturn)
+            where TOptions : Protocol.Models.IOptions, new()
+        {
+            return new Protocol.RequestInterceptor(req =>
+            {
+                var castReq = (Protocol.BatchRequest<
+                    TOptions,
+                    AzureOperationResponse<IPage<TResponse>, TResponseHeaders>>)req;
+
+                castReq.ServiceRequestFunc = ct =>
+                {
+                    return Task.FromResult(new AzureOperationResponse<IPage<TResponse>, TResponseHeaders>()
+                    {
+                        Body = new FakePage<TResponse>(valueToReturn.ToList())
                     });
                 };
             });

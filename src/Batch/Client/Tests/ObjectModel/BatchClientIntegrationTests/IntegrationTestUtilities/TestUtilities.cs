@@ -595,12 +595,10 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                 Utilities utilities = batchCli.Utilities;
                 TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                bool timedOut = taskStateMonitor.WaitAll(
+                taskStateMonitor.WaitAll(
                     boundJob.ListTasks(),
                     TaskState.Completed,
-                    new TimeSpan(1 /* hrs */, 3 /*min*/, 0));
-
-                Assert.False(timedOut, "TSM timed out in HelloWorld.");
+                    TimeSpan.FromMinutes(3));
 
                 CloudTask myCompletedTask = new List<CloudTask>(boundJob.ListTasks(null))[0];
 

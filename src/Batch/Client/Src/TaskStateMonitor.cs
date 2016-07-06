@@ -41,92 +41,87 @@
         /// </remarks>
         public IList<BatchClientBehavior> CustomBehaviors { get; set; }
 
-#endregion IInheritedBehaviors
+        #endregion IInheritedBehaviors
 
-#region TaskStateMonitor
-
-        /// <summary>
-        /// Begins asynchronous call to monitor an CloudTask collection until each of its members has reached a desired state at least once.
-        /// The State of each CloudTask instance is assumed to authoritative at the time of the call.
-        /// Instances that are already at the desiredState are ignored.
-        /// The CloudTask instances in the collection are treated as read-only.
-        /// No updates are made to any of these instances.
-        /// This means that when the call completes (timeout or not) the CloudTask instances should be refreshed before using.
-        /// </summary>
-        /// <param name="tasksToMonitor">The collection of tasks to monitor.</param>
-        /// <param name="desiredState">The target state of the tasks.  The WaitAll will exit when all tasks have reached this state at least once.</param>
-        /// <param name="timeout">The maximum amount of time this call will wait before timing out.</param>
-        /// <param name="controlParams">Controls various settings of the monitor, such as delay between each poll.</param>
-        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        /// <returns>True if the WaitAll timed out, false if it did not.</returns>
-        [Obsolete("Renamed to WhenAllAsync in 9/2015")]
-        public Task<bool> WaitAllAsync(
-                                        IEnumerable<CloudTask> tasksToMonitor,
-                                        Common.TaskState desiredState,
-                                        TimeSpan timeout,
-                                        ODATAMonitorControl controlParams = null,
-                                        IEnumerable<BatchClientBehavior> additionalBehaviors = null)
-        {
-            return this.WhenAllAsync(
-                tasksToMonitor,
-                desiredState,
-                timeout,
-                controlParams,
-                additionalBehaviors);
-        }
+        #region TaskStateMonitor
 
         /// <summary>
-        /// Begins asynchronous call to monitor an CloudTask collection until each of its members has reached a desired state at least once.
-        /// The State of each CloudTask instance is assumed to authoritative at the time of the call.
-        /// Instances that are already at the desiredState are ignored.
-        /// The CloudTask instances in the collection are treated as read-only.
-        /// No updates are made to any of these instances.
-        /// This means that when the call completes (timeout or not) the CloudTask instances should be refreshed before using.
+        /// Monitors a <see cref="CloudTask"/> collection until each of its members has reached a desired state at least once.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The state of each <see cref="CloudTask"/> instance is assumed to be authoritative at the time of the call.
+        /// Instances that are already at the <paramref name="desiredState"/> are ignored.
+        /// The <see cref="CloudTask"/> instances in the collection are treated as read-only.
+        /// This means that when the call completes (timeout or not) the <see cref="CloudTask"/> instances should be refreshed before using.
+        /// </para>
+        /// <para>
+        /// This method runs asynchronously.
+        /// <para>
+        /// </remarks>
         /// <param name="tasksToMonitor">The collection of tasks to monitor.</param>
-        /// <param name="desiredState">The target state of the tasks.  The WhenAll will exit when all tasks have reached this state at least once.</param>
+        /// <param name="desiredState">The target state of the tasks. The method will exit when all tasks have reached this state at least once.</param>
         /// <param name="timeout">The maximum amount of time this call will wait before timing out.</param>
         /// <param name="controlParams">Controls various settings of the monitor, such as delay between each poll.</param>
-        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        /// <returns>True if the WhenAll timed out, false if it did not.</returns>
-        public Task<bool> WhenAllAsync(
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <exception cref="TimeoutException">Thrown if the <paramref name="timeout"/> has elapsed.</exception>
+        public async Task WhenAll(
             IEnumerable<CloudTask> tasksToMonitor,
             Common.TaskState desiredState,
             TimeSpan timeout,
             ODATAMonitorControl controlParams = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            return this.WhenAllImplAsync(
-                tasksToMonitor,
-                desiredState,
-                timeout,
-                CancellationToken.None,
-                controlParams,
-                additionalBehaviors,
-                throwOnTimeout: false);
+            using (CancellationTokenSource tokenSource = new CancellationTokenSource(timeout))
+            {
+                try
+                {
+                    await this.WhenAllImplAsync(
+                        tasksToMonitor,
+                        desiredState,
+                        tokenSource.Token,
+                        controlParams,
+                        additionalBehaviors).ConfigureAwait(continueOnCapturedContext: false);
+                }
+                catch (OperationCanceledException cancellationException)
+                {
+                    if (cancellationException.CancellationToken == tokenSource.Token)
+                    {
+                        throw new TimeoutException(
+                            string.Format(BatchErrorMessages.ODataMonitorTimedOut, timeout),
+                            cancellationException);
+                    }
+
+                    throw;
+                }
+            }
         }
 
         /// <summary>
-        /// Begins asynchronous call to monitor an CloudTask collection until each of its members has reached a desired state at least once.
-        /// The State of each CloudTask instance is assumed to authoritative at the time of the call.
-        /// Instances that are already at the desiredState are ignored.
-        /// The CloudTask instances in the collection are treated as read-only.
-        /// No updates are made to any of these instances.
-        /// This means that when the call completes (timeout or not) the CloudTask instances should be refreshed before using.
-        /// If time time specified in the <paramref name="timeout"/> is exceeded a <see cref="TimeoutException"/> is thrown.
+        /// Monitors a <see cref="CloudTask"/> collection until each of its members has reached a desired state at least once.
         /// </summary>
-        /// <remarks>This method throws an exception if a timeout or cancellation occurs.</remarks>
+        /// <remarks>
+        /// <para>
+        /// The state of each <see cref="CloudTask"/> instance is assumed to be authoritative at the time of the call.
+        /// Instances that are already at the <paramref name="desiredState"/> are ignored.
+        /// The <see cref="CloudTask"/> instances in the collection are treated as read-only.
+        /// This means that when the call completes (timeout or not) the <see cref="CloudTask"/> instances should be refreshed before using.
+        /// </para>
+        /// <para>
+        /// This method runs asynchronously.
+        /// <para>
+        /// </remarks>
         /// <param name="tasksToMonitor">The collection of tasks to monitor.</param>
-        /// <param name="desiredState">The target state of the tasks.  The WaitAll will exit when all tasks have reached this state at least once.</param>
-        /// <param name="timeout">The maximum amount of time this call will wait before timing out.</param>
-        /// <param name="controlParams">Controls various settings of the monitor, such as delay between each poll.</param>
-        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        /// <param name="desiredState">The target state of the tasks. The method will exit when all tasks have reached this state at least once.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <param name="controlParams">Controls various settings of the monitor, such as delay between each poll.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
-        public async Task WhenAllAsync(
+        /// <exception cref="OperationCanceledException">Thrown if the <paramref name="cancellationToken"/> was cancelled.</exception>
+        public async Task WhenAll(
             IEnumerable<CloudTask> tasksToMonitor,
             Common.TaskState desiredState,
-            TimeSpan timeout,
             CancellationToken cancellationToken,
             ODATAMonitorControl controlParams = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
@@ -134,48 +129,51 @@
             await this.WhenAllImplAsync(
                 tasksToMonitor,
                 desiredState,
-                timeout,
                 cancellationToken,
                 controlParams,
-                additionalBehaviors,
-                throwOnTimeout: true).ConfigureAwait(continueOnCapturedContext: false);
+                additionalBehaviors).ConfigureAwait(continueOnCapturedContext: false);
         }
 
         /// <summary>
-        /// Blocking call to monitor an CloudTask collection until each of its members has reached a desired state at least once.
-        /// The State of each CloudTask instance is assumed to authoritative at the time of the call.
-        /// Instances that are already at the desiredState are ignored.
-        /// The CloudTask instances in the collection are treated as read-only.
-        /// No updates are made to any of these instances.
-        /// This means that when the call completes (timeout or not) the CloudTask instances should be refreshed before using.
+        /// Monitors a <see cref="CloudTask"/> collection until each of its members has reached a desired state at least once.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The state of each <see cref="CloudTask"/> instance is assumed to be authoritative at the time of the call.
+        /// Instances that are already at the <paramref name="desiredState"/> are ignored.
+        /// The <see cref="CloudTask"/> instances in the collection are treated as read-only.
+        /// This means that when the call completes (timeout or not) the <see cref="CloudTask"/> instances should be refreshed before using.
+        /// </para>
+        /// <para>
+        /// This is a blocking operation. For a non-blocking equivalent, see
+        /// <see cref="WhenAll(System.Collections.Generic.IEnumerable{Microsoft.Azure.Batch.CloudTask},Microsoft.Azure.Batch.Common.TaskState,System.TimeSpan,Microsoft.Azure.Batch.ODATAMonitorControl,System.Collections.Generic.IEnumerable{Microsoft.Azure.Batch.BatchClientBehavior})"/>.
+        /// <para>
+        /// </remarks>
         /// <param name="tasksToMonitor">The collection of tasks to monitor.</param>
-        /// <param name="desiredState">The target state of the tasks.  The WaitAll will exit when all tasks have reached this state at least once.</param>
+        /// <param name="desiredState">The target state of the tasks. The method will exit when all tasks have reached this state at least once.</param>
         /// <param name="timeout">The maximum amount of time this call will wait before timing out.</param>
         /// <param name="controlParams">Controls various settings of the monitor, such as delay between each poll.</param>
-        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        /// <returns>True if the WaitAll timed out, false if it did not.</returns>
-        public bool WaitAll(
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <exception cref="TimeoutException">Thrown if the <paramref name="timeout"/> has elapsed.</exception>
+        public void WaitAll(
             IEnumerable<CloudTask> tasksToMonitor,
             Common.TaskState desiredState,
             TimeSpan timeout,
             ODATAMonitorControl controlParams = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            using (Task<bool> asyncTask = WhenAllAsync(tasksToMonitor, desiredState, timeout, controlParams, additionalBehaviors))
+            using (Task asyncTask = this.WhenAll(tasksToMonitor, desiredState, timeout, controlParams, additionalBehaviors))
             {
-                return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+                asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }
         }
 
-        private async Task<bool> WhenAllImplAsync(
+        private async Task WhenAllImplAsync(
             IEnumerable<CloudTask> tasksToMonitor,
             Common.TaskState desiredState,
-            TimeSpan timeout,
             CancellationToken cancellationToken,
             ODATAMonitorControl controlParams,
-            IEnumerable<BatchClientBehavior> additionalBehaviors,
-            bool throwOnTimeout)
+            IEnumerable<BatchClientBehavior> additionalBehaviors)
         {
             if (null == tasksToMonitor)
             {
@@ -203,7 +201,6 @@
             foreach (CloudTask curTask in tasksToMonitor)
             {
                 // can only monitor bound objects
-                
                 if (curTask.BindingState != BindingState.Bound)
                 {
                     Exception ex = UtilitiesInternal.OperationForbiddenOnUnboundObjects;
@@ -229,34 +226,23 @@
             }
 
             // start call
-            Task<bool> asyncTask = ODATAMonitor.WhenAllAsync<CloudTask>(
-                                                    tasksToMonitor,
-                                                    x =>
-                                                    {
-                                                        // return true if is desired state
-                                                        bool hasReachedDesiredState = x.State == desiredState;
+            Task asyncTask = ODATAMonitor.WhenAllAsync(
+                tasksToMonitor,
+                x =>
+                {
+                    // return true if is desired state
+                    bool hasReachedDesiredState = x.State == desiredState;
+                    return hasReachedDesiredState;
+                },
+                x => { return x.Id; },  // return the Id of the task
+                () => _parentUtilities.ParentBatchClient.JobOperations.ListTasksImpl(jobId, bhMgr, odataSuperOptimalPredicates),   // call this lambda to (re)fetch the list
+                cancellationToken,
+                odataSuperOptimalPredicates,
+                controlParams);
 
-                                                        /*  TODO: add logging feature and include this at some logging level
-                                                        if (hasReachedDesiredState)
-                                                        {
-                                                            Console.WriteLine("dropping task: " + x.Id + ", state: " + x.State);
-                                                        }
-                                                        */
-
-                                                        return hasReachedDesiredState;
-                                                    },
-
-                                                    x => { return x.Id; },  // return the Id of the task
-                                                    () => _parentUtilities.ParentBatchClient.JobOperations.ListTasksImpl(jobId, bhMgr, odataSuperOptimalPredicates),   // call this lambda to (re)fetch the list
-                                                    timeout,
-                                                    cancellationToken,
-                                                    odataSuperOptimalPredicates,
-                                                    controlParams,
-                                                    throwOnTimeout);
-
-            return await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+            await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
-        
+
 #endregion TaskStateMonitor
 
     }

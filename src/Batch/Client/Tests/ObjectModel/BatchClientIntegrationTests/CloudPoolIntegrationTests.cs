@@ -308,7 +308,7 @@
 
                     try
                     {
-                        TimeSpan referenceRST = new TimeSpan(0, 5, 0);
+                        TimeSpan referenceRST = TimeSpan.FromMinutes(5);
 
                         // create a pool with env-settings and ResFiles
                         {
@@ -328,7 +328,7 @@
 
                         // confirm constraint does not allow changes to bound object
 
-                        TestUtilities.AssertThrows<InvalidOperationException>(() => boundPool.ResizeTimeout = new TimeSpan(1));
+                        TestUtilities.AssertThrows<InvalidOperationException>(() => boundPool.ResizeTimeout = TimeSpan.FromMinutes(1));
                     }
                     finally
                     {
@@ -585,7 +585,7 @@
                         Assert.Equal(virtualMachineSize, clList[j].VirtualMachineSize);
                     }
 
-                    List<PoolUsageMetrics> list = batchCli.PoolOperations.ListPoolUsageMetrics(DateTime.Now - new TimeSpan(days: 1, hours: 0, minutes: 0, seconds: 0)).ToList();
+                    List<PoolUsageMetrics> list = batchCli.PoolOperations.ListPoolUsageMetrics(DateTime.Now - TimeSpan.FromDays(1)).ToList();
                 }
             };
 
@@ -949,12 +949,10 @@
                         //
                         Utilities utilities = batchCli.Utilities;
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
-                        bool monitorTimedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             batchCli.JobOperations.ListTasks(jobId),
                             Microsoft.Azure.Batch.Common.TaskState.Running,
-                            new TimeSpan(0 /* hrs */, 20 /*min*/, 0));
-
-                        Assert.False(monitorTimedOut);
+                            TimeSpan.FromMinutes(20));
 
                         //
                         // Remove pool compute nodes
@@ -1209,12 +1207,10 @@
                         // Wait for tasks to go to running
                         //
                         TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
-                        bool monitorTimedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             batchCli.JobOperations.ListTasks(jobId),
                             Microsoft.Azure.Batch.Common.TaskState.Running,
-                            new TimeSpan(0 /* hrs */, 2 /*min*/, 0));
-
-                        Assert.False(monitorTimedOut);
+                            TimeSpan.FromMinutes(2));
 
                         //
                         // Reboot the compute nodes from the pool with requeue option and ensure tasks goes to Active again and compute node state goes to rebooting
@@ -1229,12 +1225,10 @@
 
                         //Ensure task goes to active state
                         taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
-                        monitorTimedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             batchCli.JobOperations.ListTasks(jobId),
                             Microsoft.Azure.Batch.Common.TaskState.Active,
-                            new TimeSpan(0 /* hrs */, 1 /*min*/, 0));
-
-                        Assert.False(monitorTimedOut);
+                            TimeSpan.FromMinutes(1));
 
                         //Ensure each compute node goes to rebooting state
                         IEnumerable<ComputeNode> rebootingComputeNodes = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId);
@@ -1245,13 +1239,10 @@
 
                         //Wait for tasks to start to run again
                         taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
-                        monitorTimedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             batchCli.JobOperations.ListTasks(jobId),
                             Microsoft.Azure.Batch.Common.TaskState.Running,
-                            new TimeSpan(0 /* hrs */, 10 /*min*/, 0));
-
-                        Assert.False(monitorTimedOut);
-
+                            TimeSpan.FromMinutes(10));
                         //
                         // Reimage a compute node from the pool with terminate option and ensure task goes to completed and compute node state goes to reimaging
                         //
@@ -1264,12 +1255,10 @@
 
                         //Ensure task goes to completed state
                         taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
-                        monitorTimedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             batchCli.JobOperations.ListTasks(jobId),
                             Microsoft.Azure.Batch.Common.TaskState.Completed,
                             TimeSpan.FromMinutes(1));
-
-                        Assert.False(monitorTimedOut);
 
                         //Ensure each compute node goes to reimaging state
                         IEnumerable<ComputeNode> reimagingComputeNodes = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId);

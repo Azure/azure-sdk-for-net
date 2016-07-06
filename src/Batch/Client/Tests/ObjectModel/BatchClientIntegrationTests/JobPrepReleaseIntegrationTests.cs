@@ -431,7 +431,7 @@
 
                         TaskStateMonitor tsm = client.Utilities.CreateTaskStateMonitor();
 
-                        bool didTimeout = tsm.WaitAll(
+                        tsm.WaitAll(
                             client.JobOperations.ListTasks(jobId),
                             TaskState.Completed,
                             TimeSpan.FromMinutes(10),
@@ -456,9 +456,6 @@
                                         })
                                 }
                             );
-
-                        // must not timeout
-                        Assert.False(didTimeout);
 
                         // ok terminate job to trigger job release
                         client.JobOperations.TerminateJob(jobId, "BUG: Server will throw 500 if I don't provide reason");
@@ -667,15 +664,12 @@
                                                 });
 
                 // waiting for the task to complete means so JobRelease is run.
-                bool timedOut = tsm.WaitAll(
-                                            batchCli.JobOperations.GetJob(jobId).ListTasks(additionalBehaviors: new[] { consoleSpammer }),
-                                            TaskState.Completed,
-                                            TimeSpan.FromSeconds(120),
-                                            additionalBehaviors: new[] { consoleSpammer }
-                                            );
-                // we need the task to have competed so the job ends and the JobRelease task is run on the victim compute node
-                Assert.False(timedOut);
-
+                tsm.WaitAll(
+                    batchCli.JobOperations.GetJob(jobId).ListTasks(additionalBehaviors: new[] { consoleSpammer }),
+                    TaskState.Completed,
+                    TimeSpan.FromSeconds(120),
+                    additionalBehaviors: new[] { consoleSpammer });
+                
                 // trigger JobRelease
                 batchCli.JobOperations.TerminateJob(jobId, terminateReason: "die! I want JobRelease to run!");
 

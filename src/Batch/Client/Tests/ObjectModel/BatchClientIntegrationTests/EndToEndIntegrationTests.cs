@@ -84,10 +84,10 @@
                         Utilities utilities = batchCli.Utilities;
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                        bool timedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             boundJob.ListTasks(),
                             Microsoft.Azure.Batch.Common.TaskState.Completed,
-                            new TimeSpan(0, 10 /*min*/, 0),
+                            TimeSpan.FromMinutes(10),
                             controlParams: null,
                             additionalBehaviors:
                                 new[]
@@ -116,11 +116,8 @@
                                     Assert.True(false, "SampleWithFilesAndPool probably can ignore this if its pool not found: " + ex.ToString());
                                 }
                             })
-                        }
-                            );
-
-                        Assert.False(timedOut, "TSM timed out in SampleWithFilesAndPool");
-
+                        });
+                        
                         List<CloudTask> tasks = boundJob.ListTasks(null).ToList();
                         CloudTask myCompletedTask = tasks[0];
 

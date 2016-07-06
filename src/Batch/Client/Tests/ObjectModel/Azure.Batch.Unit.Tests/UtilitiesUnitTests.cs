@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using BatchTestCommon;
@@ -9,9 +10,9 @@
     using Microsoft.Rest.Azure;
     using Xunit;
     using Xunit.Abstractions;
-    using CloudTask = Microsoft.Azure.Batch.CloudTask;
     using Protocol=Microsoft.Azure.Batch.Protocol;
-    using TaskState = Microsoft.Azure.Batch.Common.TaskState;
+    using Microsoft.Azure.Batch.Common;
+    using TestUtilities;
 
     public class UtilitiesUnitTests
     {
@@ -63,11 +64,8 @@
                 }));
 
                 //Create some tasks which are "bound"
-                List<CloudTask> taskList = new List<CloudTask>();
-                foreach (string taskId in taskIds)
-                {
-                    taskList.Add(CreateBoundCloudTask(batchCli, dummyJobId, taskId));
-                }
+                IEnumerable<Protocol.Models.CloudTask> protocolTasks = taskIds.Select(CreateProtocolCloudTask);
+                IEnumerable<CloudTask> taskList = protocolTasks.Select(protoTask => CreateBoundCloudTask(batchCli, dummyJobId, protoTask));
 
                 TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
 
@@ -82,10 +80,9 @@
                             DelayBetweenDataFetch = TimeSpan.FromSeconds(0)
                         };
 
-                    await Assert.ThrowsAsync<OperationCanceledException>(async () => await taskStateMonitor.WhenAllAsync(
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => await taskStateMonitor.WhenAll(
                         taskList,
                         TaskState.Running,
-                        TimeSpan.FromHours(1), //Set a long timeout that won't be hit
                         controlParams: controls,
                         cancellationToken: cancellationTokenSource.Token));
                     DateTime endTime = DateTime.UtcNow;
@@ -97,11 +94,77 @@
             }
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public async Task TaskStateMonitorTimedOut_ThrowsTimeoutException()
+        {
+            TimeSpan timeout = TimeSpan.FromSeconds(0);
+            const string dummyJobId = "Dummy";
+
+            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            {
+                List<string> taskIds = new List<string>()
+                    {
+                        "task1",
+                        "task2"
+                    };
+
+                //Create some tasks which are "bound"
+                IEnumerable<Protocol.Models.CloudTask> protocolTasks = taskIds.Select(CreateProtocolCloudTask);
+                IEnumerable<CloudTask> taskList = protocolTasks.Select(protoTask => CreateBoundCloudTask(batchCli, dummyJobId, protoTask));
+
+                TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
+                TimeoutException e = await Assert.ThrowsAsync<TimeoutException>(async () => await taskStateMonitor.WhenAll(
+                    taskList,
+                    TaskState.Completed,
+                    timeout,
+                    additionalBehaviors: new[] { InterceptorFactory.CreateListTasksRequestInterceptor(protocolTasks) }));
+
+                Assert.Contains(string.Format("waiting for resources after {0}", timeout), e.Message);
+                Assert.IsType<OperationCanceledException>(e.InnerException);
+            }
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public async Task TaskStateMonitorCancelled_ThrowsCancellationException()
+        {
+            TimeSpan timeout = TimeSpan.FromSeconds(0);
+            const string dummyJobId = "Dummy";
+
+            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            {
+                List<string> taskIds = new List<string>()
+                    {
+                        "task1",
+                        "task2"
+                    };
+
+                //Create some tasks which are "bound"
+                IEnumerable<Protocol.Models.CloudTask> protocolTasks = taskIds.Select(CreateProtocolCloudTask);
+                IEnumerable<CloudTask> taskList = protocolTasks.Select(protoTask => CreateBoundCloudTask(batchCli, dummyJobId, protoTask));
+
+                TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
+                using (CancellationTokenSource cts = new CancellationTokenSource(timeout))
+                {
+                    await Assert.ThrowsAsync<OperationCanceledException>(async () => await taskStateMonitor.WhenAll(
+                        taskList,
+                        TaskState.Completed,
+                        cts.Token,
+                        additionalBehaviors: new[] { InterceptorFactory.CreateListTasksRequestInterceptor(protocolTasks) }));
+                }
+            }
+        }
+
         #region Private helpers
 
-        private static CloudTask CreateBoundCloudTask(BatchClient batchClient, string parentJobId, string taskId)
+        private static Protocol.Models.CloudTask CreateProtocolCloudTask(string taskId)
         {
-            Protocol.Models.CloudTask protoTask = new Protocol.Models.CloudTask(taskId, "dummy");
+            return new Protocol.Models.CloudTask(taskId, "dummy");
+        }
+
+        private static CloudTask CreateBoundCloudTask(BatchClient batchClient, string parentJobId, Protocol.Models.CloudTask protoTask)
+        {
             CloudTask cloudTask = new CloudTask(batchClient, parentJobId, protoTask, batchClient.CustomBehaviors);
 
             return cloudTask;

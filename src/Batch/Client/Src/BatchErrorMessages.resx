@@ -189,4 +189,7 @@
   <data name="UnknownAddTaskResultAction" xml:space="preserve">
     <value>Unknown AddTaskResultAction value: {0}</value>
   </data>
+  <data name="ODataMonitorTimedOut" xml:space="preserve">
+    <value>Timed out waiting for resources after {0}.</value>
+  </data>
 </root>

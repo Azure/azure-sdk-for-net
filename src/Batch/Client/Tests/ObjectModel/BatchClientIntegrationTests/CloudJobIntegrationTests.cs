@@ -110,25 +110,14 @@
                         this.testOutputHelper.WriteLine("Calling TaskStateMonitor.WaitAll().  This will take a while.");
 
                         TimeSpan timeToWait = TimeSpan.FromMinutes(5);
+                        Task whenAll = tsm.WhenAll(taskList, Microsoft.Azure.Batch.Common.TaskState.Completed, timeToWait, controlParams: odmc);
 
-                        Task<bool> boolReturnWhenAll = tsm.WhenAllAsync(taskList, Microsoft.Azure.Batch.Common.TaskState.Completed, timeToWait, odmc);
-                        Task voidReturnWhenAll = tsm.WhenAllAsync(taskList, Microsoft.Azure.Batch.Common.TaskState.Completed, timeToWait, odmc);
+                        //This could throw, if it does the test will fail, which is what we want
+                        whenAll.Wait();
 
-                        bool timedOut = boolReturnWhenAll.Result;
-
-                        // this should not timeout
-                        Assert.False(timedOut);
-
-                        //This could throw, make sure it doesn't
-                        voidReturnWhenAll.Wait();
-
-                        // if not timeout, confirm all are in completed state
-                        if (!timedOut)
+                        foreach (CloudTask curTask in boundJob.ListTasks())
                         {
-                            foreach (CloudTask curTask in boundJob.ListTasks())
-                            {
-                                Assert.Equal(TaskState.Completed, curTask.State);
-                            }
+                            Assert.Equal(TaskState.Completed, curTask.State);
                         }
                     }
                     finally
@@ -646,27 +635,25 @@
 
                         this.testOutputHelper.WriteLine("Invoking TaskStateMonitor");
 
-                        bool didTimeout = tsm.WaitAll(
-                                            boundJob.ListTasks(),
-                                            TaskState.Completed,
-                                            TimeSpan.FromMinutes(15),
-                                            odControl,
-                                            new[] {
-                                            // spam/logging interceptor
-                                            new Microsoft.Azure.Batch.Protocol.RequestInterceptor((x) =>
-                                                {
-                                                    this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
+                        tsm.WaitAll(
+                            boundJob.ListTasks(),
+                            TaskState.Completed,
+                            TimeSpan.FromMinutes(15),
+                            odControl,
+                            new[] {
+                                // spam/logging interceptor
+                                new Microsoft.Azure.Batch.Protocol.RequestInterceptor((x) =>
+                                {
+                                    this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
 
-                                                    // print out the compute node states... we are actually waiting on the compute nodes
-                                                    List<ComputeNode> allComputeNodes = boundPool.ListComputeNodes().ToList();
-                                                    this.testOutputHelper.WriteLine("    #comnpute nodes: " + allComputeNodes.Count);
+                                    // print out the compute node states... we are actually waiting on the compute nodes
+                                    List<ComputeNode> allComputeNodes = boundPool.ListComputeNodes().ToList();
+                                    this.testOutputHelper.WriteLine("    #comnpute nodes: " + allComputeNodes.Count);
 
-                                                    allComputeNodes.ForEach((icn) => { this.testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State); });
-                                                    this.testOutputHelper.WriteLine("");
-                                                })
-                                            }
-                                        );
-                        Assert.False(didTimeout);
+                                    allComputeNodes.ForEach((icn) => { this.testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State); });
+                                    this.testOutputHelper.WriteLine("");
+                                })
+                            });
 
                         // confirm the task ran by inspecting the stdOut
                         string stdOut = boundJob.ListTasks().ToList()[0].GetNodeFile(Constants.StandardOutFileName).ReadAsString();

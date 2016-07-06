@@ -169,11 +169,10 @@
                         Utilities utilities = batchCli.Utilities;
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
-                        bool timedOut = taskStateMonitor.WaitAll(
+                        taskStateMonitor.WaitAll(
                             boundJob.ListTasks(),
                             Microsoft.Azure.Batch.Common.TaskState.Completed,
                             new TimeSpan(0, 3 /*min*/, 0));
-                        Assert.False(timedOut, "TSM timed out in Bug2329884_ComputeNodeRecentTasksAndComputeNodeError");
 
                         CloudTask boundTask = boundJob.GetTask(taskId);
 
