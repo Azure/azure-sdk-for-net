@@ -67,6 +67,9 @@
     <Compile Include="AsyncListNodeAgentSkus.cs" />
     <Compile Include="AsyncListSubtasks.cs" />
     <Compile Include="CertificateReference.cs" />
+    <Compile Include="Common\Enumerations\JobAction.cs" />
+    <Compile Include="Common\Enumerations\OnTaskFailure.cs" />
+    <Compile Include="Common\Enumerations\OnAllTasksComplete.cs" />
     <Compile Include="Common\Enumerations\OSType.cs" />
     <Compile Include="Common\Enumerations\AddTaskStatus.cs" />
     <Compile Include="ImageReference.cs" />

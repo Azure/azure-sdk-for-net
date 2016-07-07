@@ -40,12 +40,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobPatchParameter class.
         /// </summary>
         /// <param name="priority">The priority of the job.</param>
+        /// <param name="onAllTasksComplete">Specifies an action the Batch service should take when all tasks in the job are in the completed state. Possible values include: 'noAction', 'terminateJob'</param>
         /// <param name="constraints">The execution constraints for the job.</param>
         /// <param name="poolInfo">The pool on which the Batch service runs the job's tasks.</param>
         /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
-        public JobPatchParameter(int? priority = default(int?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        public JobPatchParameter(int? priority = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
+            OnAllTasksComplete = onAllTasksComplete;
             Constraints = constraints;
             PoolInfo = poolInfo;
             Metadata = metadata;
@@ -61,6 +63,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies an action the Batch service should take
+        /// when all tasks in the job are in the completed state. Possible
+        /// values include: 'noAction', 'terminateJob'
+        /// </summary>
+        [JsonProperty(PropertyName = "onAllTasksComplete")]
+        public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints for the job.

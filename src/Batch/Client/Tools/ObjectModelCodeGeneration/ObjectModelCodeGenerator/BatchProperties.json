@@ -782,6 +782,33 @@
         },
         {
           "Key": {
+            "Type": "Common.OnAllTasksComplete?",
+            "Name": "OnAllTasksComplete",
+            "SummaryComment": "The action the Batch service should take when all tasks in the job are in the <see cref=\"Common.JobState.Completed\"/> state.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.OnAllTasksComplete?",
+            "Name": "OnAllTasksComplete",
+          }
+        },
+        {
+          "Key": {
+            "Type": "Common.OnTaskFailure?",
+            "Name": "OnTaskFailure",
+            "SummaryComment": "The action the Batch service should take when any task in the job fails.",
+            "remarkComment": "A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.OnTaskFailure?",
+            "Name": "OnTaskFailure",
+          }
+        },
+        {
+          "Key": {
             "Type": "DateTime?",
             "Name": "PreviousStateTransitionTime",
             "SummaryComment": "The time at which the job entered its previous state.",
@@ -1509,6 +1536,19 @@
         },
         {
           "Key": {
+            "Type": "ExitConditions",
+            "Name": "ExitConditions",
+            "SummaryComment": "How the Batch service should respond when the task completes.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+           },
+           "Value": {
+              "Type": "Models.ExitConditions",
+              "Name": "ExitConditions",
+            }
+         },
+         {
+          "Key": {
             "Type": "IList<EnvironmentSetting>",
             "Name": "EnvironmentSettings",
             "SummaryComment": "A list of environment variable settings for the task.",
@@ -2215,6 +2255,165 @@
           },
           "Value": null
         }
+      ]
+    },
+    {
+      "Name": "ExitConditions",
+      "ProtocolName": "Models.ExitConditions",
+      "Comment": "How the Batch service should respond when a task completes.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "IList<ExitCodeMapping>",
+            "Name": "ExitCodes",
+            "SummaryComment": "A list of task exit codes and how the Batch service should respond to them.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ExitCodeMapping>",
+            "Name": "ExitCodes",
+          }
+        },
+        {
+          "Key": {
+            "Type": "IList<ExitCodeRangeMapping>",
+            "Name": "ExitCodeRanges",
+            "SummaryComment": "A list of task exit code ranges and how the Batch service should respond to them.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ExitCodeRangeMapping>",
+            "Name": "ExitCodeRanges",
+          }
+        },
+        { 
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "SchedulingError",
+            "SummaryComment": "How the Batch service should respond if the task fails with a scheduling error.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "Default",
+            "SummaryComment": "How the Batch service should respond if the task fails with an exit condition not covered by any of the other properties.",
+            "RemarksComment": "This value is used if the task exits with any nonzero exit code not listed in the <see cref=\"ExitCodes\"/> or <see cref=\"ExitCodeRanges\"/> collection, or with a scheduling error if the <see cref=\"SchedulingError\"/> property is not present.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.ExitOptions",
+            "Name": "DefaultProperty",
+          }
+        },
+      ]
+    },
+    {
+      "Name": "ExitCodeMapping",
+      "ProtocolName": "Models.ExitCodeMapping",
+      "Comment": "A process exit code and how the Batch service should respond if a task exits with that exit code.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "int",
+            "Name": "Code",
+            "SummaryComment": "The process exit code.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "ExitOptions",
+            "SummaryComment": "How the Batch service should respond if the task exits with this exit code.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null,
+        },
+      ]
+    },
+    {
+      "Name": "ExitCodeRangeMapping",
+      "ProtocolName": "Models.ExitCodeRangeMapping",
+      "Comment": "A range of exit codes and how the Batch service should respond if a task exits with an exit code within that range.",
+      "IsUsedInCollections": true,
+      "ForceConstructorOrder": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "int",
+            "Name": "Start",
+            "SummaryComment": "The first exit code in the range.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "int",
+            "Name": "End",
+            "SummaryComment": "The last exit code in the range.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "ExitOptions",
+            "SummaryComment": "An <see cref=\"ExitOptions\" /> specifying how the Batch service should respond if the task exits with an exit code in the range <see cref=\"Start\"/> to <see cref=\"End\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": {
+            "Type": "Models.ExitOptions",
+            "Name": "ExitOptions",
+          } 
+        },
+      ]
+    },
+    {
+      "Name": "ExitOptions",
+      "ProtocolName": "Models.ExitOptions",
+      "Comment": "How the Batch service should respond to a particular exit condition.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "Common.JobAction?",
+            "Name": "JobAction",
+            "SummaryComment": "An action to take on the job containing the task, if the task completes with the given exit condition and the job's <see cref=\"CloudJob.OnTaskFailure\"/> property is <see cref=\"Common.OnTaskFailure.PerformExitOptionsJobAction\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+          },
+          "Value": {
+            "Type": "Models.JobAction?",
+            "Name": "JobAction",
+          }
+        },
       ]
     },
     {

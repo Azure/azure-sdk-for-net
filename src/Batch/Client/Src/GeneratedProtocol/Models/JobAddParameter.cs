@@ -48,9 +48,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="jobPreparationTask">The Job Preparation task.</param>
         /// <param name="jobReleaseTask">The Job Release task.</param>
         /// <param name="commonEnvironmentSettings">The list of common environment variable settings. These environment variables are set for all tasks in the job (including the Job Manager, Job Preparation and Job Release tasks).</param>
+        /// <param name="onAllTasksComplete">The action the Batch service should take when all tasks in the job are in the completed state. Possible values include: 'noAction', 'terminateJob'</param>
+        /// <param name="onTaskFailure">The action the Batch service should take when any task in the job fails. A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error. Possible values include: 'noAction', 'performExitOptionsJobAction'</param>
         /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
         /// <param name="usesTaskDependencies">The flag that determines if this job will use tasks with dependencies.</param>
-        public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
+        public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
         {
             Id = id;
             DisplayName = displayName;
@@ -61,6 +63,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             JobReleaseTask = jobReleaseTask;
             CommonEnvironmentSettings = commonEnvironmentSettings;
             PoolInfo = poolInfo;
+            OnAllTasksComplete = onAllTasksComplete;
+            OnTaskFailure = onTaskFailure;
             Metadata = metadata;
             UsesTaskDependencies = usesTaskDependencies;
         }
@@ -134,6 +138,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action the Batch service should take when all
+        /// tasks in the job are in the completed state. Possible values
+        /// include: 'noAction', 'terminateJob'
+        /// </summary>
+        [JsonProperty(PropertyName = "onAllTasksComplete")]
+        public OnAllTasksComplete? OnAllTasksComplete { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action the Batch service should take when any
+        /// task in the job fails. A task is considered to have failed if it
+        /// completes with a non-zero exit code and has exhausted its retry
+        /// count, or if it had a scheduling error. Possible values include:
+        /// 'noAction', 'performExitOptionsJobAction'
+        /// </summary>
+        [JsonProperty(PropertyName = "onTaskFailure")]
+        public OnTaskFailure? OnTaskFailure { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the job as

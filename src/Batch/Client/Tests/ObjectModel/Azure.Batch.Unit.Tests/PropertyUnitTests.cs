@@ -101,6 +101,8 @@
                 new ComparerPropertyMapping(typeof(CloudTask), typeof(Protocol.Models.TaskAddParameter), "AffinityInformation", "AffinityInfo"),
                 new ComparerPropertyMapping(typeof(CloudTask), typeof(Protocol.Models.TaskAddParameter), "ComputeNodeInformation", "NodeInfo"),
 
+                new ComparerPropertyMapping(typeof(ExitConditions), typeof(Protocol.Models.ExitConditions), "Default", "DefaultProperty"),
+
                 new ComparerPropertyMapping(typeof(TaskInformation), typeof(Protocol.Models.TaskInformation), "ExecutionInformation", "ExecutionInfo"),
 
                 new ComparerPropertyMapping(typeof(ComputeNode), typeof(Protocol.Models.ComputeNode), "IPAddress", "IpAddress"),

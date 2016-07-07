@@ -64,7 +64,8 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.JobPatchHeaders>> PatchJob(
             string jobId, 
-            int? priority, 
+            int? priority,
+            Models.OnAllTasksComplete onAllTasksComplete,
             Models.PoolInformation poolInfo, 
             Models.JobConstraints constraints, 
             IList<Models.MetadataItem> metadata, 
@@ -72,7 +73,8 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.JobUpdateHeaders>> UpdateJob(
             string jobId, 
-            int? priority, 
+            int? priority,
+            Models.OnAllTasksComplete onAllTasksComplete,
             Models.PoolInformation poolInfo, 
             Models.JobConstraints constraints, 
             IList<Models.MetadataItem> metadata, 

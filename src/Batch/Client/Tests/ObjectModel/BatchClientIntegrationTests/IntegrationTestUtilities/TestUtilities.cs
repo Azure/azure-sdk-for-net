@@ -4,6 +4,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
     using BatchTestCommon;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Net;
     using System.Reflection;
@@ -493,6 +494,30 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                     condition: () => Task.FromResult(pool.AllocationState == targetAllocationState),
                     timeout: timeout).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// Waits for the job to enter a its expected state within the given time.
+        /// </summary>
+        /// <param name="cloudJob">The job whose state to monitor.</param>
+        /// <param name="waitFor">How long to wait for the job to reach the target state.</param>
+        /// <param name="expected">The target job state to wait for.</param>
+        /// <returns></returns>
+        public static async Task WaitForJobStateAsync(CloudJob cloudJob, TimeSpan waitFor, JobState expected)
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
+            while (stopwatch.Elapsed < waitFor && cloudJob.State != expected)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+                await cloudJob.RefreshAsync().ConfigureAwait(false);
+            }
+
+            if (cloudJob.State != expected)
+            {
+                throw new TimeoutException($"Job {cloudJob.Id} did not reach expected state {expected} within time {waitFor}");
+            }
+        }
+        
 
         /// <summary>
         /// Will throw if timeout is exceeded.

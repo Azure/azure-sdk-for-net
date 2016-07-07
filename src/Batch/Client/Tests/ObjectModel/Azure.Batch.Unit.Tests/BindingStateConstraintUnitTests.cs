@@ -12,16 +12,19 @@ namespace Azure.Batch.Unit.Tests
 
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Auth;
+    using Microsoft.Azure.Batch.Common;
     using Microsoft.Rest.Azure;
     using Xunit;
-    using Protocol=Microsoft.Azure.Batch.Protocol;
+    using Protocol = Microsoft.Azure.Batch.Protocol;
     using Models = Microsoft.Azure.Batch.Protocol.Models;
+    using TestUtilities;
+
 
     public class BindingStateConstraintUnitTests
     {
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void Pool_UnboundAndBoundTests()
+        public void Pool_WhenReturnedFromServer_HasExpectedUnboundProperties()
         {
             const string cloudPoolId = "id-123";
             const string osFamily = "2";
@@ -40,23 +43,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(cloudPool.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(cloudPool.Metadata.First().Value, metadataItem.Value);
 
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
-                {
-                    var request = (Protocol.BatchRequests.PoolAddBatchRequest)baseRequest;
-
-                    request.ServiceRequestFunc = (ct) =>
-                    {
-                        var response = new AzureOperationHeaderResponse<Models.PoolAddHeaders>
-                        {
-                            Response = new HttpResponseMessage(HttpStatusCode.Accepted),
-                        };
-                        
-                        var task = Task.FromResult(response);
-                        return task;
-                    };
-                });
-
-                cloudPool.Commit(additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                cloudPool.Commit(additionalBehaviors: new[] { InterceptorFactory.CreateAddPoolRequestInterceptor() });
 
                 // writing isn't allowed for a cloudPool that is in an readonly state.
                 Assert.Throws<InvalidOperationException>(() => cloudPool.AutoScaleFormula = "Foo");
@@ -77,42 +64,35 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Null(cloudPool.TargetDedicated);
                 Assert.Null(cloudPool.VirtualMachineConfiguration);
                 Assert.Equal(virtualMachineSize, cloudPool.VirtualMachineSize);
+            }
+        }
 
-                interceptor = new Protocol.RequestInterceptor(baseRequest =>
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void Pool_WhenReturnedFromServer_HasExpectedBoundProperties()
+        {
+            const string cloudPoolId = "id-123";
+            const string cloudPoolDisplayName = "pool-display-name-test";
+            MetadataItem metadataItem = new MetadataItem("foo", "bar");
+
+            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
+            using (BatchClient client = BatchClient.Open(credentials))
+            {
+                Models.CloudPool protoPool = new Models.CloudPool(id: cloudPoolId, displayName: cloudPoolDisplayName, metadata: new[]
                 {
-                    var request = (Protocol.BatchRequest<Models.PoolGetOptions, AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>>)baseRequest;
-
-                    request.ServiceRequestFunc = (ct) =>
+                    new Models.MetadataItem
                     {
-                        var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
-                        {
-                            Body = new Models.CloudPool
-                            {
-                                DisplayName = cloudPoolDisplayName,
-                                Metadata = new[]
-                                {
-                                    new Models.MetadataItem
-                                    {
-                                        Name = metadataItem.Name,
-                                        Value = metadataItem.Value
-                                    }
-                                },
-                                CloudServiceConfiguration = new Models.CloudServiceConfiguration()
-                            }
-                        };
-
-                        var task = Task.FromResult(response);
-                        return task;
-                    };
+                        Name = metadataItem.Name,
+                        Value = metadataItem.Value
+                    }
                 });
 
-
-                CloudPool boundPool = client.PoolOperations.GetPool(cloudPoolId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                CloudPool boundPool = client.PoolOperations.GetPool(string.Empty, additionalBehaviors: new[] { InterceptorFactory.CreateGetPoolRequestInterceptor(protoPool) });
 
                 // Cannot change these bound properties.
                 Assert.Throws<InvalidOperationException>(() => boundPool.DisplayName = "cannot-change-display-name");
                 Assert.Throws<InvalidOperationException>(() => boundPool.Id = "cannot-change-id");
-                
+
                 Assert.Throws<InvalidOperationException>(() => boundPool.TargetDedicated = 1);
                 Assert.Throws<InvalidOperationException>(() => boundPool.VirtualMachineSize = "cannot-change-1");
 
@@ -126,7 +106,7 @@ namespace Azure.Batch.Unit.Tests
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void CloudJobSchedule_UnboundAndBoundTests()
+        public void CloudJobSchedule_WhenSendingToTheServer_HasExpectedUnboundProperties()
         {
             const string jobScheduleId = "id-123";
             const string displayName = "DisplayNameFoo";
@@ -135,22 +115,6 @@ namespace Azure.Batch.Unit.Tests
             BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
             using (BatchClient client = BatchClient.Open(credentials))
             {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
-                {
-                    var request = (Protocol.BatchRequests.JobScheduleAddBatchRequest)baseRequest;
-
-                    request.ServiceRequestFunc = async (token) =>
-                    {
-                        var response = new AzureOperationHeaderResponse<Models.JobScheduleAddHeaders>
-                        {
-                            Response = new HttpResponseMessage(HttpStatusCode.Accepted),
-                        };
-
-                        var task = Task.FromResult(response);
-                        return await task;
-                    };
-                });
-
                 CloudJobSchedule jobSchedule = client.JobScheduleOperations.CreateJobSchedule();
                 jobSchedule.Id = jobScheduleId;
                 jobSchedule.DisplayName = displayName;
@@ -160,7 +124,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(jobSchedule.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(jobSchedule.Metadata.First().Value, metadataItem.Value);
 
-                jobSchedule.Commit(additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                jobSchedule.Commit(additionalBehaviors: new[] { InterceptorFactory.CreateAddJobScheduleRequestInterceptor() });
 
                 // writing isn't allowed for a jobSchedule that is in an read only state.
                 Assert.Throws<InvalidOperationException>(() => jobSchedule.Id = "cannot-change-id");
@@ -169,38 +133,37 @@ namespace Azure.Batch.Unit.Tests
                 //Can still read though
                 Assert.Equal(jobScheduleId, jobSchedule.Id);
                 Assert.Equal(displayName, jobSchedule.DisplayName);
+            }
+        }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void CloudJobSchedule_WhenReturnedFromServer_HasExpectedBoundProperties()
+        {
+            const string jobScheduleId = "id-123";
+            const string displayName = "DisplayNameFoo";
+            MetadataItem metadataItem = new MetadataItem("foo", "bar");
+
+            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
+            using (BatchClient client = BatchClient.Open(credentials))
+            {
                 DateTime creationTime = DateTime.Now;
 
-                interceptor = new Protocol.RequestInterceptor(baseRequest =>
+                var cloudJobSchedule = new Models.CloudJobSchedule
                 {
-                    var request = (Protocol.BatchRequest<Models.JobScheduleGetOptions, AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>>)baseRequest;
-
-                    request.ServiceRequestFunc = async (token) =>
-                    {
-                        var response = new AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>
-                        {
-                            Response = new HttpResponseMessage(HttpStatusCode.Accepted),
-                            Body = new Models.CloudJobSchedule
+                    Id = jobScheduleId,
+                    DisplayName = displayName,
+                    Metadata = new[]
                             {
-                                Id = jobScheduleId,
-                                DisplayName = displayName,
-                                Metadata = new[] {
-                                new Models.MetadataItem
-                                    {
-                                        Name = metadataItem.Name, Value = metadataItem.Value
-                                    }
-                                },
-                                CreationTime = creationTime
-                            }
-                        };
+                                new Models.MetadataItem { Name = metadataItem.Name, Value = metadataItem.Value }
+                            },
+                    CreationTime = creationTime
+                };
 
-                        var task = Task.FromResult(response);
-                        return await task;
-                    };
+                CloudJobSchedule boundJobSchedule = client.JobScheduleOperations.GetJobSchedule(jobScheduleId, additionalBehaviors: new[]
+                {
+                    InterceptorFactory.CreateGetJobScheduleRequestInterceptor(cloudJobSchedule) 
                 });
-
-                CloudJobSchedule boundJobSchedule = client.JobScheduleOperations.GetJobSchedule(jobScheduleId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
                 Assert.Equal(jobScheduleId, boundJobSchedule.Id); // reading is allowed from a jobSchedule that is returned from the server.
                 Assert.Equal(creationTime, boundJobSchedule.CreationTime);
@@ -213,7 +176,7 @@ namespace Azure.Batch.Unit.Tests
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void CloudJob_UnboundAndBoundTests()
+        public void CloudJob_WhenSendingToTheServer_HasExpectedUnboundProperties()
         {
             const string jobId = "id-123";
             const string displayName = "DisplayNameFoo";
@@ -223,78 +186,60 @@ namespace Azure.Batch.Unit.Tests
             BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
             using (BatchClient client = BatchClient.Open(credentials))
             {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
-                {
-                    var request = (Protocol.BatchRequests.JobAddBatchRequest)baseRequest;
-
-                    request.ServiceRequestFunc = async (token) =>
-                    {
-                        var response = new AzureOperationHeaderResponse<Models.JobAddHeaders>
-                        {
-                             Response = new HttpResponseMessage(HttpStatusCode.Accepted),
-                        };
-
-                        var task = Task.FromResult(response);
-                        return await task;
-                    };
-                });
-
                 CloudJob cloudJob = client.JobOperations.CreateJob(jobId, new PoolInformation { AutoPoolSpecification = new AutoPoolSpecification { KeepAlive = false }});
                 cloudJob.Id = jobId;
                 cloudJob.DisplayName = displayName;
                 cloudJob.Metadata = new List<MetadataItem> { metadataItem };
                 cloudJob.Priority = priority;
+                cloudJob.OnAllTasksComplete = OnAllTasksComplete.NoAction;
+                cloudJob.OnTaskFailure = OnTaskFailure.NoAction;
 
                 Assert.Throws<InvalidOperationException>(() => cloudJob.Url); // cannot read a Url since it's unbound at this point.
                 Assert.Equal(cloudJob.Id, jobId); // can set an unbound object
                 Assert.Equal(cloudJob.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(cloudJob.Metadata.First().Value, metadataItem.Value);
+                Assert.Equal(cloudJob.OnAllTasksComplete, OnAllTasksComplete.NoAction);
+                Assert.Equal(cloudJob.OnTaskFailure, OnTaskFailure.NoAction);
 
-                cloudJob.Commit(additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                cloudJob.Commit(additionalBehaviors: new[] { InterceptorFactory.CreateAddJobRequestInterceptor() });
 
                 // writing isn't allowed for a job that is in an invalid state.
                 Assert.Throws<InvalidOperationException>(() => cloudJob.Id = "cannot-change-id");
                 Assert.Throws<InvalidOperationException>(() => cloudJob.DisplayName = "cannot-change-display-name");
-                
+            }
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void CloudJob_WhenReturnedFromServer_HasExpectedBoundProperties()
+        {
+            const string jobId = "id-123";
+            const string displayName = "DisplayNameFoo";
+            MetadataItem metadataItem = new MetadataItem("foo", "bar");
+            const int priority = 0;
+            var onAllTasksComplete = OnAllTasksComplete.TerminateJob;
+
+            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
+            using (BatchClient client = BatchClient.Open(credentials))
+            {
                 DateTime creationTime = DateTime.Now;
 
-                interceptor = new Protocol.RequestInterceptor(baseRequest =>
-                {
-                    var request = (Protocol.BatchRequest<Models.JobGetOptions, AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>>)baseRequest;
+                Models.CloudJob protoJob = new Models.CloudJob(
+                    jobId,
+                    displayName,
+                    metadata: new[] { new Models.MetadataItem { Name = metadataItem.Name, Value = metadataItem.Value } },
+                    creationTime: creationTime,
+                    priority: priority,
+                    url: ClientUnitTestCommon.DummyBaseUrl, 
+                    onAllTasksComplete: Models.OnAllTasksComplete.NoAction);
 
-                    request.ServiceRequestFunc = async (token) =>
-                    {
-                        var response = new AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>
-                        {
-                            Body = new Models.CloudJob
-                            {
-                                Id = jobId,
-                                DisplayName = displayName,
-                                Metadata = new[]{
-                                                    new Models.MetadataItem
-                                                        {
-                                                            Name = metadataItem.Name, Value = metadataItem.Value
-                                                        }
-                                                },
-                                CreationTime = creationTime,
-                                Priority = priority,
-                                Url = ClientUnitTestCommon.DummyBaseUrl
-                            }
-                        };
-
-                        var task = Task.FromResult(response);
-                        return await task;
-                    };
-                });
-
-                CloudJob boundJob = client.JobOperations.GetJob(jobId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                CloudJob boundJob = client.JobOperations.GetJob(jobId, additionalBehaviors: new[] { InterceptorFactory.CreateGetJobRequestInterceptor(protoJob) });
 
                 Assert.Equal(jobId, boundJob.Id); // reading is allowed from a job that is returned from the server.
                 Assert.Equal(creationTime, boundJob.CreationTime);
                 Assert.Equal(displayName, boundJob.DisplayName);
 
-                // You can change the Priority, Metadata, PoolInformation and JobConstraints after a job has been returned.
-                ValuesThatCanBeChangedInABoundJob(boundJob, priority, metadataItem);
+                AssertPatchableJobPropertiesCanBeWritten(boundJob, priority, metadataItem, onAllTasksComplete);
 
                 // Can only read a url from a returned object.
                 Assert.Equal(ClientUnitTestCommon.DummyBaseUrl, boundJob.Url);
@@ -305,7 +250,49 @@ namespace Azure.Batch.Unit.Tests
             }
         }
 
-        private static void ValuesThatCanBeChangedInABoundJob(CloudJob boundJob, int priority, MetadataItem metadataItem)
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void CloudTask_WhenReturnedFromServer_HasExpectedBoundProperties()
+        {
+            const string jobId = "id-123";
+            const string taskId = "id-123";
+            const int exitCode = 1;
+            const int exitCodeRangeStart = 0;
+            const int exitCodeRangeEnd = 4;
+            Models.ExitOptions terminateExitOption = new Models.ExitOptions() { JobAction = Models.JobAction.Terminate };
+            Models.ExitOptions disableExitOption = new Models.ExitOptions() { JobAction = Models.JobAction.Disable };
+
+            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
+            using (BatchClient client = BatchClient.Open(credentials))
+            {
+                Models.CloudTask cloudTask = new Models.CloudTask()
+                {
+                    Id = jobId,
+                    ExitConditions = new Models.ExitConditions()
+                    {
+                        DefaultProperty = disableExitOption,
+                        ExitCodeRanges = new List<Models.ExitCodeRangeMapping>() { new Models.ExitCodeRangeMapping(exitCodeRangeStart, exitCodeRangeEnd, terminateExitOption) },
+                        ExitCodes = new List<Models.ExitCodeMapping>() { new Models.ExitCodeMapping(exitCode, terminateExitOption) },
+                        SchedulingError = terminateExitOption,
+                    }
+                };
+                
+                CloudTask boundTask = client.JobOperations.GetTask(jobId, taskId, additionalBehaviors: new List<BatchClientBehavior>
+                {
+                    InterceptorFactory.CreateGetTaskRequestInterceptor(cloudTask)
+                });
+
+                Assert.Equal(taskId, boundTask.Id); // reading is allowed from a task that is returned from the server.
+                Assert.Equal(disableExitOption.JobAction.ToString(), boundTask.ExitConditions.Default.JobAction.ToString());
+                Assert.Throws<InvalidOperationException>(() => boundTask.ExitConditions = new ExitConditions());
+                Assert.Throws<InvalidOperationException>(() => boundTask.DependsOn = new TaskDependencies(new List<string>(), new List<TaskIdRange>()));
+                Assert.Throws<InvalidOperationException>(() => boundTask.RunElevated = true);
+                Assert.Throws<InvalidOperationException>(() => boundTask.CommandLine = "Cannot change command line");
+                Assert.Throws<InvalidOperationException>(() => boundTask.ExitConditions.Default = new ExitOptions() { JobAction = JobAction.Terminate });
+            }
+        }
+
+        private static void AssertPatchableJobPropertiesCanBeWritten(CloudJob boundJob, int priority, MetadataItem metadataItem, OnAllTasksComplete onAllTasksComplete)
         {
             boundJob.Priority = priority + 1;
             Assert.Equal(priority + 1, boundJob.Priority);
@@ -344,6 +331,9 @@ namespace Azure.Batch.Unit.Tests
             boundJob.Metadata = new[] { new MetadataItem(metadataItem.Value, metadataItem.Name) };
             Assert.Equal(metadataItem.Name, boundJob.Metadata.First().Value);
             Assert.Equal(metadataItem.Value, boundJob.Metadata.First().Name);
+
+            boundJob.OnAllTasksComplete = OnAllTasksComplete.TerminateJob;
+            Assert.Equal(OnAllTasksComplete.TerminateJob, boundJob.OnAllTasksComplete);
         }
     }
 }

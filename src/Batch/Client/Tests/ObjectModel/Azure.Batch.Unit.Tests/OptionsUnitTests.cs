@@ -19,7 +19,8 @@
 
             IEnumerable<Type> optionsTypes = selectedModelType.Assembly.GetTypes().Where(t =>
                 t.Namespace == selectedModelType.Namespace &&
-                t.Name.EndsWith("Options"));
+                t.Name.EndsWith("Options") && 
+                !t.Name.Equals("ExitOptions"));
 
             Assert.NotEmpty(optionsTypes);
 

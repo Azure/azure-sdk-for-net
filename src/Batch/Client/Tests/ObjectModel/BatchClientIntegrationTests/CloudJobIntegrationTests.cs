@@ -10,7 +10,7 @@
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Common;
     using IntegrationTestUtilities;
-    using Protocol=Microsoft.Azure.Batch.Protocol;
+    using Protocol = Microsoft.Azure.Batch.Protocol;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -261,8 +261,11 @@
 
                         //Update the bound job priority
                         const int newJobPriority = 5;
+                        OnAllTasksComplete newOnAllTasksComplete = OnAllTasksComplete.NoAction;
+
                         this.testOutputHelper.WriteLine("Job priority is: {0}", refreshableJob.Priority);
                         refreshableJob.Priority = newJobPriority;
+                        refreshableJob.OnAllTasksComplete = newOnAllTasksComplete;
                         refreshableJob.Commit();
 
                         AssertJobCorrectness(batchCli.JobOperations, jobId, ref refreshableJob, this.poolFixture.PoolId, newJobPriority, null);
@@ -387,6 +390,157 @@
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void TestJobCompletesWhenAllItsTasksComplete()
+        {
+            Action test = () =>
+            {
+                using (BatchClient client = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    //Create a job
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestJobCompletesWhenAllItsTasksComplete";
+                    string taskIdPrefix = "task-id";
+
+                    try
+                    {
+                        CloudJob boundJob = CreateBoundJob(client, jobId);
+
+                        var cloudTasks = new List<CloudTask>();
+                        for (var i = 0; i < 4; i++)
+                        {
+                            cloudTasks.Add(new CloudTask(taskIdPrefix + "-" + i, "cmd /c ping 127.0.0.1"));
+                        }
+
+                        boundJob.AddTask(cloudTasks);
+
+                        boundJob.OnAllTasksComplete = OnAllTasksComplete.TerminateJob;
+                        boundJob.Commit();
+
+                        boundJob.Refresh();
+
+                        TestUtilities.WaitForJobStateAsync(boundJob, TimeSpan.FromMinutes(2), JobState.Completed).Wait();
+
+                        Assert.Equal(JobState.Completed, boundJob.State);
+                        Assert.Equal("AllTasksCompleted", boundJob.ExecutionInformation.TerminateReason);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void IfJobSetsOnTaskFailed_JobCompletesWhenAnyTaskFails()
+        {
+            Action test = () =>
+            {
+                using (BatchClient client = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    //Create a job
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-IfJobSetsOnTaskFailedJobCompletesWhenAnyTaskFail";
+                    string taskId = "task-id-1";
+
+                    try
+                    {
+                        CloudJob boundJob = null;
+                        {
+                            // need a bound job/task for the tests so set one up
+                            boundJob = CreateBoundJob(client, jobId, j => { j.OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction; });
+
+                            Assert.Equal(OnTaskFailure.PerformExitOptionsJobAction, boundJob.OnTaskFailure);
+
+                            CloudTask cloudTask = new CloudTask(taskId, "cmd /c exit 3");
+
+                            cloudTask.ExitConditions = new ExitConditions
+                            {
+                                ExitCodeRanges = new List<ExitCodeRangeMapping>
+                                {
+                                    new ExitCodeRangeMapping(2, 4, new ExitOptions { JobAction = JobAction.Terminate})
+                                }
+                            };
+
+                            boundJob.AddTask(cloudTask);
+                            boundJob.Refresh();
+
+                            TestUtilities.WaitForJobStateAsync(boundJob, TimeSpan.FromMinutes(2), JobState.Completed).Wait();
+                            Assert.Equal(JobState.Completed, boundJob.State);
+
+                            Assert.Equal("CriticalTaskFailure", boundJob.ExecutionInformation.TerminateReason);
+                        }
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void TestExitConditionsAreBeingRoundTrippedCorrectly()
+        {
+            Action test = () => 
+            { 
+                using (BatchClient client = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    //Create a job
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestExitConditionsAreBeingRoundTrippedCorrectly";
+                    string taskId = "task-id-1";
+                    try
+                    {
+                        CloudJob boundJob = null;
+                        {
+                            // need a bound job/task for the tests so set one up
+                            boundJob = CreateBoundJob(client, jobId, j => { j.OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction; });
+                            CloudTask cloudTask = new CloudTask(taskId, "cmd /c exit 2");
+
+                            cloudTask.ExitConditions = new ExitConditions
+                            {
+                                ExitCodes = new List<ExitCodeMapping> { new ExitCodeMapping(1, new ExitOptions { JobAction = JobAction.None }) },
+                                ExitCodeRanges = new List<ExitCodeRangeMapping>
+                                {
+                                    new ExitCodeRangeMapping(2, 4, new ExitOptions { JobAction = JobAction.Disable })
+                                },
+                                SchedulingError = new ExitOptions { JobAction = JobAction.Terminate },
+                                Default = new ExitOptions { JobAction = JobAction.Terminate },
+                            };
+
+                            boundJob.AddTask(cloudTask);
+                            boundJob.Refresh();
+
+                            Assert.Equal(boundJob.OnTaskFailure, OnTaskFailure.PerformExitOptionsJobAction);
+                            CloudTask boundTask = client.JobOperations.GetTask(jobId, taskId);
+
+                            Assert.Equal(JobAction.None, boundTask.ExitConditions.ExitCodes.First().ExitOptions.JobAction);
+                            Assert.Equal(1, boundTask.ExitConditions.ExitCodes.First().Code);
+
+                            var exitCodeRangeMappings = boundTask.ExitConditions.ExitCodeRanges;
+                            Assert.Equal(2, exitCodeRangeMappings.First().Start);
+                            Assert.Equal(4, exitCodeRangeMappings.First().End);
+                            Assert.Equal(JobAction.Disable, exitCodeRangeMappings.First().ExitOptions.JobAction);
+                            Assert.Equal(JobAction.Terminate, boundTask.ExitConditions.SchedulingError.JobAction);
+                            Assert.Equal(JobAction.Terminate, boundTask.ExitConditions.Default.JobAction);
+                        }
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
         #region Test helpers
 
         private static void AssertJobCorrectness(
@@ -410,6 +564,15 @@
             }
         }
 
+        private CloudJob CreateBoundJob(BatchClient client, string jobId, Action<CloudJob> jobSetup = null)
+        {
+            CloudJob cloudJob = client.JobOperations.CreateJob(jobId, new PoolInformation());
+            cloudJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+            jobSetup?.Invoke(cloudJob);
+            cloudJob.Commit();
+
+            return client.JobOperations.GetJob(jobId);
+        }
 
         #endregion
 

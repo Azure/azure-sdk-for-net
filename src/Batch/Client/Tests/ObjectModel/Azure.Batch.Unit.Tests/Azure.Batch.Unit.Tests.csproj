@@ -80,6 +80,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JobAutoTerminationUnitTests.cs" />
     <Compile Include="BatchClientUnitTest.cs" />
     <Compile Include="CommitAndRefreshUnitTests.cs" />
     <Compile Include="ODataUnitTests.cs" />

@@ -28,6 +28,8 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<JobReleaseTask> JobReleaseTaskProperty;
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
+            public readonly PropertyAccessor<Common.OnAllTasksComplete?> OnAllTasksCompleteProperty;
+            public readonly PropertyAccessor<Common.OnTaskFailure?> OnTaskFailureProperty;
             public readonly PropertyAccessor<PoolInformation> PoolInformationProperty;
             public readonly PropertyAccessor<Common.JobState?> PreviousStateProperty;
             public readonly PropertyAccessor<DateTime?> PreviousStateTransitionTimeProperty;
@@ -52,6 +54,8 @@ namespace Microsoft.Azure.Batch
                 this.JobReleaseTaskProperty = this.CreatePropertyAccessor<JobReleaseTask>("JobReleaseTask", BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>("LastModified", BindingAccess.None);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
+                this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor<Common.OnAllTasksComplete?>("OnAllTasksComplete", BindingAccess.Read | BindingAccess.Write);
+                this.OnTaskFailureProperty = this.CreatePropertyAccessor<Common.OnTaskFailure?>("OnTaskFailure", BindingAccess.Read | BindingAccess.Write);
                 this.PoolInformationProperty = this.CreatePropertyAccessor<PoolInformation>("PoolInformation", BindingAccess.Read | BindingAccess.Write);
                 this.PreviousStateProperty = this.CreatePropertyAccessor<Common.JobState?>("PreviousState", BindingAccess.None);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("PreviousStateTransitionTime", BindingAccess.None);
@@ -113,6 +117,14 @@ namespace Microsoft.Azure.Batch
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
                     "Metadata",
                     BindingAccess.Read | BindingAccess.Write);
+                this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete>(protocolObject.OnAllTasksComplete),
+                    "OnAllTasksComplete",
+                    BindingAccess.Read | BindingAccess.Write);
+                this.OnTaskFailureProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Common.OnTaskFailure>(protocolObject.OnTaskFailure),
+                    "OnTaskFailure",
+                    BindingAccess.Read);
                 this.PoolInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.PoolInfo, o => new PoolInformation(o)),
                     "PoolInformation",
@@ -314,6 +326,25 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the action the Batch service should take when all tasks in the job are in the <see cref="Common.JobState.Completed"/> 
+        /// state.
+        /// </summary>
+        public Common.OnAllTasksComplete? OnAllTasksComplete
+        {
+            get { return this.propertyContainer.OnAllTasksCompleteProperty.Value; }
+            set { this.propertyContainer.OnAllTasksCompleteProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the action the Batch service should take when any task in the job fails.
+        /// </summary>
+        public Common.OnTaskFailure? OnTaskFailure
+        {
+            get { return this.propertyContainer.OnTaskFailureProperty.Value; }
+            set { this.propertyContainer.OnTaskFailureProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the pool on which the Batch service runs the job's tasks.
         /// </summary>
         public PoolInformation PoolInformation
@@ -440,6 +471,8 @@ namespace Microsoft.Azure.Batch
                 JobPreparationTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobPreparationTask, (o) => o.GetTransportObject()),
                 JobReleaseTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobReleaseTask, (o) => o.GetTransportObject()),
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
+                OnAllTasksComplete = UtilitiesInternal.MapNullableEnum<Models.OnAllTasksComplete>(this.OnAllTasksComplete),
+                OnTaskFailure = UtilitiesInternal.MapNullableEnum<Models.OnTaskFailure>(this.OnTaskFailure),
                 PoolInfo = UtilitiesInternal.CreateObjectWithNullCheck(this.PoolInformation, (o) => o.GetTransportObject()),
                 Priority = this.Priority,
                 UsesTaskDependencies = this.UsesTaskDependencies,

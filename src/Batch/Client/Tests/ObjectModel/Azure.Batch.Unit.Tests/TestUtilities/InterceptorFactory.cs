@@ -22,6 +22,11 @@
                 AzureOperationHeaderResponse<Protocol.Models.JobAddHeaders>>();
         }
 
+        public static Protocol.RequestInterceptor CreateGetTaskRequestInterceptor(Protocol.Models.CloudTask TaskToReturn)
+        {
+            return CreateGetRequestInterceptor<Protocol.Models.TaskGetOptions, Protocol.Models.CloudTask, Protocol.Models.TaskGetHeaders>(TaskToReturn);
+        }
+
         public static Protocol.RequestInterceptor CreateGetPoolRequestInterceptor(Protocol.Models.CloudPool poolToReturn)
         {
             return CreateGetRequestInterceptor<Protocol.Models.PoolGetOptions, Protocol.Models.CloudPool, Protocol.Models.PoolGetHeaders>(poolToReturn);

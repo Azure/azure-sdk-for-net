@@ -6,6 +6,7 @@
     using BatchTestCommon;
     using Microsoft.Azure.Batch;
     using Protocol=Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Azure.Batch.Common;
     using Microsoft.Azure.Batch.Protocol.BatchRequests;
     using Microsoft.Rest.Azure;
     using TestUtilities;
@@ -51,8 +52,15 @@
             const string jobId = "Foo";
             const string newPoolId = "Bar";
             var protoJob = new Protocol.Models.CloudJob(id: jobId);
+            var newOnAllTasksCompleted = Protocol.Models.OnAllTasksComplete.TerminateJob;
 
-            Action<CloudJob> modificationFunction = job => job.PoolInformation = new PoolInformation() { PoolId = newPoolId };
+
+            Action<CloudJob> modificationFunction = job =>
+            {
+                job.PoolInformation = new PoolInformation() { PoolId = newPoolId }; 
+                job.OnAllTasksComplete = (Microsoft.Azure.Batch.Common.OnAllTasksComplete?)newOnAllTasksCompleted;
+            };
+
             Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
             {
                 Assert.Null(patchParameters.Priority);
@@ -73,8 +81,15 @@
             const string jobId = "Foo";
             const int newPriority = 5;
             var protoJob = new Protocol.Models.CloudJob(id: jobId);
+            var newOnAllTasksCompleted = Protocol.Models.OnAllTasksComplete.TerminateJob;
 
-            Action<CloudJob> modificationFunction = job => job.Priority = newPriority;
+
+            Action<CloudJob> modificationFunction = job =>
+            {
+                job.Priority = newPriority;
+                job.OnAllTasksComplete = (Microsoft.Azure.Batch.Common.OnAllTasksComplete?)newOnAllTasksCompleted;
+            };
+
             Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
             {
                 Assert.Null(patchParameters.Constraints);
@@ -83,6 +98,9 @@
 
                 Assert.NotNull(patchParameters.Priority);
                 Assert.Equal(newPriority, patchParameters.Priority);
+
+                Assert.NotNull(patchParameters.OnAllTasksComplete);
+                Assert.Equal(newOnAllTasksCompleted, patchParameters.OnAllTasksComplete);
             };
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
@@ -101,7 +119,12 @@
                         new Protocol.Models.MetadataItem("Foo", "Bar")
                     });
 
-            Action<CloudJob> modificationFunction = job => job.Metadata.Add(new MetadataItem("Baz", "Qux"));
+            Action<CloudJob> modificationFunction = job =>
+                {
+                    job.Metadata.Add(new MetadataItem("Baz", "Qux"));
+                    job.OnAllTasksComplete = OnAllTasksComplete.NoAction;
+                };
+
             Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
                 {
                     Assert.Null(patchParameters.Priority);
@@ -126,7 +149,12 @@
                 id: jobId,
                 constraints: new Protocol.Models.JobConstraints(maxWallClockTime: TimeSpan.FromSeconds(10)));
 
-            Action<CloudJob> modificationFunction = job => job.Constraints.MaxWallClockTime = newMaxWallClock;
+            Action<CloudJob> modificationFunction = job =>
+                {
+                    job.Constraints.MaxWallClockTime = newMaxWallClock;
+                    job.OnAllTasksComplete = OnAllTasksComplete.NoAction;
+                };
+
             Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
                 {
                     Assert.Null(patchParameters.Priority);

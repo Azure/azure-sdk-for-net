@@ -13,7 +13,7 @@
     <NuGetPackageImportStamp>ceeaaba5</NuGetPackageImportStamp>
     <AutoRestProjects>true</AutoRestProjects>
     <TestProject>true</TestProject>
-  </PropertyGroup>  
+  </PropertyGroup>
   <Import Project="..\..\..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
@@ -150,7 +150,6 @@
     <Compile Include="TaskDependencyIntegrationTests.cs" />
     <Compile Include="IntegrationTestUtilities\TestUtilities.cs" />
     <Compile Include="CloudJobScheduleIntegrationTests.cs" />
-    <Compile Include="CloudJobIntegrationTests.cs" />
     <Compile Include="CloudPoolIntegrationTests.cs" />
     <Compile Include="CloudTaskIntegrationTests.cs" />
     <Compile Include="ComputeNodeIntegrationTests.cs" />

@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="eTag">The ETag of the task.</param>
         /// <param name="lastModified">The last modified time of the task.</param>
         /// <param name="creationTime">The creation time of the task.</param>
+        /// <param name="exitConditions">How the Batch service should respond when the task completes.</param>
         /// <param name="state">The current state of the task.</param>
         /// <param name="stateTransitionTime">The time at which the task entered its current state.</param>
         /// <param name="previousState">The previous state of the task.</param>
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="multiInstanceSettings">Information about how to run the multi-instance task.</param>
         /// <param name="stats">Resource usage statistics for the task.</param>
         /// <param name="dependsOn">Any dependencies this task has.</param>
-        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), TaskState? state = default(TaskState?), DateTime? stateTransitionTime = default(DateTime?), TaskState? previousState = default(TaskState?), DateTime? previousStateTransitionTime = default(DateTime?), string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies))
+        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), DateTime? stateTransitionTime = default(DateTime?), TaskState? previousState = default(TaskState?), DateTime? previousStateTransitionTime = default(DateTime?), string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies))
         {
             Id = id;
             DisplayName = displayName;
@@ -68,6 +69,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             ETag = eTag;
             LastModified = lastModified;
             CreationTime = creationTime;
+            ExitConditions = exitConditions;
             State = state;
             StateTransitionTime = stateTransitionTime;
             PreviousState = previousState;
@@ -126,6 +128,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTime? CreationTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets how the Batch service should respond when the task
+        /// completes.
+        /// </summary>
+        [JsonProperty(PropertyName = "exitConditions")]
+        public ExitConditions ExitConditions { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the task.

@@ -383,13 +383,14 @@
         public Task<AzureOperationHeaderResponse<Models.JobUpdateHeaders>> UpdateJob(
             string jobId,
             int? priority,
+            Models.OnAllTasksComplete onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
             IList<Models.MetadataItem> metadata,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.JobUpdateParameter(poolInfo, priority, constraints, metadata);
+            var parameters = new Models.JobUpdateParameter(poolInfo, priority, constraints, metadata, onAllTasksComplete);
             var request = new JobUpdateBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.UpdateWithHttpMessagesAsync(
@@ -407,13 +408,14 @@
         public Task<AzureOperationHeaderResponse<Models.JobPatchHeaders>> PatchJob(
             string jobId,
             int? priority,
+            Models.OnAllTasksComplete onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
             IList<Models.MetadataItem> metadata,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.JobPatchParameter(priority, constraints, poolInfo, metadata);
+            var parameters = new Models.JobPatchParameter(priority, onAllTasksComplete, constraints, poolInfo, metadata);
             var request = new JobPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.PatchWithHttpMessagesAsync(

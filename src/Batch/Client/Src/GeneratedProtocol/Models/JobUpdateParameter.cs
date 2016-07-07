@@ -43,12 +43,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="priority">The priority of the job.</param>
         /// <param name="constraints">The execution constraints for the job.</param>
         /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
-        public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="onAllTasksComplete">Specifies an action the Batch service should take when all tasks in the job are in the completed state. Possible values include: 'noAction', 'terminateJob'</param>
+        public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), IList<MetadataItem> metadata = default(IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
         {
             Priority = priority;
             Constraints = constraints;
             PoolInfo = poolInfo;
             Metadata = metadata;
+            OnAllTasksComplete = onAllTasksComplete;
         }
 
         /// <summary>
@@ -96,6 +98,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies an action the Batch service should take
+        /// when all tasks in the job are in the completed state. Possible
+        /// values include: 'noAction', 'terminateJob'
+        /// </summary>
+        [JsonProperty(PropertyName = "onAllTasksComplete")]
+        public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
         /// Validate the object.

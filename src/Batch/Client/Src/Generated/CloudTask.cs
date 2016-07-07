@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<IList<EnvironmentSetting>> EnvironmentSettingsProperty;
             public readonly PropertyAccessor<string> ETagProperty;
             public readonly PropertyAccessor<TaskExecutionInformation> ExecutionInformationProperty;
+            public readonly PropertyAccessor<ExitConditions> ExitConditionsProperty;
             public readonly PropertyAccessor<IList<IFileStagingProvider>> FilesToStageProperty;
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
@@ -52,6 +53,7 @@ namespace Microsoft.Azure.Batch
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
                 this.ETagProperty = this.CreatePropertyAccessor<string>("ETag", BindingAccess.None);
                 this.ExecutionInformationProperty = this.CreatePropertyAccessor<TaskExecutionInformation>("ExecutionInformation", BindingAccess.None);
+                this.ExitConditionsProperty = this.CreatePropertyAccessor<ExitConditions>("ExitConditions", BindingAccess.Read | BindingAccess.Write);
                 this.FilesToStageProperty = this.CreatePropertyAccessor<IList<IFileStagingProvider>>("FilesToStage", BindingAccess.Read | BindingAccess.Write);
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>("LastModified", BindingAccess.None);
@@ -107,6 +109,10 @@ namespace Microsoft.Azure.Batch
                 this.ExecutionInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExecutionInfo, o => new TaskExecutionInformation(o).Freeze()),
                     "ExecutionInformation",
+                    BindingAccess.Read);
+                this.ExitConditionsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExitConditions, o => new ExitConditions(o).Freeze()),
+                    "ExitConditions",
                     BindingAccess.Read);
                 this.FilesToStageProperty = this.CreatePropertyAccessor<IList<IFileStagingProvider>>(
                     "FilesToStage",
@@ -303,6 +309,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets how the Batch service should respond when the task completes.
+        /// </summary>
+        public ExitConditions ExitConditions
+        {
+            get { return this.propertyContainer.ExitConditionsProperty.Value; }
+            set { this.propertyContainer.ExitConditionsProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets a list of files to be staged for the task.
         /// </summary>
         public IList<IFileStagingProvider> FilesToStage
@@ -454,6 +469,7 @@ namespace Microsoft.Azure.Batch
                 DependsOn = UtilitiesInternal.CreateObjectWithNullCheck(this.DependsOn, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),
+                ExitConditions = UtilitiesInternal.CreateObjectWithNullCheck(this.ExitConditions, (o) => o.GetTransportObject()),
                 Id = this.Id,
                 MultiInstanceSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.MultiInstanceSettings, (o) => o.GetTransportObject()),
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),

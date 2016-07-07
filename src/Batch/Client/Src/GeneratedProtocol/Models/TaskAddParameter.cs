@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="id">A string that uniquely identifies the task within the job.</param>
         /// <param name="commandLine">The command line of the task. For multi-instance tasks, the command line is executed on the primary subtask after all the subtasks have finished executing the coordianation command line.</param>
         /// <param name="displayName">A display name for the task.</param>
+        /// <param name="exitConditions">How the Batch service should respond when the task completes.</param>
         /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
         /// <param name="environmentSettings">A list of environment variable settings for the task.</param>
         /// <param name="affinityInfo">A locality hint that can be used by the Batch service to select a compute node on which to start the new task.</param>
@@ -49,11 +50,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="runElevated">Whether to run the task in elevated mode.</param>
         /// <param name="multiInstanceSettings">Information about how to run the multi-instance task.</param>
         /// <param name="dependsOn">Any other tasks that this task depends on.</param>
-        public TaskAddParameter(string id, string commandLine, string displayName = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies))
+        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies))
         {
             Id = id;
             DisplayName = displayName;
             CommandLine = commandLine;
+            ExitConditions = exitConditions;
             ResourceFiles = resourceFiles;
             EnvironmentSettings = environmentSettings;
             AffinityInfo = affinityInfo;
@@ -96,6 +98,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
+
+        /// <summary>
+        /// Gets or sets how the Batch service should respond when the task
+        /// completes.
+        /// </summary>
+        [JsonProperty(PropertyName = "exitConditions")]
+        public ExitConditions ExitConditions { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
