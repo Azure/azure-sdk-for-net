@@ -1,35 +1,39 @@
 # Microsoft Azure SDK for .NET Documentation
 
-The following services use AutoRest
-- AppServices
+The following services have SDKs that are generated from AutoRest
+- Authorization
+- Cdn
+- Cognitive services
 - Compute
 - DataLake Analytics
 - DataLake Store
-- DataLake Storeuploader
 - DevTestLabs
+- Graph.RBAC
 - Identity
+- Intune
+- Logic
 - Machine Learning
 - Networking
 - NotificationHubs
 - PowerBI
 - Redis Cache
 - Resource Manager (ARM)
+- Scheduler
+- Search
+- Server Management
+- Storage
+- Traffic Manager
+- Websites
 
-The following services use Hyak
+The following services have SDKs that are generated from Hyak
 - Azure Backup
 - Azure Stack
 - Data Factory
-- Datalake AnalyticsCatalog
-- Datalake AnalyticsJob
-- DataLake StoreFileSystem
 - HdInsight
 - Insights
-- Intune
 - Key Vault
 - Operational Insights
 - Recovery Services
-- Search
-- Server Management
 - Site Recovery
 - SQL
 - Stream Analytics
