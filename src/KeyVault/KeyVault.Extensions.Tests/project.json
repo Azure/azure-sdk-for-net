@@ -16,9 +16,8 @@
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.0-rc2-*"
+          "version": "1.0.0"
         },
-        "moq.netcore": "4.4.0-beta8",
         "System.Security.Cryptography.Primitives": "4.0.0",
         "System.Diagnostics.TraceSource": "4.0.0",
         "System.Security.Cryptography.Algorithms": "4.2.0"
