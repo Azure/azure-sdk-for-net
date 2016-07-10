@@ -18,7 +18,28 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
 
         public void AddNode(U node)
         {
-            graph.Add(node.Key, node);
+            if (Contains(node.Key))
+            {
+                throw new NodeExistsException(node.Key);
+            }
+
+            graph.Add(node.Key.ToLowerInvariant(), node);
+        }
+
+        public bool Contains(string key)
+        {
+            U value;
+            return graph.TryGetValue(key.ToLowerInvariant(), out value);
+        }
+
+        public U GetNode(string key)
+        {
+            U value;
+            if (!graph.TryGetValue(key.ToLowerInvariant(), out value))
+            {
+                throw new NodeNotFoundException(key);
+            }
+            return value;
         }
 
         public void Visit(Action<U> visitor)
@@ -30,11 +51,13 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
                     Dfs(visitor, item.Value);
                 }
             }
+            visited.Clear();
         }
 
         private void Dfs(Action<U> visitor, U node)
         {
             visitor(node);
+            visited.Add(node.Key);
             foreach(string childKey in node.Children)
             {
                 if (!visited.Contains(childKey))
@@ -42,12 +65,12 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
                     U childNode;
                     if (!graph.TryGetValue(childKey, out childNode))
                     {
-                        // TODO
+                        // TODO: Better exception for errors due to internal logic error
+                        throw new Exception("unexpected state: the node " + childKey + " is marked as the child node of " + node.Key + ",but graph does not contain a node with key " + childKey);
                     }
                     Dfs(visitor, childNode);
                 }
             }
-
         }
     }
 }

@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource.DAG
 {
     public class Node<T>
     {
-        private List<string> children;
+        private HashSet<string> children;
 
         public Node(string key, T data)
         {
             Key = key;
             Data = data;
-            children = new List<string>();
+            children = new HashSet<string>();
         }
 
         public string Key
@@ -36,12 +37,17 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
         {
             get
             {
-                return new ReadOnlyCollection<string>(children);
+                return new ReadOnlyCollection<string>(children.ToList());
             }
         }
 
         public void AddChild(string childKey)
         {
+            if (children.Contains(childKey))
+            {
+                throw new ChildExistsException(Key, childKey);
+            }
+
             children.Add(childKey);
         }
     }

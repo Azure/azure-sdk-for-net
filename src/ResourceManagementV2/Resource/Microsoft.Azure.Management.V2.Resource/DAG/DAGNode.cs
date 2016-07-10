@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource.DAG
 {
     public class DAGNode<T> : Node<T>
     {
-        private List<string> dependentKeys;
+        private HashSet<string> dependentKeys;
         private int toBeResolved;
 
         public DAGNode(string key, T data) : base(key, data)
         {
-            dependentKeys = new List<string>();
+            dependentKeys = new HashSet<string>();
         }
 
         public IReadOnlyCollection<string> DependentKeys
         {
             get
             {
-                return new ReadOnlyCollection<string>(dependentKeys);
+                return new ReadOnlyCollection<string>(dependentKeys.ToList());
             }
         }
 
-        public void AddDependent(string key)
+        public void AddDependent(string dependentKey)
         {
-            this.dependentKeys.Add(key);
+            dependentKey = dependentKey.ToLowerInvariant();
+            if (dependentKeys.Contains(dependentKey))
+            {
+                throw new DependentExistsException(Key, dependentKey);
+            }
+
+            dependentKeys.Add(dependentKey);
         }
 
         public IReadOnlyCollection<string> DependencyKeys
@@ -35,32 +42,32 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
             }
         }
 
-        public bool IsPreparer { get; private set; }
-
         public void AddDependency(string dependencyKey)
         {
             AddChild(dependencyKey);
         }
 
-        public bool hasDependencies()
+        public bool HasDependencies
         {
-            return HasChildren;
+            get
+            {
+                return HasChildren;
+            }
         }
+
+        public bool IsPreparer { get; private set; }
 
         public void SetPreparer(bool isPreparer)
         {
-            this.IsPreparer = isPreparer;
+            IsPreparer = isPreparer;
         }
 
-        public void Initialize()
+        public bool HasAllResolved
         {
-            toBeResolved = DependencyKeys.Count;
-            dependentKeys.Clear();
-        }
-
-        public bool HasAllResolved()
-        {
-            return toBeResolved == 0;
+            get
+            {
+                return toBeResolved == 0;
+            }
         }
 
         public void ReportCompleted(string dependencyKey)
@@ -70,6 +77,12 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
                 throw new InvalidOperationException("invalid state - " + Key + ": The dependency '" + dependencyKey + "' is already reported or there is no such dependencyKey");
             }
             toBeResolved--;
+        }
+
+        public void Initialize()
+        {
+            toBeResolved = DependencyKeys.Count;
+            dependentKeys.Clear();
         }
     }
 }
