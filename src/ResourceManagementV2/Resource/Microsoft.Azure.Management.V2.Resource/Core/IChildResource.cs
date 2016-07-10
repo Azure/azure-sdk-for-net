@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.Azure.Management.V2.Resource.Core
 {
-    interface IChildResource : IIndexable
+    public interface IChildResource : IIndexable
     {
         string Name { get; }
     }

@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource.DAG
 {
-    public class Node<T>
+    public class Node<DataT>
     {
         private HashSet<string> children;
 
-        public Node(string key, T data)
+        public Node(string key, DataT data)
         {
             Key = key;
             Data = data;
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
             get; private set;
         }
 
-        public T Data
+        public DataT Data
         {
             get; private set;
         }

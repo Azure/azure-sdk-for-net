@@ -2,7 +2,7 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
-    interface IRefreshable<IFluentResourceT>
+    public interface IRefreshable<IFluentResourceT>
     {
         Task<IFluentResourceT> Refresh();
     }

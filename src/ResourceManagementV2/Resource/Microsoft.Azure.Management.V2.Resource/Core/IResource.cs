@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
-    interface IResource
+    public interface IResource
     {
         string Id { get; }
         string Type { get; }

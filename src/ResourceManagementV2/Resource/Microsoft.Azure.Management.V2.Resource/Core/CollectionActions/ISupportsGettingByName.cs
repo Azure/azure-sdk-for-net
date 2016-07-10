@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.Collections
 {
-    interface ISupportsGettingByName<T>
+    public interface ISupportsGettingByName<T>
     {
         Task<T> GetByName(string name);
     }

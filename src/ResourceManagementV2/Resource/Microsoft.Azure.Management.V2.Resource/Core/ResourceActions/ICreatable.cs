@@ -2,7 +2,7 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
-    interface ICreatable<IFluentResourceT> : IIndexable
+    public interface ICreatable<IFluentResourceT> : IIndexable
     {
         Task<IFluentResourceT> Create();
     }

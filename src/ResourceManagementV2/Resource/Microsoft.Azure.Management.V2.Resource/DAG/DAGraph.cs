@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.DAG
 {
-    public class DAGraph<T, U> : Graph<T, U> where U : DAGNode<T> 
+    public class DAGraph<NodeDataT, NodeT> : Graph<NodeDataT, NodeT> where NodeT : DAGNode<NodeDataT> 
     {
         private Queue<string> queue;
-        private U rootNode;
+        private NodeT rootNode;
 
-        public DAGraph(U rootNode)
+        public DAGraph(NodeT rootNode)
         {
             this.rootNode = rootNode;
             queue = new Queue<string>();
@@ -18,7 +16,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
             this.AddNode(rootNode);
         }
 
-        public bool IsRootNode(U node)
+        public bool IsRootNode(NodeT node)
         {
             return this.rootNode == node;
         }
@@ -31,10 +29,10 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
             }
         }
 
-        public void Merge(DAGraph<T, U> parent)
+        public void Merge(DAGraph<NodeDataT, NodeT> parent)
         {
             parent.rootNode.AddDependency(rootNode.Key);
-            foreach(KeyValuePair<string, U> item in this.graph) {
+            foreach(KeyValuePair<string, NodeT> item in this.graph) {
                 if (!parent.graph.ContainsKey(item.Key))
                 {
                     parent.graph.Add(item.Key, item.Value);
@@ -46,7 +44,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
         {
             if (IsPreparer)
             {
-                foreach(U node in graph.Values)
+                foreach(NodeT node in graph.Values)
                 {
                     node.Initialize(); // clear dependent and set ToBeResolved count
                     if (!this.IsRootNode(node))
@@ -59,26 +57,26 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
             }
         }
 
-        public U GetNext()
+        public NodeT GetNext()
         {
-            U nextNode;
-            graph.TryGetValue(queue.Dequeue(), out nextNode);
-            return nextNode;
+            if (queue.Any())
+            {
+                return GetNode(queue.Dequeue());
+            }
+            return null;
         }
 
-        public T GetNodeData(string key)
+        public NodeDataT GetNodeData(string key)
         {
-            U node;
-            graph.TryGetValue(key, out node);
-            return node.Data;
+            return GetNode(key).Data;
         }
 
-        public void ReportCompleted(U dependency)
+        public void ReportCompleted(NodeT dependency)
         {
             dependency.SetPreparer(true);
             foreach (string dependentKey in dependency.DependentKeys)
             {
-                U dependent = GetNode(dependentKey);
+                NodeT dependent = GetNode(dependentKey);
                 dependent.ReportCompleted(dependency.Key);
                 if (dependent.HasAllResolved)
                 {
@@ -89,7 +87,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
 
         private void InitializeDependentKeys()
         {
-            Visit((U node) =>
+            Visit((NodeT node) =>
             {
                 if (!node.HasDependencies)
                 {
@@ -107,7 +105,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
         private void InitializeQueue()
         {
             queue.Clear();
-            foreach(KeyValuePair<string ,U> item in graph)
+            foreach(KeyValuePair<string ,NodeT> item in graph)
             {
                 if (!item.Value.HasDependencies)
                 {

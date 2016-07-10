@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.Collections
 {
-    interface ISupportsListingByRegion<T>
+    public interface ISupportsListingByRegion<T>
     {
         Task<List<T>> ListByRegion(string regionName);
 

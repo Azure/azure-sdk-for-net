@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Microsoft.Azure.Management.V2.Resource.Core.Collections
+﻿namespace Microsoft.Azure.Management.V2.Resource.Core.Collections
 {
-    interface ISupportsCreating<T>
+    public interface ISupportsCreating<T>
     {
         T Define(string name);
     }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.Collections
 {
-    interface ISupportsListing<T>
+    public interface ISupportsListing<T>
     {
         Task<List<T>> List();
     }

@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.DAG
 {
-    public class Graph<T, U> where U : Node<T>
+    public class Graph<NodeDataT, NodeT> where NodeT : Node<NodeDataT>
     {
-        protected IDictionary<string, U> graph;
+        protected IDictionary<string, NodeT> graph;
         private HashSet<string> visited;
 
         public Graph()
         {
-            graph = new Dictionary<string, U>();
+            graph = new Dictionary<string, NodeT>();
             visited = new HashSet<string>();
         }
 
-        public void AddNode(U node)
+        public void AddNode(NodeT node)
         {
             if (Contains(node.Key))
             {
@@ -28,13 +26,13 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
 
         public bool Contains(string key)
         {
-            U value;
+            NodeT value;
             return graph.TryGetValue(key.ToLowerInvariant(), out value);
         }
 
-        public U GetNode(string key)
+        public NodeT GetNode(string key)
         {
-            U value;
+            NodeT value;
             if (!graph.TryGetValue(key.ToLowerInvariant(), out value))
             {
                 throw new NodeNotFoundException(key);
@@ -42,9 +40,9 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
             return value;
         }
 
-        public void Visit(Action<U> visitor)
+        public void Visit(Action<NodeT> visitor)
         {
-            foreach(KeyValuePair<string, U> item in graph)
+            foreach(KeyValuePair<string, NodeT> item in graph)
             {
                 if (!visited.Contains(item.Key))
                 {
@@ -54,7 +52,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
             visited.Clear();
         }
 
-        private void Dfs(Action<U> visitor, U node)
+        private void Dfs(Action<NodeT> visitor, NodeT node)
         {
             visitor(node);
             visited.Add(node.Key);
@@ -62,7 +60,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
             {
                 if (!visited.Contains(childKey))
                 {
-                    U childNode;
+                    NodeT childNode;
                     if (!graph.TryGetValue(childKey, out childNode))
                     {
                         // TODO: Better exception for errors due to internal logic error

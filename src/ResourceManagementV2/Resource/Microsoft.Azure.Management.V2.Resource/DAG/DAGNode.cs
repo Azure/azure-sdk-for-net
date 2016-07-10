@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource.DAG
 {
-    public class DAGNode<T> : Node<T>
+    public class DAGNode<DataT> : Node<DataT>
     {
         private HashSet<string> dependentKeys;
         private int toBeResolved;
 
-        public DAGNode(string key, T data) : base(key, data)
+        public DAGNode(string key, DataT data) : base(key, data)
         {
             dependentKeys = new HashSet<string>();
         }
