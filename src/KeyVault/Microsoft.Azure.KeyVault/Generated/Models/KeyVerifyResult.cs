@@ -22,6 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyVerifyResult class.
         /// </summary>
+        /// <param name="value">true if the signature is verified, false otherwise.</param>
         public KeyVerifyResult(bool? value = default(bool?))
         {
             Value = value;

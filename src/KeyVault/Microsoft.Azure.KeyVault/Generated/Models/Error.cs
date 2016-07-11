@@ -22,6 +22,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Error class.
         /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
         public Error(string code = default(string), string message = default(string))
         {
             Code = code;
@@ -29,11 +31,13 @@ namespace Microsoft.Azure.KeyVault.Models
         }
 
         /// <summary>
+        /// Gets the error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
+        /// Gets the error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }

@@ -25,12 +25,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Vault class.
         /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <param name="location">Resource location</param>
+        /// <param name="name">The name of the key vault.</param>
+        /// <param name="location">The supported Azure location where the key vault should be created.</param>
         /// <param name="properties">Properties of the vault</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">The Azure Resource Manager resource ID for the key vault.</param>
+        /// <param name="type">The resource type of the key vault.</param>
+        /// <param name="tags">The tags that will be assigned to the key vault. </param>
         public Vault(string name, string location, VaultProperties properties, string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(name, location, id, type, tags)
         {

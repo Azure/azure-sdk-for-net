@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// SKU details
+    /// </summary>
     public partial class Sku
     {
         /// <summary>
@@ -22,25 +25,27 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="family">SKU family name</param>
-        /// <param name="name">SKU name</param>
-        public Sku(string family, string name)
+        /// <param name="name">SKU name to specify whether the key vault is a standard vault or a premium vault. Possible values include: 'standard', 'premium'</param>
+        /// <param name="family">SKU family name. Possible values include: 'A'</param>
+        public Sku(SkuName name, string family = default(string))
         {
             Family = family;
             Name = name;
         }
 
         /// <summary>
-        /// Gets or sets SKU family name
+        /// Gets or sets SKU family name. Possible values include: 'A'
         /// </summary>
         [JsonProperty(PropertyName = "family")]
         public string Family { get; set; }
 
         /// <summary>
-        /// Gets or sets SKU name
+        /// Gets or sets SKU name to specify whether the key vault is a
+        /// standard vault or a premium vault. Possible values include:
+        /// 'standard', 'premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public SkuName Name { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -50,14 +55,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Family == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Family");
-            }
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
         }
     }
 }

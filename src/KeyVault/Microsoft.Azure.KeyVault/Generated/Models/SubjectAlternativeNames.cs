@@ -22,6 +22,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the SubjectAlternativeNames class.
         /// </summary>
+        /// <param name="emails">Email addresses.</param>
+        /// <param name="dnsNames">Domain names.</param>
+        /// <param name="upns">User principal names.</param>
         public SubjectAlternativeNames(IList<string> emails = default(IList<string>), IList<string> dnsNames = default(IList<string>), IList<string> upns = default(IList<string>))
         {
             Emails = emails;

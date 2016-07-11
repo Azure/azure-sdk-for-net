@@ -22,6 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the SecretProperties class.
         /// </summary>
+        /// <param name="contentType">The media type (MIME type).</param>
         public SecretProperties(string contentType = default(string))
         {
             ContentType = contentType;

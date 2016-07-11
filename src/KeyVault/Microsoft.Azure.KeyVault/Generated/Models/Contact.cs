@@ -22,6 +22,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Contact class.
         /// </summary>
+        /// <param name="emailAddress">Email addresss.</param>
+        /// <param name="name">Name.</param>
+        /// <param name="phone">Phone number.</param>
         public Contact(string emailAddress = default(string), string name = default(string), string phone = default(string))
         {
             EmailAddress = emailAddress;

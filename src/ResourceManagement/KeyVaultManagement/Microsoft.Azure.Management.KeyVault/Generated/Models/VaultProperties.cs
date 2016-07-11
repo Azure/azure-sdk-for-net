@@ -25,13 +25,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the VaultProperties class.
         /// </summary>
-        /// <param name="tenantId">Tenant ID</param>
+        /// <param name="tenantId">The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault.</param>
         /// <param name="sku">SKU details</param>
-        /// <param name="accessPolicies">Access policies for one or more principals</param>
-        /// <param name="vaultUri">URL of the vault</param>
-        /// <param name="enabledForDeployment">Enabled or disabled for deployment</param>
-        /// <param name="enabledForDiskEncryption">Enabled or disabled for disk encryption</param>
-        /// <param name="enabledForTemplateDeployment">Enabled or disabled for Azure Resource Manager template deployment</param>
+        /// <param name="accessPolicies">An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID.</param>
+        /// <param name="vaultUri">The URI of the vault for performing operations on keys and secrets.</param>
+        /// <param name="enabledForDeployment">Property to specify whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault.</param>
+        /// <param name="enabledForDiskEncryption">Property to specify whether Azure Disk Encryption is permitted to retrieve secrets from the vault and unwrap keys.</param>
+        /// <param name="enabledForTemplateDeployment">Property to specify whether Azure Resource Manager is permitted to retrieve secrets from the key vault.</param>
         public VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies, string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?))
         {
             VaultUri = vaultUri;
@@ -44,13 +44,15 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         }
 
         /// <summary>
-        /// Gets or sets URL of the vault
+        /// Gets or sets the URI of the vault for performing operations on
+        /// keys and secrets.
         /// </summary>
         [JsonProperty(PropertyName = "vaultUri")]
         public string VaultUri { get; set; }
 
         /// <summary>
-        /// Gets or sets tenant ID
+        /// Gets or sets the Azure Active Directory tenant ID that should be
+        /// used for authenticating requests to the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public Guid TenantId { get; set; }
@@ -62,26 +64,31 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets access policies for one or more principals
+        /// Gets or sets an array of 0 to 16 identities that have access to
+        /// the key vault. All identities in the array must use the same
+        /// tenant ID as the key vault's tenant ID.
         /// </summary>
         [JsonProperty(PropertyName = "accessPolicies")]
         public IList<AccessPolicyEntry> AccessPolicies { get; set; }
 
         /// <summary>
-        /// Gets or sets enabled or disabled for deployment
+        /// Gets or sets property to specify whether Azure Virtual Machines
+        /// are permitted to retrieve certificates stored as secrets from the
+        /// key vault.
         /// </summary>
         [JsonProperty(PropertyName = "enabledForDeployment")]
         public bool? EnabledForDeployment { get; set; }
 
         /// <summary>
-        /// Gets or sets enabled or disabled for disk encryption
+        /// Gets or sets property to specify whether Azure Disk Encryption is
+        /// permitted to retrieve secrets from the vault and unwrap keys.
         /// </summary>
         [JsonProperty(PropertyName = "enabledForDiskEncryption")]
         public bool? EnabledForDiskEncryption { get; set; }
 
         /// <summary>
-        /// Gets or sets enabled or disabled for Azure Resource Manager
-        /// template deployment
+        /// Gets or sets property to specify whether Azure Resource Manager is
+        /// permitted to retrieve secrets from the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "enabledForTemplateDeployment")]
         public bool? EnabledForTemplateDeployment { get; set; }
@@ -105,6 +112,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             if (this.Sku != null)
             {
                 this.Sku.Validate();
+            }
+            if (this.AccessPolicies != null)
+            {
+                if (this.AccessPolicies.Count > 16)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "AccessPolicies", 16);
+                }
             }
         }
     }

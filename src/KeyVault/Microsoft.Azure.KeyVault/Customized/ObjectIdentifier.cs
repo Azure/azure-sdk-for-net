@@ -63,7 +63,7 @@ namespace Microsoft.Azure.KeyVault
         {
         }
 
-        protected ObjectIdentifier(string vaultBaseUrl, string collection, string name, string version = null)
+        protected ObjectIdentifier(string vaultBaseUrl, string collection, string name, string version = "")
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
                 throw new ArgumentNullException("vaultBaseUrl");
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.KeyVault
 
             Uri baseUri = new Uri(identifier, UriKind.Absolute);
 
-            // We expect and identifier with either 3 or 4 segments: host + collection + name [+ version]
+            // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
             if (baseUri.Segments.Length != 3 && baseUri.Segments.Length != 4)
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", identifier, baseUri.Segments.Length));
 
@@ -106,6 +106,7 @@ namespace Microsoft.Azure.KeyVault
 
             if (baseUri.Segments.Length == 4)
                 _version = baseUri.Segments[3].Substring(0, baseUri.Segments[3].Length).TrimEnd('/');
+            else _version = string.Empty;
 
             _vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
             _vaultWithoutScheme = baseUri.Authority;
@@ -172,7 +173,7 @@ namespace Microsoft.Azure.KeyVault
             return ObjectIdentifier.IsObjectIdentifier("keys", identifier);
         }
 
-        public KeyIdentifier(string vaultBaseUrl, string name, string version = null)
+        public KeyIdentifier(string vaultBaseUrl, string name, string version = "")
             : base(vaultBaseUrl, "keys", name, version)
         {
         }
@@ -190,7 +191,7 @@ namespace Microsoft.Azure.KeyVault
             return ObjectIdentifier.IsObjectIdentifier("secrets", identifier);
         }
 
-        public SecretIdentifier(string vaultBaseUrl, string name, string version = null)
+        public SecretIdentifier(string vaultBaseUrl, string name, string version = "")
             : base(vaultBaseUrl, "secrets", name, version)
         {
         }
@@ -203,12 +204,12 @@ namespace Microsoft.Azure.KeyVault
 
     public sealed class CertificateIdentifier : ObjectIdentifier
     {
-        public static bool IsSecretIdentifier(string identifier)
+        public static bool IsCertificateIdentifier(string identifier)
         {
             return ObjectIdentifier.IsObjectIdentifier("certificates", identifier);
         }
 
-        public CertificateIdentifier(string vaultBaseUrl, string name, string version = null)
+        public CertificateIdentifier(string vaultBaseUrl, string name, string version = "")
             : base(vaultBaseUrl, "certificates", name, version)
         {
         }
@@ -221,21 +222,52 @@ namespace Microsoft.Azure.KeyVault
 
     public sealed class CertificateOperationIdentifier : ObjectIdentifier
     {
+        public static bool IsCertificateOperationIdentifier(string identifier)
+        {
+            var isValid = ObjectIdentifier.IsObjectIdentifier("certificates", identifier);
+
+            Uri baseUri = new Uri(identifier, UriKind.Absolute);
+
+            // 4 segments: host + "certificates" + name + "pending"
+            if (baseUri.Segments.Length != 4)
+                isValid = false;
+
+            if (!string.Equals(baseUri.Segments[3], "pending"))
+                isValid = false;
+
+            return isValid;
+        }
+
         public CertificateOperationIdentifier(string vaultBaseUrl, string name)
             : base(vaultBaseUrl, "certificates", name, "pending")
         {
+            _baseIdentifier = _identifier;
+            _version = string.Empty;
         }
-
+        
         public CertificateOperationIdentifier(string identifier)
             : base("certificates", identifier)
         {
-            if (0 != string.CompareOrdinal("pending", Version))
-                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid CertificateOperationIdentifier: {0}.", identifier));
+            _baseIdentifier = _identifier;
+            _version = string.Empty;
         }
     }
 
     public sealed class IssuerIdentifier : ObjectIdentifier
     {
+        public static bool IsIssuerIdentifier(string identifier)
+        {
+            if (string.IsNullOrEmpty(identifier))
+                return false;
+
+            Uri baseUri = new Uri(identifier, UriKind.Absolute);
+
+            if (baseUri.Segments.Length != 4 || !string.Equals(baseUri.Segments[1], "certificates/") || !string.Equals(baseUri.Segments[2], "issuers/"))
+                return false;
+
+            return true;
+        }
+
         public IssuerIdentifier(string vaultBaseUrl, string name)
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
@@ -247,7 +279,7 @@ namespace Microsoft.Azure.KeyVault
             var baseUri = new Uri(vaultBaseUrl, UriKind.Absolute);
 
             _name = name;
-            _version = null;
+            _version = string.Empty;
             _vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
             _vaultWithoutScheme = baseUri.Authority;
             _baseIdentifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", _vault, "certificates/issuers", _name);
@@ -262,7 +294,7 @@ namespace Microsoft.Azure.KeyVault
 
             Uri baseUri = new Uri(identifier, UriKind.Absolute);
 
-            // We expect and identifier with either 3 or 4 segments: host + collection + name [+ version]
+            // We expect an identifier with 4 segments: host + "certificates" + "issuers" + name
             if (baseUri.Segments.Length != 4)
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", identifier, baseUri.Segments.Length));
 
@@ -273,7 +305,7 @@ namespace Microsoft.Azure.KeyVault
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}', found '{2}'", identifier, "issuers/", baseUri.Segments[1]));
 
             _name = baseUri.Segments[3].Substring(0, baseUri.Segments[3].Length).TrimEnd('/');
-            _version = null;
+            _version = string.Empty;
             _vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
             _vaultWithoutScheme = baseUri.Authority;
             _baseIdentifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", _vault, "certificates/issuers", _name);

@@ -22,6 +22,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the IssuerAttributes class.
         /// </summary>
+        /// <param name="enabled">Determines whether the issuer is enabled</param>
+        /// <param name="created">Creation time in UTC</param>
+        /// <param name="updated">Last updated time in UTC</param>
         public IssuerAttributes(bool? enabled = default(bool?), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?))
         {
             Enabled = enabled;

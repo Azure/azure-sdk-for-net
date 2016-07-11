@@ -139,7 +139,7 @@ namespace KeyVault.Tests
                     Properties = new VaultProperties
                     {
                         EnabledForDeployment = true,
-                        Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = "Premium" },
+                        Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = SkuName.Premium },
                         TenantId = Guid.Parse(tenantId),
                         VaultUri = "",
                         AccessPolicies = new[]

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.KeyVault
     public static partial class VaultsOperationsExtensions
     {
             /// <summary>
-            /// Creates a new Azure key vault.
+            /// Create or update a key vault in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.KeyVault
             }
 
             /// <summary>
-            /// Creates a new Azure key vault.
+            /// Create or update a key vault in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -157,9 +157,9 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <param name='top'>
             /// Maximum number of results to return.
             /// </param>
-            public static IPage<Vault> List(this IVaultsOperations operations, string resourceGroupName, int top)
+            public static IPage<Vault> ListByResourceGroup(this IVaultsOperations operations, string resourceGroupName, int? top = default(int?))
             {
-                return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListAsync(resourceGroupName, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListByResourceGroupAsync(resourceGroupName, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -178,9 +178,9 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Vault>> ListAsync(this IVaultsOperations operations, string resourceGroupName, int top, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Vault>> ListByResourceGroupAsync(this IVaultsOperations operations, string resourceGroupName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -196,9 +196,9 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <param name='top'>
             /// Maximum number of results to return.
             /// </param>
-            public static IPage<Vault> ListAll(this IVaultsOperations operations, int top)
+            public static IPage<Vault> List(this IVaultsOperations operations, int? top = default(int?))
             {
-                return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListAllAsync(top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListAsync(top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,9 +214,9 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Vault>> ListAllAsync(this IVaultsOperations operations, int top, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Vault>> ListAsync(this IVaultsOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -225,6 +225,42 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <summary>
             /// The List operation gets information about the vaults associated with the
             /// subscription and within the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Vault> ListByResourceGroupNext(this IVaultsOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The List operation gets information about the vaults associated with the
+            /// subscription and within the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Vault>> ListByResourceGroupNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The List operation gets information about the vaults associated with the
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -239,7 +275,7 @@ namespace Microsoft.Azure.Management.KeyVault
 
             /// <summary>
             /// The List operation gets information about the vaults associated with the
-            /// subscription and within the specified resource group.
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,42 +289,6 @@ namespace Microsoft.Azure.Management.KeyVault
             public static async Task<IPage<Vault>> ListNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The List operation gets information about the vaults associated with the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Vault> ListAllNext(this IVaultsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The List operation gets information about the vaults associated with the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Vault>> ListAllNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

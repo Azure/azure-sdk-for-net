@@ -22,6 +22,10 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the CertificateItem class.
         /// </summary>
+        /// <param name="id">Certificate Identifier</param>
+        /// <param name="attributes">The certificate management attributes</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
+        /// <param name="x5T">Thumbprint of the certificate.</param>
         public CertificateItem(string id = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), byte[] x5T = default(byte[]))
         {
             Id = id;

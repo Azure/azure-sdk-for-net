@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Key Vault resource
+    /// </summary>
     public partial class Resource : IResource
     {
         /// <summary>
@@ -22,11 +25,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="name">The name of the key vault.</param>
+        /// <param name="location">The supported Azure location where the key vault should be created.</param>
+        /// <param name="id">The Azure Resource Manager resource ID for the key vault.</param>
+        /// <param name="type">The resource type of the key vault.</param>
+        /// <param name="tags">The tags that will be assigned to the key vault. </param>
         public Resource(string name, string location, string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
@@ -37,31 +40,32 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         }
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets the Azure Resource Manager resource ID for the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource name
+        /// Gets or sets the name of the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets resource type
+        /// Gets the resource type of the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource location
+        /// Gets or sets the supported Azure location where the key vault
+        /// should be created.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets the tags that will be assigned to the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

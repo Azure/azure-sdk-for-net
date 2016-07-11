@@ -43,7 +43,7 @@ namespace Microsoft.Azure.KeyVault
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Gets Azure subscription credentials.
+        /// Credentials needed for the client to connect to Azure.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.KeyVault
         /// Initializes a new instance of the KeyVaultClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.KeyVault
         /// Initializes a new instance of the KeyVaultClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -147,6 +147,10 @@ namespace Microsoft.Azure.KeyVault
             }
         }
 
+        /// <summary>
+        /// An optional partial-method to perform custom initialization.
+        /// </summary>
+        partial void CustomInitialize();
         /// <summary>
         /// Initializes client properties.
         /// </summary>
@@ -182,6 +186,7 @@ namespace Microsoft.Azure.KeyVault
                         new Iso8601TimeSpanConverter()
                     }
             };
+            CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
         /// <summary>
@@ -6333,6 +6338,10 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificatePolicy");
             }
+            if (certificatePolicy != null)
+            {
+                certificatePolicy.Validate();
+            }
             CertificateCreateParameters parameters = new CertificateCreateParameters();
             if (certificatePolicy != null || certificateAttributes != null || tags != null)
             {
@@ -6556,6 +6565,10 @@ namespace Microsoft.Azure.KeyVault
             if (certificatePolicy == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificatePolicy");
+            }
+            if (certificatePolicy != null)
+            {
+                certificatePolicy.Validate();
             }
             CertificateImportParameters parameters = new CertificateImportParameters();
             if (base64EncodedCertificate != null || password != null || certificatePolicy != null || certificateAttributes != null || tags != null)

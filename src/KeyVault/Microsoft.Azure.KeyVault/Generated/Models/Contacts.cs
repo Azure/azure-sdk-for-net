@@ -22,6 +22,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Contacts class.
         /// </summary>
+        /// <param name="id">Identifier for the contacts collection.</param>
+        /// <param name="contactList">Contacts.</param>
         public Contacts(string id = default(string), IList<Contact> contactList = default(IList<Contact>))
         {
             Id = id;

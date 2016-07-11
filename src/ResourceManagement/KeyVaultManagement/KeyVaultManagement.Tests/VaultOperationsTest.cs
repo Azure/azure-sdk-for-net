@@ -51,7 +51,7 @@ namespace KeyVault.Management.Tests
                             EnabledForDeployment = true,
                             EnabledForDiskEncryption = true,
                             EnabledForTemplateDeployment = true,
-                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = "Standard" },
+                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = SkuName.Standard },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
                             AccessPolicies = new[]
@@ -69,7 +69,7 @@ namespace KeyVault.Management.Tests
                     tenantIdGuid,
                     testBase.location,
                     "A",
-                    "Standard",
+                    SkuName.Standard,
                     true,
                     true,
                     true,
@@ -78,7 +78,7 @@ namespace KeyVault.Management.Tests
 
                 //Update
 
-                createdVault.Properties.Sku.Name = "Premium";
+                createdVault.Properties.Sku.Name = SkuName.Premium;
                 accPol.Permissions.Secrets = new string[] { "get", "set" };
                 accPol.Permissions.Keys = null;
                 createdVault.Properties.AccessPolicies = new[] { accPol };
@@ -101,7 +101,7 @@ namespace KeyVault.Management.Tests
                     tenantIdGuid,
                     testBase.location,
                     "A",
-                    "Premium",
+                    SkuName.Premium,
                     true,
                     true,
                     true,
@@ -119,7 +119,7 @@ namespace KeyVault.Management.Tests
                     tenantIdGuid,
                     testBase.location,
                     "A",
-                    "Premium",
+                    SkuName.Premium,
                     true,
                     true,
                     true,
@@ -180,7 +180,7 @@ namespace KeyVault.Management.Tests
                             EnabledForDeployment = true,
                             EnabledForDiskEncryption = true,
                             EnabledForTemplateDeployment = true,
-                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = "Standard" },
+                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = SkuName.Standard },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
                             AccessPolicies = new[]
@@ -198,7 +198,7 @@ namespace KeyVault.Management.Tests
                     tenantIdGuid,
                     testBase.location,
                     "A",
-                    "Standard",
+                    SkuName.Standard,
                     true,
                     true,
                     true,
@@ -217,7 +217,7 @@ namespace KeyVault.Management.Tests
                     tenantIdGuid,
                     testBase.location,
                     "A",
-                    "Standard",
+                    SkuName.Standard,
                     true,
                     true,
                     true,
@@ -247,7 +247,7 @@ namespace KeyVault.Management.Tests
             Guid expectedTenantId,
             string expectedLocation,
             string expectedSkuFamily,
-            string expectedSku,
+            SkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
@@ -344,7 +344,7 @@ namespace KeyVault.Management.Tests
                                 EnabledForDeployment = true,
                                 EnabledForDiskEncryption = true,
                                 EnabledForTemplateDeployment = true,
-                                Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = "Standard" },
+                                Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = SkuName.Standard },
                                 TenantId = tenantIdGuid,
                                 VaultUri = "",
                                 AccessPolicies = new[]
@@ -370,7 +370,7 @@ namespace KeyVault.Management.Tests
                     vaultNameList.Add(createdVault.Name);
                 }
 
-                var vaults = client.Vaults.List(rgName, top);
+                var vaults = client.Vaults.ListByResourceGroup(rgName, top);
                 Assert.NotNull(vaults);
 
                 foreach (var v in vaults)
@@ -389,7 +389,7 @@ namespace KeyVault.Management.Tests
                 }
                 Assert.True(resourceIds.Count == 0);
 
-                var allVaults = client.Vaults.ListAll(top);
+                var allVaults = client.Vaults.List(top);
                 Assert.NotNull(vaults);
 
                 // Delete

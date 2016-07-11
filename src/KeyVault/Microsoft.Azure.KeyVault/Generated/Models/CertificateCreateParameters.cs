@@ -24,6 +24,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the CertificateCreateParameters
         /// class.
         /// </summary>
+        /// <param name="certificatePolicy">The management policy for the certificate</param>
+        /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public CertificateCreateParameters(CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             CertificatePolicy = certificatePolicy;
@@ -61,6 +64,10 @@ namespace Microsoft.Azure.KeyVault.Models
             if (CertificatePolicy == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CertificatePolicy");
+            }
+            if (this.CertificatePolicy != null)
+            {
+                this.CertificatePolicy.Validate();
             }
         }
     }

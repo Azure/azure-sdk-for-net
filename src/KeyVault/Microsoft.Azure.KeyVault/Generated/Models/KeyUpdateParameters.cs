@@ -22,6 +22,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyUpdateParameters class.
         /// </summary>
+        /// <param name="keyOps">Json web key operations. For more information on possible key operations, see JsonWebKeyOperation.</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public KeyUpdateParameters(IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             KeyOps = keyOps;

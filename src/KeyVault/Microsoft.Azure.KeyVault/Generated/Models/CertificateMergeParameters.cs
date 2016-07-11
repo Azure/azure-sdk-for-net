@@ -22,6 +22,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the CertificateMergeParameters class.
         /// </summary>
+        /// <param name="x509Certificates">The certificate or the certificte chain to merge</param>
+        /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public CertificateMergeParameters(IList<byte[]> x509Certificates, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             X509Certificates = x509Certificates;

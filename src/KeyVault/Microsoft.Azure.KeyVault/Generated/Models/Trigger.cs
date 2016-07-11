@@ -22,16 +22,43 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Trigger class.
         /// </summary>
-        public Trigger(int? lifetimePercentage = default(int?))
+        /// <param name="lifetimePercentage">Percentage of lifetime as which to trigger. Value should be between 1 and 99.</param>
+        /// <param name="daysBeforeExpiry">Days before expiry.</param>
+        public Trigger(int? lifetimePercentage = default(int?), int? daysBeforeExpiry = default(int?))
         {
             LifetimePercentage = lifetimePercentage;
+            DaysBeforeExpiry = daysBeforeExpiry;
         }
 
         /// <summary>
-        /// Gets or sets the type of the action.
+        /// Gets or sets percentage of lifetime as which to trigger. Value
+        /// should be between 1 and 99.
         /// </summary>
         [JsonProperty(PropertyName = "lifetime_percentage")]
         public int? LifetimePercentage { get; set; }
 
+        /// <summary>
+        /// Gets or sets days before expiry.
+        /// </summary>
+        [JsonProperty(PropertyName = "days_before_expiry")]
+        public int? DaysBeforeExpiry { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.LifetimePercentage > 99)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "LifetimePercentage", 99);
+            }
+            if (this.LifetimePercentage < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "LifetimePercentage", 1);
+            }
+        }
     }
 }

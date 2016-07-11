@@ -22,6 +22,13 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the JsonWebKey class.
         /// </summary>
+        /// <param name="kid">Key Identifier</param>
+        /// <param name="kty">Key type, usually RSA</param>
+        /// <param name="n">RSA modulus</param>
+        /// <param name="e">RSA public exponent</param>
+        /// <param name="d">RSA private exponent</param>
+        /// <param name="k">Symmetric key</param>
+        /// <param name="t">HSM Token, used with Bring Your Own Key</param>
         public JsonWebKey(string kid = default(string), string kty = default(string), IList<string> keyOps = default(IList<string>), byte[] n = default(byte[]), byte[] e = default(byte[]), byte[] d = default(byte[]), byte[] dp = default(byte[]), byte[] dq = default(byte[]), byte[] qi = default(byte[]), byte[] p = default(byte[]), byte[] q = default(byte[]), byte[] k = default(byte[]), byte[] t = default(byte[]))
         {
             Kid = kid;

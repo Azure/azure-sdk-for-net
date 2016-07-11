@@ -24,6 +24,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the
         /// PendingCertificateSigningRequestResult class.
         /// </summary>
+        /// <param name="value">The pending certificate signing request as Base64 encoded string.</param>
         public PendingCertificateSigningRequestResult(string value = default(string))
         {
             Value = value;

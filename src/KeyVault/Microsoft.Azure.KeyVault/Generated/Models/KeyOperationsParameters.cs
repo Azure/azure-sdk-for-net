@@ -22,6 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyOperationsParameters class.
         /// </summary>
+        /// <param name="algorithm">algorithm identifier</param>
         public KeyOperationsParameters(string algorithm, byte[] value)
         {
             Algorithm = algorithm;

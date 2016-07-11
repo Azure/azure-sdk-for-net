@@ -22,6 +22,15 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the CertificateBundle class.
         /// </summary>
+        /// <param name="id">The certificate id</param>
+        /// <param name="kid">The key id</param>
+        /// <param name="sid">The secret id</param>
+        /// <param name="x5t">Thumbprint of the certificate.</param>
+        /// <param name="policy">The management policy.</param>
+        /// <param name="cer"> CER contents of x509 certificate.</param>
+        /// <param name="contentType">The content type of the secret</param>
+        /// <param name="attributes">The certificate attributes.</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public CertificateBundle(string id = default(string), string kid = default(string), string sid = default(string), byte[] x5t = default(byte[]), CertificatePolicy policy = default(CertificatePolicy), byte[] cer = default(byte[]), string contentType = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
@@ -92,5 +101,18 @@ namespace Microsoft.Azure.KeyVault.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Policy != null)
+            {
+                this.Policy.Validate();
+            }
+        }
     }
 }

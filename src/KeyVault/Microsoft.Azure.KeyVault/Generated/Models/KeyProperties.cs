@@ -22,10 +22,14 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyProperties class.
         /// </summary>
-        public KeyProperties(bool? exportable = default(bool?), string kty = default(string), int? keySize = default(int?), bool? reuseKey = default(bool?))
+        /// <param name="exportable">Indicates if the private key can be exported.</param>
+        /// <param name="keyType">The key type.</param>
+        /// <param name="keySize">The key size.</param>
+        /// <param name="reuseKey">Indicates if the same key pair will be used on certificate renewal.</param>
+        public KeyProperties(bool? exportable = default(bool?), string keyType = default(string), int? keySize = default(int?), bool? reuseKey = default(bool?))
         {
             Exportable = exportable;
-            Kty = kty;
+            KeyType = keyType;
             KeySize = keySize;
             ReuseKey = reuseKey;
         }
@@ -40,7 +44,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Gets or sets the key type.
         /// </summary>
         [JsonProperty(PropertyName = "kty")]
-        public string Kty { get; set; }
+        public string KeyType { get; set; }
 
         /// <summary>
         /// Gets or sets the key size.

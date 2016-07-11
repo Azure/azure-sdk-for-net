@@ -22,6 +22,10 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the AdministratorDetails class.
         /// </summary>
+        /// <param name="firstName">First name.</param>
+        /// <param name="lastName">Last name.</param>
+        /// <param name="emailAddress">Email addresss.</param>
+        /// <param name="phone">Phone number.</param>
         public AdministratorDetails(string firstName = default(string), string lastName = default(string), string emailAddress = default(string), string phone = default(string))
         {
             FirstName = firstName;

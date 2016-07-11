@@ -22,16 +22,18 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Action class.
         /// </summary>
-        public Action(string actionType = default(string))
+        /// <param name="actionType">The type of the action. Possible values include: 'EmailContacts', 'AutoRenew'</param>
+        public Action(ActionType? actionType = default(ActionType?))
         {
             ActionType = actionType;
         }
 
         /// <summary>
-        /// Gets or sets the type of the action.
+        /// Gets or sets the type of the action. Possible values include:
+        /// 'EmailContacts', 'AutoRenew'
         /// </summary>
         [JsonProperty(PropertyName = "action_type")]
-        public string ActionType { get; set; }
+        public ActionType? ActionType { get; set; }
 
     }
 }

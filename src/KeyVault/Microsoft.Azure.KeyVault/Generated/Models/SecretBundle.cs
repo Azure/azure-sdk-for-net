@@ -22,6 +22,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the SecretBundle class.
         /// </summary>
+        /// <param name="value">The secret value </param>
+        /// <param name="id">The secret id</param>
+        /// <param name="contentType">The content type of the secret</param>
+        /// <param name="attributes">The secret management attributes</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public SecretBundle(string value = default(string), string id = default(string), string contentType = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Value = value;

@@ -22,6 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyRestoreParameters class.
         /// </summary>
+        /// <param name="keyBundleBackup">the backup blob associated with a key bundle</param>
         public KeyRestoreParameters(byte[] keyBundleBackup)
         {
             KeyBundleBackup = keyBundleBackup;

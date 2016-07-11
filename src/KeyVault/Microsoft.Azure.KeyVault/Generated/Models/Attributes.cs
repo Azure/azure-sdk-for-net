@@ -22,6 +22,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Attributes class.
         /// </summary>
+        /// <param name="enabled">Determines whether the object is enabled</param>
+        /// <param name="notBefore">Not before date in UTC</param>
+        /// <param name="expires">Expiry date in UTC</param>
+        /// <param name="created">Creation time in UTC</param>
+        /// <param name="updated">Last updated time in UTC</param>
         public Attributes(bool? enabled = default(bool?), DateTime? notBefore = default(DateTime?), DateTime? expires = default(DateTime?), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?))
         {
             Enabled = enabled;

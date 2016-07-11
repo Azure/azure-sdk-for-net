@@ -22,6 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the IssuerReference class.
         /// </summary>
+        /// <param name="name">Name of the referenced issuer object.</param>
         public IssuerReference(string name = default(string))
         {
             Name = name;

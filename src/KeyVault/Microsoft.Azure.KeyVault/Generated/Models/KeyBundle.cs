@@ -22,6 +22,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyBundle class.
         /// </summary>
+        /// <param name="key">The Json web key</param>
+        /// <param name="attributes">The key management attributes</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public KeyBundle(JsonWebKey key = default(JsonWebKey), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Key = key;

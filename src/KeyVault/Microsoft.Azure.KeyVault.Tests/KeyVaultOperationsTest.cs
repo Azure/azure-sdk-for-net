@@ -854,7 +854,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -966,7 +966,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1078,7 +1078,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1177,7 +1177,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1212,7 +1212,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1280,7 +1280,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1313,7 +1313,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1372,7 +1372,7 @@ namespace KeyVault.Tests
                         {
                             Exportable = true,
                             KeySize = 2048,
-                            Kty = "RSA",
+                            KeyType = "RSA",
                             ReuseKey = false
                         },
                         SecretProperties = new SecretProperties
@@ -1449,7 +1449,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1539,7 +1539,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1630,7 +1630,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1707,7 +1707,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1787,7 +1787,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -1875,7 +1875,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties
@@ -2042,12 +2042,6 @@ namespace KeyVault.Tests
                     },
                     OrganizationDetails = new OrganizationDetails
                     {
-                        Name = "MICROSOFT CORP",
-                        Address1 = "1 Microsoft Way",
-                        City = "Redmond",
-                        State = "WA",
-                        Zipcode = "98007",
-                        Country = "US",
                         AdministratorDetails = new List<AdministratorDetails>
                         {
                             new AdministratorDetails
@@ -2078,12 +2072,6 @@ namespace KeyVault.Tests
                     },
                     OrganizationDetails = new OrganizationDetails
                     {
-                        Name = "Xbox CORP",
-                        Address1 = "1 Xbox Way",
-                        City = "Bellevue",
-                        State = "WA",
-                        Zipcode = "98004",
-                        Country = "US",
                         AdministratorDetails = new List<AdministratorDetails>
                         {
                             new AdministratorDetails
@@ -2137,7 +2125,7 @@ namespace KeyVault.Tests
                     {
                         Exportable = true,
                         KeySize = 2048,
-                        Kty = "RSA",
+                        KeyType = "RSA",
                         ReuseKey = false
                     },
                     SecretProperties = new SecretProperties

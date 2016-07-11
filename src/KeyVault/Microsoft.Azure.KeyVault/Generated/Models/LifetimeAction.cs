@@ -22,6 +22,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the LifetimeAction class.
         /// </summary>
+        /// <param name="trigger">The condition that will execute the action.</param>
+        /// <param name="action">The action that will be executed.</param>
         public LifetimeAction(Trigger trigger = default(Trigger), Action action = default(Action))
         {
             Trigger = trigger;
@@ -40,5 +42,18 @@ namespace Microsoft.Azure.KeyVault.Models
         [JsonProperty(PropertyName = "action")]
         public Action Action { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Trigger != null)
+            {
+                this.Trigger.Validate();
+            }
+        }
     }
 }

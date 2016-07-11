@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Parameters for creating or updating a vault
+    /// </summary>
     public partial class VaultCreateOrUpdateParameters : IResource
     {
         /// <summary>
@@ -24,9 +27,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Initializes a new instance of the VaultCreateOrUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="location">Resource location</param>
+        /// <param name="location">The supported Azure location where the key vault should be created.</param>
         /// <param name="properties">Properties of the vault</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="tags">The tags that will be assigned to the key vault. </param>
         public VaultCreateOrUpdateParameters(string location, VaultProperties properties, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Location = location;
@@ -35,13 +38,14 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         }
 
         /// <summary>
-        /// Gets or sets resource location
+        /// Gets or sets the supported Azure location where the key vault
+        /// should be created.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets the tags that will be assigned to the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

@@ -22,6 +22,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the CertificateIssuerItem class.
         /// </summary>
+        /// <param name="id">Certificate Identifier</param>
+        /// <param name="provider">The name of the issuer.</param>
         public CertificateIssuerItem(string id = default(string), string provider = default(string))
         {
             Id = id;

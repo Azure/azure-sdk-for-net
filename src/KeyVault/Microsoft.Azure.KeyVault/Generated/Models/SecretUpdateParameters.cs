@@ -22,6 +22,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the SecretUpdateParameters class.
         /// </summary>
+        /// <param name="contentType">Type of the secret value such as a password</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public SecretUpdateParameters(string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             ContentType = contentType;

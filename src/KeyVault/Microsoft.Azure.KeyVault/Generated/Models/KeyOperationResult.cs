@@ -22,6 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyOperationResult class.
         /// </summary>
+        /// <param name="kid">Key identifier</param>
         public KeyOperationResult(string kid = default(string), byte[] result = default(byte[]))
         {
             Kid = kid;

@@ -22,59 +22,19 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the OrganizationDetails class.
         /// </summary>
-        public OrganizationDetails(string name = default(string), string address1 = default(string), string address2 = default(string), string city = default(string), string zipcode = default(string), string state = default(string), string country = default(string), IList<AdministratorDetails> administratorDetails = default(IList<AdministratorDetails>))
+        /// <param name="id">Id of the organization.</param>
+        /// <param name="administratorDetails">Details of the organization administrator.</param>
+        public OrganizationDetails(string id = default(string), IList<AdministratorDetails> administratorDetails = default(IList<AdministratorDetails>))
         {
-            Name = name;
-            Address1 = address1;
-            Address2 = address2;
-            City = city;
-            Zipcode = zipcode;
-            State = state;
-            Country = country;
+            Id = id;
             AdministratorDetails = administratorDetails;
         }
 
         /// <summary>
-        /// Gets or sets name of the organization.
+        /// Gets or sets id of the organization.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets address line 1.
-        /// </summary>
-        [JsonProperty(PropertyName = "address1")]
-        public string Address1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets address line 2.
-        /// </summary>
-        [JsonProperty(PropertyName = "address2")]
-        public string Address2 { get; set; }
-
-        /// <summary>
-        /// Gets or sets city.
-        /// </summary>
-        [JsonProperty(PropertyName = "city")]
-        public string City { get; set; }
-
-        /// <summary>
-        /// Gets or sets zipcode.
-        /// </summary>
-        [JsonProperty(PropertyName = "zip")]
-        public string Zipcode { get; set; }
-
-        /// <summary>
-        /// Gets or sets state.
-        /// </summary>
-        [JsonProperty(PropertyName = "state")]
-        public string State { get; set; }
-
-        /// <summary>
-        /// Gets or sets country.
-        /// </summary>
-        [JsonProperty(PropertyName = "country")]
-        public string Country { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets details of the organization administrator.

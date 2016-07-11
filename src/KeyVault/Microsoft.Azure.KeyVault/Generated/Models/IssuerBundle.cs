@@ -22,6 +22,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the IssuerBundle class.
         /// </summary>
+        /// <param name="id">Identifier for the issuer object.</param>
+        /// <param name="provider">The name of the issuer.</param>
+        /// <param name="credentials">The credentials to be used for the issuer.</param>
+        /// <param name="organizationDetails">Details of the organization as provided to the issuer.</param>
+        /// <param name="attributes">Attributes of the issuer object.</param>
         public IssuerBundle(string id = default(string), string provider = default(string), IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes))
         {
             Id = id;

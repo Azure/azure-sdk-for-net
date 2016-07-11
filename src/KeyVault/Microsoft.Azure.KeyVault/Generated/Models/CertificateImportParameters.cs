@@ -24,6 +24,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the CertificateImportParameters
         /// class.
         /// </summary>
+        /// <param name="base64EncodedCertificate">Base64 encoded representaion of the certificate object to import. This certificate needs to contain the private key.</param>
+        /// <param name="password">If the private key in base64EncodedCertificate is encrypted, the password used for encryption</param>
+        /// <param name="certificatePolicy">The management policy for the certificate</param>
+        /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public CertificateImportParameters(string base64EncodedCertificate, string password, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Base64EncodedCertificate = base64EncodedCertificate;
@@ -86,6 +91,10 @@ namespace Microsoft.Azure.KeyVault.Models
             if (CertificatePolicy == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CertificatePolicy");
+            }
+            if (this.CertificatePolicy != null)
+            {
+                this.CertificatePolicy.Validate();
             }
         }
     }

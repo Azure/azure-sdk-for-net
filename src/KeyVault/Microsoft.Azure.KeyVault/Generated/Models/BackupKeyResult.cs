@@ -22,6 +22,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the BackupKeyResult class.
         /// </summary>
+        /// <param name="value">The backup blob containing the backed up key</param>
         public BackupKeyResult(byte[] value = default(byte[]))
         {
             Value = value;

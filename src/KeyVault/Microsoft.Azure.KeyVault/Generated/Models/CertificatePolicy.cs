@@ -22,6 +22,13 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the CertificatePolicy class.
         /// </summary>
+        /// <param name="id">The certificate id</param>
+        /// <param name="keyProperties">Properties of the key backing a certificate.</param>
+        /// <param name="secretProperties">Properties of the secret backing a certificate.</param>
+        /// <param name="x509CertificateProperties">Properties of the X509 component of a certificate.</param>
+        /// <param name="lifetimeActions">Actions that will be performed by Key Vault over the lifetime of a certificate.</param>
+        /// <param name="issuerReference">Reference to the issuer of the X509 component of a certificate.</param>
+        /// <param name="attributes">The certificate attributes.</param>
         public CertificatePolicy(string id = default(string), KeyProperties keyProperties = default(KeyProperties), SecretProperties secretProperties = default(SecretProperties), X509CertificateProperties x509CertificateProperties = default(X509CertificateProperties), IList<LifetimeAction> lifetimeActions = default(IList<LifetimeAction>), IssuerReference issuerReference = default(IssuerReference), CertificateAttributes attributes = default(CertificateAttributes))
         {
             Id = id;
@@ -77,5 +84,28 @@ namespace Microsoft.Azure.KeyVault.Models
         [JsonProperty(PropertyName = "attributes")]
         public CertificateAttributes Attributes { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.X509CertificateProperties != null)
+            {
+                this.X509CertificateProperties.Validate();
+            }
+            if (this.LifetimeActions != null)
+            {
+                foreach (var element in this.LifetimeActions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

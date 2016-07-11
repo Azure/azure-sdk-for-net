@@ -22,6 +22,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the IssuerCredentials class.
         /// </summary>
+        /// <param name="accountId">The user name/account name/account id.</param>
+        /// <param name="password">The password/secret/account key.</param>
         public IssuerCredentials(string accountId = default(string), string password = default(string))
         {
             AccountId = accountId;

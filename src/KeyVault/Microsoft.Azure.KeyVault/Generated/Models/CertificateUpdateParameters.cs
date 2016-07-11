@@ -24,6 +24,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the CertificateUpdateParameters
         /// class.
         /// </summary>
+        /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
+        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         public CertificateUpdateParameters(CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             CertificateAttributes = certificateAttributes;
