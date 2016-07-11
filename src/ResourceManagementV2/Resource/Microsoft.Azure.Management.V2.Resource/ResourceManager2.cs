@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.ResourceGroup;
 using Microsoft.Rest;
 using System;
 using System.Linq;
@@ -101,7 +100,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             {
                 if (resourceGroups == null)
                 {
-                    resourceGroups = new ResourceGroups(); // TODO init
+                    resourceGroups = new ResourceGroupsImpl(); // TODO init
                 }
                 return resourceGroups;
             }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
 
-namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup
+namespace Microsoft.Azure.Management.V2.Resource
 {
     public interface IResourceGroups :
-        ISupportsCreating<Definition.IBlank>
+        ISupportsCreating<ResourceGroup.Definition.IBlank>
     {
     }
 }

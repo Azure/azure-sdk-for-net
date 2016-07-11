@@ -1,19 +1,14 @@
 ﻿using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.V2.Resource.Resource.Update;
-using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Definition;
-using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Update;
 
-namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup
+namespace Microsoft.Azure.Management.V2.Resource
 {
-    internal class ResourceGroup : 
-        CreatableUpdatable<IResourceGroup, ResourceManager.Models.ResourceGroup, ResourceGroup>,
+    internal class ResourceGroupImpl : 
+        CreatableUpdatable<IResourceGroup, ResourceManager.Models.ResourceGroup, ResourceGroupImpl>,
             IResourceGroup,
-            IDefinition,
-            IUpdate
+            ResourceGroup.Definition.IDefinition,
+            ResourceGroup.Update.IUpdate
     {
         ResourceManager.ResourceManagementClient client;
 
@@ -65,7 +60,7 @@ namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup
             }
         }
 
-        internal ResourceGroup(ResourceManager.Models.ResourceGroup inner, ResourceManager.ResourceManagementClient client) : base(inner.Name, inner)
+        internal ResourceGroupImpl(ResourceManager.Models.ResourceGroup inner, ResourceManager.ResourceManagementClient client) : base(inner.Name, inner)
         {
             this.client = client;
         }
@@ -75,7 +70,7 @@ namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup
             return await CreateAsync();
         }
 
-        public IUpdate Update() {
+        public ResourceGroup.Update.IUpdate Update() {
             return this;
         }
 
@@ -96,25 +91,27 @@ namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup
             ResourceManager.Models.ResourceGroup param = new ResourceManager.Models.ResourceGroup();
             param.Location = Inner.Location;
             param.Tags = Inner.Tags;
-            var response = await this.client.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(Name, param);
+            var response = await client.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(Name, param);
             SetInner(response.Body);
         }
 
         #region Fluent setters
 
-        public IWithCreate withRegion(string regionName)
+        #region Definition setters 
+
+        public ResourceGroup.Definition.IWithCreate withRegion(string regionName)
         {
             Inner.Location = regionName;
             return this;
         }
 
-        public IWithCreate withTags(IDictionary<string, string> tags)
+        ResourceGroup.Definition.IWithCreate Resource.Definition.IWithTags<ResourceGroup.Definition.IWithCreate>.withTags(IDictionary<string, string> tags)
         {
             Inner.Tags = tags;
             return this;
         }
 
-        public IWithCreate withTag(string key, string value)
+        ResourceGroup.Definition.IWithCreate Resource.Definition.IWithTags<ResourceGroup.Definition.IWithCreate>.withTag(string key, string value)
         {
             if (Inner.Tags == null)
             {
@@ -125,21 +122,27 @@ namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup
             return this;
         }
 
-        IUpdate IWithTags<IUpdate>.withTags(IDictionary<string, string> tags)
+        #endregion
+
+        #region Update setters
+
+        ResourceGroup.Update.IUpdate Resource.Update.IWithTags<ResourceGroup.Update.IUpdate>.withTags(IDictionary<string, string> tags)
         {
             Inner.Tags = tags;
             return this;
         }
 
-        IUpdate IWithTags<IUpdate>.withTag(string key, string value)
+        ResourceGroup.Update.IUpdate Resource.Update.IWithTags<ResourceGroup.Update.IUpdate>.withTag(string key, string value)
         {
             return this;
         }
 
-        IUpdate IWithTags<IUpdate>.withoutTag(string key)
+        public ResourceGroup.Update.IUpdate withoutTag(string key)
         {
             return this;
         }
+
+        #endregion
 
         #endregion
     }
