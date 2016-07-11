@@ -2,9 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.V2.Resource.DAG
+namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public class Node<DataT>
+    internal class Node<DataT>
     {
         private HashSet<string> children;
 

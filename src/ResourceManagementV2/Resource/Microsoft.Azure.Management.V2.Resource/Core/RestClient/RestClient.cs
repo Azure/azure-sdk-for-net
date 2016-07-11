@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.RestClient
+namespace Microsoft.Azure.Management.V2.Resource.Core
 {
     /// <summary>
     /// The RestClient
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.V2.Resource.RestClient
         /// Builder to configure and build a RestClient.
         /// </summary>
         /// <returns></returns>
-        public static RestClientBuilder.IBlank Builder()
+        public static RestClientBuilder.IBlank Configure()
         {
             return new RestClientBuilder();
         }
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.V2.Resource.RestClient
             private UserAgentDelegatingHandler userAgentDelegatingHandler;
 
             /// <summary>
-            /// Restrict access so that for users it can be created only by <HttpClient cref="RestClient.Builder" />
+            /// Restrict access so that for users it can be created only by <HttpClient cref="RestClient.Configure" />
             /// </summary>
             internal RestClientBuilder()
             {

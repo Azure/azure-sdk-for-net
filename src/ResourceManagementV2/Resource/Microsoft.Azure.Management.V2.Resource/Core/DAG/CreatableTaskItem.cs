@@ -2,9 +2,9 @@
 using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.DAG
+namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public class CreatableTaskItem : ITaskItem<IResource>
+    internal class CreatableTaskItem : ITaskItem<IResource>
     {
         private ICreatable<IResource> creatable;
         private IResource createdResource;
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
                 return;
             }
 
-            createdResource = await creatable.Create();
+            createdResource = await creatable.CreateAsync();
         }
     }
 }

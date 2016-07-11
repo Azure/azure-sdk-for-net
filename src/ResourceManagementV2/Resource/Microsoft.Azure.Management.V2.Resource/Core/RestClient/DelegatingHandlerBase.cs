@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.RestClient
+namespace Microsoft.Azure.Management.V2.Resource.Core
 {
     public class DelegatingHandlerBase : DelegatingHandler
     {

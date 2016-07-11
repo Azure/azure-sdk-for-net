@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.V2.Resource.Core.Collections
+﻿namespace Microsoft.Azure.Management.V2.Resource.Core.CollectionActions
 {
     public interface ISupportsCreating<T>
     {

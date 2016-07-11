@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.RestClient
+namespace Microsoft.Azure.Management.V2.Resource.Core
 {
     public class HttpLoggingDelegatingHandler : DelegatingHandlerBase
     {

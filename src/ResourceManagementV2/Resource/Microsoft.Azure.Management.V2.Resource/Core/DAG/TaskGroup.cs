@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.DAG
+namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public interface ITaskGroup<TaskResultT, TaskItemT> where TaskItemT : ITaskItem<TaskResultT>
+    internal interface ITaskGroup<TaskResultT, TaskItemT> where TaskItemT : ITaskItem<TaskResultT>
     {
         DAGraph<TaskItemT, DAGNode<TaskItemT>> DAG { get; }
 

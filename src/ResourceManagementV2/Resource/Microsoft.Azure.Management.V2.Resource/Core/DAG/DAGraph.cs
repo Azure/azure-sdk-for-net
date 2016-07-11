@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.V2.Resource.DAG
+namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public class DAGraph<NodeDataT, NodeT> : Graph<NodeDataT, NodeT> where NodeT : DAGNode<NodeDataT> 
+    internal class DAGraph<NodeDataT, NodeT> : Graph<NodeDataT, NodeT> where NodeT : DAGNode<NodeDataT> 
     {
         private Queue<string> queue;
         private NodeT rootNode;

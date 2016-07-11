@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.DAG
+namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public abstract class TaskGroupBase<TaskResultT> : ITaskGroup<TaskResultT, ITaskItem<TaskResultT>>
+    internal abstract class TaskGroupBase<TaskResultT> : ITaskGroup<TaskResultT, ITaskItem<TaskResultT>>
     {
         public TaskGroupBase(string rootTaskItemId, ITaskItem<TaskResultT> rootTaskItem)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.V2.Resource.DAG;
+using Microsoft.Azure.Management.V2.Resource.Core.DAG;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             await CreateResource();
         }
 
-        public async Task<FluentResourceT> Create()
+        public async Task<FluentResourceT> CreateAsync()
         {
             if (creatableTaskGroup.IsPreparer)
             {

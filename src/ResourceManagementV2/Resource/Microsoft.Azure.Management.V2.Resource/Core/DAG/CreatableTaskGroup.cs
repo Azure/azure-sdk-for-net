@@ -1,10 +1,9 @@
-﻿using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+﻿using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.DAG
+namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public class CreatableTaskGroup : TaskGroupBase<IResource>
+    internal class CreatableTaskGroup : TaskGroupBase<IResource>
     {
         private IRootResourceCreator rootCreate;
 

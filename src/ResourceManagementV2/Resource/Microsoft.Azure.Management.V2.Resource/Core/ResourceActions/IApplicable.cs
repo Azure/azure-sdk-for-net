@@ -4,6 +4,6 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
     public interface IApplicable<IFluentResourceT> : IIndexable
     {
-        Task<IFluentResourceT> Apply();
+        Task<IFluentResourceT> ApplyAsync();
     }
 }

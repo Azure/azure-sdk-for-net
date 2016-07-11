@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.V2.Resource.DAG
+namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public class Graph<NodeDataT, NodeT> where NodeT : Node<NodeDataT>
+    internal class Graph<NodeDataT, NodeT> where NodeT : Node<NodeDataT>
     {
         protected IDictionary<string, NodeT> graph;
         private HashSet<string> visited;

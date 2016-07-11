@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.V2.Resource.DAG
+namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public class DAGNode<DataT> : Node<DataT>
+    internal class DAGNode<DataT> : Node<DataT>
     {
         private HashSet<string> dependentKeys;
         private int toBeResolved;
