@@ -69,32 +69,45 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             }
         }
 
+        //
+
+
+        protected bool IsInCreateMode
+        {
+            get
+            {
+                return Id == null;
+            }
+        }
+
+        //
+
         private void EnsureResource(InnerResourceT innerObject)
         {
             TypeInfo typeInfo = innerObject.GetType().GetTypeInfo();
             if (!HasProperty(innerObject, "Id"))
             {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource");
+                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Id property]");
             }
 
             if (!HasProperty(innerObject, "Location"))
             {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource");
+                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Location property]");
             }
 
             if (!HasProperty(innerObject, "Name"))
             {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource");
+                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Name property]");
             }
 
             if (!HasProperty(innerObject, "Tags"))
             {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource");
+                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Tags property]");
             }
 
             if (!HasProperty(innerObject, "Type"))
             {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource");
+                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Type property]");
             }
         }
 

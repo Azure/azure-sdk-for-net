@@ -1,3 +1,3 @@
 {
-  "projects": [ "Microsoft.Azure"]
+    "projects": [ "Microsoft.Azure", "../Resource" ]
 }

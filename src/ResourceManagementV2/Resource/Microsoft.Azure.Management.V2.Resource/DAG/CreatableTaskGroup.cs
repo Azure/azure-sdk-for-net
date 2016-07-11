@@ -6,16 +6,13 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
 {
     public class CreatableTaskGroup : TaskGroupBase<IResource>
     {
-        private RootResourceCreator rootCreate;
+        private IRootResourceCreator rootCreate;
 
-        public CreatableTaskGroup(string key, CreatableTaskItem rootTask, RootResourceCreator rootCreate) : base(key, rootTask)
+        public CreatableTaskGroup(string rootCreatableId, ICreatable<IResource> rootCreatable, IRootResourceCreator rootCreate) 
+            : base(rootCreatableId, new CreatableTaskItem(rootCreatable))
         {
             this.rootCreate = rootCreate;
         }
-
-        public CreatableTaskGroup(string rootCreatableId, ICreatable<IResource> rootCreatable, RootResourceCreator rootCreate) 
-            : this(rootCreatableId, new CreatableTaskItem(rootCreatable), rootCreate)
-        {}
 
         public IResource CreatedResource(string key)
         {
@@ -28,7 +25,7 @@ namespace Microsoft.Azure.Management.V2.Resource.DAG
         }
     }
 
-    public interface RootResourceCreator
+    public interface IRootResourceCreator
     {
         Task createRootResource();
     }

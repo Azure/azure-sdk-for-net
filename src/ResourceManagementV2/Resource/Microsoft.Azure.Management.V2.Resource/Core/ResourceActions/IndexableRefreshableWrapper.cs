@@ -4,7 +4,7 @@
     {
         protected IndexableRefreshableWrapper(string name, InnerResourceT innerObject) : base(name)
         {
-            setInner(innerObject);
+            SetInner(innerObject);
         }
 
         public InnerResourceT Inner
@@ -12,7 +12,7 @@
             get; private set;
         }
 
-        protected void setInner(InnerResourceT innerObject)
+        protected void SetInner(InnerResourceT innerObject)
         {
             Inner = innerObject;
         }

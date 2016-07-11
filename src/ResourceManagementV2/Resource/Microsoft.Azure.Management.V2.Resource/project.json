@@ -43,6 +43,7 @@
         }
     },
     "dependencies": {
+        "Microsoft.Azure.Management.ResourceManager": "1.1.3-preview",
         "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.11.305310302-alpha",
         "Microsoft.Rest.ClientRuntime.Azure.Authentication": "2.2.4-preview"
     }
