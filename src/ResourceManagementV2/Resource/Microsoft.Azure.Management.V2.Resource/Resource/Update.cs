@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Update
 
     public interface IWithTags<T>
     {
-        T withTags(IDictionary<string, string> tags);
+        T WithTags(IDictionary<string, string> tags);
 
-        T withTag(string key, string value);
+        T WithTag(string key, string value);
 
         T withoutTag(string key);
     }

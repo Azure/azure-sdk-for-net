@@ -1,28 +1,33 @@
 ﻿using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
-    public interface IStorageAccount
+    public interface IStorageAccount :
+        IRefreshable<IStorageAccount>,
+        IUpdatable<StorageAccount.Update.IUpdate>,
+        IWrapper<Management.Storage.Models.StorageAccount>
     {
-        AccountStatus accountStatuses();
+        AccountStatuses AccountStatuses { get; }
 
-        Sku sku();
+        Sku Sku { get; }
 
-        Kind kind();
+        Kind? Kind { get; }
 
-        DateTime creationTime();
+        DateTime? CreationTime { get; }
 
-        CustomDomain customDomain();
+        CustomDomain CustomDomain { get; }
 
-        DateTime lastGeoFailoverTime();
+        DateTime? LastGeoFailoverTime { get; }
 
-        ProvisioningState provisioningState();
+        ProvisioningState? ProvisioningState { get; }
 
-        PublicEndpoints endPoints();
+        PublicEndpoints EndPoints { get; }
 
-        Encryption encryption();
+        Encryption Encryption { get; }
 
-        AccessTier accessTier();
+        AccessTier? AccessTier { get; }
     }
 }

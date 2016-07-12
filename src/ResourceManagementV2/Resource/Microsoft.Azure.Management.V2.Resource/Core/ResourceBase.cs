@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// <typeparam name="IFluentResourceT"></typeparam>
     /// <typeparam name="InnerResourceT"></typeparam>
     /// <typeparam name="FluentResourceT"></typeparam>
-    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT> : CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT>,
+    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT> : 
+        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT>,
         IResource
         where IFluentResourceT : class
         where InnerResourceT : class     // TODO: This constraint will change to "where InnerResourceT : Resource" once we shared "Resource"
@@ -81,6 +82,40 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         }
 
         //
+
+        public FluentResourceT WithRegion(string regionName)
+        {
+            setValue("Location", regionName);
+            return this as FluentResourceT;
+        }
+
+        public FluentResourceT WithTags(IDictionary<string, string> tags)
+        {
+            setValue("Tags", tags);
+            return this as FluentResourceT;
+        }
+        
+        public FluentResourceT WithTag(string key, string value)
+        {
+            var tags = getValue("Tags") as IDictionary<string, string>;
+            if (!tags.ContainsKey(key))
+            {
+                tags.Add(key, value);
+            }
+            return this as FluentResourceT;
+        }
+
+        public FluentResourceT WithoutTag(string key)
+        {
+            var tags = getValue("Tags") as IDictionary<string, string>;
+            if (tags.ContainsKey(key))
+            {
+                tags.Remove(key);
+                setValue("Tags", tags);
+            }
+            return this as FluentResourceT;
+        }
+
 
         private void EnsureResource(InnerResourceT innerObject)
         {

@@ -5,164 +5,222 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.V2.Resource.GroupableResource;
+using Microsoft.Azure.Management.Storage;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
-    public class StorageAccountImpl :
+    internal class StorageAccountImpl :
+        GroupableResourceImpl<IStorageAccount, Management.Storage.Models.StorageAccount, StorageAccountImpl>,
         IStorageAccount,
         StorageAccount.Definition.IDefinition,
         StorageAccount.Update.IUpdate
     {
-        public string Key
+        private string name;
+        private StorageAccountCreateParameters createParameters;
+        private StorageAccountUpdateParameters updateParameters;
+
+        private IStorageAccountsOperations client;
+
+
+        internal StorageAccountImpl(string name,
+            Management.Storage.Models.StorageAccount innerObject,
+            IStorageAccountsOperations client) : base(name, innerObject)
+        {
+            this.name = name;
+            createParameters = new StorageAccountCreateParameters();
+            updateParameters = new StorageAccountUpdateParameters();
+            this.client = client;
+        }
+
+        #region Getters
+
+        public AccessTier? AccessTier
         {
             get
             {
-                throw new NotImplementedException();
+                return Inner.AccessTier;
             }
         }
 
-        public AccessTier accessTier()
+        public AccountStatuses AccountStatuses
         {
-            throw new NotImplementedException();
+            get
+            {
+                return new AccountStatuses(Inner.StatusOfPrimary, Inner.StatusOfSecondary);
+            }
         }
 
-        public AccountStatus accountStatuses()
+        public DateTime? CreationTime
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Inner.CreationTime;
+            }
         }
 
-        public Task<IStorageAccount> ApplyAsync()
+        public CustomDomain CustomDomain
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Inner.CustomDomain;
+            }
         }
 
-        public Task<IStorageAccount> CreateAsync()
+        public Encryption Encryption
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Inner.Encryption;
+            }
         }
 
-        public DateTime creationTime()
+        public PublicEndpoints EndPoints
         {
-            throw new NotImplementedException();
+            get
+            {
+                return new PublicEndpoints(Inner.PrimaryEndpoints, Inner.SecondaryEndpoints);
+            }
         }
 
-        public CustomDomain customDomain()
+        public Kind? Kind
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Inner.Kind;
+            }
         }
 
-        public Encryption encryption()
+        public DateTime? LastGeoFailoverTime
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Inner.LastGeoFailoverTime;
+            }
         }
 
-        public PublicEndpoints endPoints()
+        public ProvisioningState? ProvisioningState
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Inner.ProvisioningState;
+            }
         }
 
-        public Kind kind()
+        public Sku Sku
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Inner.Sku;
+            }
         }
 
-        public DateTime lastGeoFailoverTime()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ProvisioningState provisioningState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Sku sku()
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
         #region Fluent setters 
 
         #region Definition setters
 
-        public StorageAccount.Definition.IWithGroup withRegion(string regionName)
+        public new StorageAccount.Definition.IWithGroup WithRegion(string regionName)
         {
-            throw new NotImplementedException();
+            base.WithRegion(regionName);
+            return this;
         }
 
-        public StorageAccount.Definition.IWithGroup WithNewResourceGroup()
+        public new StorageAccount.Definition.IWithGroup WithNewResourceGroup()
         {
-            throw new NotImplementedException();
+            base.WithNewResourceGroup();
+            return this;
         }
 
-        public StorageAccount.Definition.IWithGroup WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
+        public new StorageAccount.Definition.IWithGroup WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
         {
-            throw new NotImplementedException();
+            base.WithNewResourceGroup(creatable);
+            return this;
         }
 
-        public StorageAccount.Definition.IWithGroup WithNewResourceGroup(string name)
+        public new StorageAccount.Definition.IWithGroup WithNewResourceGroup(string name)
         {
-            throw new NotImplementedException();
+            base.WithNewResourceGroup(name);
+            return this;
         }
 
-        public StorageAccount.Definition.IWithGroup WithExistingResourceGroup(IResourceGroup resourceGroup)
+        public new StorageAccount.Definition.IWithGroup WithExistingResourceGroup(IResourceGroup resourceGroup)
         {
-            throw new NotImplementedException();
+            base.WithExistingResourceGroup(resourceGroup);
+            return this;
         }
 
-        public StorageAccount.Definition.IWithGroup WithExistingResourceGroup(string groupName)
+        public new StorageAccount.Definition.IWithGroup WithExistingResourceGroup(string groupName)
         {
-            throw new NotImplementedException();
+            base.WithExistingResourceGroup(groupName);
+            return this;
         }
 
         public StorageAccount.Definition.IWithCreate WithSku(SkuName skuName)
         {
-            throw new NotImplementedException();
+            createParameters.Sku = new Sku()
+            {
+                Name = skuName
+            };
+            return this;
         }
 
         public StorageAccount.Definition.IWithCreate WithAccessTier(AccessTier accessTier)
         {
-            throw new NotImplementedException();
+            createParameters.AccessTier = accessTier;
+            return this;
         }
 
-        public StorageAccount.Definition.IWithCreateAndAccessTier withBlobStorageAccountKind()
+        public StorageAccount.Definition.IWithCreateAndAccessTier WithBlobStorageAccountKind()
         {
-            throw new NotImplementedException();
+            createParameters.Kind = Management.Storage.Models.Kind.BlobStorage;
+            return this;
         }
 
-        public StorageAccount.Definition.IWithCreate withCustomDomain(string name)
+        public StorageAccount.Definition.IWithCreate WithCustomDomain(string name)
         {
-            throw new NotImplementedException();
+            createParameters.CustomDomain = new CustomDomain(name);
+            return this;
         }
 
-        public StorageAccount.Definition.IWithCreate withCustomDomain(CustomDomain customDomain)
+        public StorageAccount.Definition.IWithCreate WithCustomDomain(CustomDomain customDomain)
         {
-            throw new NotImplementedException();
+            createParameters.CustomDomain = customDomain;
+            return this;
         }
 
-        public StorageAccount.Definition.IWithCreate withCustomDomain(string name, bool useSubDomain)
+        public StorageAccount.Definition.IWithCreate WithCustomDomain(string name, bool useSubDomain)
         {
-            throw new NotImplementedException();
+            return WithCustomDomain(new CustomDomain()
+            {
+                Name = name,
+                UseSubDomain = useSubDomain
+            });
         }
 
         public StorageAccount.Definition.IWithCreate WithEncryption(Encryption encryption)
         {
-            throw new NotImplementedException();
+            createParameters.Encryption = encryption;
+            return this;
         }
 
         public StorageAccount.Definition.IWithCreate WithGeneralPurposeAccountKind()
         {
-            throw new NotImplementedException();
+            createParameters.Kind = Management.Storage.Models.Kind.Storage;
+            return this;
         }
 
-        StorageAccount.Definition.IWithCreate Resource.Definition.IWithTags<StorageAccount.Definition.IWithCreate>.withTags(IDictionary<string, string> tags)
+        StorageAccount.Definition.IWithCreate Resource.Definition.IWithTags<StorageAccount.Definition.IWithCreate>.WithTags(IDictionary<string, string> tags)
         {
-            throw new NotImplementedException();
+            base.WithTags(tags);
+            return this;
         }
 
-        StorageAccount.Definition.IWithCreate Resource.Definition.IWithTags<StorageAccount.Definition.IWithCreate>.withTag(string key, string value)
+        StorageAccount.Definition.IWithCreate Resource.Definition.IWithTags<StorageAccount.Definition.IWithCreate>.WithTag(string key, string value)
         {
-            throw new NotImplementedException();
+            base.WithTag(key, value);
+            return this;
         }
 
         #endregion
@@ -172,46 +230,93 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         StorageAccount.Update.IUpdate StorageAccount.Update.IWithAccessTier.WithAccessTier(AccessTier accessTier)
         {
-            throw new NotImplementedException();
+            if (Inner.Kind != Management.Storage.Models.Kind.BlobStorage)
+            {
+                throw new ArgumentException("Access tier cannot be changed for general purpose storage accounts");
+            }
+            updateParameters.AccessTier = accessTier;
+            return this;
         }
 
-        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.withCustomDomain(string name)
+        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name)
         {
-            throw new NotImplementedException();
+            updateParameters.CustomDomain = new CustomDomain(name);
+            return this;
         }
 
-        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.withCustomDomain(CustomDomain customDomain)
+        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(CustomDomain customDomain)
         {
-            throw new NotImplementedException();
+            updateParameters.CustomDomain = customDomain;
+            return this;
         }
 
-        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.withCustomDomain(string name, bool useSubDomain)
+        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name, bool useSubDomain)
         {
-            throw new NotImplementedException();
+            updateParameters.CustomDomain = new CustomDomain()
+            {
+                Name = name,
+                UseSubDomain = useSubDomain
+            };
+            return this;
         }
 
         StorageAccount.Update.IUpdate StorageAccount.Update.IWithSku.WithSku(SkuName skuName)
         {
-            throw new NotImplementedException();
+            updateParameters.Sku = new Sku()
+            {
+                Name = skuName
+            };
+            return this;
         }
 
         public StorageAccount.Update.IUpdate withoutTag(string key)
         {
-            throw new NotImplementedException();
+            base.WithoutTag(key);
+            return this;
         }
 
-        StorageAccount.Update.IUpdate Resource.Update.IWithTags<StorageAccount.Update.IUpdate>.withTag(string key, string value)
+        StorageAccount.Update.IUpdate Resource.Update.IWithTags<StorageAccount.Update.IUpdate>.WithTag(string key, string value)
         {
-            throw new NotImplementedException();
+            base.WithTag(key, value);
+            return this;
         }
 
-        StorageAccount.Update.IUpdate Resource.Update.IWithTags<StorageAccount.Update.IUpdate>.withTags(IDictionary<string, string> tags)
+        StorageAccount.Update.IUpdate Resource.Update.IWithTags<StorageAccount.Update.IUpdate>.WithTags(IDictionary<string, string> tags)
         {
-            throw new NotImplementedException();
+            base.WithTags(tags);
+            return this;
         }
 
         #endregion
 
         #endregion
+
+        public override Task<IStorageAccount> Refresh()
+        {
+            throw new NotImplementedException();
+        }
+
+        public StorageAccount.Update.IUpdate Update()
+        {
+            return this;
+        }
+
+        public Task<IStorageAccount> ApplyAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async new Task<IStorageAccount> CreateAsync()
+        {
+            return await base.CreateAsync();
+        }
+
+        protected override async Task CreateResourceAsync()
+        {
+            createParameters.Location = RegionName;
+            createParameters.Tags = Inner.Tags;
+            var response = await client.CreateWithHttpMessagesAsync(ResourceGroupName, Name, createParameters);
+            SetInner(response.Body);
+        }
     }
 }

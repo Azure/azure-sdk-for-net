@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition
 
     public interface IWithBlobStorageAccountKind
     {
-        IWithCreateAndAccessTier withBlobStorageAccountKind();
+        IWithCreateAndAccessTier WithBlobStorageAccountKind();
     }
 
     public interface IWithGeneralPurposeAccountKind
@@ -48,11 +48,11 @@ namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition
 
     public interface IWithCustomDomain
     {
-        IWithCreate withCustomDomain(CustomDomain customDomain);
+        IWithCreate WithCustomDomain(CustomDomain customDomain);
 
-        IWithCreate withCustomDomain(string name);
+        IWithCreate WithCustomDomain(string name);
 
-        IWithCreate withCustomDomain(string name, bool useSubDomain);
+        IWithCreate WithCustomDomain(string name, bool useSubDomain);
     }
 
     public interface IWithCreateAndAccessTier : IWithCreate

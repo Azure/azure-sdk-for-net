@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.V2.Resource
         IIndexable,
         IResource,
         IRefreshable<IResourceGroup>,
-        IWrapper<ResourceManager.Models.ResourceGroup>,
-        IUpdatable<ResourceGroup.Update.IUpdate>
+        IUpdatable<ResourceGroup.Update.IUpdate>,
+        IWrapper<ResourceManager.Models.ResourceGroup>
     {
         string ProvisioningState { get; }
     }

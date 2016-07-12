@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             childTaskGroup.Merge(creatableTaskGroup);
         }
 
-        public async Task createRootResource()
+        public async Task CreateRootResourceAsync()
         {
-            await CreateResource();
+            await CreateResourceAsync();
         }
 
         public async Task<FluentResourceT> CreateAsync()
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             }
             else
             {
-                await CreateResource();
+                await CreateResourceAsync();
             }
             FluentResourceT thisResource = this as FluentResourceT;
             if (thisResource == null)
@@ -54,6 +54,6 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             return creatableTaskGroup.TaskResult(key);
         }
 
-        protected abstract Task CreateResource();
+        protected abstract Task CreateResourceAsync();
     }
 }

@@ -20,12 +20,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 
         public override async Task ExecuteRootTask(ITaskItem<IResource> taskItem)
         {
-            await rootCreate.createRootResource();
+            await rootCreate.CreateRootResourceAsync();
         }
     }
 
     public interface IRootResourceCreator
     {
-        Task createRootResource();
+        Task CreateRootResourceAsync();
     }
 }

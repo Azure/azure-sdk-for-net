@@ -28,11 +28,11 @@ namespace Azure.Tests
 
             var resourceGroup = resourceManager.ResourceGroups
                 .Define("")
-                .withRegion("west us")
+                .WithRegion("west us")
                 .CreateAsync().Result;
 
             resourceGroup.Update()
-                .withTag("", "")
+                .WithTag("", "")
                 .ApplyAsync().Wait();
 
 

@@ -11,13 +11,13 @@ namespace Microsoft.Azure.Management.V2.Resource.Definition
 
     public interface IWithRegion<T>
     {
-        T withRegion(string regionName);
+        T WithRegion(string regionName);
     }
 
     public interface IWithTags<T>
     {
-        T withTags(IDictionary<string, string> tags);
+        T WithTags(IDictionary<string, string> tags);
 
-        T withTag(string key, string value);
+        T WithTag(string key, string value);
     }
 }

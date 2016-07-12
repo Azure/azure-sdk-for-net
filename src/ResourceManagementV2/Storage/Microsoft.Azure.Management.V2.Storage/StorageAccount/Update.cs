@@ -18,11 +18,11 @@ namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Update
 
     public interface IWithCustomDomain
     {
-        IUpdate withCustomDomain(CustomDomain customDomain);
+        IUpdate WithCustomDomain(CustomDomain customDomain);
 
-        IUpdate withCustomDomain(string name);
+        IUpdate WithCustomDomain(string name);
 
-        IUpdate withCustomDomain(string name, bool useSubDomain);
+        IUpdate WithCustomDomain(string name, bool useSubDomain);
     }
 
     public interface IWithEncryption
