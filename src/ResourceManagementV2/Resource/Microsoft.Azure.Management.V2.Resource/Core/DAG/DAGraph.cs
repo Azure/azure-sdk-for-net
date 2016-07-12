@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal class DAGraph<NodeDataT, NodeT> : Graph<NodeDataT, NodeT> where NodeT : DAGNode<NodeDataT> 
+    public class DAGraph<NodeDataT, NodeT> : Graph<NodeDataT, NodeT> where NodeT : DAGNode<NodeDataT> 
     {
         private Queue<string> queue;
         private NodeT rootNode;

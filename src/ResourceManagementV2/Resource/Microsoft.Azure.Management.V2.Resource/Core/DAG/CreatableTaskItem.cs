@@ -1,17 +1,16 @@
-﻿using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+﻿using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
     internal class CreatableTaskItem : ITaskItem<IResource>
     {
-        private ICreatable<IResource> creatable;
+        private IResourceCreator resourceCreator;
         private IResource createdResource;
 
-        public CreatableTaskItem(ICreatable<IResource> creatable)
+        public CreatableTaskItem(IResourceCreator resourceCreator)
         {
-            this.creatable = creatable;
+            this.resourceCreator = resourceCreator;
         }
 
         public IResource Result
@@ -30,7 +29,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
                 return;
             }
 
-            createdResource = await creatable.CreateAsync();
+            createdResource = await resourceCreator.CreateResourceAsync();
         }
     }
 }

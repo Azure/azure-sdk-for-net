@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.V2.Storage;
 
 namespace Azure.Tests
 {
@@ -16,28 +17,40 @@ namespace Azure.Tests
 
         public void FirstTest()
         {
-            Assert.True(true);
-
+            string tenantId = "";
+            string clientId = "";
+            string clientSecret = "";
             string subscriptionId = "";
-            ApplicationTokenCredentails credentials = null;
 
+            ApplicationTokenCredentails credentials = new ApplicationTokenCredentails(tenantId, 
+                clientId, 
+                clientSecret);
+
+            /**
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(subscriptionId);
 
             var resourceGroup = resourceManager.ResourceGroups
-                .Define("")
+                .Define("mynewrg")
                 .WithRegion("west us")
                 .CreateAsync().Result;
+            **/
 
-            resourceGroup.Update()
-                .WithTag("", "")
-                .ApplyAsync().Wait();
+            IStorageManager storageManager = StorageManager
+                .Configure()
+                .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, subscriptionId);
 
 
+            var storageAccount = storageManager.StorageAccounts
+                .Define("anuredbluv")
+                .WithRegion("east us")
+                .WithNewResourceGroup("myrg123")
+                .CreateAsync().Result;
 
-
+            Console.WriteLine(storageAccount);
         }
     }
 }

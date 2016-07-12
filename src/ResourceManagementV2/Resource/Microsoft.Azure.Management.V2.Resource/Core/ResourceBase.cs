@@ -11,13 +11,17 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// <typeparam name="IFluentResourceT"></typeparam>
     /// <typeparam name="InnerResourceT"></typeparam>
     /// <typeparam name="FluentResourceT"></typeparam>
-    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT> : 
+    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT> : 
         CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT>,
         IResource
-        where IFluentResourceT : class
+        where IFluentResourceT : class, IResource
         where InnerResourceT : class     // TODO: This constraint will change to "where InnerResourceT : Resource" once we shared "Resource"
-        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT>
+        where InnerResourceBaseT: class
+        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT>, IFluentResourceT
     {
+
+        private TypeInfo resourceTypeInfo;
+
         protected ResourceBase(string key, InnerResourceT innerObject) : base(key, innerObject)
         {
             EnsureResource(innerObject);
@@ -119,37 +123,49 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
 
         private void EnsureResource(InnerResourceT innerObject)
         {
+            var baseTypeName = typeof(InnerResourceBaseT).FullName;
             TypeInfo typeInfo = innerObject.GetType().GetTypeInfo();
-            if (!HasProperty(innerObject, "Id"))
+            while (typeInfo != null && !typeInfo.FullName.Equals(baseTypeName))
+            {
+                Type baseType = typeInfo.BaseType;
+                if (baseType == null)
+                {
+                    break;
+                }
+                typeInfo = baseType.GetTypeInfo();
+            }
+
+            if (typeInfo == null)
+            {
+                throw new ArgumentException(innerObject.GetType().FullName + " is not " + baseTypeName);
+            }
+
+            if (typeInfo.GetDeclaredProperty("Id") == null)
             {
                 throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Id property]");
             }
 
-            if (!HasProperty(innerObject, "Location"))
+            if (typeInfo.GetDeclaredProperty("Location") == null)
             {
                 throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Location property]");
             }
 
-            if (!HasProperty(innerObject, "Name"))
+            if (typeInfo.GetDeclaredProperty("Name") == null)
             {
                 throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Name property]");
             }
 
-            if (!HasProperty(innerObject, "Tags"))
+            if (typeInfo.GetDeclaredProperty("Tags") == null)
             {
                 throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Tags property]");
             }
 
-            if (!HasProperty(innerObject, "Type"))
+            if (typeInfo.GetDeclaredProperty("Type") == null)
             {
                 throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Type property]");
             }
-        }
 
-        private bool HasProperty(InnerResourceT innerObject, string propertyName)
-        {
-            TypeInfo typeInfo = innerObject.GetType().GetTypeInfo();
-            return typeInfo.GetDeclaredProperty(propertyName) == null;
+            resourceTypeInfo = typeInfo;
         }
 
         private string getStringValue(string propertyName)
@@ -159,15 +175,14 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
 
         private object getValue(string propertyName)
         {
-            TypeInfo typeInfo = Inner.GetType().GetTypeInfo();
-            PropertyInfo propInfo = typeInfo.GetDeclaredProperty(propertyName);
+            PropertyInfo propInfo = resourceTypeInfo.GetDeclaredProperty(propertyName);
+            var l = propInfo.GetValue(Inner);
             return propInfo.GetValue(Inner);
         }
 
         private void setValue(string propertyName, object val)
         {
-            TypeInfo typeInfo = Inner.GetType().GetTypeInfo();
-            PropertyInfo propInfo = typeInfo.GetDeclaredProperty(propertyName);
+            PropertyInfo propInfo = resourceTypeInfo.GetDeclaredProperty(propertyName);
             propInfo.SetValue(Inner, val);
         }
     }

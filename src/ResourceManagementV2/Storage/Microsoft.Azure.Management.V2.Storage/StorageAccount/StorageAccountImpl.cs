@@ -7,11 +7,12 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using Microsoft.Azure.Management.V2.Resource.GroupableResource;
 using Microsoft.Azure.Management.Storage;
+using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
     internal class StorageAccountImpl :
-        GroupableResourceImpl<IStorageAccount, Management.Storage.Models.StorageAccount, StorageAccountImpl, StorageManager>,
+        GroupableResourceImpl<IStorageAccount, Management.Storage.Models.StorageAccount, Management.Storage.Models.Resource, StorageAccountImpl, StorageManager>,
         IStorageAccount,
         StorageAccount.Definition.IDefinition,
         StorageAccount.Update.IUpdate
@@ -128,31 +129,31 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public new StorageAccount.Definition.IWithGroup WithNewResourceGroup()
+        public new StorageAccount.Definition.IWithCreate WithNewResourceGroup()
         {
             base.WithNewResourceGroup();
             return this;
         }
 
-        public new StorageAccount.Definition.IWithGroup WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
+        public new StorageAccount.Definition.IWithCreate WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
         {
             base.WithNewResourceGroup(creatable);
             return this;
         }
 
-        public new StorageAccount.Definition.IWithGroup WithNewResourceGroup(string name)
+        public new StorageAccount.Definition.IWithCreate WithNewResourceGroup(string name)
         {
             base.WithNewResourceGroup(name);
             return this;
         }
 
-        public new StorageAccount.Definition.IWithGroup WithExistingResourceGroup(IResourceGroup resourceGroup)
+        public new StorageAccount.Definition.IWithCreate WithExistingResourceGroup(IResourceGroup resourceGroup)
         {
             base.WithExistingResourceGroup(resourceGroup);
             return this;
         }
 
-        public new StorageAccount.Definition.IWithGroup WithExistingResourceGroup(string groupName)
+        public new StorageAccount.Definition.IWithCreate WithExistingResourceGroup(string groupName)
         {
             base.WithExistingResourceGroup(groupName);
             return this;
@@ -312,12 +313,13 @@ namespace Microsoft.Azure.Management.V2.Storage
             return await base.CreateAsync();
         }
 
-        protected override async Task CreateResourceAsync()
+        public override async Task<IResource> CreateResourceAsync()
         {
             createParameters.Location = RegionName;
             createParameters.Tags = Inner.Tags;
-            var response = await client.CreateWithHttpMessagesAsync(ResourceGroupName, Name, createParameters);
+            var response = await client.CreateWithHttpMessagesAsync(ResourceGroupName, this.name, createParameters);
             SetInner(response.Body);
+            return this;
         }
     }
 }

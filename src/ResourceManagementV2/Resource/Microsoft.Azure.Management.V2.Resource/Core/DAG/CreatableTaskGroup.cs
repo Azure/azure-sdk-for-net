@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal class CreatableTaskGroup : TaskGroupBase<IResource>
+    public class CreatableTaskGroup : TaskGroupBase<IResource>
     {
         private IRootResourceCreator rootCreate;
 
-        public CreatableTaskGroup(string rootCreatableId, ICreatable<IResource> rootCreatable, IRootResourceCreator rootCreate) 
-            : base(rootCreatableId, new CreatableTaskItem(rootCreatable))
+        public CreatableTaskGroup(string rootCreatableId, IResourceCreator resourceCreator, IRootResourceCreator rootCreate) 
+            : base(rootCreatableId, new CreatableTaskItem(resourceCreator))
         {
             this.rootCreate = rootCreate;
         }

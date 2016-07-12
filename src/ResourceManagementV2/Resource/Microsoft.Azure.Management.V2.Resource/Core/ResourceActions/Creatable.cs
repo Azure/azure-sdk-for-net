@@ -4,23 +4,31 @@ using Microsoft.Azure.Management.V2.Resource.Core.DAG;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
+    public interface IResourceCreator
+    {
+        Task<IResource> CreateResourceAsync();
+        CreatableTaskGroup CreatableTaskGroup { get; }
+    }
+
+
     public abstract class Creatable<IFluentResourceT, InnerResourceT, FluentResourceT> : 
         IndexableRefreshableWrapper<IFluentResourceT, InnerResourceT>,
-        IRootResourceCreator
+        IRootResourceCreator,
+        IResourceCreator
         where FluentResourceT : class
+        where IFluentResourceT : IResource
     {
-        private CreatableTaskGroup creatableTaskGroup;
+        public CreatableTaskGroup CreatableTaskGroup { get; private set; }
 
         protected Creatable(string name, InnerResourceT innerObject) : base(name, innerObject)
         {
-            ICreatable<IResource> thisCreatable = this as ICreatable<IResource>;
-            creatableTaskGroup = new CreatableTaskGroup(name, thisCreatable, this);
+            IResourceCreator creator =this as IResourceCreator;
+            CreatableTaskGroup = new CreatableTaskGroup(name, creator, this);
         }
 
-        protected void AddCreatableDependency(ICreatable<IResource> creatableResource)
+        protected void AddCreatableDependency(IResourceCreator creatableResource)
         {
-            CreatableTaskGroup childTaskGroup = ((Creatable<object, object, object>)creatableResource).creatableTaskGroup;
-            childTaskGroup.Merge(creatableTaskGroup);
+            creatableResource.CreatableTaskGroup.Merge(CreatableTaskGroup);
         }
 
         public async Task CreateRootResourceAsync()
@@ -30,10 +38,10 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 
         public async Task<FluentResourceT> CreateAsync()
         {
-            if (creatableTaskGroup.IsPreparer)
+            if (CreatableTaskGroup.IsPreparer)
             {
-                creatableTaskGroup.Prepare();
-                await creatableTaskGroup.Execute();
+                CreatableTaskGroup.Prepare();
+                await CreatableTaskGroup.Execute();
             }
             else
             {
@@ -51,9 +59,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 
         protected IResource CreatedResource(string key)
         {
-            return creatableTaskGroup.TaskResult(key);
+            return CreatableTaskGroup.TaskResult(key);
         }
 
-        protected abstract Task CreateResourceAsync();
+        public abstract Task<IResource> CreateResourceAsync();
     }
 }

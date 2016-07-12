@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal class Node<DataT>
+    public class Node<DataT>
     {
         private HashSet<string> children;
 

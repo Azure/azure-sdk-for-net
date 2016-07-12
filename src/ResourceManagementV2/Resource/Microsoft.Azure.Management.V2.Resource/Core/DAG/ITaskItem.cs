@@ -2,7 +2,7 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal interface ITaskItem<TaskResultT>
+    public interface ITaskItem<TaskResultT>
     {
         TaskResultT Result { get; }
 

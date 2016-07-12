@@ -2,7 +2,7 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal interface ITaskGroup<TaskResultT, TaskItemT> where TaskItemT : ITaskItem<TaskResultT>
+    public interface ITaskGroup<TaskResultT, TaskItemT> where TaskItemT : ITaskItem<TaskResultT>
     {
         DAGraph<TaskItemT, DAGNode<TaskItemT>> DAG { get; }
 

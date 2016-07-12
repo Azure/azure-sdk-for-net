@@ -2,7 +2,7 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal class ChildExistsException : Exception {
+    public class ChildExistsException : Exception {
         public ChildExistsException(string parentKey, string childKey) : base("A child with key '" + childKey + "' already exists in the parent '" + parentKey + "'") {}
     }
 

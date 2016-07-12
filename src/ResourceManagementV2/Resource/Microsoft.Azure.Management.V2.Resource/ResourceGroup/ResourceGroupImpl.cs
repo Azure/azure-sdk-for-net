@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+﻿using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -86,13 +87,14 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        protected override async Task CreateResourceAsync()
+        public override async Task<IResource> CreateResourceAsync()
         {
             ResourceManager.Models.ResourceGroup param = new ResourceManager.Models.ResourceGroup();
             param.Location = Inner.Location;
             param.Tags = Inner.Tags;
             var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param);
             SetInner(response.Body);
+            return this;
         }
 
         #region Fluent setters

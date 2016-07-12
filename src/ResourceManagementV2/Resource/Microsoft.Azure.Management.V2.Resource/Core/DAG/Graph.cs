@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal class Graph<NodeDataT, NodeT> where NodeT : Node<NodeDataT>
+    public class Graph<NodeDataT, NodeT> where NodeT : Node<NodeDataT>
     {
         protected IDictionary<string, NodeT> graph;
         private HashSet<string> visited;

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal class DAGNode<DataT> : Node<DataT>
+    public class DAGNode<DataT> : Node<DataT>
     {
         private HashSet<string> dependentKeys;
         private int toBeResolved;

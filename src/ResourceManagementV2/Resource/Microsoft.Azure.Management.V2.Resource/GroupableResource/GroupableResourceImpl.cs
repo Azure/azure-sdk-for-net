@@ -4,13 +4,14 @@ using System;
 
 namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
 {
-    public abstract class GroupableResourceImpl<IFluentResourceT, InnerResourceT, FluentResourceT, ManagerT> :
-        ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT>,
+    public abstract class GroupableResourceImpl<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, ManagerT> :
+        ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT>,
         IGroupableResource
-        where FluentResourceT : GroupableResourceImpl<IFluentResourceT, InnerResourceT, FluentResourceT, ManagerT>
+        where FluentResourceT : GroupableResourceImpl<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, ManagerT>, IFluentResourceT
         where ManagerT : ManagerBase
-        where IFluentResourceT : class
+        where IFluentResourceT : class, IResource
         where InnerResourceT : class
+        where InnerResourceBaseT: class
     {
         protected ICreatable<IResourceGroup> newGroup;
         private string groupName;
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
         {
             groupName = creatable.Key;
             newGroup = creatable;
-            AddCreatableDependency(creatable as ICreatable<IResource>);
+            AddCreatableDependency(creatable as IResourceCreator);
             return this as FluentResourceT;
         }
 

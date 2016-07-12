@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition
     public interface IBlank : Resource.Definition.IWithRegion<IWithGroup>
     {}
 
-    public interface IWithGroup : Resource.GroupableResource.Definition.IWithGroup<IWithGroup>
+    public interface IWithGroup : Resource.GroupableResource.Definition.IWithGroup<IWithCreate>
     {}
 
     public interface IWithCreate :
