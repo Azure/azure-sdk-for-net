@@ -514,7 +514,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (cloudJob.State != expected)
             {
-                throw new TimeoutException($"Job {cloudJob.Id} did not reach expected state {expected} within time {waitFor}");
+                throw new TimeoutException($"Job {cloudJob.Id} did not reach expected state {expected} within time {waitFor}, last observed {cloudJob.State}");
             }
         }
         

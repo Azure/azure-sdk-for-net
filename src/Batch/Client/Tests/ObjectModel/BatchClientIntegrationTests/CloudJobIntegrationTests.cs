@@ -471,7 +471,7 @@
                             TestUtilities.WaitForJobStateAsync(boundJob, TimeSpan.FromMinutes(2), JobState.Completed).Wait();
                             Assert.Equal(JobState.Completed, boundJob.State);
 
-                            Assert.Equal("CriticalTaskFailure", boundJob.ExecutionInformation.TerminateReason);
+                            Assert.Equal("TaskFailed", boundJob.ExecutionInformation.TerminateReason);
                         }
                     }
                     finally

@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ApplicationPackageFixture.cs" />
+    <Compile Include="CloudJobIntegrationTests.cs" />
     <Compile Include="Fixtures\IaasLinuxPoolFixture.cs" />
     <Compile Include="Fixtures\PaasWindowsPoolFixture.cs" />
     <Compile Include="Application\ApplicationIntegrationCommon.cs" />
