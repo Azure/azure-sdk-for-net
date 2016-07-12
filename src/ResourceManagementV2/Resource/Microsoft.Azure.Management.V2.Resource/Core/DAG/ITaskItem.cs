@@ -6,6 +6,6 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
     {
         TaskResultT Result { get; }
 
-        Task Execute();
+        Task ExecuteAsync();
     }
 }

@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal class CreatableTaskItem : ITaskItem<IResource>
+    internal class CreatorTaskItem : ITaskItem<IResource>
     {
         private IResourceCreator resourceCreator;
         private IResource createdResource;
 
-        public CreatableTaskItem(IResourceCreator resourceCreator)
+        public CreatorTaskItem(IResourceCreator resourceCreator)
         {
             this.resourceCreator = resourceCreator;
         }
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
             }
         }
 
-        public async Task Execute()
+        public async Task ExecuteAsync()
         {
             if (createdResource != null)
             {

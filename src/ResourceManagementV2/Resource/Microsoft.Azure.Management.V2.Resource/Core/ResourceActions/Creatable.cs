@@ -4,64 +4,58 @@ using Microsoft.Azure.Management.V2.Resource.Core.DAG;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
-    public interface IResourceCreator
-    {
-        Task<IResource> CreateResourceAsync();
-        CreatableTaskGroup CreatableTaskGroup { get; }
-    }
-
-
     public abstract class Creatable<IFluentResourceT, InnerResourceT, FluentResourceT> : 
         IndexableRefreshableWrapper<IFluentResourceT, InnerResourceT>,
-        IRootResourceCreator,
         IResourceCreator
         where FluentResourceT : class
         where IFluentResourceT : IResource
     {
-        public CreatableTaskGroup CreatableTaskGroup { get; private set; }
-
         protected Creatable(string name, InnerResourceT innerObject) : base(name, innerObject)
         {
             IResourceCreator creator =this as IResourceCreator;
-            CreatableTaskGroup = new CreatableTaskGroup(name, creator, this);
+            CreatorTaskGroup = new CreatorTaskGroup(name, creator);
         }
 
         protected void AddCreatableDependency(IResourceCreator creatableResource)
         {
-            creatableResource.CreatableTaskGroup.Merge(CreatableTaskGroup);
+            creatableResource.CreatorTaskGroup.Merge(CreatorTaskGroup);
         }
 
-        public async Task CreateRootResourceAsync()
+        protected async Task<FluentResourceT> CreateAsync()
         {
-            await CreateResourceAsync();
-        }
+            if (!CreatorTaskGroup.IsPreparer)
+            {
+                throw new InvalidOperationException("Interal Error: Creatable::CreateAsync can be invoked only on preparer");
+            }
 
-        public async Task<FluentResourceT> CreateAsync()
-        {
-            if (CreatableTaskGroup.IsPreparer)
-            {
-                CreatableTaskGroup.Prepare();
-                await CreatableTaskGroup.Execute();
-            }
-            else
-            {
-                await CreateResourceAsync();
-            }
+            CreatorTaskGroup.Prepare();
+            await CreatorTaskGroup.ExecuteAsync();
             FluentResourceT thisResource = this as FluentResourceT;
             if (thisResource == null)
             {
-                throw new InvalidOperationException("Interal Error: The type of this class required to be 'of type' '" + typeof(FluentResourceT) + "', but actually it is '" + this.GetType().Namespace + "'");
+                throw new InvalidOperationException("Interal Error: Expected 'of type' '" + typeof(FluentResourceT) + "', but got '" + this.GetType().Namespace + "'");
             }
-
             return thisResource;
         }
 
 
         protected IResource CreatedResource(string key)
         {
-            return CreatableTaskGroup.TaskResult(key);
+            return CreatorTaskGroup.TaskResult(key);
         }
 
+        #region Implementation of IResourceCreator
+
+        public CreatorTaskGroup CreatorTaskGroup { get; private set; }
+
         public abstract Task<IResource> CreateResourceAsync();
+
+        #endregion
+    }
+
+    public interface IResourceCreator
+    {
+        Task<IResource> CreateResourceAsync();
+        CreatorTaskGroup CreatorTaskGroup { get; }
     }
 }

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
             }
         }
 
-        public async Task Execute()
+        public async Task ExecuteAsync()
         {
             var nextNode = DAG.GetNext();
             if (nextNode == null)
@@ -50,22 +50,14 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
                 return;
             }
 
-            if (DAG.IsRootNode(nextNode))
-            {
-                await ExecuteRootTask(nextNode.Data);
-                return;
-            }
-
-            await nextNode.Data.Execute();
+            await nextNode.Data.ExecuteAsync();
             DAG.ReportCompleted(nextNode);
-            await Execute();
+            await ExecuteAsync();
         }
 
         public TaskResultT TaskResult(string taskId)
         {
             return DAG.GetNodeData(taskId).Result;
         }
-
-        public abstract Task ExecuteRootTask(ITaskItem<TaskResultT> taskItem);
     }
 }

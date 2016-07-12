@@ -6,18 +6,19 @@ using System.Reflection;
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
     /// <summary>
-    ///  TODO: This class uses Reflection, it will be removed once we have a Resource that is shared across all services.
+    /// This class uses Reflection, it will be removed once we have a "Resource" from which all resource inherits
     /// </summary>
-    /// <typeparam name="IFluentResourceT"></typeparam>
-    /// <typeparam name="InnerResourceT"></typeparam>
-    /// <typeparam name="FluentResourceT"></typeparam>
+    /// <typeparam name="IFluentResourceT">The fluent wrapper interface for the resource</typeparam>
+    /// <typeparam name="InnerResourceT">The autorest generated resource</typeparam>
+    /// <typeparam name="InnerResourceBaseT">The autorest generated base class from which <InnerResourceT @ref="InnerResourceT" /> inherits</typeparam>
+    /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
     public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT> : 
         CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT>,
         IResource
-        where IFluentResourceT : class, IResource
-        where InnerResourceT : class     // TODO: This constraint will change to "where InnerResourceT : Resource" once we shared "Resource"
-        where InnerResourceBaseT: class
         where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT>, IFluentResourceT
+        where IFluentResourceT : class, IResource
+        where InnerResourceBaseT : class
+        where InnerResourceT : class, InnerResourceBaseT
     {
 
         private TypeInfo resourceTypeInfo;
@@ -25,18 +26,19 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         protected ResourceBase(string key, InnerResourceT innerObject) : base(key, innerObject)
         {
             EnsureResource(innerObject);
-            if (getValue("Tags") == null)
+            if (GetValue("Tags") == null)
             {
-                setValue("Tags", new Dictionary<string, string>());
+                SetValue("Tags", new Dictionary<string, string>());
             }
-
         }
+
+        #region Getters
 
         public string Id
         {
             get
             {
-                return getStringValue("Id");
+                return GetStringValue("Id");
 
             }
         }
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             get
             {
-                return getStringValue("Name");
+                return GetStringValue("Name");
             }
         }
 
@@ -53,7 +55,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             get
             {
-                return getStringValue("Location");
+                return GetStringValue("Location");
             }
         }
 
@@ -61,7 +63,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             get
             {
-                return getStringValue("Type");
+                return GetStringValue("Type");
             }
         }
 
@@ -69,13 +71,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             get
             {
-                Dictionary<string, string> tags = (Dictionary < string, string>)getValue("Tags");
+                Dictionary<string, string> tags = (Dictionary < string, string>)GetValue("Tags");
                 return tags;
             }
         }
 
-        //
-
+        #endregion
 
         protected bool IsInCreateMode
         {
@@ -85,23 +86,24 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             }
         }
 
-        //
+
+        #region The fluent setters
 
         public FluentResourceT WithRegion(string regionName)
         {
-            setValue("Location", regionName);
+            SetValue("Location", regionName);
             return this as FluentResourceT;
         }
 
         public FluentResourceT WithTags(IDictionary<string, string> tags)
         {
-            setValue("Tags", tags);
+            SetValue("Tags", tags);
             return this as FluentResourceT;
         }
         
         public FluentResourceT WithTag(string key, string value)
         {
-            var tags = getValue("Tags") as IDictionary<string, string>;
+            var tags = GetValue("Tags") as IDictionary<string, string>;
             if (!tags.ContainsKey(key))
             {
                 tags.Add(key, value);
@@ -111,15 +113,16 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
 
         public FluentResourceT WithoutTag(string key)
         {
-            var tags = getValue("Tags") as IDictionary<string, string>;
+            var tags = GetValue("Tags") as IDictionary<string, string>;
             if (tags.ContainsKey(key))
             {
                 tags.Remove(key);
-                setValue("Tags", tags);
+                SetValue("Tags", tags);
             }
             return this as FluentResourceT;
         }
 
+        #endregion
 
         private void EnsureResource(InnerResourceT innerObject)
         {
@@ -168,19 +171,18 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             resourceTypeInfo = typeInfo;
         }
 
-        private string getStringValue(string propertyName)
+        private string GetStringValue(string propertyName)
         {
-            return (string) getValue(propertyName);
+            return (string) GetValue(propertyName);
         }
 
-        private object getValue(string propertyName)
+        private object GetValue(string propertyName)
         {
             PropertyInfo propInfo = resourceTypeInfo.GetDeclaredProperty(propertyName);
-            var l = propInfo.GetValue(Inner);
             return propInfo.GetValue(Inner);
         }
 
-        private void setValue(string propertyName, object val)
+        private void SetValue(string propertyName, object val)
         {
             PropertyInfo propInfo = resourceTypeInfo.GetDeclaredProperty(propertyName);
             propInfo.SetValue(Inner, val);

@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 
         void Prepare();
 
-        Task Execute();
+        Task ExecuteAsync();
 
         TaskResultT TaskResult(string taskId);
     }
