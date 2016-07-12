@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #endregion
 
-        #region ResourceManager2 builder
+        #region StorageManager builder
 
         public static IStorageManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId)
         {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Microsoft.Azure.Management.V2.Resource
+﻿namespace Microsoft.Azure.Management.V2.Resource
 {
     public class AzureEnvironment
     {
@@ -39,15 +34,15 @@ namespace Microsoft.Azure.Management.V2.Resource
         /// Azure active directory service endpoint to get OAuth token to access ARM resource
         /// management endpoint <service cref="ResourceManagerEndpoint" />.
         /// </summary>
-        public string AuthenticationEndpoint { get; private set; }
+        public string AuthenticationEndpoint { get; set; }
         /// <summary>
         /// Azure ARM resource management endpoint.
         /// </summary>
-        public string ResourceManagerEndpoint { get; private set; }
+        public string ResourceManagerEndpoint { get; set; }
         /// <summary>
         /// The unique id (in the form of url) of the ARM resource management service <service cref="ResourceManagerEndpoint" />.
         /// </summary>
-        public string TokenAuidence { get; private set; }
+        public string TokenAuidence { get; set; }
 
 
         public static AzureEnvironment AzureGlobalCloud

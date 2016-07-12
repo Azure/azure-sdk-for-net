@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Fluent setters 
 
-        #region Definition setters
+        #region Definition setters [Implementation of interfaces in StorageAccount.Definition]
 
         public new StorageAccount.Definition.IWithGroup WithRegion(string regionName)
         {
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         #endregion
 
 
-        #region Update setters 
+        #region Update setters [Implementation of interfaces in StorageAccount.Update]
 
         StorageAccount.Update.IUpdate StorageAccount.Update.IWithAccessTier.WithAccessTier(AccessTier accessTier)
         {

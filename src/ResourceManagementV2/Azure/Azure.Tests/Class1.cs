@@ -17,15 +17,7 @@ namespace Azure.Tests
 
         public void FirstTest()
         {
-            string tenantId = "";
-            string clientId = "";
-            string clientSecret = "";
-            string subscriptionId = "";
-
-            ApplicationTokenCredentails credentials = new ApplicationTokenCredentails(tenantId, 
-                clientId, 
-                clientSecret);
-
+            ApplicationTokenCredentails credentials = new ApplicationTokenCredentails(@"C:\my.azureauth");
             /**
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -41,8 +33,7 @@ namespace Azure.Tests
             IStorageManager storageManager = StorageManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, subscriptionId);
-
+                .Authenticate(credentials, credentials.SubscriptionId);
 
             var storageAccount = storageManager.StorageAccounts
                 .Define("anuredbluv")

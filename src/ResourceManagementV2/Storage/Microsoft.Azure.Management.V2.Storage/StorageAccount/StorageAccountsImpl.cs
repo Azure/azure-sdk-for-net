@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.V2.Storage
     internal class StorageAccountsImpl :
         IStorageAccounts
     {
-
         IStorageAccountsOperations innerCollection;
         StorageManager manager;
 
