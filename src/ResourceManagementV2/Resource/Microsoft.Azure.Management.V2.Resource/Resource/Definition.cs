@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.Resource.Definition
+namespace Microsoft.Azure.Management.V2.Resource.Definition
 {
     public interface IDefinition<T> : IWithTags<T>
     {

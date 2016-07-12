@@ -1,9 +1,12 @@
-﻿using Microsoft.Azure.Management.V2.Resource.ResourceGroup;
+﻿using Microsoft.Azure.Management.V2.Resource;
+using Microsoft.Azure.Management.V2.Resource.Authentication;
+using Microsoft.Azure.Management.V2.Resource.ResourceGroup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Azure.Tests
 {
@@ -14,6 +17,27 @@ namespace Azure.Tests
         public void FirstTest()
         {
             Assert.True(true);
+
+            string subscriptionId = "";
+            ApplicationTokenCredentails credentials = null;
+
+            IResourceManager resourceManager = ResourceManager2.Configure()
+                .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials)
+                .WithSubscription(subscriptionId);
+
+            var resourceGroup = resourceManager.ResourceGroups
+                .Define("")
+                .withRegion("west us")
+                .CreateAsync().Result;
+
+            resourceGroup.Update()
+                .withTag("", "")
+                .ApplyAsync().Wait();
+
+
+
+
         }
     }
 }

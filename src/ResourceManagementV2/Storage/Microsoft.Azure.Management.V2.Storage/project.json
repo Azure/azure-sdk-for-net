@@ -41,6 +41,7 @@
         }
     },
     "dependencies": {
+        "Microsoft.Azure.Management.Storage": "5.0.2-preview",
         "Microsoft.Azure.Management.V2.Resource": "0.0.1-prerelease"
     }
 }

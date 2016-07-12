@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.Resource.Update
+namespace Microsoft.Azure.Management.V2.Resource.Update
 {
     public interface IUpdate<T> : IWithTags<T>
     {
