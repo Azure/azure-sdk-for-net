@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             {
                 if (resourceGroups == null)
                 {
-                    resourceGroups = new ResourceGroupsImpl(); // TODO init
+                    resourceGroups = new ResourceGroupsImpl(resourceManagementClient.ResourceGroups);
                 }
                 return resourceGroups;
             }

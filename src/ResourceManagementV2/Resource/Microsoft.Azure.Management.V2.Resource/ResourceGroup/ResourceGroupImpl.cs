@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             ResourceGroup.Definition.IDefinition,
             ResourceGroup.Update.IUpdate
     {
-        ResourceManager.ResourceManagementClient client;
+        ResourceManager.IResourceGroupsOperations client;
 
         public string ProvisioningState
         {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
         }
 
-        internal ResourceGroupImpl(ResourceManager.Models.ResourceGroup inner, ResourceManager.ResourceManagementClient client) : base(inner.Name, inner)
+        internal ResourceGroupImpl(ResourceManager.Models.ResourceGroup inner, ResourceManager.IResourceGroupsOperations client) : base(inner.Name, inner)
         {
             this.client = client;
         }
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public override async Task<IResourceGroup> Refresh()
         {
-            var result = await client.ResourceGroups.GetWithHttpMessagesAsync(Name);
+            var result = await client.GetWithHttpMessagesAsync(Name);
             SetInner(result.Body);
             return this;
         }
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             ResourceManager.Models.ResourceGroup param = new ResourceManager.Models.ResourceGroup();
             param.Location = Inner.Location;
             param.Tags = Inner.Tags;
-            var response = await client.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(Name, param);
+            var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param);
             SetInner(response.Body);
         }
 

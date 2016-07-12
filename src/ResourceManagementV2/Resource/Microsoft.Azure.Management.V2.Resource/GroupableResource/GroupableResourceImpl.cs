@@ -4,18 +4,22 @@ using System;
 
 namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
 {
-    public abstract class GroupableResourceImpl<IFluentResourceT, InnerResourceT, FluentResourceT> :
+    public abstract class GroupableResourceImpl<IFluentResourceT, InnerResourceT, FluentResourceT, ManagerT> :
         ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT>,
         IGroupableResource
-        where FluentResourceT : GroupableResourceImpl<IFluentResourceT, InnerResourceT, FluentResourceT>
+        where FluentResourceT : GroupableResourceImpl<IFluentResourceT, InnerResourceT, FluentResourceT, ManagerT>
+        where ManagerT : ManagerBase
         where IFluentResourceT : class
         where InnerResourceT : class
     {
         protected ICreatable<IResourceGroup> newGroup;
         private string groupName;
+        private ManagerT manager;
 
-        protected GroupableResourceImpl(string key, InnerResourceT innerObject) :base(key, innerObject)
-        {}
+        protected GroupableResourceImpl(string key, InnerResourceT innerObject, ManagerT manager) :base(key, innerObject)
+        {
+            this.manager = manager;
+        }
 
         public string ResourceGroupName
         {
@@ -36,8 +40,12 @@ namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
 
         public FluentResourceT WithNewResourceGroup(string groupName)
         {
-            this.groupName = groupName;
-            return this as FluentResourceT;
+            ICreatable<IResourceGroup> creatable = manager
+                .ResourceManager
+                .ResourceGroups
+                .Define(groupName)
+                .WithRegion(RegionName);
+            return WithNewResourceGroup(creatable);
         }
 
         public FluentResourceT WithNewResourceGroup(ICreatable<IResourceGroup> creatable)

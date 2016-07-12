@@ -11,7 +11,7 @@ using Microsoft.Azure.Management.Storage;
 namespace Microsoft.Azure.Management.V2.Storage
 {
     internal class StorageAccountImpl :
-        GroupableResourceImpl<IStorageAccount, Management.Storage.Models.StorageAccount, StorageAccountImpl>,
+        GroupableResourceImpl<IStorageAccount, Management.Storage.Models.StorageAccount, StorageAccountImpl, StorageManager>,
         IStorageAccount,
         StorageAccount.Definition.IDefinition,
         StorageAccount.Update.IUpdate
@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         internal StorageAccountImpl(string name,
             Management.Storage.Models.StorageAccount innerObject,
-            IStorageAccountsOperations client) : base(name, innerObject)
+            IStorageAccountsOperations client,
+            StorageManager manager) : base(name, innerObject, manager)
         {
             this.name = name;
             createParameters = new StorageAccountCreateParameters();
