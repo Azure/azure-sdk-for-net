@@ -238,6 +238,22 @@ namespace DataLakeStore.Tests
         }
 
         [Fact]
+        public void DataLakeStoreFileSystemTestFile()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    Assert.False(commonData.DataLakeStoreFileSystemClient.FileSystem.PathExists(commonData.DataLakeStoreFileSystemAccountName, "nonexistentfile"));
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
+                    Assert.True(commonData.DataLakeStoreFileSystemClient.FileSystem.PathExists(commonData.DataLakeStoreFileSystemAccountName, filePath));
+                }
+            }
+        }
+
+        [Fact]
         public void DataLakeStoreFileSystemFileAlreadyExists()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
