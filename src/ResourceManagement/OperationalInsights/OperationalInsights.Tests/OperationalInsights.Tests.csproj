@@ -8,6 +8,7 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Compile Include="Helpers\DataSourceUndoHandler.cs" />
     <Compile Include="Helpers\StorageInsightUndoHandler.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Helpers\UndoContextDiscoveryExtensions.cs" />
@@ -33,6 +34,8 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\CanCreateUpdateDeleteDataSource.json" />
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\DataSourceCreateFailsWithoutWorkspace.json" />
     <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.SearchOperationsTest\CanCreateOrUpdateAndDeleteSavedSearches.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -61,4 +64,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
 </Project>

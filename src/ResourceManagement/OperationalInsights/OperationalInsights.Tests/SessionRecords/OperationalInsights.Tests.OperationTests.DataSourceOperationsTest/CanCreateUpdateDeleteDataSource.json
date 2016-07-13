@@ -1,0 +1,815 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/providers/Microsoft.OperationalInsights?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Byb3ZpZGVycy9NaWNyb3NvZnQuT3BlcmF0aW9uYWxJbnNpZ2h0cz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/providers/Microsoft.OperationalInsights\",\r\n  \"namespace\": \"Microsoft.OperationalInsights\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"d2a0a418-0aac-4541-82b2-b3142c89da77\",\r\n    \"roleDefinitionId\": \"86695298-2eb9-48a7-9ec3-2fdb38b6878b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"workspaces\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"Southeast Asia\",\r\n        \"Australia Southeast\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-11-01-preview\",\r\n        \"2015-03-20\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"workspaces/dataSources\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"Southeast Asia\",\r\n        \"Australia Southeast\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-11-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"storageInsightConfigs\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2014-10-10\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"linkTargets\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-03-20\",\r\n        \"2014-10-10\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2014-11-10\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "895"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14775"
+        ],
+        "x-ms-request-id": [
+          "e0e6fefb-624e-4cb0-a21c-d0b50d50fd2e"
+        ],
+        "x-ms-correlation-request-id": [
+          "e0e6fefb-624e-4cb0-a21c-d0b50d50fd2e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000545Z:e0e6fefb-624e-4cb0-a21c-d0b50d50fd2e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:05:44 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQ/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Australia Southeast\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "41"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourceGroups/OIHyak2174\",\r\n  \"name\": \"OIHyak2174\",\r\n  \"location\": \"australiasoutheast\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "185"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "367e6971-9c46-487c-be49-0dda1f3dbcea"
+        ],
+        "x-ms-correlation-request-id": [
+          "367e6971-9c46-487c-be49-0dda1f3dbcea"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000548Z:367e6971-9c46-487c-be49-0dda1f3dbcea"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:05:47 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820?api-version=2015-03-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMD9hcGktdmVyc2lvbj0yMDE1LTAzLTIw",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"AzTest5820\",\r\n  \"location\": \"australiasoutheast\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "65"
+        ],
+        "x-ms-client-request-id": [
+          "fd050811-994a-4ecc-a701-a4feb1b228ed"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"source\": \"Azure\",\r\n    \"customerId\": \"869a396e-c6a6-4622-9215-9260a965215c\",\r\n    \"portalUrl\": \"https://seau.mms.microsoft.com/?tenant=72f988bf-86f1-41af-91ab-2d7cd011db47&resource=%2fsubscriptions%2f0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef%2fresourcegroups%2foihyak2174%2fproviders%2fmicrosoft.operationalinsights%2fworkspaces%2faztest5820\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"sku\": {\r\n      \"name\": \"free\"\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/oihyak2174/providers/microsoft.operationalinsights/workspaces/aztest5820\",\r\n  \"name\": \"AzTest5820\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces\",\r\n  \"location\": \"australiasoutheast\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "723"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b267954c-2471-46d8-a493-15033beebc3d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "349d6966-84c4-4510-8d7a-7e7abd199d71"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000557Z:349d6966-84c4-4510-8d7a-7e7abd199d71"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:05:56 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820?api-version=2015-03-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMD9hcGktdmVyc2lvbj0yMDE1LTAzLTIw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a7098ce4-e30c-4dca-8adb-bffa37e8cd9d"
+        ],
+        "x-ms-version": [
+          "2015-03-20"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"source\": \"Azure\",\r\n    \"customerId\": \"869a396e-c6a6-4622-9215-9260a965215c\",\r\n    \"portalUrl\": \"https://seau.mms.microsoft.com/?tenant=72f988bf-86f1-41af-91ab-2d7cd011db47&resource=%2fsubscriptions%2f0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef%2fresourcegroups%2foihyak2174%2fproviders%2fmicrosoft.operationalinsights%2fworkspaces%2faztest5820\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"sku\": {\r\n      \"name\": \"free\"\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/oihyak2174/providers/microsoft.operationalinsights/workspaces/aztest5820\",\r\n  \"name\": \"AzTest5820\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces\",\r\n  \"location\": \"australiasoutheast\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "723"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7c6fa454-fb78-450b-afa8-c56c5b11854d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14772"
+        ],
+        "x-ms-correlation-request-id": [
+          "db93c8e5-81fc-4988-8657-2f72652f000d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000558Z:db93c8e5-81fc-4988-8657-2f72652f000d"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:05:57 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820?api-version=2015-03-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMD9hcGktdmVyc2lvbj0yMDE1LTAzLTIw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6365fc92-7c0b-416f-9a4a-b04b9392a42b"
+        ],
+        "x-ms-version": [
+          "2015-03-20"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"source\": \"Azure\",\r\n    \"customerId\": \"869a396e-c6a6-4622-9215-9260a965215c\",\r\n    \"portalUrl\": \"https://seau.mms.microsoft.com/?tenant=72f988bf-86f1-41af-91ab-2d7cd011db47&resource=%2fsubscriptions%2f0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef%2fresourcegroups%2foihyak2174%2fproviders%2fmicrosoft.operationalinsights%2fworkspaces%2faztest5820\",\r\n    \"provisioningState\": \"ProvisioningAccount\",\r\n    \"sku\": {\r\n      \"name\": \"free\"\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/oihyak2174/providers/microsoft.operationalinsights/workspaces/aztest5820\",\r\n  \"name\": \"AzTest5820\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces\",\r\n  \"location\": \"australiasoutheast\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "734"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8f0a0948-2a55-4be9-91a4-c0e439375006"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14770"
+        ],
+        "x-ms-correlation-request-id": [
+          "31922eea-f1bf-4e8c-80c0-319de0e23d73"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000603Z:31922eea-f1bf-4e8c-80c0-319de0e23d73"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:06:02 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820?api-version=2015-03-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMD9hcGktdmVyc2lvbj0yMDE1LTAzLTIw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "223c7e80-69ab-460d-acdb-b8e403864736"
+        ],
+        "x-ms-version": [
+          "2015-03-20"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"source\": \"Azure\",\r\n    \"customerId\": \"869a396e-c6a6-4622-9215-9260a965215c\",\r\n    \"portalUrl\": \"https://seau.mms.microsoft.com/?tenant=72f988bf-86f1-41af-91ab-2d7cd011db47&resource=%2fsubscriptions%2f0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef%2fresourcegroups%2foihyak2174%2fproviders%2fmicrosoft.operationalinsights%2fworkspaces%2faztest5820\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"sku\": {\r\n      \"name\": \"free\"\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/oihyak2174/providers/microsoft.operationalinsights/workspaces/aztest5820\",\r\n  \"name\": \"AzTest5820\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces\",\r\n  \"location\": \"australiasoutheast\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "724"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "526f6b9b-7ab1-41fb-9eba-260ce57af45c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14769"
+        ],
+        "x-ms-correlation-request-id": [
+          "53d7eb2c-7ab2-4ae1-baec-a129418b7a7c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000609Z:53d7eb2c-7ab2-4ae1-baec-a129418b7a7c"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:06:08 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/dataSources/AzTestDS8466?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMC9kYXRhU291cmNlcy9BelRlc3REUzg0NjY/YXBpLXZlcnNpb249MjAxNS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"LinkedResourceId\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"name\": \"AzTestDS8466\",\r\n  \"kind\": \"AzureAuditLog\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "213"
+        ],
+        "x-ms-client-request-id": [
+          "58200e89-1d9f-4b4b-8897-8ab873bc14d4"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"kind\": \"AzureAuditLog\",\r\n  \"properties\": {\r\n    \"linkedResourceId\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourceGroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/datasources/AzTestDS8466\",\r\n  \"etag\": \"W/\\\"datetime'2016-07-13T00%3A06%3A13.3079544Z'\\\"\",\r\n  \"name\": \"AzTest5820/AzTestDS8466\",\r\n  \"type\": \"Microsoft.OperationInsights/workspaces/datasources\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-request-id": [
+          "c2d0d6ba-8ea1-4252-858f-c3236655cc58"
+        ],
+        "x-ms-correlation-request-id": [
+          "c2d0d6ba-8ea1-4252-858f-c3236655cc58"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000613Z:c2d0d6ba-8ea1-4252-858f-c3236655cc58"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:06:13 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/dataSources/AzTestDS8466?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMC9kYXRhU291cmNlcy9BelRlc3REUzg0NjY/YXBpLXZlcnNpb249MjAxNS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9e776151-f492-47a1-b2b9-06d8e91aeac4"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"kind\": \"AzureAuditLog\",\r\n  \"properties\": {\r\n    \"linkedResourceId\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourceGroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/datasources/AzTestDS8466\",\r\n  \"etag\": \"W/\\\"datetime'2016-07-13T00%3A06%3A13.3079544Z'\\\"\",\r\n  \"name\": \"AzTest5820/AzTestDS8466\",\r\n  \"type\": \"Microsoft.OperationInsights/workspaces/datasources\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14768"
+        ],
+        "x-ms-request-id": [
+          "5b2baf78-683f-458c-9f74-68e5af915786"
+        ],
+        "x-ms-correlation-request-id": [
+          "5b2baf78-683f-458c-9f74-68e5af915786"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000616Z:5b2baf78-683f-458c-9f74-68e5af915786"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:06:16 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/dataSources/AzTestDS8466?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMC9kYXRhU291cmNlcy9BelRlc3REUzg0NjY/YXBpLXZlcnNpb249MjAxNS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6d9ab73f-3676-4eb4-bfb5-2a79079c42a7"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"DataSourceNotFound\",\r\n    \"message\": \"DataSource 'AzTestDS8466' could not be found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "97"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14763"
+        ],
+        "x-ms-request-id": [
+          "ef742604-7fdb-4e0b-a1be-07774c6c72c1"
+        ],
+        "x-ms-correlation-request-id": [
+          "ef742604-7fdb-4e0b-a1be-07774c6c72c1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000703Z:ef742604-7fdb-4e0b-a1be-07774c6c72c1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:07:03 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/dataSources/AzTestDS5276?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMC9kYXRhU291cmNlcy9BelRlc3REUzUyNzY/YXBpLXZlcnNpb249MjAxNS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"LinkedResourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"name\": \"AzTestDS5276\",\r\n  \"kind\": \"AzureAuditLog\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "213"
+        ],
+        "x-ms-client-request-id": [
+          "2dab5efe-9c3e-476c-ab7e-a6fc9ebc2ad6"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"kind\": \"AzureAuditLog\",\r\n  \"properties\": {\r\n    \"linkedResourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourceGroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/datasources/AzTestDS5276\",\r\n  \"etag\": \"W/\\\"datetime'2016-07-13T00%3A06%3A16.6829025Z'\\\"\",\r\n  \"name\": \"AzTest5820/AzTestDS5276\",\r\n  \"type\": \"Microsoft.OperationInsights/workspaces/datasources\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-request-id": [
+          "a4dfb6cc-41a7-4368-b6a2-d3533853f086"
+        ],
+        "x-ms-correlation-request-id": [
+          "a4dfb6cc-41a7-4368-b6a2-d3533853f086"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000617Z:a4dfb6cc-41a7-4368-b6a2-d3533853f086"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:06:17 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/dataSources/AzTestDS5276?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMC9kYXRhU291cmNlcy9BelRlc3REUzUyNzY/YXBpLXZlcnNpb249MjAxNS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"LinkedResourceId\": \"/subscriptions/bc8edd8f-a09f-499d-978d-6b5ed2f84852/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourceGroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/datasources/AzTestDS5276\",\r\n  \"name\": \"AzTestDS5276\",\r\n  \"type\": \"Microsoft.OperationInsights/workspaces/datasources\",\r\n  \"kind\": \"AzureAuditLog\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "455"
+        ],
+        "x-ms-client-request-id": [
+          "f032ff01-bf70-45b7-ba70-dadb8077c32f"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"kind\": \"AzureAuditLog\",\r\n  \"properties\": {\r\n    \"linkedResourceId\": \"/subscriptions/bc8edd8f-a09f-499d-978d-6b5ed2f84852/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourceGroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/datasources/AzTestDS5276\",\r\n  \"etag\": \"W/\\\"datetime'2016-07-13T00%3A06%3A34.0006072Z'\\\"\",\r\n  \"name\": \"AzTest5820/AzTestDS5276\",\r\n  \"type\": \"Microsoft.OperationInsights/workspaces/datasources\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-request-id": [
+          "da826632-19ff-4b3b-a5c9-98f0919173f0"
+        ],
+        "x-ms-correlation-request-id": [
+          "da826632-19ff-4b3b-a5c9-98f0919173f0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000634Z:da826632-19ff-4b3b-a5c9-98f0919173f0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:06:34 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/dataSources?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMC9kYXRhU291cmNlcz9hcGktdmVyc2lvbj0yMDE1LTExLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6a7be491-e6ee-4224-83f8-8bcc842831d8"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"__metadata\": {},\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourceGroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/datasources/aztestds5276\",\r\n      \"etag\": \"W/\\\"datetime'2016-07-13T00%3A06%3A16.6829025Z'\\\"\",\r\n      \"properties\": {\r\n        \"SubscriptionId\": \"a6383be3-f0e8-4968-93d5-10f2625f5bb5\",\r\n        \"AADId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"DataSourceETag\": \"W/\\\"datetime'2016-07-13T00%3A06%3A16.6829025Z'\\\"\",\r\n        \"DataSourceId\": \"AzTestDS5276\",\r\n        \"DataSourceType\": \"AzureAuditLog\"\r\n      },\r\n      \"name\": \"aztestds5276\",\r\n      \"type\": \"Microsoft.OperationInsights/workspaces/datasources\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourceGroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/datasources/aztestds8466\",\r\n      \"etag\": \"W/\\\"datetime'2016-07-13T00%3A06%3A13.3079544Z'\\\"\",\r\n      \"properties\": {\r\n        \"SubscriptionId\": \"0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef\",\r\n        \"AADId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"DataSourceETag\": \"W/\\\"datetime'2016-07-13T00%3A06%3A13.3079544Z'\\\"\",\r\n        \"DataSourceId\": \"AzTestDS8466\",\r\n        \"DataSourceType\": \"AzureAuditLog\"\r\n      },\r\n      \"name\": \"aztestds8466\",\r\n      \"type\": \"Microsoft.OperationInsights/workspaces/datasources\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1153"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14765"
+        ],
+        "x-ms-request-id": [
+          "f4ae2178-33c0-4f84-b278-f95990dd6d59"
+        ],
+        "x-ms-correlation-request-id": [
+          "f4ae2178-33c0-4f84-b278-f95990dd6d59"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000633Z:f4ae2178-33c0-4f84-b278-f95990dd6d59"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:06:32 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/resourcegroups/OIHyak2174/providers/Microsoft.OperationalInsights/workspaces/AzTest5820/dataSources/AzTestDS8466?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGI4OGRmZGItNTViMy00ZmIwLWI0NzQtNWI2ZGNiZTZiMmVmL3Jlc291cmNlZ3JvdXBzL09JSHlhazIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0NTgyMC9kYXRhU291cmNlcy9BelRlc3REUzg0NjY/YXBpLXZlcnNpb249MjAxNS0xMS0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e55bce42-4857-4e08-afcb-4c625be8166a"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.14.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1191"
+        ],
+        "x-ms-request-id": [
+          "3813a990-2bcf-483a-9265-f658d29a9184"
+        ],
+        "x-ms-correlation-request-id": [
+          "3813a990-2bcf-483a-9265-f658d29a9184"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160713T000642Z:3813a990-2bcf-483a-9265-f658d29a9184"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Jul 2016 00:06:42 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCreateUpdateDeleteDataSource": [
+      "OIHyak2174",
+      "AzTest5820",
+      "AzTestDS8466",
+      "AzTestDS5276"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef"
+  }
+}

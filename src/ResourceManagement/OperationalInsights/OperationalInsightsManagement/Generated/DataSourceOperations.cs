@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 url = url + Uri.EscapeDataString(parameters.DataSource.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-20");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             url = url + "/dataSources/";
             url = url + Uri.EscapeDataString(datasourceName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-20");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -542,7 +542,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             url = url + "/dataSources/";
             url = url + Uri.EscapeDataString(dataSourceName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-20");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -746,7 +746,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             url = url + Uri.EscapeDataString(workspaceName);
             url = url + "/dataSources";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-20");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
