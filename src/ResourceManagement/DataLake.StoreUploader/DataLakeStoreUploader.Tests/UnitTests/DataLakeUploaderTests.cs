@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
     {
         #region Private
 
-        private const int LargeFileLength = 40 * 1024 * 1024; // 40mb
+        private const int LargeFileLength = 9 * 1024 * 1024; // 9mb
         private readonly byte[] _largeFileData = new byte[LargeFileLength];
         private string _largeFilePath;
         private const int SmallFileLength = 128; 
@@ -251,6 +251,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             CancellationTokenSource myTokenSource = new CancellationTokenSource();
             var cancelToken = myTokenSource.Token;
             var frontEnd = new InMemoryFrontEnd();
+            var mockedFrontend = new MockableFrontEnd(frontEnd);
+            mockedFrontend.GetStreamLengthImplementation = (streamPath, isDownload) =>
+            {
+                // sleep for 1 second to allow for the cancellation to actual happen
+                Thread.Sleep(1000);
+                return frontEnd.GetStreamLength(streamPath, isDownload);
+            };
             var up = CreateParameters(isResume: false);
             UploadProgress progress = null;
             var syncRoot = new object();
@@ -266,10 +273,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                         }
                     }
                 });
-            var uploader = new DataLakeStoreUploader(up, frontEnd, cancelToken, progressTracker);
+            var uploader = new DataLakeStoreUploader(up, mockedFrontend, cancelToken, progressTracker);
 
-            Task uploadTask = Task.Run(() => uploader.Execute(), cancelToken);
-            Assert.True(!uploadTask.IsCompleted, "The task finished before we could cancel it");
+            Task uploadTask = Task.Run(() =>
+            {
+                uploader.Execute();
+                Thread.Sleep(1000);
+            }, cancelToken);
             myTokenSource.Cancel();
             Assert.True(cancelToken.IsCancellationRequested);
 

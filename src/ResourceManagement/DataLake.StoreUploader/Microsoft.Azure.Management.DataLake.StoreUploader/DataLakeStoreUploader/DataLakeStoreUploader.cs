@@ -165,57 +165,167 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     {
                         var fileProgressTracker = CreateFileProgressTracker(metadata);
                         var exceptions = new ConcurrentQueue<Exception>();
-                        Parallel.ForEach(metadata.Files, folderOptions,
-                            file =>
+                        var allFiles = new ConcurrentQueue<UploadMetadata>(metadata.Files);
+                        int threadCount = Math.Min(allFiles.Count, this.Parameters.ConcurrentFileCount);
+                        var threads = new List<Thread>(threadCount);
+
+                        // break up the batch save into 100 even chunks. This is most important for very large directories
+                        var filesPerSave = (int)Math.Ceiling((double)metadata.FileCount / 100);
+                        //start a bunch of new threads that pull from the file list and then wait for them to finish
+                        int filesCompleted = 0;
+                        for (int i = 0; i < threadCount; i++)
+                        {
+                            var t = new Thread(() => {
+
+                                UploadMetadata file;
+                                while (allFiles.TryDequeue(out file))
+                                {
+                                    try
+                                    {
+                                        _token.ThrowIfCancellationRequested();
+                                        // only initiate uploads for files that are not already complete
+                                        if (file.Status != SegmentUploadStatus.Complete)
+                                        {
+                                            var segmentProgressTracker = CreateSegmentProgressTracker(file, fileProgressTracker);
+                                            if (this.Parameters.IsDownload)
+                                            {
+                                                DownloadFile(file, segmentProgressTracker);
+                                            }
+                                            else
+                                            {
+                                                UploadFile(file, segmentProgressTracker);
+                                            }
+                                        }
+                                    }
+                                    catch (OperationCanceledException ex)
+                                    {
+                                        // Add to the queue and re-throw so that we immediately abort
+                                        exceptions.Enqueue(ex);
+
+                                        // on cancel definitely try to save the metadata
+                                        try
+                                        {
+                                            // replace the file in the list with the one that we have been modifying
+                                            foreach (var item in metadata.Files.Where(f => f.UploadId.Equals(file.UploadId)))
+                                            {
+                                                item.Status = file.Status;
+                                                item.Segments = file.Segments;
+                                            }
+
+                                            metadata.Save();
+                                        }
+                                        catch { } // if we can't save the metadata we shouldn't fail out. 
+
+                                        throw;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // for all other exceptions just enqueue and continue.
+                                        exceptions.Enqueue(ex);
+                                        // in this case we should save since something bad happened, but only if we aren't going to save anyway in the finally.
+                                        if(filesCompleted % filesPerSave != 0)
+                                        {
+                                            try
+                                            {
+                                                // replace the file in the list with the one that we have been modifying
+
+                                                foreach (var item in metadata.Files.Where(f => f.UploadId.Equals(file.UploadId)))
+                                                {
+                                                    item.Status = file.Status;
+                                                    item.Segments = file.Segments;
+                                                }
+
+                                                metadata.Save();
+                                            }
+                                            catch { } // if we can't save the metadata we shouldn't fail out. 
+                                        }
+                                    }
+                                    finally
+                                    {
+                                        // increment the files that we have made it through (even if they have failed).
+                                        // this ensures that we will periodically save the metadata
+                                        Interlocked.Increment(ref filesCompleted);
+                                        try
+                                        {
+                                            foreach (var item in metadata.Files.Where(f => f.UploadId.Equals(file.UploadId)))
+                                            {
+                                                item.Status = file.Status;
+                                                item.Segments = file.Segments;
+                                            }
+
+                                            // delete the temp metadata created if it exists.
+                                            file.DeleteFile();
+                                            file = null;
+                                        }
+                                        catch { } // if we can't delete a temp file we shouldn't fail out.
+                                    }
+                                }
+                            });
+                            t.Start();
+                            threads.Add(t);
+                        }
+
+                        // create a thread that handles saving of the metadata so that there is no locking happening in the upload threads
+                        var saveThread = new Thread(() =>
+                        {
+                            while (allFiles.Count > 0)
                             {
                                 try
                                 {
                                     _token.ThrowIfCancellationRequested();
-                                    // only initiate uploads for files that are not already complete
-                                    if (file.Status != SegmentUploadStatus.Complete)
+                                    if (filesCompleted % filesPerSave == 0)
                                     {
-                                        var segmentProgressTracker = CreateSegmentProgressTracker(file, fileProgressTracker);
-                                        if (this.Parameters.IsDownload)
+                                        try
                                         {
-                                            DownloadFile(file, segmentProgressTracker);
+                                            metadata.Save();
                                         }
-                                        else
-                                        {
-                                            UploadFile(file, segmentProgressTracker);
-                                        }
+                                        catch { } // if we can't save the metadata we shouldn't fail out. 
                                     }
+
+                                    // sleep for two seconds between checks to save just to keep this thread from using too many cycles.
+                                    Thread.Sleep(2000);
                                 }
                                 catch (OperationCanceledException ex)
                                 {
-                                    // Add to the queue and re-throw so that we immediately abort
                                     exceptions.Enqueue(ex);
+                                    try
+                                    {
+                                        metadata.Save();
+                                    }
+                                    catch { } // if we can't save the metadata we shouldn't fail out. 
                                     throw;
                                 }
                                 catch (Exception ex)
                                 {
-                                    // for all other exceptions just enqueue and continue.
                                     exceptions.Enqueue(ex);
                                 }
-                                finally
-                                {
-                                    // attempt to save the metadata
-                                    try
-                                    {
-                                        metadata.Save();
-                                        // delete the temp metadata created if it exists.
-                                        file.DeleteFile();
-                                    }
-                                    catch { } // if we can't save the metadata or delete a temp file we shouldn't fail out.
-                                }
                             }
-                        );
+                        });
 
-                        if(exceptions.Count > 0)
+                        saveThread.Start();
+                        threads.Add(saveThread);
+
+                        foreach (var t in threads)
+                        {
+                            t.Join();
+                        }
+
+                        if (exceptions.Count > 0)
                         {
                             throw new AggregateException(exceptions);
                         }
 
                         metadata.DeleteFile();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // do not rethrow in this case.
+                        try
+                        {
+                            // if anything went wrong, make sure that we attempt to save the current state of the folder metadata
+                            metadata.Save();
+                        }
+                        catch { } // saving the metadata is a best effort, we will not fail out for this reason and we want to ensure the root exception is preserved.
                     }
                     catch
                     {

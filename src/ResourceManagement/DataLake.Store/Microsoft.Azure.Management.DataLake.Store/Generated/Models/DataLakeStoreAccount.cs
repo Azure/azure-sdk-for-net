@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="type">the namespace and type of the account.</param>
         /// <param name="id">the account subscription ID.</param>
         /// <param name="tags">the value of custom properties.</param>
-        /// <param name="properties">the Data Lake Store account properties.</param>
+        /// <param name="properties">the Data Lake Store account
+        /// properties.</param>
         public DataLakeStoreAccount(string location = default(string), string name = default(string), string type = default(string), string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStoreAccountProperties properties = default(DataLakeStoreAccountProperties))
         {
             Location = location;

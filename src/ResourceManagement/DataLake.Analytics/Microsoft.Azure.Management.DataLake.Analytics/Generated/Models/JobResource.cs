@@ -31,7 +31,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         /// <param name="name">the name of the resource.</param>
         /// <param name="resourcePath">the path to the resource.</param>
-        /// <param name="type">the job resource type. Possible values include: 'VertexResource', 'JobManagerResource', 'StatisticsResource', 'VertexResourceInUserFolder', 'JobManagerResourceInUserFolder', 'StatisticsResourceInUserFolder'</param>
+        /// <param name="type">the job resource type. Possible values include:
+        /// 'VertexResource', 'JobManagerResource', 'StatisticsResource',
+        /// 'VertexResourceInUserFolder', 'JobManagerResourceInUserFolder',
+        /// 'StatisticsResourceInUserFolder'</param>
         public JobResource(string name = default(string), string resourcePath = default(string), JobResourceType? type = default(JobResourceType?))
         {
             Name = name;

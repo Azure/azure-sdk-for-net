@@ -17,7 +17,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// DataLakeAnalytics DataLakeAnalyticsAccount information.
+    /// Data Lake Analytics catalog secret creation and update parameters.
+    /// This is deprecated and will be removed in the next release. Please
+    /// use DataLakeAnalyticsCatalogCredentialCreateOrUpdateParameters
+    /// instead.
     /// </summary>
     public partial class DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
     {
@@ -31,8 +34,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the
         /// DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters class.
         /// </summary>
-        /// <param name="password">the password for the secret to pass in</param>
-        /// <param name="uri">the URI identifier for the secret in the format <hostname>:<port></param>
+        /// <param name="password">the password for the secret to pass
+        /// in</param>
+        /// <param name="uri">the URI identifier for the secret in the format
+        /// <hostname>:<port></param>
         public DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters(string password, string uri = default(string))
         {
             Password = password;

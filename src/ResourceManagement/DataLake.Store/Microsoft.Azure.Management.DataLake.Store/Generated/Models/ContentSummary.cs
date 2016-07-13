@@ -31,8 +31,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         /// <param name="directoryCount">the number of directories.</param>
         /// <param name="fileCount">the number of files.</param>
-        /// <param name="length">the number of bytes used by the contet.</param>
-        /// <param name="spaceConsumed">the disk space consumed by the content.</param>
+        /// <param name="length">the number of bytes used by the
+        /// contet.</param>
+        /// <param name="spaceConsumed">the disk space consumed by the
+        /// content.</param>
         public ContentSummary(long? directoryCount = default(long?), long? fileCount = default(long?), long? length = default(long?), long? spaceConsumed = default(long?))
         {
             DirectoryCount = directoryCount;

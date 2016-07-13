@@ -30,9 +30,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the USqlDistributionInfo class.
         /// </summary>
         /// <param name="type">the type of this distribution.</param>
-        /// <param name="keys">the list of directed columns in the distribution</param>
-        /// <param name="count">the count of indices using this distribution.</param>
-        /// <param name="dynamicCount">the dynamic count of indices using this distribution.</param>
+        /// <param name="keys">the list of directed columns in the
+        /// distribution</param>
+        /// <param name="count">the count of indices using this
+        /// distribution.</param>
+        /// <param name="dynamicCount">the dynamic count of indices using this
+        /// distribution.</param>
         public USqlDistributionInfo(int? type = default(int?), IList<USqlDirectedColumn> keys = default(IList<USqlDirectedColumn>), int? count = default(int?), int? dynamicCount = default(int?))
         {
             Type = type;
