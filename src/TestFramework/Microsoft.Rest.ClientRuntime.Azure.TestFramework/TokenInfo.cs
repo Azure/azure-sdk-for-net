@@ -5,6 +5,12 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
+    public enum TokenAudience
+    {
+        Management,
+        Graph
+    }
+
     public class TokenInfo
     {
         public TokenInfo(string accessToken)
