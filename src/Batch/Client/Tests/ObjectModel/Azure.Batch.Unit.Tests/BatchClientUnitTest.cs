@@ -34,7 +34,7 @@
             TestBatchClientIsClosed(batchCli);
         }
 
-        [Fact(Skip="Will be fixed before release")]
+        [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void BatchClientVersionIsNot9999()
         {

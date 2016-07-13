@@ -9,12 +9,12 @@
 
     public static class InterceptorFactory
     {
-        public static Protocol.RequestInterceptor CreateGetJobRequestInterceptor(Protocol.Models.CloudJob jobToReturn)
+        public static IEnumerable<Protocol.RequestInterceptor> CreateGetJobRequestInterceptor(Protocol.Models.CloudJob jobToReturn)
         {
             return CreateGetRequestInterceptor<Protocol.Models.JobGetOptions, Protocol.Models.CloudJob, Protocol.Models.JobGetHeaders>(jobToReturn);
         }
 
-        public static Protocol.RequestInterceptor CreateAddJobRequestInterceptor()
+        public static IEnumerable<Protocol.RequestInterceptor> CreateAddJobRequestInterceptor()
         {
             return CreateAddRequestInterceptor<
                 Protocol.Models.JobAddParameter,
@@ -22,17 +22,22 @@
                 AzureOperationHeaderResponse<Protocol.Models.JobAddHeaders>>();
         }
 
-        public static Protocol.RequestInterceptor CreateGetTaskRequestInterceptor(Protocol.Models.CloudTask TaskToReturn)
+        public static IEnumerable<Protocol.RequestInterceptor> CreateGetTaskRequestInterceptor(Protocol.Models.CloudTask TaskToReturn)
         {
             return CreateGetRequestInterceptor<Protocol.Models.TaskGetOptions, Protocol.Models.CloudTask, Protocol.Models.TaskGetHeaders>(TaskToReturn);
         }
 
-        public static Protocol.RequestInterceptor CreateGetPoolRequestInterceptor(Protocol.Models.CloudPool poolToReturn)
+        public static IEnumerable<Protocol.RequestInterceptor> CreateGetPoolRequestInterceptor(Protocol.Models.CloudPool poolToReturn)
         {
             return CreateGetRequestInterceptor<Protocol.Models.PoolGetOptions, Protocol.Models.CloudPool, Protocol.Models.PoolGetHeaders>(poolToReturn);
         }
 
-        public static Protocol.RequestInterceptor CreateAddPoolRequestInterceptor()
+        public static IEnumerable<Protocol.RequestInterceptor> CreateGetComputeNodeRequestInterceptor(Protocol.Models.ComputeNode nodeToReturn)
+        {
+            return CreateGetRequestInterceptor<Protocol.Models.ComputeNodeGetOptions, Protocol.Models.ComputeNode, Protocol.Models.ComputeNodeGetHeaders>(nodeToReturn);
+        }
+
+        public static IEnumerable<Protocol.RequestInterceptor> CreateAddPoolRequestInterceptor()
         {
             return CreateAddRequestInterceptor<
                 Protocol.Models.PoolAddParameter,
@@ -40,12 +45,12 @@
                 AzureOperationHeaderResponse<Protocol.Models.PoolAddHeaders>>();
         }
 
-        public static Protocol.RequestInterceptor CreateGetJobScheduleRequestInterceptor(Protocol.Models.CloudJobSchedule jobScheduleToReturn)
+        public static IEnumerable<Protocol.RequestInterceptor> CreateGetJobScheduleRequestInterceptor(Protocol.Models.CloudJobSchedule jobScheduleToReturn)
         {
             return CreateGetRequestInterceptor<Protocol.Models.JobScheduleGetOptions, Protocol.Models.CloudJobSchedule, Protocol.Models.JobScheduleGetHeaders>(jobScheduleToReturn);
         }
 
-        public static Protocol.RequestInterceptor CreateAddJobScheduleRequestInterceptor()
+        public static IEnumerable<Protocol.RequestInterceptor> CreateAddJobScheduleRequestInterceptor()
         {
             return CreateAddRequestInterceptor<
                 Protocol.Models.JobScheduleAddParameter,
@@ -53,12 +58,12 @@
                 AzureOperationHeaderResponse<Protocol.Models.JobScheduleAddHeaders>>();
         }
 
-        public static Protocol.RequestInterceptor CreateGetCertificateRequestInterceptor(Protocol.Models.Certificate certificateToReturn)
+        public static IEnumerable<Protocol.RequestInterceptor> CreateGetCertificateRequestInterceptor(Protocol.Models.Certificate certificateToReturn)
         {
             return CreateGetRequestInterceptor<Protocol.Models.CertificateGetOptions, Protocol.Models.Certificate, Protocol.Models.CertificateGetHeaders>(certificateToReturn);
         }
 
-        public static Protocol.RequestInterceptor CreateAddCertificateRequestInterceptor()
+        public static IEnumerable<Protocol.RequestInterceptor> CreateAddCertificateRequestInterceptor()
         {
             return CreateAddRequestInterceptor<
                 Protocol.Models.CertificateAddParameter,
@@ -66,7 +71,7 @@
                 AzureOperationHeaderResponse<Protocol.Models.CertificateAddHeaders>>();
         }
 
-        public static Protocol.RequestInterceptor CreateListTasksRequestInterceptor(IEnumerable<Protocol.Models.CloudTask> tasksToReturn)
+        public static IEnumerable<Protocol.RequestInterceptor> CreateListTasksRequestInterceptor(IEnumerable<Protocol.Models.CloudTask> tasksToReturn)
         {
             return CreateListRequestInterceptor<
                 Protocol.Models.TaskListOptions,
@@ -74,57 +79,68 @@
                 Protocol.Models.TaskListHeaders>(tasksToReturn);
         }
 
-        public static Protocol.RequestInterceptor CreateAddRequestInterceptor<TBody, TOptions, TResponse>()
+        public static IEnumerable<Protocol.RequestInterceptor> CreateAddRequestInterceptor<TBody, TOptions, TResponse>()
             where TOptions : Protocol.Models.IOptions, new()
             where TResponse : IAzureOperationResponse, new()
         {
-            return new Protocol.RequestInterceptor(req =>
-            {
-                var requestType = (Protocol.BatchRequest<TBody, TOptions, TResponse>)req;
-
-                requestType.ServiceRequestFunc = ct =>
+            return new[]
                 {
-                    return Task.FromResult(new TResponse());
+                    new Protocol.RequestInterceptor(req =>
+                        {
+                            var requestType = (Protocol.BatchRequest<TBody, TOptions, TResponse>)req;
+
+                            requestType.ServiceRequestFunc = ct =>
+                                {
+                                    return Task.FromResult(new TResponse());
+                                };
+                        })
                 };
-            });
         }
 
-        public static Protocol.RequestInterceptor CreateGetRequestInterceptor<TOptions, TResponse, TResponseHeaders>(TResponse valueToReturn)
+        public static IEnumerable<Protocol.RequestInterceptor> CreateGetRequestInterceptor<TOptions, TResponse, TResponseHeaders>(TResponse valueToReturn)
             where TOptions : Protocol.Models.IOptions, new()
         {
-            return new Protocol.RequestInterceptor(req =>
-            {
-                var castReq = (Protocol.BatchRequest<
-                    TOptions,
-                    AzureOperationResponse<TResponse, TResponseHeaders>>)req;
-
-                castReq.ServiceRequestFunc = ct =>
+            return new[]
                 {
-                    return Task.FromResult(new AzureOperationResponse<TResponse, TResponseHeaders>()
-                    {
-                        Body = valueToReturn
-                    });
+                    new Protocol.RequestInterceptor(req =>
+                        {
+                            var castReq = (Protocol.BatchRequest<
+                                TOptions,
+                                AzureOperationResponse<TResponse, TResponseHeaders>>)req;
+
+                            castReq.ServiceRequestFunc = ct =>
+                                {
+                                    return Task.FromResult(new AzureOperationResponse<TResponse, TResponseHeaders>()
+                                        {
+                                            Body = valueToReturn
+                                        });
+                                };
+                        })
                 };
-            });
         }
 
-        public static Protocol.RequestInterceptor CreateListRequestInterceptor<TOptions, TResponse, TResponseHeaders>(IEnumerable<TResponse> valueToReturn)
+        public static IEnumerable<Protocol.RequestInterceptor> CreateListRequestInterceptor<TOptions, TResponse, TResponseHeaders>(
+            IEnumerable<TResponse> valueToReturn)
             where TOptions : Protocol.Models.IOptions, new()
         {
-            return new Protocol.RequestInterceptor(req =>
-            {
-                var castReq = (Protocol.BatchRequest<
-                    TOptions,
-                    AzureOperationResponse<IPage<TResponse>, TResponseHeaders>>)req;
-
-                castReq.ServiceRequestFunc = ct =>
+            return new[]
                 {
-                    return Task.FromResult(new AzureOperationResponse<IPage<TResponse>, TResponseHeaders>()
-                    {
-                        Body = new FakePage<TResponse>(valueToReturn.ToList())
-                    });
+                    new Protocol.RequestInterceptor(req =>
+                        {
+                            var castReq = (Protocol.BatchRequest<
+                                TOptions,
+                                AzureOperationResponse<IPage<TResponse>, TResponseHeaders>>)req;
+
+                            castReq.ServiceRequestFunc = ct =>
+                                {
+                                    return Task.FromResult(new AzureOperationResponse<IPage<TResponse>, TResponseHeaders>()
+                                        {
+                                            Body = new FakePage<TResponse>(valueToReturn.ToList())
+                                        });
+                                };
+                        })
+
                 };
-            });
         }
     }
 }

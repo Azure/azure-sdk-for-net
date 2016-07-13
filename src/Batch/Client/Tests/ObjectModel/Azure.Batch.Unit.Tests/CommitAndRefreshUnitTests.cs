@@ -40,9 +40,9 @@
                         PoolId = "Foo"
                     });
 
-                await job.CommitAsync(additionalBehaviors: new[] { InterceptorFactory.CreateAddJobRequestInterceptor() });
+                await job.CommitAsync(additionalBehaviors: InterceptorFactory.CreateAddJobRequestInterceptor());
 
-                await job.RefreshAsync(additionalBehaviors: new[] { InterceptorFactory.CreateGetJobRequestInterceptor(protoJob) });
+                await job.RefreshAsync(additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
 
                 Assert.Equal(id, job.Id);
                 Assert.Equal(displayName, job.DisplayName);
@@ -68,9 +68,9 @@
 
                 CloudPool pool = batchClient.PoolOperations.CreatePool(id, "Woo", new CloudServiceConfiguration("4"));
 
-                await pool.CommitAsync(additionalBehaviors: new[] { InterceptorFactory.CreateAddPoolRequestInterceptor() });
+                await pool.CommitAsync(additionalBehaviors: InterceptorFactory.CreateAddPoolRequestInterceptor());
 
-                await pool.RefreshAsync(additionalBehaviors: new[] { InterceptorFactory.CreateGetPoolRequestInterceptor(protoPool) });
+                await pool.RefreshAsync(additionalBehaviors: InterceptorFactory.CreateGetPoolRequestInterceptor(protoPool));
 
                 Assert.Equal(id, pool.Id);
                 Assert.Equal(displayName, pool.DisplayName);
@@ -99,9 +99,9 @@
 
                 CloudJobSchedule jobSchedule = batchClient.JobScheduleOperations.CreateJobSchedule(id, new Schedule(), null);
 
-                await jobSchedule.CommitAsync(additionalBehaviors: new[] { InterceptorFactory.CreateAddJobScheduleRequestInterceptor() });
+                await jobSchedule.CommitAsync(additionalBehaviors: InterceptorFactory.CreateAddJobScheduleRequestInterceptor());
 
-                await jobSchedule.RefreshAsync(additionalBehaviors: new[] { InterceptorFactory.CreateGetJobScheduleRequestInterceptor(protoJobSchedule) });
+                await jobSchedule.RefreshAsync(additionalBehaviors: InterceptorFactory.CreateGetJobScheduleRequestInterceptor(protoJobSchedule));
 
                 Assert.Equal(id, jobSchedule.Id);
                 Assert.Equal(displayName, jobSchedule.DisplayName);
@@ -130,9 +130,9 @@
 
                     Assert.NotNull(certificate.ThumbprintAlgorithm);
 
-                    await certificate.CommitAsync(additionalBehaviors: new [] { InterceptorFactory.CreateAddCertificateRequestInterceptor() });
+                    await certificate.CommitAsync(additionalBehaviors: InterceptorFactory.CreateAddCertificateRequestInterceptor());
 
-                    await certificate.RefreshAsync(additionalBehaviors: new[] { InterceptorFactory.CreateGetCertificateRequestInterceptor(protoCertificate) });
+                    await certificate.RefreshAsync(additionalBehaviors: InterceptorFactory.CreateGetCertificateRequestInterceptor(protoCertificate));
 
                     Assert.Equal(expectedThumbprint, certificate.Thumbprint);
                     Assert.Null(certificate.ThumbprintAlgorithm);

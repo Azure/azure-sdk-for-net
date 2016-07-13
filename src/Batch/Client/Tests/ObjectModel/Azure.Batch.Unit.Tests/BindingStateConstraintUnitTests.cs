@@ -43,7 +43,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(cloudPool.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(cloudPool.Metadata.First().Value, metadataItem.Value);
 
-                cloudPool.Commit(additionalBehaviors: new[] { InterceptorFactory.CreateAddPoolRequestInterceptor() });
+                cloudPool.Commit(additionalBehaviors: InterceptorFactory.CreateAddPoolRequestInterceptor() );
 
                 // writing isn't allowed for a cloudPool that is in an readonly state.
                 Assert.Throws<InvalidOperationException>(() => cloudPool.AutoScaleFormula = "Foo");
@@ -87,7 +87,7 @@ namespace Azure.Batch.Unit.Tests
                     }
                 });
 
-                CloudPool boundPool = client.PoolOperations.GetPool(string.Empty, additionalBehaviors: new[] { InterceptorFactory.CreateGetPoolRequestInterceptor(protoPool) });
+                CloudPool boundPool = client.PoolOperations.GetPool(string.Empty, additionalBehaviors: InterceptorFactory.CreateGetPoolRequestInterceptor(protoPool));
 
                 // Cannot change these bound properties.
                 Assert.Throws<InvalidOperationException>(() => boundPool.DisplayName = "cannot-change-display-name");
@@ -124,7 +124,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(jobSchedule.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(jobSchedule.Metadata.First().Value, metadataItem.Value);
 
-                jobSchedule.Commit(additionalBehaviors: new[] { InterceptorFactory.CreateAddJobScheduleRequestInterceptor() });
+                jobSchedule.Commit(additionalBehaviors: InterceptorFactory.CreateAddJobScheduleRequestInterceptor());
 
                 // writing isn't allowed for a jobSchedule that is in an read only state.
                 Assert.Throws<InvalidOperationException>(() => jobSchedule.Id = "cannot-change-id");
@@ -160,10 +160,9 @@ namespace Azure.Batch.Unit.Tests
                     CreationTime = creationTime
                 };
 
-                CloudJobSchedule boundJobSchedule = client.JobScheduleOperations.GetJobSchedule(jobScheduleId, additionalBehaviors: new[]
-                {
-                    InterceptorFactory.CreateGetJobScheduleRequestInterceptor(cloudJobSchedule) 
-                });
+                CloudJobSchedule boundJobSchedule = client.JobScheduleOperations.GetJobSchedule(
+                    jobScheduleId,
+                    additionalBehaviors: InterceptorFactory.CreateGetJobScheduleRequestInterceptor(cloudJobSchedule));
 
                 Assert.Equal(jobScheduleId, boundJobSchedule.Id); // reading is allowed from a jobSchedule that is returned from the server.
                 Assert.Equal(creationTime, boundJobSchedule.CreationTime);
@@ -201,7 +200,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(cloudJob.OnAllTasksComplete, OnAllTasksComplete.NoAction);
                 Assert.Equal(cloudJob.OnTaskFailure, OnTaskFailure.NoAction);
 
-                cloudJob.Commit(additionalBehaviors: new[] { InterceptorFactory.CreateAddJobRequestInterceptor() });
+                cloudJob.Commit(additionalBehaviors: InterceptorFactory.CreateAddJobRequestInterceptor());
 
                 // writing isn't allowed for a job that is in an invalid state.
                 Assert.Throws<InvalidOperationException>(() => cloudJob.Id = "cannot-change-id");
@@ -233,7 +232,7 @@ namespace Azure.Batch.Unit.Tests
                     url: ClientUnitTestCommon.DummyBaseUrl, 
                     onAllTasksComplete: Models.OnAllTasksComplete.NoAction);
 
-                CloudJob boundJob = client.JobOperations.GetJob(jobId, additionalBehaviors: new[] { InterceptorFactory.CreateGetJobRequestInterceptor(protoJob) });
+                CloudJob boundJob = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
 
                 Assert.Equal(jobId, boundJob.Id); // reading is allowed from a job that is returned from the server.
                 Assert.Equal(creationTime, boundJob.CreationTime);
@@ -276,11 +275,11 @@ namespace Azure.Batch.Unit.Tests
                         SchedulingError = terminateExitOption,
                     }
                 };
-                
-                CloudTask boundTask = client.JobOperations.GetTask(jobId, taskId, additionalBehaviors: new List<BatchClientBehavior>
-                {
-                    InterceptorFactory.CreateGetTaskRequestInterceptor(cloudTask)
-                });
+
+                CloudTask boundTask = client.JobOperations.GetTask(
+                    jobId,
+                    taskId,
+                    additionalBehaviors: InterceptorFactory.CreateGetTaskRequestInterceptor(cloudTask));
 
                 Assert.Equal(taskId, boundTask.Id); // reading is allowed from a task that is returned from the server.
                 Assert.Equal(disableExitOption.JobAction.ToString(), boundTask.ExitConditions.Default.JobAction.ToString());

@@ -118,7 +118,7 @@
                     taskList,
                     TaskState.Completed,
                     timeout,
-                    additionalBehaviors: new[] { InterceptorFactory.CreateListTasksRequestInterceptor(protocolTasks) }));
+                    additionalBehaviors: InterceptorFactory.CreateListTasksRequestInterceptor(protocolTasks)));
 
                 Assert.Contains(string.Format("waiting for resources after {0}", timeout), e.Message);
                 Assert.IsType<OperationCanceledException>(e.InnerException);
@@ -151,7 +151,7 @@
                         taskList,
                         TaskState.Completed,
                         cts.Token,
-                        additionalBehaviors: new[] { InterceptorFactory.CreateListTasksRequestInterceptor(protocolTasks) }));
+                        additionalBehaviors: InterceptorFactory.CreateListTasksRequestInterceptor(protocolTasks)));
                 }
             }
         }

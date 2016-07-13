@@ -31,7 +31,7 @@ namespace Azure.Batch.Unit.Tests
             {
                 Models.CloudJob protoJob = new Models.CloudJob(id: "id", onAllTasksComplete: Models.OnAllTasksComplete.NoAction, onTaskFailure: Models.OnTaskFailure.PerformExitOptionsJobAction);
 
-                CloudJob boundJob = await client.JobOperations.GetJobAsync(string.Empty, additionalBehaviors: new[] { InterceptorFactory.CreateGetJobRequestInterceptor(protoJob) });
+                CloudJob boundJob = await client.JobOperations.GetJobAsync(string.Empty, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
                 Assert.Equal(OnAllTasksComplete.NoAction, boundJob.OnAllTasksComplete);
                 Assert.Equal(OnTaskFailure.PerformExitOptionsJobAction, boundJob.OnTaskFailure);
 
@@ -69,7 +69,7 @@ namespace Azure.Batch.Unit.Tests
                     };
                 });
 
-                CloudJob boundJob = await client.JobOperations.GetJobAsync(string.Empty, additionalBehaviors: new[] { InterceptorFactory.CreateGetJobRequestInterceptor(protoJob) });
+                CloudJob boundJob = await client.JobOperations.GetJobAsync(string.Empty, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
 
                 boundJob.OnAllTasksComplete = OnAllTasksComplete.TerminateJob;
 

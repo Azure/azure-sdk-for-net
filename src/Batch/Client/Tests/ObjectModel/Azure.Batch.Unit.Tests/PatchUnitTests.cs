@@ -391,7 +391,7 @@
             {
                 CloudJob job = client.JobOperations.GetJob(
                     string.Empty,
-                    additionalBehaviors: new[] { InterceptorFactory.CreateGetJobRequestInterceptor(startEntity) });
+                    additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(startEntity));
 
                 modificationFunction(job);
 
@@ -429,7 +429,7 @@
             {
                 CloudPool pool = client.PoolOperations.GetPool(
                     string.Empty,
-                    additionalBehaviors: new[] { InterceptorFactory.CreateGetPoolRequestInterceptor(startEntity) });
+                    additionalBehaviors: InterceptorFactory.CreateGetPoolRequestInterceptor(startEntity));
 
                 modificationFunction(pool);
 
@@ -465,7 +465,7 @@
             {
                 CloudJobSchedule jobSchedule = client.JobScheduleOperations.GetJobSchedule(
                     string.Empty,
-                    additionalBehaviors: new[] { InterceptorFactory.CreateGetJobScheduleRequestInterceptor(startEntity) });
+                    additionalBehaviors: InterceptorFactory.CreateGetJobScheduleRequestInterceptor(startEntity));
 
                 modificationFunction(jobSchedule);
 
