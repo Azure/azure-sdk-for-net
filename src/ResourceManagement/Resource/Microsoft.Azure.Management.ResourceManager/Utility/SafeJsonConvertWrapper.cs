@@ -1,10 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
+//
+// This is a wrapper class for Microsoft.Rest.Serialization.SafeJsonConvert. We create this class to support string values to
+// Deployment.Properties.Template and Deployment.Properties.Parameters. The string values must be valid JSON payloads for tempalte
+// and parameters respectively. 
+//
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
     using Microsoft.Azure.Management.ResourceManager.Models;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -20,14 +26,29 @@ namespace Microsoft.Azure.Management.ResourceManager
                 {
                     if (deployment.Properties.Template is string)
                     {
-                        deployment.Properties.Template = JObject.Parse((string)deployment.Properties.Template);
+                        try
+                        {
+                            deployment.Properties.Template = JObject.Parse((string)deployment.Properties.Template);
+                        }
+                        catch (JsonException ex)
+                        {
+                            throw new SerializationException("Unable to serialize template.", ex);
+                        }
                     }
                     if (deployment.Properties.Parameters is string)
                     {
-                        var templateParameters = JObject.Parse((string)deployment.Properties.Parameters);
-                        if (templateParameters["$schema"] != null)
+                        try
                         {
-                            deployment.Properties.Parameters = templateParameters["parameters"];
+                            var templateParameters = JObject.Parse((string)deployment.Properties.Parameters);
+
+                            if (templateParameters["$schema"] != null && templateParameters["parameters"] != null)
+                            {
+                                deployment.Properties.Parameters = templateParameters["parameters"];
+                            }
+                        }
+                        catch (JsonException ex)
+                        {
+                            throw new SerializationException("Unable to serialize template parameters.", ex);
                         }
                     }
                 }
