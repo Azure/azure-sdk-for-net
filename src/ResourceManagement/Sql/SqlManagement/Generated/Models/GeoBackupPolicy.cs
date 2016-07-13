@@ -21,32 +21,47 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Export Azure SQL Database parameters.
+    /// Represents an Azure SQL Database geo backup policy.
     /// </summary>
-    public partial class ImportExtensionProperties : ExportRequestParameters
+    public partial class GeoBackupPolicy : ResourceBaseExtended
     {
-        private string _operrationMode;
+        private GeoBackupPolicyProperties _properties;
         
         /// <summary>
-        /// Optional. Gets the operation mode
+        /// Optional. Gets or sets the properties representing the geo backup
+        /// policy.
         /// </summary>
-        public string OperrationMode
+        public GeoBackupPolicyProperties Properties
         {
-            get { return this._operrationMode; }
-            set { this._operrationMode = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ImportExtensionProperties class.
+        /// Initializes a new instance of the GeoBackupPolicy class.
         /// </summary>
-        public ImportExtensionProperties()
+        public GeoBackupPolicy()
         {
-            this.OperrationMode = "Import";
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GeoBackupPolicy class with
+        /// required arguments.
+        /// </summary>
+        public GeoBackupPolicy(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }
