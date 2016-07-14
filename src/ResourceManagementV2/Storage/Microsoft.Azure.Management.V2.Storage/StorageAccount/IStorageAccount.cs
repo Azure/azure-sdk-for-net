@@ -6,6 +6,7 @@ using System;
 namespace Microsoft.Azure.Management.V2.Storage
 {
     public interface IStorageAccount :
+        IGroupableResource,
         IResource,
         IRefreshable<IStorageAccount>,
         IUpdatable<StorageAccount.Update.IUpdate>,

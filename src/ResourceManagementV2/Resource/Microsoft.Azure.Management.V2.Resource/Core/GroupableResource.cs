@@ -2,7 +2,7 @@
 using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System;
 
-namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
+namespace Microsoft.Azure.Management.V2.Resource
 {
     /// <summary>
     /// Implementation of IGroupableResource.
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
     /// <typeparam name="ManagerT"></typeparam
     /// <typeparam name="IDefintionAfterRegion">The definition stage to continue after defining the region</typeparam>
     /// <typeparam name="IDefintionAfterResourceGroup">The definition stage to continue after defining the resource gorup</typeparam>
-    public abstract class GroupableResourceImpl<IFluentResourceT,
+    public abstract class GroupableResource<IFluentResourceT,
         InnerResourceT,
         InnerResourceBaseT,
         FluentResourceT,
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
         IDefintionAfterResourceGroup> :
         ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion>,
         IGroupableResource
-        where FluentResourceT : GroupableResourceImpl<IFluentResourceT,
+        where FluentResourceT : GroupableResource<IFluentResourceT,
             InnerResourceT,
             InnerResourceBaseT,
             FluentResourceT,
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
         private string groupName;
         private ManagerT manager;
 
-        protected GroupableResourceImpl(string key, InnerResourceT innerObject, ManagerT manager) :base(key, innerObject)
+        protected GroupableResource(string key, InnerResourceT innerObject, ManagerT manager) :base(key, innerObject)
         {
             this.manager = manager;
         }

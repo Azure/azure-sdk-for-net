@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-using Microsoft.Azure.Management.V2.Resource.GroupableResource;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
     internal class StorageAccountImpl :
-        GroupableResourceImpl<IStorageAccount,
+        GroupableResource<IStorageAccount,
             Management.Storage.Models.StorageAccount,
             Management.Storage.Models.Resource, 
             StorageAccountImpl,

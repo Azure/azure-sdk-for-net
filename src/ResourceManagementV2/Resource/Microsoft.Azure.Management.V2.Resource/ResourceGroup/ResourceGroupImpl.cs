@@ -66,18 +66,8 @@ namespace Microsoft.Azure.Management.V2.Resource
             this.client = client;
         }
 
-        async Task<IResourceGroup> ICreatable<IResourceGroup>.CreateAsync()
-        {
-            return await CreateAsync();
-        }
-
         public ResourceGroup.Update.IUpdate Update() {
             return this;
-        }
-
-        public async Task<IResourceGroup> ApplyAsync()
-        {
-            return await CreateAsync();
         }
 
         public override async Task<IResourceGroup> Refresh()
