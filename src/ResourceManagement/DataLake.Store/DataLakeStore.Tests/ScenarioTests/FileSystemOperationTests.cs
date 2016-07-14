@@ -238,6 +238,47 @@ namespace DataLakeStore.Tests
         }
 
         [Fact]
+        public void DataLakeStoreFileSystemTestFile()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    Assert.False(commonData.DataLakeStoreFileSystemClient.FileSystem.PathExists(commonData.DataLakeStoreFileSystemAccountName, "nonexistentfile"));
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
+                    Assert.True(commonData.DataLakeStoreFileSystemClient.FileSystem.PathExists(commonData.DataLakeStoreFileSystemAccountName, filePath));
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemFileAlreadyExists()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
+                    // now try to recreate the file
+                    try
+                    {
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.Create(commonData.DataLakeStoreFileSystemAccountName, filePath, new MemoryStream());
+                        Assert.True(false, "Recreation of an existing file without overwrite should have failed and did not.");
+                    }
+                    catch (AdlsErrorException ex)
+                    {
+                        Assert.Equal(typeof(AdlsFileAlreadyExistsException), ex.Body.RemoteException.GetType());
+                    }
+                }
+            }
+        }
+
+        [Fact]
         public void DataLakeStoreFileSystemFileCreateWithContents()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -320,7 +361,7 @@ namespace DataLakeStore.Tests
                     }
                     catch (AdlsErrorException ex)
                     {
-                        Assert.Equal(typeof(AdlsIllegalArgumentException), ex.Body.RemoteException.GetType());
+                        Assert.Equal(typeof(AdlsBadOffsetException), ex.Body.RemoteException.GetType());
                     }
                 }
             }
