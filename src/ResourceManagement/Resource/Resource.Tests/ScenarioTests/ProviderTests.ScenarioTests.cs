@@ -99,6 +99,50 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void GetProviderWithAliases()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var computeNamespace = "Microsoft.Compute";
+                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+                var client = GetResourceManagementClient(context, handler);
+
+                var reg = client.Providers.Register(computeNamespace);
+                Assert.NotNull(reg);
+
+                var result = client.Providers.List(expand: "resourceTypes/aliases");
+
+                // Validate headers
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                // Validate result
+                Assert.True(result.Any());
+                var computeProvider = result.First(
+                    provider => string.Equals(provider.NamespaceProperty, computeNamespace, StringComparison.OrdinalIgnoreCase));
+
+                Assert.NotEmpty(computeProvider.ResourceTypes);
+                var virtualMachinesType = computeProvider.ResourceTypes.First(
+                    resourceType => string.Equals(resourceType.ResourceType, "virtualMachines", StringComparison.OrdinalIgnoreCase));
+
+                Assert.NotEmpty(virtualMachinesType.Aliases);
+                Assert.Equal("Microsoft.Compute/virtualMachines/sku.name", virtualMachinesType.Aliases[0].Name);
+                Assert.Equal("properties.hardwareProfile.vmSize", virtualMachinesType.Aliases[0].Paths[0].Path);
+
+                computeProvider = client.Providers.Get(resourceProviderNamespace: computeNamespace, expand: "resourceTypes/aliases");
+
+                Assert.NotEmpty(computeProvider.ResourceTypes);
+                virtualMachinesType = computeProvider.ResourceTypes.First(
+                    resourceType => string.Equals(resourceType.ResourceType, "virtualMachines", StringComparison.OrdinalIgnoreCase));
+
+                Assert.NotEmpty(virtualMachinesType.Aliases);
+                Assert.Equal("Microsoft.Compute/virtualMachines/sku.name", virtualMachinesType.Aliases[0].Name);
+                Assert.Equal("properties.hardwareProfile.vmSize", virtualMachinesType.Aliases[0].Paths[0].Path);
+            }
+        }
+
+        [Fact]
         public void VerifyProviderRegister()
         {
             var handler = new RecordedDelegatingHandler() {StatusCodeToReturn = HttpStatusCode.OK};
