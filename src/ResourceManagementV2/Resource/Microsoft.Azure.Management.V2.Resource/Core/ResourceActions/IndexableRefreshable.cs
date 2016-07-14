@@ -2,7 +2,9 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
-    public abstract class IndexableRefreshable<IFluentResourceT> : Indexable, IRefreshable<IFluentResourceT>
+    public abstract class IndexableRefreshable<IFluentResourceT> : 
+        Indexable,
+        IRefreshable<IFluentResourceT>
     {
         protected IndexableRefreshable(string name) : base(name) {}
 

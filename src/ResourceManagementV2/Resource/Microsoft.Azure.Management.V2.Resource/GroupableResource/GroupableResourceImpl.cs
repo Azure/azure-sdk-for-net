@@ -4,23 +4,40 @@ using System;
 
 namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
 {
-    /// 
     /// <summary>
+    /// Implementation of IGroupableResource.
+    /// </summary>
     /// The implementation for IGroupableResource.
     /// </summary>
     /// <typeparam name="IFluentResourceT">The fluent wrapper interface for the resource</typeparam>
     /// <typeparam name="InnerResourceT">The autorest generated resource</typeparam>
     /// <typeparam name="InnerResourceBaseT">The autorest generated base class from which InnerResourceT inherits</typeparam>
     /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
-    /// <typeparam name="ManagerT"></typeparam>
-    public abstract class GroupableResourceImpl<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, ManagerT> :
-        ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT>,
+    /// <typeparam name="ManagerT"></typeparam
+    /// <typeparam name="IDefintionAfterRegion">The definition stage to continue after defining the region</typeparam>
+    /// <typeparam name="IDefintionAfterResourceGroup">The definition stage to continue after defining the resource gorup</typeparam>
+    public abstract class GroupableResourceImpl<IFluentResourceT,
+        InnerResourceT,
+        InnerResourceBaseT,
+        FluentResourceT,
+        ManagerT,
+        IDefintionAfterRegion,
+        IDefintionAfterResourceGroup> :
+        ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion>,
         IGroupableResource
-        where FluentResourceT : GroupableResourceImpl<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, ManagerT>, IFluentResourceT
+        where FluentResourceT : GroupableResourceImpl<IFluentResourceT,
+            InnerResourceT,
+            InnerResourceBaseT,
+            FluentResourceT,
+            ManagerT,
+            IDefintionAfterRegion,
+            IDefintionAfterResourceGroup>, IFluentResourceT
         where ManagerT : ManagerBase
         where IFluentResourceT : class, IResource
         where InnerResourceBaseT: class
         where InnerResourceT : class, InnerResourceBaseT
+        where IDefintionAfterRegion : class
+        where IDefintionAfterResourceGroup : class
     {
         protected ICreatable<IResourceGroup> newGroup;
         private string groupName;
@@ -41,7 +58,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
                 {
                     return groupName;
                 }
-                return null; // TODO
+                return ResourceUtils.GroupFromResourceId(Id);
             }
         }
 
@@ -49,12 +66,12 @@ namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
 
         #region Fluent Setters [Implementation of GroupableResource.Definition interfaces]
 
-        public FluentResourceT WithNewResourceGroup()
+        public IDefintionAfterResourceGroup WithNewResourceGroup()
         {
             return WithNewResourceGroup(this.Name + "group");
         }
 
-        public FluentResourceT WithNewResourceGroup(string groupName)
+        public IDefintionAfterResourceGroup WithNewResourceGroup(string groupName)
         {
             ICreatable<IResourceGroup> creatable = manager
                 .ResourceManager
@@ -64,23 +81,23 @@ namespace Microsoft.Azure.Management.V2.Resource.GroupableResource
             return WithNewResourceGroup(creatable);
         }
 
-        public FluentResourceT WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
+        public IDefintionAfterResourceGroup WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
         {
             groupName = creatable.Key;
             newGroup = creatable;
             AddCreatableDependency(creatable as IResourceCreator);
-            return this as FluentResourceT;
+            return this as IDefintionAfterResourceGroup;
         }
 
-        public FluentResourceT WithExistingResourceGroup(String groupName)
+        public IDefintionAfterResourceGroup WithExistingResourceGroup(String groupName)
         {
             this.groupName = groupName;
-            return this as FluentResourceT; 
+            return this as IDefintionAfterResourceGroup; 
         }
 
-        public FluentResourceT WithExistingResourceGroup(IResourceGroup group)
+        public IDefintionAfterResourceGroup WithExistingResourceGroup(IResourceGroup group)
         {
-            return this.WithExistingResourceGroup(group.Name);
+            return WithExistingResourceGroup(group.Name);
         }
 
         #endregion

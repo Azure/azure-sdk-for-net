@@ -4,11 +4,11 @@ using Microsoft.Azure.Management.V2.Resource.Core.DAG;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
-    public abstract class Creatable<IFluentResourceT, InnerResourceT, FluentResourceT> : 
+    public abstract class Creatable<IFluentResourceT, InnerResourceT, FluentResourceT> :
         IndexableRefreshableWrapper<IFluentResourceT, InnerResourceT>,
         IResourceCreator
         where FluentResourceT : class
-        where IFluentResourceT : IResource
+        where IFluentResourceT : class, IResource
     {
         protected Creatable(string name, InnerResourceT innerObject) : base(name, innerObject)
         {
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             creatableResource.CreatorTaskGroup.Merge(CreatorTaskGroup);
         }
 
-        protected async Task<FluentResourceT> CreateAsync()
+        public async Task<IFluentResourceT> CreateAsync()
         {
             if (!CreatorTaskGroup.IsPreparer)
             {
@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 
             CreatorTaskGroup.Prepare();
             await CreatorTaskGroup.ExecuteAsync();
-            FluentResourceT thisResource = this as FluentResourceT;
+            IFluentResourceT thisResource = this as IFluentResourceT;
             if (thisResource == null)
             {
-                throw new InvalidOperationException("Interal Error: Expected 'of type' '" + typeof(FluentResourceT) + "', but got '" + this.GetType().Namespace + "'");
+                throw new InvalidOperationException("Interal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'");
             }
             return thisResource;
         }

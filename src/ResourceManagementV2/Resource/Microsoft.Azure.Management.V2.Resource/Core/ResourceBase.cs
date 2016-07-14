@@ -12,13 +12,14 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// <typeparam name="InnerResourceT">The autorest generated resource</typeparam>
     /// <typeparam name="InnerResourceBaseT">The autorest generated base class from which <InnerResourceT @ref="InnerResourceT" /> inherits</typeparam>
     /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
-    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT> : 
+    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion> : 
         CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT>,
         IResource
-        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT>, IFluentResourceT
+        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion>, IFluentResourceT
         where IFluentResourceT : class, IResource
         where InnerResourceBaseT : class
         where InnerResourceT : class, InnerResourceBaseT
+        where IDefintionAfterRegion: class
     {
 
         private TypeInfo resourceTypeInfo;
@@ -86,13 +87,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             }
         }
 
-
         #region The fluent setters
 
-        public FluentResourceT WithRegion(string regionName)
+        public IDefintionAfterRegion WithRegion(string regionName)
         {
             SetValue("Location", regionName);
-            return this as FluentResourceT;
+            return this as IDefintionAfterRegion;
         }
 
         public FluentResourceT WithTags(IDictionary<string, string> tags)

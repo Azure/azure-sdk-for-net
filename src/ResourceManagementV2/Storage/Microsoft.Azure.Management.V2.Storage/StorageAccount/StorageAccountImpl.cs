@@ -12,7 +12,13 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 namespace Microsoft.Azure.Management.V2.Storage
 {
     internal class StorageAccountImpl :
-        GroupableResourceImpl<IStorageAccount, Management.Storage.Models.StorageAccount, Management.Storage.Models.Resource, StorageAccountImpl, StorageManager>,
+        GroupableResourceImpl<IStorageAccount,
+            Management.Storage.Models.StorageAccount,
+            Management.Storage.Models.Resource, 
+            StorageAccountImpl,
+            StorageManager,
+            StorageAccount.Definition.IWithGroup,
+            StorageAccount.Definition.IWithCreate>,
         IStorageAccount,
         StorageAccount.Definition.IDefinition,
         StorageAccount.Update.IUpdate
@@ -123,42 +129,6 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Definition setters [Implementation of interfaces in StorageAccount.Definition]
 
-        public new StorageAccount.Definition.IWithGroup WithRegion(string regionName)
-        {
-            base.WithRegion(regionName);
-            return this;
-        }
-
-        public new StorageAccount.Definition.IWithCreate WithNewResourceGroup()
-        {
-            base.WithNewResourceGroup();
-            return this;
-        }
-
-        public new StorageAccount.Definition.IWithCreate WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
-        {
-            base.WithNewResourceGroup(creatable);
-            return this;
-        }
-
-        public new StorageAccount.Definition.IWithCreate WithNewResourceGroup(string name)
-        {
-            base.WithNewResourceGroup(name);
-            return this;
-        }
-
-        public new StorageAccount.Definition.IWithCreate WithExistingResourceGroup(IResourceGroup resourceGroup)
-        {
-            base.WithExistingResourceGroup(resourceGroup);
-            return this;
-        }
-
-        public new StorageAccount.Definition.IWithCreate WithExistingResourceGroup(string groupName)
-        {
-            base.WithExistingResourceGroup(groupName);
-            return this;
-        }
-
         public StorageAccount.Definition.IWithCreate WithSku(SkuName skuName)
         {
             createParameters.Sku = new Sku()
@@ -226,8 +196,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         }
 
         #endregion
-
-
+        
         #region Update setters [Implementation of interfaces in StorageAccount.Update]
 
         StorageAccount.Update.IUpdate StorageAccount.Update.IWithAccessTier.WithAccessTier(AccessTier accessTier)
@@ -293,32 +262,34 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #endregion
 
-        public override Task<IStorageAccount> Refresh()
+        public override async Task<IStorageAccount> Refresh()
         {
-            throw new NotImplementedException();
+            var response = await client.GetPropertiesAsync(ResourceGroupName, this.name);
+            SetInner(response);
+            return this;
         }
 
         public StorageAccount.Update.IUpdate Update()
         {
+            updateParameters = new StorageAccountUpdateParameters();
             return this;
         }
 
-        public Task<IStorageAccount> ApplyAsync()
+        public new async Task<IStorageAccount> ApplyAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        public async new Task<IStorageAccount> CreateAsync()
-        {
-            return await base.CreateAsync();
+            // overriding the base.ApplyAsync here since the parameter for update is different from the 
+            // one for create
+            var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters);
+            SetInner(response);
+            return this;
         }
 
         public override async Task<IResource> CreateResourceAsync()
         {
             createParameters.Location = RegionName;
             createParameters.Tags = Inner.Tags;
-            var response = await client.CreateWithHttpMessagesAsync(ResourceGroupName, this.name, createParameters);
-            SetInner(response.Body);
+            var response = await client.CreateAsync(ResourceGroupName, this.name, createParameters);
+            SetInner(response);
             return this;
         }
     }
