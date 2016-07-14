@@ -42,9 +42,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", envString);
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var client = context.GetServiceClient<SimpleClient>(TestEnvironmentFactory.GetTestEnvironment());
+                var testEnv = TestEnvironmentFactory.GetTestEnvironment();
+                var client = context.GetServiceClient<SimpleClient>(testEnv);
+                var graphClient = context.GetGraphServiceClient<SimpleClient>(testEnv);
                 var response = client.CsmGetLocation();
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                Assert.Equal(testEnv.Endpoints.ResourceManagementUri, client.BaseUri);
+                Assert.Equal(testEnv.Endpoints.GraphUri, graphClient.BaseUri);
             }
         }
 
