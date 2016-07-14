@@ -50,6 +50,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public uint? CloudDataMovementUnits { get; set; }
 
+        /// <summary>
+        /// Optional. Specifies whether to copy data via an interim staging.
+        /// Default value is false.
+        /// </summary>
+        public bool? EnableStaging { get; set; }
+
+        /// <summary>
+        /// Optional. Specifies interim staging settings when EnableStaging is true.
+        /// </summary>
+        public StagingSettings StagingSettings { get; set; }
+
         public CopyActivity()
         {
         }

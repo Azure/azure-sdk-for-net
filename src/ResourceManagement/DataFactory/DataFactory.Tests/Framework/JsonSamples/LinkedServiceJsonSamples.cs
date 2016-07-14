@@ -379,7 +379,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         type: ""OnPremisesOdbc"",
         typeProperties: {
             connectionString: ""driver={SQL Server};server=myserver;database=mydb;"",
-            credential: ""uid=myuid;pwd=mypassword"",
+
+            credential: ""uid=myuid;pwd=PLACEHOLDER"",
             username: ""microsoft"",
             password: ""fakepassword"",
             gatewayName: ""MSourceDemoGateway"",
@@ -435,8 +436,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             url: ""http://myhost.com/"",
             authenticationType: ""Basic"",
             username: ""microsoft"",
-            password: ""fakepassword"",
-            apiKey: ""mykey""            
+            password: ""fakepassword""   
         }
     }
 }";

@@ -16,11 +16,10 @@ using System;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Azure;
-using Microsoft.AzureStack.Management.StorageAdmin.Models;
-using Microsoft.AzureStack.Management.StorageAdmin;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Xunit;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     public class FarmTests : TestBase
     {
@@ -209,6 +208,27 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
             Assert.Equal(locationUri, handler.Uri.AbsoluteUri);
+        }
+
+        [Fact]
+        public void OnDemandGc()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+
+            var subscriptionId = Guid.NewGuid().ToString();
+         
+            var handler = new RecordedDelegatingHandler(response)
+            {
+                StatusCodeToReturn = HttpStatusCode.OK,
+            };
+
+            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
+            var client = GetClient(handler, token);
+            var result = client.Farms.OnDemandGc(
+                Constants.ResourceGroupName,
+                Constants.FarmId);
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
         }
 
         private void CompareExpectedResult(FarmModel result)

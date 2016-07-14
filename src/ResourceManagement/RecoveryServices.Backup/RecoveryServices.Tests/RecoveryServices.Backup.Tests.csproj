@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{A19685A5-BE77-4EB0-ABB2-CDFC22F56059}</ProjectGuid>
+    <RootNamespace>RecoveryServices.Backup.Tests</RootNamespace>
+    <AssemblyName>RecoveryServices.Backup.Tests</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>..\..\..\..\packages\Hyak.Common.1.0.3\lib\net40\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.2.1.0\lib\net40\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Test.Framework">
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.Framework.1.0.5568.26003-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Test.HttpRecorder">
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.HttpRecorder.1.0.5568.26003-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.12.111071459\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
+      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.12.111071459\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\..\..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\BackupEngineHelpers.cs" />
+    <Compile Include="Helpers\RestoreTestHelpers.cs" />
+    <Compile Include="Helpers\RecoveryPointTestHelpers.cs" />
+    <Compile Include="Helpers\VaultTestHelpers.cs" />
+    <Compile Include="Helpers\ContainerTestHelpers.cs" />
+    <Compile Include="Helpers\CommonTestHelpers.cs" />
+    <Compile Include="Helpers\JobTestHelpers.cs" />
+    <Compile Include="Helpers\PolicyTestHelpers.cs" />
+    <Compile Include="Helpers\BackupTestHelpers.cs" />
+    <Compile Include="Helpers\ProtectableObjectTestHelper.cs" />
+    <Compile Include="Helpers\ProtectedItemTestHelpers.cs" />
+    <Compile Include="Helpers\TestConstants.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\ContainerTests.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\PolicyTests.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\BackupTests.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\RecoveryPointTests.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\RestoreTests.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlContainerTests.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlPolicyTests.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlProtectedItemTest.cs" />
+    <Compile Include="ScenarioTests\AzureSql\AzureSqlRecoveryPointTests.cs" />
+    <Compile Include="ScenarioTests\DpmTests\BackupEngineTest.cs" />
+    <Compile Include="ScenarioTests\JobTests.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectableObjectTests.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectedItemTests.cs" />
+    <Compile Include="ScenarioTests\MabTests\ContainerTests.cs" />
+    <Compile Include="ScenarioTests\RecoveryServicesTestBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.BackupTests\BackupProtectedItemTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.ContainerTests\ListContainersTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.ContainerTests\RefreshContainerTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.IaaSVMPolicyTests\PolicyCrudTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.IaaSVMPolicyTests\ListProtectionPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.JobTests\CancelJobTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.JobTests\ListJobsAndGetJobTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.ProtectableObjectTests\ListProtectableObjectTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.ProtectedItemTest\EnableProtectionTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.ProtectedItemTest\ListProtectedItemsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.ProtectedItemTest\RemoveProtectionTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.RecoveryPointTests\GetRecoveryPointDetailTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.RecoveryPointTests\ListRecoveryPointTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.BackupEngineTest\UnregisterDPMBackupEngineTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.MABContainerTests\ListContainersTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.MABContainerTests\UnregisterContainersTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.RestoreDiskTests\RestoreDiskTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlContainerTests\ListContainersTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlContainerTests\UnregisterContainersTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlPolicyTests\PolicyCrudTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlPolicyTests\ListProtectionPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlProtectedItemTest\DeleteProtectedItemTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlProtectedItemTest\GetProtectedItemTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlProtectedItemTest\ListProtectedItemTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlRecoveryPointTests\GetRecoveryPointDetailTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Backup.Tests.AzureSqlRecoveryPointTests\ListRecoveryPointTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RecoveryServices\RecoveryServices.Tests\RecoveryServices.Tests.csproj">
+      <Project>{d7a2f934-5411-465d-a64e-554b891ec6b4}</Project>
+      <Name>RecoveryServices.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RecoveryServices\RecoveryServicesManagement\RecoveryServicesManagement.csproj">
+      <Project>{6854664c-cd43-45ee-a9be-22bab085bad0}</Project>
+      <Name>RecoveryServicesManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RecoveryServicesBackupManagement\RecoveryServicesBackupManagement.csproj">
+      <Project>{14f715ec-c03d-4bb4-83bd-6eefaa6b0c67}</Project>
+      <Name>RecoveryServicesBackupManagement</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+</Project>

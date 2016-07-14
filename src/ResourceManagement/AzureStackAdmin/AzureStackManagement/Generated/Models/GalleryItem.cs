@@ -28,14 +28,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Gallery item model.
     /// </summary>
     public partial class GalleryItem
     {
         private IDictionary<string, string> _additionalProperties;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Additional properties.
         /// </summary>
         public IDictionary<string, string> AdditionalProperties
         {
@@ -46,7 +46,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<string> _categoryIds;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Category identities.
         /// </summary>
         public IList<string> CategoryIds
         {
@@ -57,7 +57,7 @@ namespace Microsoft.AzureStack.Management.Models
         private DefinitionTemplates _definitionTemplates;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Definition templates.
         /// </summary>
         public DefinitionTemplates DefinitionTemplates
         {
@@ -68,7 +68,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _description;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Description.
         /// </summary>
         public string Description
         {
@@ -79,7 +79,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IDictionary<IconKind, string> _iconFileUris;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Icon file Uris.
         /// </summary>
         public IDictionary<IconKind, string> IconFileUris
         {
@@ -90,7 +90,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _identity;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Identity.
         /// </summary>
         public string Identity
         {
@@ -101,7 +101,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _itemDisplayName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Item display name.
         /// </summary>
         public string ItemDisplayName
         {
@@ -112,7 +112,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _itemName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Item name.
         /// </summary>
         public string ItemName
         {
@@ -123,7 +123,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<LinkProperties> _links;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Links.
         /// </summary>
         public IList<LinkProperties> Links
         {
@@ -134,7 +134,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _longSummary;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Long summary.
         /// </summary>
         public string LongSummary
         {
@@ -145,7 +145,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _publisher;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Publisher.
         /// </summary>
         public string Publisher
         {
@@ -156,7 +156,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _publisherDisplayName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Publisher display name.
         /// </summary>
         public string PublisherDisplayName
         {
@@ -167,7 +167,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _resourceGroupName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Resource group name.
         /// </summary>
         public string ResourceGroupName
         {
@@ -178,7 +178,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<string> _screenshotUris;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Screenshot Uris.
         /// </summary>
         public IList<string> ScreenshotUris
         {
@@ -189,7 +189,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _summary;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Summary.
         /// </summary>
         public string Summary
         {
@@ -200,7 +200,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _version;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Version.
         /// </summary>
         public string Version
         {

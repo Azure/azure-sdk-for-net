@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GlobalFilters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContentSearchFilters>
+    <ContentFilter>
+      <Name>Initial ContentFilters</Name>
+      <Filters>
+        <!-- ericxu: Adding filters to filter out KeyVault credentials -->
+        <string>key\s*=\s*".*?KeyVault.*?"</string>
+        <string>https://[^\.]*?\.vault\.azure\.net:443</string>
+        <!-- ericxu: Adding filters to filter out thumbprint -->
+        <string>key\s*=\s*".*?Thumbprint"\s+value\s*=\s*"\w{40}"</string>
+        <!-- ericxu: Adding filters to filter out application id -->
+        <string>key\s*=\s*".*?(ApplicationId|AppId|ClientId)"</string>
+        <!-- Varunsh: Adding filters to filter out false positives for base64 search patterns -->
+        <string>publickey|pubkey|hash|digestvalue</string>
+        <string>REPLACE_DATABASE_NAME|REPLACE_SERVER_NAME|SQLAZURE\.SERVERNAME|Data\sSource=(\.|\(localDB\))|Server=\.\\|\.DataClasses\.|\(local\)|\|DataDirectory\||dummy|localhost|127\.0\.0\.1|localhost</string>
+        <string>DatabasePublish\.</string>
+        <string>\|SqlExpressInstanceName\|</string>
+        <string>\[SERVERNAME|STORAGE_ACCOUNT_KEY|ACCOUNT_KEY|your\ssecret\|UPDATE\sBEFORE\sDEPLOYMENT]</string>
+        <string>Catalog=TESTDUMMY</string>
+        <string>PLACEHOLDER</string>
+        <string>MyReleaseDB</string>
+        <string>Password="UNUSED"</string>
+		<string>user ID</string>
+        <string>Subscription="00000000\-0000\-0000\-0000\-000000000000"</string>
+        <string>Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==</string>
+        <string>AutoGenerate</string>
+        <string>PublicKeyToken</string>
+        <string>"DefaultConnection"</string>
+        <string>datacenterName="\{DatacenterName\}"</string>
+        <string>Integrated\sSecurity=True</string>
+        <string>DefaultSecretStoreLocations</string>
+        <string>ClusterSpecificSecretStoreLocations</string>
+        <string>ApplicationServices</string>
+		    <string>ConnectionStringTemplate=</string>
+        <string>key="(aspnet:MaxHttpCollectionKeys|SuperuserCredentialEndDate|SuperuserCredentialEndDate|SuperuserCredentialStartDate|aeskeysize|AutoscaleStorageConnectionStringTemplate|CertificateEncryptionKeyThumbprint|CsrfRegex|Microsoft\.WindowsAzure\.Management\.Marketplace\.Configuration\.Marketplace\.ApprovedAppKeyword|allowedftscolumns|alltasks|alltypes|cachepath|cluster_healing_TenantNames|cluster_keydelivery_rediscachename|companydisplayname|companydomainname|compute\.chaosmonkey\.down.*|compute\.chaosmonkey\.reboot.*|credsfile|directoryreaderaccess|directorywriteraccess|encryptioncertthumbprint|errorkeywordstohighlight|events\.followcontinuationtokenlimit|filestocopyfortest|firstadminuser.*|flowtokencookiename|forcereportsubscriptionavailablekey|icmconnectorregistrykeypath|identityfiles|identityxmlfiles|intbulkoperations.*|ironmanrequeststoreaccountsencrfilepath|liveencoderservice_pushcontent|loadbalancercredentialname|loginpublickeyurl|machinekeywordfilterlist|maximumkeys|maximumsecrets|microsoft\.portal\.framework\.identityconfiguration\.authtokenprovider|.*certificatethumbprint.*|microsoft\.windowsazure\.resourcestack\.frontdoor.*|networkcredential\.domain|networkcredential\.username|notificationemailids|prodadjustssosecretsiwuserid|prodadjustssosecretsiwuserupn|prodhomtenantappverificationkeys|prodnonhometenantappverificationkeys|propertymappingfile|protectedcompanydomainprefixes|querywrapperfor.*|read\sservice\sprincipals|registrykeypath|roletemplate.*|rootgroupcontainerdn|rr1telnetaccountkey|saskeyowner.*|scomrmsnameregkeypath|sharedkeyname|sharedsecretsfile|skusnotblockingcompanydeletion|soapupdatecredentialspath|sqlreplacementkeys|sqlsecretsfilepath|syncfabricmanagercertificateprivatekeyfile|tenantsecretsbaseurl|tenantsecretsencryptioncertificateissuer|tenantsecretsencrptioncertificatesubject|testexpecteddsasquery|tipadjustssosecretsiwuserupn|tk5iloaccountkey|topologyadmincrednetialname|useridwithinvalidcredential|useridwithvalidcredential|versionnotes|redstarter\.dll\.config.*|Event\.FollowContinuationTokenLimit)"</string>
+        <string>__ENCRYPTIONCERTIFICATEPASSWORD__</string>
+        <string>&lt;add\skey="privatekeypassword"/s\/&gt;</string>
+        <string>"{KeyStoreConnectionString}"</string>
+        <string>xdt\:Transform="Remove"</string>
+        <string>https://production\.secretstore\.core\.windows\.net</string>
+        <string>https://test\.secretstore\.core\.windows\.net</string>
+        <string>https://stage\.secretstore\.core\.windows\.net</string>
+        <string>https://production\.secretstore\.core\.usgovcloudapi\.net</string>
+        <string>https://production\.secretstore\.core\.chinacloudapi\.cn</string>
+        <string>value="\d\d:\d\d:\d\d"</string>
+        <string>"fill\sin\skey\sbefore\srunning"</string>
+        <string>value="(X509Certificate|\[your\s?namespace\]|\[your\s?key\]|\[copyuserpassword\]|Overridden\s?by\s?portal\s?settings|DROP\sASSEMBLY|InTesting|Ship|Missing|\[YOUR_APP_KEY_FROM_AAD\]|Your\s?Management\s?secret\s?key"|TBD|your\s?value|User|PassportUserId|xxxxxx|Run|accountKey|apiKey|apiSecret|accessToken|accessTokenSecret|\[find someone who knows\]|orgid|\**|\d{1,3}|MachinePassword|\\\\phx\.gbl\\Public\\.*|accountname|v1\.0|owner|fill\sin.*|keyvalue|client_credentials|AkamaiPublishTrafficManagementCredential|\[enter\sclient\sapp\skey|usedevelopmentstorage|replace_your_access_key|secretstore|\$\(changestorageaccountcredential\)|__configurationkey__|testvalueonconfigfile|__svcbuskey__|.*accountkey=\"|__CREDENTIALNAMEFORREMOTEFILEOPERATIONS__|stub\-deployment\-key|key1|replace_with_ema_secret|n\/a|exception|system\saccount\skey|add\-external\-storage\-account\-key|false|cdlfesecrets\\.*|storage|salesforce\.com|addserviceprinciplecredentials.*|account\-key|.*\[issuersecret\]|.*\[your\secret\]|.*accountkey=\{\d\}|microsoftkeystore|applicationkey|overriden\sby\sportal\ssettings|systemkey|facebooksecret|set\sby\sportal|googlesecret|key.p12|images|masterkey|twitterconsumerkey|twitterconsumersecret|sharedaccesskey=\{\d\}|hotfix\;master|originentitykeys|originkeys|\[\[\]\]|cn=corp\.sts\.microsoft\.com|defaultsdkservice.*|replace_send_key_here|serverpoolenabled|rootmanagesharedaccesskey|add_encrypted_key|consumerkey|consumersecret|securitytoken|shared_access_key_value_here|.*dcmxxstoreprimarykey,.*|__diagnosticsstoragekey__|\!\!enter\sstorage\saccount\skey\!\!|tablestoragekey\d|\$\{random100\}|__storage_account_key__|wabo_master_bo|zumodashrelay|timesynccookie|utssocwebserviceuri|\[enter\surl\sfor\syour\skey\svalut\]|add\-media\-services\-storage\-account\-key|\%WINDOWS_FABRIC_APP_GLOBAL_HIGHKEY\%|apsecretstoreprotectedconfigurationprovider|\{livesiteservicebuskey\}|\%paths.xstoresimulatorfolder\%\\faleimages|for\snow\swe\sshould\snot\sbe\sreading\sthis\skey)"</string>
+        <string>.*primary\skey.*</string>
+        <string>accountkey=(__storage_account_key__|account_key|\[storage\saccount\skey\]|livesitestorageaccountkey|accountkeyhere|your_account_key)</string>
+        <string>password=(dbpassword|passwordhere)\;</string>
+        <string>password=\;</string>
+        <string>accountkey=foobar|account\skey"</string>
+        <string>validationkey="__validationmachinekey__"</string>
+        <string>decryptionkey="__decryptionmachinekey__"</string>
+        <string>\[emptying\sout\sper\ssecurity\]</string>
+        <string>initial\scatalog=northwind\;</string>
+        <string>^(?!.*(AccountKey|password)).*xdt\:Transform="SetAttributes"</string>
+        <string>facebookclient\(pageaccesstoken\)\;</string>
+        <string>connectionStringName="LocalSqlServer"</string>
+        <string>value="Account\s?Key\s?Here"</string>
+        <string>value="API\s?Key\s?Here"</string>
+        <string>value="todo"</string>
+        <string>value="CurrentUser"</string>
+        <string>value="someToken"</string>
+        <string>value="\[Replace Me\]"</string>
+        <string>value="enter\-my\-password\-here"</string>
+        <string>value=";;;;;;"</string>
+        <string>value="ToBeFilledIn"</string>
+        <string>value="MicrosoftAccountClientSecret"</string>
+        <string>value="GoogleClientSecret"</string>
+        <string>value="SampleValue"</string>
+        <string>value="(RunAsAccount|DefaultPassword|foo|\{subscriptionName\}|512|1024|2048|4096|#*|Kerberos|CancellationToken\-.*|to_be_replaced|\-\-\sSee\sDocumentation\s\-\-|testvalue\d?|\s*|WazSettingsSecrets.xml)"</string>
+        <string>(connectionString|value)="\[?\]?"</string>
+        <string>key="(AADTokenEndpoint|ReturnPublishingPassword|ProdSecretStore|enableNamespaceIssuerKeyEncryption|SecurityTokenServiceComponentMaxConcurrentCalls|SecurityTokenServiceComponentMaxConcurrentSessions|SecurityTokenServiceComponentMaxConcurrentInstances|SecurityTokenServiceComponentMaxReceivedMessageSize|gettokenUri|AccountsPath|stringSecretList|AcsBaseAddress|GrantType|UseStreamingEndpointByAccountId|SendUserToken|SsUrl|SiteStatusServiceUrl|AccountAddressIFrameURL|PcsIFrameURL|Pcsv2IFrameURL|EndpointAddress|IsolateApps|RequirePassword|WAStatementUrlBase|AccountsCacheDuration|CertThumbprint|MsdnCertThumbprintMsdnEndpointAddress|MsdnPayAsYouGofferingsList|Microsoft\.WindowsAzure\.Management\.(Billing|Accounts)|IsPassThrough|SupportsPassThrough|ManagementServicePassportPortNumber|MaxPollHealthForOneNodePerPass|MaxNodesToStagePerPass|UserAccountMaxExpirationTime|DefaultGroupPolicyForUserAccount|GroupPolicyForUserAccount|FakeSecrets|SigningKeyStoreName|managementIdpMetadataAddress|archivedKeySigningAlgorithm|BackupXStoreAccount|IsKeyEncrypted|KeySize|SecretStoreServiceAddress|RunnerInstanceName|RunnerName|TestPassPeriod|_CA_SecretStoreCertTableName|_CA_SecretExpirationIsEnabled|MACertificateName|MAXMLFilename|ExcludeStorageAccounts|NodeKey)("|.)</string>
+        <string>key="(AlwaysCopyPackagetoUserAccount|PackageLocation|DestinationAccountName|StorageAuthenticatingAccount|StorageAccountServiceEndpoint|DestinationAccountName|ChangePasswordTestEmailAddress|ConnectionStringFormat|RunnerInstanceName|RunnerName|SDKRegKeyPath|SDKVersionPassed|SecretStore.*|http://schemas\.microsoft\.com/.*|StartupAssemblies|stashClientPath|StorageKeyEncryptionCertificateThumbprint|ThumbPrintKeyRegexStr)("|.)</string>
+        <string>.*STG\/\{0\}\/\{1\}.*</string>
+        <string>value="\{.*\}".*</string>
+        <string>.*&lt;add\s?key="SymmetricAlgorithmKeySize"\s?value="\d+"/&gt;.*</string>
+        <string>&lt;add\s*key\s?=\s?".*"\svalue\s?=\s?"(\[NotUsed\]|Certificate|http.*|IcmKeywords|SecretStoreBasicRunner|no|yes|false|true|SecretStoreAuditor|SHA\d\d\d|sha1:|(CancellationToken\-?)|federationmetadata.xml|SecretStoreSecretStoreCert|key1|HKEY_CURRENT_USER.*|.*publiclockbox.*|\?*)"\s?/&gt;</string>
+        <string>&lt;add\s*key="(MeshSecret(Version|HeaderName)|ExcludePasswords|ignoreCompanyList)"\svalue\s*=\s*".*"\s*/&gt;</string>
+        <string>&lt;add\s*key=".*"\svalue\s*=\s*".*\.(srf|pfx|cer|txt)"\s*/&gt;</string>
+        <string>&lt;add\s*key=".*"\svalue\s*=\s*""\s*/&gt;</string>
+        <string>&lt;add\s*key=".*"\svalue\s*=\s*"(SOFTWARE|SYSTEM|SECURITY|USER)\\"\s*/&gt;</string>
+        <string>onebox</string>
+        <string>0000000000000000000000000000000000000000000000000000000000000000</string>
+        <string>="@\[password\(.*"</string>
+        <string>{MachineDecryptionKey}|AccountKey=\{1\};</string>
+        <string>&lt;machineKey\scompatibilityMode="Framework45" /&gt;</string>
+        <string>&lt;add\s*key=".*"\svalue\s*="[\w\d]{0,4}"\s*/&gt;</string>
+        <string>=("|tcp:)?((\[\[\\\\)|(@\[password\(.*)).*</string>
+        <string>&lt;add\s*key="((.*IssuerName)|(.*Key(Lengths|Algorithms|Thumbprint)))"\svalue\s*=\s*".*"\s*/&gt;</string>
+        <string>StorageCredentials\(this\.(destblob|sourceblob)</string>
+        <string>add\skey="_TOKENS_(REPLACE|SA|SQL)</string>
+        <string>&lt;machineKey/&gt;</string>
+        <string>&lt;encrypted\skey\shere&gt;</string>
+        <string>\-password\s(\%_servicepassword\%|\(\[string\]|&lt;password&gt;|parameter\sis\snull)</string>
+        <string>AccountName=foo;AccountKey=bar==</string>
+        <string>Account(Name|Key)=(\$\(|&lt;Your|\{\d\})</string>
+        <string>__DIAGNOSTICSSTORAGEKEY__|CloudTestHostDataModel|You\-can\-have\-your\-connectionString\-here</string>
+        <string>property\sname="UserName"</string>
+        <string>server=\.;</string>
+        <string>User\sId=login;Password=password</string>
+        <string>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=</string>
+        <string>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=</string>
+        <string>aaaaaaaaaaaaaaaaa\+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa==</string>
+        <string>Uid=someusername;Pwd=somepassword;</string>
+        <string>this\.SystemKey1</string>
+        <string>value="\$.*\$"</string>
+        <string>AccountName=;AccountKey="</string>
+        <string>xdt:Transform="SetAttributes\(value\)"</string>
+        <string>value="your\sapplication\skey\shere"</string>
+        <string>AccountName=xxx;AccountKey=xxx</string>
+        <string>value="&lt;removed&gt;"</string>
+        <string>value="&lt;Your.*Storage\sKey&gt;"</string>
+		  <string>\x2B\x2B\x2B\x2BThis</string>
+		  <string>SharedAccessKey=(\[your\ssecret\]|\{1\})</string>
+        <!-- Examples
+        AccountName=[StorageAccountName]
+        AccountName={0}
+        -->
+        <!-- Revert back to exclude [ char before 1.0.9 -->
+        <string>Name=\{\d\}|\[</string>
+        <string>XTestEncrypted</string>       
+      </Filters>
+    </ContentFilter>
+  </ContentSearchFilters>
+  <ResourceSearchFilters>
+    <ResourceFilter>
+      <Name>Mock/UnitTest Path Filters</Name>
+      <Filters>
+        <string>UnitTest</string>
+        <string>Mock</string>
+        <!-- <string>\\Test[s]?\\</string> -->
+        <string>\\OneBox\\</string>
+        <string>ART\\TSATest</string>
+        <string>KeyVault\\KeyVault.Tests\\Resources\\localhost.pfx</string>
+        <string>ApiManagement\\ApiManagement.Tests\\Resources\\testcertificate.pfx</string>
+        <string>Authentication\\Common.Authentication.Tests\\Resources\\InvalidProfile.PublishSettings</string>
+        <string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile.PublishSettings</string>
+        <string>Authentication\\Common.Authentication.Tests\\Resources\\Azure.PublishSettings</string>
+        <string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfileChina.PublishSettings</string>
+        <string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfileChinaOld.PublishSettings</string>
+        <string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile3.PublishSettings</string>
+        <string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile2.PublishSettings</string>
+        <string>ResourceManagement\\Network\\Network.Tests\\ApplicationGatewayCertificate\\GW5000.pfx</string>
+        <string>ResourceManagement\\Network\\Network.Tests\\bin\\Net45-Debug\\ApplicationGatewayCertificate\\GW5000.pfx</string>
+        <string>ResourceManagement\\ApiManagement\\ApiManagement.Tests\\bin\\Net45-Debug\\Resources\\testcertificate.pfx</string>
+      </Filters>
+    </ResourceFilter>
+  </ResourceSearchFilters>
+</GlobalFilters>

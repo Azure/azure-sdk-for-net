@@ -29,35 +29,31 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Administrator Operations on the subscription  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
     public partial interface IManagedSubscriptionOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create or updates the subscription
         /// </summary>
         /// <param name='parameters'>
-        /// Your documentation here.
+        /// Subscription update parameters
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or the update operation of the subscription
         /// </returns>
         Task<ManagedSubscriptionCreateOrUpdateResult> CreateOrUpdateAsync(ManagedSubscriptionCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation of the subscription
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Your documentation here.
+        /// Subscription Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -69,49 +65,41 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string subscriptionId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the subscription
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Your documentation here.
+        /// Subscription Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the subscription get operation
         /// </returns>
         Task<ManagedSubscriptionGetResult> GetAsync(string subscriptionId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscriptions
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the list operations
         /// </returns>
         Task<ManagedSubscriptionListResult> ListAsync(bool includeDetails, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the subscription with the next link
         /// </summary>
         /// <param name='nextLink'>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// The URL pointing to get the next set of subscriptions
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the list operations
         /// </returns>
         Task<ManagedSubscriptionListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
     }

@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Sql.Tests;
 using Xunit;
 
 namespace Sql2.Tests.ScenarioTests
@@ -161,18 +162,12 @@ namespace Sql2.Tests.ScenarioTests
                 var defaultCollation = "SQL_Latin1_General_CP1_CI_AS";
                 var defaultEdition = "Standard";
                 var defaultDatabaseSize = 1L * 1024L * 1024L * 1024L; // 1 GB
-                var defaultGuid = new Guid("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c");
 
                 // Variables for database create
                 string databaseName = TestUtilities.GenerateName("csm-sql-dbcrud-db");
                 string databaseCollation = "Japanese_Bushu_Kakusu_100_CS_AS_KS_WS";
                 string databaseEdition = "Standard";
                 long databaseMaxSize = 5L * 1024L * 1024L * 1024L; // 5 GB
-                Guid dbSloShared = new Guid("910b4fcb-8a29-4c3e-958f-f7ba794388b2"); // Web / Business
-                Guid dbSloBasic = new Guid("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"); // Basic
-                Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
-                Guid dbSloS1 = new Guid("1b1ebd4d-d903-4baa-97f9-4ea675f5e928"); // S1
-                Guid dbSloS2 = new Guid("455330e1-00cd-488b-b5fa-177c226f28b7"); // S2
 
                 var databaseName2 = TestUtilities.GenerateName("csm-sql-dbcrud-db");
                 var databaseMaxSize2 = defaultDatabaseSize / 2L;
@@ -220,12 +215,12 @@ namespace Sql2.Tests.ScenarioTests
                             Collation = databaseCollation,
                             Edition = databaseEdition,
                             MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
+                            RequestedServiceObjectiveId = SqlConstants.DbSloS1
                         },
                     });
 
                     TestUtilities.ValidateOperationResponse(createDbResponse1, HttpStatusCode.Created);
-                    VerifyDatabaseInformation(createDbResponse1.Database, serverLocation, databaseCollation, databaseEdition, databaseMaxSize, dbSloS1, dbSloS1);
+                    VerifyDatabaseInformation(createDbResponse1.Database, serverLocation, databaseCollation, databaseEdition, databaseMaxSize, SqlConstants.DbSloS1, SqlConstants.DbSloS1);
 
                     // Create only required
                     var createDbResponse2 = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName2, new DatabaseCreateOrUpdateParameters()
@@ -238,7 +233,7 @@ namespace Sql2.Tests.ScenarioTests
                     });
 
                     TestUtilities.ValidateOperationResponse(createDbResponse2, HttpStatusCode.Created);
-                    VerifyDatabaseInformation(createDbResponse2.Database, serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, dbSloS0, dbSloS0);
+                    VerifyDatabaseInformation(createDbResponse2.Database, serverLocation, defaultCollation, databaseEdition, defaultDatabaseSize, SqlConstants.DbSloS0, SqlConstants.DbSloS0);
                     //////////////////////////////////////////////////////////////////////
 
                     //////////////////////////////////////////////////////////////////////
@@ -248,13 +243,13 @@ namespace Sql2.Tests.ScenarioTests
                     var getDatabase1 = sqlClient.Databases.Get(resGroupName, serverName, databaseName);
 
                     TestUtilities.ValidateOperationResponse(getDatabase1);
-                    VerifyDatabaseInformation(getDatabase1.Database, serverLocation, databaseCollation, databaseEdition, databaseMaxSize, dbSloS1, dbSloS1);
+                    VerifyDatabaseInformation(getDatabase1.Database, serverLocation, databaseCollation, databaseEdition, databaseMaxSize, SqlConstants.DbSloS1, SqlConstants.DbSloS1);
 
                     // Get second database
                     var getDatabase2 = sqlClient.Databases.Get(resGroupName, serverName, databaseName2);
 
                     TestUtilities.ValidateOperationResponse(getDatabase2);
-                    VerifyDatabaseInformation(getDatabase2.Database, serverLocation, defaultCollation, defaultEdition, defaultDatabaseSize, dbSloS0, dbSloS0);
+                    VerifyDatabaseInformation(getDatabase2.Database, serverLocation, defaultCollation, defaultEdition, defaultDatabaseSize, SqlConstants.DbSloS0, SqlConstants.DbSloS0);
 
                     // Get all databases
                     var listDatabase1 = sqlClient.Databases.List(resGroupName, serverName);
@@ -266,7 +261,7 @@ namespace Sql2.Tests.ScenarioTests
 
                     TestUtilities.ValidateOperationResponse(getById);
                     Assert.Equal(1, getById.Databases.Count);
-                    VerifyDatabaseInformation(getById.Databases[0], serverLocation, databaseCollation, databaseEdition, databaseMaxSize, dbSloS1, dbSloS1);
+                    VerifyDatabaseInformation(getById.Databases[0], serverLocation, databaseCollation, databaseEdition, databaseMaxSize, SqlConstants.DbSloS1, SqlConstants.DbSloS1);
                     //////////////////////////////////////////////////////////////////////
 
                     //////////////////////////////////////////////////////////////////////
@@ -278,12 +273,12 @@ namespace Sql2.Tests.ScenarioTests
                         Location = serverLocation,
                         Properties = new DatabaseCreateOrUpdateProperties()
                         {
-                            RequestedServiceObjectiveId = dbSloS2
+                            RequestedServiceObjectiveId = SqlConstants.DbSloS2
                         },
                     });
 
                     TestUtilities.ValidateOperationResponse(updateDb1);
-                    VerifyDatabaseInformation(updateDb1.Database, serverLocation, databaseCollation, databaseEdition, databaseMaxSize, dbSloS2, dbSloS2);
+                    VerifyDatabaseInformation(updateDb1.Database, serverLocation, databaseCollation, databaseEdition, databaseMaxSize, SqlConstants.DbSloS2, SqlConstants.DbSloS2);
 
                     //Update Size
                     var updateDb2 = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
@@ -296,7 +291,7 @@ namespace Sql2.Tests.ScenarioTests
                     });
 
                     TestUtilities.ValidateOperationResponse(updateDb2);
-                    VerifyDatabaseInformation(updateDb2.Database, serverLocation, databaseCollation, databaseEdition, defaultDatabaseSize, dbSloS2, dbSloS2);
+                    VerifyDatabaseInformation(updateDb2.Database, serverLocation, databaseCollation, databaseEdition, defaultDatabaseSize, SqlConstants.DbSloS2, SqlConstants.DbSloS2);
 
                     //Update Edition + SLO
                     var updateDb3 = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName2, new DatabaseCreateOrUpdateParameters()
@@ -305,12 +300,12 @@ namespace Sql2.Tests.ScenarioTests
                         Properties = new DatabaseCreateOrUpdateProperties()
                         {
                             Edition = dbEditionBasic,
-                            RequestedServiceObjectiveId = dbSloBasic,
+                            RequestedServiceObjectiveId = SqlConstants.DbSloBasic,
                         },
                     });
 
                     TestUtilities.ValidateOperationResponse(updateDb3);
-                    VerifyDatabaseInformation(updateDb3.Database, serverLocation, defaultCollation, "Basic", defaultDatabaseSize, dbSloBasic, dbSloBasic);
+                    VerifyDatabaseInformation(updateDb3.Database, serverLocation, defaultCollation, "Basic", defaultDatabaseSize, SqlConstants.DbSloBasic, SqlConstants.DbSloBasic);
                     //////////////////////////////////////////////////////////////////////
 
                     //////////////////////////////////////////////////////////////////////

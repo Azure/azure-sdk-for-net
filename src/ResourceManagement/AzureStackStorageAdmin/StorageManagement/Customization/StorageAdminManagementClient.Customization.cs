@@ -21,12 +21,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.AzureStack.Management.StorageAdmin.Models;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin
+namespace Microsoft.AzureStack.AzureConsistentStorage
 {
     public static partial class FarmOperationsExtensions
     {
@@ -37,7 +37,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -89,7 +89,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
@@ -141,7 +141,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name="eventQuery">
         /// Required. Your documentation here.
@@ -163,7 +163,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name="eventQuery">
         /// Required. Your documentation here.
@@ -193,7 +193,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.AzureStack.Management.StorageAdmin.IFarmOperations.
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
         /// </param>
         /// <param name="eventQuery">
         /// Required. Your documentation here.
@@ -762,7 +762,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
     /// <summary>
     /// Your documentation here.
     /// </summary>
-    public partial class EventModel : Microsoft.AzureStack.Management.StorageAdmin.Models.ResourceBase
+    public partial class EventModel : Microsoft.AzureStack.AzureConsistentStorage.Models.ResourceBase
     {
         /// <summary>
         /// Optional. Your documentation here

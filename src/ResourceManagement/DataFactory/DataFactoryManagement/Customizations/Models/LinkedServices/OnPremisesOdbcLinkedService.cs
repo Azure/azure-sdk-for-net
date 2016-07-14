@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string ConnectionString { get; set; }
 
         /// <summary>
-        /// Optional. The access credential portion of the connection string specified in driver-specific property-value format, 
-        /// e.g. “Uid=myusername;Pwd=mypassword;RefreshToken=mytoken;”.
+        /// Optional. The access credential portion of the connection string specified in driver-specific property-value format,
+        /// e.g. “Uid=someusername;Pwd=somepassword;RefreshToken=mytoken;”.
         /// </summary>]
         public string Credential { get; set; }
 

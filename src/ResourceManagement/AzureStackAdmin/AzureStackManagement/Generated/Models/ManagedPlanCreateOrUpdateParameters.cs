@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Parameters for creating or updating the plan
     /// </summary>
     public partial class ManagedPlanCreateOrUpdateParameters
     {
         private AdminPlanModel _plan;
         
         /// <summary>
-        /// Required. Your documentation here.
+        /// Required. Administrator view of the plan properties
         /// </summary>
         public AdminPlanModel Plan
         {

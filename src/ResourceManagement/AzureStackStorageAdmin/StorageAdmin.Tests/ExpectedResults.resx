@@ -117,6 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AcquisitionGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/default_shanghai/acquisitions/D6AE96E1-62B1-4F43-91F6-680E3990D76D",
+  "name": "default_shanghai/D6AE96E1-62B1-4F43-91F6-680E3990D76D",
+  "type": "Microsoft.Storage.Admin/farms/acquisitions",
+  "location": "Shanghai",
+  "properties": {
+    "filePath": "\\\\JUSTISUN-BLOB2\\blob\\mystorageaccount1\\blob1\\c9c61ccf-9db4-4543-bb9f-39510f1c4591.pageblob",
+    "maximumblobsize": 0,
+    "status": "Success",
+    "susbcriptionid": "d6ae96e1-62b1-4f43-91f6-680e3990d76b",
+    "storageaccount": "mystorageaccount1",
+    "container": "blob1",
+    "blob": "blob3",
+    "acquisitionid": "D6AE96E1-62B1-4F43-91F6-680E3990D76D"
+  }
+}</value>
+  </data>
+  <data name="AcquisitionListResponse" xml:space="preserve">
+    <value>[ {
+    "id": "/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/default_shanghai/acquisitions/D6AE96E1-62B1-4F43-91F6-680E3990D76D",
+    "name": "default_shanghai/D6AE96E1-62B1-4F43-91F6-680E3990D76D",
+    "type": "Microsoft.Storage.Admin/farms/acquisitions",
+    "location": "Shanghai",
+    "properties": {
+      "filePath": "\\\\JUSTISUN-BLOB2\\blob\\mystorageaccount1\\blob1\\c9c61ccf-9db4-4543-bb9f-39510f1c4591.pageblob",
+      "maximumblobsize": 0,
+      "status": "Success",
+      "susbcriptionid": "d6ae96e1-62b1-4f43-91f6-680e3990d76b",
+      "storageaccount": "mystorageaccount1",
+      "container": "blob1",
+      "blob": "blob3",
+      "acquisitionid": "D6AE96E1-62B1-4F43-91F6-680E3990D76D"
+    }
+  },
+  {
+    "id": "/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/default_shanghai/acquisitions/D6AE96E1-62B1-4F43-91F6-680E3990D76E",
+    "name": "default_shanghai/D6AE96E1-62B1-4F43-91F6-680E3990D76E",
+    "type": "Microsoft.Storage.Admin/farms/acquisitions",
+    "location": "Shanghai",
+    "properties": {
+      "maximumblobsize": 20,
+      "status": "Failed",
+      "susbcriptionid": "d6ae96e1-62b1-4f43-91f6-680e3990d76b",
+      "storageaccount": "mystorageaccount1",
+      "container": "$root",
+      "blob": "blob1",
+      "acquisitionid": "D6AE96E1-62B1-4F43-91F6-680E3990D76E"
+    }
+  }
+]</value>
+  </data>
   <data name="BlobServiceGetResponse" xml:space="preserve">
     <value>{
   "id": "/subscriptions/dummyServiceAdmin/resourceGroups/dummyResourceGroup/providers/Microsoft.Storage.Admin/farms/WEST_US_1/blobservices/default",
@@ -153,11 +205,12 @@
   <data name="CurrentActiveFaultListResponse" xml:space="preserve">
     <value>[
   {
-    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a2452",
-    "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a2452",
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521",
+    "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521",
     "type": "Microsoft.Storage.Admin/farms/faults",
     "location": "West_US",
     "properties": {
+      "faultId": "c8e6bfe487b4b8eceb5dc36ff6a24521",
       "faultRuleName": "faultRule1",
       "description": "TBD",
       "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node1",
@@ -175,6 +228,7 @@
     "type": "Microsoft.Storage.Admin/farms/faults",
     "location": "West_US",
     "properties": {
+      "faultId": "16287dc04150fab5d8da52de0bf94051",
       "faultRuleName": "faultRule2",
       "description": "TBD",
       "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tablemasterinstances/woss-node2",
@@ -210,13 +264,13 @@
         "startTime":"2015-05-15T18:02:00Z",
         "endTime":"2015-05-25T18:02:00Z",
         "tableName":"WDEvent20150515",
-        "sasToken":"sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+        "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
     },
     {
         "startTime":"2015-05-25T18:02:00Z",
         "endTime":"2015-06-05T18:02:00Z",
         "tableName":"WDEvent20150525",
-        "sasToken":"sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+        "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
     }
   ]}</value>
   </data>
@@ -278,11 +332,12 @@
   </data>
   <data name="FaultGetResponse" xml:space="preserve">
     <value>{
-  "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a2452",
-  "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a2452",
+  "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521",
+  "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521",
   "type": "Microsoft.Storage.Admin/farms/faults",
   "location": "West_US",
   "properties": {
+      "faultId": "c8e6bfe487b4b8eceb5dc36ff6a24521",
       "faultRuleName": "faultRule1",
       "description": "TBD",
       "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node1",
@@ -298,12 +353,12 @@
   <data name="HistoryActiveFaultListResponse" xml:space="preserve">
     <value>[
   {
-    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a2452",
-    "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a2452",
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521",
+    "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521",
     "type": "Microsoft.Storage.Admin/farms/faults",
     "location": "West_US",
     "properties": {
-      "id": "c8e6bfe487b4b8eceb5dc36ff6a2452",
+      "faultId": "c8e6bfe487b4b8eceb5dc36ff6a24521",
       "faultRuleName": "faultRule1",
       "description": "TBD",
       "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node1",
@@ -319,13 +374,13 @@
           "startTime":"2015-05-15T18:02:00Z",
           "endTime":"2015-05-25T18:02:00Z",
           "tableName":"WDEvent20150515",
-          "sasToken":"sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+          "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
         },
         {
           "startTime":"2015-05-25T18:02:00Z",
           "endTime":"2015-06-05T18:02:00Z",
           "tableName":"WDEvent20150525",
-          "sasToken":"sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+          "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
         }]}
     }
   },
@@ -335,6 +390,7 @@
     "type": "Microsoft.Storage.Admin/farms/faults",
     "location": "West_US",
     "properties": {
+      "faultId": "16287dc04150fab5d8da52de0bf94051",
       "faultRuleName": "faultRule2",
       "description": "TBD",
       "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tablefrontendinstances/woss-node2",
@@ -393,7 +449,7 @@
     "codeVersion": "3.0.1414.9492",
     "configVersion": "1.0",
     "faultDomain": "fd:/woss-node-1",
-    "healthStatus": "Healthy",
+     "healthStatus": "Healthy",
     "ipAddressOrFqdn": "woss-node-1",
     "isSeedNode": true,
     "nodeId": "c8e6bfe487b4b8eceb5dc36ff6a2452",
@@ -535,6 +591,74 @@
   }
 ]</value>
   </data>
+  <data name="QueueServiceGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/dummyServiceAdmin/resourceGroups/dummyResourceGroup/providers/Microsoft.Storage.Admin/farms/WEST_US_1/queueservices/default",
+  "name": "WEST_US_1/default",
+  "type": "Microsoft.Storage.Admin/farms/queueservices",
+  "location": "West_US",
+  "properties": {
+    "settings": {
+      "frontEndHttpListenPort": 11001,
+      "frontEndHttpsListenPort": 11101,
+      "frontEndCallbackThreadsCount": 1,
+      "frontEndCpuBasedKeepAliveThrottlingEnabled": true,
+      "frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold": 10.0,
+      "frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle": 90.5,
+      "frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds": 10,
+      "frontEndMemoryThrottlingEnabled": true,
+      "frontEndMaxMillisecondsBetweenMemorySamples": 100,
+      "frontEndMemoryThrottleThresholdSettings": "2;3",
+      "frontEndMinThreadPoolThreads": 10,
+      "frontEndThreadPoolBasedKeepAliveIOCompletionThreshold": 10,
+      "frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold": 10,
+      "frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds": 10,
+      "frontEndThreadPoolBasedKeepAlivePercentage": 80.0,
+      "frontEndUseSlaTimeInAvailability": false
+    },
+    "version": "1.0",
+    "healthStatus": "Healthy"
+  }
+}</value>
+  </data>
+  <data name="QuotaGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/SRP_DefaultQuota",
+  "name": "redmond/SRP_DefaultQuota",
+  "type": "Microsoft.Storage.Admin/locations/quotas",
+  "location": "redmond",
+  "properties": {
+    "numberOfStorageAccounts": 10,
+    "capacityInGb": 100
+  }
+}</value>
+  </data>
+  <data name="QuotaListResponse" xml:space="preserve">
+    <value>{
+  "value": [
+    {
+  "id": "/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/SRP_DefaultQuota",
+  "name": "redmond/SRP_DefaultQuota",
+  "type": "Microsoft.Storage.Admin/locations/quotas",
+  "location": "redmond",
+  "properties": {
+    "numberOfStorageAccounts": 10,
+    "capacityInGb": 100
+  }
+},
+    {
+  "id": "/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/dummyName2",
+  "name": "redmond/dummyName2",
+  "type": "Microsoft.Storage.Admin/locations/quotas",
+  "location": "redmond",
+  "properties": {
+    "numberOfStorageAccounts": 10,
+    "capacityInGb": 100
+  }
+}
+  ]
+}</value>
+  </data>
   <data name="RoleInstanceListResponse" xml:space="preserve">
     <value>[{"id":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/tableserviceinstances/woss-node-1","name":"default/woss-node-1","type":"Microsoft.Storage.Admin/farms/tableserviceinstances","location":"","properties":{"roleIdentifier":"woss-node-1","version":"3/18/2015","healthStatus":"Healthy","nodeUri":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/nodes/woss-node-1","historyInfos": [{"startTime": "2015-09-16T01:01:10.0757296Z", "endTime": "2015-09-16T02:01:10.0757296Z", "duration": "PT1H", "roleIdentifier": "woss-node-1"}]}},{"id":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/tableserviceinstances/woss-node-2","name":"default/woss-node-2","type":"Microsoft.Storage.Admin/farms/tableserviceinstances","location":"","properties":{"roleIdentifier":"woss-node-2","version":"3/18/2015","healthStatus":"Healthy","nodeUri":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/nodes/woss-node-2","historyInfos": [{"startTime": "2015-09-16T01:01:10.0757296Z", "endTime": "2015-09-16T02:01:10.0757296Z", "duration": "PT1H", "roleIdentifier": "woss-node-1"}]}},{"id":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/tableserviceinstances/woss-node-3","name":"default/woss-node-3","type":"Microsoft.Storage.Admin/farms/tableserviceinstances","location":"","properties":{"roleIdentifier":"woss-node-3","version":"3/18/2015","healthStatus":"Healthy","nodeUri":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/nodes/woss-node-3","historyInfos": [{"startTime": "2015-09-16T01:01:10.0757296Z", "endTime": "2015-09-16T02:01:10.0757296Z", "duration": "PT1H", "roleIdentifier": "woss-node-1"}]}}]</value>
   </data>
@@ -542,10 +666,10 @@
     <value>{"id":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/tableserviceinstances/woss-node-1","name":"default/woss-node-1","type":"Microsoft.Storage.Admin/farms/tableserviceinstances","location":"","properties":{"roleIdentifier":"woss-node-1","version":"3/18/2015","healthStatus":"Healthy","nodeUri":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/nodes/woss-node-1","historyInfos": [{"startTime": "2015-09-16T01:01:10.0757296Z", "endTime": "2015-09-16T02:01:10.0757296Z", "duration": "PT1H", "roleIdentifier": "woss-node-1" }]}}</value>
   </data>
   <data name="ShareGetResponse" xml:space="preserve">
-    <value>{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/smb1","type":"Microsoft.Storage.Admin/farms/shares","location":"west us","name":"defaultFarm/||localhost|smb1","properties":{"shareName":"smb1","uncPath":"\\\\localhost\\smb1","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}}</value>
+    <value>{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/||localhost|smb1","type":"Microsoft.Storage.Admin/farms/shares","location":"west us","name":"defaultFarm/||localhost|smb1","properties":{"shareName":"||localhost|smb1","uncPath":"\\\\localhost\\smb1","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}}</value>
   </data>
   <data name="ShareListResponse" xml:space="preserve">
-    <value>[{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/smb1","type":"Microsoft.Storage.Admin/farms","location":"west us","name":"defaultFarm","properties":{"shareName":"smb1","uncPath":"\\\\localhost\\smb1","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}},{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/smb2","type":"Microsoft.Storage.Admin/farms","location":"west us","name":"defaultFarm","properties":{"shareName":"smb2","uncPath":"\\\\localhost\\smb2","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}}]</value>
+    <value>[{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/||localhost|smb1","type":"Microsoft.Storage.Admin/farms","location":"west us","name":"defaultFarm","properties":{"shareName":"||localhost|smb1","uncPath":"\\\\localhost\\smb1","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}},{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/||localhost|smb2","type":"Microsoft.Storage.Admin/farms","location":"west us","name":"defaultFarm","properties":{"shareName":"||localhost|smb2","uncPath":"\\\\localhost\\smb2","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}}]</value>
   </data>
   <data name="StorageAccountGetResponse" xml:space="preserve">
     <value>{

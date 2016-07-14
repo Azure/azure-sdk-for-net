@@ -1,13 +1,15 @@
 [CmdletBinding()]
 Param(
 [Parameter(Mandatory=$False, Position=0)]
-[string]$Folder
+[string]$Folder,
+[Parameter(Mandatory=$False, Position=1)]
+[bool]$Sync
 )
 
 $ErrorActionPreference = "Stop"
 
 # Function to update nuspec file
-function SyncNuspecFile([string]$FolderPath)
+function SyncNuspecFile([string]$FolderPath, [bool]$IsSync)
 {
     Write-Debug "folder: $FolderPath"
     echo "folder: $FolderPath"
@@ -26,7 +28,7 @@ function SyncNuspecFile([string]$FolderPath)
         $assemblyContent = Get-Content $FolderPath\Properties\AssemblyInfo.cs
         $currentContent = $assemblyContent | Out-String
 
-        #Updating AssemblyFileVersion
+        #Getting AssemblyFileVersion
         $packageVersion = $nuproj.Project.ItemGroup.SdkNuGetPackage.PackageVersion
         $packageVersion = ([regex]"[\d\.]+").Match($packageVersion).Value
         $tokens = $packageVersion.split(".")
@@ -35,38 +37,68 @@ function SyncNuspecFile([string]$FolderPath)
         }
         $majorVersion = $tokens[0]
         $assemblyFileVersion = "$packageVersion.0" 
-        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$assemblyFileVersion`")]"
 
-        #Updating AssemblyVersion
-        $assemblyVersion = "$majorVersion.0.0.0"
-        if ($majorVersion -eq "0") {
-            $assemblyVersion = "0.9.0.0"
-        }
-        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyVersion\s*\(\s*`"[\d\.\s]+","[assembly: AssemblyVersion(`"$assemblyVersion"       
-        $newContent = $assemblyContent | Out-String
+        if ($IsSync)
+        {
+            Write-Debug "Updating AssemblyFileVersion and AssemblyVersion"
+            echo "Updating AssemblyFileVersion and AssemblyVersion"
 
-        if ($currentContent.CompareTo($newContent)  -ne 0) {
-            # due to file access confliction with other process such as VS, retry several times 
-            $retry = 1
-            while($true){
-                Try {
-                    Set-Content -Path $FolderPath\Properties\AssemblyInfo.cs -Value $assemblyContent
-                    break
-                }
-                Catch {
-                    $ErrorMessage = $_.Exception.Message
-                    if ($retry -eq 20) {
-                        Throw $ErrorMessage         
-                    } else {
-                        Write-Debug "Failed to update assemblyinfo.cs due to error: $ErrorMessage. Will retry."
-                        $retry++
-                        Start-Sleep -s 2
+            #Updating AssemblyFileVersion
+            $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$assemblyFileVersion`")]"
+
+            #Updating AssemblyVersion
+            $assemblyVersion = "$majorVersion.0.0.0"
+            if ($majorVersion -eq "0") {
+                $assemblyVersion = "0.9.0.0"
+            }
+            $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyVersion\s*\(\s*`"[\d\.\s]+","[assembly: AssemblyVersion(`"$assemblyVersion"
+            $newContent = $assemblyContent | Out-String
+
+            if ($currentContent.CompareTo($newContent)  -ne 0) {
+                # due to file access confliction with other process such as VS, retry several times
+                $retry = 1
+                while($true){
+                    Try {
+                        Set-Content -Path $FolderPath\Properties\AssemblyInfo.cs -Value $assemblyContent
+                        break
+                    }
+                    Catch {
+                        $ErrorMessage = $_.Exception.Message
+                        if ($retry -eq 20) {
+                            Throw $ErrorMessage
+                        } else {
+                            Write-Debug "Failed to update assemblyinfo.cs due to error: $ErrorMessage. Will retry."
+                            $retry++
+                            Start-Sleep -s 2
+                        }
                     }
                 }
-            }            
+            } else {
+                echo "No content change. Skipping...."
+            }
         } else {
-            echo "No content change. Skipping...."
+            Write-Debug "Checking if AssemblyFileVersion and AssemblyVersion match between nuget project and AssemblyInfo"
+            echo "Checking if AssemblyFileVersion and AssemblyVersion match between nuget project and AssemblyInfo"
+
+            #Checking AssemblyFileVersion
+            $assemblyFileVersionLine = $assemblyContent -match "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]"
+            $actualAssemblyFileVersion = $assemblyFileVersionLine.Split("`"")[1]
+
+            if ($assemblyFileVersion -ne $actualAssemblyFileVersion)
+            {
+                Throw "Assembly File Versions between nuget project and AssemblyInfo don't match"
+            }
+
+            #Checking AssemblyVersion
+            $assemblyVersionLine = $assemblyContent -match "\[assembly\:\s*AssemblyVersion\s*\(\s*`"[\d\.\s]+"
+            $actualAssemblyMajorVersion = $assemblyVersionLine.Split("`"")[1].Split(".")[0];
+
+            if ($majorVersion -ne $actualAssemblyMajorVersion)
+            {
+                Throw "Assembly Versions between nuget project and AssemblyInfo don't match"
+            }
         }
+
     }
 
     # Check files exist
@@ -126,4 +158,4 @@ function SyncNuspecFile([string]$FolderPath)
     }
 }
 
-SyncNuspecFile $Folder
+SyncNuspecFile $Folder $Sync

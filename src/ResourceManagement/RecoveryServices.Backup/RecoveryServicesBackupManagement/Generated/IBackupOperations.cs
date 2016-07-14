@@ -60,12 +60,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='protectedItemName'>
         /// Name of the protected item which has to be backed up.
         /// </param>
+        /// <param name='request'>
+        /// Backup request for the backup item.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, TriggerBackupRequest request, CancellationToken cancellationToken);
     }
 }

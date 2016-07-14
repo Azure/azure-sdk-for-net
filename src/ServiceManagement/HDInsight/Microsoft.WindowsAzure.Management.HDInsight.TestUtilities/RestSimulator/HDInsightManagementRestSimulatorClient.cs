@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
             config.Core.AddRange(
                 new List<KeyValuePair<string, string>>()
             {
-                    new KeyValuePair<string, string>("fs.default.name", Hadoop.Client.Constants.WabsProtocolSchemeName + "apitestclusterrdfe19-laureny@hdicurrenteastus.blob.core.windows.net"),
+                    new KeyValuePair<string, string>("fs.default.name", Hadoop.Client.Constants.WabsProtocolSchemeName + "apitestclusterrdfe19-laureny@storageaccount.blob.core.windows.net"),
                     new KeyValuePair<string, string>("hadoop.tmp.dir", "/hdfs/tmp"),
                     new KeyValuePair<string, string>("fs.trash.interval", "60"),
                     new KeyValuePair<string, string>("fs.checkpoint.dir", "c:\\hdfs\\2nn"),
@@ -235,8 +235,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
                     new KeyValuePair<string, string>("hadoop.proxyuser.hdp.hosts", "headnodehost"),
                     new KeyValuePair<string, string>("fs.azure.selfthrottling.read.factor", "1.000000"),
                     new KeyValuePair<string, string>(
-                    "fs.azure.account.key.hdicurrenteastus.blob.core.windows.net",
-                    "jKe7cqoU0a9OmDFlwi3DHZLf7JoKwGOU2pV1iZdBKifxwQuDOKwZFyXMJrPSLtGgDV9b7pVKSGz6lbBWcfX2lA==")
+                    "fs.azure.account.key.storageaccount.blob.core.windows.net",
+                    "fakekey")
                 });
 
             config.Hive.AddRange(

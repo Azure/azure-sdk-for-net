@@ -35,9 +35,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IExtensionMetadataOperations
     {
         /// <summary>
-        /// Returns list of extensions the user has access to  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Returns list of extensions the user has access to
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

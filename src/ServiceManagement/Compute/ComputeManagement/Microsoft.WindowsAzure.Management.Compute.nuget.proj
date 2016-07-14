@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management.Compute
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Compute">
-      <PackageVersion>12.8.0</PackageVersion>
+      <PackageVersion>13.0.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

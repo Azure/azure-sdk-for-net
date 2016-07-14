@@ -20,22 +20,19 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Tenant plan definition
     /// </summary>
     public partial class PlanDefinition
     {
         private string _description;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Description of the plan
         /// </summary>
         public string Description
         {
@@ -46,7 +43,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Display Name of the plan
         /// </summary>
         public string DisplayName
         {
@@ -57,7 +54,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Name of the plan
         /// </summary>
         public string Name
         {
@@ -65,15 +62,16 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._name = value; }
         }
         
-        private IList<ServiceQuotaDefinition> _serviceQuotas;
+        private int? _remainingAcquisitions;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. The number of instances left available for acquisition in
+        /// the current subscription context
         /// </summary>
-        public IList<ServiceQuotaDefinition> ServiceQuotas
+        public int? RemainingAcquisitions
         {
-            get { return this._serviceQuotas; }
-            set { this._serviceQuotas = value; }
+            get { return this._remainingAcquisitions; }
+            set { this._remainingAcquisitions = value; }
         }
         
         /// <summary>
@@ -81,7 +79,6 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public PlanDefinition()
         {
-            this.ServiceQuotas = new LazyList<ServiceQuotaDefinition>();
         }
     }
 }

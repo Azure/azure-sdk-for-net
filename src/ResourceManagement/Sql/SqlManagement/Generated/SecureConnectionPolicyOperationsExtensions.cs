@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class SecureConnectionPolicyOperationsExtensions
     {
         /// <summary>
-        /// Creates or updates an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Connection policy.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Creates or updates an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Connection policy.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

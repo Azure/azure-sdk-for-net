@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Resource group property definition
     /// </summary>
     public partial class ResourceGroupPropertiesDefinition
     {
         private ProvisioningState _provisioningState;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Provisioning state of the resource group deployment
         /// </summary>
         public ProvisioningState ProvisioningState
         {
