@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Rest.Azure;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,8 +9,46 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
 {
     public abstract class ReadableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>
     {
-        // TODO
+        protected abstract IFluentResourceT WrapModel(InnerResourceT inner);
 
-        protected abstract FluentResourceT wrapModel(InnerResourceT inner);
+        protected PagedList<IFluentResourceT> WrapList(PagedList<InnerResourceT> innerList)
+        {
+            return new PagedList<IFluentResourceT>(new WrappedPage<InnerResourceT, IFluentResourceT>(innerList.CurrentPage, WrapModel),
+                (string nextPageLink) =>
+                {
+                    innerList.LoadNextPage();
+                    return new WrappedPage<InnerResourceT, IFluentResourceT>(innerList.CurrentPage, WrapModel);
+                });
+        }
+
+        protected class WrappedPage<InnerT, WrappedT> : IPage<WrappedT>
+        {
+            private string nextPageLink;
+            private List<WrappedT> wrappedPageItems;
+
+            public WrappedPage(IPage<InnerT> innerPage, Func<InnerT, WrappedT> doWrap)
+            {
+                wrappedPageItems = innerPage.Select(doWrap).ToList();
+                nextPageLink = innerPage.NextPageLink;
+            }
+
+            public string NextPageLink
+            {
+                get
+                {
+                    return nextPageLink;
+                }
+            }
+
+            public IEnumerator<WrappedT> GetEnumerator()
+            {
+                return wrappedPageItems.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+        }
     }
 }

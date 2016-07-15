@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
@@ -35,7 +36,14 @@ namespace Microsoft.Azure.Management.V2.Storage
             throw new NotImplementedException();
         }
 
-        protected override StorageAccountImpl wrapModel(Management.Storage.Models.StorageAccount inner)
+        public PagedList<IStorageAccount> List()
+        {
+            // var storageAccounts = await InnerCollection.ListAsync();
+            // return new PagedList<Management.Storage.Models.StorageAccount>(storageAccounts);
+            throw new NotImplementedException();
+        }
+
+        protected override IStorageAccount WrapModel(Management.Storage.Models.StorageAccount inner)
         {
             return new StorageAccountImpl(inner.Name,
                 inner,

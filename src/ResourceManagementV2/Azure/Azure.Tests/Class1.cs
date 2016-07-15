@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Storage;
+using Microsoft.Azure.Management.V2.Compute;
 
 namespace Azure.Tests
 {
@@ -18,6 +19,14 @@ namespace Azure.Tests
         public void FirstTest()
         {
             ApplicationTokenCredentails credentials = new ApplicationTokenCredentails(@"C:\my.azureauth");
+
+            IComputeManager computeManager = ComputeManager
+                .Configure()
+                .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, credentials.SubscriptionId);
+
+            computeManager.VirtualMachines.List();
+
             /**
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -30,6 +39,7 @@ namespace Azure.Tests
                 .CreateAsync().Result;
             **/
 
+            /**
             IStorageManager storageManager = StorageManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -42,6 +52,7 @@ namespace Azure.Tests
                 .CreateAsync().Result;
 
             Console.WriteLine(storageAccount);
+            **/
         }
     }
 }
