@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         GroupableResources<
                 IStorageAccount,
                 StorageAccountImpl,
-                Management.Storage.Models.StorageAccount,
+                Management.Storage.Models.StorageAccountInner,
                 IStorageAccountsOperations,
                 StorageManager>,
         IStorageAccounts
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public StorageAccount.Definition.IBlank Define(string name)
         {
-            Management.Storage.Models.StorageAccount innerObject = new Management.Storage.Models.StorageAccount();
+            Management.Storage.Models.StorageAccountInner innerObject = new Management.Storage.Models.StorageAccountInner();
             StorageAccountImpl wrapped = new StorageAccountImpl(name, 
                 innerObject, 
                 InnerCollection,
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             throw new NotImplementedException();
         }
 
-        protected override IStorageAccount WrapModel(Management.Storage.Models.StorageAccount inner)
+        protected override IStorageAccount WrapModel(Management.Storage.Models.StorageAccountInner inner)
         {
             return new StorageAccountImpl(inner.Name,
                 inner,
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         protected override StorageAccountImpl WrapModel(string name)
         {
-            Management.Storage.Models.StorageAccount innerObject = new Management.Storage.Models.StorageAccount();
+            Management.Storage.Models.StorageAccountInner innerObject = new Management.Storage.Models.StorageAccountInner();
             return new StorageAccountImpl(name,
                 innerObject,
                 InnerCollection,

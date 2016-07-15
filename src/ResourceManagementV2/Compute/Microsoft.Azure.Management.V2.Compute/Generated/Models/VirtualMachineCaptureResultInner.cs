@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Resource Id.
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualMachineCaptureResultInner : Resource
+    public partial class VirtualMachineCaptureResultInner : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineCaptureResultInner
@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="output">Operation output data (raw JSON)</param>
-        public VirtualMachineCaptureResultInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), object output = default(object))
-            : base(location, id, name, type, tags)
+        public VirtualMachineCaptureResultInner(String id = default(String), object output = default(object))
+            : base(id)
         {
             Output = output;
         }

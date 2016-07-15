@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Outbound NAT pool of the loadbalancer
     /// </summary>
     [JsonTransformation]
-    public partial class OutboundNatRule : Resource
+    public partial class OutboundNatRule : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the OutboundNatRule class.
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public OutboundNatRule(SubResource backendAddressPool, String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), int? allocatedOutboundPorts = default(int?), IList<SubResource> frontendIPConfigurations = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public OutboundNatRule(SubResource backendAddressPool, String id = default(String), int? allocatedOutboundPorts = default(int?), IList<SubResource> frontendIPConfigurations = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             AllocatedOutboundPorts = allocatedOutboundPorts;
             FrontendIPConfigurations = frontendIPConfigurations;

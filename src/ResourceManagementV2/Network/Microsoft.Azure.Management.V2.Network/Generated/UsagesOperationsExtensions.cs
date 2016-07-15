@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='location'>
             /// The location upon which resource usage is queried.
             /// </param>
-            public static IPage<Usage> List(this IUsagesOperations operations, string location)
+            public static IPage<UsageInner> List(this IUsagesOperations operations, string location)
             {
                 return Task.Factory.StartNew(s => ((IUsagesOperations)s).ListAsync(location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Usage>> ListAsync(this IUsagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<UsageInner>> ListAsync(this IUsagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Usage> ListNext(this IUsagesOperations operations, string nextPageLink)
+            public static IPage<UsageInner> ListNext(this IUsagesOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IUsagesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Usage>> ListNextAsync(this IUsagesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<UsageInner>> ListNextAsync(this IUsagesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

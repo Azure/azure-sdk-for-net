@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         IResource,
         IRefreshable<IStorageAccount>,
         IUpdatable<StorageAccount.Update.IUpdate>,
-        IWrapper<Management.Storage.Models.StorageAccount>
+        IWrapper<Management.Storage.Models.StorageAccountInner>
     {
         AccountStatuses AccountStatuses { get; }
 

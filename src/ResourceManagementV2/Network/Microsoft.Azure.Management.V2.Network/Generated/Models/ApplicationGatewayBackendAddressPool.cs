@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Backend Address Pool of application gateway
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayBackendAddressPool : Resource
+    public partial class ApplicationGatewayBackendAddressPool : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayBackendAddressPool(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<ApplicationGatewayBackendAddress> backendAddresses = default(IList<ApplicationGatewayBackendAddress>), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public ApplicationGatewayBackendAddressPool(String id = default(String), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<ApplicationGatewayBackendAddress> backendAddresses = default(IList<ApplicationGatewayBackendAddress>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             BackendIPConfigurations = backendIPConfigurations;
             BackendAddresses = backendAddresses;

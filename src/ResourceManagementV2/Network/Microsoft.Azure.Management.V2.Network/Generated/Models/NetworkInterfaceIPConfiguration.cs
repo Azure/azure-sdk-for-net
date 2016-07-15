@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// IPConfiguration in a NetworkInterface
     /// </summary>
     [JsonTransformation]
-    public partial class NetworkInterfaceIPConfiguration : Resource
+    public partial class NetworkInterfaceIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkInterfaceIPConfiguration
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public NetworkInterfaceIPConfiguration(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), SubnetInner subnet = default(SubnetInner), bool? primary = default(bool?), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public NetworkInterfaceIPConfiguration(String id = default(String), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), SubnetInner subnet = default(SubnetInner), bool? primary = default(bool?), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;

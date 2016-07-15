@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Peerings in a VirtualNework resource
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualNetworkPeeringInner : Resource
+    public partial class VirtualNetworkPeeringInner : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkPeeringInner class.
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public VirtualNetworkPeeringInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public VirtualNetworkPeeringInner(String id = default(String), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
             AllowForwardedTraffic = allowForwardedTraffic;

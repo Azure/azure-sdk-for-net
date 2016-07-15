@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Frontend IP address of the load balancer
     /// </summary>
     [JsonTransformation]
-    public partial class FrontendIPConfiguration : Resource
+    public partial class FrontendIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the FrontendIPConfiguration class.
@@ -54,8 +54,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public FrontendIPConfiguration(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public FrontendIPConfiguration(String id = default(String), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             InboundNatRules = inboundNatRules;
             InboundNatPools = inboundNatPools;

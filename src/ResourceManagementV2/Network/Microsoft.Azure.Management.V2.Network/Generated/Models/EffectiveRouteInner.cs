@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Effective Route
     /// </summary>
-    public partial class EffectiveRoute : Resource
+    public partial class EffectiveRouteInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the EffectiveRoute class.
+        /// Initializes a new instance of the EffectiveRouteInner class.
         /// </summary>
-        public EffectiveRoute() { }
+        public EffectiveRouteInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the EffectiveRoute class.
+        /// Initializes a new instance of the EffectiveRouteInner class.
         /// </summary>
         /// <param name="userDefinedRoute">Gets the Id of the effective route.
         /// This is optional, only user defined routes have the name.</param>
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// packet should be sent to. Possible values include:
         /// 'VirtualNetworkGateway', 'VnetLocal', 'Internet',
         /// 'VirtualAppliance', 'None'</param>
-        public EffectiveRoute(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), SubResource userDefinedRoute = default(SubResource), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
-            : base(location, id, name, type, tags)
+        public EffectiveRouteInner(String id = default(String), SubResource userDefinedRoute = default(SubResource), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
+            : base(id)
         {
             UserDefinedRoute = userDefinedRoute;
             Source = source;

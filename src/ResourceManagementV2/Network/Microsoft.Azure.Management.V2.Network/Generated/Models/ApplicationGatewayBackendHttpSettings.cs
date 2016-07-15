@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Backend address pool settings of application gateway
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayBackendHttpSettings : Resource
+    public partial class ApplicationGatewayBackendHttpSettings : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayBackendHttpSettings(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public ApplicationGatewayBackendHttpSettings(String id = default(String), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             Port = port;
             Protocol = protocol;

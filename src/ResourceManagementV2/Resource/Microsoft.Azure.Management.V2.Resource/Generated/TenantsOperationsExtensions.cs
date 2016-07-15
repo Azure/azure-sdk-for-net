@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<TenantIdDescription> List(this ITenantsOperations operations)
+            public static IPage<TenantIdDescriptionInner> List(this ITenantsOperations operations)
             {
                 return Task.Factory.StartNew(s => ((ITenantsOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TenantIdDescription>> ListAsync(this ITenantsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TenantIdDescriptionInner>> ListAsync(this ITenantsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<TenantIdDescription> ListNext(this ITenantsOperations operations, string nextPageLink)
+            public static IPage<TenantIdDescriptionInner> ListNext(this ITenantsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((ITenantsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TenantIdDescription>> ListNextAsync(this ITenantsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TenantIdDescriptionInner>> ListNextAsync(this ITenantsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

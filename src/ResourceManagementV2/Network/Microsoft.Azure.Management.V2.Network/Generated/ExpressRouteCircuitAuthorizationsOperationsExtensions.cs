@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='circuitName'>
             /// The name of the curcuit.
             /// </param>
-            public static IPage<ExpressRouteCircuitAuthorization> List(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName)
+            public static IPage<ExpressRouteCircuitAuthorizationInner> List(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName)
             {
                 return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).ListAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteCircuitAuthorization>> ListAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ExpressRouteCircuitAuthorizationInner>> ListAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, circuitName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ExpressRouteCircuitAuthorization> ListNext(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink)
+            public static IPage<ExpressRouteCircuitAuthorizationInner> ListNext(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -342,7 +342,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteCircuitAuthorization>> ListNextAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ExpressRouteCircuitAuthorizationInner>> ListNextAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

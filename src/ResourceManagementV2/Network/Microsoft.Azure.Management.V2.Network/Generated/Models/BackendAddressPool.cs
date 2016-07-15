@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Pool of backend IP addresseses
     /// </summary>
     [JsonTransformation]
-    public partial class BackendAddressPool : Resource
+    public partial class BackendAddressPool : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the BackendAddressPool class.
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public BackendAddressPool(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundNatRule = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public BackendAddressPool(String id = default(String), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundNatRule = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             BackendIPConfigurations = backendIPConfigurations;
             LoadBalancingRules = loadBalancingRules;

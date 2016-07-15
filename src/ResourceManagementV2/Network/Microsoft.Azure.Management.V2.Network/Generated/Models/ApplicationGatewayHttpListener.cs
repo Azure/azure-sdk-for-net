@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Http listener of application gateway
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayHttpListener : Resource
+    public partial class ApplicationGatewayHttpListener : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayHttpListener
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayHttpListener(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public ApplicationGatewayHttpListener(String id = default(String), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             FrontendPort = frontendPort;

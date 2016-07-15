@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static IPage<RouteTable> List(this IRouteTablesOperations operations, string resourceGroupName)
+            public static IPage<RouteTableInner> List(this IRouteTablesOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RouteTable>> ListAsync(this IRouteTablesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RouteTableInner>> ListAsync(this IRouteTablesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<RouteTable> ListAll(this IRouteTablesOperations operations)
+            public static IPage<RouteTableInner> ListAll(this IRouteTablesOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RouteTable>> ListAllAsync(this IRouteTablesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RouteTableInner>> ListAllAsync(this IRouteTablesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RouteTable> ListNext(this IRouteTablesOperations operations, string nextPageLink)
+            public static IPage<RouteTableInner> ListNext(this IRouteTablesOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RouteTable>> ListNextAsync(this IRouteTablesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RouteTableInner>> ListNextAsync(this IRouteTablesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RouteTable> ListAllNext(this IRouteTablesOperations operations, string nextPageLink)
+            public static IPage<RouteTableInner> ListAllNext(this IRouteTablesOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -362,7 +362,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RouteTable>> ListAllNextAsync(this IRouteTablesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RouteTableInner>> ListAllNextAsync(this IRouteTablesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

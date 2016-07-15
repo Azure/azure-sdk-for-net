@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Network security rule
     /// </summary>
     [JsonTransformation]
-    public partial class SecurityRuleInner : Resource
+    public partial class SecurityRuleInner : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SecurityRuleInner class.
@@ -70,8 +70,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public SecurityRuleInner(string protocol, string sourceAddressPrefix, string destinationAddressPrefix, string access, string direction, String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string description = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), int? priority = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public SecurityRuleInner(string protocol, string sourceAddressPrefix, string destinationAddressPrefix, string access, string direction, String id = default(String), string description = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), int? priority = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             Description = description;
             Protocol = protocol;

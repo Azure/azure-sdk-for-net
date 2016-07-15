@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.V2.Storage
 {
     internal class StorageAccountImpl :
         GroupableResource<IStorageAccount,
-            Management.Storage.Models.StorageAccount,
-            Management.Storage.Models.Resource, 
+            Management.Storage.Models.StorageAccountInner,
+            Rest.Azure.Resource, 
             StorageAccountImpl,
             StorageManager,
             StorageAccount.Definition.IWithGroup,
@@ -21,20 +21,20 @@ namespace Microsoft.Azure.Management.V2.Storage
         StorageAccount.Update.IUpdate
     {
         private string name;
-        private StorageAccountCreateParameters createParameters;
-        private StorageAccountUpdateParameters updateParameters;
+        private StorageAccountCreateParametersInner createParameters;
+        private StorageAccountUpdateParametersInner updateParameters;
 
         private IStorageAccountsOperations client;
 
 
         internal StorageAccountImpl(string name,
-            Management.Storage.Models.StorageAccount innerObject,
+            Management.Storage.Models.StorageAccountInner innerObject,
             IStorageAccountsOperations client,
             StorageManager manager) : base(name, innerObject, manager)
         {
             this.name = name;
-            createParameters = new StorageAccountCreateParameters();
-            updateParameters = new StorageAccountUpdateParameters();
+            createParameters = new StorageAccountCreateParametersInner();
+            updateParameters = new StorageAccountUpdateParametersInner();
             this.client = client;
         }
 
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public StorageAccount.Update.IUpdate Update()
         {
-            updateParameters = new StorageAccountUpdateParameters();
+            updateParameters = new StorageAccountUpdateParametersInner();
             return this;
         }
 

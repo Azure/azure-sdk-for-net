@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// IpConfiguration for Virtual network gateway
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualNetworkGatewayIPConfiguration : Resource
+    public partial class VirtualNetworkGatewayIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public VirtualNetworkGatewayIPConfiguration(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public VirtualNetworkGatewayIPConfiguration(String id = default(String), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;

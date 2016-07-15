@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Probe of application gateway
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayProbe : Resource
+    public partial class ApplicationGatewayProbe : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayProbe class.
@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayProbe(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public ApplicationGatewayProbe(String id = default(String), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             Protocol = protocol;
             Host = host;

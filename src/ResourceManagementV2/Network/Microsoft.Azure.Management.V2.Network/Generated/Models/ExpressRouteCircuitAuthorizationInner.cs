@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Authorization in a ExpressRouteCircuit resource
     /// </summary>
     [JsonTransformation]
-    public partial class ExpressRouteCircuitAuthorizationInner : Resource
+    public partial class ExpressRouteCircuitAuthorizationInner : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ExpressRouteCircuitAuthorizationInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string authorizationKey = default(string), string authorizationUseStatus = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public ExpressRouteCircuitAuthorizationInner(String id = default(String), string authorizationKey = default(string), string authorizationUseStatus = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             AuthorizationKey = authorizationKey;
             AuthorizationUseStatus = authorizationUseStatus;

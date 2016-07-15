@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Route resource
     /// </summary>
     [JsonTransformation]
-    public partial class RouteInner : Resource
+    public partial class RouteInner : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the RouteInner class.
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public RouteInner(string nextHopType, String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string addressPrefix = default(string), string nextHopIpAddress = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public RouteInner(string nextHopType, String id = default(String), string addressPrefix = default(string), string nextHopIpAddress = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             AddressPrefix = addressPrefix;
             NextHopType = nextHopType;

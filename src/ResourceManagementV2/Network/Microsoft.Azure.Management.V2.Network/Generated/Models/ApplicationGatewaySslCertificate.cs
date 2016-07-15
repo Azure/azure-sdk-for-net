@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// SSL certificates of application gateway
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewaySslCertificate : Resource
+    public partial class ApplicationGatewaySslCertificate : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewaySslCertificate
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewaySslCertificate(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string data = default(string), string password = default(string), string publicCertData = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public ApplicationGatewaySslCertificate(String id = default(String), string data = default(string), string password = default(string), string publicCertData = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             Data = data;
             Password = password;

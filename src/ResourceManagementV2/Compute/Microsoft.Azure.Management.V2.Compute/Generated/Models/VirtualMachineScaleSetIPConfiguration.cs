@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// configuration.
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualMachineScaleSetIPConfiguration : Resource
+    public partial class VirtualMachineScaleSetIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// backend address pools.</param>
         /// <param name="loadBalancerInboundNatPools">the load balancer
         /// inbound nat pools.</param>
-        public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet, String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
-            : base(location, id, name, type, tags)
+        public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet, String id = default(String), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
+            : base(id)
         {
             Name = name;
             Subnet = subnet;

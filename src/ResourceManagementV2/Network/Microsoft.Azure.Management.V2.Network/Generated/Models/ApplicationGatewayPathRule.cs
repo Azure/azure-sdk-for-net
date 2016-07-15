@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Path rule of URL path map of application gateway
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayPathRule : Resource
+    public partial class ApplicationGatewayPathRule : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayPathRule class.
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayPathRule(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public ApplicationGatewayPathRule(String id = default(String), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             Paths = paths;
             BackendAddressPool = backendAddressPool;

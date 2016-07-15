@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Inbound NAT pool of the loadbalancer
     /// </summary>
     [JsonTransformation]
-    public partial class InboundNatPool : Resource
+    public partial class InboundNatPool : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the InboundNatPool class.
@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public InboundNatPool(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), SubResource frontendIPConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public InboundNatPool(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, String id = default(String), SubResource frontendIPConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             Protocol = protocol;

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Frontend IP configuration of application gateway
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayFrontendIPConfiguration : Resource
+    public partial class ApplicationGatewayFrontendIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayFrontendIPConfiguration(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public ApplicationGatewayFrontendIPConfiguration(String id = default(String), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;

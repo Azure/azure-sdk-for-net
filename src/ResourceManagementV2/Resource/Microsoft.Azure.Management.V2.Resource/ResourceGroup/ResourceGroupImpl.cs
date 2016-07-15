@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class ResourceGroupImpl : 
-            CreatableUpdatable<IResourceGroup, ResourceManager.Models.ResourceGroup, ResourceGroupImpl>,
+            CreatableUpdatable<IResourceGroup, ResourceManager.Models.ResourceGroupInner, ResourceGroupImpl>,
             IResourceGroup,
             ResourceGroup.Definition.IDefinition,
             ResourceGroup.Update.IUpdate
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
         }
 
-        internal ResourceGroupImpl(ResourceManager.Models.ResourceGroup inner, ResourceManager.IResourceGroupsOperations client) : base(inner.Name, inner)
+        internal ResourceGroupImpl(ResourceManager.Models.ResourceGroupInner inner, ResourceManager.IResourceGroupsOperations client) : base(inner.Name, inner)
         {
             this.client = client;
         }
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public override async Task<IResource> CreateResourceAsync()
         {
-            ResourceManager.Models.ResourceGroup param = new ResourceManager.Models.ResourceGroup();
+            ResourceManager.Models.ResourceGroupInner param = new ResourceManager.Models.ResourceGroupInner();
             param.Location = Inner.Location;
             param.Tags = Inner.Tags;
             var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param);

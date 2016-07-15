@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a network interface reference.
     /// </summary>
     [JsonTransformation]
-    public partial class NetworkInterfaceReference : Resource
+    public partial class NetworkInterfaceReference : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkInterfaceReference class.
@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="primary">whether this is a primary NIC on a virtual
         /// machine</param>
-        public NetworkInterfaceReference(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), bool? primary = default(bool?))
-            : base(location, id, name, type, tags)
+        public NetworkInterfaceReference(String id = default(String), bool? primary = default(bool?))
+            : base(id)
         {
             Primary = primary;
         }

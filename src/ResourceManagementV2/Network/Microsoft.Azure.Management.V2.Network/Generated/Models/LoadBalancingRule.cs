@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Rules of the load balancer
     /// </summary>
     [JsonTransformation]
-    public partial class LoadBalancingRule : Resource
+    public partial class LoadBalancingRule : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the LoadBalancingRule class.
@@ -73,8 +73,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public LoadBalancingRule(string protocol, int frontendPort, String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), SubResource frontendIPConfiguration = default(SubResource), SubResource backendAddressPool = default(SubResource), SubResource probe = default(SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public LoadBalancingRule(string protocol, int frontendPort, String id = default(String), SubResource frontendIPConfiguration = default(SubResource), SubResource backendAddressPool = default(SubResource), SubResource probe = default(SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendAddressPool = backendAddressPool;

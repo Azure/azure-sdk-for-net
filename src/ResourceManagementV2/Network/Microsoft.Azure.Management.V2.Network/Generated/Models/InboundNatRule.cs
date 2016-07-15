@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Inbound NAT rule of the loadbalancer
     /// </summary>
     [JsonTransformation]
-    public partial class InboundNatRule : Resource
+    public partial class InboundNatRule : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the InboundNatRule class.
@@ -68,8 +68,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public InboundNatRule(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), SubResource frontendIPConfiguration = default(SubResource), NetworkInterfaceIPConfiguration backendIPConfiguration = default(NetworkInterfaceIPConfiguration), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public InboundNatRule(String id = default(String), SubResource frontendIPConfiguration = default(SubResource), NetworkInterfaceIPConfiguration backendIPConfiguration = default(NetworkInterfaceIPConfiguration), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+            : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendIPConfiguration = backendIPConfiguration;

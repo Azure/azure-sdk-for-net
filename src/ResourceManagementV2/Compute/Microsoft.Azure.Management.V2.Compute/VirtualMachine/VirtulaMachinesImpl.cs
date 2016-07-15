@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 GroupableResources<
                 IVirtualMachine,
                 VirtualMachineImpl,
-                Management.Compute.Models.VirtualMachine,
+                VirtualMachineInner,
                 IVirtualMachinesOperations,
                 ComputeManager>,
                 IVirtualMachines
@@ -35,14 +35,14 @@ namespace Microsoft.Azure.Management.V2.Compute
         public PagedList<IVirtualMachine> List()
         {
             var firstPage = InnerCollection.ListAll();
-            var pagedList = new PagedList<Management.Compute.Models.VirtualMachine>(firstPage, (string nextPageLink) =>
+            var pagedList = new PagedList<VirtualMachineInner>(firstPage, (string nextPageLink) =>
             {
                 return InnerCollection.ListAllNext(nextPageLink);
             });
             return WrapList(pagedList);
         }
 
-        protected override IVirtualMachine WrapModel(Management.Compute.Models.VirtualMachine inner)
+        protected override IVirtualMachine WrapModel(VirtualMachineInner inner)
         {
             return new VirtualMachineImpl(inner.Name,
                 inner,

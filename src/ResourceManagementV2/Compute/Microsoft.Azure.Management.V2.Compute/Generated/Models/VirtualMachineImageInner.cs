@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">the name of the resource.</param>
         /// <param name="location">the location of the resource.</param>
         /// <param name="tags">the tags attached to the resource.</param>
-        public VirtualMachineImageInner(string name, string location, String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>))
-            : base(name, location, location, id, name, type, tags, tags)
+        public VirtualMachineImageInner(string name, string location, String id = default(String), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>))
+            : base(name, location, id, tags)
         {
             Plan = plan;
             OsDiskImage = osDiskImage;
