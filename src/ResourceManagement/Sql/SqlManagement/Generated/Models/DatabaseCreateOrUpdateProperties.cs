@@ -90,6 +90,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._maxSizeBytes = value; }
         }
         
+        private string _recoveryServicesRecoveryPointResourceId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the recovery services restore point resource
+        /// ID (for LTR)
+        /// </summary>
+        public string RecoveryServicesRecoveryPointResourceId
+        {
+            get { return this._recoveryServicesRecoveryPointResourceId; }
+            set { this._recoveryServicesRecoveryPointResourceId = value; }
+        }
+        
         private System.Guid? _requestedServiceObjectiveId;
         
         /// <summary>

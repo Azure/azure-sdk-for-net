@@ -167,6 +167,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for operating on Azure SQL Job
+        /// Accounts. Contains operations to: Create, Retrieve, Update, and
+        /// Delete Job Accounts
+        /// </summary>
+        IJobAccountOperations JobAccounts
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL
         /// Recommended Elastic Pools.  Contains operations to: Retrieve.
         /// </summary>
