@@ -4,6 +4,8 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.CollectionActions
 {
     public interface ISupportsDeletingByGroup
     {
-        Task Delete(string resourceGroupName, string name);
+        Task DeleteAsync(string resourceGroupName, string name);
+
+        void Delete(string resourceGroupName, string name);
     }
 }

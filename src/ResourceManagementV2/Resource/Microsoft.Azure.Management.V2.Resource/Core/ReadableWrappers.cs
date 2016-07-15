@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
     public abstract class ReadableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>
+        where FluentResourceT : IFluentResourceT
     {
         protected abstract IFluentResourceT WrapModel(InnerResourceT inner);
 

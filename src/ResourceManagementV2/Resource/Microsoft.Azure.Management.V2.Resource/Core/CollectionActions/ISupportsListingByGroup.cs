@@ -5,6 +5,6 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.CollectionActions
 {
     public interface ISupportsListingByGroup<T>
     {
-        Task<List<T>> ListByGroup(string resourceGroupName);
+        PagedList<T> ListByGroup(string resourceGroupName);
     }
 }

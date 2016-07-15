@@ -4,6 +4,8 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.CollectionActions
 {
     public interface ISupportsGettingByGroup<T>
     {
-        Task<T> GetByGroup(string resourceGroupName, string name);
+        Task<T> GetByGroupAsync(string resourceGroupName, string name);
+
+        T GetByGroup(string resourceGroupName, string name);
     }
 }

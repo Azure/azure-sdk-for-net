@@ -4,6 +4,9 @@ namespace Microsoft.Azure.Management.V2.Storage
 {
     public interface IStorageAccounts :
         ISupportsCreating<StorageAccount.Definition.IBlank>,
-        ISupportsListing<IStorageAccount>
-    {}
+        ISupportsListing<IStorageAccount>,
+        ISupportsListingByGroup<IStorageAccount>,
+        ISupportsDeleting,
+        ISupportsDeletingByGroup
+    { }
 }

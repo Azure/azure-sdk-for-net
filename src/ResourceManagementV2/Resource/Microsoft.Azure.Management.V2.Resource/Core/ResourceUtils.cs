@@ -2,7 +2,7 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
-    internal static class ResourceUtils
+    public static class ResourceUtils
     {
         public static string ExtractFromResourceId(string id, string identifier)
         {
