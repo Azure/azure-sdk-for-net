@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<GenericResourceInner>>> ListResourcesWithHttpMessagesAsync(string resourceGroupName, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GenericResourceInner>>> ListResourcesWithHttpMessagesAsync(string resourceGroupName, ODataQuery<GenericResourceFilterInner> odataQuery = default(ODataQuery<GenericResourceFilterInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1445,7 +1445,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ResourceGroupInner>>> ListWithHttpMessagesAsync(ODataQuery<ResourceGroupFilter> odataQuery = default(ODataQuery<ResourceGroupFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceGroupInner>>> ListWithHttpMessagesAsync(ODataQuery<ResourceGroupFilterInner> odataQuery = default(ODataQuery<ResourceGroupFilterInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {

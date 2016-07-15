@@ -403,7 +403,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='select'>
             /// The list parameters.
             /// </param>
-            public static IPage<VirtualMachineScaleSetVMInner> List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, ODataQuery<VirtualMachineScaleSetVM> odataQuery = default(ODataQuery<VirtualMachineScaleSetVM>), string select = default(string))
+            public static IPage<VirtualMachineScaleSetVMInner> List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, ODataQuery<VirtualMachineScaleSetVMInner> odataQuery = default(ODataQuery<VirtualMachineScaleSetVMInner>), string select = default(string))
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetVMsOperations)s).ListAsync(resourceGroupName, virtualMachineScaleSetName, odataQuery, select), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachineScaleSetVMInner>> ListAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, ODataQuery<VirtualMachineScaleSetVM> odataQuery = default(ODataQuery<VirtualMachineScaleSetVM>), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSetVMInner>> ListAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, ODataQuery<VirtualMachineScaleSetVMInner> odataQuery = default(ODataQuery<VirtualMachineScaleSetVMInner>), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualMachineScaleSetName, odataQuery, select, null, cancellationToken).ConfigureAwait(false))
                 {

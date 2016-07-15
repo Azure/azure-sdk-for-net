@@ -100,6 +100,6 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IList<VirtualMachineExtensionImageInner>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImage> odataQuery = default(ODataQuery<VirtualMachineExtensionImage>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VirtualMachineExtensionImageInner>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImageInner> odataQuery = default(ODataQuery<VirtualMachineExtensionImageInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

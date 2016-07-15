@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            public static IPage<VirtualMachineScaleSetSkuInner> ListSkus(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
+            public static IPage<VirtualMachineScaleSetSku> ListSkus(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).ListSkusAsync(resourceGroupName, vmScaleSetName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -558,7 +558,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachineScaleSetSkuInner>> ListSkusAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSetSku>> ListSkusAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSkusWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1084,7 +1084,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<VirtualMachineScaleSetSkuInner> ListSkusNext(this IVirtualMachineScaleSetsOperations operations, string nextPageLink)
+            public static IPage<VirtualMachineScaleSetSku> ListSkusNext(this IVirtualMachineScaleSetsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).ListSkusNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1102,7 +1102,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachineScaleSetSkuInner>> ListSkusNextAsync(this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachineScaleSetSku>> ListSkusNextAsync(this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSkusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

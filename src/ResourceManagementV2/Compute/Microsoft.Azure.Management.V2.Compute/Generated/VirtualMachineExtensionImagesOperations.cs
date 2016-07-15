@@ -477,7 +477,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<VirtualMachineExtensionImageInner>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImage> odataQuery = default(ODataQuery<VirtualMachineExtensionImage>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<VirtualMachineExtensionImageInner>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImageInner> odataQuery = default(ODataQuery<VirtualMachineExtensionImageInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {

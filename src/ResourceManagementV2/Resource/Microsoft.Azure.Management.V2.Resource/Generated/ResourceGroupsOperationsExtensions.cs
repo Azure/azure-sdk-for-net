@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<GenericResourceInner> ListResources(this IResourceGroupsOperations operations, string resourceGroupName, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>))
+            public static IPage<GenericResourceInner> ListResources(this IResourceGroupsOperations operations, string resourceGroupName, ODataQuery<GenericResourceFilterInner> odataQuery = default(ODataQuery<GenericResourceFilterInner>))
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListResourcesAsync(resourceGroupName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<GenericResourceInner>> ListResourcesAsync(this IResourceGroupsOperations operations, string resourceGroupName, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GenericResourceInner>> ListResourcesAsync(this IResourceGroupsOperations operations, string resourceGroupName, ODataQuery<GenericResourceFilterInner> odataQuery = default(ODataQuery<GenericResourceFilterInner>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ResourceGroupInner> List(this IResourceGroupsOperations operations, ODataQuery<ResourceGroupFilter> odataQuery = default(ODataQuery<ResourceGroupFilter>))
+            public static IPage<ResourceGroupInner> List(this IResourceGroupsOperations operations, ODataQuery<ResourceGroupFilterInner> odataQuery = default(ODataQuery<ResourceGroupFilterInner>))
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListAsync(odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceGroupInner>> ListAsync(this IResourceGroupsOperations operations, ODataQuery<ResourceGroupFilter> odataQuery = default(ODataQuery<ResourceGroupFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceGroupInner>> ListAsync(this IResourceGroupsOperations operations, ODataQuery<ResourceGroupFilterInner> odataQuery = default(ODataQuery<ResourceGroupFilterInner>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<GenericResourceInner>>> ListWithHttpMessagesAsync(ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GenericResourceInner>>> ListWithHttpMessagesAsync(ODataQuery<GenericResourceFilterInner> odataQuery = default(ODataQuery<GenericResourceFilterInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks whether resource exists.
         /// </summary>

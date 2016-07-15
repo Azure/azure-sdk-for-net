@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DeploymentExtendedInner>>> ListWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DeploymentExtendedFilter> odataQuery = default(ODataQuery<DeploymentExtendedFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DeploymentExtendedInner>>> ListWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(ODataQuery<DeploymentExtendedFilterInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of deployments.
         /// </summary>

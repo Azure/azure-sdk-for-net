@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EffectiveRouteInner>>> GetEffectiveRouteTableWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EffectiveRoute>>> GetEffectiveRouteTableWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The get effective routetable operation retrieves all the route
         /// tables applied on a networkInterface.
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EffectiveRouteInner>>> BeginGetEffectiveRouteTableWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EffectiveRoute>>> BeginGetEffectiveRouteTableWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list effective network security group operation retrieves all
         /// the network security groups applied on a networkInterface.
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EffectiveNetworkSecurityGroupInner>>> ListEffectiveNetworkSecurityGroupsWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EffectiveNetworkSecurityGroup>>> ListEffectiveNetworkSecurityGroupsWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list effective network security group operation retrieves all
         /// the network security groups applied on a networkInterface.
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EffectiveNetworkSecurityGroupInner>>> BeginListEffectiveNetworkSecurityGroupsWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EffectiveNetworkSecurityGroup>>> BeginListEffectiveNetworkSecurityGroupsWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list network interface operation retrieves information about
         /// all network interfaces in a virtual machine from a virtual
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EffectiveRouteInner>>> GetEffectiveRouteTableNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EffectiveRoute>>> GetEffectiveRouteTableNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The get effective routetable operation retrieves all the route
         /// tables applied on a networkInterface.
@@ -531,7 +531,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EffectiveRouteInner>>> BeginGetEffectiveRouteTableNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EffectiveRoute>>> BeginGetEffectiveRouteTableNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list effective network security group operation retrieves all
         /// the network security groups applied on a networkInterface.
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EffectiveNetworkSecurityGroupInner>>> ListEffectiveNetworkSecurityGroupsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EffectiveNetworkSecurityGroup>>> ListEffectiveNetworkSecurityGroupsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list effective network security group operation retrieves all
         /// the network security groups applied on a networkInterface.
@@ -577,6 +577,6 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EffectiveNetworkSecurityGroupInner>>> BeginListEffectiveNetworkSecurityGroupsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EffectiveNetworkSecurityGroup>>> BeginListEffectiveNetworkSecurityGroupsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

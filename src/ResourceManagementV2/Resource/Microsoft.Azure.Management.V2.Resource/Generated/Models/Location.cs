@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// Location information.
     /// </summary>
-    public partial class LocationInner
+    public partial class Location
     {
         /// <summary>
-        /// Initializes a new instance of the LocationInner class.
+        /// Initializes a new instance of the Location class.
         /// </summary>
-        public LocationInner() { }
+        public Location() { }
 
         /// <summary>
-        /// Initializes a new instance of the LocationInner class.
+        /// Initializes a new instance of the Location class.
         /// </summary>
         /// <param name="id">Gets or sets the ID of the resource
         /// (/subscriptions/SubscriptionId).</param>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// location</param>
         /// <param name="longitude">Gets or sets the longitude of the
         /// location</param>
-        public LocationInner(string id = default(string), string subscriptionId = default(string), string name = default(string), string displayName = default(string), string latitude = default(string), string longitude = default(string))
+        public Location(string id = default(string), string subscriptionId = default(string), string name = default(string), string displayName = default(string), string latitude = default(string), string longitude = default(string))
         {
             Id = id;
             SubscriptionId = subscriptionId;

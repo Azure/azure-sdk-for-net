@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IList<VirtualMachineImageResourceInner> List(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResource> odataQuery = default(ODataQuery<VirtualMachineImageResource>))
+            public static IList<VirtualMachineImageResourceInner> List(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResourceInner> odataQuery = default(ODataQuery<VirtualMachineImageResourceInner>))
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListAsync(location, publisherName, offer, skus, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VirtualMachineImageResourceInner>> ListAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResource> odataQuery = default(ODataQuery<VirtualMachineImageResource>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VirtualMachineImageResourceInner>> ListAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResourceInner> odataQuery = default(ODataQuery<VirtualMachineImageResourceInner>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, publisherName, offer, skus, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {

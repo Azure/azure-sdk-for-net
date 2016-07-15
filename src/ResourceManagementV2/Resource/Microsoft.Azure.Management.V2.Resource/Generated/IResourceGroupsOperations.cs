@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<GenericResourceInner>>> ListResourcesWithHttpMessagesAsync(string resourceGroupName, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GenericResourceInner>>> ListResourcesWithHttpMessagesAsync(string resourceGroupName, ODataQuery<GenericResourceFilterInner> odataQuery = default(ODataQuery<GenericResourceFilterInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks whether resource group exists.
         /// </summary>
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceGroupInner>>> ListWithHttpMessagesAsync(ODataQuery<ResourceGroupFilter> odataQuery = default(ODataQuery<ResourceGroupFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ResourceGroupInner>>> ListWithHttpMessagesAsync(ODataQuery<ResourceGroupFilterInner> odataQuery = default(ODataQuery<ResourceGroupFilterInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all of the resources under a subscription.
         /// </summary>

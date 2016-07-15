@@ -19,23 +19,21 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes an available virtual machine scale set sku.
     /// </summary>
-    public partial class VirtualMachineScaleSetSkuInner
+    public partial class VirtualMachineScaleSetSku
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineScaleSetSkuInner
-        /// class.
+        /// Initializes a new instance of the VirtualMachineScaleSetSku class.
         /// </summary>
-        public VirtualMachineScaleSetSkuInner() { }
+        public VirtualMachineScaleSetSku() { }
 
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineScaleSetSkuInner
-        /// class.
+        /// Initializes a new instance of the VirtualMachineScaleSetSku class.
         /// </summary>
         /// <param name="resourceType">the type of resource the sku applies
         /// to.</param>
         /// <param name="sku">the Sku.</param>
         /// <param name="capacity">available scaling information.</param>
-        public VirtualMachineScaleSetSkuInner(string resourceType = default(string), Sku sku = default(Sku), VirtualMachineScaleSetSkuCapacity capacity = default(VirtualMachineScaleSetSkuCapacity))
+        public VirtualMachineScaleSetSku(string resourceType = default(string), Sku sku = default(Sku), VirtualMachineScaleSetSkuCapacity capacity = default(VirtualMachineScaleSetSkuCapacity))
         {
             ResourceType = resourceType;
             Sku = sku;

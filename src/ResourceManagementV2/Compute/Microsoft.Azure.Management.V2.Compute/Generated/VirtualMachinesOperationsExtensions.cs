@@ -526,7 +526,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static IEnumerable<VirtualMachineSizeInner> ListAvailableSizes(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static IEnumerable<VirtualMachineSize> ListAvailableSizes(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAvailableSizesAsync(resourceGroupName, vmName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -547,7 +547,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<VirtualMachineSizeInner>> ListAvailableSizesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<VirtualMachineSize>> ListAvailableSizesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
                 {

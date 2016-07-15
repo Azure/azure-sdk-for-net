@@ -404,7 +404,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<DeploymentExtendedInner> List(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilter> odataQuery = default(ODataQuery<DeploymentExtendedFilter>))
+            public static IPage<DeploymentExtendedInner> List(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(ODataQuery<DeploymentExtendedFilterInner>))
             {
                 return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListAsync(resourceGroupName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DeploymentExtendedInner>> ListAsync(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilter> odataQuery = default(ODataQuery<DeploymentExtendedFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DeploymentExtendedInner>> ListAsync(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(ODataQuery<DeploymentExtendedFilterInner>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {

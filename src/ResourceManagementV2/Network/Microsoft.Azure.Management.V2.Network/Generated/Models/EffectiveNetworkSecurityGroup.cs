@@ -19,23 +19,23 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Effective NetworkSecurityGroup
     /// </summary>
-    public partial class EffectiveNetworkSecurityGroupInner
+    public partial class EffectiveNetworkSecurityGroup
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// EffectiveNetworkSecurityGroupInner class.
+        /// Initializes a new instance of the EffectiveNetworkSecurityGroup
+        /// class.
         /// </summary>
-        public EffectiveNetworkSecurityGroupInner() { }
+        public EffectiveNetworkSecurityGroup() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// EffectiveNetworkSecurityGroupInner class.
+        /// Initializes a new instance of the EffectiveNetworkSecurityGroup
+        /// class.
         /// </summary>
         /// <param name="networkSecurityGroup">Gets the id of network security
         /// group that is applied</param>
         /// <param name="effectiveSecurityRules">Gets collection of effective
         /// security rules</param>
-        public EffectiveNetworkSecurityGroupInner(SubResource networkSecurityGroup = default(SubResource), EffectiveNetworkSecurityGroupAssociation association = default(EffectiveNetworkSecurityGroupAssociation), IList<EffectiveNetworkSecurityRules> effectiveSecurityRules = default(IList<EffectiveNetworkSecurityRules>))
+        public EffectiveNetworkSecurityGroup(SubResource networkSecurityGroup = default(SubResource), EffectiveNetworkSecurityGroupAssociation association = default(EffectiveNetworkSecurityGroupAssociation), IList<EffectiveNetworkSecurityRules> effectiveSecurityRules = default(IList<EffectiveNetworkSecurityRules>))
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;

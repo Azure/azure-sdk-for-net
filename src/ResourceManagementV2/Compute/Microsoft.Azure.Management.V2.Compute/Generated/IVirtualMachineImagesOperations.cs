@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IList<VirtualMachineImageResourceInner>>> ListWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResource> odataQuery = default(ODataQuery<VirtualMachineImageResource>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VirtualMachineImageResourceInner>>> ListWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResourceInner> odataQuery = default(ODataQuery<VirtualMachineImageResourceInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of virtual machine image offers.
         /// </summary>

@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Effective Route
     /// </summary>
-    public partial class EffectiveRouteInner : SubResource
+    public partial class EffectiveRoute : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the EffectiveRouteInner class.
+        /// Initializes a new instance of the EffectiveRoute class.
         /// </summary>
-        public EffectiveRouteInner() { }
+        public EffectiveRoute() { }
 
         /// <summary>
-        /// Initializes a new instance of the EffectiveRouteInner class.
+        /// Initializes a new instance of the EffectiveRoute class.
         /// </summary>
         /// <param name="userDefinedRoute">Gets the Id of the effective route.
         /// This is optional, only user defined routes have the name.</param>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// packet should be sent to. Possible values include:
         /// 'VirtualNetworkGateway', 'VnetLocal', 'Internet',
         /// 'VirtualAppliance', 'None'</param>
-        public EffectiveRouteInner(String id = default(String), SubResource userDefinedRoute = default(SubResource), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
+        public EffectiveRoute(String id = default(String), SubResource userDefinedRoute = default(SubResource), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
             : base(id)
         {
             UserDefinedRoute = userDefinedRoute;

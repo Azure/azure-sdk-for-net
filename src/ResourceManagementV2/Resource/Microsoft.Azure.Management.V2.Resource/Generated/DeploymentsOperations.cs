@@ -1511,7 +1511,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DeploymentExtendedInner>>> ListWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DeploymentExtendedFilter> odataQuery = default(ODataQuery<DeploymentExtendedFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<DeploymentExtendedInner>>> ListWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(ODataQuery<DeploymentExtendedFilterInner>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {

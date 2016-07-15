@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='location'>
             /// The location upon which virtual-machine-sizes is queried.
             /// </param>
-            public static IEnumerable<VirtualMachineSizeInner> List(this IVirtualMachineSizesOperations operations, string location)
+            public static IEnumerable<VirtualMachineSize> List(this IVirtualMachineSizesOperations operations, string location)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineSizesOperations)s).ListAsync(location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<VirtualMachineSizeInner>> ListAsync(this IVirtualMachineSizesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<VirtualMachineSize>> ListAsync(this IVirtualMachineSizesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {

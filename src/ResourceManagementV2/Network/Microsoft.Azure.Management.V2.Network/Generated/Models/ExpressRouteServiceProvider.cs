@@ -20,16 +20,16 @@ namespace Microsoft.Azure.Management.Network.Models
     /// ExpressRouteResourceProvider object
     /// </summary>
     [JsonTransformation]
-    public partial class ExpressRouteServiceProviderInner : Resource
+    public partial class ExpressRouteServiceProvider : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the ExpressRouteServiceProviderInner
+        /// Initializes a new instance of the ExpressRouteServiceProvider
         /// class.
         /// </summary>
-        public ExpressRouteServiceProviderInner() { }
+        public ExpressRouteServiceProvider() { }
 
         /// <summary>
-        /// Initializes a new instance of the ExpressRouteServiceProviderInner
+        /// Initializes a new instance of the ExpressRouteServiceProvider
         /// class.
         /// </summary>
         /// <param name="peeringLocations">Gets or list of peering
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="bandwidthsOffered">Gets or bandwidths offered</param>
         /// <param name="provisioningState">Gets provisioning state of the
         /// resource </param>
-        public ExpressRouteServiceProviderInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<string> peeringLocations = default(IList<string>), IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
+        public ExpressRouteServiceProvider(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<string> peeringLocations = default(IList<string>), IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             PeeringLocations = peeringLocations;

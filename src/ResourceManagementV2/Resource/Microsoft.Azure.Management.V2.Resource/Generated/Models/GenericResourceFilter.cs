@@ -32,13 +32,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="resourceType">Gets or sets the resource type.</param>
         /// <param name="tagname">Gets or sets the tag name.</param>
         /// <param name="tagvalue">Gets or sets the tag value.</param>
-        /// <param name="expand">Gets or sets the expand value.</param>
-        public GenericResourceFilter(string resourceType = default(string), string tagname = default(string), string tagvalue = default(string), string expand = default(string))
+        public GenericResourceFilter(string resourceType = default(string), string tagname = default(string), string tagvalue = default(string))
         {
             ResourceType = resourceType;
             Tagname = tagname;
             Tagvalue = tagvalue;
-            Expand = expand;
         }
 
         /// <summary>
@@ -58,12 +56,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "tagvalue")]
         public string Tagvalue { get; set; }
-
-        /// <summary>
-        /// Gets or sets the expand value.
-        /// </summary>
-        [JsonProperty(PropertyName = "expand")]
-        public string Expand { get; set; }
 
     }
 }

@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IList<VirtualMachineExtensionImageInner> ListVersions(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImage> odataQuery = default(ODataQuery<VirtualMachineExtensionImage>))
+            public static IList<VirtualMachineExtensionImageInner> ListVersions(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImageInner> odataQuery = default(ODataQuery<VirtualMachineExtensionImageInner>))
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachineExtensionImagesOperations)s).ListVersionsAsync(location, publisherName, type, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VirtualMachineExtensionImageInner>> ListVersionsAsync(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImage> odataQuery = default(ODataQuery<VirtualMachineExtensionImage>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VirtualMachineExtensionImageInner>> ListVersionsAsync(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImageInner> odataQuery = default(ODataQuery<VirtualMachineExtensionImageInner>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListVersionsWithHttpMessagesAsync(location, publisherName, type, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {

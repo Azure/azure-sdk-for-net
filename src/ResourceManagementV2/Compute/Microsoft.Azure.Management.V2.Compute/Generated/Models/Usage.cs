@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.Compute.Models
 {
     using System;
     using System.Linq;
@@ -17,33 +17,31 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Describes Network Resource Usage.
+    /// Describes Compute Resource Usage.
     /// </summary>
-    public partial class UsageInner
+    public partial class Usage
     {
         /// <summary>
-        /// Initializes a new instance of the UsageInner class.
+        /// Initializes a new instance of the Usage class.
         /// </summary>
-        public UsageInner() { }
+        public Usage() { }
 
         /// <summary>
-        /// Initializes a new instance of the UsageInner class.
+        /// Initializes a new instance of the Usage class.
         /// </summary>
-        /// <param name="currentValue">Gets or sets the current value of the
-        /// usage.</param>
-        /// <param name="limit">Gets or sets the limit of usage.</param>
-        /// <param name="name">Gets or sets the name of the type of
-        /// usage.</param>
-        public UsageInner(long currentValue, long limit, UsageName name)
+        /// <param name="currentValue">the current value of the usage.</param>
+        /// <param name="limit">the limit of usage.</param>
+        /// <param name="name">the name of the type of usage.</param>
+        public Usage(int currentValue, long limit, UsageName name)
         {
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
         }
         /// <summary>
-        /// Static constructor for UsageInner class.
+        /// Static constructor for Usage class.
         /// </summary>
-        static UsageInner()
+        static Usage()
         {
             Unit = "Count";
         }
@@ -52,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the current value of the usage.
         /// </summary>
         [JsonProperty(PropertyName = "currentValue")]
-        public long CurrentValue { get; set; }
+        public int CurrentValue { get; set; }
 
         /// <summary>
         /// Gets or sets the limit of usage.
@@ -67,7 +65,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public UsageName Name { get; set; }
 
         /// <summary>
-        /// Gets or sets an enum describing the unit of measurement.
+        /// an enum describing the unit of measurement.
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public static string Unit { get; private set; }

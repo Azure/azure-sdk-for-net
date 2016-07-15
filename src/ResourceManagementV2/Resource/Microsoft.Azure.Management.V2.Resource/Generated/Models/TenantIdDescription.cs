@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// Tenant Id information
     /// </summary>
-    public partial class TenantIdDescriptionInner
+    public partial class TenantIdDescription
     {
         /// <summary>
-        /// Initializes a new instance of the TenantIdDescriptionInner class.
+        /// Initializes a new instance of the TenantIdDescription class.
         /// </summary>
-        public TenantIdDescriptionInner() { }
+        public TenantIdDescription() { }
 
         /// <summary>
-        /// Initializes a new instance of the TenantIdDescriptionInner class.
+        /// Initializes a new instance of the TenantIdDescription class.
         /// </summary>
         /// <param name="id">Gets or sets Id</param>
         /// <param name="tenantId">Gets or sets tenantId</param>
-        public TenantIdDescriptionInner(string id = default(string), string tenantId = default(string))
+        public TenantIdDescription(string id = default(string), string tenantId = default(string))
         {
             Id = id;
             TenantId = tenantId;
