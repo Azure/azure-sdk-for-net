@@ -259,6 +259,8 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #endregion
 
+        #region Implementation of IRefreshable interface
+
         public override async Task<IStorageAccount> Refresh()
         {
             var response = await client.GetPropertiesAsync(ResourceGroupName, this.name);
@@ -266,20 +268,32 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
+        #endregion
+
+        #region Implementation of IUpdatable interface
+
         public StorageAccount.Update.IUpdate Update()
         {
             updateParameters = new StorageAccountUpdateParametersInner();
             return this;
         }
 
+        #endregion
+
+
+        #region Implementation of IApplicable interface
+
         public new async Task<IStorageAccount> ApplyAsync()
         {
-            // overriding the base.ApplyAsync here since the parameter for update is different from the 
-            // one for create
+            // overriding the base.ApplyAsync here since the parameter for update is different from the  one for create.
             var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters);
             SetInner(response);
             return this;
         }
+
+        #endregion
+
+        #region Implementation of Creatable::CreateResourceAsync method
 
         public override async Task<IResource> CreateResourceAsync()
         {
@@ -289,5 +303,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             SetInner(response);
             return this;
         }
+
+        #endregion
     }
 }

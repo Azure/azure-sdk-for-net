@@ -27,15 +27,16 @@ namespace Microsoft.Azure.Management.V2.Compute
             throw new NotImplementedException();
         }
 
-        public override Task<IVirtualMachine> GetByGroup(string groupName, string name)
+        public override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name)
         {
             throw new NotImplementedException();
         }
 
         public PagedList<IVirtualMachine> List()
         {
-            var firstPage = InnerCollection.ListAll();
-            var pagedList = new PagedList<VirtualMachineInner>(firstPage, (string nextPageLink) =>
+
+            IPage<Management.Compute.Models.VirtualMachineInner> firstPage = InnerCollection.ListAll();
+            var pagedList = new PagedList<Management.Compute.Models.VirtualMachineInner>(firstPage, (string nextPageLink) =>
             {
                 return InnerCollection.ListAllNext(nextPageLink);
             });

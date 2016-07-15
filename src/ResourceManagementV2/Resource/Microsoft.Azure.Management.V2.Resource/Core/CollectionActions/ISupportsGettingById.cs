@@ -4,6 +4,8 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.CollectionActions
 {
     public interface ISupportsGettingById<T>
     {
-        Task<T> GetById(string id);
+        Task<T> GetByIdAsync(string id);
+
+        T GetById(string id);
     }
 }
