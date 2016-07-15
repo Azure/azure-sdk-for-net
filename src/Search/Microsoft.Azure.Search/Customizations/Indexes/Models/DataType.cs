@@ -4,15 +4,14 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+    using Newtonsoft.Json;
+    using Serialization;
 
     /// <summary>
     /// Defines the data type of a field in an Azure Search index.
     /// </summary>
-    public sealed class DataType : IEquatable<DataType>
+    [JsonConverter(typeof(ExtensibleEnumConverter<DataType>))]
+    public sealed class DataType : ExtensibleEnum<DataType>
     {
         /// <summary>
         /// Indicates that a field contains a string.
@@ -49,24 +48,9 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly DataType GeographyPoint = new DataType("Edm.GeographyPoint");
 
-        private static readonly Lazy<Dictionary<string, DataType>> _typeMap =
-            new Lazy<Dictionary<string, DataType>>(CreateTypeMap, isThreadSafe: true);
-
-        private string _name;
-
-        private DataType(string typeName)
+        private DataType(string typeName) : base(typeName)
         {
-            _name = typeName;
-        }
-
-        /// <summary>
-        /// Defines implicit conversion from DataType to string.
-        /// </summary>
-        /// <param name="dataType">DataType to convert.</param>
-        /// <returns>The name of the DataType as a string.</returns>
-        public static implicit operator string(DataType dataType)
-        {
-            return (dataType != null) ? dataType.ToString() : null;
+            // Base class does all initialization.
         }
 
         /// <summary>
@@ -77,18 +61,8 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A DataType instance with the given name.</returns>
         public static DataType Create(string name)
         {
-            Throw.IfArgumentNull(name, "name");
-
             // Data types are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            DataType dataType;
-            if (_typeMap.Value.TryGetValue(name, out dataType))
-            {
-                return dataType;
-            }
-            else
-            {
-                return new DataType(name);
-            }
+            return Lookup(name) ?? new DataType(name);
         }
 
         /// <summary>
@@ -100,57 +74,6 @@ namespace Microsoft.Azure.Search.Models
         {
             Throw.IfArgumentNull(elementType, "elementType");
             return new DataType(System.String.Format("Collection({0})", elementType.ToString()));
-        }
-
-        /// <summary>
-        /// Compares the DataType for equality with another DataType.
-        /// </summary>
-        /// <param name="other">The DataType with which to compare.</param>
-        /// <returns>true if the DataType objects are equal; false otherwise.</returns>
-        public bool Equals(DataType other)
-        {
-            if (object.ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
-            return this._name == other._name;
-        }
-
-        /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as AnalyzerName);
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _name.GetHashCode();
-        }
-
-        /// <summary>
-        /// Returns the name of the DataType in a form that can be used in an Azure Search index definition.
-        /// </summary>
-        /// <returns>The name of the DataType as a string.</returns>
-        public override string ToString()
-        {
-            return _name;
-        }
-
-        private static Dictionary<string, DataType> CreateTypeMap()
-        {
-            IEnumerable<FieldInfo> allPublicStaticFields =
-                typeof(DataType).GetTypeInfo().DeclaredFields.Where(f => f.IsStatic && f.IsPublic);
-
-            IEnumerable<DataType> allKnownValues =
-                allPublicStaticFields
-                    .Where(f => f.FieldType == typeof(DataType))
-                    .Select(f => f.GetValue(null))
-                    .OfType<DataType>();
-
-            allKnownValues = allKnownValues.Concat(allKnownValues.Select(v => Collection(v)));
-            return allKnownValues.ToDictionary(v => (string)v, v => v);
         }
     }
 }
