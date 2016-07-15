@@ -102,6 +102,7 @@ ClientBin
 [Ss]tyle[Cc]op.*
 ~$*
 *.dbmdl
+node_modules
 
 *.[Pp]ublish.xml
 

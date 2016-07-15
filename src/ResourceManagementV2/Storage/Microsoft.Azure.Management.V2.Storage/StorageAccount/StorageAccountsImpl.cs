@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         GroupableResources<
                 IStorageAccount,
                 StorageAccountImpl,
-                Management.Storage.Models.StorageAccount,
+                Management.Storage.Models.StorageAccountInner,
                 IStorageAccountsOperations,
                 StorageManager>,
         IStorageAccounts
@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public PagedList<IStorageAccount> List()
         {
-            IEnumerable<Management.Storage.Models.StorageAccount> storageAccounts = InnerCollection.List();
-            var pagedList = new PagedList<Management.Storage.Models.StorageAccount>(storageAccounts);
+            IEnumerable<Management.Storage.Models.StorageAccountInner> storageAccounts = InnerCollection.List();
+            var pagedList = new PagedList<Management.Storage.Models.StorageAccountInner>(storageAccounts);
             return WrapList(pagedList);
         }
 
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public PagedList<IStorageAccount> ListByGroup(string groupName)
         {
-            IEnumerable<Management.Storage.Models.StorageAccount> storageAccounts = InnerCollection.ListByResourceGroup(groupName);
-            var pagedList = new PagedList<Management.Storage.Models.StorageAccount>(storageAccounts);
+            IEnumerable<Management.Storage.Models.StorageAccountInner> storageAccounts = InnerCollection.ListByResourceGroup(groupName);
+            var pagedList = new PagedList<Management.Storage.Models.StorageAccountInner>(storageAccounts);
             return WrapList(pagedList);
         }
 
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Implementation of CreatableWrappers::WrapModel abstract method
 
-        protected override IStorageAccount WrapModel(Management.Storage.Models.StorageAccount inner)
+        protected override IStorageAccount WrapModel(Management.Storage.Models.StorageAccountInner inner)
         {
             return new StorageAccountImpl(inner.Name,
                 inner,
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         protected override StorageAccountImpl WrapModel(string name)
         {
-            Management.Storage.Models.StorageAccount innerObject = new Management.Storage.Models.StorageAccount();
+            Management.Storage.Models.StorageAccountInner innerObject = new Management.Storage.Models.StorageAccountInner();
             return new StorageAccountImpl(name,
                 innerObject,
                 InnerCollection,

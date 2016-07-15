@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public ResourceGroup.Definition.IBlank Define(string name)
         {
-            ResourceManager.Models.ResourceGroup inner = new ResourceManager.Models.ResourceGroup();
+            ResourceManager.Models.ResourceGroupInner inner = new ResourceManager.Models.ResourceGroupInner();
             inner.Name = name;
             return new ResourceGroupImpl(inner, innerCollection);
         }
