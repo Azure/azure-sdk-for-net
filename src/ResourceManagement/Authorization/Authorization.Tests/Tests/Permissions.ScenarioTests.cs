@@ -43,6 +43,11 @@ namespace Authorization.Tests
             return client;
         }
 
+        public PermissionsTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
+        }
+
         public AuthorizationManagementClient GetAuthorizationManagementClient(MockContext context)
         {
             var client = context.GetServiceClient<AuthorizationManagementClient>();
