@@ -4,16 +4,15 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+    using Newtonsoft.Json;
+    using Serialization;
 
     /// <summary>
     /// Defines the names of all text analyzers supported by Azure Search.
     /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx"/>
     /// </summary>
-    public sealed class AnalyzerName : IEquatable<AnalyzerName>
+    [JsonConverter(typeof(ExtensibleEnumConverter<AnalyzerName>))]
+    public sealed class AnalyzerName : ExtensibleEnum<AnalyzerName>
     {
         // MAINTENANCE NOTE: Keep these ordered the same as the table on this page:
         // https://msdn.microsoft.com/library/azure/dn879793.aspx
@@ -459,24 +458,9 @@ namespace Microsoft.Azure.Search.Models
         public static readonly AnalyzerName StandardAsciiFoldingLucene =
             new AnalyzerName("standardasciifolding.lucene");
 
-        private static readonly Lazy<Dictionary<string, AnalyzerName>> _analyzerMap =
-            new Lazy<Dictionary<string, AnalyzerName>>(CreateAnalyzerMap, isThreadSafe: true);
-
-        private string _name;
-
-        private AnalyzerName(string name)
+        private AnalyzerName(string name) : base(name)
         {
-            _name = name;
-        }
-
-        /// <summary>
-        /// Defines implicit conversion from AnalyzerName to string.
-        /// </summary>
-        /// <param name="name">AnalyzerName to convert.</param>
-        /// <returns>The AnalyzerName as a string.</returns>
-        public static implicit operator string(AnalyzerName name)
-        {
-            return (name != null) ? name.ToString() : null;
+            // Base class does all initialization.
         }
 
         /// <summary>
@@ -487,68 +471,8 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>An AnalyzerName instance with the given name.</returns>
         public static AnalyzerName Create(string name)
         {
-            Throw.IfArgumentNull(name, "name");
-
             // Analyzer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            AnalyzerName analyzerName;
-            if (_analyzerMap.Value.TryGetValue(name, out analyzerName))
-            {
-                return analyzerName;
-            }
-            else
-            {
-                return new AnalyzerName(name);
-            }
-        }
-
-        /// <summary>
-        /// Compares the AnalyzerName for equality with another AnalyzerName.
-        /// </summary>
-        /// <param name="other">The AnalyzerName with which to compare.</param>
-        /// <returns>true if the AnalyzerName objects are equal; false otherwise.</returns>
-        public bool Equals(AnalyzerName other)
-        {
-            if (object.ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
-            return this._name == other._name;
-        }
-
-        /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as AnalyzerName);
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _name.GetHashCode();
-        }
-
-        /// <summary>
-        /// Returns the AnalyzerName in a form that can be used in an Azure Search index definition.
-        /// </summary>
-        /// <returns>The AnalyzerName as a string.</returns>
-        public override string ToString()
-        {
-            return _name;
-        }
-
-        private static Dictionary<string, AnalyzerName> CreateAnalyzerMap()
-        {
-            IEnumerable<FieldInfo> allPublicStaticFields =
-                typeof(AnalyzerName).GetTypeInfo().DeclaredFields.Where(f => f.IsStatic && f.IsPublic);
-
-            IEnumerable<AnalyzerName> allKnownValues =
-                allPublicStaticFields
-                    .Where(f => f.FieldType == typeof(AnalyzerName))
-                    .Select(f => f.GetValue(null))
-                    .OfType<AnalyzerName>();
-
-            return allKnownValues.ToDictionary(v => (string)v, v => v);
+            return Lookup(name) ?? new AnalyzerName(name);
         }
     }
 }
