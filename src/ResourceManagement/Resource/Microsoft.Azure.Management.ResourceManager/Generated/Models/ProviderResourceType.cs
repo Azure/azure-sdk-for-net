@@ -29,10 +29,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ProviderResourceType class.
         /// </summary>
-        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<string> apiVersions = default(IList<string>), IDictionary<string, string> properties = default(IDictionary<string, string>))
+        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<AliasType> aliases = default(IList<AliasType>), IList<string> apiVersions = default(IList<string>), IDictionary<string, string> properties = default(IDictionary<string, string>))
         {
             ResourceType = resourceType;
             Locations = locations;
+            Aliases = aliases;
             ApiVersions = apiVersions;
             Properties = properties;
         }
@@ -49,6 +50,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
         public IList<string> Locations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the aliases that are supported by this resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "aliases")]
+        public IList<AliasType> Aliases { get; set; }
 
         /// <summary>
         /// Gets or sets the api version.
