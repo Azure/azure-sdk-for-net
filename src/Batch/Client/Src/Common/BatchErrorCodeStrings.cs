@@ -673,6 +673,11 @@ namespace Microsoft.Azure.Batch.Common
     public static class TaskSchedulingErrorCodes
     {
         /// <summary>
+        /// An error occurred when trying to deploy a required application package.
+        /// </summary>
+        public const string ApplicationPackageError = "ApplicationPackageError";
+
+        /// <summary>
         /// Access was denied when trying to download a resource file required for the task.
         /// </summary>
         public const string BlobAccessDenied = "BlobAccessDenied";

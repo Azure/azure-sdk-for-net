@@ -83,64 +83,54 @@
             where TOptions : Protocol.Models.IOptions, new()
             where TResponse : IAzureOperationResponse, new()
         {
-            return new[]
+            yield return new Protocol.RequestInterceptor(req =>
                 {
-                    new Protocol.RequestInterceptor(req =>
-                        {
-                            var requestType = (Protocol.BatchRequest<TBody, TOptions, TResponse>)req;
+                    var requestType = (Protocol.BatchRequest<TBody, TOptions, TResponse>)req;
 
-                            requestType.ServiceRequestFunc = ct =>
-                                {
-                                    return Task.FromResult(new TResponse());
-                                };
-                        })
-                };
+                    requestType.ServiceRequestFunc = ct =>
+                        {
+                            return Task.FromResult(new TResponse());
+                        };
+                });
         }
 
         public static IEnumerable<Protocol.RequestInterceptor> CreateGetRequestInterceptor<TOptions, TResponse, TResponseHeaders>(TResponse valueToReturn)
             where TOptions : Protocol.Models.IOptions, new()
         {
-            return new[]
+            yield return new Protocol.RequestInterceptor(req =>
                 {
-                    new Protocol.RequestInterceptor(req =>
-                        {
-                            var castReq = (Protocol.BatchRequest<
-                                TOptions,
-                                AzureOperationResponse<TResponse, TResponseHeaders>>)req;
+                    var castReq = (Protocol.BatchRequest<
+                        TOptions,
+                        AzureOperationResponse<TResponse, TResponseHeaders>>)req;
 
-                            castReq.ServiceRequestFunc = ct =>
+                    castReq.ServiceRequestFunc = ct =>
+                        {
+                            return Task.FromResult(new AzureOperationResponse<TResponse, TResponseHeaders>()
                                 {
-                                    return Task.FromResult(new AzureOperationResponse<TResponse, TResponseHeaders>()
-                                        {
-                                            Body = valueToReturn
-                                        });
-                                };
-                        })
-                };
+                                    Body = valueToReturn
+                                });
+                        };
+                });
         }
 
         public static IEnumerable<Protocol.RequestInterceptor> CreateListRequestInterceptor<TOptions, TResponse, TResponseHeaders>(
             IEnumerable<TResponse> valueToReturn)
             where TOptions : Protocol.Models.IOptions, new()
         {
-            return new[]
+            yield return new Protocol.RequestInterceptor(req =>
                 {
-                    new Protocol.RequestInterceptor(req =>
+                    var castReq = (Protocol.BatchRequest<
+                        TOptions,
+                        AzureOperationResponse<IPage<TResponse>, TResponseHeaders>>)req;
+
+                    castReq.ServiceRequestFunc = ct =>
                         {
-                            var castReq = (Protocol.BatchRequest<
-                                TOptions,
-                                AzureOperationResponse<IPage<TResponse>, TResponseHeaders>>)req;
-
-                            castReq.ServiceRequestFunc = ct =>
+                            return Task.FromResult(new AzureOperationResponse<IPage<TResponse>, TResponseHeaders>()
                                 {
-                                    return Task.FromResult(new AzureOperationResponse<IPage<TResponse>, TResponseHeaders>()
-                                        {
-                                            Body = new FakePage<TResponse>(valueToReturn.ToList())
-                                        });
-                                };
-                        })
-
-                };
+                                    Body = new FakePage<TResponse>(valueToReturn.ToList())
+                                });
+                        };
+                });
         }
     }
 }

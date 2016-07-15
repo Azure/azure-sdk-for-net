@@ -13,7 +13,7 @@
     public abstract class PoolFixture : IDisposable
     {
         public const string OSFamily = "4";
-        public const string VMSize = "STANDARD_D1";
+        public const string VMSize = "STANDARD_D1_v2";
 
         public CloudPool Pool { get; protected set; }
 
