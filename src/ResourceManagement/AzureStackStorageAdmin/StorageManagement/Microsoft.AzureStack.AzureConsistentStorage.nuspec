@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.AzureStack.AzureConsistentStorage</id>
+    <title>Microsoft Azure Stack Storage Management Library Preview</title>
+    <releaseNotes>Microsoft Azure Stack Storage Management Library Preview</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft, Azure Stack Team</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net-pr</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>A management library for working with Microsoft Azure-consistent Storage services including Blob and Table</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>AzureStack, StorageManagement</tags>
+    <references>
+      <group targetFramework="portable-net45+sl50+wp80+win">
+        <reference file="Microsoft.AzureStack.AzureConsistentStorage.dll" />
+      </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.AzureStack.AzureConsistentStorage.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+      <dependency id="WindowsAzure.Storage" version="[6.1.0,7.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ResourceManagement\AzureStackStorageAdmin\StorageManagement\**\*.cs" target="src" />
+    <file src="..\binaries\net45\Microsoft.AzureStack.AzureConsistentStorage.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.AzureStack.AzureConsistentStorage.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.AzureStack.AzureConsistentStorage.xml" target="lib\net45" />
+    <file src="..\binaries\net40\Microsoft.AzureStack.AzureConsistentStorage.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.AzureStack.AzureConsistentStorage.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.AzureStack.AzureConsistentStorage.xml" target="lib\net40" />
+  </files>
+</package>

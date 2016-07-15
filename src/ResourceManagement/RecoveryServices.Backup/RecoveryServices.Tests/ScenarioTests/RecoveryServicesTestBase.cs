@@ -13,21 +13,20 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
+using Microsoft.Azure.Management.RecoveryServices.Backup;
+using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Reflection;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Backup;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
-using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class RecoveryServicesTestsBase : TestBase
+    public class RecoveryServicesBackupTestsBase : TestBase
     {
         public static void ExecuteTest(Action<RecoveryServicesBackupManagementClient> action, string resourceNamespace = null)
         {

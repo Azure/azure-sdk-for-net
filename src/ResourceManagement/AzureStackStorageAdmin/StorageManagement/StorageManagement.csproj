@@ -6,18 +6,18 @@
     <ProjectGuid>{0F495F37-C031-4827-9EA6-3E19A4930A70}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.AzureStack.Management.Storage</RootNamespace>
-    <AssemblyName>Microsoft.AzureStack.Management.Storage</AssemblyName>
+    <RootNamespace>Microsoft.AzureStack.AzureConsistentStorage</RootNamespace>
+    <AssemblyName>Microsoft.AzureStack.AzureConsistentStorage</AssemblyName>
     <OutputType>Library</OutputType>
-    <RestorePackages>true</RestorePackages>    
-  </PropertyGroup>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>  
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customization\EventQueryException.cs" />
     <Compile Include="Customization\StorageAdminManagementClient.Customization.cs" />
     <Compile Include="Generated\StorageAdminManagementClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup> 
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Microsoft.AzureStack.Management.Storage.nuget.proj" />
@@ -37,7 +37,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(LibraryNugetPackageFolder)\WindowsAzure.Storage.6.1.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-  </ItemGroup> 
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

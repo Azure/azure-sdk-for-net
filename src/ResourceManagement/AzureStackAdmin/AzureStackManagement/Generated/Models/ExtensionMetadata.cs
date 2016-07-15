@@ -20,19 +20,21 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Extension Metadata
     /// </summary>
     public partial class ExtensionMetadata
     {
         private string _endpointUri;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the endpoint Uri
         /// </summary>
         public string EndpointUri
         {
@@ -43,7 +45,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the location of the extension
         /// </summary>
         public string Location
         {
@@ -54,7 +56,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the name of the extension
         /// </summary>
         public string Name
         {
@@ -62,15 +64,15 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._name = value; }
         }
         
-        private string _namespace;
+        private IList<string> _namespaces;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the list of Namespaces
         /// </summary>
-        public string Namespace
+        public IList<string> Namespaces
         {
-            get { return this._namespace; }
-            set { this._namespace = value; }
+            get { return this._namespaces; }
+            set { this._namespaces = value; }
         }
         
         /// <summary>
@@ -78,6 +80,7 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public ExtensionMetadata()
         {
+            this.Namespaces = new LazyList<string>();
         }
     }
 }

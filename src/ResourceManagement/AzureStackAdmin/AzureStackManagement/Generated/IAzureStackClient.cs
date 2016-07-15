@@ -29,7 +29,7 @@ namespace Microsoft.AzureStack.Management
     public partial interface IAzureStackClient : IDisposable
     {
         /// <summary>
-        /// Your documentation here.
+        /// Apiversion of the endpoint
         /// </summary>
         string ApiVersion
         {
@@ -37,7 +37,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.
+        /// Resource Manager endpoint
         /// </summary>
         Uri BaseUri
         {
@@ -45,7 +45,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.
+        /// Credentials to access resource manager endpoint
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
@@ -53,51 +53,11 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        ICloudOperations Clouds
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the curation items  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
         ICurationOperations Curation
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for delegated offers.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IDelegatedOfferOperations DelegatedOffers
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for delegated provider configuration.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IDelegatedProviderConfigurationOperations DelegatedProviderConfiguration
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IEventTypesOperations EventTypes
         {
             get; 
         }
@@ -113,21 +73,11 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Gallery item operations.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
         IGalleryItemOperations GalleryItem
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IImportedSubscriptionOperations ImportedSubscriptions
         {
             get; 
         }
@@ -143,7 +93,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator Operations on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -153,7 +103,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator operations on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -163,7 +113,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Administrator Operations on the subscription  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -173,7 +123,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the offer  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -183,17 +133,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IPackageOperations Package
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the plan  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -203,7 +143,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Resource provider manifest registration operations  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -213,7 +153,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
+        /// Public gallery items operations.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
@@ -223,9 +163,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
+        /// Operations on the resource group
         /// </summary>
         IResourceGroupOperations ResourceGroups
         {
@@ -233,41 +171,21 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IResourceOperations Resources
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IResourceProviderOperations ResourceProviders
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IShallowResourceOperations ShallowResources
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
+        /// Operations on the subscription as a tenant  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
         /// </summary>
         ISubscriptionOperations Subscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Usage connection operations  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        IUsageConnectionsOperations UsageConnections
         {
             get; 
         }

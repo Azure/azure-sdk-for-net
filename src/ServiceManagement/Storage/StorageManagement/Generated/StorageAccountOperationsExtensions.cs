@@ -790,5 +790,47 @@ namespace Microsoft.WindowsAzure.Management.Storage
         {
             return operations.UpdateAsync(accountName, parameters, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Validate storage account migration api validates the given storage
+        /// account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Storage Account Migration operation response.
+        /// </returns>
+        public static XrpMigrationValidateStorageResponse ValidateMigration(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageAccountOperations)s).ValidateMigrationAsync(storageAccountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Validate storage account migration api validates the given storage
+        /// account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Storage Account Migration operation response.
+        /// </returns>
+        public static Task<XrpMigrationValidateStorageResponse> ValidateMigrationAsync(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return operations.ValidateMigrationAsync(storageAccountName, CancellationToken.None);
+        }
     }
 }

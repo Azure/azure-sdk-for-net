@@ -29,7 +29,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the offer
     /// </summary>
     public partial class OfferListResult : AzureOperationResponse
     {
@@ -47,7 +47,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<OfferDefinition> _offers;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. List of offers
         /// </summary>
         public IList<OfferDefinition> Offers
         {

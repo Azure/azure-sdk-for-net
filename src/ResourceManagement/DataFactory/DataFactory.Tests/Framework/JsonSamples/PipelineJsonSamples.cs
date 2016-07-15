@@ -327,6 +327,13 @@ namespace DataFactory.Tests.Framework.JsonSamples
                             useTypeDefault: true
                         }
                     },
+                    enableStaging: true,
+                    stagingSettings: 
+                    {
+                        linkedServiceName: ""MyStagingBlob"",
+                        path: ""stagingcontainer/path"",
+                        enableCompression: true
+                    }
                 },
                 inputs: 
                 [ 
@@ -1383,6 +1390,52 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     retry: 2,
                     timeout: ""01:00:00""
                 }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyBlobToAzureDataLakeWithPerformanceParams = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from Blob to AzureDataLake with performance parameters"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""BlobSource"",
+                    },
+                     sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                    },
+                    ""parallelCopies"": 5,
+                    ""cloudDataMovementUnits"": 4
+                },
+                inputs:
+                [ 
+                    {
+                        name: ""RawBlob""
+                    }
+                ],
+                outputs:
+                [ 
+                    {
+                        name: ""AdlOut""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
             }
         ]
     }

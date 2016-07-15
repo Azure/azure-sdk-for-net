@@ -10,8 +10,8 @@
     //  -- all output should be in UTC.
 
     // Example usage:
-    // lat.exe download -account mikelidwestus1 -key "/+rgnxiQFRHiNYzXGQWZtLE/b0FLhz/QNZpdqsUVxwDDSmwCJsAsFCEFqyZKCpuhbtgjymJ5Jsi3o8/p6lNmwQ==" -f -logCache d:\wasLogs\
-    // lat.exe throttlinganalysis -account mikelidwestus2 -logCache d:\wasLogs\ -start "2013-11-22 19:12:03Z" -end "2013-11-22 19:12:43Z"
+    // lat.exe download -account <storageaccountname> -key "<accountkey>" -f -logCache d:\wasLogs\
+    // lat.exe throttlinganalysis -account <storageaccountname> -logCache d:\wasLogs\ -start "2013-11-22 19:12:03Z" -end "2013-11-22 19:12:43Z"
     internal class Program
     {
         private static void GeneralUsage()

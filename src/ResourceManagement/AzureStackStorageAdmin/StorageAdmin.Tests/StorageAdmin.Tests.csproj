@@ -2,8 +2,11 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{F312ED2D-D97E-4C8E-8BE6-3049F839FDDF}</ProjectGuid>
-    <AssemblyName>StorageAdmin.Tests</AssemblyName>
-    <RootNamespace>Microsoft.AzureStack.Management.StorageAdmin.Tests</RootNamespace>
+    <AssemblyName>AzureStackStorageAdmin.Tests</AssemblyName>
+    <RootNamespace>Microsoft.AzureStack.AzureConsistentStorage.Tests</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net40-Debug'">
+    <DocumentationFile>bin\Net40-Debug\AzureStackStorageAdmin.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
@@ -25,6 +28,8 @@
     <Compile Include="InMemoryTests\TestBase.cs" />
     <Compile Include="RecordedDelegatingHandler.cs" />
     <Compile Include="EventQueryResultValidator.cs" />
+    <Compile Include="InMemoryTests\QuotaTests.cs" />
+    <Compile Include="InMemoryTests\AcquisitionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

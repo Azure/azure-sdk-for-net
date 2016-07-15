@@ -243,6 +243,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 propertiesValue["policyId"] = derived.PolicyId;
                             }
+                            
+                            if (derived.SourceResourceId != null)
+                            {
+                                propertiesValue["sourceResourceId"] = derived.SourceResourceId;
+                            }
                         }
                         if (request.Item.Properties is AzureIaaSVMProtectedItem)
                         {
@@ -312,6 +317,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived2.PolicyId != null)
                             {
                                 propertiesValue["policyId"] = derived2.PolicyId;
+                            }
+                            
+                            if (derived2.SourceResourceId != null)
+                            {
+                                propertiesValue["sourceResourceId"] = derived2.SourceResourceId;
                             }
                         }
                         if (request.Item.Properties is AzureIaaSComputeVMProtectedItem)
@@ -383,6 +393,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 propertiesValue["policyId"] = derived3.PolicyId;
                             }
+                            
+                            if (derived3.SourceResourceId != null)
+                            {
+                                propertiesValue["sourceResourceId"] = derived3.SourceResourceId;
+                            }
                         }
                         if (request.Item.Properties is AzureIaaSClassicComputeVMProtectedItem)
                         {
@@ -453,6 +468,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 propertiesValue["policyId"] = derived4.PolicyId;
                             }
+                            
+                            if (derived4.SourceResourceId != null)
+                            {
+                                propertiesValue["sourceResourceId"] = derived4.SourceResourceId;
+                            }
                         }
                         if (request.Item.Properties is MabFileFolderProtectedItem)
                         {
@@ -500,6 +520,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived5.PolicyId != null)
                             {
                                 propertiesValue["policyId"] = derived5.PolicyId;
+                            }
+                            
+                            if (derived5.SourceResourceId != null)
+                            {
+                                propertiesValue["sourceResourceId"] = derived5.SourceResourceId;
                             }
                         }
                         if (request.Item.Properties is AzureSqlProtectedItem)
@@ -556,6 +581,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived6.PolicyId != null)
                             {
                                 propertiesValue["policyId"] = derived6.PolicyId;
+                            }
+                            
+                            if (derived6.SourceResourceId != null)
+                            {
+                                propertiesValue["sourceResourceId"] = derived6.SourceResourceId;
                             }
                         }
                     }
@@ -1180,6 +1210,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance = ((string)policyIdValue);
                                         protectedItemInstance.PolicyId = policyIdInstance;
                                     }
+                                    
+                                    JToken sourceResourceIdValue = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue != null && sourceResourceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance = ((string)sourceResourceIdValue);
+                                        protectedItemInstance.SourceResourceId = sourceResourceIdInstance;
+                                    }
                                     itemInstance.Properties = protectedItemInstance;
                                 }
                                 if (typeName == "AzureIaaSVMProtectedItem")
@@ -1282,6 +1319,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance2 = ((string)policyIdValue2);
                                         azureIaaSVMProtectedItemInstance.PolicyId = policyIdInstance2;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue2 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue2 != null && sourceResourceIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance2 = ((string)sourceResourceIdValue2);
+                                        azureIaaSVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectedItemInstance;
                                 }
@@ -1386,6 +1430,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance3 = ((string)policyIdValue3);
                                         azureIaaSComputeVMProtectedItemInstance.PolicyId = policyIdInstance3;
                                     }
+                                    
+                                    JToken sourceResourceIdValue3 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue3 != null && sourceResourceIdValue3.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance3 = ((string)sourceResourceIdValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance3;
+                                    }
                                     itemInstance.Properties = azureIaaSComputeVMProtectedItemInstance;
                                 }
                                 if (typeName == "Microsoft.ClassicCompute/virtualMachines")
@@ -1489,6 +1540,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance4 = ((string)policyIdValue4);
                                         azureIaaSClassicComputeVMProtectedItemInstance.PolicyId = policyIdInstance4;
                                     }
+                                    
+                                    JToken sourceResourceIdValue4 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue4 != null && sourceResourceIdValue4.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance4 = ((string)sourceResourceIdValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance4;
+                                    }
                                     itemInstance.Properties = azureIaaSClassicComputeVMProtectedItemInstance;
                                 }
                                 if (typeName == "MabFileFolderProtectedItem")
@@ -1556,6 +1614,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance5 = ((string)policyIdValue5);
                                         mabFileFolderProtectedItemInstance.PolicyId = policyIdInstance5;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue5 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue5 != null && sourceResourceIdValue5.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance5 = ((string)sourceResourceIdValue5);
+                                        mabFileFolderProtectedItemInstance.SourceResourceId = sourceResourceIdInstance5;
                                     }
                                     itemInstance.Properties = mabFileFolderProtectedItemInstance;
                                 }
@@ -1631,6 +1696,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance6 = ((string)policyIdValue6);
                                         azureSqlProtectedItemInstance.PolicyId = policyIdInstance6;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue6 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue6 != null && sourceResourceIdValue6.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance6 = ((string)sourceResourceIdValue6);
+                                        azureSqlProtectedItemInstance.SourceResourceId = sourceResourceIdInstance6;
                                     }
                                     itemInstance.Properties = azureSqlProtectedItemInstance;
                                 }
@@ -1954,6 +2026,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance = ((string)policyIdValue);
                                         protectedItemInstance.PolicyId = policyIdInstance;
                                     }
+                                    
+                                    JToken sourceResourceIdValue = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue != null && sourceResourceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance = ((string)sourceResourceIdValue);
+                                        protectedItemInstance.SourceResourceId = sourceResourceIdInstance;
+                                    }
                                     itemInstance.Properties = protectedItemInstance;
                                 }
                                 if (typeName == "AzureIaaSVMProtectedItem")
@@ -2056,6 +2135,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance2 = ((string)policyIdValue2);
                                         azureIaaSVMProtectedItemInstance.PolicyId = policyIdInstance2;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue2 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue2 != null && sourceResourceIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance2 = ((string)sourceResourceIdValue2);
+                                        azureIaaSVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectedItemInstance;
                                 }
@@ -2160,6 +2246,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance3 = ((string)policyIdValue3);
                                         azureIaaSComputeVMProtectedItemInstance.PolicyId = policyIdInstance3;
                                     }
+                                    
+                                    JToken sourceResourceIdValue3 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue3 != null && sourceResourceIdValue3.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance3 = ((string)sourceResourceIdValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance3;
+                                    }
                                     itemInstance.Properties = azureIaaSComputeVMProtectedItemInstance;
                                 }
                                 if (typeName == "Microsoft.ClassicCompute/virtualMachines")
@@ -2263,6 +2356,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance4 = ((string)policyIdValue4);
                                         azureIaaSClassicComputeVMProtectedItemInstance.PolicyId = policyIdInstance4;
                                     }
+                                    
+                                    JToken sourceResourceIdValue4 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue4 != null && sourceResourceIdValue4.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance4 = ((string)sourceResourceIdValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance4;
+                                    }
                                     itemInstance.Properties = azureIaaSClassicComputeVMProtectedItemInstance;
                                 }
                                 if (typeName == "MabFileFolderProtectedItem")
@@ -2330,6 +2430,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance5 = ((string)policyIdValue5);
                                         mabFileFolderProtectedItemInstance.PolicyId = policyIdInstance5;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue5 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue5 != null && sourceResourceIdValue5.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance5 = ((string)sourceResourceIdValue5);
+                                        mabFileFolderProtectedItemInstance.SourceResourceId = sourceResourceIdInstance5;
                                     }
                                     itemInstance.Properties = mabFileFolderProtectedItemInstance;
                                 }
@@ -2405,6 +2512,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance6 = ((string)policyIdValue6);
                                         azureSqlProtectedItemInstance.PolicyId = policyIdInstance6;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue6 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue6 != null && sourceResourceIdValue6.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance6 = ((string)sourceResourceIdValue6);
+                                        azureSqlProtectedItemInstance.SourceResourceId = sourceResourceIdInstance6;
                                     }
                                     itemInstance.Properties = azureSqlProtectedItemInstance;
                                 }
@@ -2661,6 +2775,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance = ((string)policyIdValue);
                                         protectedItemInstance.PolicyId = policyIdInstance;
                                     }
+                                    
+                                    JToken sourceResourceIdValue = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue != null && sourceResourceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance = ((string)sourceResourceIdValue);
+                                        protectedItemInstance.SourceResourceId = sourceResourceIdInstance;
+                                    }
                                     itemInstance.Properties = protectedItemInstance;
                                 }
                                 if (typeName == "AzureIaaSVMProtectedItem")
@@ -2763,6 +2884,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance2 = ((string)policyIdValue2);
                                         azureIaaSVMProtectedItemInstance.PolicyId = policyIdInstance2;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue2 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue2 != null && sourceResourceIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance2 = ((string)sourceResourceIdValue2);
+                                        azureIaaSVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance2;
                                     }
                                     itemInstance.Properties = azureIaaSVMProtectedItemInstance;
                                 }
@@ -2867,6 +2995,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance3 = ((string)policyIdValue3);
                                         azureIaaSComputeVMProtectedItemInstance.PolicyId = policyIdInstance3;
                                     }
+                                    
+                                    JToken sourceResourceIdValue3 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue3 != null && sourceResourceIdValue3.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance3 = ((string)sourceResourceIdValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance3;
+                                    }
                                     itemInstance.Properties = azureIaaSComputeVMProtectedItemInstance;
                                 }
                                 if (typeName == "Microsoft.ClassicCompute/virtualMachines")
@@ -2970,6 +3105,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string policyIdInstance4 = ((string)policyIdValue4);
                                         azureIaaSClassicComputeVMProtectedItemInstance.PolicyId = policyIdInstance4;
                                     }
+                                    
+                                    JToken sourceResourceIdValue4 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue4 != null && sourceResourceIdValue4.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance4 = ((string)sourceResourceIdValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance4;
+                                    }
                                     itemInstance.Properties = azureIaaSClassicComputeVMProtectedItemInstance;
                                 }
                                 if (typeName == "MabFileFolderProtectedItem")
@@ -3037,6 +3179,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance5 = ((string)policyIdValue5);
                                         mabFileFolderProtectedItemInstance.PolicyId = policyIdInstance5;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue5 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue5 != null && sourceResourceIdValue5.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance5 = ((string)sourceResourceIdValue5);
+                                        mabFileFolderProtectedItemInstance.SourceResourceId = sourceResourceIdInstance5;
                                     }
                                     itemInstance.Properties = mabFileFolderProtectedItemInstance;
                                 }
@@ -3112,6 +3261,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string policyIdInstance6 = ((string)policyIdValue6);
                                         azureSqlProtectedItemInstance.PolicyId = policyIdInstance6;
+                                    }
+                                    
+                                    JToken sourceResourceIdValue6 = propertiesValue["sourceResourceId"];
+                                    if (sourceResourceIdValue6 != null && sourceResourceIdValue6.Type != JTokenType.Null)
+                                    {
+                                        string sourceResourceIdInstance6 = ((string)sourceResourceIdValue6);
+                                        azureSqlProtectedItemInstance.SourceResourceId = sourceResourceIdInstance6;
                                     }
                                     itemInstance.Properties = azureSqlProtectedItemInstance;
                                 }
@@ -3451,6 +3607,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 string policyIdInstance = ((string)policyIdValue);
                                                 protectedItemInstance.PolicyId = policyIdInstance;
                                             }
+                                            
+                                            JToken sourceResourceIdValue = propertiesValue["sourceResourceId"];
+                                            if (sourceResourceIdValue != null && sourceResourceIdValue.Type != JTokenType.Null)
+                                            {
+                                                string sourceResourceIdInstance = ((string)sourceResourceIdValue);
+                                                protectedItemInstance.SourceResourceId = sourceResourceIdInstance;
+                                            }
                                             protectedItemResourceInstance.Properties = protectedItemInstance;
                                         }
                                         if (typeName == "AzureIaaSVMProtectedItem")
@@ -3553,6 +3716,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string policyIdInstance2 = ((string)policyIdValue2);
                                                 azureIaaSVMProtectedItemInstance.PolicyId = policyIdInstance2;
+                                            }
+                                            
+                                            JToken sourceResourceIdValue2 = propertiesValue["sourceResourceId"];
+                                            if (sourceResourceIdValue2 != null && sourceResourceIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string sourceResourceIdInstance2 = ((string)sourceResourceIdValue2);
+                                                azureIaaSVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance2;
                                             }
                                             protectedItemResourceInstance.Properties = azureIaaSVMProtectedItemInstance;
                                         }
@@ -3657,6 +3827,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 string policyIdInstance3 = ((string)policyIdValue3);
                                                 azureIaaSComputeVMProtectedItemInstance.PolicyId = policyIdInstance3;
                                             }
+                                            
+                                            JToken sourceResourceIdValue3 = propertiesValue["sourceResourceId"];
+                                            if (sourceResourceIdValue3 != null && sourceResourceIdValue3.Type != JTokenType.Null)
+                                            {
+                                                string sourceResourceIdInstance3 = ((string)sourceResourceIdValue3);
+                                                azureIaaSComputeVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance3;
+                                            }
                                             protectedItemResourceInstance.Properties = azureIaaSComputeVMProtectedItemInstance;
                                         }
                                         if (typeName == "Microsoft.ClassicCompute/virtualMachines")
@@ -3760,6 +3937,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 string policyIdInstance4 = ((string)policyIdValue4);
                                                 azureIaaSClassicComputeVMProtectedItemInstance.PolicyId = policyIdInstance4;
                                             }
+                                            
+                                            JToken sourceResourceIdValue4 = propertiesValue["sourceResourceId"];
+                                            if (sourceResourceIdValue4 != null && sourceResourceIdValue4.Type != JTokenType.Null)
+                                            {
+                                                string sourceResourceIdInstance4 = ((string)sourceResourceIdValue4);
+                                                azureIaaSClassicComputeVMProtectedItemInstance.SourceResourceId = sourceResourceIdInstance4;
+                                            }
                                             protectedItemResourceInstance.Properties = azureIaaSClassicComputeVMProtectedItemInstance;
                                         }
                                         if (typeName == "MabFileFolderProtectedItem")
@@ -3827,6 +4011,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string policyIdInstance5 = ((string)policyIdValue5);
                                                 mabFileFolderProtectedItemInstance.PolicyId = policyIdInstance5;
+                                            }
+                                            
+                                            JToken sourceResourceIdValue5 = propertiesValue["sourceResourceId"];
+                                            if (sourceResourceIdValue5 != null && sourceResourceIdValue5.Type != JTokenType.Null)
+                                            {
+                                                string sourceResourceIdInstance5 = ((string)sourceResourceIdValue5);
+                                                mabFileFolderProtectedItemInstance.SourceResourceId = sourceResourceIdInstance5;
                                             }
                                             protectedItemResourceInstance.Properties = mabFileFolderProtectedItemInstance;
                                         }
@@ -3902,6 +4093,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string policyIdInstance6 = ((string)policyIdValue6);
                                                 azureSqlProtectedItemInstance.PolicyId = policyIdInstance6;
+                                            }
+                                            
+                                            JToken sourceResourceIdValue6 = propertiesValue["sourceResourceId"];
+                                            if (sourceResourceIdValue6 != null && sourceResourceIdValue6.Type != JTokenType.Null)
+                                            {
+                                                string sourceResourceIdInstance6 = ((string)sourceResourceIdValue6);
+                                                azureSqlProtectedItemInstance.SourceResourceId = sourceResourceIdInstance6;
                                             }
                                             protectedItemResourceInstance.Properties = azureSqlProtectedItemInstance;
                                         }

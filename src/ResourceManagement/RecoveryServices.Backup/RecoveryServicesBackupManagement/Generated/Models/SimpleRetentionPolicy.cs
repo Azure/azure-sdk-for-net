@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class SimpleRetentionPolicy : RetentionPolicy
     {
+        private RetentionDuration _retentionDuration;
+        
+        /// <summary>
+        /// Optional. Retention duration of the protection policy.
+        /// </summary>
+        public RetentionDuration RetentionDuration
+        {
+            get { return this._retentionDuration; }
+            set { this._retentionDuration = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the SimpleRetentionPolicy class.
         /// </summary>

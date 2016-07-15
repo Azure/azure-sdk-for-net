@@ -1,0 +1,452 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5b5beaec-a079-4949-9235-6f33ea1eea3e"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"name\": \"idcdlslbRSVault3\",\r\n  \"etag\": \"3c35fe83-d677-4061-a823-7d354722a6c7\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3\",\r\n  \"type\": \"Microsoft.RecoveryServicesBVTD/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"standard\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "359"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7b7cdbc7-c155-45e1-831e-d1eec51eda70"
+        ],
+        "x-ms-client-request-id": [
+          "5b5beaec-a079-4949-9235-6f33ea1eea3e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13631"
+        ],
+        "x-ms-correlation-request-id": [
+          "7b7cdbc7-c155-45e1-831e-d1eec51eda70"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T213804Z:7b7cdbc7-c155-45e1-831e-d1eec51eda70"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 21:38:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupPolicies/DefaultPolicy?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwUG9saWNpZXMvRGVmYXVsdFBvbGljeT9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "894ee1a7-999f-4781-af8f-a1f838a29848"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupPolicies/DefaultPolicy\",\r\n  \"name\": \"DefaultPolicy\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n  \"properties\": {\r\n    \"backupManagementType\": \"AzureIaasVM\",\r\n    \"schedulePolicy\": {\r\n      \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n      \"scheduleRunFrequency\": \"Daily\",\r\n      \"scheduleRunTimes\": [\r\n        \"2016-06-21T22:30:00Z\"\r\n      ],\r\n      \"scheduleWeeklyFrequency\": 0\r\n    },\r\n    \"retentionPolicy\": {\r\n      \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n      \"dailySchedule\": {\r\n        \"retentionTimes\": [\r\n          \"2016-06-21T22:30:00Z\"\r\n        ],\r\n        \"retentionDuration\": {\r\n          \"count\": 30,\r\n          \"durationType\": \"Days\"\r\n        }\r\n      }\r\n    },\r\n    \"protectedItemsCount\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "682"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "91ca9f79-e3c1-4245-88f9-72cae9242515"
+        ],
+        "x-ms-client-request-id": [
+          "894ee1a7-999f-4781-af8f-a1f838a29848",
+          "894ee1a7-999f-4781-af8f-a1f838a29848"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13630"
+        ],
+        "x-ms-correlation-request-id": [
+          "91ca9f79-e3c1-4245-88f9-72cae9242515"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T213806Z:91ca9f79-e3c1-4245-88f9-72cae9242515"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 21:38:06 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer%3Biaasvmcontainerv2%3Barpittestresourcegroup%3Bvkencryrestore/protectedItems/vm%3Biaasvmcontainerv2%3Barpittestresourcegroup%3Bvkencryrestore?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXIlM0JpYWFzdm1jb250YWluZXJ2MiUzQmFycGl0dGVzdHJlc291cmNlZ3JvdXAlM0J2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bSUzQmlhYXN2bWNvbnRhaW5lcnYyJTNCYXJwaXR0ZXN0cmVzb3VyY2Vncm91cCUzQnZrZW5jcnlyZXN0b3JlP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"protectedItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n    \"policyId\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupPolicies/DefaultPolicy\"\r\n  },\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "300"
+        ],
+        "x-ms-client-request-id": [
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/b9d2bde3-c8dd-4858-a927-8792c5faed5f?api-version=2016-05-01"
+        ],
+        "x-ms-request-id": [
+          "55e29560-5810-40f9-be89-5a672d4a785a"
+        ],
+        "x-ms-client-request-id": [
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34",
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-correlation-request-id": [
+          "55e29560-5810-40f9-be89-5a672d4a785a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T213808Z:55e29560-5810-40f9-be89-5a672d4a785a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 21:38:07 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/b9d2bde3-c8dd-4858-a927-8792c5faed5f?api-version=2016-05-01"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/b9d2bde3-c8dd-4858-a927-8792c5faed5f?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvblJlc3VsdHMvYjlkMmJkZTMtYzhkZC00ODU4LWE5MjctODc5MmM1ZmFlZDVmP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/b9d2bde3-c8dd-4858-a927-8792c5faed5f?api-version=2016-05-01"
+        ],
+        "x-ms-request-id": [
+          "c65db6c2-be00-4e6c-922b-2362449b63fe"
+        ],
+        "x-ms-client-request-id": [
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34",
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13628"
+        ],
+        "x-ms-correlation-request-id": [
+          "c65db6c2-be00-4e6c-922b-2362449b63fe"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T213808Z:c65db6c2-be00-4e6c-922b-2362449b63fe"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 21:38:08 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/b9d2bde3-c8dd-4858-a927-8792c5faed5f?api-version=2016-05-01"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationResults/b9d2bde3-c8dd-4858-a927-8792c5faed5f?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvblJlc3VsdHMvYjlkMmJkZTMtYzhkZC00ODU4LWE5MjctODc5MmM1ZmFlZDVmP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/VM;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore\",\r\n  \"name\": \"iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n  \"properties\": {\r\n    \"friendlyName\": \"vkencryrestore\",\r\n    \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/arpittestresourcegroup/providers/Microsoft.Compute/virtualMachines/vkencryrestore\",\r\n    \"protectionStatus\": \"Healthy\",\r\n    \"protectionState\": \"IRPending\",\r\n    \"lastBackupStatus\": \"\",\r\n    \"lastBackupTime\": \"2001-01-01T00:00:00Z\",\r\n    \"extendedInfo\": {\r\n      \"recoveryPointCount\": 0,\r\n      \"policyInconsistent\": false\r\n    },\r\n    \"protectedItemType\": \"Microsoft.Compute/virtualMachines\",\r\n    \"backupManagementType\": \"AzureIaasVM\",\r\n    \"workloadType\": \"VM\",\r\n    \"containerName\": \"iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore\",\r\n    \"policyId\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupPolicies/DefaultPolicy\",\r\n    \"policyName\": \"DefaultPolicy\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1294"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ecd32b82-2717-4225-b927-62cecdf1ced2"
+        ],
+        "x-ms-client-request-id": [
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34",
+          "c97b2c94-50bc-40ef-b4e7-863f90749a34"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13626"
+        ],
+        "x-ms-correlation-request-id": [
+          "ecd32b82-2717-4225-b927-62cecdf1ced2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T213814Z:ecd32b82-2717-4225-b927-62cecdf1ced2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 21:38:13 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/IaasVMContainer;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/protectedItems/vm;iaasvmcontainerv2;arpittestresourcegroup;vkencryrestore/operationsStatus/b9d2bde3-c8dd-4858-a927-8792c5faed5f?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwRmFicmljcy9BenVyZS9wcm90ZWN0aW9uQ29udGFpbmVycy9JYWFzVk1Db250YWluZXI7aWFhc3ZtY29udGFpbmVydjI7YXJwaXR0ZXN0cmVzb3VyY2Vncm91cDt2a2VuY3J5cmVzdG9yZS9wcm90ZWN0ZWRJdGVtcy92bTtpYWFzdm1jb250YWluZXJ2MjthcnBpdHRlc3RyZXNvdXJjZWdyb3VwO3ZrZW5jcnlyZXN0b3JlL29wZXJhdGlvbnNTdGF0dXMvYjlkMmJkZTMtYzhkZC00ODU4LWE5MjctODc5MmM1ZmFlZDVmP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fc346c75-685e-458d-a125-8d6ec93302c2"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"b9d2bde3-c8dd-4858-a927-8792c5faed5f\",\r\n  \"name\": \"b9d2bde3-c8dd-4858-a927-8792c5faed5f\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2016-06-21T21:38:07.502692Z\",\r\n  \"endTime\": \"2016-06-21T21:38:07.502692Z\",\r\n  \"properties\": {\r\n    \"objectType\": \"OperationStatusJobExtendedInfo\",\r\n    \"jobId\": \"0e439f42-4b81-4013-a323-ea3c5e79463d\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "302"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fe89800e-cf19-4a73-9a78-d9489dd5644c"
+        ],
+        "x-ms-client-request-id": [
+          "fc346c75-685e-458d-a125-8d6ec93302c2",
+          "fc346c75-685e-458d-a125-8d6ec93302c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13625"
+        ],
+        "x-ms-correlation-request-id": [
+          "fe89800e-cf19-4a73-9a78-d9489dd5644c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T213815Z:fe89800e-cf19-4a73-9a78-d9489dd5644c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 21:38:14 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServices/vaults/idcdlslbRSVault3/backupProtectableItems?api-version=2016-05-01&$filter=backupManagementType%20eq%20'AzureIaasVM'",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZmM3NGI0NjAtMGVkYy00MWI1LTgxYjMtYmFkZGMxZmM0MjU3L3Jlc291cmNlR3JvdXBzL2xhYlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2lkY2Rsc2xiUlNWYXVsdDMvYmFja3VwUHJvdGVjdGFibGVJdGVtcz9hcGktdmVyc2lvbj0yMDE2LTA1LTAxJiRmaWx0ZXI9YmFja3VwTWFuYWdlbWVudFR5cGUlMjBlcSUyMCdBenVyZUlhYXNWTSc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d3b362f6-59a0-4751-a938-9860bacf6ace"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;anjor-sandbox;anjor-sandbox/protectableItems/vm;iaasvmcontainer;anjor-sandbox;anjor-sandbox\",\r\n      \"name\": \"iaasvmcontainer;anjor-sandbox;anjor-sandbox\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/anjor-sandbox/providers/Microsoft.ClassicCompute/virtualMachines/anjor-sandbox\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"anjor-sandbox\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"anjor-sandbox\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;arpit-test3;arpit-test3/protectableItems/vm;iaasvmcontainer;arpit-test3;arpit-test3\",\r\n      \"name\": \"iaasvmcontainer;arpit-test3;arpit-test3\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/arpit-test3/providers/Microsoft.ClassicCompute/virtualMachines/arpit-test3\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"arpit-test3\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"arpit-test3\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;arpit-test4;arpit-test4/protectableItems/vm;iaasvmcontainer;arpit-test4;arpit-test4\",\r\n      \"name\": \"iaasvmcontainer;arpit-test4;arpit-test4\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/arpit-test4/providers/Microsoft.ClassicCompute/virtualMachines/arpit-test4\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"arpit-test4\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"arpit-test4\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;bcdrdrill1;bcdrdrill1/protectableItems/vm;iaasvmcontainer;bcdrdrill1;bcdrdrill1\",\r\n      \"name\": \"iaasvmcontainer;bcdrdrill1;bcdrdrill1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/bcdrdrill1/providers/Microsoft.ClassicCompute/virtualMachines/bcdrdrill1\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"bcdrdrill1\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"bcdrdrill1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;bcdrdrill2;bcdrdrill2/protectableItems/vm;iaasvmcontainer;bcdrdrill2;bcdrdrill2\",\r\n      \"name\": \"iaasvmcontainer;bcdrdrill2;bcdrdrill2\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/bcdrdrill2/providers/Microsoft.ClassicCompute/virtualMachines/bcdrdrill2\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"bcdrdrill2\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"bcdrdrill2\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;bcdrdrill3;bcdrdrill3/protectableItems/vm;iaasvmcontainer;bcdrdrill3;bcdrdrill3\",\r\n      \"name\": \"iaasvmcontainer;bcdrdrill3;bcdrdrill3\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/bcdrdrill3/providers/Microsoft.ClassicCompute/virtualMachines/bcdrdrill3\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"bcdrdrill3\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"bcdrdrill3\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;bcdrdrill4;bcdrdrill4/protectableItems/vm;iaasvmcontainer;bcdrdrill4;bcdrdrill4\",\r\n      \"name\": \"iaasvmcontainer;bcdrdrill4;bcdrdrill4\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/bcdrdrill4/providers/Microsoft.ClassicCompute/virtualMachines/bcdrdrill4\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"bcdrdrill4\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"bcdrdrill4\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;group-4;mkheranismvm1/protectableItems/vm;iaasvmcontainer;group-4;mkheranismvm1\",\r\n      \"name\": \"iaasvmcontainer;group-4;mkheranismvm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/Group-4/providers/Microsoft.ClassicCompute/virtualMachines/mkheraniSMvm1\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"Group-4\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"mkheraniSMvm1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;mkherani008;mkherani008/protectableItems/vm;iaasvmcontainer;mkherani008;mkherani008\",\r\n      \"name\": \"iaasvmcontainer;mkherani008;mkherani008\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/mkherani008/providers/Microsoft.ClassicCompute/virtualMachines/mkherani008\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"mkherani008\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"mkherani008\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;prodseav1lvm1;prodseav1lvm1/protectableItems/vm;iaasvmcontainer;prodseav1lvm1;prodseav1lvm1\",\r\n      \"name\": \"iaasvmcontainer;prodseav1lvm1;prodseav1lvm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ProdSeaV1LVM1/providers/Microsoft.ClassicCompute/virtualMachines/ProdSeaV1LVM1\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"ProdSeaV1LVM1\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"ProdSeaV1LVM1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;prodseav1lvm2;prodseav1lvm2/protectableItems/vm;iaasvmcontainer;prodseav1lvm2;prodseav1lvm2\",\r\n      \"name\": \"iaasvmcontainer;prodseav1lvm2;prodseav1lvm2\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ProdSeaV1LVM2/providers/Microsoft.ClassicCompute/virtualMachines/ProdSeaV1LVM2\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"ProdSeaV1LVM2\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"ProdSeaV1LVM2\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;prodseav1wvm1;prodseav1wvm1/protectableItems/vm;iaasvmcontainer;prodseav1wvm1;prodseav1wvm1\",\r\n      \"name\": \"iaasvmcontainer;prodseav1wvm1;prodseav1wvm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ProdSeaV1WVM1/providers/Microsoft.ClassicCompute/virtualMachines/ProdSeaV1WVM1\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"ProdSeaV1WVM1\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"ProdSeaV1WVM1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;prodseav1wvm2;prodseav1wvm2/protectableItems/vm;iaasvmcontainer;prodseav1wvm2;prodseav1wvm2\",\r\n      \"name\": \"iaasvmcontainer;prodseav1wvm2;prodseav1wvm2\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ProdSeaV1WVM2/providers/Microsoft.ClassicCompute/virtualMachines/ProdSeaV1WVM2\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"ProdSeaV1WVM2\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"ProdSeaV1WVM2\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;prodseav1wvm3;prodseav1wvm3/protectableItems/vm;iaasvmcontainer;prodseav1wvm3;prodseav1wvm3\",\r\n      \"name\": \"iaasvmcontainer;prodseav1wvm3;prodseav1wvm3\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ProdSeaV1WVM3/providers/Microsoft.ClassicCompute/virtualMachines/ProdSeaV1WVM3\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"ProdSeaV1WVM3\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"ProdSeaV1WVM3\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;rajtestiaasvm;rajtestiaasvm/protectableItems/vm;iaasvmcontainer;rajtestiaasvm;rajtestiaasvm\",\r\n      \"name\": \"iaasvmcontainer;rajtestiaasvm;rajtestiaasvm\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/rajtestiaasvm/providers/Microsoft.ClassicCompute/virtualMachines/rajtestiaasvm\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"rajtestiaasvm\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"rajtestiaasvm\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainer;vmuse0d0593c8c4504dc29e7b033f834c448b;vmuse/protectableItems/vm;iaasvmcontainer;vmuse0d0593c8c4504dc29e7b033f834c448b;vmuse\",\r\n      \"name\": \"iaasvmcontainer;vmuse0d0593c8c4504dc29e7b033f834c448b;vmuse\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/vmuse0d0593c8c4504dc29e7b033f834c448b/providers/Microsoft.ClassicCompute/virtualMachines/vmuse\",\r\n        \"virtualMachineVersion\": \"ClassicCompute\",\r\n        \"resourceGroup\": \"vmuse0d0593c8c4504dc29e7b033f834c448b\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n        \"friendlyName\": \"vmuse\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;arpittestresourcegroup;arpittestencvm1/protectableItems/vm;iaasvmcontainerv2;arpittestresourcegroup;arpittestencvm1\",\r\n      \"name\": \"iaasvmcontainerv2;arpittestresourcegroup;arpittestencvm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ArpitTestResourceGroup/providers/Microsoft.Compute/virtualMachines/arpittestencvm1\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"ArpitTestResourceGroup\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"arpittestencvm1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;arpittestrg2;arpit-lin4-rest/protectableItems/vm;iaasvmcontainerv2;arpittestrg2;arpit-lin4-rest\",\r\n      \"name\": \"iaasvmcontainerv2;arpittestrg2;arpit-lin4-rest\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/arpittestrg2/providers/Microsoft.Compute/virtualMachines/arpit-lin4-rest\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"arpittestrg2\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"arpit-lin4-rest\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;arpittestrg2;arpit-test-lin4/protectableItems/vm;iaasvmcontainerv2;arpittestrg2;arpit-test-lin4\",\r\n      \"name\": \"iaasvmcontainerv2;arpittestrg2;arpit-test-lin4\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ArpitTestRG2/providers/Microsoft.Compute/virtualMachines/arpit-test-lin4\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"ArpitTestRG2\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"arpit-test-lin4\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;marketplacetest;mar-servercs/protectableItems/vm;iaasvmcontainerv2;marketplacetest;mar-servercs\",\r\n      \"name\": \"iaasvmcontainerv2;marketplacetest;mar-servercs\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/marketplaceTest/providers/Microsoft.Compute/virtualMachines/mar-servercs\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"marketplaceTest\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"mar-servercs\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;marketplacetest;marketplacevm1/protectableItems/vm;iaasvmcontainerv2;marketplacetest;marketplacevm1\",\r\n      \"name\": \"iaasvmcontainerv2;marketplacetest;marketplacevm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/marketplaceTest/providers/Microsoft.Compute/virtualMachines/marketPlaceVm1\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"marketplaceTest\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"marketPlaceVm1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;marketplacetest;marketplacevm2kemp/protectableItems/vm;iaasvmcontainerv2;marketplacetest;marketplacevm2kemp\",\r\n      \"name\": \"iaasvmcontainerv2;marketplacetest;marketplacevm2kemp\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/marketplaceTest/providers/Microsoft.Compute/virtualMachines/marketplacevm2kemp\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"marketplaceTest\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"marketplacevm2kemp\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;marketplacetest;marketvm4-cloudlink/protectableItems/vm;iaasvmcontainerv2;marketplacetest;marketvm4-cloudlink\",\r\n      \"name\": \"iaasvmcontainerv2;marketplacetest;marketvm4-cloudlink\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/marketplaceTest/providers/Microsoft.Compute/virtualMachines/marketvm4-CLoudLink\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"marketplaceTest\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"marketvm4-CLoudLink\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;markplaceredhatvm;markplaceredhatvm/protectableItems/vm;iaasvmcontainerv2;markplaceredhatvm;markplaceredhatvm\",\r\n      \"name\": \"iaasvmcontainerv2;markplaceredhatvm;markplaceredhatvm\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/MarkPlaceRedHatVM/providers/Microsoft.Compute/virtualMachines/MarkPlaceRedHatVM\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"MarkPlaceRedHatVM\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"MarkPlaceRedHatVM\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;mkheranirmvm1;mkheranirmvm1/protectableItems/vm;iaasvmcontainerv2;mkheranirmvm1;mkheranirmvm1\",\r\n      \"name\": \"iaasvmcontainerv2;mkheranirmvm1;mkheranirmvm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/mkheraniRMVM1/providers/Microsoft.Compute/virtualMachines/mkheraniRMVM1\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"mkheraniRMVM1\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"mkheraniRMVM1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;prodseav2lvm1;prodseav2lvm1/protectableItems/vm;iaasvmcontainerv2;prodseav2lvm1;prodseav2lvm1\",\r\n      \"name\": \"iaasvmcontainerv2;prodseav2lvm1;prodseav2lvm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ProdSeaV2LVM1/providers/Microsoft.Compute/virtualMachines/ProdSeaV2LVM1\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"ProdSeaV2LVM1\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"ProdSeaV2LVM1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/labRG1/providers/Microsoft.RecoveryServicesBVTD/vaults/idcdlslbRSVault3/backupFabrics/Azure/protectionContainers/iaasvmcontainer;iaasvmcontainerv2;prodseav2wvm1;prodseav2wvm1/protectableItems/vm;iaasvmcontainerv2;prodseav2wvm1;prodseav2wvm1\",\r\n      \"name\": \"iaasvmcontainerv2;prodseav2wvm1;prodseav2wvm1\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectableItems\",\r\n      \"properties\": {\r\n        \"virtualMachineId\": \"/subscriptions/fc74b460-0edc-41b5-81b3-baddc1fc4257/resourceGroups/ProdSeaV2WVM1/providers/Microsoft.Compute/virtualMachines/ProdSeaV2WVM1\",\r\n        \"virtualMachineVersion\": \"Compute\",\r\n        \"resourceGroup\": \"ProdSeaV2WVM1\",\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"protectableItemType\": \"Microsoft.Compute/virtualMachines\",\r\n        \"friendlyName\": \"ProdSeaV2WVM1\",\r\n        \"protectionState\": \"NotProtected\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "23730"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "501823c7-566b-4d9f-9589-e2b470c6229d"
+        ],
+        "x-ms-client-request-id": [
+          "d3b362f6-59a0-4751-a938-9860bacf6ace",
+          "d3b362f6-59a0-4751-a938-9860bacf6ace"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13624"
+        ],
+        "x-ms-correlation-request-id": [
+          "501823c7-566b-4d9f-9589-e2b470c6229d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160621T213816Z:501823c7-566b-4d9f-9589-e2b470c6229d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 Jun 2016 21:38:16 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "fc74b460-0edc-41b5-81b3-baddc1fc4257"
+  }
+}

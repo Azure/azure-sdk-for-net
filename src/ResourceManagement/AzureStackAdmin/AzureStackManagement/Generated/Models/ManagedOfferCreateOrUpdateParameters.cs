@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Administratior view of offer parameters
     /// </summary>
     public partial class ManagedOfferCreateOrUpdateParameters
     {
         private AdminOfferModel _offer;
         
         /// <summary>
-        /// Required. Your documentation here.
+        /// Required. Administrator view of offer properties
         /// </summary>
         public AdminOfferModel Offer
         {

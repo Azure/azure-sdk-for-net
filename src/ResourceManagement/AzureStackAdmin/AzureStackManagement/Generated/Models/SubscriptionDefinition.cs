@@ -20,44 +20,20 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The subscription definition object.
     /// </summary>
     public partial class SubscriptionDefinition
     {
-        private IList<PlanReferenceDefinition> _acquiredPlans;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public IList<PlanReferenceDefinition> AcquiredPlans
-        {
-            get { return this._acquiredPlans; }
-            set { this._acquiredPlans = value; }
-        }
-        
-        private string _delegatedProviderId;
-        
-        /// <summary>
-        /// Optional. The provider ID under which the subscription exists.
-        /// </summary>
-        public string DelegatedProviderId
-        {
-            get { return this._delegatedProviderId; }
-            set { this._delegatedProviderId = value; }
-        }
-        
         private string _displayName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the subscription name.
         /// </summary>
         public string DisplayName
         {
@@ -68,7 +44,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _externalReferenceId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the External Reference Id
         /// </summary>
         public string ExternalReferenceId
         {
@@ -79,7 +55,8 @@ namespace Microsoft.AzureStack.Management.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the fully qualified identifier
+        /// (/subscriptions/{subscriptionId}).
         /// </summary>
         public string Id
         {
@@ -87,21 +64,11 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._id = value; }
         }
         
-        private string _offerDisplayName;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public string OfferDisplayName
-        {
-            get { return this._offerDisplayName; }
-            set { this._offerDisplayName = value; }
-        }
-        
         private string _offerId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the identifier of the offer under the scope
+        /// of a delegated provider.
         /// </summary>
         public string OfferId
         {
@@ -109,56 +76,12 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._offerId = value; }
         }
         
-        private string _offerName;
+        private Microsoft.AzureStack.Management.Models.SubscriptionState? _state;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the subscription state.
         /// </summary>
-        public string OfferName
-        {
-            get { return this._offerName; }
-            set { this._offerName = value; }
-        }
-        
-        private string _owner;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public string Owner
-        {
-            get { return this._owner; }
-            set { this._owner = value; }
-        }
-        
-        private QuotaSyncState _quotaSyncState;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public QuotaSyncState QuotaSyncState
-        {
-            get { return this._quotaSyncState; }
-            set { this._quotaSyncState = value; }
-        }
-        
-        private IList<ServiceQuotaDefinition> _serviceQuotas;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public IList<ServiceQuotaDefinition> ServiceQuotas
-        {
-            get { return this._serviceQuotas; }
-            set { this._serviceQuotas = value; }
-        }
-        
-        private SubscriptionState _state;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public SubscriptionState State
+        public Microsoft.AzureStack.Management.Models.SubscriptionState? State
         {
             get { return this._state; }
             set { this._state = value; }
@@ -167,7 +90,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _subscriptionId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the subscription Guid string.
         /// </summary>
         public string SubscriptionId
         {
@@ -180,8 +103,6 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public SubscriptionDefinition()
         {
-            this.AcquiredPlans = new LazyList<PlanReferenceDefinition>();
-            this.ServiceQuotas = new LazyList<ServiceQuotaDefinition>();
         }
     }
 }

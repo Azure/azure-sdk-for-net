@@ -27,9 +27,6 @@
     <None Include="SessionRecords\HDInsightJob.Tests.ScenarioTests.JobsEnumerationTests\ListJobs.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\KillMapReduceJobTimeOut.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\KillMapReduceStreamingJob.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -242,7 +242,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -447,7 +447,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -772,7 +772,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1042,7 +1042,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1253,7 +1253,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1550,7 +1550,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1693,7 +1693,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1849,7 +1849,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2028,7 +2028,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2221,7 +2221,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2387,7 +2387,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2557,7 +2557,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2748,7 +2748,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2908,7 +2908,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3082,7 +3082,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3256,7 +3256,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3420,7 +3420,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3580,7 +3580,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3732,7 +3732,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3919,7 +3919,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4095,7 +4095,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4353,7 +4353,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4725,7 +4725,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5044,7 +5044,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5242,7 +5242,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6211,7 +6211,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8306,7 +8306,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -10630,7 +10630,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -10837,7 +10837,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -11796,7 +11796,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -11975,7 +11975,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -12637,6 +12637,254 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             return result;
+        }
+        
+        /// <summary>
+        /// The Validate Deployment Operation validates your deployment for
+        /// IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Validate Deployment Migration operation response.
+        /// </returns>
+        public async Task<XrpMigrationValidateDeploymentResponse> ValidateMigrationAsync(string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.DestinationVirtualNetwork == null)
+            {
+                throw new ArgumentNullException("parameters.DestinationVirtualNetwork");
+            }
+            if (parameters.ResourceGroupName == null)
+            {
+                throw new ArgumentNullException("parameters.ResourceGroupName");
+            }
+            if (parameters.SubNetName == null)
+            {
+                throw new ArgumentNullException("parameters.SubNetName");
+            }
+            if (parameters.VirtualNetworkName == null)
+            {
+                throw new ArgumentNullException("parameters.VirtualNetworkName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "ValidateMigrationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/migration";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=validate");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement deploymentNetworkResourceElement = new XElement(XName.Get("DeploymentNetworkResource", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(deploymentNetworkResourceElement);
+                
+                XElement resourceGroupNameElement = new XElement(XName.Get("ResourceGroupName", "http://schemas.microsoft.com/windowsazure"));
+                resourceGroupNameElement.Value = parameters.ResourceGroupName;
+                deploymentNetworkResourceElement.Add(resourceGroupNameElement);
+                
+                XElement virtualNetworkNameElement = new XElement(XName.Get("VirtualNetworkName", "http://schemas.microsoft.com/windowsazure"));
+                virtualNetworkNameElement.Value = parameters.VirtualNetworkName;
+                deploymentNetworkResourceElement.Add(virtualNetworkNameElement);
+                
+                XElement subNetNameElement = new XElement(XName.Get("SubNetName", "http://schemas.microsoft.com/windowsazure"));
+                subNetNameElement.Value = parameters.SubNetName;
+                deploymentNetworkResourceElement.Add(subNetNameElement);
+                
+                XElement destinationVirtualNetworkElement = new XElement(XName.Get("DestinationVirtualNetwork", "http://schemas.microsoft.com/windowsazure"));
+                destinationVirtualNetworkElement.Value = parameters.DestinationVirtualNetwork;
+                deploymentNetworkResourceElement.Add(destinationVirtualNetworkElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    XrpMigrationValidateDeploymentResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new XrpMigrationValidateDeploymentResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement validationMessagesSequenceElement = responseDoc.Element(XName.Get("ValidationMessages", "http://schemas.microsoft.com/windowsazure"));
+                        if (validationMessagesSequenceElement != null)
+                        {
+                            foreach (XElement validationMessagesElement in validationMessagesSequenceElement.Elements(XName.Get("ValidationMessage", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                XrpMigrationValidateDeploymentMessage validationMessageInstance = new XrpMigrationValidateDeploymentMessage();
+                                result.ValidateDeploymentMessages.Add(validationMessageInstance);
+                                
+                                XElement resourceTypeElement = validationMessagesElement.Element(XName.Get("ResourceType", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceTypeElement != null)
+                                {
+                                    string resourceTypeInstance = resourceTypeElement.Value;
+                                    validationMessageInstance.ResourceType = resourceTypeInstance;
+                                }
+                                
+                                XElement resourceNameElement = validationMessagesElement.Element(XName.Get("ResourceName", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceNameElement != null)
+                                {
+                                    string resourceNameInstance = resourceNameElement.Value;
+                                    validationMessageInstance.ResourceName = resourceNameInstance;
+                                }
+                                
+                                XElement categoryElement = validationMessagesElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                                if (categoryElement != null)
+                                {
+                                    string categoryInstance = categoryElement.Value;
+                                    validationMessageInstance.Category = categoryInstance;
+                                }
+                                
+                                XElement messageElement = validationMessagesElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    validationMessageInstance.Message = messageInstance;
+                                }
+                                
+                                XElement virtualMachineElement = validationMessagesElement.Element(XName.Get("VirtualMachine", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachineElement != null)
+                                {
+                                    string virtualMachineInstance = virtualMachineElement.Value;
+                                    validationMessageInstance.VirtualMachineName = virtualMachineInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
         
         /// <summary>

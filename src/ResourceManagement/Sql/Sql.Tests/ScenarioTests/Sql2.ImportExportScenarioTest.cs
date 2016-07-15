@@ -23,6 +23,7 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test;
+using Sql.Tests;
 using Sql2.Tests;
 using Sql2.Tests.ScenarioTests;
 using Xunit;
@@ -140,7 +141,6 @@ namespace Sql2.Tests.ScenarioTests
             string databaseName = TestUtilities.GenerateName("csm-sql-db_ie");
             string databaseEdition = "Standard";
             long databaseMaxSize = 5L*1024L*1024L*1024L; // 5 GB
-            Guid dbSloS1 = new Guid("1b1ebd4d-d903-4baa-97f9-4ea675f5e928"); // S1
             string serviceObjectiveName = "S1";
 
             // Create firewall test.
@@ -201,7 +201,7 @@ namespace Sql2.Tests.ScenarioTests
                         {
                             Edition = databaseEdition,
                             MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
+                            RequestedServiceObjectiveId = SqlConstants.DbSloS1
                         },
                     });
 
