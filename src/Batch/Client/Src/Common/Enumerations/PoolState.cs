@@ -25,8 +25,7 @@ namespace Microsoft.Azure.Batch.Common
     public enum PoolState
     {
         /// <summary>
-        /// The pool is fully available to run tasks.  A pool enters this state
-        /// when it is created and remains in this state until it is deleted.
+        /// The pool is available to run tasks subject to the availability of compute nodes.
         /// </summary>
         Active,
         
