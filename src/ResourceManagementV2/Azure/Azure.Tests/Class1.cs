@@ -9,8 +9,9 @@ using Xunit;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Storage;
 using Microsoft.Azure.Management.V2.Compute;
+using Microsoft.Azure.Management;
 
-namespace Azure.Tests
+namespace AzureTests
 {
     public class Class1
     {
@@ -23,7 +24,7 @@ namespace Azure.Tests
             IComputeManager computeManager = ComputeManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.SubscriptionId);
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
 
             computeManager.VirtualMachines.List();
 

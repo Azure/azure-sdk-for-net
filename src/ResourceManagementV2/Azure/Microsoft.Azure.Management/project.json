@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.0-*",
+
+    "dependencies": {
+        "Microsoft.Azure.Management.V2.Compute": "0.0.1-prerelease",
+        "Microsoft.Azure.Management.V2.Network": "0.0.1-prerelease",
+        "Microsoft.Azure.Management.V2.Resource": "0.0.1-prerelease",
+        "Microsoft.Azure.Management.V2.Storage": "0.0.1-prerelease",
+        "NETStandard.Library": "1.6.0"
+    },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}
