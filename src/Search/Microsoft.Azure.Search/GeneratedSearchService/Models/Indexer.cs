@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the Indexer class.
         /// </summary>
-        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters))
+        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), bool? isDisabled = default(bool?))
         {
             Name = name;
             Description = description;
@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Search.Models
             TargetIndexName = targetIndexName;
             Schedule = schedule;
             Parameters = parameters;
+            IsDisabled = isDisabled;
         }
 
         /// <summary>
@@ -77,6 +78,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IndexingParameters Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the indexer is disabled.
+        /// Default is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "disabled")]
+        public bool? IsDisabled { get; set; }
 
         /// <summary>
         /// Validate the object.
