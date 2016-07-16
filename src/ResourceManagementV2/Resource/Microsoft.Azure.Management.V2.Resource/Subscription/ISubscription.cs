@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 {
     public interface ISubscription :
         IIndexable,
-        IWrapper<Management.ResourceManager.Models.Subscription>
+        IWrapper<Management.ResourceManager.Models.SubscriptionInner>
     {
         string SubscriptionId { get; }
 

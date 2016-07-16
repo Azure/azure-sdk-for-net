@@ -6,12 +6,12 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class SubscriptionImpl :
-        IndexableWrapper<Management.ResourceManager.Models.Subscription>,
+        IndexableWrapper<Management.ResourceManager.Models.SubscriptionInner>,
         ISubscription
     {
         private ISubscriptionsOperations innerCollection;
 
-        internal SubscriptionImpl(Management.ResourceManager.Models.Subscription innerModel, ISubscriptionsOperations client) : base(innerModel.Id, innerModel)
+        internal SubscriptionImpl(Management.ResourceManager.Models.SubscriptionInner innerModel, ISubscriptionsOperations client) : base(innerModel.Id, innerModel)
         {
             innerCollection = client;
         }
