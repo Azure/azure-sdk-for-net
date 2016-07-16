@@ -14,6 +14,11 @@ namespace Microsoft.Azure.Search.Tests
     {
         public static void DocumentsEqual(Document expected, Document actual)
         {
+            DictionariesEqual(expected, actual);
+        }
+
+        public static void DictionariesEqual(IDictionary<string, object> expected, IDictionary<string, object> actual)
+        {
             if (expected == null)
             {
                 Assert.Null(actual);
@@ -21,9 +26,9 @@ namespace Microsoft.Azure.Search.Tests
 
             if (expected.Count != actual.Count)
             {
-                string message = 
+                string message =
                     String.Format(
-                        "Document field count doesn't match. Expected fields: [{0}] Actual fields: [{1}]",
+                        "Dictionary key count doesn't match. Expected keys: [{0}] Actual keys: [{1}]",
                         String.Join(", ", expected.Keys),
                         String.Join(", ", actual.Keys));
 
@@ -46,6 +51,7 @@ namespace Microsoft.Azure.Search.Tests
                     Type expectedType = expectedObj.GetType();
                     Assert.IsType(expectedType, actualObj);
 
+                    // Special case for comparing Documents.
                     if (expectedType == typeof(string[]))
                     {
                         Assert.True(((string[])expectedObj).SequenceEqual((string[])actualObj));
