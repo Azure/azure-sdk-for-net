@@ -57,6 +57,7 @@ namespace Authorization.Tests
 
         public TestExecutionContext()
         {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
             this.createdUsers = new List<Guid>();
             this.createdGroups = new List<string>();
 
