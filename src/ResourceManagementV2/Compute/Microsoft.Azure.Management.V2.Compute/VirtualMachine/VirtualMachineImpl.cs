@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
     internal class VirtualMachineImpl :
         GroupableResource<IVirtualMachine,
-            Management.Compute.Models.VirtualMachine,
-            Management.Compute.Models.Resource,
+            Management.Compute.Models.VirtualMachineInner,
+            Rest.Azure.Resource,
             VirtualMachineImpl,
             ComputeManager,
             VirtualMachine.Definition.IWithGroup,
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         VirtualMachine.Update.IUpdate
     {
         internal VirtualMachineImpl(string name,
-        Management.Compute.Models.VirtualMachine innerObject,
+        Management.Compute.Models.VirtualMachineInner innerObject,
         IVirtualMachinesOperations client,
         ComputeManager manager) : base(name, innerObject, manager)
         {

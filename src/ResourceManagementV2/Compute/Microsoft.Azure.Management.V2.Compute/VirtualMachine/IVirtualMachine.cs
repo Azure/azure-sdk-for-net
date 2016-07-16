@@ -12,6 +12,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         IResource,
         IRefreshable<IVirtualMachine>,
         IUpdatable<VirtualMachine.Update.IUpdate>,
-        IWrapper<Management.Compute.Models.VirtualMachine>
+        IWrapper<Management.Compute.Models.VirtualMachineInner>
     {}
 }
