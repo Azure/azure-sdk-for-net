@@ -1,3 +1,3 @@
 {
-    "projects": [ "Microsoft.Azure", "../Resource", "../Storage", "../Compute" ]
+    "projects": [ "Microsoft.Azure", "../Resource", "../Storage", "../Compute", "../Network" ]
 }

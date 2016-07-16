@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
         private string clientId;
         private string clientSecret;
         public TokenCache TokenCache { get; private set; }
-        public string SubscriptionId { get; private set; }
+        public string DefaultSubscriptionId { get; private set; }
 
         private ActiveDirectoryServiceSettings activeDirectoryServiceSettings;
 
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
                 TokenAuidence = config["managementuri"].Replace("\\", ""),
                 ResourceManagerEndpoint = config["baseurl"].Replace("\\", "")
             }, config["tenant"], config["client"], config["key"]);
-            WithSubscription(config["subscription"]);
+            WithDefaultSubscription(config["subscription"]);
         }
 
         private void Init(AzureEnvironment environment, string tenantId, string clientId, string clientSecret)
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
             return this;
         }
 
-        public ApplicationTokenCredentails WithSubscription(string subscriptionId)
+        public ApplicationTokenCredentails WithDefaultSubscription(string subscriptionId)
         {
-            SubscriptionId = subscriptionId;
+            DefaultSubscriptionId = subscriptionId;
             return this;
         }
 

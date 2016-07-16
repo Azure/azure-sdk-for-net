@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.V2.Resource.Core;
+﻿using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Rest;
 using System;
 using System.Linq;
@@ -54,18 +55,52 @@ namespace Microsoft.Azure.Management.V2.Resource
         #region IAuthenticated and it's implementation 
         public interface IAuthenticated
         {
-            // public ITenants() Tenants { get; }
-            // public ISubscriptions() Subscriptions { get; }
+            ITenants Tenants { get; }
+
+            ISubscriptions Subscriptions { get; }
+
             IResourceManager WithSubscription(string subscriptionId);
         }
 
         protected class Authenticated : IAuthenticated
         {
             private RestClient restClient;
+            private SubscriptionClient subscriptionClient;
+
+            private ISubscriptions subscriptions;
+            private ITenants tenants;
 
             public Authenticated(RestClient restClient)
             {
                 this.restClient = restClient;
+                subscriptionClient = new SubscriptionClient(new Uri(restClient.BaseUri),
+                restClient.Credentials,
+                restClient.RootHttpHandler,
+                restClient.Handlers.ToArray());
+            }
+
+            public ISubscriptions Subscriptions
+            {
+                get
+                {
+                    if (subscriptions == null)
+                    {
+                        subscriptions = new SubscriptionsImpl(this.subscriptionClient.Subscriptions);
+                    }
+                    return subscriptions;
+                }
+            }
+
+            public ITenants Tenants
+            {
+                get
+                {
+                    if (tenants == null)
+                    {
+                        tenants = new TenantsImpl(this.subscriptionClient.Tenants);
+                    }
+                    return tenants;
+                }
             }
 
             public IResourceManager WithSubscription(string subscriptionId)
@@ -105,6 +140,7 @@ namespace Microsoft.Azure.Management.V2.Resource
                 return resourceGroups;
             }
         }
+
         #endregion
     }
 
