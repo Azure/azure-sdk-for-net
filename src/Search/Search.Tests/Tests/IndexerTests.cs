@@ -25,6 +25,15 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
                 Indexer expectedIndexer = Data.CreateTestIndexer();
+                expectedIndexer.IsDisabled = true;
+                expectedIndexer.Parameters =
+                    new IndexingParameters()
+                    {
+                        BatchSize = 50,
+                        Base64EncodeKeys =  true,
+                        MaxFailedItems = 10,
+                        MaxFailedItemsPerBatch = 10
+                    };
 
                 Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
 
@@ -251,6 +260,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expected.Description, actual.Description);
             Assert.Equal(expected.DataSourceName, actual.DataSourceName);
             Assert.Equal(expected.TargetIndexName, actual.TargetIndexName);
+            Assert.Equal(expected.IsDisabled, actual.IsDisabled);
 
             AssertSchedulesEqual(expected.Schedule, actual.Schedule);
             AssertParametersEqual(expected.Parameters, actual.Parameters);
@@ -265,9 +275,19 @@ namespace Microsoft.Azure.Search.Tests
             else
             {
                 Assert.NotNull(actual);
+                Assert.Equal(expected.BatchSize, actual.BatchSize);
                 Assert.Equal(expected.Base64EncodeKeys, actual.Base64EncodeKeys);
                 Assert.Equal(expected.MaxFailedItems, actual.MaxFailedItems);
                 Assert.Equal(expected.MaxFailedItemsPerBatch, actual.MaxFailedItemsPerBatch);
+
+                if (expected.Configuration != null)
+                {
+                    SearchAssert.DictionariesEqual(expected.Configuration, actual.Configuration);
+                }
+                else
+                {
+                    SearchAssert.DictionariesEqual(new Dictionary<string, object>(), actual.Configuration);
+                }
             }
         }
 

@@ -29,12 +29,22 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the IndexingParameters class.
         /// </summary>
-        public IndexingParameters(int? maxFailedItems = default(int?), int? maxFailedItemsPerBatch = default(int?), bool? base64EncodeKeys = default(bool?))
+        public IndexingParameters(int? batchSize = default(int?), int? maxFailedItems = default(int?), int? maxFailedItemsPerBatch = default(int?), bool? base64EncodeKeys = default(bool?), IDictionary<string, object> configuration = default(IDictionary<string, object>))
         {
+            BatchSize = batchSize;
             MaxFailedItems = maxFailedItems;
             MaxFailedItemsPerBatch = maxFailedItemsPerBatch;
             Base64EncodeKeys = base64EncodeKeys;
+            Configuration = configuration;
         }
+
+        /// <summary>
+        /// Gets or sets the number of items that are read from the data
+        /// source and indexed as a single batch in order to improve
+        /// performance. The default depends on the data source type.
+        /// </summary>
+        [JsonProperty(PropertyName = "batchSize")]
+        public int? BatchSize { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of items that can fail indexing
@@ -60,6 +70,14 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "base64EncodeKeys")]
         public bool? Base64EncodeKeys { get; set; }
+
+        /// <summary>
+        /// Gets or sets a dictionary of indexer-specific configuration
+        /// properties. Each name is the name of a specific property. Each
+        /// value must be of a primitive type.
+        /// </summary>
+        [JsonProperty(PropertyName = "configuration")]
+        public IDictionary<string, object> Configuration { get; set; }
 
     }
 }
