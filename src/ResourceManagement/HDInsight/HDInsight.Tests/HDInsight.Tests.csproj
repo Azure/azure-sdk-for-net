@@ -22,6 +22,7 @@
     <Compile Include="ScenarioTests\ListClusterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\ScriptActionsOnRunningCluster.cs" />
+    <Compile Include="UnitTests\StorageAccountTests.cs" />
     <Compile Include="UnitTests\MetastoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -29,7 +30,13 @@
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestAdJoinedIaasCreateGetDeleteCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDefaultFsAzureBlobClusterContainerNotSpecified.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDuplicateCluster.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDefaultFsAzureBlobClusterUsingClusterParameters.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithCustomVMSizes.json">
@@ -66,6 +73,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDataLakeClusterUsingClusterParameters.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDefaultFsDataLakeClusterUsingClusterParameters.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.GetCapabilitiesTests\TestGetCapabilities.json">

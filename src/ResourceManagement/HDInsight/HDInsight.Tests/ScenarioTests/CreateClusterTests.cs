@@ -423,5 +423,75 @@ namespace HDInsight.Tests
                 Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
         }
+
+        [Fact]
+        public void TestCreateDefaultFsAzureBlobClusterUsingClusterParameters()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetAzureBlobDefaultFsCreateParametersIaas();
+                const string dnsname = "hdisdk-defaultfsazureblob";
+                const string operationState = "Running";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+                Assert.Equal(operationState, createresponse.Cluster.Properties.ClusterState);
+
+                var clusterConfig = client.Clusters.GetClusterConfigurations(resourceGroup, dnsname, "core-site");
+                string value;
+                clusterConfig.Configuration.TryGetValue("fs.defaultFS", out value);
+                Assert.True(value.StartsWith("wasb://"));
+
+                client.Clusters.Get(resourceGroup, dnsname);
+
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
+            }
+        }
+
+        [Fact]
+        public void TestCreateDefaultFsAzureBlobClusterContainerNotSpecified()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetAzureBlobDefaultFsCreateParametersIaas(specifyDefaultContainer:false);
+                const string dnsname = "hdisdk-defaultfsazureblob-nocontainer";
+                const string operationState = "Running";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+                Assert.Equal(operationState, createresponse.Cluster.Properties.ClusterState);
+
+                var clusterConfig = client.Clusters.GetClusterConfigurations(resourceGroup, dnsname, "core-site");
+                string value;
+                clusterConfig.Configuration.TryGetValue("fs.defaultFS", out value);
+                Assert.True(value.StartsWith("wasb://" + dnsname + "@"));
+
+                client.Clusters.Get(resourceGroup, dnsname);
+
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
+            }
+        }
     }
 }

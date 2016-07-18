@@ -112,9 +112,9 @@ namespace HDInsight.Tests
                     string failingScriptUri = "http://bing.com";
 
                     //this is set only for RECORD mode, playback this uri doesnt matter
-                    if (!string.IsNullOrEmpty(clusterCreateParams.DefaultStorageAccountName))
+                    if (HDInsightManagementTestUtilities.IsRecordMode())
                     {
-                        failingScriptUri = string.Format(FailingScriptLocationFormat, clusterCreateParams.DefaultStorageAccountName, FailingScriptLocationContainer);
+                        failingScriptUri = string.Format(FailingScriptLocationFormat, clusterCreateParams.DefaultStorageInfo.StorageAccountName, FailingScriptLocationContainer);
                     }
 
                     var executeScriptActionParams = GetExecuteScriptActionParams(true, scriptName, failingScriptUri);
@@ -234,14 +234,14 @@ namespace HDInsight.Tests
             client.Clusters.Create(resourceGroup, dnsName, clusterCreateParams);
 
             HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsName, client);
-          
-            string storageAccountName =clusterCreateParams.DefaultStorageAccountName.Split('.')[0];
 
-            //upload only in record mode, storageaccount will be empty in playback mode
-            if (!string.IsNullOrEmpty(storageAccountName))
+            // upload only in record mode
+            if (HDInsightManagementTestUtilities.IsRecordMode())
             {
                 //upload failing script to the cluster  default storage account
-                var creds = new StorageCredentials(storageAccountName, clusterCreateParams.DefaultStorageAccountKey);
+                var defaultStorageAccount = clusterCreateParams.DefaultStorageInfo as AzureStorageInfo;
+                var storageAccountName = defaultStorageAccount.StorageAccountName.Split('.')[0];
+                var creds = new StorageCredentials(storageAccountName, defaultStorageAccount.StorageAccountKey);
 
                 var storageAccount = new CloudStorageAccount(creds, true);
                 var blobClient = storageAccount.CreateCloudBlobClient();
