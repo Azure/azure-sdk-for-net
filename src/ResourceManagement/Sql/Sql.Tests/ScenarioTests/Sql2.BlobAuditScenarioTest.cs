@@ -129,7 +129,10 @@ namespace Sql2.Tests.ScenarioTests
                     succeededInUpdate = true;
                     break;
                 }
-                await Task.Delay(30000);
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                {
+                    await Task.Delay(30000);
+                }                  
             }
 
             Assert.True(succeededInUpdate, "Failed to update server blob auditing policy");
