@@ -44,7 +44,6 @@ namespace Sql2.Tests.ScenarioTests
             // Verify that the initial Get request contains the default policy.
             TestUtilities.ValidateOperationResponse(getDefaultDatabasePolicyResponse);
             VerifyAuditingPolicyInformation(GetDefaultBlobAuditProperties(), properties);
-
             // Modify the policy properties, send and receive, see it its still ok
             var updateParams = new BlobAuditingCreateOrUpdateParameters { Properties = properties };
 
@@ -62,7 +61,7 @@ namespace Sql2.Tests.ScenarioTests
         }
   
         /// <summary>
-        /// Creates and returns a BlobAuditingProperties object that holds the default settings for a a database blob auditing policy
+        /// Creates and returns a BlobAuditingProperties object that holds the default settings for a database blob auditing policy
         /// </summary>
         /// <returns>A BlobAuditingProperties object with the default audit policy settings</returns>
         private BlobAuditingProperties GetDefaultBlobAuditProperties()
@@ -94,6 +93,7 @@ namespace Sql2.Tests.ScenarioTests
             }
             else
             {
+                Assert.Equal(expected.AuditActionsAndGroups.Count, actual.AuditActionsAndGroups.Count);
                 actual.AuditActionsAndGroups.ForEach(s => Assert.True(expected.AuditActionsAndGroups.Any(es => es.Equals(s))));
             }
         }
@@ -112,7 +112,7 @@ namespace Sql2.Tests.ScenarioTests
             VerifyAuditingPolicyInformation(GetDefaultBlobAuditProperties(), properties);
 
             // Modify the policy properties, send and receive, see it its still ok
-            ChangeServerAuditPolicy(properties);
+            ChangeBlobAuditPolicy(properties);
             var updateParams = new BlobAuditingCreateOrUpdateParameters { Properties = properties };
 
             var updateResponse = sqlClient.BlobAuditing.CreateOrUpdateServerPolicy(resourceGroupName, server.Name, updateParams);
@@ -142,11 +142,10 @@ namespace Sql2.Tests.ScenarioTests
             VerifyAuditingPolicyInformation(properties, updatedProperties);
         }
 
-
         /// <summary>
         /// Changes the server auditing policy with new values
         /// </summary>
-        private void ChangeServerAuditPolicy(BlobAuditingProperties properties)
+        private void ChangeBlobAuditPolicy(BlobAuditingProperties properties)
         {
             properties.RetentionDays = 10;
             properties.AuditActionsAndGroups = new List<string>{ "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP" };
