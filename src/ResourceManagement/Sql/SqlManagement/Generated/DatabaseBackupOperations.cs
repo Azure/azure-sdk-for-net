@@ -693,11 +693,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -896,6 +896,306 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             return result;
+        }
+        
+        /// <summary>
+        /// Updates a Azure SQL Database Geo Backup Policy.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <param name='geoBackupPolicyName'>
+        /// Required. The name of the Azure SQL Database Geo Backup Policy to
+        /// retrieve geo backup policies for.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a SQL
+        /// Database Geo Backup Policy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for Azure Sql Database Geo Backup Policy operations.
+        /// </returns>
+        public async Task<GeoBackupPolicyCreateOrUpdateResponse> CreateOrUpdateGeoBackupPolicyAsync(string resourceGroupName, string serverName, string databaseName, string geoBackupPolicyName, GeoBackupPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (geoBackupPolicyName == null)
+            {
+                throw new ArgumentNullException("geoBackupPolicyName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("geoBackupPolicyName", geoBackupPolicyName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateGeoBackupPolicyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/geoBackupPolicies/";
+            url = url + Uri.EscapeDataString(geoBackupPolicyName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject geoBackupPolicyCreateOrUpdateParametersValue = new JObject();
+                requestDoc = geoBackupPolicyCreateOrUpdateParametersValue;
+                
+                JObject propertiesValue = new JObject();
+                geoBackupPolicyCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.State != null)
+                {
+                    propertiesValue["state"] = parameters.Properties.State;
+                }
+                
+                geoBackupPolicyCreateOrUpdateParametersValue["location"] = parameters.Location;
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    geoBackupPolicyCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GeoBackupPolicyCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GeoBackupPolicyCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            GeoBackupPolicy geoBackupPolicyInstance = new GeoBackupPolicy();
+                            result.GeoBackupPolicy = geoBackupPolicyInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                GeoBackupPolicyProperties propertiesInstance = new GeoBackupPolicyProperties();
+                                geoBackupPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken stateValue = propertiesValue2["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                geoBackupPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                geoBackupPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                geoBackupPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                geoBackupPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    geoBackupPolicyInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.Created)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
         
         /// <summary>
@@ -2328,6 +2628,245 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Returns an Azure SQL Database geo backup policy.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <param name='geoBackupPolicyName'>
+        /// Required. The name of the Azure SQL Database Geo Backup Policy to
+        /// retrieve geo backup policies for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database geo backup
+        /// policy request.
+        /// </returns>
+        public async Task<GeoBackupPolicyGetResponse> GetGeoBackupPolicyAsync(string resourceGroupName, string serverName, string databaseName, string geoBackupPolicyName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            if (geoBackupPolicyName == null)
+            {
+                throw new ArgumentNullException("geoBackupPolicyName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("geoBackupPolicyName", geoBackupPolicyName);
+                TracingAdapter.Enter(invocationId, this, "GetGeoBackupPolicyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/geoBackupPolicies/";
+            url = url + Uri.EscapeDataString(geoBackupPolicyName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GeoBackupPolicyGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GeoBackupPolicyGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            GeoBackupPolicy geoBackupPolicyInstance = new GeoBackupPolicy();
+                            result.GeoBackupPolicy = geoBackupPolicyInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                GeoBackupPolicyProperties propertiesInstance = new GeoBackupPolicyProperties();
+                                geoBackupPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                geoBackupPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                geoBackupPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                geoBackupPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                geoBackupPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    geoBackupPolicyInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Returns a list of Azure SQL Server backup LongTermRetention vaults
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -3040,6 +3579,242 @@ namespace Microsoft.Azure.Management.Sql
                                             string tagsKey = ((string)property.Name);
                                             string tagsValue = ((string)property.Value);
                                             deletedDatabaseBackupInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Database geo backup policies.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database geo backup
+        /// policies request.
+        /// </returns>
+        public async Task<GeoBackupPolicyListResponse> ListGeoBackupPoliciesAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "ListGeoBackupPoliciesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/geoBackupPolicies";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GeoBackupPolicyListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GeoBackupPolicyListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    GeoBackupPolicy geoBackupPolicyInstance = new GeoBackupPolicy();
+                                    result.GeoBackupPolicies.Add(geoBackupPolicyInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        GeoBackupPolicyProperties propertiesInstance = new GeoBackupPolicyProperties();
+                                        geoBackupPolicyInstance.Properties = propertiesInstance;
+                                        
+                                        JToken stateValue = propertiesValue["state"];
+                                        if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                        {
+                                            string stateInstance = ((string)stateValue);
+                                            propertiesInstance.State = stateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        geoBackupPolicyInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        geoBackupPolicyInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        geoBackupPolicyInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        geoBackupPolicyInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            geoBackupPolicyInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }
