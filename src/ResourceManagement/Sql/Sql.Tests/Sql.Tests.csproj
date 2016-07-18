@@ -38,6 +38,9 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BlobAuditScenarioTest\ServerBlobAuditingPolicyLifecycleTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BackupScenarioTest\GeoBackupPolicyTest.json">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ImportExportScenarioTests\ExportDatabaseTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
