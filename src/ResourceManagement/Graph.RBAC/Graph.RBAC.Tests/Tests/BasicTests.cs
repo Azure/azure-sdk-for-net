@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Fix test")]
+        [Fact]
         public void FilteredListUsersTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact (Skip = "TODO: Fix test")]
+        [Fact]
         public void FilteredListGroupsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Fix test")]
+        [Fact]
         public void QueryServicePrincipalTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -318,27 +318,28 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 Assert.NotNull(servicePrincipals);
 
                 string testServicePrincipalName = servicePrincipals.ElementAt(0).ServicePrincipalNames[0];
-                string testObjcetId = servicePrincipals.ElementAt(0).ObjectId;
+                string testObjectId = servicePrincipals.ElementAt(0).ObjectId;
+                string testDisplayName = servicePrincipals.ElementAt(0).DisplayName;
 
                 //test query by 'service principal name'
-                var listResult = client.ServicePrincipals.List(new ODataQuery<ServicePrincipal>(f=> f.DisplayName == testServicePrincipalName));
+                var listResult = client.ServicePrincipals.List(new ODataQuery<ServicePrincipal>(f=> f.ServicePrincipalNames.Contains(testServicePrincipalName)));
                 ServicePrincipal servicePrincipal = listResult.First();
 
                 Assert.Equal(1, listResult.Count());
                 Assert.NotNull(servicePrincipal);
-                Assert.True(servicePrincipal.ObjectId == testObjcetId);
-                Assert.NotNull(servicePrincipal.DisplayName);
+                Assert.True(servicePrincipal.ObjectId == testObjectId);
+                Assert.Equal(testDisplayName, servicePrincipal.DisplayName);
                 Assert.NotNull(servicePrincipal.ObjectType);
                 Assert.True(servicePrincipal.ServicePrincipalNames.Contains(testServicePrincipalName));
 
                 //test query by 'object id'
-                var getResult = client.ServicePrincipals.Get(testObjcetId);
+                var getResult = client.ServicePrincipals.Get(testObjectId);
                 servicePrincipal = getResult;
 
                 Assert.NotNull(getResult);
                 Assert.NotNull(getResult);
-                Assert.True(servicePrincipal.ObjectId == testObjcetId);
-                Assert.NotNull(servicePrincipal.DisplayName);
+                Assert.True(servicePrincipal.ObjectId == testObjectId);
+                Assert.Equal(testDisplayName, servicePrincipal.DisplayName);
                 Assert.NotNull(servicePrincipal.ObjectType);
                 Assert.True(servicePrincipal.ServicePrincipalNames.Contains(testServicePrincipalName));
 
@@ -347,14 +348,14 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 servicePrincipal = listResult.First();
 
                 Assert.NotNull(listResult);
-                Assert.True(servicePrincipal.ObjectId == testObjcetId);
-                Assert.NotNull(servicePrincipal.DisplayName);
+                Assert.True(servicePrincipal.ObjectId == testObjectId);
+                Assert.Equal(testDisplayName, servicePrincipal.DisplayName);
                 Assert.NotNull(servicePrincipal.ObjectType);
                 Assert.True(servicePrincipal.ServicePrincipalNames.Contains(testServicePrincipalName));
             }
         }
 
-        [Fact(Skip = "TODO: Fix test")]
+        [Fact]
         public void ObjectsByObjectIdsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
