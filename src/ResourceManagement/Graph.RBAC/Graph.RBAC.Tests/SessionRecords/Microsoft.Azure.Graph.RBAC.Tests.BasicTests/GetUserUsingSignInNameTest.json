@@ -7,13 +7,13 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ebe793bc-2ea2-470c-a85c-ea865abcdde3"
+          "52cdd37d-a246-43ac-9e65-204dd0294f87"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/2.3.0-preview"
+          "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/3.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/rbacclitest.onmicrosoft.com/$metadata#directoryObjects/Microsoft.DirectoryServices.User\",\r\n  \"value\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.DirectoryServices.User\",\r\n      \"objectType\": \"User\",\r\n      \"objectId\": \"110ccbe1-cf56-46f4-9b4f-2a27f858ca8d\",\r\n      \"deletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"signInNames\": [],\r\n      \"assignedLicenses\": [],\r\n      \"assignedPlans\": [],\r\n      \"city\": null,\r\n      \"companyName\": null,\r\n      \"country\": null,\r\n      \"creationType\": null,\r\n      \"department\": null,\r\n      \"dirSyncEnabled\": null,\r\n      \"displayName\": \"auxtm\",\r\n      \"facsimileTelephoneNumber\": null,\r\n      \"givenName\": \"auxtm\",\r\n      \"immutableId\": null,\r\n      \"isCompromised\": null,\r\n      \"jobTitle\": null,\r\n      \"lastDirSyncTime\": null,\r\n      \"mail\": null,\r\n      \"mailNickname\": \"auxtm596_live.com#EXT#\",\r\n      \"mobile\": null,\r\n      \"onPremisesSecurityIdentifier\": null,\r\n      \"otherMails\": [\r\n        \"auxtm596@live.com\"\r\n      ],\r\n      \"passwordPolicies\": \"None\",\r\n      \"passwordProfile\": {\r\n        \"password\": null,\r\n        \"forceChangePasswordNextLogin\": true,\r\n        \"enforceChangePasswordPolicy\": false\r\n      },\r\n      \"physicalDeliveryOfficeName\": null,\r\n      \"postalCode\": null,\r\n      \"preferredLanguage\": null,\r\n      \"provisionedPlans\": [],\r\n      \"provisioningErrors\": [],\r\n      \"proxyAddresses\": [],\r\n      \"refreshTokensValidFromDateTime\": \"2015-09-17T19:49:10Z\",\r\n      \"sipProxyAddress\": null,\r\n      \"state\": null,\r\n      \"streetAddress\": null,\r\n      \"surname\": \"auxtm\",\r\n      \"telephoneNumber\": null,\r\n      \"usageLocation\": null,\r\n      \"userPrincipalName\": \"auxtm596_live.com#EXT#@rbacCliTest.onmicrosoft.com\",\r\n      \"userType\": \"Member\"\r\n    }\r\n  ]\r\n}",
@@ -31,7 +31,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Jul 2016 01:16:28 GMT"
+          "Tue, 19 Jul 2016 19:45:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -40,19 +40,19 @@
           "Microsoft-IIS/8.5"
         ],
         "ocp-aad-diagnostics-server-name": [
-          "+u3G9g5PWpdX413WhNwPLKppymwjckPFR0XoeOQ7+kA="
+          "NmOhVwUmxtMXE2yVTyo+Rgxuh4SzBZla+ESSAHIGDQ8="
         ],
         "request-id": [
-          "03ed3a1e-9d6c-491e-bd73-a23074e682e2"
+          "9f4853fc-efd9-4427-9186-fdd851b86b3d"
         ],
         "client-request-id": [
-          "0f8e2fca-e626-474a-9ab2-03ff095a2b4d"
+          "ae3b07f8-f8fe-44a7-97f6-bdad284d0e09"
         ],
         "x-ms-dirapi-data-contract-version": [
           "1.6"
         ],
         "ocp-aad-session-key": [
-          "Jb6Y6z-gTjiLLTJbv4ZA977k9Z2sfr2AViwpR29ybzkjzcS5lcFX7-kjitpT6s4PDXEEdLqu0sLNHRUU9EoJS6sCKMw0OzI5wK5o7rWLjDvBzdLG-LBTohwwOAf_3ZC_o-AyXrhCe6ymsgHG2LwetXbI7NMqVvRIKM612xA5j_3BTI2sOe0WPbh8RIXOQ0wsMQdpv0HeBSrJrYdu0E5KTQ.efbZ748xTJ8OYM8ZER_d3JNxsiUlZZs3rV2VDlpDNe4"
+          "_Ch8fMC2KOhHGgG9_gOgaTR970fbydyumAGwItkOdGohatlw6pU39_S8ejsf0J5RepDYHqiV40amBiO_aK4rvG_djg0wiWaVClsvpfQeE7H4dN47bpfxDPZ7HXlGl_T7y5QymmOZtF0S1T-BRtFolg.bUXbsfh-Ew2ztSV8lYQXnIXE0-Eyaur8BJoIuppWS7E"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -74,7 +74,7 @@
           "ASP.NET"
         ],
         "Duration": [
-          "1931187"
+          "996393"
         ]
       },
       "StatusCode": 200
@@ -86,13 +86,13 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8c158a30-7f53-4c98-b70e-34c9dd300fe5"
+          "8ae7c3d8-b71a-475a-83c7-6567325c1874"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/2.3.0-preview"
+          "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/3.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/rbacclitest.onmicrosoft.com/$metadata#directoryObjects/Microsoft.DirectoryServices.User\",\r\n  \"value\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.DirectoryServices.User\",\r\n      \"objectType\": \"User\",\r\n      \"objectId\": \"f8d526a0-54eb-4941-ae69-ebf4a334d0f0\",\r\n      \"deletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"signInNames\": [],\r\n      \"assignedLicenses\": [],\r\n      \"assignedPlans\": [],\r\n      \"city\": null,\r\n      \"companyName\": null,\r\n      \"country\": null,\r\n      \"creationType\": null,\r\n      \"department\": null,\r\n      \"dirSyncEnabled\": null,\r\n      \"displayName\": \"test2\",\r\n      \"facsimileTelephoneNumber\": null,\r\n      \"givenName\": \"test\",\r\n      \"immutableId\": null,\r\n      \"isCompromised\": null,\r\n      \"jobTitle\": null,\r\n      \"lastDirSyncTime\": null,\r\n      \"mail\": null,\r\n      \"mailNickname\": \"test2\",\r\n      \"mobile\": null,\r\n      \"onPremisesSecurityIdentifier\": null,\r\n      \"otherMails\": [\r\n        \"shubhamagarwal05@gmail.com\"\r\n      ],\r\n      \"passwordPolicies\": \"None\",\r\n      \"passwordProfile\": null,\r\n      \"physicalDeliveryOfficeName\": null,\r\n      \"postalCode\": null,\r\n      \"preferredLanguage\": \"en-US\",\r\n      \"provisionedPlans\": [],\r\n      \"provisioningErrors\": [],\r\n      \"proxyAddresses\": [],\r\n      \"refreshTokensValidFromDateTime\": \"2016-02-08T04:57:13Z\",\r\n      \"sipProxyAddress\": null,\r\n      \"state\": null,\r\n      \"streetAddress\": null,\r\n      \"surname\": \"test2\",\r\n      \"telephoneNumber\": null,\r\n      \"usageLocation\": null,\r\n      \"userPrincipalName\": \"test2@rbacCliTest.onmicrosoft.com\",\r\n      \"userType\": \"Member\"\r\n    }\r\n  ]\r\n}",
@@ -110,7 +110,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Jul 2016 01:16:29 GMT"
+          "Tue, 19 Jul 2016 19:45:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -119,19 +119,19 @@
           "Microsoft-IIS/8.5"
         ],
         "ocp-aad-diagnostics-server-name": [
-          "+u3G9g5PWpdX413WhNwPLKppymwjckPFR0XoeOQ7+kA="
+          "nX0EELQHx3TZ2/z8/kRkrIJJFoYzKeuOsYay4yBGCH8="
         ],
         "request-id": [
-          "5eb2ed62-e8bd-4086-9003-1f1526215ac1"
+          "cc804140-7b45-4251-a429-ba19a5589176"
         ],
         "client-request-id": [
-          "7e5e3566-7b61-470e-9f37-e437020d4ab5"
+          "9ef41680-1478-45b5-a560-5790649a635d"
         ],
         "x-ms-dirapi-data-contract-version": [
           "1.6"
         ],
         "ocp-aad-session-key": [
-          "BHB4vnbTXbIUFdrRe3zcWvqvw6Kb0IyGqyD7A0sKiLN7xFwq-WYrEU2Iy6vUNfOseV70Q5Qv4EU0x7hiM5Szsh2yN15veZiq7Sc76iyg2T-g1kZZ7AVw2Hy0brfEuuYGDHAyIeaIIT1F5b3K8Vs1eA4vdjRBHUFqXMieCthAp5keCoo4ekYAPOmRSs1BA2L9CTV4w1IVMJKLE6VefXnmdg.09mjqe99glALeWPqm48i2kz_rFZoYy_Mg9kldP8285M"
+          "YkFoJAYMGYqM4a1SJUOb-Hlz0-4azJNC4NGqCJgPtc-6x5l2t-Lu8EM3nN9CPNx0ZjB32Eqxb7m1U7fxLZFMj71sCMLbngsroElKIYr1AWR1YtAyG5CqEC5UpnVH3T3iXQHIZXUfVkk4sv-JJzAgeQ.Q4R_VE8oJ46GYNnNifi6YX6ZuTZ8eMTuDJQA-IYBoOY"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -153,7 +153,7 @@
           "ASP.NET"
         ],
         "Duration": [
-          "920340"
+          "1015688"
         ]
       },
       "StatusCode": 200
