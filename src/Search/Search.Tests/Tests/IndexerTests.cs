@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Search.Tests
                     new IndexingParameters()
                     {
                         BatchSize = 50,
-                        Base64EncodeKeys =  true,
                         MaxFailedItems = 10,
                         MaxFailedItemsPerBatch = 10
                     };
@@ -276,7 +275,6 @@ namespace Microsoft.Azure.Search.Tests
             {
                 Assert.NotNull(actual);
                 Assert.Equal(expected.BatchSize, actual.BatchSize);
-                Assert.Equal(expected.Base64EncodeKeys, actual.Base64EncodeKeys);
                 Assert.Equal(expected.MaxFailedItems, actual.MaxFailedItems);
                 Assert.Equal(expected.MaxFailedItemsPerBatch, actual.MaxFailedItemsPerBatch);
 
