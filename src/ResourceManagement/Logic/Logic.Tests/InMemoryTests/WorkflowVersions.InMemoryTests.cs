@@ -179,11 +179,9 @@ namespace Test.Azure.Management.Logic
             Assert.Equal("Microsoft.Web/serverFarms", workflow.Sku.Plan.Type);
             Assert.Equal("planName", workflow.Sku.Plan.Name);
             Assert.NotEmpty(workflow.Definition.ToString());
-            Assert.Equal(null, workflow.DefinitionLink);
             Assert.Equal(2, workflow.Parameters.Count);
             Assert.Equal(ParameterType.String, workflow.Parameters["parameter1"].Type);
             Assert.Equal(ParameterType.Array, workflow.Parameters["parameter2"].Type);
-            Assert.Equal(null, workflow.ParametersLink);
         }
 
         #endregion

@@ -181,21 +181,6 @@
     <None Include="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSchemaScenarioTests\ListIntegrationAccountSchemas.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests\CreateAndDelete.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests\CreateAndList.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests\RegenerateAndListSecretKeys.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowRunActionsScenarioTests\ListAndGetActions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowRunsScenarioTests\RunGetAndListRuns.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\CreateAndDeleteWorkflow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -208,10 +193,10 @@
     <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\ListWorkflow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\UpdateAndRunWorkflow.json">
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\UpdateWorkflow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\ValidateAndRunWorkflow.json">
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\ValidateWorkflow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests\GetHistory.json">
@@ -278,7 +263,6 @@
     <Compile Include="InMemoryTests\IntegrationAccountMapInMemoryTests.cs" />
     <Compile Include="InMemoryTests\IntegrationAccountPartnerInMemoryTests.cs" />
     <Compile Include="InMemoryTests\IntegrationAccountSchemaInMemoryTests.cs" />
-    <Compile Include="InMemoryTests\WorkflowAccessKeys.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\WorkflowRunActions.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\WorkflowRuns.InMemoryTests.cs" />
     <Compile Include="InMemoryTests\Workflows.InMemoryTests.cs" />
@@ -293,9 +277,6 @@
     <Compile Include="ScenarioTests\IntegrationAccountMaps.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\IntegrationAccountPartners.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\IntegrationAccountSchemas.ScenarioTests.cs" />
-    <Compile Include="ScenarioTests\WorkflowAccessKeys.ScenarioTests.cs" />
-    <Compile Include="ScenarioTests\WorkflowRunActions.ScenarioTests.cs" />
-    <Compile Include="ScenarioTests\WorkflowRuns.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Workflows.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\WorkflowTriggerHistories.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\WorkflowTriggers.ScenarioTests.cs" />

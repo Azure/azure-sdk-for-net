@@ -300,14 +300,14 @@ namespace Test.Azure.Management.Logic
                 Key = new KeyVaultKeyReference
                 {
                     KeyName = "PRIVATEKEY",
-                    KeyVault = new ResourceReference
+                    KeyVault = new KeyVaultKeyReferenceKeyVault()
                     {
                         Id =
                             string.Format(CultureInfo.InvariantCulture,
                                 "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/IntegrationAccountVault",
                                 Constants.DefaultSubscription, Constants.DefaultResourceGroup)
                     },
-                    KeyVersion = "10816c5390074324a968b5cc5c2dfaaf"
+                    KeyVersion = "a71cf67368fc473f8d2a40cd8804ac85"
                 },
                 PublicCertificate = Convert.ToBase64String(cert.GetRawCertData())
             };
