@@ -53,15 +53,15 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._startTime = value; }
         }
         
-        private OperationStatus _status;
+        private OperationStatus _state;
         
         /// <summary>
         /// Optional. Gets or sets the status of the operation.
         /// </summary>
-        public OperationStatus Status
+        public OperationStatus State
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         /// <summary>

@@ -116,22 +116,25 @@ namespace Sql2.Tests.ScenarioTests
             var updateParams = new BlobAuditingCreateOrUpdateParameters { Properties = properties };
 
             var updateResponse = sqlClient.BlobAuditing.CreateOrUpdateServerPolicy(resourceGroupName, server.Name, updateParams);
-
+            var succeededInUpated = false;
             // Verify that the initial Get request of contains the default policy.
             TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.Accepted);
             for (var iterationCount = 0; iterationCount < 10; iterationCount++) // at most 10 iterations, each means wait of 30 seconds
             {
                 var blobAuditStatusResponse = sqlClient.BlobAuditing.GetOperationStatus(updateResponse.OperationStatusLink);
                 var blobAuditingOperationResult = blobAuditStatusResponse.OperationResult.Properties;
-                if (blobAuditingOperationResult.Status == OperationStatus.Succeeded)
+                if (blobAuditingOperationResult.State == OperationStatus.Succeeded)
                 {
+                    succeededInUpated = true;
                     break;
                 }
                 if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                 {
-                    await Task.Delay(60000);
-                }                  
+                    await Task.Delay(30000);    
+                }                                  
             }
+
+            Assert.True(succeededInUpated, "Failed in updating the server's policy");
 
             var getUpdatedPolicyResponse = sqlClient.BlobAuditing.GetServerPolicy(resourceGroupName, server.Name);
             var updatedProperties = getUpdatedPolicyResponse.AuditingPolicy.Properties;

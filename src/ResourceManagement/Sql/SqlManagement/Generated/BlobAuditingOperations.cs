@@ -869,11 +869,11 @@ namespace Microsoft.Azure.Management.Sql
                                 BlobAuditingOperationResultProperties propertiesInstance = new BlobAuditingOperationResultProperties();
                                 operationResultInstance.Properties = propertiesInstance;
                                 
-                                JToken statusValue = propertiesValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
                                 {
-                                    OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
-                                    propertiesInstance.Status = statusInstance;
+                                    OperationStatus stateInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)stateValue), true));
+                                    propertiesInstance.State = stateInstance;
                                 }
                                 
                                 JToken startTimeValue = propertiesValue["startTime"];
