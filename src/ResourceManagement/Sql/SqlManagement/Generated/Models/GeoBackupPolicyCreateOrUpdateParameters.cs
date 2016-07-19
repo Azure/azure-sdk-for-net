@@ -27,16 +27,16 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Create or update Sql Azure Database backup archival policy parameters.
+    /// Create or update Sql Azure Database Geo Backup Policy parameters.
     /// </summary>
-    public partial class DatabaseBackupArchivalPolicyCreateOrUpdateParameters : ResourceBase
+    public partial class GeoBackupPolicyCreateOrUpdateParameters : ResourceBase
     {
-        private DatabaseBackupArchivalPolicyProperties _properties;
+        private GeoBackupPolicyProperties _properties;
         
         /// <summary>
         /// Required. Gets or sets the properties of the request.
         /// </summary>
-        public DatabaseBackupArchivalPolicyProperties Properties
+        public GeoBackupPolicyProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -44,18 +44,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DatabaseBackupArchivalPolicyCreateOrUpdateParameters class.
+        /// GeoBackupPolicyCreateOrUpdateParameters class.
         /// </summary>
-        public DatabaseBackupArchivalPolicyCreateOrUpdateParameters()
+        public GeoBackupPolicyCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DatabaseBackupArchivalPolicyCreateOrUpdateParameters class with
-        /// required arguments.
+        /// GeoBackupPolicyCreateOrUpdateParameters class with required
+        /// arguments.
         /// </summary>
-        public DatabaseBackupArchivalPolicyCreateOrUpdateParameters(DatabaseBackupArchivalPolicyProperties properties, string location)
+        public GeoBackupPolicyCreateOrUpdateParameters(GeoBackupPolicyProperties properties, string location)
             : this()
         {
             if (properties == null)

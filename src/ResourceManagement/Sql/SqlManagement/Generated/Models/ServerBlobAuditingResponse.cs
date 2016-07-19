@@ -21,30 +21,30 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the properties of an Azure SQL Server backup archival vault.
+    /// Response Azure Sql Server blob auditing operation.
     /// </summary>
-    public partial class BackupArchivalVaultProperties
+    public partial class ServerBlobAuditingResponse : AzureOperationResponse
     {
-        private string _recoveryServicesVaultResourceId;
+        private string _operationStatusLink;
         
         /// <summary>
-        /// Optional. Gets or sets the recovery services vault resource id
+        /// Optional.
         /// </summary>
-        public string RecoveryServicesVaultResourceId
+        public string OperationStatusLink
         {
-            get { return this._recoveryServicesVaultResourceId; }
-            set { this._recoveryServicesVaultResourceId = value; }
+            get { return this._operationStatusLink; }
+            set { this._operationStatusLink = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupArchivalVaultProperties
-        /// class.
+        /// Initializes a new instance of the ServerBlobAuditingResponse class.
         /// </summary>
-        public BackupArchivalVaultProperties()
+        public ServerBlobAuditingResponse()
         {
         }
     }

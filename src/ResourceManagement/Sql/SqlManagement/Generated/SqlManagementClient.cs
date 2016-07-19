@@ -102,6 +102,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._auditingPolicy; }
         }
         
+        private IBlobAuditingOperations _blobAuditing;
+        
+        /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Server blob auditing. Contains operations to: Create, Retrieve and
+        /// Update blob auditing settings.
+        /// </summary>
+        public virtual IBlobAuditingOperations BlobAuditing
+        {
+            get { return this._blobAuditing; }
+        }
+        
         private ICapabilitiesOperations _capabilities;
         
         /// <summary>
@@ -370,6 +382,7 @@ namespace Microsoft.Azure.Management.Sql
             : base()
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._blobAuditing = new BlobAuditingOperations(this);
             this._capabilities = new CapabilitiesOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
             this._databaseBackup = new DatabaseBackupOperations(this);
@@ -458,6 +471,7 @@ namespace Microsoft.Azure.Management.Sql
             : base(httpClient)
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._blobAuditing = new BlobAuditingOperations(this);
             this._capabilities = new CapabilitiesOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
             this._databaseBackup = new DatabaseBackupOperations(this);

@@ -327,6 +327,80 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Updates a Azure SQL Database Geo Backup Policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <param name='geoBackupPolicyName'>
+        /// Required. The name of the Azure SQL Database Geo Backup Policy to
+        /// retrieve geo backup policies for.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a SQL
+        /// Database Geo Backup Policy.
+        /// </param>
+        /// <returns>
+        /// Response for Azure Sql Database Geo Backup Policy operations.
+        /// </returns>
+        public static GeoBackupPolicyCreateOrUpdateResponse CreateOrUpdateGeoBackupPolicy(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName, string geoBackupPolicyName, GeoBackupPolicyCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseBackupOperations)s).CreateOrUpdateGeoBackupPolicyAsync(resourceGroupName, serverName, databaseName, geoBackupPolicyName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates a Azure SQL Database Geo Backup Policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <param name='geoBackupPolicyName'>
+        /// Required. The name of the Azure SQL Database Geo Backup Policy to
+        /// retrieve geo backup policies for.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a SQL
+        /// Database Geo Backup Policy.
+        /// </param>
+        /// <returns>
+        /// Response for Azure Sql Database Geo Backup Policy operations.
+        /// </returns>
+        public static Task<GeoBackupPolicyCreateOrUpdateResponse> CreateOrUpdateGeoBackupPolicyAsync(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName, string geoBackupPolicyName, GeoBackupPolicyCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateGeoBackupPolicyAsync(resourceGroupName, serverName, databaseName, geoBackupPolicyName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Returns an Azure SQL Server backup LongTermRetention vault
         /// </summary>
         /// <param name='operations'>
@@ -655,6 +729,74 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Returns an Azure SQL Database geo backup policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <param name='geoBackupPolicyName'>
+        /// Required. The name of the Azure SQL Database Geo Backup Policy to
+        /// retrieve geo backup policies for.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database geo backup
+        /// policy request.
+        /// </returns>
+        public static GeoBackupPolicyGetResponse GetGeoBackupPolicy(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName, string geoBackupPolicyName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseBackupOperations)s).GetGeoBackupPolicyAsync(resourceGroupName, serverName, databaseName, geoBackupPolicyName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database geo backup policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <param name='geoBackupPolicyName'>
+        /// Required. The name of the Azure SQL Database Geo Backup Policy to
+        /// retrieve geo backup policies for.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database geo backup
+        /// policy request.
+        /// </returns>
+        public static Task<GeoBackupPolicyGetResponse> GetGeoBackupPolicyAsync(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName, string geoBackupPolicyName)
+        {
+            return operations.GetGeoBackupPolicyAsync(resourceGroupName, serverName, databaseName, geoBackupPolicyName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Returns a list of Azure SQL Server backup LongTermRetention vaults
         /// </summary>
         /// <param name='operations'>
@@ -820,6 +962,66 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<DeletedDatabaseBackupListResponse> ListDeletedDatabaseBackupsAsync(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName)
         {
             return operations.ListDeletedDatabaseBackupsAsync(resourceGroupName, serverName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Database geo backup policies.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database geo backup
+        /// policies request.
+        /// </returns>
+        public static GeoBackupPolicyListResponse ListGeoBackupPolicies(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseBackupOperations)s).ListGeoBackupPoliciesAsync(resourceGroupName, serverName, databaseName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Database geo backup policies.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backup policies for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo backup
+        /// policies for.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database geo backup
+        /// policies request.
+        /// </returns>
+        public static Task<GeoBackupPolicyListResponse> ListGeoBackupPoliciesAsync(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName)
+        {
+            return operations.ListGeoBackupPoliciesAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
         }
         
         /// <summary>

@@ -20,55 +20,56 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a List Azure Sql Server backup archival
-    /// vault request.
+    /// Represents the properties of a create or update request for an Azure
+    /// SQL blob auditing policy.
     /// </summary>
-    public partial class BackupArchivalVaultListResponse : AzureOperationResponse, IEnumerable<BackupArchivalVault>
+    public partial class BlobAuditingOperationResultProperties
     {
-        private IList<BackupArchivalVault> _backupArchivalVaults;
+        private string _operationId;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Azure Sql Server backup archival
-        /// vaults.
+        /// Optional. Gets or sets the operation Id.
         /// </summary>
-        public IList<BackupArchivalVault> BackupArchivalVaults
+        public string OperationId
         {
-            get { return this._backupArchivalVaults; }
-            set { this._backupArchivalVaults = value; }
+            get { return this._operationId; }
+            set { this._operationId = value; }
+        }
+        
+        private string _startTime;
+        
+        /// <summary>
+        /// Optional. Gets or sets the start time of the operation
+        /// </summary>
+        public string StartTime
+        {
+            get { return this._startTime; }
+            set { this._startTime = value; }
+        }
+        
+        private OperationStatus _state;
+        
+        /// <summary>
+        /// Optional. Gets or sets the status of the operation.
+        /// </summary>
+        public OperationStatus State
+        {
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupArchivalVaultListResponse
-        /// class.
+        /// Initializes a new instance of the
+        /// BlobAuditingOperationResultProperties class.
         /// </summary>
-        public BackupArchivalVaultListResponse()
+        public BlobAuditingOperationResultProperties()
         {
-            this.BackupArchivalVaults = new LazyList<BackupArchivalVault>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of BackupArchivalVaults.
-        /// </summary>
-        public IEnumerator<BackupArchivalVault> GetEnumerator()
-        {
-            return this.BackupArchivalVaults.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of BackupArchivalVaults.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

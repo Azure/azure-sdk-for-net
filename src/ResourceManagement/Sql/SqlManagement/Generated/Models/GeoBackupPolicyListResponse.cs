@@ -29,42 +29,41 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a List Azure Sql Database backup archival
-    /// policy request.
+    /// Represents the response to a List Azure Sql Database geo backup
+    /// policies request.
     /// </summary>
-    public partial class DatabaseBackupArchivalPolicyListResponse : AzureOperationResponse, IEnumerable<DatabaseBackupArchivalPolicy>
+    public partial class GeoBackupPolicyListResponse : AzureOperationResponse, IEnumerable<GeoBackupPolicy>
     {
-        private IList<DatabaseBackupArchivalPolicy> _databaseBackupArchivalPolicies;
+        private IList<GeoBackupPolicy> _geoBackupPolicies;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Azure Sql Database backup
-        /// archival policies.
+        /// Optional. Gets or sets the list of a given Azure Sql Database geo
+        /// backup policies.
         /// </summary>
-        public IList<DatabaseBackupArchivalPolicy> DatabaseBackupArchivalPolicies
+        public IList<GeoBackupPolicy> GeoBackupPolicies
         {
-            get { return this._databaseBackupArchivalPolicies; }
-            set { this._databaseBackupArchivalPolicies = value; }
+            get { return this._geoBackupPolicies; }
+            set { this._geoBackupPolicies = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DatabaseBackupArchivalPolicyListResponse class.
+        /// Initializes a new instance of the GeoBackupPolicyListResponse class.
         /// </summary>
-        public DatabaseBackupArchivalPolicyListResponse()
+        public GeoBackupPolicyListResponse()
         {
-            this.DatabaseBackupArchivalPolicies = new LazyList<DatabaseBackupArchivalPolicy>();
+            this.GeoBackupPolicies = new LazyList<GeoBackupPolicy>();
         }
         
         /// <summary>
-        /// Gets the sequence of DatabaseBackupArchivalPolicies.
+        /// Gets the sequence of GeoBackupPolicies.
         /// </summary>
-        public IEnumerator<DatabaseBackupArchivalPolicy> GetEnumerator()
+        public IEnumerator<GeoBackupPolicy> GetEnumerator()
         {
-            return this.DatabaseBackupArchivalPolicies.GetEnumerator();
+            return this.GeoBackupPolicies.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of DatabaseBackupArchivalPolicies.
+        /// Gets the sequence of GeoBackupPolicies.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

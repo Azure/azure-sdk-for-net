@@ -27,22 +27,10 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Response for long running Azure operations.
+    /// Response for Azure Sql Database Geo Backup Policy operations.
     /// </summary>
-    public partial class BackupArchivalVaultCreateOrUpdateResponse : AzureOperationResponse
+    public partial class GeoBackupPolicyCreateOrUpdateResponse : AzureOperationResponse
     {
-        private BackupArchivalVault _backupArchivalVault;
-        
-        /// <summary>
-        /// Optional. Gets or sets object that represents the Azure Sql Server
-        /// backup archival vault.
-        /// </summary>
-        public BackupArchivalVault BackupArchivalVault
-        {
-            get { return this._backupArchivalVault; }
-            set { this._backupArchivalVault = value; }
-        }
-        
         private ErrorResponse _error;
         
         /// <summary>
@@ -52,6 +40,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._error; }
             set { this._error = value; }
+        }
+        
+        private GeoBackupPolicy _geoBackupPolicy;
+        
+        /// <summary>
+        /// Optional. Gets or sets GeoBackupPolicy object that represents the
+        /// Azure Sql Database Geo Backup Policy.
+        /// </summary>
+        public GeoBackupPolicy GeoBackupPolicy
+        {
+            get { return this._geoBackupPolicy; }
+            set { this._geoBackupPolicy = value; }
         }
         
         private string _operationStatusLink;
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// BackupArchivalVaultCreateOrUpdateResponse class.
+        /// GeoBackupPolicyCreateOrUpdateResponse class.
         /// </summary>
-        public BackupArchivalVaultCreateOrUpdateResponse()
+        public GeoBackupPolicyCreateOrUpdateResponse()
         {
         }
     }

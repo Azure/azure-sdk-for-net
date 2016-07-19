@@ -21,47 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database backup archival vault.
+    /// Represents the properties of an Azure SQL Database Geo Backup Policy.
     /// </summary>
-    public partial class BackupArchivalVault : ResourceBaseExtended
+    public partial class GeoBackupPolicyProperties
     {
-        private BackupArchivalVaultProperties _properties;
+        private string _state;
         
         /// <summary>
-        /// Optional. Gets or sets the properties representing the backup
-        /// archival vault.
+        /// Optional. Gets or sets state
         /// </summary>
-        public BackupArchivalVaultProperties Properties
+        public string State
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupArchivalVault class.
+        /// Initializes a new instance of the GeoBackupPolicyProperties class.
         /// </summary>
-        public BackupArchivalVault()
+        public GeoBackupPolicyProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BackupArchivalVault class with
-        /// required arguments.
-        /// </summary>
-        public BackupArchivalVault(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
         }
     }
 }
