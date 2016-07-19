@@ -22,46 +22,54 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database backup archival vault.
+    /// Represents the properties of a create or update request for an Azure
+    /// SQL blob auditing policy.
     /// </summary>
-    public partial class BackupArchivalVault : ResourceBaseExtended
+    public partial class BlobAuditingOperationResultProperties
     {
-        private BackupArchivalVaultProperties _properties;
+        private string _operationId;
         
         /// <summary>
-        /// Optional. Gets or sets the properties representing the backup
-        /// archival vault.
+        /// Optional. Gets or sets the operation Id.
         /// </summary>
-        public BackupArchivalVaultProperties Properties
+        public string OperationId
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._operationId; }
+            set { this._operationId = value; }
+        }
+        
+        private string _startTime;
+        
+        /// <summary>
+        /// Optional. Gets or sets the start time of the operation
+        /// </summary>
+        public string StartTime
+        {
+            get { return this._startTime; }
+            set { this._startTime = value; }
+        }
+        
+        private OperationStatus _state;
+        
+        /// <summary>
+        /// Optional. Gets or sets the status of the operation.
+        /// </summary>
+        public OperationStatus State
+        {
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupArchivalVault class.
+        /// Initializes a new instance of the
+        /// BlobAuditingOperationResultProperties class.
         /// </summary>
-        public BackupArchivalVault()
+        public BlobAuditingOperationResultProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BackupArchivalVault class with
-        /// required arguments.
-        /// </summary>
-        public BackupArchivalVault(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
         }
     }
 }

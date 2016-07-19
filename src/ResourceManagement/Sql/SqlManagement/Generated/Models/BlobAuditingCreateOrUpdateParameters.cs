@@ -21,22 +21,21 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Create or update Sql Azure Server backup archival vault parameters.
+    /// Create or update blob auditing parameters.
     /// </summary>
-    public partial class BackupArchivalVaultCreateOrUpdateParameters : ResourceBase
+    public partial class BlobAuditingCreateOrUpdateParameters
     {
-        private BackupArchivalVaultProperties _properties;
+        private BlobAuditingProperties _properties;
         
         /// <summary>
         /// Required. Gets or sets the properties of the request.
         /// </summary>
-        public BackupArchivalVaultProperties Properties
+        public BlobAuditingProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -44,30 +43,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// BackupArchivalVaultCreateOrUpdateParameters class.
+        /// BlobAuditingCreateOrUpdateParameters class.
         /// </summary>
-        public BackupArchivalVaultCreateOrUpdateParameters()
+        public BlobAuditingCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// BackupArchivalVaultCreateOrUpdateParameters class with required
-        /// arguments.
+        /// BlobAuditingCreateOrUpdateParameters class with required arguments.
         /// </summary>
-        public BackupArchivalVaultCreateOrUpdateParameters(BackupArchivalVaultProperties properties, string location)
+        public BlobAuditingCreateOrUpdateParameters(BlobAuditingProperties properties)
             : this()
         {
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
             this.Properties = properties;
-            this.Location = location;
         }
     }
 }

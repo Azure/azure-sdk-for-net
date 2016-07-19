@@ -27,46 +27,39 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Create or update Sql Azure Database backup archival policy parameters.
+    /// Represents an Azure SQL blob auditing policy.
     /// </summary>
-    public partial class DatabaseBackupArchivalPolicyCreateOrUpdateParameters : ResourceBase
+    public partial class BlobAuditingPolicy : ResourceBaseExtended
     {
-        private DatabaseBackupArchivalPolicyProperties _properties;
+        private BlobAuditingProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the request.
+        /// Optional. Represents the properties of the resource.
         /// </summary>
-        public DatabaseBackupArchivalPolicyProperties Properties
+        public BlobAuditingProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DatabaseBackupArchivalPolicyCreateOrUpdateParameters class.
+        /// Initializes a new instance of the BlobAuditingPolicy class.
         /// </summary>
-        public DatabaseBackupArchivalPolicyCreateOrUpdateParameters()
+        public BlobAuditingPolicy()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DatabaseBackupArchivalPolicyCreateOrUpdateParameters class with
+        /// Initializes a new instance of the BlobAuditingPolicy class with
         /// required arguments.
         /// </summary>
-        public DatabaseBackupArchivalPolicyCreateOrUpdateParameters(DatabaseBackupArchivalPolicyProperties properties, string location)
+        public BlobAuditingPolicy(string location)
             : this()
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
             if (location == null)
             {
                 throw new ArgumentNullException("location");
             }
-            this.Properties = properties;
             this.Location = location;
         }
     }

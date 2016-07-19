@@ -21,43 +21,47 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the properties of an Azure SQL Database backup archival
-    /// policy.
+    /// Represents the status of a create or update operation of Azure SQL
+    /// Server blob auditing policy.
     /// </summary>
-    public partial class DatabaseBackupArchivalPolicyProperties
+    public partial class BlobAuditingOperationResult : ResourceBaseExtended
     {
-        private string _recoveryServicesBackupPolicyResourceId;
+        private BlobAuditingOperationResultProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure vault policy resource ID
+        /// Optional. Represents the properties of the resource.
         /// </summary>
-        public string RecoveryServicesBackupPolicyResourceId
+        public BlobAuditingOperationResultProperties Properties
         {
-            get { return this._recoveryServicesBackupPolicyResourceId; }
-            set { this._recoveryServicesBackupPolicyResourceId = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional. Gets or sets a value indicating the backup archival status
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DatabaseBackupArchivalPolicyProperties class.
+        /// Initializes a new instance of the BlobAuditingOperationResult class.
         /// </summary>
-        public DatabaseBackupArchivalPolicyProperties()
+        public BlobAuditingOperationResult()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the BlobAuditingOperationResult class
+        /// with required arguments.
+        /// </summary>
+        public BlobAuditingOperationResult(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

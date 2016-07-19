@@ -11,6 +11,7 @@
     <Compile Include="Helpers\BasicDelegatingHandler.cs" />
     <Compile Include="Helpers\SqlConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\Sql2.BlobAuditScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.BackupScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ImportExportScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.JobAccountScenarioTests.cs" />
@@ -31,6 +32,12 @@
     <Compile Include="ScenarioTests\Sql2ScenarioHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BlobAuditScenarioTest\DatabaseBlobAuditingPolicyLifecycleTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BlobAuditScenarioTest\ServerBlobAuditingPolicyLifecycleTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BackupScenarioTest\GeoBackupPolicyTest.json">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>

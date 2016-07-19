@@ -27,28 +27,27 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Azure Sql Database backup archival
-    /// policy request.
+    /// Response for long running Azure Sql server blob auditing create or
+    /// update operations.
     /// </summary>
-    public partial class DatabaseBackupArchivalPolicyGetResponse : AzureOperationResponse
+    public partial class ServerBlobAuditingOperationResponse : AzureOperationResponse
     {
-        private DatabaseBackupArchivalPolicy _databaseBackupArchivalPolicy;
+        private BlobAuditingOperationResult _operationResult;
         
         /// <summary>
-        /// Optional. Gets or sets the object representing a given Azure Sql
-        /// Database backup archival policy.
+        /// Optional. Gets or sets the Azure Sql Database auditing policy.
         /// </summary>
-        public DatabaseBackupArchivalPolicy DatabaseBackupArchivalPolicy
+        public BlobAuditingOperationResult OperationResult
         {
-            get { return this._databaseBackupArchivalPolicy; }
-            set { this._databaseBackupArchivalPolicy = value; }
+            get { return this._operationResult; }
+            set { this._operationResult = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DatabaseBackupArchivalPolicyGetResponse class.
+        /// ServerBlobAuditingOperationResponse class.
         /// </summary>
-        public DatabaseBackupArchivalPolicyGetResponse()
+        public ServerBlobAuditingOperationResponse()
         {
         }
     }
