@@ -119,23 +119,19 @@ namespace Sql2.Tests.ScenarioTests
 
             // Verify that the initial Get request of contains the default policy.
             TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.Accepted);
-            var succeededInUpdate = false;
             for (var iterationCount = 0; iterationCount < 10; iterationCount++) // at most 10 iterations, each means wait of 30 seconds
             {
                 var blobAuditStatusResponse = sqlClient.BlobAuditing.GetOperationStatus(updateResponse.OperationStatusLink);
                 var blobAuditingOperationResult = blobAuditStatusResponse.OperationResult.Properties;
                 if (blobAuditingOperationResult.Status == OperationStatus.Succeeded)
                 {
-                    succeededInUpdate = true;
                     break;
                 }
                 if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                 {
-                    await Task.Delay(30000);
+                    await Task.Delay(60000);
                 }                  
             }
-
-            Assert.True(succeededInUpdate, "Failed to update server blob auditing policy");
 
             var getUpdatedPolicyResponse = sqlClient.BlobAuditing.GetServerPolicy(resourceGroupName, server.Name);
             var updatedProperties = getUpdatedPolicyResponse.AuditingPolicy.Properties;
