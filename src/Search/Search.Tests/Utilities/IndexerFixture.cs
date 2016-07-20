@@ -34,6 +34,13 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new[]
                 {
                     new Field("feature_id", DataType.String) { IsKey = true },
+                    new Field("feature_name", DataType.String) { IsFilterable = true, IsSearchable = true },
+                    new Field("feature_class", DataType.String),
+                    new Field("state", DataType.String) { IsFilterable = true, IsSearchable = true },
+                    new Field("county_name", DataType.String) { IsFilterable = true, IsSearchable = true },
+                    new Field("elevation", DataType.Int32) { IsFilterable = true },
+                    new Field("map_name", DataType.String) { IsFilterable = true, IsSearchable = true },
+                    new Field("history", DataType.Collection(DataType.String)) { IsSearchable = true }
                 });
 
             searchClient.Indexes.Create(index);
@@ -53,7 +60,17 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             {
                 // We can't test startTime because it's an absolute time that must be within 24 hours of the current
                 // time. That doesn't play well with recorded mock payloads.
-                Schedule = new IndexingSchedule() { Interval = TimeSpan.FromDays(1) }
+                Schedule = new IndexingSchedule(interval: TimeSpan.FromDays(1)),
+                FieldMappings = new[]
+                {
+                    // Try all the field mapping functions (even if they don't make sense in the context of the test DB).
+                    new FieldMapping("feature_class", FieldMappingFunction.Base64Encode()),
+                    new FieldMapping("state_alpha", "state"),
+                    new FieldMapping("county_name", FieldMappingFunction.ExtractTokenAtPosition(" ", 0)),
+                    new FieldMapping("elev_in_m", "elevation"),
+                    new FieldMapping("map_name", FieldMappingFunction.Base64Decode()),
+                    new FieldMapping("history", FieldMappingFunction.JsonArrayToStringCollection())
+                }
             };
         }
     }

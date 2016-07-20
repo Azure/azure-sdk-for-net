@@ -263,6 +263,44 @@ namespace Microsoft.Azure.Search.Tests
 
             AssertSchedulesEqual(expected.Schedule, actual.Schedule);
             AssertParametersEqual(expected.Parameters, actual.Parameters);
+            SearchAssert.SequenceEqual(expected.FieldMappings, actual.FieldMappings, AssertFieldMappingsEqual);
+        }
+
+        private void AssertFieldMappingsEqual(FieldMapping expected, FieldMapping actual)
+        {
+            if (expected == null)
+            {
+                Assert.Null(actual);
+            }
+            else
+            {
+                Assert.NotNull(actual);
+                Assert.Equal(expected.SourceFieldName, actual.SourceFieldName);
+                Assert.Equal(expected.TargetFieldName, actual.TargetFieldName);
+                AssertFieldMappingFunctionsEqual(expected.MappingFunction, actual.MappingFunction);
+            }
+        }
+
+        private void AssertFieldMappingFunctionsEqual(FieldMappingFunction expected, FieldMappingFunction actual)
+        {
+            if (expected == null)
+            {
+                Assert.Null(actual);
+            }
+            else
+            {
+                Assert.NotNull(actual);
+                Assert.Equal(expected.Name, actual.Name);
+
+                if (expected.Parameters != null)
+                {
+                    SearchAssert.DictionariesEqual(expected.Parameters, actual.Parameters);
+                }
+                else if (actual.Parameters != null)
+                {
+                    SearchAssert.DictionariesEqual(new Dictionary<string, object>(), actual.Parameters);
+                }
+            }
         }
 
         private void AssertParametersEqual(IndexingParameters expected, IndexingParameters actual)

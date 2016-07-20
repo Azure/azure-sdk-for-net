@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the Indexer class.
         /// </summary>
-        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), bool? isDisabled = default(bool?))
+        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), IList<FieldMapping> fieldMappings = default(IList<FieldMapping>), bool? isDisabled = default(bool?))
         {
             Name = name;
             Description = description;
@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Search.Models
             TargetIndexName = targetIndexName;
             Schedule = schedule;
             Parameters = parameters;
+            FieldMappings = fieldMappings;
             IsDisabled = isDisabled;
         }
 
@@ -80,6 +81,13 @@ namespace Microsoft.Azure.Search.Models
         public IndexingParameters Parameters { get; set; }
 
         /// <summary>
+        /// Gets or sets defines mappings between fields in the data source
+        /// and corresponding target fields in the index.
+        /// </summary>
+        [JsonProperty(PropertyName = "fieldMappings")]
+        public IList<FieldMapping> FieldMappings { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the indexer is disabled.
         /// Default is false.
         /// </summary>
@@ -109,6 +117,16 @@ namespace Microsoft.Azure.Search.Models
             if (this.Schedule != null)
             {
                 this.Schedule.Validate();
+            }
+            if (this.FieldMappings != null)
+            {
+                foreach (var element in this.FieldMappings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
