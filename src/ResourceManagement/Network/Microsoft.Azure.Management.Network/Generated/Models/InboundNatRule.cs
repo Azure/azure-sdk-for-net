@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the frontendIPConfigurations is forwarded to the backed IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendIPConfiguration")]
-        public NetworkInterfaceIPConfiguration BackendIPConfiguration { get; set; }
+        public NetworkInterfaceIPConfiguration BackendIPConfiguration { get; private set; }
 
         /// <summary>
         /// Gets or sets the transport potocol for the endpoint. Possible

@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets collection of references to Network Interfaces
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkInterfaces")]
-        public IList<NetworkInterface> NetworkInterfaces { get; set; }
+        public IList<NetworkInterface> NetworkInterfaces { get; private set; }
 
         /// <summary>
         /// Gets collection of references to subnets
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnets")]
-        public IList<Subnet> Subnets { get; set; }
+        public IList<Subnet> Subnets { get; private set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the network security group
