@@ -22,6 +22,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Net.Http;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Media.Tests.Helpers
 {
@@ -39,12 +40,12 @@ namespace Media.Tests.Helpers
         public static Kind DefaultKind = Kind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
-            { "key1","value1"},
+            {"key1","value1"},
             {"key2","value2"}
         };
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "eastus";
+        public static string DefaultLocation = IsTestTenant ? null : "East US";
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
@@ -104,7 +105,7 @@ namespace Media.Tests.Helpers
             return Handler;
         }
 
-        public static string CreateResourceGroup(ResourceManagementClient resourcesClient)
+        public static string CreateResourceGroup(ResourceManagementClient resourcesClient, string location)
         {
             var rgname = TestUtilities.GenerateName("rg");
 
@@ -114,7 +115,7 @@ namespace Media.Tests.Helpers
                     rgname,
                     new ResourceGroup
                     {
-                        Location = DefaultLocation
+                        Location = location
                     });
             }
 
@@ -129,7 +130,7 @@ namespace Media.Tests.Helpers
             }
         }
 
-        public static StorageAccount CreateStorageAccount(StorageManagementClient storageClient, string rgname)
+        public static StorageAccount CreateStorageAccount(StorageManagementClient storageClient, string rgname, string location)
         {
             var stoName = TestUtilities.GenerateName("sto");
 
@@ -137,7 +138,7 @@ namespace Media.Tests.Helpers
             {
                 return storageClient.StorageAccounts.Create(rgname, stoName, new StorageAccountCreateParameters
                 {
-                    Location = DefaultLocation,
+                    Location = location,
                     Tags = DefaultTags,
                     Sku = new Sku { Name = DefaultSkuName },
                     Kind = DefaultKind,
@@ -152,6 +153,36 @@ namespace Media.Tests.Helpers
             {
                 storageClient.StorageAccounts.Delete(rgname, accountName);
             }
+        }
+
+        public static string TryGetLocation(ResourceManagementClient resourceClient, string preferedLocationName = null)
+        {
+            var providers = resourceClient.Providers.List();
+            var provider = providers.FirstOrDefault(x => x.NamespaceProperty.Contains("Cdn"));
+            if (provider == null)
+            {
+                return string.Empty;
+            }
+
+            var resourceTypes = provider.ResourceTypes;
+            if (resourceTypes == null || resourceTypes.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            var locations = resourceTypes.First().Locations;
+            if (locations == null || locations.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            if (preferedLocationName == null)
+            {
+                return locations.First();
+            }
+
+            var preferedLocation = locations.FirstOrDefault(x => x.Contains(preferedLocationName));
+            return preferedLocation ?? locations.First();
         }
     }
 }

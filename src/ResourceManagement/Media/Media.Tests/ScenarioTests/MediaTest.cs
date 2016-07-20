@@ -41,15 +41,17 @@ namespace Media.Tests.ScenarioTests
                 var resourcesClient = MediaManagementTestUtilities.GetResourceManagementClient(context, handler2);
                 var storageClient = MediaManagementTestUtilities.GetStorageManagementClient(context, handler3);
 
+                var location = MediaManagementTestUtilities.TryGetLocation(resourcesClient, MediaManagementTestUtilities.DefaultLocation);
+
                 // Create resource group
-                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient, location);
 
                 // List media services by resource group
                 var mediaservices = mediaMgmtClient.MediaService.ListByResourceGroup(rgname);
                 Assert.Equal(0, mediaservices.Count());
 
                 // Create storage account
-                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname);
+                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname, location);
 
                 // Create a media service
                 var accountName = TestUtilities.GenerateName("media");
@@ -105,15 +107,17 @@ namespace Media.Tests.ScenarioTests
                 var resourcesClient = MediaManagementTestUtilities.GetResourceManagementClient(context, handler2);
                 var storageClient = MediaManagementTestUtilities.GetStorageManagementClient(context, handler3);
 
+                var location = MediaManagementTestUtilities.TryGetLocation(resourcesClient, MediaManagementTestUtilities.DefaultLocation);
+
                 // Create resource group
-                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient, location);
 
                 // List media services by resource group
                 var mediaservices = mediaMgmtClient.MediaService.ListByResourceGroup(rgname);
                 Assert.Equal(0, mediaservices.Count());
 
                 // Create storage account
-                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname);
+                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname, location);
 
                 // Create a media service
                 var accountName = TestUtilities.GenerateName("media");
@@ -159,11 +163,13 @@ namespace Media.Tests.ScenarioTests
                 var resourcesClient = MediaManagementTestUtilities.GetResourceManagementClient(context, handler2);
                 var storageClient = MediaManagementTestUtilities.GetStorageManagementClient(context, handler3);
 
+                var location = MediaManagementTestUtilities.TryGetLocation(resourcesClient, MediaManagementTestUtilities.DefaultLocation);
+
                 // Create resource group
-                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient, location);
 
                 // Create storage account
-                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname);
+                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname, location);
 
                 // Create a media service
                 var accountName = TestUtilities.GenerateName("media");
@@ -217,11 +223,13 @@ namespace Media.Tests.ScenarioTests
                 var resourcesClient = MediaManagementTestUtilities.GetResourceManagementClient(context, handler2);
                 var storageClient = MediaManagementTestUtilities.GetStorageManagementClient(context, handler3);
 
+                var location = MediaManagementTestUtilities.TryGetLocation(resourcesClient, MediaManagementTestUtilities.DefaultLocation);
+
                 // Create resource group
-                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient, location);
 
                 // Create storage account
-                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname);
+                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname, location);
 
                 // Create a media service
                 var accountName = TestUtilities.GenerateName("media");
@@ -275,11 +283,13 @@ namespace Media.Tests.ScenarioTests
                 var resourcesClient = MediaManagementTestUtilities.GetResourceManagementClient(context, handler2);
                 var storageClient = MediaManagementTestUtilities.GetStorageManagementClient(context, handler3);
 
+                var location = MediaManagementTestUtilities.TryGetLocation(resourcesClient, MediaManagementTestUtilities.DefaultLocation);
+
                 // Create resource group
-                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient, location);
 
                 // Create storage account
-                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname);
+                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname, location);
 
                 // Create a media service
                 var accountName = TestUtilities.GenerateName("media");
@@ -342,11 +352,13 @@ namespace Media.Tests.ScenarioTests
                 var resourcesClient = MediaManagementTestUtilities.GetResourceManagementClient(context, handler2);
                 var storageClient = MediaManagementTestUtilities.GetStorageManagementClient(context, handler3);
 
+                var location = MediaManagementTestUtilities.TryGetLocation(resourcesClient, MediaManagementTestUtilities.DefaultLocation);
+
                 // Create resource group
-                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient, location);
 
                 // Create storage account
-                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname);
+                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname, location);
 
                 // Create a media service
                 var accountName = TestUtilities.GenerateName("media");
@@ -395,11 +407,13 @@ namespace Media.Tests.ScenarioTests
                 var resourcesClient = MediaManagementTestUtilities.GetResourceManagementClient(context, handler2);
                 var storageClient = MediaManagementTestUtilities.GetStorageManagementClient(context, handler3);
 
+                var location = MediaManagementTestUtilities.TryGetLocation(resourcesClient, MediaManagementTestUtilities.DefaultLocation);
+
                 // Create resource group
-                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient, location);
 
                 // Create storage account
-                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname);
+                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname, location);
 
                 // Create a media service
                 var accountName = TestUtilities.GenerateName("media");
@@ -446,11 +460,13 @@ namespace Media.Tests.ScenarioTests
                 var resourcesClient = MediaManagementTestUtilities.GetResourceManagementClient(context, handler2);
                 var storageClient = MediaManagementTestUtilities.GetStorageManagementClient(context, handler3);
 
+                var location = MediaManagementTestUtilities.TryGetLocation(resourcesClient, MediaManagementTestUtilities.DefaultLocation);
+
                 // Create resource group
-                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MediaManagementTestUtilities.CreateResourceGroup(resourcesClient, location);
 
                 // Create storage account
-                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname);
+                var storageAccount = MediaManagementTestUtilities.CreateStorageAccount(storageClient, rgname, location);
 
                 // Create a media service
                 var accountName = TestUtilities.GenerateName("media");
