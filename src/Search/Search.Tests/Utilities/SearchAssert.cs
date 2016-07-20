@@ -49,30 +49,61 @@ namespace Microsoft.Azure.Search.Tests
                 else
                 {
                     Type expectedType = expectedObj.GetType();
-                    Assert.IsType(expectedType, actualObj);
+                    Type actualType = actualObj.GetType();
 
-                    // Special case for comparing Documents.
-                    if (expectedType == typeof(string[]))
+                    // Special case for integers.
+                    if (expectedType == typeof(long) || actualType == typeof(long))
                     {
-                        Assert.True(((string[])expectedObj).SequenceEqual((string[])actualObj));
+                        long expectedLong = Convert.ToInt64(expectedObj);
+                        long actualLong = Convert.ToInt64(actualObj);
+
+                        Assert.Equal(expectedLong, actualLong);
                     }
                     else
                     {
-                        Assert.Equal(expectedObj, actualObj);
+                        Assert.IsType(expectedType, actualObj);
+
+                        // Special case for comparing Documents.
+                        if (expectedType == typeof(string[]))
+                        {
+                            Assert.True(((string[])expectedObj).SequenceEqual((string[])actualObj));
+                        }
+                        else
+                        {
+                            Assert.Equal(expectedObj, actualObj);
+                        }
                     }
                 }
             }
         }
 
-        public static void SequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
+        public static void SequenceEqual<T>(
+            IEnumerable<T> expected,
+            IEnumerable<T> actual,
+            Action<T, T> assertElementsEqual = null)
         {
-            string message =
-                String.Format(
-                    "Expected: ['{0}'] Actual: ['{1}']",
-                    String.Join("', '", expected),
-                    String.Join("', '", actual));
+            assertElementsEqual = assertElementsEqual ?? ((a, b) => Assert.Equal(a, b));
 
-            Assert.True(expected.SequenceEqual(actual), message);
+            if (expected == null)
+            {
+                Assert.True(actual == null || !actual.Any());
+                return;
+            }
+
+            Assert.NotNull(actual);
+
+            T[] expectedArray = expected.ToArray();
+            T[] actualArray = actual.ToArray();
+
+            Assert.Equal(expectedArray.Length, actualArray.Length);
+
+            for (int i = 0; i < expectedArray.Length; i++)
+            {
+                T expectedElement = expectedArray[i];
+                T actualElement = actualArray[i];
+
+                assertElementsEqual(expectedElement, actualElement);
+            }
         }
     }
 }
