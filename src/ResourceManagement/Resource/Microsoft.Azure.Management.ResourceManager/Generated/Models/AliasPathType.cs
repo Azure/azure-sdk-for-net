@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// The path.
+        /// The path of an alias.
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
