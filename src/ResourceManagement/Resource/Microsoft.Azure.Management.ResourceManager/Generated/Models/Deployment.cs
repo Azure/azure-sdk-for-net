@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the deployment properties.
+        /// The deployment properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DeploymentProperties Properties { get; set; }

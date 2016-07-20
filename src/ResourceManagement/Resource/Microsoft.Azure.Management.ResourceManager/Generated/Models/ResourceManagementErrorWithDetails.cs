@@ -39,25 +39,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the error code returned from the server.
+        /// The error code returned from the server.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the error message returned from the server.
+        /// The error message returned from the server.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets the target of the error.
+        /// The target of the error.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; set; }
 
         /// <summary>
-        /// Gets or sets validation error.
+        /// Validation error.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public IList<ResourceManagementErrorWithDetails> Details { get; set; }

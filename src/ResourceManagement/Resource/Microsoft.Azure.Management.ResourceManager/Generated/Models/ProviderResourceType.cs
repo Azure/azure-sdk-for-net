@@ -39,32 +39,32 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the resource type.
+        /// The resource type.
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of locations where this resource type
-        /// can be created in.
+        /// The collection of locations where this resource type can be
+        /// created in.
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
         public IList<string> Locations { get; set; }
 
         /// <summary>
-        /// Gets or sets the aliases that are supported by this resource type.
+        /// The aliases that are supported by this resource type.
         /// </summary>
         [JsonProperty(PropertyName = "aliases")]
         public IList<AliasType> Aliases { get; set; }
 
         /// <summary>
-        /// Gets or sets the api version.
+        /// The api version.
         /// </summary>
         [JsonProperty(PropertyName = "apiVersions")]
         public IList<string> ApiVersions { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties.
+        /// The properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public IDictionary<string, string> Properties { get; set; }

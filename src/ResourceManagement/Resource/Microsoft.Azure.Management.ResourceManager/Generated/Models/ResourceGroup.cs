@@ -39,13 +39,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the ID of the resource group.
+        /// The ID of the resource group.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Name of the resource group.
+        /// The Name of the resource group.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -56,16 +56,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public ResourceGroupProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the resource group. It cannot be
-        /// changed after the resource group has been created. Has to be one
-        /// of the supported Azure Locations, such as West US, East US, West
-        /// Europe, East Asia, etc.
+        /// The location of the resource group. It cannot be changed after the
+        /// resource group has been created. Has to be one of the supported
+        /// Azure Locations, such as West US, East US, West Europe, East
+        /// Asia, etc.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the tags attached to the resource group.
+        /// The tags attached to the resource group.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
