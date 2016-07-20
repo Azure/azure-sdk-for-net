@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.V2.Resource.Core.DAG;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             creatableResource.CreatorTaskGroup.Merge(CreatorTaskGroup);
         }
 
-        public async Task<IFluentResourceT> CreateAsync()
+        public async Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
         {
             if (!CreatorTaskGroup.IsPreparer)
             {
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             }
 
             CreatorTaskGroup.Prepare();
-            await CreatorTaskGroup.ExecuteAsync();
+            await CreatorTaskGroup.ExecuteAsync(cancellationToken, multiThreaded);
             IFluentResourceT thisResource = this as IFluentResourceT;
             if (thisResource == null)
             {
@@ -48,14 +49,14 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 
         public CreatorTaskGroup CreatorTaskGroup { get; private set; }
 
-        public abstract Task<IResource> CreateResourceAsync();
+        public abstract Task<IResource> CreateResourceAsync(CancellationToken cancellationToken);
 
         #endregion
     }
 
     public interface IResourceCreator
     {
-        Task<IResource> CreateResourceAsync();
+        Task<IResource> CreateResourceAsync(CancellationToken cancellationToken);
         CreatorTaskGroup CreatorTaskGroup { get; }
     }
 }

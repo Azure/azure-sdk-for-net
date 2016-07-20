@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
@@ -9,9 +10,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
     {
         protected CreatableUpdatable(string name, InnerResourceT innerObject) : base(name, innerObject) { }
 
-        public async Task<IFluentResourceT> ApplyAsync()
+        public async Task<IFluentResourceT> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
-            return await CreateAsync();
+            return await CreateAsync(cancellationToken, multiThreaded);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
@@ -41,18 +44,48 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
             }
         }
 
-        public async Task ExecuteAsync()
+        public async Task ExecuteAsync(CancellationToken cancellationToken, bool multiThreaded)
         {
-            var nextNode = DAG.GetNext();
-            if (nextNode == null)
+            if (multiThreaded)
             {
-                await Task.Yield();
+                List<Task> tasks = new List<Task>();
+                var nextNode = DAG.GetNext();
+                while (nextNode != null)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
+                    Task task = ExecuteNodeTaskAsync(nextNode, cancellationToken, true);
+                    tasks.Add(task);
+                }
+
+                if (!tasks.Any())
+                {
+                    await Task.Yield();
+                    return;
+                }
+
+                await Task.WhenAll(tasks.ToArray());
                 return;
             }
+            else
+            {
+                var nextNode = DAG.GetNext();
+                if (nextNode == null)
+                {
+                    await Task.Yield();
+                    return;
+                }
+                await ExecuteNodeTaskAsync(nextNode, cancellationToken, false);
+            }
+        }
 
-            await nextNode.Data.ExecuteAsync();
-            DAG.ReportCompleted(nextNode);
-            await ExecuteAsync();
+        private async Task ExecuteNodeTaskAsync(DAGNode<ITaskItem<TaskResultT>> node, CancellationToken cancellationToken, bool multiThreaded)
+        {
+            await node.Data.ExecuteAsync(cancellationToken);
+            DAG.ReportCompleted(node);
+            await ExecuteAsync(cancellationToken, multiThreaded);
         }
 
         public TaskResultT TaskResult(string taskId)

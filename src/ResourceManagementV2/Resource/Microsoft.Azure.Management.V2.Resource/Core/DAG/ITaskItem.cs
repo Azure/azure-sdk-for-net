@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
@@ -6,6 +7,6 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
     {
         TaskResultT Result { get; }
 
-        Task ExecuteAsync();
+        Task ExecuteAsync(CancellationToken cancellationToken);
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.V2.Resource.Core;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
         }
 
-        public override Task<IResource> CreateResourceAsync()
+        public override Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
