@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Search.Models
         /// if keys can contain characters that are invalid in keys (such as
         /// dot '.'). Default is false.
         /// </summary>
-        [Obsolete("This property is obsolete. Please create a field mapping with the 'base64Encode' function instead: https://azure.microsoft.com/en-us/documentation/articles/search-indexer-field-mappings/#base64EncodeFunction")]
+        [Obsolete("This property is obsolete. Please create a field mapping using 'FieldMapping.Base64Encode' instead.")]
         [JsonProperty(PropertyName = "base64EncodeKeys")]
         public bool? Base64EncodeKeys { get; set; }
 
