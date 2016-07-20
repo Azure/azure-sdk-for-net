@@ -59,12 +59,17 @@ namespace DataLakeAnalytics.Tests
                     JobId = jobId
                 };
 
+                // check to make sure the job doesn't already exist
+                Assert.False(clientToUse.Job.Exists(commonData.SecondDataLakeAnalyticsAccountName, jobId));
                 var jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, jobId, jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
 
                 // Cancel the job
                 clientToUse.Job.Cancel(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
+
+                // check to make sure the job does exist now
+                Assert.True(clientToUse.Job.Exists(commonData.SecondDataLakeAnalyticsAccountName, jobId));
 
                 // Get the job and ensure that it says it was cancelled.
                 var getCancelledJobResponse = clientToUse.Job.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());

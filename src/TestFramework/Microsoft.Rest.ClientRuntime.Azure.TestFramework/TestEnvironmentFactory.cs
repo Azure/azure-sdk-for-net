@@ -45,7 +45,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 testEnv.UserName = TestEnvironment.UserIdDefault;
                 SetEnvironmentSubscriptionId(testEnv, connectionString);
-                testEnv.TokenInfo = new TokenInfo(TestEnvironment.RawTokenDefault);
+                testEnv.TokenInfo[TokenAudience.Management] = new TokenInfo(TestEnvironment.RawTokenDefault);
+                testEnv.TokenInfo[TokenAudience.Graph] = new TokenInfo(TestEnvironment.RawTokenDefault);
             }
             else //Record or None
             {
@@ -61,8 +62,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                     if (parsedConnection.ContainsKey(TestEnvironment.RawToken))
                     {
-                        var token = parsedConnection[TestEnvironment.RawToken];
-                        testEnv.TokenInfo = new TokenInfo(token);
+                        testEnv.TokenInfo[TokenAudience.Management] = new TokenInfo(parsedConnection[TestEnvironment.RawToken]);
+                        testEnv.TokenInfo[TokenAudience.Graph] = new TokenInfo(parsedConnection[TestEnvironment.RawGraphToken]);
                     }
                     else
                     {
@@ -71,32 +72,32 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                         if (testEnv.UserName != null && password != null)
                         {
-                            var result = TestEnvironmentFactory.LoginUserAsync(testEnv.Tenant, 
-                                testEnv.UserName, 
-                                password, 
-                                testEnv.Endpoints.AADTokenAudienceUri.ToString(),
-                                testEnv.Endpoints.AADAuthUri.ToString())
+                            TestEnvironmentFactory.LoginUserAsync(
+                                testEnv.TokenInfo,
+                                testEnv.Tenant,
+                                testEnv.UserName,
+                                password,
+                                testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
-                            testEnv.TokenInfo = new TokenInfo(result);
                         }
                         else if (testEnv.ServicePrincipal != null && password != null)
                         {
-                            var result = TestEnvironmentFactory.LoginServicePrincipalAsync(testEnv.Tenant,
+                            TestEnvironmentFactory.LoginServicePrincipalAsync(
+                                testEnv.TokenInfo,
+                                testEnv.Tenant,
                                 testEnv.ServicePrincipal, 
                                 password, 
-                                testEnv.Endpoints.AADTokenAudienceUri.ToString(),
-                                testEnv.Endpoints.AADAuthUri.ToString())
+                                testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
-                            testEnv.TokenInfo = new TokenInfo(result);
                         }
 #if NET45
                         else
                         {
-                            var result = LoginWithPromptAsync(testEnv.Tenant,
-                                testEnv.Endpoints.AADTokenAudienceUri.ToString(),
-                                testEnv.Endpoints.AADAuthUri.ToString())
+                            TestEnvironmentFactory.LoginWithPromptAsync(
+                                testEnv.TokenInfo,
+                                testEnv.Tenant,
+                                testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
-                            testEnv.TokenInfo = new TokenInfo(result);
                         }
 #endif
                     }
@@ -109,7 +110,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     //Getting subscriptions from server
                     var subscriptions = ListSubscriptions(
                         testEnv.BaseUri.ToString(),
-                        testEnv.TokenInfo);
+                        testEnv.TokenInfo[TokenAudience.Management]);
 
                     if (subscriptions.Count == 0)
                     {
@@ -209,47 +210,72 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             return results;
         }
 
-        private static async Task<AuthenticationResult> LoginUserAsync(string domain, 
+        private static async Task LoginUserAsync(
+            Dictionary<TokenAudience, TokenInfo> tokens,
+            string domain, 
             string username, 
             string password,
-            string resource,
-            string authenticationEndpoint)
+            TestEndpoints endpoints)
         {
             var credentials = new UserCredential(username, password);
-            var authenticationContext = new AuthenticationContext(authenticationEndpoint + domain, 
-                false);
-            return await authenticationContext.AcquireTokenAsync(resource,
-                  TestEnvironment.ClientIdDefault, credentials).ConfigureAwait(false);
-               
+            var authenticationContext = new AuthenticationContext(endpoints.AADAuthUri.ToString() + domain, false);
+            var authResult =  await authenticationContext.AcquireTokenAsync(
+                endpoints.AADTokenAudienceUri.ToString(),
+                TestEnvironment.ClientIdDefault, 
+                credentials).ConfigureAwait(false);
+
+            var graphResult = await authenticationContext.AcquireTokenAsync(
+                endpoints.GraphTokenAudienceUri.ToString(),
+                TestEnvironment.ClientIdDefault,
+                credentials).ConfigureAwait(false);
+
+            tokens[TokenAudience.Management] = new TokenInfo(authResult);
+            tokens[TokenAudience.Graph] = new TokenInfo(graphResult);
         }
 
-        private static async Task<AuthenticationResult> LoginServicePrincipalAsync(string domain, 
+        private static async Task LoginServicePrincipalAsync(
+            Dictionary<TokenAudience, TokenInfo> tokens,
+            string domain, 
             string servicePrincipalId, 
             string key,
-            string resource,
-            string authenticationEndpoint)
+            TestEndpoints endpoints)
         {
             var credentials = new ClientCredential(servicePrincipalId, key);
-            var authenticationContext = new AuthenticationContext(authenticationEndpoint + domain, 
-                false);
-            return await authenticationContext.AcquireTokenAsync(resource, credentials)
-                .ConfigureAwait(false);
-               
-        }
-#if NET45
+            var authenticationContext = new AuthenticationContext(endpoints.AADAuthUri.ToString() + domain, false);
+            var authResult = await authenticationContext.AcquireTokenAsync(
+                endpoints.AADTokenAudienceUri.ToString(), 
+                credentials).ConfigureAwait(false);
 
-        private static async Task<AuthenticationResult> LoginWithPromptAsync(string domain,
-            string resource,
-            string authenticationEndpoint)
+            var graphResult = await authenticationContext.AcquireTokenAsync(
+                endpoints.GraphTokenAudienceUri.ToString(),
+                credentials).ConfigureAwait(false);
+
+            tokens[TokenAudience.Management] = new TokenInfo(authResult);
+            tokens[TokenAudience.Graph] = new TokenInfo(graphResult);
+        }
+
+#if NET45
+        private static async Task LoginWithPromptAsync(
+            Dictionary<TokenAudience, TokenInfo> tokens,
+            string domain,
+            TestEndpoints endpoints)
         {
-            var authenticationContext = new AuthenticationContext(authenticationEndpoint + domain, 
+            var authenticationContext = new AuthenticationContext(endpoints.AADAuthUri.ToString() + domain, 
                 false, 
                 TokenCache.DefaultShared);
+            AuthenticationResult graphAuthorization = null;
             TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-            var task = new Task<AuthenticationResult>(() =>
+            var taskAd = new Task<AuthenticationResult>(() =>
             {
                 var result = authenticationContext.AcquireToken(
-                    resource,
+                    endpoints.AADTokenAudienceUri.ToString(),
+                    TestEnvironment.ClientIdDefault,
+                    new Uri("urn:ietf:wg:oauth:2.0:oob"),
+                    PromptBehavior.Auto,
+                    UserIdentifier.AnyUser);
+
+                graphAuthorization = authenticationContext.AcquireToken(
+                    endpoints.GraphTokenAudienceUri.ToString(),
                     TestEnvironment.ClientIdDefault,
                     new Uri("urn:ietf:wg:oauth:2.0:oob"),
                     PromptBehavior.Auto,
@@ -257,8 +283,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 return result;
             });
 
-            task.Start(scheduler);
-            return await task.ConfigureAwait(false);
+            taskAd.Start(scheduler);
+            var authResult = await taskAd.ConfigureAwait(false);
+
+            tokens[TokenAudience.Management] = new TokenInfo(authResult);
+            tokens[TokenAudience.Graph] = new TokenInfo(graphAuthorization);
         }
 #endif
     }

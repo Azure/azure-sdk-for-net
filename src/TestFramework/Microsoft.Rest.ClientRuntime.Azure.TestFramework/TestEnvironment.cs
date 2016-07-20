@@ -71,6 +71,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// A raw token to be used for authentication with the give subscription ID
         /// </summary>
         public const string RawToken = ConnectionStringFields.RawToken;
+        public const string RawGraphToken = ConnectionStringFields.RawGraphToken;
         public static string RawTokenDefault = Guid.NewGuid().ToString();
 
         public TestEndpoints Endpoints { get; set; }
@@ -91,6 +92,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://management.azure.com/"),
                 ServiceManagementUri = new Uri("https://management.core.windows.net"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
+                GraphTokenAudienceUri = new Uri("https://graph.windows.net/"),
                 DataLakeStoreServiceUri = new Uri("https://azuredatalakestore.net"),
                 DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://azuredatalakeanalytics.net")
             });
@@ -105,6 +107,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://api-dogfood.resources.windows-int.net/"),
                 ServiceManagementUri = new Uri("https://management-preview.core.windows-int.net"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
+                GraphTokenAudienceUri = new Uri("https://graph.windows.net/"),
                 DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"),
                 DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net")
             });
@@ -119,6 +122,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://api-next.resources.windows-int.net/"),
                 ServiceManagementUri = new Uri("https://managementnext.rdfetest.dnsdemo4.com"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
+                GraphTokenAudienceUri = new Uri("https://graph.windows.net/"),
                 DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"), // TODO: change once a "next" environment is published
                 DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "next" environment is published
             });
@@ -133,6 +137,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://api-current.resources.windows-int.net/"),
                 ServiceManagementUri = new Uri("https://management.rdfetest.dnsdemo4.com"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
+                GraphTokenAudienceUri = new Uri("https://graph.windows.net/"),
                 DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"), // TODO: change once a "Current" environment is published
                 DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "Current" environment is published
             });
@@ -145,6 +150,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         public TestEnvironment(IDictionary<string, string> connection)
         {
+            this.TokenInfo = new Dictionary<TokenAudience, TestFramework.TokenInfo>();
             // Instantiate dictionary of parameters
             RawParameters = new Dictionary<string, string>();
             // By default set env to Prod
@@ -242,7 +248,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 }
                 RawParameters = connection;
             }
-
         }
 
         private bool ConnectionStringContainsEndpoint(IDictionary<string, string> connection)
@@ -278,7 +283,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        public TokenInfo TokenInfo { get; set; }
+        public Dictionary<TokenAudience,TokenInfo> TokenInfo { get; private set; }
 
         public string ServicePrincipal { get; set; }
 

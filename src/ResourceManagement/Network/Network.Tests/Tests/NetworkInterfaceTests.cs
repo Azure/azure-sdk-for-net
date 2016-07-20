@@ -24,11 +24,17 @@ using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Networks.Tests
 {   
     public class NetworkInterfaceTests
     {
+        public NetworkInterfaceTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
+        }
+
         [Fact]
         public void NetworkInterfaceApiTest()
         {
