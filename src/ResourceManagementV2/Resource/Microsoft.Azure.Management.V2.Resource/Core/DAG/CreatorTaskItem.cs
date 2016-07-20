@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
             }
         }
 
-        public async Task ExecuteAsync()
+        public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             if (createdResource != null)
             {
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
                 return;
             }
 
-            createdResource = await resourceCreator.CreateResourceAsync();
+            createdResource = await resourceCreator.CreateResourceAsync(cancellationToken);
         }
     }
 }

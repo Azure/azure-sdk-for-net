@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
@@ -12,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 
         void Prepare();
 
-        Task ExecuteAsync();
+        Task ExecuteAsync(CancellationToken cancellationToken, bool multiThreaded);
 
         TaskResultT TaskResult(string taskId);
     }

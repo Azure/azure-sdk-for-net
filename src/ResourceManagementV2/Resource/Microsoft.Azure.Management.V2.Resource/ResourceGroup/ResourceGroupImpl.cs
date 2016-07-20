@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource
@@ -77,12 +78,12 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        public override async Task<IResource> CreateResourceAsync()
+        public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
         {
             ResourceManager.Models.ResourceGroupInner param = new ResourceManager.Models.ResourceGroupInner();
             param.Location = Inner.Location;
             param.Tags = Inner.Tags;
-            var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param);
+            var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param, null, cancellationToken);
             SetInner(response.Body);
             return this;
         }

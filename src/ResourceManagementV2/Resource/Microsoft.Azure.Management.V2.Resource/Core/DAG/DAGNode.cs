@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
@@ -9,6 +10,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
     {
         private HashSet<string> dependentKeys;
         private int toBeResolved;
+        internal object LockObject = new object();
 
         public DAGNode(string key, DataT data) : base(key, data)
         {

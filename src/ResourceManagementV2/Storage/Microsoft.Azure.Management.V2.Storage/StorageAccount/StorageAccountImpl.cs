@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.V2.Resource.Core;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -280,13 +281,12 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #endregion
 
-
         #region Implementation of IApplicable interface
 
-        public new async Task<IStorageAccount> ApplyAsync()
+        public new async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
             // overriding the base.ApplyAsync here since the parameter for update is different from the  one for create.
-            var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters);
+            var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
             SetInner(response);
             return this;
         }
@@ -295,11 +295,11 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Implementation of Creatable::CreateResourceAsync method
 
-        public override async Task<IResource> CreateResourceAsync()
+        public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
         {
             createParameters.Location = RegionName;
             createParameters.Tags = Inner.Tags;
-            var response = await client.CreateAsync(ResourceGroupName, this.name, createParameters);
+            var response = await client.CreateAsync(ResourceGroupName, this.name, createParameters, cancellationToken);
             SetInner(response);
             return this;
         }

@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
     public class DAGraph<NodeDataT, NodeT> : Graph<NodeDataT, NodeT> where NodeT : DAGNode<NodeDataT> 
     {
-        private Queue<string> queue;
+        private ConcurrentQueue<string> queue;
         private NodeT rootNode;
 
         public DAGraph(NodeT rootNode)
         {
             this.rootNode = rootNode;
-            queue = new Queue<string>();
+            queue = new ConcurrentQueue<string>();
             this.rootNode.SetPreparer(true);
             this.AddNode(rootNode);
         }
@@ -59,9 +59,10 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 
         public NodeT GetNext()
         {
-            if (queue.Any())
+            string nodeKey;
+            if (queue.TryDequeue(out nodeKey))
             {
-                return GetNode(queue.Dequeue());
+                return GetNode(nodeKey);
             }
             return null;
         }
@@ -77,10 +78,13 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
             foreach (string dependentKey in dependency.DependentKeys)
             {
                 NodeT dependent = GetNode(dependentKey);
-                dependent.ReportCompleted(dependency.Key);
-                if (dependent.HasAllResolved)
+                lock (dependent.LockObject)
                 {
-                    queue.Enqueue(dependent.Key);
+                    dependent.ReportCompleted(dependency.Key);
+                    if (dependent.HasAllResolved)
+                    {
+                        queue.Enqueue(dependent.Key);
+                    }
                 }
             }
         }
@@ -104,7 +108,11 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 
         private void InitializeQueue()
         {
-            queue.Clear();
+            // Clear the queue
+            string s;
+            while (queue.TryDequeue(out s)) { }
+
+            // push the leaf node keys
             foreach(KeyValuePair<string ,NodeT> item in graph)
             {
                 if (!item.Value.HasDependencies)
