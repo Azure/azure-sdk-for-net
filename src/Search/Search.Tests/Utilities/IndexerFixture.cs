@@ -12,8 +12,13 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     {
         // The connection string we use here, as well as table name and target index schema, use the USGS database
         // that we set up to support our code samples.
-        private const string AzureSqlReadOnlyConnectionString =
+        //
+        // ASSUMPTION: Change tracking has already been enabled on the database with ALTER DATABASE ... SET CHANGE_TRACKING = ON
+        // and it has been enabled on the table with ALTER TABLE ... ENABLE CHANGE_TRACKING
+        public const string AzureSqlReadOnlyConnectionString =
             "Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;"; // [SuppressMessage("Microsoft.Security", "CS001:SecretInline")]
+
+        public const string AzureSqlTestTableName = "GeoNamesRI";
 
         public string TargetIndexName { get; private set; }
 
@@ -45,11 +50,11 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             searchClient.Indexes.Create(index);
 
-            var dataSource = new DataSource(
-                DataSourceName,
-                DataSourceType.AzureSql,
-                new DataSourceCredentials(AzureSqlReadOnlyConnectionString),
-                new DataContainer("GeoNamesRI"));
+            var dataSource = 
+                DataSource.AzureSql(
+                    name: DataSourceName,
+                    sqlConnectionString: AzureSqlReadOnlyConnectionString,
+                    tableOrViewName: AzureSqlTestTableName);
 
             searchClient.DataSources.Create(dataSource);
         }
