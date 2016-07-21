@@ -1,14 +1,14 @@
 ﻿{
   "version": "1.0.0",
-  "description": "Microsoft Azure Media Management Library",
+  "description": "Provides developers with libraries for managing the MediaServices under Azure Resource Manager. New, set, get and delete MediaServices, regenerate account keys, sync the storage key and more.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
-    "summary": "Microsoft Azure Media Management Library",
+    "summary": "Provides developers with libraries for managing the MediaServices under Azure Resource Manager. New, set, get and delete MediaServices account, regenerate account keys, sync the storage key and more.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "tags": [ "Microsoft Azure Media management", "Media", "Media management", "REST HTTP client"],
+    "tags": [ "Microsoft Azure Media management", "Media", "Media management", "REST HTTP client" ],
     "requireLicenseAcceptance": true
   },
 
