@@ -451,6 +451,71 @@ namespace Sql2.Tests.ScenarioTests
         }
 
         /// <summary>
+        /// Test for Azure SQL Database Geo Backup Policy operations
+        /// </summary>
+        [Fact]
+        public void GeoBackupPolicyTest()
+        {
+            // Test params
+            string resourceGroupName = "TestRG";
+            string serverName = "testsvr-alazad";
+            string databaseName = "testdwdb";
+            string serverLocation = "North Europe";
+            string geoBackupPolicyName = "Default";
+
+            var handler = new BasicDelegatingHandler();
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                // Management Clients
+                var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+                var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
+
+                // Retrieve current state of the policy
+                GeoBackupPolicyGetResponse resp = sqlClient.DatabaseBackup.GetGeoBackupPolicy(resourceGroupName, serverName, databaseName, geoBackupPolicyName);
+                GeoBackupPolicy initialGeoBackupPolicy = resp.GeoBackupPolicy;
+                Assert.NotNull(initialGeoBackupPolicy);
+
+                // Disable policy
+                sqlClient.DatabaseBackup.CreateOrUpdateGeoBackupPolicy(resourceGroupName, serverName, databaseName, geoBackupPolicyName, new GeoBackupPolicyCreateOrUpdateParameters
+                {
+                    Location = serverLocation,
+                    Properties = new GeoBackupPolicyProperties()
+                    {
+                        State = "Disabled",
+                    }
+                });
+
+                // Verify policy is Disabled
+                resp = sqlClient.DatabaseBackup.GetGeoBackupPolicy(resourceGroupName, serverName, databaseName, geoBackupPolicyName);
+                Assert.Equal("Disabled", resp.GeoBackupPolicy.Properties.State);
+
+                // Enable policy
+                sqlClient.DatabaseBackup.CreateOrUpdateGeoBackupPolicy(resourceGroupName, serverName, databaseName, geoBackupPolicyName, new GeoBackupPolicyCreateOrUpdateParameters
+                {
+                    Location = serverLocation,
+                    Properties = new GeoBackupPolicyProperties()
+                    {
+                        State = "Enabled",
+                    }
+                });
+
+                // Verify policy is Enabled
+                resp = sqlClient.DatabaseBackup.GetGeoBackupPolicy(resourceGroupName, serverName, databaseName, geoBackupPolicyName);
+                Assert.Equal("Enabled", resp.GeoBackupPolicy.Properties.State);
+
+                // Reset policy to its original value
+                sqlClient.DatabaseBackup.CreateOrUpdateGeoBackupPolicy(resourceGroupName, serverName, databaseName, geoBackupPolicyName, new GeoBackupPolicyCreateOrUpdateParameters
+                {
+                    Location = serverLocation,
+                    Properties = initialGeoBackupPolicy.Properties,
+                });
+            }
+        }
+
+        /// <summary>
         /// Validates the RestorePointListResponse.
         /// </summary>
         /// <param name="restorePointsListResponse">Response to validate.</param>

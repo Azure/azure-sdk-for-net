@@ -21,35 +21,46 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Azure Sql Server backup archival vault
-    /// request.
+    /// Create or update blob auditing parameters.
     /// </summary>
-    public partial class BackupArchivalVaultGetResponse : AzureOperationResponse
+    public partial class BlobAuditingCreateOrUpdateParameters
     {
-        private BackupArchivalVault _backupArchivalVault;
+        private BlobAuditingProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the object representing a given Azure Sql
-        /// Server backup archival vault.
+        /// Required. Gets or sets the properties of the request.
         /// </summary>
-        public BackupArchivalVault BackupArchivalVault
+        public BlobAuditingProperties Properties
         {
-            get { return this._backupArchivalVault; }
-            set { this._backupArchivalVault = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupArchivalVaultGetResponse
-        /// class.
+        /// Initializes a new instance of the
+        /// BlobAuditingCreateOrUpdateParameters class.
         /// </summary>
-        public BackupArchivalVaultGetResponse()
+        public BlobAuditingCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// BlobAuditingCreateOrUpdateParameters class with required arguments.
+        /// </summary>
+        public BlobAuditingCreateOrUpdateParameters(BlobAuditingProperties properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

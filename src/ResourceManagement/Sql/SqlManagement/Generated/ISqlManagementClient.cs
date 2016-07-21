@@ -87,6 +87,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Server blob auditing. Contains operations to: Create, Retrieve and
+        /// Update blob auditing settings.
+        /// </summary>
+        IBlobAuditingOperations BlobAuditing
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for determining the set of
         /// capabilites available in a specified region.
         /// </summary>

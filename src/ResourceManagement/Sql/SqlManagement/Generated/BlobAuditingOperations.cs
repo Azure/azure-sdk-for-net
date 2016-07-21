@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
@@ -38,20 +38,19 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
-    /// Represents all the operations for operating on Azure SQL Server
-    /// communication links.  Contains operations to: Create, Retrieve,
-    /// Update, and Delete.
+    /// Represents all the operations to manage Azure SQL Database and Server
+    /// blob auditing. Contains operations to: Create, Retrieve and Update
+    /// blob auditing settings.
     /// </summary>
-    internal partial class ServerCommunicationLinkOperations : IServiceOperations<SqlManagementClient>, IServerCommunicationLinkOperations
+    internal partial class BlobAuditingOperations : IServiceOperations<SqlManagementClient>, IBlobAuditingOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ServerCommunicationLinkOperations
-        /// class.
+        /// Initializes a new instance of the BlobAuditingOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ServerCommunicationLinkOperations(SqlManagementClient client)
+        internal BlobAuditingOperations(SqlManagementClient client)
         {
             this._client = client;
         }
@@ -68,33 +67,32 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Begins creating a new or updating an existing Azure SQL Server
-        /// communication. To determine the status of the operation call
-        /// GetServerCommunicationLinkOperationStatus.
+        /// Creates or updates an Azure SQL Database blob auditing policy.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the Azure SQL
-        /// Server belongs.
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
-        /// <param name='communicationLinkName'>
-        /// Required. The name of the Azure SQL Server communication link to be
-        /// operated on (Updated or created).
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database for which the auditing
+        /// policy applies.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for creating or updating a Server
-        /// communication link.
+        /// Required. The required parameters for createing or updating a Azure
+        /// SQL Database auditing policy.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running Azure Sql server communication link
-        /// operation.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<ServerCommunicationLinkCreateOrUpdateResponse> BeginCreateOrUpdateAsync(string resourceGroupName, string serverName, string communicationLinkName, ServerCommunicationLinkCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateDatabasePolicyAsync(string resourceGroupName, string serverName, string databaseName, BlobAuditingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -105,17 +103,13 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("serverName");
             }
-            if (communicationLinkName == null)
+            if (databaseName == null)
             {
-                throw new ArgumentNullException("communicationLinkName");
+                throw new ArgumentNullException("databaseName");
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
             }
             if (parameters.Properties == null)
             {
@@ -131,9 +125,9 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("communicationLinkName", communicationLinkName);
+                tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "BeginCreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateDatabasePolicyAsync", tracingParameters);
             }
             
             // Construct URL
@@ -149,10 +143,11 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/communicationLinks/";
-            url = url + Uri.EscapeDataString(communicationLinkName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/auditingSettings/Default";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -188,29 +183,40 @@ namespace Microsoft.Azure.Management.Sql
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject serverCommunicationLinkCreateOrUpdateParametersValue = new JObject();
-                requestDoc = serverCommunicationLinkCreateOrUpdateParametersValue;
+                JObject blobAuditingCreateOrUpdateParametersValue = new JObject();
+                requestDoc = blobAuditingCreateOrUpdateParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                serverCommunicationLinkCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                blobAuditingCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
-                if (parameters.Properties.PartnerServer != null)
+                if (parameters.Properties.State != null)
                 {
-                    propertiesValue["partnerServer"] = parameters.Properties.PartnerServer;
+                    propertiesValue["state"] = parameters.Properties.State;
                 }
                 
-                serverCommunicationLinkCreateOrUpdateParametersValue["location"] = parameters.Location;
-                
-                if (parameters.Tags != null)
+                if (parameters.Properties.StorageEndpoint != null)
                 {
-                    JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    propertiesValue["storageEndpoint"] = parameters.Properties.StorageEndpoint;
+                }
+                
+                if (parameters.Properties.StorageAccountAccessKey != null)
+                {
+                    propertiesValue["storageAccountAccessKey"] = parameters.Properties.StorageAccountAccessKey;
+                }
+                
+                propertiesValue["retentionDays"] = parameters.Properties.RetentionDays;
+                
+                if (parameters.Properties.AuditActionsAndGroups != null)
+                {
+                    if (parameters.Properties.AuditActionsAndGroups is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AuditActionsAndGroups).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JArray auditActionsAndGroupsArray = new JArray();
+                        foreach (string auditActionsAndGroupsItem in parameters.Properties.AuditActionsAndGroups)
+                        {
+                            auditActionsAndGroupsArray.Add(auditActionsAndGroupsItem);
+                        }
+                        propertiesValue["auditActionsAndGroups"] = auditActionsAndGroupsArray;
                     }
-                    serverCommunicationLinkCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -232,364 +238,10 @@ namespace Microsoft.Azure.Management.Sql
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ServerCommunicationLinkCreateOrUpdateResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ServerCommunicationLinkCreateOrUpdateResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            ErrorResponse errorInstance = new ErrorResponse();
-                            result.Error = errorInstance;
-                            
-                            JToken codeValue = responseDoc["code"];
-                            if (codeValue != null && codeValue.Type != JTokenType.Null)
-                            {
-                                string codeInstance = ((string)codeValue);
-                                errorInstance.Code = codeInstance;
-                            }
-                            
-                            JToken messageValue = responseDoc["message"];
-                            if (messageValue != null && messageValue.Type != JTokenType.Null)
-                            {
-                                string messageInstance = ((string)messageValue);
-                                errorInstance.Message = messageInstance;
-                            }
-                            
-                            JToken targetValue = responseDoc["target"];
-                            if (targetValue != null && targetValue.Type != JTokenType.Null)
-                            {
-                                string targetInstance = ((string)targetValue);
-                                errorInstance.Target = targetInstance;
-                            }
-                            
-                            ServerCommunicationLink serverCommunicationLinkInstance = new ServerCommunicationLink();
-                            result.ServerCommunicationLink = serverCommunicationLinkInstance;
-                            
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                            {
-                                ServerCommunicationLinkProperties propertiesInstance = new ServerCommunicationLinkProperties();
-                                serverCommunicationLinkInstance.Properties = propertiesInstance;
-                                
-                                JToken stateValue = propertiesValue2["state"];
-                                if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                {
-                                    string stateInstance = ((string)stateValue);
-                                    propertiesInstance.State = stateInstance;
-                                }
-                                
-                                JToken partnerServerValue = propertiesValue2["partnerServer"];
-                                if (partnerServerValue != null && partnerServerValue.Type != JTokenType.Null)
-                                {
-                                    string partnerServerInstance = ((string)partnerServerValue);
-                                    propertiesInstance.PartnerServer = partnerServerInstance;
-                                }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                serverCommunicationLinkInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                serverCommunicationLinkInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                serverCommunicationLinkInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                serverCommunicationLinkInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey2 = ((string)property.Name);
-                                    string tagsValue2 = ((string)property.Value);
-                                    serverCommunicationLinkInstance.Tags.Add(tagsKey2, tagsValue2);
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("Location"))
-                    {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Retry-After"))
-                    {
-                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
-                    }
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    if (statusCode == HttpStatusCode.Created)
-                    {
-                        result.Status = OperationStatus.Succeeded;
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Creates a new or updates an existing Azure SQL Server communication
-        /// link.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the Azure SQL
-        /// Database Server belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server.
-        /// </param>
-        /// <param name='communicationLinkName'>
-        /// Required. The name of the Azure SQL Server communication link to be
-        /// operated on (Updated or created).
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The required parameters for creating or updating a Server
-        /// communication link.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Response for long running Azure Sql server communication link
-        /// operation.
-        /// </returns>
-        public async Task<ServerCommunicationLinkCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string communicationLinkName, ServerCommunicationLinkCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
-        {
-            SqlManagementClient client = this.Client;
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("communicationLinkName", communicationLinkName);
-                tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
-            }
-            
-            cancellationToken.ThrowIfCancellationRequested();
-            ServerCommunicationLinkCreateOrUpdateResponse response = await client.CommunicationLinks.BeginCreateOrUpdateAsync(resourceGroupName, serverName, communicationLinkName, parameters, cancellationToken).ConfigureAwait(false);
-            if (response.Status == OperationStatus.Succeeded)
-            {
-                return response;
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            ServerCommunicationLinkCreateOrUpdateResponse result = await client.CommunicationLinks.GetServerCommunicationLinkOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = response.RetryAfter;
-            if (delayInSeconds == 0)
-            {
-                delayInSeconds = 30;
-            }
-            if (client.LongRunningOperationInitialTimeout >= 0)
-            {
-                delayInSeconds = client.LongRunningOperationInitialTimeout;
-            }
-            while (result.Status == OperationStatus.InProgress)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                result = await client.CommunicationLinks.GetServerCommunicationLinkOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = result.RetryAfter;
-                if (delayInSeconds == 0)
-                {
-                    delayInSeconds = 15;
-                }
-                if (client.LongRunningOperationRetryTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationRetryTimeout;
-                }
-            }
-            
-            if (shouldTrace)
-            {
-                TracingAdapter.Exit(invocationId, result);
-            }
-            
-            return result;
-        }
-        
-        /// <summary>
-        /// Deletes the Azure SQL server communication link with the given name.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the Azure SQL
-        /// Server belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server.
-        /// </param>
-        /// <param name='communicationLinkName'>
-        /// Required. The name of the Azure SQL server communication link to be
-        /// retrieved.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string serverName, string communicationLinkName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException("communicationLinkName");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("communicationLinkName", communicationLinkName);
-                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/communicationLinks/";
-            url = url + Uri.EscapeDataString(communicationLinkName);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -631,26 +283,28 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about an Azure SQL Server communication links.
+        /// Creates or updates an Azure SQL Database Server blob auditing
+        /// policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
         /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
-        /// <param name='communicationLinkName'>
-        /// Required. The name of the Azure SQL server communication link to be
-        /// retrieved.
+        /// <param name='parameters'>
+        /// Required. The required parameters for createing or updating a Azure
+        /// SQL Database Server blob auditing policy.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a get server communication link request.
+        /// Response Azure Sql Server blob auditing operation.
         /// </returns>
-        public async Task<ServerCommunicationLinkGetResponse> GetAsync(string resourceGroupName, string serverName, string communicationLinkName, CancellationToken cancellationToken)
+        public async Task<ServerBlobAuditingResponse> CreateOrUpdateServerPolicyAsync(string resourceGroupName, string serverName, BlobAuditingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -661,9 +315,13 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("serverName");
             }
-            if (communicationLinkName == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("communicationLinkName");
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
             }
             
             // Tracing
@@ -675,8 +333,8 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("communicationLinkName", communicationLinkName);
-                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateServerPolicyAsync", tracingParameters);
             }
             
             // Construct URL
@@ -692,10 +350,231 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/communicationLinks/";
-            url = url + Uri.EscapeDataString(communicationLinkName);
+            url = url + "/auditingSettings/Default";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject blobAuditingCreateOrUpdateParametersValue = new JObject();
+                requestDoc = blobAuditingCreateOrUpdateParametersValue;
+                
+                JObject propertiesValue = new JObject();
+                blobAuditingCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.State != null)
+                {
+                    propertiesValue["state"] = parameters.Properties.State;
+                }
+                
+                if (parameters.Properties.StorageEndpoint != null)
+                {
+                    propertiesValue["storageEndpoint"] = parameters.Properties.StorageEndpoint;
+                }
+                
+                if (parameters.Properties.StorageAccountAccessKey != null)
+                {
+                    propertiesValue["storageAccountAccessKey"] = parameters.Properties.StorageAccountAccessKey;
+                }
+                
+                propertiesValue["retentionDays"] = parameters.Properties.RetentionDays;
+                
+                if (parameters.Properties.AuditActionsAndGroups != null)
+                {
+                    if (parameters.Properties.AuditActionsAndGroups is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AuditActionsAndGroups).IsInitialized)
+                    {
+                        JArray auditActionsAndGroupsArray = new JArray();
+                        foreach (string auditActionsAndGroupsItem in parameters.Properties.AuditActionsAndGroups)
+                        {
+                            auditActionsAndGroupsArray.Add(auditActionsAndGroupsItem);
+                        }
+                        propertiesValue["auditActionsAndGroups"] = auditActionsAndGroupsArray;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerBlobAuditingResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerBlobAuditingResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database blob auditing policy.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database for which the auditing
+        /// policy applies.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a get request for Azure SQL server or
+        /// database blob auditing policy.
+        /// </returns>
+        public async Task<BlobAuditingGetResponse> GetDatabaseBlobAuditingPolicyAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "GetDatabaseBlobAuditingPolicyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/auditingSettings/Default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -754,13 +633,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    ServerCommunicationLinkGetResponse result = null;
+                    BlobAuditingGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ServerCommunicationLinkGetResponse();
+                        result = new BlobAuditingGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -769,14 +648,14 @@ namespace Microsoft.Azure.Management.Sql
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ServerCommunicationLink serverCommunicationLinkInstance = new ServerCommunicationLink();
-                            result.ServerCommunicationLink = serverCommunicationLinkInstance;
+                            BlobAuditingPolicy auditingPolicyInstance = new BlobAuditingPolicy();
+                            result.AuditingPolicy = auditingPolicyInstance;
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                ServerCommunicationLinkProperties propertiesInstance = new ServerCommunicationLinkProperties();
-                                serverCommunicationLinkInstance.Properties = propertiesInstance;
+                                BlobAuditingProperties propertiesInstance = new BlobAuditingProperties();
+                                auditingPolicyInstance.Properties = propertiesInstance;
                                 
                                 JToken stateValue = propertiesValue["state"];
                                 if (stateValue != null && stateValue.Type != JTokenType.Null)
@@ -785,11 +664,34 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.State = stateInstance;
                                 }
                                 
-                                JToken partnerServerValue = propertiesValue["partnerServer"];
-                                if (partnerServerValue != null && partnerServerValue.Type != JTokenType.Null)
+                                JToken storageEndpointValue = propertiesValue["storageEndpoint"];
+                                if (storageEndpointValue != null && storageEndpointValue.Type != JTokenType.Null)
                                 {
-                                    string partnerServerInstance = ((string)partnerServerValue);
-                                    propertiesInstance.PartnerServer = partnerServerInstance;
+                                    string storageEndpointInstance = ((string)storageEndpointValue);
+                                    propertiesInstance.StorageEndpoint = storageEndpointInstance;
+                                }
+                                
+                                JToken storageAccountAccessKeyValue = propertiesValue["storageAccountAccessKey"];
+                                if (storageAccountAccessKeyValue != null && storageAccountAccessKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountAccessKeyInstance = ((string)storageAccountAccessKeyValue);
+                                    propertiesInstance.StorageAccountAccessKey = storageAccountAccessKeyInstance;
+                                }
+                                
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    int retentionDaysInstance = ((int)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
+                                }
+                                
+                                JToken auditActionsAndGroupsArray = propertiesValue["auditActionsAndGroups"];
+                                if (auditActionsAndGroupsArray != null && auditActionsAndGroupsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken auditActionsAndGroupsValue in ((JArray)auditActionsAndGroupsArray))
+                                    {
+                                        propertiesInstance.AuditActionsAndGroups.Add(((string)auditActionsAndGroupsValue));
+                                    }
                                 }
                             }
                             
@@ -797,28 +699,28 @@ namespace Microsoft.Azure.Management.Sql
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 string idInstance = ((string)idValue);
-                                serverCommunicationLinkInstance.Id = idInstance;
+                                auditingPolicyInstance.Id = idInstance;
                             }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                serverCommunicationLinkInstance.Name = nameInstance;
+                                auditingPolicyInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
                                 string typeInstance = ((string)typeValue);
-                                serverCommunicationLinkInstance.Type = typeInstance;
+                                auditingPolicyInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                serverCommunicationLinkInstance.Location = locationInstance;
+                                auditingPolicyInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -828,7 +730,7 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
-                                    serverCommunicationLinkInstance.Tags.Add(tagsKey, tagsValue);
+                                    auditingPolicyInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -864,20 +766,21 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Gets the status of an Azure Sql Server communication link create or
+        /// Gets the status of an Azure Sql Server blob auditing create or
         /// update operation.
         /// </summary>
         /// <param name='operationStatusLink'>
-        /// Required. Location value returned by the Begin operation
+        /// Required. Server blob auditing status link returned by the
+        /// CreateOrUpdate operation
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running Azure Sql server communication link
-        /// operation.
+        /// Response for long running Azure Sql server blob auditing create or
+        /// update operations.
         /// </returns>
-        public async Task<ServerCommunicationLinkCreateOrUpdateResponse> GetServerCommunicationLinkOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<ServerBlobAuditingOperationResponse> GetOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -893,7 +796,7 @@ namespace Microsoft.Azure.Management.Sql
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                TracingAdapter.Enter(invocationId, this, "GetServerCommunicationLinkOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
@@ -930,7 +833,7 @@ namespace Microsoft.Azure.Management.Sql
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -942,13 +845,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    ServerCommunicationLinkCreateOrUpdateResponse result = null;
+                    ServerBlobAuditingOperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ServerCommunicationLinkCreateOrUpdateResponse();
+                        result = new ServerBlobAuditingOperationResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -957,51 +860,34 @@ namespace Microsoft.Azure.Management.Sql
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ErrorResponse errorInstance = new ErrorResponse();
-                            result.Error = errorInstance;
-                            
-                            JToken codeValue = responseDoc["code"];
-                            if (codeValue != null && codeValue.Type != JTokenType.Null)
-                            {
-                                string codeInstance = ((string)codeValue);
-                                errorInstance.Code = codeInstance;
-                            }
-                            
-                            JToken messageValue = responseDoc["message"];
-                            if (messageValue != null && messageValue.Type != JTokenType.Null)
-                            {
-                                string messageInstance = ((string)messageValue);
-                                errorInstance.Message = messageInstance;
-                            }
-                            
-                            JToken targetValue = responseDoc["target"];
-                            if (targetValue != null && targetValue.Type != JTokenType.Null)
-                            {
-                                string targetInstance = ((string)targetValue);
-                                errorInstance.Target = targetInstance;
-                            }
-                            
-                            ServerCommunicationLink serverCommunicationLinkInstance = new ServerCommunicationLink();
-                            result.ServerCommunicationLink = serverCommunicationLinkInstance;
+                            BlobAuditingOperationResult operationResultInstance = new BlobAuditingOperationResult();
+                            result.OperationResult = operationResultInstance;
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                ServerCommunicationLinkProperties propertiesInstance = new ServerCommunicationLinkProperties();
-                                serverCommunicationLinkInstance.Properties = propertiesInstance;
+                                BlobAuditingOperationResultProperties propertiesInstance = new BlobAuditingOperationResultProperties();
+                                operationResultInstance.Properties = propertiesInstance;
                                 
                                 JToken stateValue = propertiesValue["state"];
                                 if (stateValue != null && stateValue.Type != JTokenType.Null)
                                 {
-                                    string stateInstance = ((string)stateValue);
+                                    OperationStatus stateInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)stateValue), true));
                                     propertiesInstance.State = stateInstance;
                                 }
                                 
-                                JToken partnerServerValue = propertiesValue["partnerServer"];
-                                if (partnerServerValue != null && partnerServerValue.Type != JTokenType.Null)
+                                JToken startTimeValue = propertiesValue["startTime"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                 {
-                                    string partnerServerInstance = ((string)partnerServerValue);
-                                    propertiesInstance.PartnerServer = partnerServerInstance;
+                                    string startTimeInstance = ((string)startTimeValue);
+                                    propertiesInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken operationIdValue = propertiesValue["operationId"];
+                                if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
+                                {
+                                    string operationIdInstance = ((string)operationIdValue);
+                                    propertiesInstance.OperationId = operationIdInstance;
                                 }
                             }
                             
@@ -1009,28 +895,28 @@ namespace Microsoft.Azure.Management.Sql
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 string idInstance = ((string)idValue);
-                                serverCommunicationLinkInstance.Id = idInstance;
+                                operationResultInstance.Id = idInstance;
                             }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                serverCommunicationLinkInstance.Name = nameInstance;
+                                operationResultInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
                                 string typeInstance = ((string)typeValue);
-                                serverCommunicationLinkInstance.Type = typeInstance;
+                                operationResultInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                serverCommunicationLinkInstance.Location = locationInstance;
+                                operationResultInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -1040,7 +926,7 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
-                                    serverCommunicationLinkInstance.Tags.Add(tagsKey, tagsValue);
+                                    operationResultInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -1050,14 +936,6 @@ namespace Microsoft.Azure.Management.Sql
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        result.Status = OperationStatus.Succeeded;
-                    }
-                    if (statusCode == HttpStatusCode.Created)
-                    {
-                        result.Status = OperationStatus.Succeeded;
                     }
                     
                     if (shouldTrace)
@@ -1084,23 +962,24 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about Azure SQL Server communication links.
+        /// Returns an Azure SQL Database server blob auditing policy.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the Azure SQL
-        /// Server belongs.
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Server.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a List Azure Sql Server communication
-        /// link request.
+        /// Represents the response to a get request for Azure SQL server or
+        /// database blob auditing policy.
         /// </returns>
-        public async Task<ServerCommunicationLinkListResponse> ListAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
+        public async Task<BlobAuditingGetResponse> GetServerPolicyAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1121,7 +1000,7 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetServerPolicyAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1137,9 +1016,9 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/communicationLinks";
+            url = url + "/auditingSettings/Default";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1198,13 +1077,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    ServerCommunicationLinkListResponse result = null;
+                    BlobAuditingGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ServerCommunicationLinkListResponse();
+                        result = new BlobAuditingGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1213,73 +1092,89 @@ namespace Microsoft.Azure.Management.Sql
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            BlobAuditingPolicy auditingPolicyInstance = new BlobAuditingPolicy();
+                            result.AuditingPolicy = auditingPolicyInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                foreach (JToken valueValue in ((JArray)valueArray))
+                                BlobAuditingProperties propertiesInstance = new BlobAuditingProperties();
+                                auditingPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
                                 {
-                                    ServerCommunicationLink serverCommunicationLinkInstance = new ServerCommunicationLink();
-                                    result.ServerCommunicationLinks.Add(serverCommunicationLinkInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
+                                JToken storageEndpointValue = propertiesValue["storageEndpoint"];
+                                if (storageEndpointValue != null && storageEndpointValue.Type != JTokenType.Null)
+                                {
+                                    string storageEndpointInstance = ((string)storageEndpointValue);
+                                    propertiesInstance.StorageEndpoint = storageEndpointInstance;
+                                }
+                                
+                                JToken storageAccountAccessKeyValue = propertiesValue["storageAccountAccessKey"];
+                                if (storageAccountAccessKeyValue != null && storageAccountAccessKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountAccessKeyInstance = ((string)storageAccountAccessKeyValue);
+                                    propertiesInstance.StorageAccountAccessKey = storageAccountAccessKeyInstance;
+                                }
+                                
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    int retentionDaysInstance = ((int)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
+                                }
+                                
+                                JToken auditActionsAndGroupsArray = propertiesValue["auditActionsAndGroups"];
+                                if (auditActionsAndGroupsArray != null && auditActionsAndGroupsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken auditActionsAndGroupsValue in ((JArray)auditActionsAndGroupsArray))
                                     {
-                                        ServerCommunicationLinkProperties propertiesInstance = new ServerCommunicationLinkProperties();
-                                        serverCommunicationLinkInstance.Properties = propertiesInstance;
-                                        
-                                        JToken stateValue = propertiesValue["state"];
-                                        if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                        {
-                                            string stateInstance = ((string)stateValue);
-                                            propertiesInstance.State = stateInstance;
-                                        }
-                                        
-                                        JToken partnerServerValue = propertiesValue["partnerServer"];
-                                        if (partnerServerValue != null && partnerServerValue.Type != JTokenType.Null)
-                                        {
-                                            string partnerServerInstance = ((string)partnerServerValue);
-                                            propertiesInstance.PartnerServer = partnerServerInstance;
-                                        }
+                                        propertiesInstance.AuditActionsAndGroups.Add(((string)auditActionsAndGroupsValue));
                                     }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        serverCommunicationLinkInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        serverCommunicationLinkInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        serverCommunicationLinkInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        serverCommunicationLinkInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            serverCommunicationLinkInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                auditingPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                auditingPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                auditingPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                auditingPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    auditingPolicyInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }

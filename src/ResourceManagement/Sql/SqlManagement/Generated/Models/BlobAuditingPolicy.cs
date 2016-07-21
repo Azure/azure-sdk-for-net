@@ -27,35 +27,33 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database backup archival policy.
+    /// Represents an Azure SQL blob auditing policy.
     /// </summary>
-    public partial class DatabaseBackupArchivalPolicy : ResourceBaseExtended
+    public partial class BlobAuditingPolicy : ResourceBaseExtended
     {
-        private DatabaseBackupArchivalPolicyProperties _properties;
+        private BlobAuditingProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the properties representing the backup
-        /// archival policy.
+        /// Optional. Represents the properties of the resource.
         /// </summary>
-        public DatabaseBackupArchivalPolicyProperties Properties
+        public BlobAuditingProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DatabaseBackupArchivalPolicy
-        /// class.
+        /// Initializes a new instance of the BlobAuditingPolicy class.
         /// </summary>
-        public DatabaseBackupArchivalPolicy()
+        public BlobAuditingPolicy()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the DatabaseBackupArchivalPolicy
-        /// class with required arguments.
+        /// Initializes a new instance of the BlobAuditingPolicy class with
+        /// required arguments.
         /// </summary>
-        public DatabaseBackupArchivalPolicy(string location)
+        public BlobAuditingPolicy(string location)
             : this()
         {
             if (location == null)

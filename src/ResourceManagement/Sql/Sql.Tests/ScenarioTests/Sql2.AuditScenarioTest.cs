@@ -76,7 +76,7 @@ namespace Sql2.Tests.ScenarioTests
                 StorageAccountSubscriptionId = null,
                 StorageTableEndpoint = null,
                 RetentionDays = "0",
-                UseServerDefault = "Disabled"
+                UseServerDefault = "Enabled"
             };
             return props;
         }

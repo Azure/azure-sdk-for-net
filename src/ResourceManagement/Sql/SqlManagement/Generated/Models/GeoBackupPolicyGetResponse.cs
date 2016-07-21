@@ -27,28 +27,27 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Azure Sql Database backup archival
-    /// policy request.
+    /// Represents the response to a Get Azure Sql Database geo backup policy
+    /// request.
     /// </summary>
-    public partial class DatabaseBackupArchivalPolicyGetResponse : AzureOperationResponse
+    public partial class GeoBackupPolicyGetResponse : AzureOperationResponse
     {
-        private DatabaseBackupArchivalPolicy _databaseBackupArchivalPolicy;
+        private GeoBackupPolicy _geoBackupPolicy;
         
         /// <summary>
         /// Optional. Gets or sets the object representing a given Azure Sql
-        /// Database backup archival policy.
+        /// Database geo backup policy.
         /// </summary>
-        public DatabaseBackupArchivalPolicy DatabaseBackupArchivalPolicy
+        public GeoBackupPolicy GeoBackupPolicy
         {
-            get { return this._databaseBackupArchivalPolicy; }
-            set { this._databaseBackupArchivalPolicy = value; }
+            get { return this._geoBackupPolicy; }
+            set { this._geoBackupPolicy = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DatabaseBackupArchivalPolicyGetResponse class.
+        /// Initializes a new instance of the GeoBackupPolicyGetResponse class.
         /// </summary>
-        public DatabaseBackupArchivalPolicyGetResponse()
+        public GeoBackupPolicyGetResponse()
         {
         }
     }
