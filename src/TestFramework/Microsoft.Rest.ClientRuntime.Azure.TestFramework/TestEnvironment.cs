@@ -150,7 +150,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         public TestEnvironment(IDictionary<string, string> connection)
         {
-            this.TokenInfo = new Dictionary<TokenAudience, TestFramework.TokenInfo>();
+            this.TokenInfo = new Dictionary<TokenAudience, TokenCredentials>();
             // Instantiate dictionary of parameters
             RawParameters = new Dictionary<string, string>();
             // By default set env to Prod
@@ -283,7 +283,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        public Dictionary<TokenAudience,TokenInfo> TokenInfo { get; private set; }
+        public Dictionary<TokenAudience,TokenCredentials> TokenInfo { get; private set; }
 
         public string ServicePrincipal { get; set; }
 
