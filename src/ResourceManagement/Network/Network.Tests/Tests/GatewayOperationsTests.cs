@@ -19,9 +19,15 @@ namespace Networks.Tests
     using SubResource = Microsoft.Azure.Management.Network.Models.SubResource;
     using System.IO;
     using System.Security.Cryptography.X509Certificates;
+    using Microsoft.Azure.Test.HttpRecorder;
 
     public class GatewayOperationsTests
     {
+        public GatewayOperationsTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
+        }
+
         // Tests Resource:-VirtualNetworkGateway 6 APIs:-
         [Fact]
         public void VirtualNetworkGatewayOperationsApisTest()

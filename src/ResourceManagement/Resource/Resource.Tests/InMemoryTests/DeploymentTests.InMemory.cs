@@ -146,7 +146,86 @@ namespace ResourceGroups.Tests
             Assert.True(result.Properties.Parameters.ToString().Contains("\"type\": \"string\""));
             Assert.True(result.Properties.Outputs.ToString().Contains("\"type\": \"string\""));
         }
-         
+
+        [Fact]
+        public void DeploymentTestsTemplateAsJsonString()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"{
+                    'id': 'foo',
+                    'name': 'test-release-3',
+                    'properties': {
+                        'parameters': {
+                            'storageAccountName': {
+				                'type': 'String',
+				                'value': 'tianotest04'
+			                }
+		                },
+		                'mode': 'Incremental',
+		                'provisioningState': 'Succeeded',
+		                'timestamp': '2016-07-12T17:36:39.2398177Z',
+		                'duration': 'PT0.5966357S',
+		                'correlationId': 'c0d728d5-5b97-41b9-b79a-abcd9eb5fe4a'
+	                }
+                }")
+            };
+
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.Created };
+
+            var client = GetResourceManagementClient(handler);
+
+            var parameters = new Deployment
+            {
+                Properties = new DeploymentProperties()
+                {
+                    Template = @"{
+                        '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#',
+                        'contentVersion': '1.0.0.0',
+                        'parameters': {
+                            'storageAccountName': {
+		                        'type': 'string'
+	                        }
+                        },
+                        'resources': [
+                        ],
+                        'outputs': {  }
+                    }",
+                    Parameters = @"{
+                        '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#',
+                        'contentVersion': '1.0.0.0',
+                        'parameters': {
+                            'storageAccountName': {
+		                        'value': 'tianotest04'
+	                        }
+                        }
+                    }",
+                    Mode = DeploymentMode.Incremental
+                }
+            };
+
+            var result = client.Deployments.CreateOrUpdate("foo", "myrealease-3.14", parameters);
+
+            JObject json = JObject.Parse(handler.Request);
+
+            // Validate headers 
+            Assert.Equal("application/json; charset=utf-8", handler.ContentHeaders.GetValues("Content-Type").First());
+            Assert.Equal(HttpMethod.Put, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+            // Validate payload
+            Assert.Equal("Incremental", json["properties"]["mode"].Value<string>());
+            Assert.Equal("tianotest04", json["properties"]["parameters"]["storageAccountName"]["value"].Value<string>());
+            Assert.Equal("1.0.0.0", json["properties"]["template"]["contentVersion"].Value<string>());
+
+            // Validate result
+            Assert.Equal("foo", result.Id);
+            Assert.Equal("test-release-3", result.Name);
+            Assert.Equal("Succeeded", result.Properties.ProvisioningState);
+            Assert.Equal(DeploymentMode.Incremental, result.Properties.Mode);
+            Assert.True(result.Properties.Parameters.ToString().Contains("\"value\": \"tianotest04\""));
+        }
+
         [Fact]
         public void ListDeploymentOperationsReturnsMultipleObjects()
         {

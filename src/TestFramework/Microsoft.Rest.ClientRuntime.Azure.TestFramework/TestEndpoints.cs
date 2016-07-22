@@ -52,5 +52,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         // AAD Token Audience 
         public Uri AADTokenAudienceUri { get; set; }
 
+        // Graph Token Audience 
+        public Uri GraphTokenAudienceUri { get; set; }
+
     }
 }

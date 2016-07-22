@@ -4,7 +4,7 @@
 ::
 
 @echo off
-set autoRestVersion=0.14.0-Nightly20160125
+set autoRestVersion=0.17.0-Nightly20160704
 if  "%1" == "" (
     set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-graphrbac/1.42-previewInternal/swagger/graphrbac.json"
 ) else (
@@ -14,4 +14,4 @@ set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Graph.RBAC %autoRestVersion% %generateFolder%
+call "%repoRoot%\tools\autorest.composite.gen.cmd" %specFile% Microsoft.Azure.Graph.RBAC %autoRestVersion% %generateFolder%

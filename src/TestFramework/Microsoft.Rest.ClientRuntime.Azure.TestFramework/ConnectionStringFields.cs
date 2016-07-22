@@ -78,6 +78,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// A raw JWT token for AAD authentication
         /// </summary>
         public const string RawToken = "RawToken";
+        
+        /// <summary>
+        /// A raw JWT token for Graph authentication
+        /// </summary>
+        public const string RawGraphToken = "RawGraphToken";
 
         /// <summary>
         /// The client ID to use when authenticating with AAD
