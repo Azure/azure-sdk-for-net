@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the DataSource class.
         /// </summary>
-        public DataSource(string name, string type, DataSourceCredentials credentials, DataContainer container, string description = default(string), DataChangeDetectionPolicy dataChangeDetectionPolicy = default(DataChangeDetectionPolicy), DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default(DataDeletionDetectionPolicy))
+        public DataSource(string name, DataSourceType type, DataSourceCredentials credentials, DataContainer container, string description = default(string), DataChangeDetectionPolicy dataChangeDetectionPolicy = default(DataChangeDetectionPolicy), DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default(DataDeletionDetectionPolicy))
         {
             Name = name;
             Description = description;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets the type of the datasource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public DataSourceType Type { get; set; }
 
         /// <summary>
         /// Gets or sets credentials for the datasource.

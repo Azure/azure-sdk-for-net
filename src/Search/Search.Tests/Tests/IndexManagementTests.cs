@@ -422,14 +422,14 @@ namespace Microsoft.Azure.Search.Tests
             
             Assert.Equal(expected.Name, actual.Name);
 
-            AssertCollectionsEqual(expected.Fields, actual.Fields, AssertFieldsEqual);
-            AssertCollectionsEqual(expected.ScoringProfiles, actual.ScoringProfiles, AssertScoringProfilesEqual);
+            SearchAssert.SequenceEqual(expected.Fields, actual.Fields, AssertFieldsEqual);
+            SearchAssert.SequenceEqual(expected.ScoringProfiles, actual.ScoringProfiles, AssertScoringProfilesEqual);
 
             Assert.Equal(expected.DefaultScoringProfile, actual.DefaultScoringProfile);
 
             AssertCorsOptionsEqual(expected.CorsOptions, actual.CorsOptions);
 
-            AssertCollectionsEqual(expected.Suggesters, actual.Suggesters, AssertSuggestersEqual);
+            SearchAssert.SequenceEqual(expected.Suggesters, actual.Suggesters, AssertSuggestersEqual);
         }
 
         private static void AssertFieldsEqual(Field expected, Field actual)
@@ -455,13 +455,13 @@ namespace Microsoft.Azure.Search.Tests
             }
             else
             {
-                AssertCollectionsEqual(
+                SearchAssert.SequenceEqual(
                     expected.TextWeights.Weights, 
                     actual.TextWeights.Weights, 
                     AssertTextWeightsEqual);
             }
 
-            AssertCollectionsEqual(expected.Functions, actual.Functions, AssertScoringFunctionsEqual);
+            SearchAssert.SequenceEqual(expected.Functions, actual.Functions, AssertScoringFunctionsEqual);
         }
 
         private static void AssertCorsOptionsEqual(CorsOptions expected, CorsOptions actual)
@@ -469,7 +469,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(expected);
             Assert.NotNull(actual);
 
-            AssertCollectionsEqual(expected.AllowedOrigins, actual.AllowedOrigins);
+            SearchAssert.SequenceEqual(expected.AllowedOrigins, actual.AllowedOrigins);
             
             Assert.Equal(expected.MaxAgeInSeconds, actual.MaxAgeInSeconds);
         }
@@ -482,7 +482,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.SearchMode, actual.SearchMode);
 
-            AssertCollectionsEqual(expected.SourceFields, actual.SourceFields);
+            SearchAssert.SequenceEqual(expected.SourceFields, actual.SourceFields);
         }
 
         private static void AssertTextWeightsEqual(
@@ -570,30 +570,6 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(actual.Parameters);
 
             Assert.Equal(expected.Parameters.TagsParameter, actual.Parameters.TagsParameter);
-        }
-
-        private static void AssertCollectionsEqual<T>(
-            IEnumerable<T> expected, 
-            IEnumerable<T> actual, 
-            Action<T, T> assertElementsEqual = null)
-        {
-            assertElementsEqual = assertElementsEqual ?? ((a, b) => Assert.Equal(a, b));
-
-            Assert.NotNull(expected);
-            Assert.NotNull(actual);
-
-            T[] expectedArray = expected.ToArray();
-            T[] actualArray = actual.ToArray();
-
-            Assert.Equal(expectedArray.Length, actualArray.Length);
-
-            for (int i = 0; i < expectedArray.Length; i++)
-            {
-                T expectedElement = expectedArray[i];
-                T actualElement = actualArray[i];
-
-                assertElementsEqual(expectedElement, actualElement);
-            }
         }
     }
 }

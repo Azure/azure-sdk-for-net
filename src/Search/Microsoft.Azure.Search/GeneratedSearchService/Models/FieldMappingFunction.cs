@@ -17,40 +17,38 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Represents information about the entity (such as Azure SQL table or
-    /// DocumentDb collection) that will be indexed.
+    /// Represents a function that transforms a value from a data source
+    /// before indexing.
+    /// <see href="https://azure.microsoft.com/documentation/articles/search-indexer-field-mappings/" />
     /// </summary>
-    public partial class DataContainer
+    public partial class FieldMappingFunction
     {
         /// <summary>
-        /// Initializes a new instance of the DataContainer class.
+        /// Initializes a new instance of the FieldMappingFunction class.
         /// </summary>
-        public DataContainer() { }
+        public FieldMappingFunction() { }
 
         /// <summary>
-        /// Initializes a new instance of the DataContainer class.
+        /// Initializes a new instance of the FieldMappingFunction class.
         /// </summary>
-        public DataContainer(string name, string query = default(string))
+        public FieldMappingFunction(string name, IDictionary<string, object> parameters = default(IDictionary<string, object>))
         {
             Name = name;
-            Query = query;
+            Parameters = parameters;
         }
 
         /// <summary>
-        /// Gets or sets the name of the table or view (for Azure SQL data
-        /// source) or collection (for DocumentDB data source) that will be
-        /// indexed.
+        /// Gets or sets the name of the field mapping function.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a query that is applied to this data container. The
-        /// syntax and meaning of this parameter is datasource-specific. Not
-        /// supported by Azure SQL datasources.
+        /// Gets or sets a dictionary of parameter name/value pairs to pass to
+        /// the function. Each value must be of a primitive type.
         /// </summary>
-        [JsonProperty(PropertyName = "query")]
-        public string Query { get; set; }
+        [JsonProperty(PropertyName = "parameters")]
+        public IDictionary<string, object> Parameters { get; set; }
 
         /// <summary>
         /// Validate the object.
