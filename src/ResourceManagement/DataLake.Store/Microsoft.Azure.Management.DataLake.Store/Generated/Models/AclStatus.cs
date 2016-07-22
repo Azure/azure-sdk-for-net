@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the AclStatus class.
         /// </summary>
+        /// <param name="entries">the list of ACLSpec entries on a file or directory.</param>
+        /// <param name="group">the group owner, an AAD Object ID.</param>
+        /// <param name="owner">the user owner, an AAD Object ID.</param>
+        /// <param name="stickyBit">the indicator of whether the sticky bit is on or off.</param>
         public AclStatus(IList<string> entries = default(IList<string>), string group = default(string), string owner = default(string), bool? stickyBit = default(bool?))
         {
             Entries = entries;

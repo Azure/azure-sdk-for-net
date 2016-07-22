@@ -14,6 +14,11 @@ namespace Microsoft.Azure.Search.Tests
     {
         public static void DocumentsEqual(Document expected, Document actual)
         {
+            DictionariesEqual(expected, actual);
+        }
+
+        public static void DictionariesEqual(IDictionary<string, object> expected, IDictionary<string, object> actual)
+        {
             if (expected == null)
             {
                 Assert.Null(actual);
@@ -21,9 +26,9 @@ namespace Microsoft.Azure.Search.Tests
 
             if (expected.Count != actual.Count)
             {
-                string message = 
+                string message =
                     String.Format(
-                        "Document field count doesn't match. Expected fields: [{0}] Actual fields: [{1}]",
+                        "Dictionary key count doesn't match. Expected keys: [{0}] Actual keys: [{1}]",
                         String.Join(", ", expected.Keys),
                         String.Join(", ", actual.Keys));
 
@@ -44,29 +49,61 @@ namespace Microsoft.Azure.Search.Tests
                 else
                 {
                     Type expectedType = expectedObj.GetType();
-                    Assert.IsType(expectedType, actualObj);
+                    Type actualType = actualObj.GetType();
 
-                    if (expectedType == typeof(string[]))
+                    // Special case for integers.
+                    if (expectedType == typeof(long) || actualType == typeof(long))
                     {
-                        Assert.True(((string[])expectedObj).SequenceEqual((string[])actualObj));
+                        long expectedLong = Convert.ToInt64(expectedObj);
+                        long actualLong = Convert.ToInt64(actualObj);
+
+                        Assert.Equal(expectedLong, actualLong);
                     }
                     else
                     {
-                        Assert.Equal(expectedObj, actualObj);
+                        Assert.IsType(expectedType, actualObj);
+
+                        // Special case for comparing Documents.
+                        if (expectedType == typeof(string[]))
+                        {
+                            Assert.True(((string[])expectedObj).SequenceEqual((string[])actualObj));
+                        }
+                        else
+                        {
+                            Assert.Equal(expectedObj, actualObj);
+                        }
                     }
                 }
             }
         }
 
-        public static void SequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
+        public static void SequenceEqual<T>(
+            IEnumerable<T> expected,
+            IEnumerable<T> actual,
+            Action<T, T> assertElementsEqual = null)
         {
-            string message =
-                String.Format(
-                    "Expected: ['{0}'] Actual: ['{1}']",
-                    String.Join("', '", expected),
-                    String.Join("', '", actual));
+            assertElementsEqual = assertElementsEqual ?? ((a, b) => Assert.Equal(a, b));
 
-            Assert.True(expected.SequenceEqual(actual), message);
+            if (expected == null)
+            {
+                Assert.True(actual == null || !actual.Any());
+                return;
+            }
+
+            Assert.NotNull(actual);
+
+            T[] expectedArray = expected.ToArray();
+            T[] actualArray = actual.ToArray();
+
+            Assert.Equal(expectedArray.Length, actualArray.Length);
+
+            for (int i = 0; i < expectedArray.Length; i++)
+            {
+                T expectedElement = expectedArray[i];
+                T actualElement = actualArray[i];
+
+                assertElementsEqual(expectedElement, actualElement);
+            }
         }
     }
 }

@@ -45,19 +45,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets collection of references to IPs defined in NICs
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendIPConfigurations")]
-        public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; set; }
+        public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; private set; }
 
         /// <summary>
         /// Gets Load Balancing rules that use this Backend Address Pool
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public IList<SubResource> LoadBalancingRules { get; set; }
+        public IList<SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
         /// Gets outbound rules that use this Backend Address Pool
         /// </summary>
         [JsonProperty(PropertyName = "properties.outboundNatRule")]
-        public SubResource OutboundNatRule { get; set; }
+        public SubResource OutboundNatRule { get; private set; }
 
         /// <summary>
         /// Get provisioning state of the PublicIP resource

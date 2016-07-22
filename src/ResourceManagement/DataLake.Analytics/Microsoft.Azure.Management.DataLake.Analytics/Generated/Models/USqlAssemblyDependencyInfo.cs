@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlAssemblyDependencyInfo class.
         /// </summary>
+        /// <param name="entityId">the EntityId of the dependency.</param>
         public USqlAssemblyDependencyInfo(EntityId entityId = default(EntityId))
         {
             EntityId = entityId;

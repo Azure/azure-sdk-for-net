@@ -395,13 +395,17 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='top'>
         /// Query parameters. If null is passed returns all deployments.
         /// </param>
+        /// <param name='expand'>
+        /// The $expand query parameter. e.g. To include property aliases in response,
+        /// use $expand=resourceTypes/aliases.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<Provider>>> ListWithHttpMessagesAsync(int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Provider>>> ListWithHttpMessagesAsync(int? top = default(int?), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -419,6 +423,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("top", top);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -430,6 +435,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (top != null)
             {
                 _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -564,13 +573,17 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='resourceProviderNamespace'>
         /// Namespace of the resource provider.
         /// </param>
+        /// <param name='expand'>
+        /// The $expand query parameter. e.g. To include property aliases in response,
+        /// use $expand=resourceTypes/aliases.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Provider>> GetWithHttpMessagesAsync(string resourceProviderNamespace, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Provider>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceProviderNamespace == null)
             {
@@ -591,6 +604,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("resourceProviderNamespace", resourceProviderNamespace);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -601,6 +615,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));

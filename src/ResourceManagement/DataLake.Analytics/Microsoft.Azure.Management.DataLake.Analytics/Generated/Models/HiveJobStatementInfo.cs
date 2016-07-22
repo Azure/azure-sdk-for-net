@@ -26,6 +26,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the HiveJobStatementInfo class.
         /// </summary>
+        /// <param name="logLocation">the log location for this statement.</param>
+        /// <param name="resultPreviewLocation">the result preview location for this statement.</param>
+        /// <param name="resultLocation">the result location for this statement.</param>
+        /// <param name="errorMessage">the error message for this statement.</param>
         public HiveJobStatementInfo(string logLocation = default(string), string resultPreviewLocation = default(string), string resultLocation = default(string), string errorMessage = default(string))
         {
             LogLocation = logLocation;
