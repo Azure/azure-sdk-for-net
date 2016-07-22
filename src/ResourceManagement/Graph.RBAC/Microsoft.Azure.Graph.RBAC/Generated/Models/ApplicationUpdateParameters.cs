@@ -17,30 +17,28 @@ namespace Microsoft.Azure.Graph.RBAC.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Request parameters for create a new application
+    /// Request parameters for updating an existing application
     /// </summary>
-    public partial class ApplicationCreateParameters
+    public partial class ApplicationUpdateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationCreateParameters
+        /// Initializes a new instance of the ApplicationUpdateParameters
         /// class.
         /// </summary>
-        public ApplicationCreateParameters() { }
+        public ApplicationUpdateParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the ApplicationCreateParameters
+        /// Initializes a new instance of the ApplicationUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="availableToOtherTenants">Indicates if the application will be available to other tenants</param>
         /// <param name="displayName">Application display name</param>
         /// <param name="homepage">Application homepage</param>
         /// <param name="identifierUris">Application Uris</param>
         /// <param name="replyUrls">Application reply Urls</param>
         /// <param name="keyCredentials">Gets or sets the list of KeyCredential objects</param>
         /// <param name="passwordCredentials">Gets or sets the list of PasswordCredential objects</param>
-        public ApplicationCreateParameters(bool availableToOtherTenants, string displayName, string homepage, IList<string> identifierUris, IList<string> replyUrls = default(IList<string>), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>))
+        public ApplicationUpdateParameters(string displayName = default(string), string homepage = default(string), IList<string> identifierUris = default(IList<string>), IList<string> replyUrls = default(IList<string>), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>))
         {
-            AvailableToOtherTenants = availableToOtherTenants;
             DisplayName = displayName;
             Homepage = homepage;
             IdentifierUris = identifierUris;
@@ -48,13 +46,6 @@ namespace Microsoft.Azure.Graph.RBAC.Models
             KeyCredentials = keyCredentials;
             PasswordCredentials = passwordCredentials;
         }
-
-        /// <summary>
-        /// Gets or sets indicates if the application will be available to
-        /// other tenants
-        /// </summary>
-        [JsonProperty(PropertyName = "availableToOtherTenants")]
-        public bool AvailableToOtherTenants { get; set; }
 
         /// <summary>
         /// Gets or sets application display name
@@ -92,26 +83,5 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         [JsonProperty(PropertyName = "passwordCredentials")]
         public IList<PasswordCredential> PasswordCredentials { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (DisplayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
-            }
-            if (Homepage == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Homepage");
-            }
-            if (IdentifierUris == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IdentifierUris");
-            }
-        }
     }
 }
