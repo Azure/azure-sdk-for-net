@@ -134,7 +134,8 @@ namespace Microsoft.Azure.Search.Models
         /// Creates a new DataSource to connect to a DocumentDb database.
         /// </summary>
         /// <param name="name">The name of the datasource.</param>
-        /// <param name="documentDbConnectionString">The connection string for the DocumentDb database.</param>
+        /// <param name="documentDbConnectionString">The connection string for the DocumentDb database. It must follow this format:
+        /// "AccountName|AccountEndpoint=[your account name or endpoint];AccountKey=[your account key];Database=[your database name]"</param>
         /// <param name="collectionName">The name of the collection from which to read documents.</param>
         /// <param name="query">Optional. A query that is applied to the collection when reading documents.</param>
         /// <param name="useChangeDetection">Optional. Indicates whether to use change detection when indexing. Default is true.</param>
@@ -174,7 +175,8 @@ namespace Microsoft.Azure.Search.Models
         /// Creates a new DataSource to connect to an Azure Blob container.
         /// </summary>
         /// <param name="name">The name of the datasource.</param>
-        /// <param name="storageConnectionString">The connection string for the Azure Storage account.</param>
+        /// <param name="storageConnectionString">The connection string for the Azure Storage account. It must follow this format:
+        /// "DefaultEndpointsProtocol=https;AccountName=[your storage account];AccountKey=[your account key];" Note that HTTPS is required.</param>
         /// <param name="containerName">The name of the container from which to read blobs.</param>
         /// <param name="pathPrefix">Optional. If specified, the datasource will include only blobs with names starting with this prefix. This is
         /// useful when blobs are organized into "virtual folders", for example.</param>
@@ -212,7 +214,8 @@ namespace Microsoft.Azure.Search.Models
         /// Creates a new DataSource to connect to an Azure Table.
         /// </summary>
         /// <param name="name">The name of the datasource.</param>
-        /// <param name="storageConnectionString">The connection string for the Azure Storage account.</param>
+        /// <param name="storageConnectionString">The connection string for the Azure Storage account. It must follow this format:
+        /// "DefaultEndpointsProtocol=https;AccountName=[your storage account];AccountKey=[your account key];" Note that HTTPS is required.</param>
         /// <param name="tableName">The name of the table from which to read rows.</param>
         /// <param name="query">Optional. A query that is applied to the table when reading rows.</param>
         /// <param name="deletionDetectionPolicy">Optional. The data deletion detection policy for the datasource.</param>
