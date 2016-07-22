@@ -29,14 +29,14 @@ using Microsoft.Azure.Management.OperationalInsights.Models;
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// The list workspaces operation response.
+    /// The list data source operation response.
     /// </summary>
     public partial class DataSourceListResponse : AzureOperationResponse
     {
         private IList<DataSource> _dataSources;
         
         /// <summary>
-        /// Optional. Gets or sets a list of datasource instances.
+        /// Optional. Gets or sets a list of data source instances.
         /// </summary>
         public IList<DataSource> DataSources
         {

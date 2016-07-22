@@ -22,12 +22,12 @@ using Microsoft.Azure.Test;
 namespace OperationalInsights.Tests.Helpers
 {
     /// <summary>
-    /// Undo Handler for storage insight operations
+    /// Undo Handler for data source operations
     /// </summary>
     public class DataSourceUndoHandler : ComplexTypedOperationUndoHandler<IDataSourceOperations, OperationalInsightsManagementClient>
     {
         /// <summary>
-        /// Look up the undo operation for the given storage insight operation
+        /// Look up the undo operation for the given data source operation
         /// </summary>
         /// <param name="client">The IWorkspaceOperations instance used for the operation</param>
         /// <param name="method">The name of the workspace method</param>

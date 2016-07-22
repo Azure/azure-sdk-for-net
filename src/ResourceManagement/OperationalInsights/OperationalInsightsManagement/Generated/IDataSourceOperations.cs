@@ -29,41 +29,41 @@ using Microsoft.Azure.Management.OperationalInsights.Models;
 namespace Microsoft.Azure.Management.OperationalInsights
 {
     /// <summary>
-    /// Operations for managing DataSources under Workspaces.
+    /// Operations for managing data sources under Workspaces.
     /// </summary>
     public partial interface IDataSourceOperations
     {
         /// <summary>
-        /// Create or update a datasource.
+        /// Create or update a data source.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the datasource.
+        /// The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the parent workspace that will contain the datasource
+        /// The name of the parent workspace that will contain the data source
         /// </param>
         /// <param name='parameters'>
-        /// The parameters required to create or update a datasource.
+        /// The parameters required to create or update a data source.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The create or update workspace operation response.
+        /// The create or update data source operation response.
         /// </returns>
         Task<DataSourceCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, DataSourceCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Deletes a datasource instance.
+        /// Deletes a data source instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the datasource.
+        /// The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace that contains the datasource.
+        /// The name of the workspace that contains the data source.
         /// </param>
         /// <param name='datasourceName'>
-        /// The name of the datasource.
+        /// Name of the data source.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -75,55 +75,61 @@ namespace Microsoft.Azure.Management.OperationalInsights
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string workspaceName, string datasourceName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets a dataSource instance.
+        /// Gets a data source instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the dataSource.
+        /// The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace that contains the dataSource.
+        /// The name of the workspace that contains the data source.
         /// </param>
         /// <param name='dataSourceName'>
-        /// The name of the dataSource
+        /// Name of the data source
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The get workspace operation response.
+        /// The get data source operation response.
         /// </returns>
         Task<DataSourceGetResponse> GetAsync(string resourceGroupName, string workspaceName, string dataSourceName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the first page of dataSource instances in a workspace with the
-        /// link to the next page.
+        /// Gets the first page of data source instances in a workspace with
+        /// the link to the next page.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the dataSources.
+        /// The resource group name of the data sources.
         /// </param>
         /// <param name='workspaceName'>
-        /// The workspace that contains the dataSources.
+        /// The workspace that contains the data sources.
+        /// </param>
+        /// <param name='kind'>
+        /// Filter data sources by Kind.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Token for paging support.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The list data source operation response.
         /// </returns>
-        Task<DataSourceListResponse> ListInWorkspaceAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken);
+        Task<DataSourceListResponse> ListInWorkspaceAsync(string resourceGroupName, string workspaceName, string kind, string skiptoken, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the next page of dataSource instances with the link to the
+        /// Gets the next page of data source instances with the link to the
         /// next page.
         /// </summary>
         /// <param name='nextLink'>
-        /// The url to the next dataSource page.
+        /// The url to the next data source page.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The list data source operation response.
         /// </returns>
         Task<DataSourceListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
     }

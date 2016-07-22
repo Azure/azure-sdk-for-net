@@ -148,21 +148,17 @@ namespace OperationalInsights.Tests.Helpers
         /// <summary>
         /// Validates a storage insight matches the expected properties.  Throws assertion exceptions if validation fails.
         /// </summary>
-        /// <param name="expected">Expected storage insight</param>
-        /// <param name="actual">Actual storage insight</param>
+        /// <param name="expected">Expected data source</param>
+        /// <param name="actual">Actual data source</param>
         internal static void ValidateDatasource(DataSource expected, DataSource actual)
         {
             Assert.NotNull(actual);
             Assert.NotNull(actual.Id);
-            // TODO: NestedResource name will be wsName/dsName, need to handle this case.
-            // Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Kind, actual.Kind);
-            // TODO: ARM API is return typo "OperationInsights"
-            //Assert.Equal(DataSourceResourceType, actual.Type);
+            Assert.Equal(DataSourceResourceType, actual.Type);
 
             Assert.NotNull(actual.Properties);
-
-            // TODO: Compare detail perperties based on Kind
         }
 
         /// <summary>

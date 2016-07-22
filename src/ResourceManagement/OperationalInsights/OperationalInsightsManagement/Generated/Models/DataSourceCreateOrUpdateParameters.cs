@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.OperationalInsights.Models;
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// Parameters specifying the workspace definition for a create or update
+    /// Parameters specifying the data source definition for a create or update
     /// operation.
     /// </summary>
     public partial class DataSourceCreateOrUpdateParameters
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private DataSource _dataSource;
         
         /// <summary>
-        /// Optional. Gets or sets the definition of the datasource to be
+        /// Optional. Gets or sets the definition of the data source to be
         /// created or updated.
         /// </summary>
         public DataSource DataSource

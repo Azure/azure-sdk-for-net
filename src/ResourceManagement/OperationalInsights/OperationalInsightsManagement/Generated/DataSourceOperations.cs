@@ -37,7 +37,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.OperationalInsights
 {
     /// <summary>
-    /// Operations for managing DataSources under Workspaces.
+    /// Operations for managing data sources under Workspaces.
     /// </summary>
     internal partial class DataSourceOperations : IServiceOperations<OperationalInsightsManagementClient>, IDataSourceOperations
     {
@@ -64,23 +64,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Create or update a datasource.
+        /// Create or update a data source.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the datasource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
         /// Required. The name of the parent workspace that will contain the
-        /// datasource
+        /// data source
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update a datasource.
+        /// Required. The parameters required to create or update a data source.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The create or update workspace operation response.
+        /// The create or update data source operation response.
         /// </returns>
         public async Task<DataSourceCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, DataSourceCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -328,16 +328,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Deletes a datasource instance.
+        /// Deletes a data source instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the datasource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The name of the workspace that contains the datasource.
+        /// Required. The name of the workspace that contains the data source.
         /// </param>
         /// <param name='datasourceName'>
-        /// Required. The name of the datasource.
+        /// Required. Name of the data source.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -482,22 +482,22 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets a dataSource instance.
+        /// Gets a data source instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the dataSource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The name of the workspace that contains the dataSource.
+        /// Required. The name of the workspace that contains the data source.
         /// </param>
         /// <param name='dataSourceName'>
-        /// Required. The name of the dataSource
+        /// Required. Name of the data source
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The get workspace operation response.
+        /// The get data source operation response.
         /// </returns>
         public async Task<DataSourceGetResponse> GetAsync(string resourceGroupName, string workspaceName, string dataSourceName, CancellationToken cancellationToken)
         {
@@ -694,22 +694,28 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets the first page of dataSource instances in a workspace with the
-        /// link to the next page.
+        /// Gets the first page of data source instances in a workspace with
+        /// the link to the next page.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the dataSources.
+        /// Required. The resource group name of the data sources.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The workspace that contains the dataSources.
+        /// Required. The workspace that contains the data sources.
+        /// </param>
+        /// <param name='kind'>
+        /// Required. Filter data sources by Kind.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Required. Token for paging support.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The list data source operation response.
         /// </returns>
-        public async Task<DataSourceListResponse> ListInWorkspaceAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken)
+        public async Task<DataSourceListResponse> ListInWorkspaceAsync(string resourceGroupName, string workspaceName, string kind, string skiptoken, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -719,6 +725,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
             if (workspaceName == null)
             {
                 throw new ArgumentNullException("workspaceName");
+            }
+            if (kind == null)
+            {
+                throw new ArgumentNullException("kind");
+            }
+            if (skiptoken == null)
+            {
+                throw new ArgumentNullException("skiptoken");
             }
             
             // Tracing
@@ -730,6 +744,8 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
+                tracingParameters.Add("kind", kind);
+                tracingParameters.Add("skiptoken", skiptoken);
                 TracingAdapter.Enter(invocationId, this, "ListInWorkspaceAsync", tracingParameters);
             }
             
@@ -746,6 +762,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
             url = url + Uri.EscapeDataString(workspaceName);
             url = url + "/dataSources";
             List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add("kind+eq+'" + Uri.EscapeDataString(kind) + "'");
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            queryParameters.Add("$skiptoke=" + Uri.EscapeDataString(skiptoken));
             queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
@@ -912,17 +935,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets the next page of dataSource instances with the link to the
+        /// Gets the next page of data source instances with the link to the
         /// next page.
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. The url to the next dataSource page.
+        /// Required. The url to the next data source page.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The list data source operation response.
         /// </returns>
         public async Task<DataSourceListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {

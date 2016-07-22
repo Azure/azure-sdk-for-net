@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.OperationalInsights.Models;
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// The create or update workspace operation response.
+    /// The create or update data source operation response.
     /// </summary>
     public partial class DataSourceCreateOrUpdateResponse : AzureOperationResponse
     {
         private DataSource _dataSource;
         
         /// <summary>
-        /// Optional. Gets or sets the datasource instance.
+        /// Optional. Gets or sets the data source instance.
         /// </summary>
         public DataSource DataSource
         {

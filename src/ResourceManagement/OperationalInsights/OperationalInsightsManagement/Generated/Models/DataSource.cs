@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// DataSource nested resource under Workspace.
+    /// Data sources under OMS Workspace.
     /// </summary>
     public partial class DataSource
     {
         private string _eTag;
         
         /// <summary>
-        /// Optional. Gets or sets the ETag of the datasource.
+        /// Optional. Gets or sets the ETag of the data source.
         /// </summary>
         public string ETag
         {
@@ -76,7 +76,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the datasource properties.
+        /// Optional. Gets or sets the data source properties in raw json
+        /// format, each kind of data source have it's own schema.
         /// </summary>
         public string Properties
         {

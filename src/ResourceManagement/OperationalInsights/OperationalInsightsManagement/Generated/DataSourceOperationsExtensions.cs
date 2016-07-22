@@ -35,24 +35,24 @@ namespace Microsoft.Azure.Management.OperationalInsights
     public static partial class DataSourceOperationsExtensions
     {
         /// <summary>
-        /// Create or update a datasource.
+        /// Create or update a data source.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the datasource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
         /// Required. The name of the parent workspace that will contain the
-        /// datasource
+        /// data source
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update a datasource.
+        /// Required. The parameters required to create or update a data source.
         /// </param>
         /// <returns>
-        /// The create or update workspace operation response.
+        /// The create or update data source operation response.
         /// </returns>
         public static DataSourceCreateOrUpdateResponse CreateOrUpdate(this IDataSourceOperations operations, string resourceGroupName, string workspaceName, DataSourceCreateOrUpdateParameters parameters)
         {
@@ -64,24 +64,24 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Create or update a datasource.
+        /// Create or update a data source.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the datasource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
         /// Required. The name of the parent workspace that will contain the
-        /// datasource
+        /// data source
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update a datasource.
+        /// Required. The parameters required to create or update a data source.
         /// </param>
         /// <returns>
-        /// The create or update workspace operation response.
+        /// The create or update data source operation response.
         /// </returns>
         public static Task<DataSourceCreateOrUpdateResponse> CreateOrUpdateAsync(this IDataSourceOperations operations, string resourceGroupName, string workspaceName, DataSourceCreateOrUpdateParameters parameters)
         {
@@ -89,20 +89,20 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Deletes a datasource instance.
+        /// Deletes a data source instance.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the datasource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The name of the workspace that contains the datasource.
+        /// Required. The name of the workspace that contains the data source.
         /// </param>
         /// <param name='datasourceName'>
-        /// Required. The name of the datasource.
+        /// Required. Name of the data source.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -118,20 +118,20 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Deletes a datasource instance.
+        /// Deletes a data source instance.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the datasource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The name of the workspace that contains the datasource.
+        /// Required. The name of the workspace that contains the data source.
         /// </param>
         /// <param name='datasourceName'>
-        /// Required. The name of the datasource.
+        /// Required. Name of the data source.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -143,23 +143,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets a dataSource instance.
+        /// Gets a data source instance.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the dataSource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The name of the workspace that contains the dataSource.
+        /// Required. The name of the workspace that contains the data source.
         /// </param>
         /// <param name='dataSourceName'>
-        /// Required. The name of the dataSource
+        /// Required. Name of the data source
         /// </param>
         /// <returns>
-        /// The get workspace operation response.
+        /// The get data source operation response.
         /// </returns>
         public static DataSourceGetResponse Get(this IDataSourceOperations operations, string resourceGroupName, string workspaceName, string dataSourceName)
         {
@@ -171,23 +171,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets a dataSource instance.
+        /// Gets a data source instance.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the dataSource.
+        /// Required. The resource group name of the data source.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The name of the workspace that contains the dataSource.
+        /// Required. The name of the workspace that contains the data source.
         /// </param>
         /// <param name='dataSourceName'>
-        /// Required. The name of the dataSource
+        /// Required. Name of the data source
         /// </param>
         /// <returns>
-        /// The get workspace operation response.
+        /// The get data source operation response.
         /// </returns>
         public static Task<DataSourceGetResponse> GetAsync(this IDataSourceOperations operations, string resourceGroupName, string workspaceName, string dataSourceName)
         {
@@ -195,55 +195,67 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets the first page of dataSource instances in a workspace with the
-        /// link to the next page.
+        /// Gets the first page of data source instances in a workspace with
+        /// the link to the next page.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the dataSources.
+        /// Required. The resource group name of the data sources.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The workspace that contains the dataSources.
+        /// Required. The workspace that contains the data sources.
+        /// </param>
+        /// <param name='kind'>
+        /// Required. Filter data sources by Kind.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Required. Token for paging support.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The list data source operation response.
         /// </returns>
-        public static DataSourceListResponse ListInWorkspace(this IDataSourceOperations operations, string resourceGroupName, string workspaceName)
+        public static DataSourceListResponse ListInWorkspace(this IDataSourceOperations operations, string resourceGroupName, string workspaceName, string kind, string skiptoken)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSourceOperations)s).ListInWorkspaceAsync(resourceGroupName, workspaceName);
+                return ((IDataSourceOperations)s).ListInWorkspaceAsync(resourceGroupName, workspaceName, kind, skiptoken);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Gets the first page of dataSource instances in a workspace with the
-        /// link to the next page.
+        /// Gets the first page of data source instances in a workspace with
+        /// the link to the next page.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the dataSources.
+        /// Required. The resource group name of the data sources.
         /// </param>
         /// <param name='workspaceName'>
-        /// Required. The workspace that contains the dataSources.
+        /// Required. The workspace that contains the data sources.
+        /// </param>
+        /// <param name='kind'>
+        /// Required. Filter data sources by Kind.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Required. Token for paging support.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The list data source operation response.
         /// </returns>
-        public static Task<DataSourceListResponse> ListInWorkspaceAsync(this IDataSourceOperations operations, string resourceGroupName, string workspaceName)
+        public static Task<DataSourceListResponse> ListInWorkspaceAsync(this IDataSourceOperations operations, string resourceGroupName, string workspaceName, string kind, string skiptoken)
         {
-            return operations.ListInWorkspaceAsync(resourceGroupName, workspaceName, CancellationToken.None);
+            return operations.ListInWorkspaceAsync(resourceGroupName, workspaceName, kind, skiptoken, CancellationToken.None);
         }
         
         /// <summary>
-        /// Gets the next page of dataSource instances with the link to the
+        /// Gets the next page of data source instances with the link to the
         /// next page.
         /// </summary>
         /// <param name='operations'>
@@ -251,10 +263,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. The url to the next dataSource page.
+        /// Required. The url to the next data source page.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The list data source operation response.
         /// </returns>
         public static DataSourceListResponse ListNext(this IDataSourceOperations operations, string nextLink)
         {
@@ -266,7 +278,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets the next page of dataSource instances with the link to the
+        /// Gets the next page of data source instances with the link to the
         /// next page.
         /// </summary>
         /// <param name='operations'>
@@ -274,10 +286,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Microsoft.Azure.Management.OperationalInsights.IDataSourceOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. The url to the next dataSource page.
+        /// Required. The url to the next data source page.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The list data source operation response.
         /// </returns>
         public static Task<DataSourceListResponse> ListNextAsync(this IDataSourceOperations operations, string nextLink)
         {

@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         private IDataSourceOperations _dataSources;
         
         /// <summary>
-        /// Operations for managing DataSources under Workspaces.
+        /// Operations for managing data sources under Workspaces.
         /// </summary>
         public virtual IDataSourceOperations DataSources
         {

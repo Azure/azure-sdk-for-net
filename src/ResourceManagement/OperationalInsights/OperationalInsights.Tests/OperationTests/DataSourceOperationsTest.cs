@@ -40,7 +40,7 @@ namespace OperationalInsights.Tests.OperationTests
                 string resourceGroupName = TestUtilities.GenerateName("OIHyak");
                 var resourceGroup = TestHelper.CreateResourceGroup(resourceGroupName, resourceClient);
 
-                // Create a workspace that will house the storage insights
+                // Create a workspace that will house the data source
                 string workspaceName = TestUtilities.GenerateName("AzTest");
                 var workspaceCreateParameters = new WorkspaceCreateOrUpdateParameters
                 {
@@ -56,12 +56,12 @@ namespace OperationalInsights.Tests.OperationTests
                 Assert.True(HttpStatusCode.Created == workspaceCreateResponse.StatusCode || HttpStatusCode.OK == workspaceCreateResponse.StatusCode);
 
                 // Create a dataSource
-                string storageInsightName = TestUtilities.GenerateName("AzTestDS");
+                string dataSourceName = TestUtilities.GenerateName("AzTestDS");
                 var createParameters = new DataSourceCreateOrUpdateParameters
                 {
                     DataSource = new DataSource
                     {
-                        Name = storageInsightName,
+                        Name = dataSourceName,
                         Kind = "AzureAuditLog",
                         Properties = "{'LinkedResourceId':'/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/providers/microsoft.insights/eventtypes/management'}"
                     }
@@ -70,41 +70,41 @@ namespace OperationalInsights.Tests.OperationTests
                 Assert.True(HttpStatusCode.Created == createResponse.StatusCode || HttpStatusCode.OK == createResponse.StatusCode);
                 TestHelper.ValidateDatasource(createParameters.DataSource, createResponse.DataSource);
 
-                // Get the storage insight
-                var getResponse = client.DataSources.Get(resourceGroupName, workspaceName, storageInsightName);
+                // Get the data source
+                var getResponse = client.DataSources.Get(resourceGroupName, workspaceName, dataSourceName);
                 Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
                 TestHelper.ValidateDatasource(createParameters.DataSource, getResponse.DataSource);
 
-                // Create a second storage insight for list testing
-                var storageInsightNameTwo = TestUtilities.GenerateName("AzTestDS");
-                createParameters.DataSource.Name = storageInsightNameTwo;
+                // Create a second data source for list testing
+                var dataSourceNameTwo = TestUtilities.GenerateName("AzTestDS");
+                createParameters.DataSource.Name = dataSourceNameTwo;
                 createParameters.DataSource.Properties = "{'LinkedResourceId':'/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/providers/microsoft.insights/eventtypes/management'}";
                 createResponse = client.DataSources.CreateOrUpdate(resourceGroupName, workspaceName, createParameters);
                 Assert.True(HttpStatusCode.Created == createResponse.StatusCode || HttpStatusCode.OK == createResponse.StatusCode);
                 TestHelper.ValidateDatasource(createParameters.DataSource, createResponse.DataSource);
 
-                // List the storage insights in the workspace
-                var listResponse = client.DataSources.ListInWorkspace(resourceGroupName, workspaceName);
+                // List the data sources in the workspace
+                var listResponse = client.DataSources.ListInWorkspace(resourceGroupName, workspaceName, "AzureAuditLog", string.Empty);
                 Assert.True(HttpStatusCode.OK == listResponse.StatusCode);
                 Assert.Equal(2, listResponse.DataSources.Count);
                 Assert.Null(listResponse.NextLink);
-                Assert.Single(listResponse.DataSources.Where(w => w.Name.Equals(storageInsightName, StringComparison.OrdinalIgnoreCase)));
-                Assert.Single(listResponse.DataSources.Where(w => w.Name.Equals(storageInsightNameTwo, StringComparison.OrdinalIgnoreCase)));
+                Assert.Single(listResponse.DataSources.Where(w => w.Name.Equals(dataSourceName, StringComparison.OrdinalIgnoreCase)));
+                Assert.Single(listResponse.DataSources.Where(w => w.Name.Equals(dataSourceNameTwo, StringComparison.OrdinalIgnoreCase)));
 
-                // Perform an update on one of the storage insights
+                // Perform an update on one of the data sources
                 createResponse.DataSource.Properties= "{'LinkedResourceId':'/subscriptions/bc8edd8f-a09f-499d-978d-6b5ed2f84852/providers/microsoft.insights/eventtypes/management'}";
-                createResponse.DataSource.Name = storageInsightNameTwo;
+                createResponse.DataSource.Name = dataSourceNameTwo;
                 var updateParameters = new DataSourceCreateOrUpdateParameters { DataSource= createResponse.DataSource };
                 var updateResponse = client.DataSources.CreateOrUpdate(resourceGroupName, workspaceName, updateParameters);
                 Assert.True(HttpStatusCode.OK == updateResponse.StatusCode);
                 TestHelper.ValidateDatasource(updateParameters.DataSource, updateResponse.DataSource);
 
-                // Delete a storage insight
-                var deleteResponse = client.DataSources.Delete(resourceGroupName, workspaceName, storageInsightName);
+                // Delete a data source
+                var deleteResponse = client.DataSources.Delete(resourceGroupName, workspaceName, dataSourceName);
                 Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
 
-                // Verify the storageinsight is gone
-                TestHelper.VerifyCloudException(HttpStatusCode.NotFound, () => client.DataSources.Get(resourceGroupName, workspaceName, storageInsightName));
+                // Verify the data source is gone
+                TestHelper.VerifyCloudException(HttpStatusCode.NotFound, () => client.DataSources.Get(resourceGroupName, workspaceName, dataSourceName));
             }
         }
 
@@ -123,15 +123,14 @@ namespace OperationalInsights.Tests.OperationTests
                 string resourceGroupName = TestUtilities.GenerateName("OIHyak");
                 var resourceGroup = TestHelper.CreateResourceGroup(resourceGroupName, resourceClient);
 
-                // Create a storage insight on a non-existent workspace
-                string storageInsightName = TestUtilities.GenerateName("AzTestDS");
-                string storageAccountName = TestUtilities.GenerateName("AzTestFakeSA");
+                // Create a data source on a non-existent workspace
+                string dataSourceName = TestUtilities.GenerateName("AzTestDS");
                 string workspaceName = TestUtilities.GenerateName("AzTest");
                 var createParameters = new DataSourceCreateOrUpdateParameters
                 {
                     DataSource = new DataSource
                     {
-                        Name = storageInsightName,
+                        Name = dataSourceName,
                         Kind = "AzureAuditLog",
                         Properties = "{'LinkedResourceId':'/subscriptions/bc8edd8f-a09f-499d-978d-6b5ed2f84852/providers/microsoft.insights/eventtypes/management'}"
                     }
