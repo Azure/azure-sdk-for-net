@@ -467,9 +467,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='streamContents'>
             /// The file contents to include when appending to the file.
             /// </param>
-            public static void Append(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents)
+            /// <param name='offset'>
+            /// The optional offset in the stream to begin the append operation. Default
+            /// is to append at the end of the stream.
+            /// </param>
+            public static void Append(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).AppendAsync(accountName, directFilePath, streamContents), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).AppendAsync(accountName, directFilePath, streamContents, offset), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -493,12 +497,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='streamContents'>
             /// The file contents to include when appending to the file.
             /// </param>
+            /// <param name='offset'>
+            /// The optional offset in the stream to begin the append operation. Default
+            /// is to append at the end of the stream.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AppendAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AppendAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.AppendWithHttpMessagesAsync(accountName, directFilePath, streamContents, null, cancellationToken).ConfigureAwait(false);
+                await operations.AppendWithHttpMessagesAsync(accountName, directFilePath, streamContents, offset, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

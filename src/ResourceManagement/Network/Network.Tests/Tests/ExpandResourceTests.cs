@@ -15,9 +15,15 @@ namespace Networks.Tests
     using System;
     using System.Linq;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Microsoft.Azure.Test.HttpRecorder;
 
     public class ExpandResourceTests
     {
+        public ExpandResourceTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
+        }
+
         [Fact]
         public void ExpandResourceTest()
         {

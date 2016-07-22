@@ -57,6 +57,7 @@ namespace Authorization.Tests
 
         public TestExecutionContext()
         {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
             this.createdUsers = new List<Guid>();
             this.createdGroups = new List<string>();
 
@@ -167,7 +168,7 @@ namespace Authorization.Tests
             }
 
             var env = TestEnvironmentFactory.GetTestEnvironment();
-            var cred = new TokenCredentials(env.TokenInfo.AccessToken, env.TokenInfo.AccessTokenType);
+            var cred = env.TokenInfo[TokenAudience.Management];
             var authorizationClient = new AuthorizationManagementClient(
                 TestEnvironmentFactory.GetTestEnvironment().BaseUri,
                 cred);

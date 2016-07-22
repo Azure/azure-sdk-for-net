@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfiguration")]
-        public IPConfiguration IpConfiguration { get; set; }
+        public IPConfiguration IpConfiguration { get; private set; }
 
         /// <summary>
         /// Gets or sets FQDN of the DNS record associated with the public IP

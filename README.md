@@ -10,7 +10,7 @@ that take advantage of scalable cloud computing resources.
     * .NET Portable Framework(Netstandard1.1 for NetCore), using profile 111
 
 ### Prerequisites:
-  Install CoreCLR RC2 using [these steps](https://www.microsoft.com/net/core).
+  Install .Net CoreCLR using [these steps](https://www.microsoft.com/net/core).
 
 ### Known issue and workaround:
    

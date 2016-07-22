@@ -27,6 +27,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the HiveJobProperties class.
         /// </summary>
+        /// <param name="script">the script to run</param>
+        /// <param name="runtimeVersion">the runtime version of the Data Lake Analytics engine to use for the specific type of job being run.</param>
+        /// <param name="statementInfo">the statement information for each statement in the script</param>
+        /// <param name="logsLocation">the Hive logs location</param>
+        /// <param name="warehouseLocation">the location of the Hive warehouse</param>
+        /// <param name="statementCount">the number of statements that will be run based on the script</param>
+        /// <param name="executedStatementCount">the number of statements that have been run based on the script</param>
         public HiveJobProperties(string script, string runtimeVersion = default(string), IList<HiveJobStatementInfo> statementInfo = default(IList<HiveJobStatementInfo>), string logsLocation = default(string), string warehouseLocation = default(string), int? statementCount = default(int?), int? executedStatementCount = default(int?))
             : base(script, runtimeVersion)
         {

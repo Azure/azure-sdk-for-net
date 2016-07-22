@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Gets Azure subscription credentials.
+        /// Credentials needed for the client to connect to Azure.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Initializes a new instance of the DataLakeAnalyticsCatalogManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Initializes a new instance of the DataLakeAnalyticsCatalogManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -161,6 +161,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
         }
 
+        /// <summary>
+        /// An optional partial-method to perform custom initialization.
+        /// </summary>
+        partial void CustomInitialize();
         /// <summary>
         /// Initializes client properties.
         /// </summary>
@@ -198,6 +202,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                         new Iso8601TimeSpanConverter()
                     }
             };
+            CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }
