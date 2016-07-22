@@ -291,9 +291,6 @@
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/resourceGroups/datalakerg14633\",\r\n  \"name\": \"datalakerg14633\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "106"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],

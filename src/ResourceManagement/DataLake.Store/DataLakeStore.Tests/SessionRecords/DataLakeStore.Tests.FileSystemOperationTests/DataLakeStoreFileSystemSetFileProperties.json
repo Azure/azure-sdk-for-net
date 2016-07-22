@@ -406,7 +406,7 @@
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DataLakeStore/accounts/testadlfs17774' under resource group 'datalakerg15775' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "165"
+          "166"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -577,7 +577,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "59"
+          "60"
         ],
         "x-ms-client-request-id": [
           "487fd102-9876-4fde-aa82-8d41f6e521cf"
@@ -592,7 +592,7 @@
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"0c842551-6d8d-41b3-b5f6-1800097348b6\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/resourceGroups/datalakerg15775/providers/Microsoft.DataLakeStore/accounts/testadlfs17774\",\r\n  \"name\": \"testadlfs17774\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "418"
+          "420"
         ],
         "Content-Type": [
           "application/json"
