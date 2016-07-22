@@ -46,6 +46,7 @@
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureStorageSasLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesCassandraLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\SalesforceLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\WebLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />
     <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
