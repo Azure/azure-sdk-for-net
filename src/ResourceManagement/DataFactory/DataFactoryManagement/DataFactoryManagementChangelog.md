@@ -6,7 +6,7 @@ _Release date: 2016.07.22_
 ### Feature Additions
 
 * The following linked service types have been added: 
-    * OnPremisesCassandraLinkedService
+    * OnPremisesCassandraLinkedService, SalesforceLinkedService
 * The following dataset types have been added: 
     * OnPremisesCassandraTableDataset
 * The following copy source types have been added: 	
