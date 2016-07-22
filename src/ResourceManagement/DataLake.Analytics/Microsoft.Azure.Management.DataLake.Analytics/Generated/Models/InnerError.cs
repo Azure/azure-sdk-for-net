@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the InnerError class.
         /// </summary>
+        /// <param name="trace">the stack trace for the error</param>
+        /// <param name="context">the context for the error message</param>
         public InnerError(string trace = default(string), string context = default(string))
         {
             Trace = trace;

@@ -18,11 +18,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     {
         private Regex _resourceGroupPattern = new Regex(@"/subscriptions/[^/]+/resourcegroups/([^?]+)\?api-version");
         private HashSet<string> _resourceGroupsCreated = new HashSet<string>();
-        private TokenInfo _tokenInfo;
+        private TokenCredentials _tokenCredentials;
 
-        public ResourceGroupCleaner(TokenInfo tokenInfo)
+        public ResourceGroupCleaner(TokenCredentials tokenCredentials)
         {
-            _tokenInfo = tokenInfo;
+            _tokenCredentials = tokenCredentials;
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -44,9 +44,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 HttpRequestMessage httpRequest = new HttpRequestMessage();
                 httpRequest.Method = new HttpMethod("DELETE");
                 httpRequest.RequestUri = new Uri(resourceGroupUri);
-
-                httpRequest.Headers.Authorization = new AuthenticationHeaderValue(_tokenInfo.AccessTokenType,
-                    _tokenInfo.AccessToken);
+                
+                _tokenCredentials.ProcessHttpRequestAsync(httpRequest, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 HttpResponseMessage httpResponse = await httpClient.SendAsync(httpRequest).ConfigureAwait(false);
                 string groupName = _resourceGroupPattern.Match(resourceGroupUri).Groups[1].Value;

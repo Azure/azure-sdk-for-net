@@ -35,6 +35,9 @@ namespace DataLakeAnalytics.Tests
                 commonData = new CommonTestFixture(context, true);
                 var clientToUse = this.GetDataLakeAnalyticsAccountManagementClient(context);
 
+                // ensure the account doesn't exist
+                Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName));
+
                 // Create a test account
                 var responseCreate =
                     clientToUse.Account.Create(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName,
@@ -62,6 +65,9 @@ namespace DataLakeAnalytics.Tests
                                 { "testkey","testvalue" }
                             }
                         });
+
+                // verify the account exists
+                Assert.True(clientToUse.Account.Exists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName));
 
                 // get the account and ensure that all the values are properly set.
                 var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName);
@@ -141,10 +147,15 @@ namespace DataLakeAnalytics.Tests
                 Assert.True(listResponse.Count() > 1);
 
                 // Add, list and remove a data source to the first account
+                // validate the data source doesn't exist first
+                Assert.False(clientToUse.Account.DataLakeStoreAccountExists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName));
                 clientToUse.Account.AddDataLakeStoreAccount(commonData.ResourceGroupName,
                     commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName, new AddDataLakeStoreParameters {
                     Properties = new DataLakeStoreAccountInfoProperties {Suffix = commonData.DataLakeStoreAccountSuffix}
                     });
+
+                // verify that the store account does exist now
+                Assert.True(clientToUse.Account.DataLakeStoreAccountExists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName));
 
                 // Get the data sources and confirm there are 2
                 var getDataSourceResponse =
@@ -173,6 +184,8 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(1, getDataSourceResponse.Count());
 
                 // Add, list and remove an azure blob source to the first account
+                // verify the blob doesn't exist
+                Assert.False(clientToUse.Account.StorageAccountExists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName));
                 clientToUse.Account.AddStorageAccount(commonData.ResourceGroupName,
                     commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName, new AddStorageAccountParameters {
                     Properties = new StorageAccountProperties
@@ -180,6 +193,9 @@ namespace DataLakeAnalytics.Tests
                         Suffix = commonData.StorageAccountSuffix,
                         AccessKey = commonData.StorageAccountAccessKey
                     }});
+
+                // verify the blob exists now
+                Assert.True(clientToUse.Account.StorageAccountExists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, commonData.StorageAccountName));
 
                 // Get the data sources and confirm there is 1
                 var getDataSourceBlobResponse =

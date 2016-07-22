@@ -14,6 +14,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Networks.Tests
 {
+    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     using SubResource = Microsoft.Azure.Management.Network.Models.SubResource;
@@ -33,6 +34,11 @@ namespace Networks.Tests
                     appGwname,
                     childResourceType,
                     childResourceName);
+        }
+
+        public ApplicationGatewayTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
         }
 
         private ApplicationGatewaySslCertificate CreateSslCertificate(string sslCertName, string password)

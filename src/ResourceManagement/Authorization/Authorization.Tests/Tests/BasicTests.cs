@@ -48,6 +48,7 @@ namespace Authorization.Tests
         [Fact]
         public void ClassicAdministratorListTests()
         {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
