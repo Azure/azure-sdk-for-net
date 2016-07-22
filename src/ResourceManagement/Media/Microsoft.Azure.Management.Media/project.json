@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Provides developers with libraries for managing the MediaServices under Azure Resource Manager. New, set, get and delete MediaServices, regenerate account keys, sync the storage key and more.",
   "authors": [ "Microsoft" ],
 
