@@ -29,12 +29,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the GenericResourceFilter class.
         /// </summary>
-        public GenericResourceFilter(string resourceType = default(string), string tagname = default(string), string tagvalue = default(string), string expand = default(string))
+        public GenericResourceFilter(string resourceType = default(string), string tagname = default(string), string tagvalue = default(string))
         {
             ResourceType = resourceType;
             Tagname = tagname;
             Tagvalue = tagvalue;
-            Expand = expand;
         }
 
         /// <summary>
@@ -54,12 +53,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "tagvalue")]
         public string Tagvalue { get; set; }
-
-        /// <summary>
-        /// Gets or sets the expand value.
-        /// </summary>
-        [JsonProperty(PropertyName = "expand")]
-        public string Expand { get; set; }
 
     }
 }

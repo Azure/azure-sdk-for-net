@@ -50,25 +50,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Read only.Inbound rules URIs that use this frontend IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatRules")]
-        public IList<SubResource> InboundNatRules { get; set; }
+        public IList<SubResource> InboundNatRules { get; private set; }
 
         /// <summary>
         /// Read only.Inbound pools URIs that use this frontend IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatPools")]
-        public IList<SubResource> InboundNatPools { get; set; }
+        public IList<SubResource> InboundNatPools { get; private set; }
 
         /// <summary>
         /// Read only.Outbound rules URIs that use this frontend IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.outboundNatRules")]
-        public IList<SubResource> OutboundNatRules { get; set; }
+        public IList<SubResource> OutboundNatRules { get; private set; }
 
         /// <summary>
         /// Gets Load Balancing rules URIs that use this frontend IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public IList<SubResource> LoadBalancingRules { get; set; }
+        public IList<SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
         /// Gets or sets the privateIPAddress of the IP Configuration

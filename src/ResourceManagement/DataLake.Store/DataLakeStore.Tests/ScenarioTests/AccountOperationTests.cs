@@ -125,6 +125,9 @@ namespace DataLakeStore.Tests
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
 
+                // test that the account exists
+                Assert.True(clientToUse.Account.Exists(commonData.ResourceGroupName, newAccount.Name));
+
                 // Delete the account and confirm that it is deleted.
                 clientToUse.Account.Delete(commonData.ResourceGroupName, newAccount.Name);
 
@@ -133,6 +136,9 @@ namespace DataLakeStore.Tests
 
                 // delete the account with its old name, which should also succeed.
                 clientToUse.Account.Delete(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
+
+                // test that the account is gone
+                Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, newAccount.Name));
             }
         }
     }

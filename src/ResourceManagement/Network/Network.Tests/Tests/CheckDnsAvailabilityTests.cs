@@ -8,10 +8,16 @@ using Xunit;
 
 namespace Networks.Tests
 {
+    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     public class CheckDnsAvailabilityTests
     {
+        public CheckDnsAvailabilityTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
+        }
+
         [Fact]
         public void CheckDnsAvailabilityTest()
         {

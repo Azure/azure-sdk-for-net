@@ -12,9 +12,15 @@
     using Networks.Tests.Helpers;
     using ResourceGroups.Tests;
     using Xunit;
+    using Microsoft.Azure.Test.HttpRecorder;
 
     public class RouteTableTests
     {
+        public RouteTableTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
+        }
+
         [Fact]
         public void EmptyRouteTableTest()
         {

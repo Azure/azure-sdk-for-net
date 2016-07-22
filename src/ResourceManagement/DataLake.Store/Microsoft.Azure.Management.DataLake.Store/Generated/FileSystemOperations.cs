@@ -1645,6 +1645,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='streamContents'>
         /// The file contents to include when appending to the file.
         /// </param>
+        /// <param name='offset'>
+        /// The optional offset in the stream to begin the append operation. Default
+        /// is to append at the end of the stream.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1660,7 +1664,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1695,6 +1699,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("streamContents", streamContents);
+                tracingParameters.Add("offset", offset);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("append", append);
                 tracingParameters.Add("transferEncoding", transferEncoding);
@@ -1708,6 +1713,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
             _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
             List<string> _queryParameters = new List<string>();
+            if (offset != null)
+            {
+                _queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (op != null)
             {
                 _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
