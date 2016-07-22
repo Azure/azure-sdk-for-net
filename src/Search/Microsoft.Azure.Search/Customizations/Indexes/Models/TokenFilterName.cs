@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Removes stop words from a token stream.
         /// </summary>
-        public static readonly TokenFilterName Stop = new TokenFilterName("stop");
+        public static readonly TokenFilterName Stopwords = new TokenFilterName("stopwords");
 
         /// <summary>
         /// Matches single or multi-word synonyms in a token stream.

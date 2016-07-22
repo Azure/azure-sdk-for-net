@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Search.Models
         Danish,
         [EnumMember(Value = "dutch")]
         Dutch,
-        [EnumMember(Value = "dutch_kp")]
+        [EnumMember(Value = "dutchKp")]
         DutchKp,
         [EnumMember(Value = "english")]
         English,
-        [EnumMember(Value = "light_english")]
+        [EnumMember(Value = "lightEnglish")]
         LightEnglish,
-        [EnumMember(Value = "minimal_english")]
+        [EnumMember(Value = "minimalEnglish")]
         MinimalEnglish,
-        [EnumMember(Value = "possessive_english")]
+        [EnumMember(Value = "possessiveEnglish")]
         PossessiveEnglish,
         [EnumMember(Value = "porter2")]
         Porter2,
@@ -52,25 +52,25 @@ namespace Microsoft.Azure.Search.Models
         Lovins,
         [EnumMember(Value = "finnish")]
         Finnish,
-        [EnumMember(Value = "light_finnish")]
+        [EnumMember(Value = "lightFinnish")]
         LightFinnish,
         [EnumMember(Value = "french")]
         French,
-        [EnumMember(Value = "light_french")]
+        [EnumMember(Value = "lightFrench")]
         LightFrench,
-        [EnumMember(Value = "minimal_french")]
+        [EnumMember(Value = "minimalFrench")]
         MinimalFrench,
         [EnumMember(Value = "galician")]
         Galician,
-        [EnumMember(Value = "minimal_galician")]
+        [EnumMember(Value = "minimalGalician")]
         MinimalGalician,
         [EnumMember(Value = "german")]
         German,
         [EnumMember(Value = "german2")]
         German2,
-        [EnumMember(Value = "light_german")]
+        [EnumMember(Value = "lightGerman")]
         LightGerman,
-        [EnumMember(Value = "minimal_german")]
+        [EnumMember(Value = "minimalGerman")]
         MinimalGerman,
         [EnumMember(Value = "greek")]
         Greek,
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Search.Models
         Hindi,
         [EnumMember(Value = "hungarian")]
         Hungarian,
-        [EnumMember(Value = "light_hungarian")]
+        [EnumMember(Value = "lightHungarian")]
         LightHungarian,
         [EnumMember(Value = "indonesian")]
         Indonesian,
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Search.Models
         Irish,
         [EnumMember(Value = "italian")]
         Italian,
-        [EnumMember(Value = "light_italian")]
+        [EnumMember(Value = "lightItalian")]
         LightItalian,
         [EnumMember(Value = "sorani")]
         Sorani,
@@ -94,35 +94,35 @@ namespace Microsoft.Azure.Search.Models
         Latvian,
         [EnumMember(Value = "norwegian")]
         Norwegian,
-        [EnumMember(Value = "light_norwegian")]
+        [EnumMember(Value = "lightNorwegian")]
         LightNorwegian,
-        [EnumMember(Value = "minimal_norwegian")]
+        [EnumMember(Value = "minimalNorwegian")]
         MinimalNorwegian,
-        [EnumMember(Value = "light_nynorsk")]
+        [EnumMember(Value = "lightNynorsk")]
         LightNynorsk,
-        [EnumMember(Value = "minimal_nynorsk")]
+        [EnumMember(Value = "minimalNynorsk")]
         MinimalNynorsk,
         [EnumMember(Value = "portuguese")]
         Portuguese,
-        [EnumMember(Value = "light_portuguese")]
+        [EnumMember(Value = "lightPortuguese")]
         LightPortuguese,
-        [EnumMember(Value = "minimal_portuguese")]
+        [EnumMember(Value = "minimalPortuguese")]
         MinimalPortuguese,
-        [EnumMember(Value = "portuguese_rslp")]
+        [EnumMember(Value = "portugueseRslp")]
         PortugueseRslp,
         [EnumMember(Value = "romanian")]
         Romanian,
         [EnumMember(Value = "russian")]
         Russian,
-        [EnumMember(Value = "light_russian")]
+        [EnumMember(Value = "lightRussian")]
         LightRussian,
         [EnumMember(Value = "spanish")]
         Spanish,
-        [EnumMember(Value = "light_spanish")]
+        [EnumMember(Value = "lightSpanish")]
         LightSpanish,
         [EnumMember(Value = "swedish")]
         Swedish,
-        [EnumMember(Value = "light_swedish")]
+        [EnumMember(Value = "lightSwedish")]
         LightSwedish,
         [EnumMember(Value = "turkish")]
         Turkish

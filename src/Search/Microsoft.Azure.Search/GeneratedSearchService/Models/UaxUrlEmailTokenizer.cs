@@ -21,18 +21,18 @@ namespace Microsoft.Azure.Search.Models
     /// using Apache Lucene.
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/UAX29URLEmailTokenizer.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.UaxEmailUrlTokenizer")]
-    public partial class UaxEmailUrlTokenizer : Tokenizer
+    [JsonObject("#Microsoft.Azure.Search.UaxUrlEmailTokenizer")]
+    public partial class UaxUrlEmailTokenizer : Tokenizer
     {
         /// <summary>
-        /// Initializes a new instance of the UaxEmailUrlTokenizer class.
+        /// Initializes a new instance of the UaxUrlEmailTokenizer class.
         /// </summary>
-        public UaxEmailUrlTokenizer() { }
+        public UaxUrlEmailTokenizer() { }
 
         /// <summary>
-        /// Initializes a new instance of the UaxEmailUrlTokenizer class.
+        /// Initializes a new instance of the UaxUrlEmailTokenizer class.
         /// </summary>
-        public UaxEmailUrlTokenizer(string name, int? maxTokenLength = default(int?))
+        public UaxUrlEmailTokenizer(string name, int? maxTokenLength = default(int?))
             : base(name)
         {
             MaxTokenLength = maxTokenLength;

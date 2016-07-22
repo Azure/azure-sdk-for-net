@@ -21,18 +21,18 @@ namespace Microsoft.Azure.Search.Models
     /// implemented using Apache Lucene.
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.StopTokenFilter")]
-    public partial class StopTokenFilter : TokenFilter
+    [JsonObject("#Microsoft.Azure.Search.StopwordsTokenFilter")]
+    public partial class StopwordsTokenFilter : TokenFilter
     {
         /// <summary>
-        /// Initializes a new instance of the StopTokenFilter class.
+        /// Initializes a new instance of the StopwordsTokenFilter class.
         /// </summary>
-        public StopTokenFilter() { }
+        public StopwordsTokenFilter() { }
 
         /// <summary>
-        /// Initializes a new instance of the StopTokenFilter class.
+        /// Initializes a new instance of the StopwordsTokenFilter class.
         /// </summary>
-        public StopTokenFilter(string name, IList<string> stopwords = default(IList<string>), string stopwordsList = default(string), bool? ignoreCase = default(bool?), bool? removeTrailingStopWords = default(bool?))
+        public StopwordsTokenFilter(string name, IList<string> stopwords = default(IList<string>), string stopwordsList = default(string), bool? ignoreCase = default(bool?), bool? removeTrailingStopWords = default(bool?))
             : base(name)
         {
             Stopwords = stopwords;

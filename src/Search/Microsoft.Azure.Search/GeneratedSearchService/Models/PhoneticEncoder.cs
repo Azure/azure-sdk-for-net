@@ -20,12 +20,12 @@ namespace Microsoft.Azure.Search.Models
     {
         [EnumMember(Value = "metaphone")]
         Metaphone,
-        [EnumMember(Value = "doublemetaphone")]
-        Doublemetaphone,
+        [EnumMember(Value = "doubleMetaphone")]
+        DoubleMetaphone,
         [EnumMember(Value = "soundex")]
         Soundex,
-        [EnumMember(Value = "refinedsoundex")]
-        Refinedsoundex,
+        [EnumMember(Value = "refinedSoundex")]
+        RefinedSoundex,
         [EnumMember(Value = "caverphone1")]
         Caverphone1,
         [EnumMember(Value = "caverphone2")]
@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Search.Models
         Cologne,
         [EnumMember(Value = "nysiis")]
         Nysiis,
-        [EnumMember(Value = "koelnerphonetik")]
-        Koelnerphonetik,
-        [EnumMember(Value = "haasephonetik")]
-        Haasephonetik,
-        [EnumMember(Value = "beidermorse")]
-        Beidermorse
+        [EnumMember(Value = "koelnerPhonetik")]
+        KoelnerPhonetik,
+        [EnumMember(Value = "haasePhonetik")]
+        HaasePhonetik,
+        [EnumMember(Value = "beiderMorse")]
+        BeiderMorse
     }
 }
