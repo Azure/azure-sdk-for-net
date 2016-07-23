@@ -40,10 +40,10 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the language to use. Possible values include:
-        /// 'Armenian', 'Basque', 'Catalan', 'Danish', 'Dutch', 'English',
-        /// 'Finnish', 'French', 'German', 'German2', 'Hungarian', 'Italian',
-        /// 'Kp', 'Lovins', 'Norwegian', 'Porter', 'Portuguese', 'Romanian',
-        /// 'Russian', 'Spanish', 'Swedish', 'Turkish'
+        /// 'armenian', 'basque', 'catalan', 'danish', 'dutch', 'english',
+        /// 'finnish', 'french', 'german', 'german2', 'hungarian', 'italian',
+        /// 'kp', 'lovins', 'norwegian', 'porter', 'portuguese', 'romanian',
+        /// 'russian', 'spanish', 'swedish', 'turkish'
         /// </summary>
         [JsonProperty(PropertyName = "language")]
         public SnowballTokenFilterLanguage Language { get; set; }

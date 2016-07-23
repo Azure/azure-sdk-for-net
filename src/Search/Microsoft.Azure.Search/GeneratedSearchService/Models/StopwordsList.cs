@@ -18,67 +18,67 @@ namespace Microsoft.Azure.Search.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum StopwordsList
     {
-        [EnumMember(Value = "_arabic_")]
-        _arabic,
-        [EnumMember(Value = "_armenian_")]
-        _armenian,
-        [EnumMember(Value = "_basque_")]
-        _basque,
-        [EnumMember(Value = "_brazilian_")]
-        _brazilian,
-        [EnumMember(Value = "_bulgarian_")]
-        _bulgarian,
-        [EnumMember(Value = "_catalan_")]
-        _catalan,
-        [EnumMember(Value = "_czech_")]
-        _czech,
-        [EnumMember(Value = "_danish_")]
-        _danish,
-        [EnumMember(Value = "_dutch_")]
-        _dutch,
-        [EnumMember(Value = "_english_")]
-        _english,
-        [EnumMember(Value = "_finnish_")]
-        _finnish,
-        [EnumMember(Value = "_french_")]
-        _french,
-        [EnumMember(Value = "_galician_")]
-        _galician,
-        [EnumMember(Value = "_german_")]
-        _german,
-        [EnumMember(Value = "_greek_")]
-        _greek,
-        [EnumMember(Value = "_hindi_")]
-        _hindi,
-        [EnumMember(Value = "_hungarian_")]
-        _hungarian,
-        [EnumMember(Value = "_indonesian_")]
-        _indonesian,
-        [EnumMember(Value = "_irish_")]
-        _irish,
-        [EnumMember(Value = "_italian_")]
-        _italian,
-        [EnumMember(Value = "_latvian_")]
-        _latvian,
-        [EnumMember(Value = "_norwegian_")]
-        _norwegian,
-        [EnumMember(Value = "_persian_")]
-        _persian,
-        [EnumMember(Value = "_portuguese_")]
-        _portuguese,
-        [EnumMember(Value = "_romanian_")]
-        _romanian,
-        [EnumMember(Value = "_russian_")]
-        _russian,
-        [EnumMember(Value = "_sorani_")]
-        _sorani,
-        [EnumMember(Value = "_spanish_")]
-        _spanish,
-        [EnumMember(Value = "_swedish_")]
-        _swedish,
-        [EnumMember(Value = "_thai_")]
-        _thai,
-        [EnumMember(Value = "_turkish_")]
-        _turkish
+        [EnumMember(Value = "arabic")]
+        Arabic,
+        [EnumMember(Value = "armenian")]
+        Armenian,
+        [EnumMember(Value = "basque")]
+        Basque,
+        [EnumMember(Value = "brazilian")]
+        Brazilian,
+        [EnumMember(Value = "bulgarian")]
+        Bulgarian,
+        [EnumMember(Value = "catalan")]
+        Catalan,
+        [EnumMember(Value = "czech")]
+        Czech,
+        [EnumMember(Value = "danish")]
+        Danish,
+        [EnumMember(Value = "dutch")]
+        Dutch,
+        [EnumMember(Value = "english")]
+        English,
+        [EnumMember(Value = "finnish")]
+        Finnish,
+        [EnumMember(Value = "french")]
+        French,
+        [EnumMember(Value = "galician")]
+        Galician,
+        [EnumMember(Value = "german")]
+        German,
+        [EnumMember(Value = "greek")]
+        Greek,
+        [EnumMember(Value = "hindi")]
+        Hindi,
+        [EnumMember(Value = "hungarian")]
+        Hungarian,
+        [EnumMember(Value = "indonesian")]
+        Indonesian,
+        [EnumMember(Value = "irish")]
+        Irish,
+        [EnumMember(Value = "italian")]
+        Italian,
+        [EnumMember(Value = "latvian")]
+        Latvian,
+        [EnumMember(Value = "norwegian")]
+        Norwegian,
+        [EnumMember(Value = "persian")]
+        Persian,
+        [EnumMember(Value = "portuguese")]
+        Portuguese,
+        [EnumMember(Value = "romanian")]
+        Romanian,
+        [EnumMember(Value = "russian")]
+        Russian,
+        [EnumMember(Value = "sorani")]
+        Sorani,
+        [EnumMember(Value = "spanish")]
+        Spanish,
+        [EnumMember(Value = "swedish")]
+        Swedish,
+        [EnumMember(Value = "thai")]
+        Thai,
+        [EnumMember(Value = "turkish")]
+        Turkish
     }
 }

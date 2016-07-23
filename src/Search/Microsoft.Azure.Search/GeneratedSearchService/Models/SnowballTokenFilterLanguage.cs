@@ -18,49 +18,49 @@ namespace Microsoft.Azure.Search.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SnowballTokenFilterLanguage
     {
-        [EnumMember(Value = "Armenian")]
+        [EnumMember(Value = "armenian")]
         Armenian,
-        [EnumMember(Value = "Basque")]
+        [EnumMember(Value = "basque")]
         Basque,
-        [EnumMember(Value = "Catalan")]
+        [EnumMember(Value = "catalan")]
         Catalan,
-        [EnumMember(Value = "Danish")]
+        [EnumMember(Value = "danish")]
         Danish,
-        [EnumMember(Value = "Dutch")]
+        [EnumMember(Value = "dutch")]
         Dutch,
-        [EnumMember(Value = "English")]
+        [EnumMember(Value = "english")]
         English,
-        [EnumMember(Value = "Finnish")]
+        [EnumMember(Value = "finnish")]
         Finnish,
-        [EnumMember(Value = "French")]
+        [EnumMember(Value = "french")]
         French,
-        [EnumMember(Value = "German")]
+        [EnumMember(Value = "german")]
         German,
-        [EnumMember(Value = "German2")]
+        [EnumMember(Value = "german2")]
         German2,
-        [EnumMember(Value = "Hungarian")]
+        [EnumMember(Value = "hungarian")]
         Hungarian,
-        [EnumMember(Value = "Italian")]
+        [EnumMember(Value = "italian")]
         Italian,
-        [EnumMember(Value = "Kp")]
+        [EnumMember(Value = "kp")]
         Kp,
-        [EnumMember(Value = "Lovins")]
+        [EnumMember(Value = "lovins")]
         Lovins,
-        [EnumMember(Value = "Norwegian")]
+        [EnumMember(Value = "norwegian")]
         Norwegian,
-        [EnumMember(Value = "Porter")]
+        [EnumMember(Value = "porter")]
         Porter,
-        [EnumMember(Value = "Portuguese")]
+        [EnumMember(Value = "portuguese")]
         Portuguese,
-        [EnumMember(Value = "Romanian")]
+        [EnumMember(Value = "romanian")]
         Romanian,
-        [EnumMember(Value = "Russian")]
+        [EnumMember(Value = "russian")]
         Russian,
-        [EnumMember(Value = "Spanish")]
+        [EnumMember(Value = "spanish")]
         Spanish,
-        [EnumMember(Value = "Swedish")]
+        [EnumMember(Value = "swedish")]
         Swedish,
-        [EnumMember(Value = "Turkish")]
+        [EnumMember(Value = "turkish")]
         Turkish
     }
 }

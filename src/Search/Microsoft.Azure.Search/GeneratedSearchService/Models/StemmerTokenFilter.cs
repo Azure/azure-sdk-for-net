@@ -41,18 +41,18 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the language to use. Possible values include:
         /// 'arabic', 'armenian', 'basque', 'brazilian', 'bulgarian',
-        /// 'catalan', 'czech', 'danish', 'dutch', 'dutch_kp', 'english',
-        /// 'light_english', 'minimal_english', 'possessive_english',
-        /// 'porter2', 'lovins', 'finnish', 'light_finnish', 'french',
-        /// 'light_french', 'minimal_french', 'galician', 'minimal_galician',
-        /// 'german', 'german2', 'light_german', 'minimal_german', 'greek',
-        /// 'hindi', 'hungarian', 'light_hungarian', 'indonesian', 'irish',
-        /// 'italian', 'light_italian', 'sorani', 'latvian', 'norwegian',
-        /// 'light_norwegian', 'minimal_norwegian', 'light_nynorsk',
-        /// 'minimal_nynorsk', 'portuguese', 'light_portuguese',
-        /// 'minimal_portuguese', 'portuguese_rslp', 'romanian', 'russian',
-        /// 'light_russian', 'spanish', 'light_spanish', 'swedish',
-        /// 'light_swedish', 'turkish'
+        /// 'catalan', 'czech', 'danish', 'dutch', 'dutchKp', 'english',
+        /// 'lightEnglish', 'minimalEnglish', 'possessiveEnglish', 'porter2',
+        /// 'lovins', 'finnish', 'lightFinnish', 'french', 'lightFrench',
+        /// 'minimalFrench', 'galician', 'minimalGalician', 'german',
+        /// 'german2', 'lightGerman', 'minimalGerman', 'greek', 'hindi',
+        /// 'hungarian', 'lightHungarian', 'indonesian', 'irish', 'italian',
+        /// 'lightItalian', 'sorani', 'latvian', 'norwegian',
+        /// 'lightNorwegian', 'minimalNorwegian', 'lightNynorsk',
+        /// 'minimalNynorsk', 'portuguese', 'lightPortuguese',
+        /// 'minimalPortuguese', 'portugueseRslp', 'romanian', 'russian',
+        /// 'lightRussian', 'spanish', 'lightSpanish', 'swedish',
+        /// 'lightSwedish', 'turkish'
         /// </summary>
         [JsonProperty(PropertyName = "language")]
         public StemmerTokenFilterLanguage Language { get; set; }

@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the phonetic encoder to use. Default is "metaphone".
-        /// Possible values include: 'metaphone', 'doublemetaphone',
-        /// 'soundex', 'refinedsoundex', 'caverphone1', 'caverphone2',
-        /// 'cologne', 'nysiis', 'koelnerphonetik', 'haasephonetik',
-        /// 'beidermorse'
+        /// Possible values include: 'metaphone', 'doubleMetaphone',
+        /// 'soundex', 'refinedSoundex', 'caverphone1', 'caverphone2',
+        /// 'cologne', 'nysiis', 'koelnerPhonetik', 'haasePhonetik',
+        /// 'beiderMorse'
         /// </summary>
         [JsonProperty(PropertyName = "encoder")]
         public PhoneticEncoder? Encoder { get; set; }
