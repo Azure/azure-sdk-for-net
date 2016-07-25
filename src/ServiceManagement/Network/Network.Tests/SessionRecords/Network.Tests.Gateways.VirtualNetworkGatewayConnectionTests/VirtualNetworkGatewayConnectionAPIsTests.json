@@ -4119,8 +4119,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/virtualnetworkgateways?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrZ2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/virtualnetworkgateways?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL3ZpcnR1YWxuZXR3b3JrZ2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4160,8 +4160,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTYtMDMtMDE=",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTYtMDctMDE=",
       "RequestMethod": "POST",
       "RequestBody": "<CreateLocalNetworkGatewayParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <AddressSpace xmlns:a=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\r\n    <a:string>200.168.0.0/16</a:string>\r\n  </AddressSpace>\r\n  <GatewayName>coexistenceLocalnetGateway</GatewayName>\r\n  <IpAddress>204.95.99.237</IpAddress>\r\n</CreateLocalNetworkGatewayParameters>",
       "RequestHeaders": {
@@ -4207,8 +4207,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTYtMDMtMDE=",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTYtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4248,8 +4248,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
       "RequestMethod": "POST",
       "RequestBody": "<CreateGatewayConnectionParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ConnectedEntityId>6f335915-b57f-467d-bd5a-525ac56e4fff</ConnectedEntityId>\r\n  <GatewayConnectionName>coexistenceGatewayConnection</GatewayConnectionName>\r\n  <GatewayConnectionType>IPsec</GatewayConnectionType>\r\n  <VirtualNetworkGatewayId>408a25c0-3075-4738-b88e-04866d6a07f2</VirtualNetworkGatewayId>\r\n  <RoutingWeight>3</RoutingWeight>\r\n  <SharedKey>abc</SharedKey>\r\n</CreateGatewayConnectionParameters>",
       "RequestHeaders": {
@@ -4418,8 +4418,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections/virtualnetworkgateway/408a25c0-3075-4738-b88e-04866d6a07f2/connectedentity/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucy92aXJ0dWFsbmV0d29ya2dhdGV3YXkvNDA4YTI1YzAtMzA3NS00NzM4LWI4OGUtMDQ4NjZkNmEwN2YyL2Nvbm5lY3RlZGVudGl0eS82ZjMzNTkxNS1iNTdmLTQ2N2QtYmQ1YS01MjVhYzU2ZTRmZmY/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections/virtualnetworkgateway/408a25c0-3075-4738-b88e-04866d6a07f2/connectedentity/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucy92aXJ0dWFsbmV0d29ya2dhdGV3YXkvNDA4YTI1YzAtMzA3NS00NzM4LWI4OGUtMDQ4NjZkNmEwN2YyL2Nvbm5lY3RlZGVudGl0eS82ZjMzNTkxNS1iNTdmLTQ2N2QtYmQ1YS01MjVhYzU2ZTRmZmY/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4459,8 +4459,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections/virtualnetworkgateway/408a25c0-3075-4738-b88e-04866d6a07f2/connectedentity/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucy92aXJ0dWFsbmV0d29ya2dhdGV3YXkvNDA4YTI1YzAtMzA3NS00NzM4LWI4OGUtMDQ4NjZkNmEwN2YyL2Nvbm5lY3RlZGVudGl0eS82ZjMzNTkxNS1iNTdmLTQ2N2QtYmQ1YS01MjVhYzU2ZTRmZmY/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections/virtualnetworkgateway/408a25c0-3075-4738-b88e-04866d6a07f2/connectedentity/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucy92aXJ0dWFsbmV0d29ya2dhdGV3YXkvNDA4YTI1YzAtMzA3NS00NzM4LWI4OGUtMDQ4NjZkNmEwN2YyL2Nvbm5lY3RlZGVudGl0eS82ZjMzNTkxNS1iNTdmLTQ2N2QtYmQ1YS01MjVhYzU2ZTRmZmY/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4500,8 +4500,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections/virtualnetworkgateway/408a25c0-3075-4738-b88e-04866d6a07f2/connectedentity/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucy92aXJ0dWFsbmV0d29ya2dhdGV3YXkvNDA4YTI1YzAtMzA3NS00NzM4LWI4OGUtMDQ4NjZkNmEwN2YyL2Nvbm5lY3RlZGVudGl0eS82ZjMzNTkxNS1iNTdmLTQ2N2QtYmQ1YS01MjVhYzU2ZTRmZmY/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections/virtualnetworkgateway/408a25c0-3075-4738-b88e-04866d6a07f2/connectedentity/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucy92aXJ0dWFsbmV0d29ya2dhdGV3YXkvNDA4YTI1YzAtMzA3NS00NzM4LWI4OGUtMDQ4NjZkNmEwN2YyL2Nvbm5lY3RlZGVudGl0eS82ZjMzNTkxNS1iNTdmLTQ2N2QtYmQ1YS01MjVhYzU2ZTRmZmY/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "<UpdateGatewayConnectionParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <RoutingWeight>4</RoutingWeight>\r\n  <SharedKey>xyz</SharedKey>\r\n</UpdateGatewayConnectionParameters>",
       "RequestHeaders": {
@@ -4629,8 +4629,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4670,8 +4670,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -4711,8 +4711,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections/virtualnetworkgateway/408a25c0-3075-4738-b88e-04866d6a07f2/connectedentity/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucy92aXJ0dWFsbmV0d29ya2dhdGV3YXkvNDA4YTI1YzAtMzA3NS00NzM4LWI4OGUtMDQ4NjZkNmEwN2YyL2Nvbm5lY3RlZGVudGl0eS82ZjMzNTkxNS1iNTdmLTQ2N2QtYmQ1YS01MjVhYzU2ZTRmZmY/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/gatewayconnections/virtualnetworkgateway/408a25c0-3075-4738-b88e-04866d6a07f2/connectedentity/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2dhdGV3YXljb25uZWN0aW9ucy92aXJ0dWFsbmV0d29ya2dhdGV3YXkvNDA4YTI1YzAtMzA3NS00NzM4LWI4OGUtMDQ4NjZkNmEwN2YyL2Nvbm5lY3RlZGVudGl0eS82ZjMzNTkxNS1iNTdmLTQ2N2QtYmQ1YS01MjVhYzU2ZTRmZmY/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -5244,8 +5244,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-03-01",
-      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzZmMzM1OTE1LWI1N2YtNDY3ZC1iZDVhLTUyNWFjNTZlNGZmZj9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/localnetworkgateways/6f335915-b57f-467d-bd5a-525ac56e4fff?api-version=2016-07-01",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2xvY2FsbmV0d29ya2dhdGV3YXlzLzZmMzM1OTE1LWI1N2YtNDY3ZC1iZDVhLTUyNWFjNTZlNGZmZj9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
