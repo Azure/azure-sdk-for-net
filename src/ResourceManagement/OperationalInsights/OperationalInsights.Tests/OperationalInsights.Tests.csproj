@@ -34,8 +34,12 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\CanCreateUpdateDeleteDataSource.json" />
-    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\DataSourceCreateFailsWithoutWorkspace.json" />
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\CanCreateUpdateDeleteDataSource.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\DataSourceCreateFailsWithoutWorkspace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.SearchOperationsTest\CanCreateOrUpdateAndDeleteSavedSearches.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
