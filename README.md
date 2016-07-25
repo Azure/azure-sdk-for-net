@@ -73,7 +73,7 @@ The **master** branch contains the code generated from Hydra/Hyak.
  6. **MANDATORY**: Add or update tests for the newly generated code.
  7. Once added to the Azure SDK for .NET, Build your local package using command "msbuild build.proj /t:build;package /p:scope=YourService" 
  (Note, 'YourService' comes from the sub folder under <sdk-repo-root>\src, for example: "ResourceManagement\Compute")
- 8. Bump up the package version in YourService.nuget.proj
+ 8. If you're using **master** branch, bump up the package version in YourService.nuget.proj. If you're using **AutoRest** branch, change the package version in the project.json file, as well as in the AssemblyInfo.cs file.
  9. Use this local Package for your Powershell development
  10. Create 2 Pull Requests and send an email to [azsdkcode@microsoft.com](mailto:azsdkcode@microsoft.com)
     - A Pull Request of your spec changes against **master** branch of the [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
@@ -92,7 +92,7 @@ Before a pull request will be considered by the Azure SDK team, the following re
     - Functional tests are encouraged, and provide teams with a way to mitigate regressions caused by other code contributions.
   - Code should be commented.
   - Code should be fully code reviewed.
-  - Code should be able to merge into the dev branch being targeted.
+  - Code should be able to merge without any conflicts into the dev branch being targeted.
   - Code should pass all relevant static checks and coding guidelines set forth by the specific repository.
   - All build warnings and code analysis warnings should be fixed prior to submission.
 - As part of the pull request (aka, in the text box on GitHub as part of submitting the pull request):
@@ -124,10 +124,3 @@ Much of the SDK code is generated from metadata specs about the REST APIs. Do no
   - File an issue describing the problem,
   - Refer to the the [AutoRest project](https://github.com/azure/autorest) to view and modify the generator, or
   - Add additional methods, properties, and overloads to the SDK by adding classes in the 'Customizations' folder of a project
-
-### Other
-
-If for platform reasons that your library won't use NetCore project system, 3 notes
-  - In your library csproject file, set the msbuild property "AutoRestProjects" to "true"
-  - In your test project files, set both "AutoRestProjects" and "SDKTestProject" to "true"
-  - To simplify test discovery, the test folder must be named with ".tests"
