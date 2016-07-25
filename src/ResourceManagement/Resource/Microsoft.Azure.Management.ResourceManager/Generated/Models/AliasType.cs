@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the alias name.
+        /// The alias name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the paths for an alias.
+        /// The paths for an alias.
         /// </summary>
         [JsonProperty(PropertyName = "paths")]
         public IList<AliasPathType> Paths { get; set; }
