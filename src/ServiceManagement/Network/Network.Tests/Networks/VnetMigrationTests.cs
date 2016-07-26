@@ -39,9 +39,9 @@ namespace Network.Tests.Networks
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                Assert.NotNull(response.ValidateVirtualNetworkMessages);
-                Assert.Equal(1, response.ValidateVirtualNetworkMessages.Count);
-                Assert.Equal("The virtual network foo does not exist.", response.ValidateVirtualNetworkMessages[0].Message);
+                Assert.NotNull(response.ValidationMessages);
+                Assert.Equal(1, response.ValidationMessages.Count);
+                Assert.Equal("The virtual network foo does not exist.", response.ValidationMessages[0].Message);
             }
         }
 
