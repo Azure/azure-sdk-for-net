@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "title": "Microsoft Azure Key Vault Management",
+  "title": "Microsoft Azure IotHub Management",
   "description": "Provides management capabilities for Microsoft Azure IotHub.",
   "authors": [ "Microsoft" ],
 

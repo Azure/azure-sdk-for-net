@@ -5,7 +5,7 @@
 
 @echo off
 setlocal
-set autoRestVersion=0.14.0-Nightly20160125
+set autoRestVersion=0.16.0-Nightly20160413
 
 set iotHubSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-iothub/2016-02-03/swagger/iothub.json"
 
