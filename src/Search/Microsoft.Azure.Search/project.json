@@ -11,7 +11,7 @@
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Search", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
     "requireLicenseAcceptance":  true,
-    "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API.",
+    "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API."
   },
 
   "buildOptions": {
@@ -25,13 +25,6 @@
 
   "frameworks": {
     "net45": {
-      "frameworkAssemblies": {
-        "System.Collections": "",
-        "System.Linq.Expressions": "",
-        "System.Runtime": "",
-        "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": "",
-      },
       "dependencies": {
         "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
       }
