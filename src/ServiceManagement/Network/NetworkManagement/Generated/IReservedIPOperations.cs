@@ -377,9 +377,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The Validate Network Migration operation response.
         /// </returns>
-        Task<AzureOperationResponse> ValidateMigrationAsync(string ipName, CancellationToken cancellationToken);
+        Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(string ipName, CancellationToken cancellationToken);
     }
 }

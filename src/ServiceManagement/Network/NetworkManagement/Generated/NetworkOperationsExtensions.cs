@@ -549,9 +549,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Required. Name of the Virtual Network to be migrated.
         /// </param>
         /// <returns>
-        /// The Validate Virtual Network Migration operation response.
+        /// The Validate Network Migration operation response.
         /// </returns>
-        public static XrpMigrationValidateVirtualNetworkResponse ValidateMigration(this INetworkOperations operations, string virtualNetworkName)
+        public static NetworkMigrationValidationResponse ValidateMigration(this INetworkOperations operations, string virtualNetworkName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -572,9 +572,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Required. Name of the Virtual Network to be migrated.
         /// </param>
         /// <returns>
-        /// The Validate Virtual Network Migration operation response.
+        /// The Validate Network Migration operation response.
         /// </returns>
-        public static Task<XrpMigrationValidateVirtualNetworkResponse> ValidateMigrationAsync(this INetworkOperations operations, string virtualNetworkName)
+        public static Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(this INetworkOperations operations, string virtualNetworkName)
         {
             return operations.ValidateMigrationAsync(virtualNetworkName, CancellationToken.None);
         }

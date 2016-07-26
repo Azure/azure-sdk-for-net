@@ -909,10 +909,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Required. Name of the reservedIP to be migrated.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The Validate Network Migration operation response.
         /// </returns>
-        public static AzureOperationResponse ValidateMigration(this IReservedIPOperations operations, string ipName)
+        public static NetworkMigrationValidationResponse ValidateMigration(this IReservedIPOperations operations, string ipName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -933,10 +932,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Required. Name of the reservedIP to be migrated.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The Validate Network Migration operation response.
         /// </returns>
-        public static Task<AzureOperationResponse> ValidateMigrationAsync(this IReservedIPOperations operations, string ipName)
+        public static Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(this IReservedIPOperations operations, string ipName)
         {
             return operations.ValidateMigrationAsync(ipName, CancellationToken.None);
         }
