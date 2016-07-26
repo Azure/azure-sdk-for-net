@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void CanTestAnalyzers()
+        public void CanAnalyze()
         {
             Run(() =>
             {
@@ -329,22 +329,23 @@ namespace Microsoft.Azure.Search.Tests
                 AnalyzeResult result = client.Indexes.Analyze(index.Name, request);
 
                 Assert.Equal(2, result.Tokens.Count);
-                AssertTokenInfoEqual("one", expectedStartOffset: 0, expectedEndOffset: 2, expectedPosition: 0, actual: result.Tokens[0]);
-                AssertTokenInfoEqual("two", expectedStartOffset: 4, expectedEndOffset: 6, expectedPosition: 1, actual: result.Tokens[1]);
+                AssertTokenInfoEqual("One", expectedStartOffset: 0, expectedEndOffset: 3, expectedPosition: 0, actual: result.Tokens[0]);
+                AssertTokenInfoEqual("two", expectedStartOffset: 4, expectedEndOffset: 7, expectedPosition: 1, actual: result.Tokens[1]);
 
                 request = new AnalyzeRequest()
                 {
                     Text = "One's <two/>",
                     Tokenizer = TokenizerName.Whitespace,
-                    TokenFilters = new[] { TokenFilterName.Classic },
+                    TokenFilters = new[] { TokenFilterName.Apostrophe },
                     CharFilters = new[] { CharFilterName.HtmlStrip }
                 };
 
                 result = client.Indexes.Analyze(index.Name, request);
 
-                Assert.Equal(2, result.Tokens.Count);
-                AssertTokenInfoEqual("one", expectedStartOffset: 0, expectedEndOffset: 2, expectedPosition: 0, actual: result.Tokens[0]);
-                AssertTokenInfoEqual("two", expectedStartOffset: 7, expectedEndOffset: 9, expectedPosition: 1, actual: result.Tokens[1]);
+                Assert.Equal(1, result.Tokens.Count);
+
+                // End offset is based on the original token, not the one emitted by the filters.
+                AssertTokenInfoEqual("One", expectedStartOffset: 0, expectedEndOffset: 5, expectedPosition: 0, actual: result.Tokens[0]);
             });
         }
 
