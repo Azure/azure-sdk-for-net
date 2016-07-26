@@ -297,5 +297,53 @@ namespace Microsoft.Azure.Search
                 }
             }
 
+            /// <summary>
+            /// Shows how an analyzer breaks text into tokens.
+            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/search-api-2015-02-28-preview/#TestAnalyzer" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='indexName'>
+            /// The name of the index for which to test an analyzer.
+            /// </param>
+            /// <param name='request'>
+            /// The text and analyzer or analysis components to test.
+            /// </param>
+            /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static AnalyzeResult Analyze(this IIndexesOperations operations, string indexName, AnalyzeRequest request, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            {
+                return Task.Factory.StartNew(s => ((IIndexesOperations)s).AnalyzeAsync(indexName, request, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Shows how an analyzer breaks text into tokens.
+            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/search-api-2015-02-28-preview/#TestAnalyzer" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='indexName'>
+            /// The name of the index for which to test an analyzer.
+            /// </param>
+            /// <param name='request'>
+            /// The text and analyzer or analysis components to test.
+            /// </param>
+            /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AnalyzeResult> AnalyzeAsync(this IIndexesOperations operations, string indexName, AnalyzeRequest request, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AnalyzeWithHttpMessagesAsync(indexName, request, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
