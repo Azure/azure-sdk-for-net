@@ -21,7 +21,7 @@
                 Protocol.Models.JobAddOptions,
                 AzureOperationHeaderResponse<Protocol.Models.JobAddHeaders>>();
         }
-
+        
         public static IEnumerable<Protocol.RequestInterceptor> CreateGetTaskRequestInterceptor(Protocol.Models.CloudTask TaskToReturn)
         {
             return CreateGetRequestInterceptor<Protocol.Models.TaskGetOptions, Protocol.Models.CloudTask, Protocol.Models.TaskGetHeaders>(TaskToReturn);

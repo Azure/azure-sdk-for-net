@@ -31,7 +31,7 @@
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
-        public async Task IfThereAreApplicationsInTheAccount_ThenListApplicationSummariesReturnsThem()
+        public async Task IfThereAreApplicationsInTheAccountThenListApplicationSummariesReturnsThem()
         {
             Func<Task> test = async () =>
             {

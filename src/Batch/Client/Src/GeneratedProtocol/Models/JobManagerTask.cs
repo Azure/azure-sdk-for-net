@@ -48,7 +48,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="killJobOnCompletion">Whether completion of the Job Manager task signifies completion of the entire job.</param>
         /// <param name="runElevated">Whether to run the Job Manager task in elevated mode. The default value is false.</param>
         /// <param name="runExclusive">Whether the Job Manager task requires exclusive use of the compute node where it runs.</param>
-        public JobManagerTask(string id, string commandLine, string displayName = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?))
+        /// <param name="applicationPackageReferences">A list of application packages that the Batch service will deploy to the compute node before running the command line.</param>
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>))
         {
             Id = id;
             DisplayName = displayName;
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             KillJobOnCompletion = killJobOnCompletion;
             RunElevated = runElevated;
             RunExclusive = runExclusive;
+            ApplicationPackageReferences = applicationPackageReferences;
         }
 
         /// <summary>
@@ -137,6 +139,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? RunExclusive { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of application packages that the Batch service
+        /// will deploy to the compute node before running the command line.
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationPackageReferences")]
+        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -169,6 +178,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (this.ApplicationPackageReferences != null)
+            {
+                foreach (var element2 in this.ApplicationPackageReferences)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

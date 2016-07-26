@@ -61,7 +61,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="multiInstanceSettings">Information about how to run the multi-instance task.</param>
         /// <param name="stats">Resource usage statistics for the task.</param>
         /// <param name="dependsOn">Any dependencies this task has.</param>
-        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), DateTime? stateTransitionTime = default(DateTime?), TaskState? previousState = default(TaskState?), DateTime? previousStateTransitionTime = default(DateTime?), string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies))
+        /// <param name="applicationPackageReferences">A list of application packages that the Batch service will deploy to the compute node before running the command line.</param>
+        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), DateTime? stateTransitionTime = default(DateTime?), TaskState? previousState = default(TaskState?), DateTime? previousStateTransitionTime = default(DateTime?), string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>))
         {
             Id = id;
             DisplayName = displayName;
@@ -85,6 +86,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             MultiInstanceSettings = multiInstanceSettings;
             Stats = stats;
             DependsOn = dependsOn;
+            ApplicationPackageReferences = applicationPackageReferences;
         }
 
         /// <summary>
@@ -258,6 +260,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskDependencies DependsOn { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of application packages that the Batch service
+        /// will deploy to the compute node before running the command line.
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationPackageReferences")]
+        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -300,6 +309,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.Stats != null)
             {
                 this.Stats.Validate();
+            }
+            if (this.ApplicationPackageReferences != null)
+            {
+                foreach (var element2 in this.ApplicationPackageReferences)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
             }
         }
     }

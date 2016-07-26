@@ -27,40 +27,44 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A reference to an application package to be deployed to compute nodes.
+    /// A range of exit codes and how the Batch service should respond to the
+    /// exit codes within that range.
     /// </summary>
-    public partial class ApplicationPackageReference
+    public partial class ExitCodeRangeMapping
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationPackageReference
-        /// class.
+        /// Initializes a new instance of the ExitCodeRangeMapping class.
         /// </summary>
-        public ApplicationPackageReference() { }
+        public ExitCodeRangeMapping() { }
 
         /// <summary>
-        /// Initializes a new instance of the ApplicationPackageReference
-        /// class.
+        /// Initializes a new instance of the ExitCodeRangeMapping class.
         /// </summary>
-        /// <param name="applicationId">The id of the application to deploy.</param>
-        /// <param name="version">The version of the application to deploy. If omitted, the default version is deployed.</param>
-        public ApplicationPackageReference(string applicationId, string version = default(string))
+        public ExitCodeRangeMapping(int start, int end, ExitOptions exitOptions)
         {
-            ApplicationId = applicationId;
-            Version = version;
+            Start = start;
+            End = end;
+            ExitOptions = exitOptions;
         }
 
         /// <summary>
-        /// Gets or sets the id of the application to deploy.
+        /// Gets or sets the first exit code in the range.
         /// </summary>
-        [JsonProperty(PropertyName = "applicationId")]
-        public string ApplicationId { get; set; }
+        [JsonProperty(PropertyName = "start")]
+        public int Start { get; set; }
 
         /// <summary>
-        /// Gets or sets the version of the application to deploy. If omitted,
-        /// the default version is deployed.
+        /// Gets or sets the last exit code in the range.
         /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
+        [JsonProperty(PropertyName = "end")]
+        public int End { get; set; }
+
+        /// <summary>
+        /// Gets or sets how the Batch service should respond if the task
+        /// exits with an exit code within the range.
+        /// </summary>
+        [JsonProperty(PropertyName = "exitOptions")]
+        public ExitOptions ExitOptions { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -70,9 +74,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ApplicationId == null)
+            if (ExitOptions == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ApplicationId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ExitOptions");
             }
         }
     }

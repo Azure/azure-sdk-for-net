@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Batch
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<AffinityInformation> AffinityInformationProperty;
+            public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<ComputeNodeInformation> ComputeNodeInformationProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
@@ -44,6 +45,7 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.AffinityInformationProperty = this.CreatePropertyAccessor<AffinityInformation>("AffinityInformation", BindingAccess.Read | BindingAccess.Write);
+                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
                 this.ComputeNodeInformationProperty = this.CreatePropertyAccessor<ComputeNodeInformation>("ComputeNodeInformation", BindingAccess.None);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
@@ -73,6 +75,10 @@ namespace Microsoft.Azure.Batch
                 this.AffinityInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AffinityInfo, o => new AffinityInformation(o).Freeze()),
                     "AffinityInformation",
+                    BindingAccess.Read);
+                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
+                    ApplicationPackageReference.ConvertFromProtocolCollectionAndFreeze(protocolObject.ApplicationPackageReferences),
+                    "ApplicationPackageReferences",
                     BindingAccess.Read);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
@@ -216,6 +222,19 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.AffinityInformationProperty.Value; }
             set { this.propertyContainer.AffinityInformationProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a list of application packages that the Batch service will deploy to the compute node before running 
+        /// the command line.
+        /// </summary>
+        public IList<ApplicationPackageReference> ApplicationPackageReferences
+        {
+            get { return this.propertyContainer.ApplicationPackageReferencesProperty.Value; }
+            set
+            {
+                this.propertyContainer.ApplicationPackageReferencesProperty.Value = ConcurrentChangeTrackedModifiableList<ApplicationPackageReference>.TransformEnumerableToConcurrentModifiableList(value);
+            }
         }
 
         /// <summary>
@@ -464,6 +483,7 @@ namespace Microsoft.Azure.Batch
             Models.TaskAddParameter result = new Models.TaskAddParameter()
             {
                 AffinityInfo = UtilitiesInternal.CreateObjectWithNullCheck(this.AffinityInformation, (o) => o.GetTransportObject()),
+                ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
                 DependsOn = UtilitiesInternal.CreateObjectWithNullCheck(this.DependsOn, (o) => o.GetTransportObject()),

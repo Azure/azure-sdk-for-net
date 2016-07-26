@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
@@ -41,6 +43,10 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer(Models.JobManagerTask protocolObject) : base(BindingState.Bound)
             {
+                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
+                    ApplicationPackageReference.ConvertFromProtocolCollectionAndFreeze(protocolObject.ApplicationPackageReferences),
+                    "ApplicationPackageReferences",
+                    BindingAccess.Read);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
                     "CommandLine",
@@ -106,6 +112,19 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region JobManagerTask
+
+        /// <summary>
+        /// Gets or sets a list of application packages that the Batch service will deploy to the compute node before running 
+        /// the command line.
+        /// </summary>
+        public IList<ApplicationPackageReference> ApplicationPackageReferences
+        {
+            get { return this.propertyContainer.ApplicationPackageReferencesProperty.Value; }
+            set
+            {
+                this.propertyContainer.ApplicationPackageReferencesProperty.Value = ConcurrentChangeTrackedModifiableList<ApplicationPackageReference>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the command line of the task.
@@ -227,6 +246,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.JobManagerTask result = new Models.JobManagerTask()
             {
+                ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,

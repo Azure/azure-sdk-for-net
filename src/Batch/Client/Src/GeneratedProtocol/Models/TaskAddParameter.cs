@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="runElevated">Whether to run the task in elevated mode.</param>
         /// <param name="multiInstanceSettings">Information about how to run the multi-instance task.</param>
         /// <param name="dependsOn">Any other tasks that this task depends on.</param>
-        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies))
+        /// <param name="applicationPackageReferences">A list of application packages that the Batch service will deploy to the compute node before running the command line.</param>
+        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>))
         {
             Id = id;
             DisplayName = displayName;
@@ -63,6 +64,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             RunElevated = runElevated;
             MultiInstanceSettings = multiInstanceSettings;
             DependsOn = dependsOn;
+            ApplicationPackageReferences = applicationPackageReferences;
         }
 
         /// <summary>
@@ -156,6 +158,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskDependencies DependsOn { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of application packages that the Batch service
+        /// will deploy to the compute node before running the command line.
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationPackageReferences")]
+        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -198,6 +207,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.MultiInstanceSettings != null)
             {
                 this.MultiInstanceSettings.Validate();
+            }
+            if (this.ApplicationPackageReferences != null)
+            {
+                foreach (var element2 in this.ApplicationPackageReferences)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
             }
         }
     }

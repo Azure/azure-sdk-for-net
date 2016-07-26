@@ -100,14 +100,14 @@
     {
       "Name": "ApplicationPackageReference",
       "ProtocolName": "Models.ApplicationPackageReference",
-      "Comment": "A reference to an application package to be installed on compute nodes in a pool.",
+      "Comment": "A reference to an application package to be deployed to compute nodes.",
       "IsUsedInCollections": true,
       "Properties": [
         {
           "Key": {
             "Type": "string",
             "Name": "ApplicationId",
-            "SummaryComment": "The id of the application to be installed on the compute nodes. ",
+            "SummaryComment": "The id of the application to be deployed on compute nodes.",
             "RemarksComment": null,
             "BoundAccess": "read",
             "UnboundAccess": "read,write"
@@ -118,8 +118,8 @@
           "Key": {
             "Type": "string",
             "Name": "Version",
-            "SummaryComment": "The version of the application to be installed on the compute nodes.",
-            "RemarksComment": "If not specified, the default version of the application, as defined in the application settings, is installed. If no default version is defined in the application settings, you must specify a version in the <see cref=\"ApplicationPackageReference\"/>.",
+            "SummaryComment": "The version of the application to be deployed on compute nodes.",
+            "RemarksComment": "If not specified, the default version of the application, as defined in the application settings, is deployed. If no default version is defined in the application settings, you must specify a version in the <see cref=\"ApplicationPackageReference\"/>.",
             "BoundAccess": "read",
             "UnboundAccess": "read,write"
           },
@@ -1724,7 +1724,21 @@
             "UnboundAccess": "none"
           },
           "Value": null
-        }
+        },
+        {
+          "Key": {
+            "Type": "IList<ApplicationPackageReference>",
+            "Name": "ApplicationPackageReferences",
+            "SummaryComment": "A list of application packages that the Batch service will deploy to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ApplicationPackageReference>",
+            "Name": "ApplicationPackageReferences",
+          },
+        },
       ]
     },
     {
@@ -2417,6 +2431,165 @@
       ]
     },
     {
+      "Name": "ExitConditions",
+      "ProtocolName": "Models.ExitConditions",
+      "Comment": "How the Batch service should respond when a task completes.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "IList<ExitCodeMapping>",
+            "Name": "ExitCodes",
+            "SummaryComment": "A list of task exit codes and how the Batch service should respond to them.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ExitCodeMapping>",
+            "Name": "ExitCodes",
+          }
+        },
+        {
+          "Key": {
+            "Type": "IList<ExitCodeRangeMapping>",
+            "Name": "ExitCodeRanges",
+            "SummaryComment": "A list of task exit code ranges and how the Batch service should respond to them.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ExitCodeRangeMapping>",
+            "Name": "ExitCodeRanges",
+          }
+        },
+        { 
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "SchedulingError",
+            "SummaryComment": "How the Batch service should respond if the task fails with a scheduling error.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "Default",
+            "SummaryComment": "How the Batch service should respond if the task fails with an exit condition not covered by any of the other properties.",
+            "RemarksComment": "This value is used if the task exits with any nonzero exit code not listed in the <see cref=\"ExitCodes\"/> or <see cref=\"ExitCodeRanges\"/> collection, or with a scheduling error if the <see cref=\"SchedulingError\"/> property is not present.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.ExitOptions",
+            "Name": "DefaultProperty",
+          }
+        },
+      ]
+    },
+    {
+      "Name": "ExitCodeMapping",
+      "ProtocolName": "Models.ExitCodeMapping",
+      "Comment": "A process exit code and how the Batch service should respond if a task exits with that exit code.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "int",
+            "Name": "Code",
+            "SummaryComment": "The process exit code.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "ExitOptions",
+            "SummaryComment": "How the Batch service should respond if the task exits with this exit code.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null,
+        },
+      ]
+    },
+    {
+      "Name": "ExitCodeRangeMapping",
+      "ProtocolName": "Models.ExitCodeRangeMapping",
+      "Comment": "A range of exit codes and how the Batch service should respond if a task exits with an exit code within that range.",
+      "IsUsedInCollections": true,
+      "ForceConstructorOrder": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "int",
+            "Name": "Start",
+            "SummaryComment": "The first exit code in the range.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "int",
+            "Name": "End",
+            "SummaryComment": "The last exit code in the range.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "ExitOptions",
+            "SummaryComment": "An <see cref=\"ExitOptions\" /> specifying how the Batch service should respond if the task exits with an exit code in the range <see cref=\"Start\"/> to <see cref=\"End\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": {
+            "Type": "Models.ExitOptions",
+            "Name": "ExitOptions",
+          } 
+        },
+      ]
+    },
+    {
+      "Name": "ExitOptions",
+      "ProtocolName": "Models.ExitOptions",
+      "Comment": "How the Batch service should respond to a particular exit condition.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "Common.JobAction?",
+            "Name": "JobAction",
+            "SummaryComment": "An action to take on the job containing the task, if the task completes with the given exit condition and the job's <see cref=\"CloudJob.OnTaskFailure\"/> property is <see cref=\"Common.OnTaskFailure.PerformExitOptionsJobAction\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+          },
+          "Value": {
+            "Type": "Models.JobAction?",
+            "Name": "JobAction",
+          }
+        },
+      ]
+    },
+    {
       "Name": "ErrorMessage",
       "ProtocolName": "Models.ErrorMessage",
       "Comment": "An error message received in an Azure Batch error response.",
@@ -2777,7 +2950,21 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        }
+        },
+        {
+          "Key": {
+            "Type": "IList<ApplicationPackageReference>",
+            "Name": "ApplicationPackageReferences",
+            "SummaryComment": "A list of application packages that the Batch service will deploy to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ApplicationPackageReference>",
+            "Name": "ApplicationPackageReferences",
+          },
+        },
       ]
     },
     {

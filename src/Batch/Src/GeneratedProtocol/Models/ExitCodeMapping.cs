@@ -27,40 +27,37 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A reference to an application package to be deployed to compute nodes.
+    /// A process exit code and how the Batch service should respond if a task
+    /// exits with that exit code.
     /// </summary>
-    public partial class ApplicationPackageReference
+    public partial class ExitCodeMapping
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationPackageReference
-        /// class.
+        /// Initializes a new instance of the ExitCodeMapping class.
         /// </summary>
-        public ApplicationPackageReference() { }
+        public ExitCodeMapping() { }
 
         /// <summary>
-        /// Initializes a new instance of the ApplicationPackageReference
-        /// class.
+        /// Initializes a new instance of the ExitCodeMapping class.
         /// </summary>
-        /// <param name="applicationId">The id of the application to deploy.</param>
-        /// <param name="version">The version of the application to deploy. If omitted, the default version is deployed.</param>
-        public ApplicationPackageReference(string applicationId, string version = default(string))
+        public ExitCodeMapping(int code, ExitOptions exitOptions)
         {
-            ApplicationId = applicationId;
-            Version = version;
+            Code = code;
+            ExitOptions = exitOptions;
         }
 
         /// <summary>
-        /// Gets or sets the id of the application to deploy.
+        /// Gets or sets the process exit code.
         /// </summary>
-        [JsonProperty(PropertyName = "applicationId")]
-        public string ApplicationId { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public int Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the version of the application to deploy. If omitted,
-        /// the default version is deployed.
+        /// Gets or sets how the Batch service should respond if the task
+        /// exits with this exit code.
         /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
+        [JsonProperty(PropertyName = "exitOptions")]
+        public ExitOptions ExitOptions { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -70,9 +67,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ApplicationId == null)
+            if (ExitOptions == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ApplicationId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ExitOptions");
             }
         }
     }

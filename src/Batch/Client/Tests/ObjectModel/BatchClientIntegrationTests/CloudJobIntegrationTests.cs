@@ -470,7 +470,6 @@
 
                             TestUtilities.WaitForJobStateAsync(boundJob, TimeSpan.FromMinutes(2), JobState.Completed).Wait();
                             Assert.Equal(JobState.Completed, boundJob.State);
-
                             Assert.Equal("TaskFailed", boundJob.ExecutionInformation.TerminateReason);
                         }
                     }

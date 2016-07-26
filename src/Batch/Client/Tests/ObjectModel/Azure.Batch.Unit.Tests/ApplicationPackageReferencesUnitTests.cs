@@ -6,6 +6,7 @@
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using TestUtilities;
     using BatchTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Auth;
@@ -324,6 +325,79 @@
 
                 Assert.Equal(apr.ApplicationId, applicationId);
                 Assert.Equal(apr.Version, version);
+            }
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void CreateCloudTaskWithApplicationPackageReferences()
+        {
+            const string jobId = "id-123";
+            const string taskId = "id-123";
+            const string applicationId = "testApp";
+            const string applicationVersion = "beta";
+
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            {
+                Models.CloudJob returnFakeJob = new Models.CloudJob(jobId);
+                var job = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(returnFakeJob));
+
+                var verifyAPRs = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskAddParameter, Models.TaskAddOptions, AzureOperationHeaderResponse<Models.TaskAddHeaders>>(
+                    (parameters, options) =>
+                {
+                    Assert.Equal(applicationId, parameters.ApplicationPackageReferences.First().ApplicationId);
+                    Assert.Equal(applicationVersion, parameters.ApplicationPackageReferences.First().Version);
+
+                    return new AzureOperationHeaderResponse<Models.TaskAddHeaders>
+                    {
+                        Response = new HttpResponseMessage(HttpStatusCode.Accepted)
+                    };
+                });
+
+                var taskWithAPRs = new CloudTask(taskId, "cmd /c hostname")
+                {
+                    ApplicationPackageReferences = new List<ApplicationPackageReference>
+                    {
+                        new ApplicationPackageReference
+                        {
+                            ApplicationId = applicationId,
+                            Version = applicationVersion
+                        }
+                    }
+                };
+
+                job.AddTask(taskWithAPRs, additionalBehaviors: verifyAPRs);  // assertions happen in the callback
+            }
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void GetJobManagerTaskWithApplicationPackageReferences()
+        {
+            const string jobId = "id-123";
+            const string applicationId = "foo";
+            const string version = "beta";
+
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            {
+                Models.CloudJob protoJob = new Models.CloudJob
+                {
+                    Id = jobId,
+                    JobManagerTask = new Models.JobManagerTask
+                    {
+                        ApplicationPackageReferences = new List<Models.ApplicationPackageReference>
+                        {
+                            new Models.ApplicationPackageReference
+                            {
+                                Version = version, ApplicationId = applicationId
+                            } 
+                        }
+                    }
+                };
+
+                var job = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
+                Assert.Equal(applicationId, job.JobManagerTask.ApplicationPackageReferences.First().ApplicationId);
+                Assert.Equal(version, job.JobManagerTask.ApplicationPackageReferences.First().Version);
             }
         }
 

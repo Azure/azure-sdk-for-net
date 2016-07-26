@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// A reference to an application package to be installed on compute nodes in a pool.
+    /// A reference to an application package to be deployed to compute nodes.
     /// </summary>
     public partial class ApplicationPackageReference : ITransportObjectProvider<Models.ApplicationPackageReference>, IPropertyMetadata
     {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Batch
         #region ApplicationPackageReference
 
         /// <summary>
-        /// Gets or sets the id of the application to be installed on the compute nodes. 
+        /// Gets or sets the id of the application to be deployed on compute nodes.
         /// </summary>
         public string ApplicationId
         {
@@ -69,10 +69,10 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the version of the application to be installed on the compute nodes.
+        /// Gets or sets the version of the application to be deployed on compute nodes.
         /// </summary>
         /// <remarks>
-        /// If not specified, the default version of the application, as defined in the application settings, is installed. 
+        /// If not specified, the default version of the application, as defined in the application settings, is deployed. 
         /// If no default version is defined in the application settings, you must specify a version in the <see cref="ApplicationPackageReference"/>.
         /// </remarks>
         public string Version

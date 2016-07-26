@@ -43,7 +43,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(cloudPool.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(cloudPool.Metadata.First().Value, metadataItem.Value);
 
-                cloudPool.Commit(additionalBehaviors: InterceptorFactory.CreateAddPoolRequestInterceptor() );
+                cloudPool.Commit(additionalBehaviors: InterceptorFactory.CreateAddPoolRequestInterceptor());
 
                 // writing isn't allowed for a cloudPool that is in an readonly state.
                 Assert.Throws<InvalidOperationException>(() => cloudPool.AutoScaleFormula = "Foo");
@@ -181,6 +181,8 @@ namespace Azure.Batch.Unit.Tests
             const string displayName = "DisplayNameFoo";
             MetadataItem metadataItem = new MetadataItem("foo", "bar");
             const int priority = 0;
+            const string applicationId = "testApp";
+            const string applicationVersion = "beta";
 
             BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
             using (BatchClient client = BatchClient.Open(credentials))
@@ -190,8 +192,14 @@ namespace Azure.Batch.Unit.Tests
                 cloudJob.DisplayName = displayName;
                 cloudJob.Metadata = new List<MetadataItem> { metadataItem };
                 cloudJob.Priority = priority;
+                cloudJob.JobManagerTask = new JobManagerTask { ApplicationPackageReferences = new List<ApplicationPackageReference>
+                {
+                    new ApplicationPackageReference { ApplicationId = applicationId, Version = applicationVersion }
+                }};
+
                 cloudJob.OnAllTasksComplete = OnAllTasksComplete.NoAction;
                 cloudJob.OnTaskFailure = OnTaskFailure.NoAction;
+
 
                 Assert.Throws<InvalidOperationException>(() => cloudJob.Url); // cannot read a Url since it's unbound at this point.
                 Assert.Equal(cloudJob.Id, jobId); // can set an unbound object
@@ -214,11 +222,15 @@ namespace Azure.Batch.Unit.Tests
         {
             const string jobId = "id-123";
             const string displayName = "DisplayNameFoo";
+            string applicationVersion = "beta";
+            string applicationId = "test";
+
             MetadataItem metadataItem = new MetadataItem("foo", "bar");
             const int priority = 0;
             var onAllTasksComplete = OnAllTasksComplete.TerminateJob;
 
             BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
+            
             using (BatchClient client = BatchClient.Open(credentials))
             {
                 DateTime creationTime = DateTime.Now;
@@ -226,6 +238,10 @@ namespace Azure.Batch.Unit.Tests
                 Models.CloudJob protoJob = new Models.CloudJob(
                     jobId,
                     displayName,
+                    jobManagerTask: new Models.JobManagerTask()
+                    {
+                        ApplicationPackageReferences = new [] { new Models.ApplicationPackageReference(){ ApplicationId = applicationId, Version = applicationVersion } }
+                    }, 
                     metadata: new[] { new Models.MetadataItem { Name = metadataItem.Name, Value = metadataItem.Value } },
                     creationTime: creationTime,
                     priority: priority,
@@ -234,20 +250,27 @@ namespace Azure.Batch.Unit.Tests
 
                 CloudJob boundJob = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
 
+
+
                 Assert.Equal(jobId, boundJob.Id); // reading is allowed from a job that is returned from the server.
                 Assert.Equal(creationTime, boundJob.CreationTime);
                 Assert.Equal(displayName, boundJob.DisplayName);
+                Assert.Equal(applicationId, boundJob.JobManagerTask.ApplicationPackageReferences.First().ApplicationId);
+                Assert.Equal(applicationVersion, boundJob.JobManagerTask.ApplicationPackageReferences.First().Version);
 
                 AssertPatchableJobPropertiesCanBeWritten(boundJob, priority, metadataItem, onAllTasksComplete);
 
                 // Can only read a url from a returned object.
                 Assert.Equal(ClientUnitTestCommon.DummyBaseUrl, boundJob.Url);
 
-                // Cannot change a bound displayName and Id.
+                // Cannot change a bound displayName, Id and any property on a JobManagerTask.
                 Assert.Throws<InvalidOperationException>(() => boundJob.DisplayName = "cannot-change-display-name");
                 Assert.Throws<InvalidOperationException>(() => boundJob.Id = "cannot-change-id");
+                Assert.Throws<InvalidOperationException>(() => boundJob.JobManagerTask.ApplicationPackageReferences = new List<ApplicationPackageReference>());
+                Assert.Throws<InvalidOperationException>(() => boundJob.JobManagerTask = new JobManagerTask());
             }
         }
+
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
@@ -280,6 +303,7 @@ namespace Azure.Batch.Unit.Tests
                     jobId,
                     taskId,
                     additionalBehaviors: InterceptorFactory.CreateGetTaskRequestInterceptor(cloudTask));
+
 
                 Assert.Equal(taskId, boundTask.Id); // reading is allowed from a task that is returned from the server.
                 Assert.Equal(disableExitOption.JobAction.ToString(), boundTask.ExitConditions.Default.JobAction.ToString());
