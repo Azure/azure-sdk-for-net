@@ -67,5 +67,53 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             var ex = Assert.Throws<ArgumentNullException>(() => job.OutputStorageContainerName());
             Assert.Equal("job", ex.ParamName);
         }
+
+        [Fact]
+        public void CannotGetOutputStorageUrlForNullJob()
+        {
+            CloudJob job = null;
+            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+            var ex = Assert.Throws<ArgumentNullException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(5)));
+            Assert.Equal("job", ex.ParamName);
+        }
+
+        [Fact]
+        public async Task CannotGetOutputStorageUrlForNullStorageAccount()
+        {
+            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            {
+                CloudJob job = batchClient.JobOperations.CreateJob();
+                job.Id = "fakejob";
+                CloudStorageAccount storageAccount = null;
+                var ex = Assert.Throws<ArgumentNullException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(5)));
+                Assert.Equal("storageAccount", ex.ParamName);
+            }
+        }
+
+        [Fact]
+        public async Task CannotGetOutputStorageUrlWithZeroExpiryTime()
+        {
+            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            {
+                CloudJob job = batchClient.JobOperations.CreateJob();
+                job.Id = "fakejob";
+                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+                var ex = Assert.Throws<ArgumentException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(0)));
+                Assert.Equal("expiryTime", ex.ParamName);
+            }
+        }
+
+        [Fact]
+        public async Task CannotGetOutputStorageUrlWithNegativeExpiryTime()
+        {
+            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            {
+                CloudJob job = batchClient.JobOperations.CreateJob();
+                job.Id = "fakejob";
+                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+                var ex = Assert.Throws<ArgumentException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(-5)));
+                Assert.Equal("expiryTime", ex.ParamName);
+            }
+        }
     }
 }

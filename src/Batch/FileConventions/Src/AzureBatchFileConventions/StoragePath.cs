@@ -77,6 +77,30 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             await blob.UploadFromFileAsync(sourcePath, FileMode.Open, cancellationToken);
         }
 
+        // Uploads text to blob storage.
+        public async Task SaveTextAsync(
+            IOutputKind kind,
+            string text,
+            string destinationRelativePath,
+            CancellationToken cancellationToken = default(CancellationToken)
+        )
+        {
+            if (kind == null)
+            {
+                throw new ArgumentNullException(nameof(kind));
+            }
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
+            Validate.IsNotNullOrEmpty(destinationRelativePath, nameof(destinationRelativePath));
+
+            var blobName = BlobName(kind, destinationRelativePath);
+            var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
+            await blob.UploadTextAsync(text, cancellationToken);
+        }
+
         // Uploads a file and tracks appends to that file. The implementation creates an append blob to
         // contain the file contents, then creates a file tracking object which runs a background operation
         // to upload the file to the append blob, then track appends to the file and append them to the blob.

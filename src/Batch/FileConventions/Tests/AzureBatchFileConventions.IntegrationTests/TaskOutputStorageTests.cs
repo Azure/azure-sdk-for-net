@@ -119,6 +119,21 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
         }
 
         [Fact]
+        public async Task IfTextIsSaved_ThenItCanBeGot()
+        {
+            var sampleXml = "<document><empty /></document>";
+
+            var taskOutputStorage = new TaskOutputStorage(StorageAccount, _jobId, _taskId);
+            await taskOutputStorage.SaveTextAsync(TaskOutputKind.TaskOutput, sampleXml, "TextNotFromFile.xml");
+
+            var blob = await taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskOutput, "TextNotFromFile.xml");
+
+            var blobContent = Encoding.UTF8.GetString(await blob.ReadAsByteArrayAsync());
+
+            Assert.Equal(sampleXml, blobContent);
+        }
+
+        [Fact]
         public async Task IfAFileIsSavedWithAPathOutsideTheWorkingDirectory_ThenTheUpPartsOfThePathAreStripped()
         {
             var taskOutputStorage = new TaskOutputStorage(StorageAccount, _jobId, _taskId);

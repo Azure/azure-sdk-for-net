@@ -39,6 +39,32 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                 Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/Files/TestText1.txt"));
             }
         }
+
+        [Fact]
+        public async Task CloudJobGetStorageContainerUrlExtensionSasPermitsWritingToJobOutputContainer()
+        {
+            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            {
+                var job = batchClient.JobOperations.CreateJob(_jobId, null);
+
+                var url = job.GetOutputStorageContainerUrl(StorageAccount, TimeSpan.FromMinutes(5));
+
+                // Write something using the SAS URL
+
+                var jobOutputStorageFromUrl = new JobOutputStorage(new Uri(url));
+
+                await jobOutputStorageFromUrl.SaveAsync(JobOutputKind.JobPreview, FilePath("TestText1.txt"), "SavedViaSas.txt");
+
+                // And retrieve that same thing using the account credentials to verify
+                // it was successfully written (and to the correct place)
+
+                var jobOutputStorageFromAccount = job.OutputStorage(StorageAccount);
+
+                var blobs = jobOutputStorageFromAccount.ListOutputs(JobOutputKind.JobPreview).ToList();
+                Assert.NotEqual(0, blobs.Count);
+                Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobPreview/SavedViaSas.txt"));
+            }
+        }
     }
 
     public class CloudJobExtensionsContainerCreationTests : IntegrationTest, IClassFixture<CloudJobExtensionsContainerCreationTests.JobIdFixtureImpl>

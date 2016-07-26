@@ -117,6 +117,26 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             => await _storagePath.SaveAsync(kind, sourcePath, destinationRelativePath, cancellationToken);
 
         /// <summary>
+        /// Saves the specified text to persistent storage, without requiring you to create a local file.
+        /// </summary>
+        /// <param name="kind">A <see cref="TaskOutputKind"/> representing the category under which to
+        /// store this data, for example <see cref="TaskOutputKind.TaskOutput"/> or <see cref="TaskOutputKind.TaskLog"/>.</param>
+        /// <param name="text">The text to save.</param>
+        /// <param name="destinationRelativePath">The blob name under which to save the text. This may include a
+        /// relative component, such as "records/widget42.json".</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
+        /// <exception cref="ArgumentNullException">The <paramref name="kind"/>, <paramref name="text"/>, or <paramref name="destinationRelativePath"/> argument is null.</exception>
+        /// <exception cref="ArgumentException">The <paramref name="destinationRelativePath"/> argument is empty.</exception>
+        public async Task SaveTextAsync(
+            TaskOutputKind kind,
+            string text,
+            string destinationRelativePath,
+            CancellationToken cancellationToken = default(CancellationToken)
+        )
+            => await _storagePath.SaveTextAsync(kind, text, destinationRelativePath, cancellationToken);
+
+        /// <summary>
         /// Lists the task outputs of the specified kind.
         /// </summary>
         /// <param name="kind">A <see cref="TaskOutputKind"/> representing the category of outputs to
