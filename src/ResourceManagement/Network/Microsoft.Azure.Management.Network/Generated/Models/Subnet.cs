@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// configurations using subnet
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<IPConfiguration> IpConfigurations { get; set; }
+        public IList<IPConfiguration> IpConfigurations { get; private set; }
 
         /// <summary>
         /// Gets provisioning state of the resource

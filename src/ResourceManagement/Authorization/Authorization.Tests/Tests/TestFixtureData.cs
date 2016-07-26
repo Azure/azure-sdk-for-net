@@ -168,7 +168,7 @@ namespace Authorization.Tests
             }
 
             var env = TestEnvironmentFactory.GetTestEnvironment();
-            var cred = new TokenCredentials(env.TokenInfo[TokenAudience.Management].AccessToken, env.TokenInfo[TokenAudience.Management].AccessTokenType);
+            var cred = env.TokenInfo[TokenAudience.Management];
             var authorizationClient = new AuthorizationManagementClient(
                 TestEnvironmentFactory.GetTestEnvironment().BaseUri,
                 cred);

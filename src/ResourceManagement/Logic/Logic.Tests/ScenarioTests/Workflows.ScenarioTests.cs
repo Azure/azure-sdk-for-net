@@ -32,10 +32,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.definition)                        
                     });
 
@@ -43,7 +40,7 @@ namespace Test.Azure.Management.Logic
                 var workflow = client.Workflows.Get(this.resourceGroupName, workflowName);
                 Assert.Equal(WorkflowState.Enabled, workflow.State);
                 Assert.Equal(this.location, workflow.Location);
-                Assert.Equal(SkuName.Basic, workflow.Sku.Name);
+                Assert.Equal(this.Sku.Name, workflow.Sku.Name);
                 Assert.NotEmpty(workflow.Definition.ToString());
 
                 // Delete the workflow
@@ -66,10 +63,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
@@ -113,10 +107,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
@@ -132,10 +123,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
@@ -168,7 +156,7 @@ namespace Test.Azure.Management.Logic
         }
 
         [Fact]
-        public void ValidateAndRunWorkflow()
+        public void ValidateWorkflow()
         {
             using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
@@ -182,24 +170,19 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.simpleTriggerDefinition)
                     });
 
                 // Validate a workflow
                 client.Workflows.Validate(
                     this.resourceGroupName,
+                    this.location,
                     workflowName,
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.definition)
                     });
 
@@ -208,25 +191,15 @@ namespace Test.Azure.Management.Logic
                     // Validate an invlaid workflow
                     client.Workflows.Validate(
                         this.resourceGroupName,
+                        this.location,
                         workflowName,
                         new Workflow
                         {
                             Location = this.location,
-                            Sku = new Sku()
-                            {
-                                Name = SkuName.Free
-                            },
+                            Sku = this.Sku,
                             Definition = "invalid definition"
                         });
                 });
-
-                var run = client.Workflows.Run(resourceGroupName, workflowName, new RunWorkflowParameters
-                    {
-                        Name = "pushTrigger",
-                        Outputs = "testbody"
-                    });
-
-                Assert.Equal("testbody", run.Outputs["output1"].Value.ToString());
             }
         }
 
@@ -261,7 +234,7 @@ namespace Test.Azure.Management.Logic
         }
 
         [Fact]
-        public void UpdateAndRunWorkflow()
+        public void UpdateWorkflow()
         {
             using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
@@ -275,10 +248,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.definition)
                     });
 

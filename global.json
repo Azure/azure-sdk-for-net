@@ -12,6 +12,8 @@
     "src/ResourceManagement/DataLake.Analytics/Microsoft.Azure.Management.DataLake.Analytics",
     "src/ResourceManagement/DataLake.Store/Microsoft.Azure.Management.DataLake.Store",
     "src/ResourceManagement/DevTestLabs/Microsoft.Azure.Management.DevTestLabs",
+    "src/ResourceManagement/KeyVaultManagement/Microsoft.Azure.Management.KeyVault",
+    "src/ResourceManagement/Logic/Microsoft.Azure.Management.Logic",
     "src/ResourceManagement/MachineLearning/Microsoft.Azure.Management.MachineLearning",
     "src/ResourceManagement/Network/Microsoft.Azure.Management.Network",
     "src/ResourceManagement/NotificationHubs/Microsoft.Azure.Management.NotificationHubs",

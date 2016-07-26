@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets collection of references to subnets
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnets")]
-        public IList<Subnet> Subnets { get; set; }
+        public IList<Subnet> Subnets { get; private set; }
 
         /// <summary>
         /// Gets provisioning state of the resource Updating/Deleting/Failed

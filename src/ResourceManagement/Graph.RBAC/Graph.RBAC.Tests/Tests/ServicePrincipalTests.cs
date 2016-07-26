@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 {
     public class ServicePrincipalTests : GraphTestBase
     {
-        [Fact(Skip = "TODO: Fix test")]
+        [Fact]
         public void CreateDeleteApplicationTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Fix test")]
+        [Fact]
         public void CreateDeleteServicePrincipalTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
