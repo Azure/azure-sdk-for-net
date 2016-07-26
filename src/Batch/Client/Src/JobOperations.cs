@@ -53,7 +53,7 @@
 #region // JobOperations
 
         /// <summary>
-        /// Creates an instance of CloudJob that is unbound and does not have a consistency relationship to any object in the Batch Service.
+        /// Creates an instance of CloudJob that is unbound and does not have a consistency relationship to any job in the Batch Service.
         /// </summary>
         /// <returns>A <see cref="CloudJob"/> representing a new job that has not been submitted to the Batch service.</returns>
         public CloudJob CreateJob()
@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// Creates an instance of CloudJob that is unbound and does not have a consistency relationship to any object in the Batch Service.
+        /// Creates an instance of CloudJob that is unbound and does not have a consistency relationship to any job in the Batch Service.
         /// </summary>
         /// <param name="jobId">The Id of the job.</param>
         /// <param name="poolInformation">The information about the pool the job will run on.</param>

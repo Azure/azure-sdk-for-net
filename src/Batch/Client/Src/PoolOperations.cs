@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any object in the Batch service.
+        /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <returns>A <see cref="CloudPool"/> representing a new pool that has not been added to the Batch service.
         /// To add the pool to the Batch account, call <see cref="CloudPool.CommitAsync"/>.</returns>
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any object in the Batch service.
+        /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="virtualMachineSize">The size of virtual machines in the pool.  See https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-size-specs/ for sizes.</param>
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any object in the Batch service.
+        /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="virtualMachineSize">The size of virtual machines in the pool.  See https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-size-specs/ for sizes.</param>

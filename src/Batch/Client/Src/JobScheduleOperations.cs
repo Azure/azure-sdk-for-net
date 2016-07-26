@@ -123,7 +123,7 @@
         }
 
         /// <summary>
-        /// Creates an instance of CloudJobSchedule that is unbound and does not have a consistency relationship to any object in the Batch Service.
+        /// Creates an instance of CloudJobSchedule that is unbound and does not have a consistency relationship to any job schedule in the Batch Service.
         /// </summary>
         /// <returns>A <see cref="CloudJobSchedule"/> representing a new job schedule that has not been submitted to the Batch service.</returns>
         public CloudJobSchedule CreateJobSchedule()
@@ -134,7 +134,7 @@
         }
 
         /// <summary>
-        /// Creates an instance of CloudJobSchedule that is unbound and does not have a consistency relationship to any object in the Batch Service.
+        /// Creates an instance of CloudJobSchedule that is unbound and does not have a consistency relationship to any job schedule in the Batch Service.
         /// </summary>
         /// <param name="jobScheduleId">The id of the job schedule.</param>
         /// <param name="schedule">The schedule that determines when jobs will be created.</param>
