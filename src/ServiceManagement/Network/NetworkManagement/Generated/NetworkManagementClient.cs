@@ -230,7 +230,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             this._routes = new RouteOperations(this);
             this._staticIPs = new StaticIPOperations(this);
             this._virtualIPs = new VirtualIPOperations(this);
-            this._apiVersion = "2016-03-01";
+            this._apiVersion = "2016-07-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -305,7 +305,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             this._routes = new RouteOperations(this);
             this._staticIPs = new StaticIPOperations(this);
             this._virtualIPs = new VirtualIPOperations(this);
-            this._apiVersion = "2016-03-01";
+            this._apiVersion = "2016-07-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -469,7 +469,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
