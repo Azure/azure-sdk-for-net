@@ -1,8 +1,0 @@
-{
-    name: "foo2",
-    properties:
-    {
-        type: "AzureStorageLinkedService",
-        connectionString: "$EncryptedString$BlobEncryptedConnectionString"
-    }
-}
