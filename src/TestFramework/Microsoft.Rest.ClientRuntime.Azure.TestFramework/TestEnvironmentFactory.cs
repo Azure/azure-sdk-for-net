@@ -233,13 +233,19 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                 .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, mgmSettings)
                                 .ConfigureAwait(false);
 
-
-            var graphAuthResult = (TokenCredentials)await UserTokenProvider
-                            .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, grpSettings)
-                            .ConfigureAwait(false);
+            try
+            {
+                var graphAuthResult = (TokenCredentials)await UserTokenProvider
+                                .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, grpSettings)
+                                .ConfigureAwait(false);
+                tokens[TokenAudience.Graph] = graphAuthResult;
+            }
+            catch
+            {
+                // Not all accounts are registered to have access to Graph endpoints. 
+            }
 
             tokens[TokenAudience.Management] = mgmAuthResult;
-            tokens[TokenAudience.Graph] = graphAuthResult;
         }
 
         private static async Task LoginServicePrincipalAsync(
@@ -258,6 +264,24 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             var mgmAuthResult = (TokenCredentials) await ApplicationTokenProvider
                             .LoginSilentAsync(domain, servicePrincipalId, key, mgmSettings)
                             .ConfigureAwait(false);
+
+            var grpSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                TokenAudience = endpoints.GraphTokenAudienceUri
+            };
+
+            try
+            {
+                var graphAuthResult = (TokenCredentials)await ApplicationTokenProvider
+                                .LoginSilentAsync(domain, servicePrincipalId, key, grpSettings)
+                                .ConfigureAwait(false);
+                tokens[TokenAudience.Graph] = graphAuthResult;
+            }
+            catch
+            {
+                // Not all accounts are registered to have access to Graph endpoints. 
+            }
 
             tokens[TokenAudience.Management] = mgmAuthResult;
         }
@@ -290,12 +314,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                           .LoginWithPromptAsync(domain, clientSettings, mgmSettings)
                           .ConfigureAwait(false)
                           .GetAwaiter().GetResult();
-
-            var graphAuthResult = (TokenCredentials) UserTokenProvider
-                           .LoginWithPromptAsync(domain, clientSettings, grpSettings)
-                          .GetAwaiter().GetResult();
+            try
+            {
+                var graphAuthResult = (TokenCredentials)UserTokenProvider
+                               .LoginWithPromptAsync(domain, clientSettings, grpSettings)
+                              .GetAwaiter().GetResult();
+                tokens[TokenAudience.Graph] = graphAuthResult;
+            }
+            catch
+            {
+                // Not all accounts are registered to have access to Graph endpoints. 
+            }
             tokens[TokenAudience.Management] = mgmAuthResult;
-            tokens[TokenAudience.Graph] = graphAuthResult;
         }
 #endif
     }
