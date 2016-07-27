@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Zone mapping type.
     /// </summary>
     public partial class ZoneMappingType
     {
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
+        /// The location of this zone mapping.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

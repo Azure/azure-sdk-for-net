@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The deployment export result.
     /// </summary>
     public partial class DeploymentExportResult
     {

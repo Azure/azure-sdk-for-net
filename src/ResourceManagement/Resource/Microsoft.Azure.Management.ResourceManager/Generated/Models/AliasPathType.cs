@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The type of alias paths.
     /// </summary>
     public partial class AliasPathType
     {
