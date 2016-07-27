@@ -310,6 +310,45 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        public void CanAnalyze()
+        {
+            Run(() =>
+            {
+                SearchServiceClient client = Data.GetSearchServiceClient();
+
+                Index index = CreateTestIndex();
+                client.Indexes.Create(index);
+
+                var request = new AnalyzeRequest()
+                {
+                    Text = "One two",
+                    Analyzer = AnalyzerName.Whitespace
+                };
+
+                AnalyzeResult result = client.Indexes.Analyze(index.Name, request);
+
+                Assert.Equal(2, result.Tokens.Count);
+                AssertTokenInfoEqual("One", expectedStartOffset: 0, expectedEndOffset: 3, expectedPosition: 0, actual: result.Tokens[0]);
+                AssertTokenInfoEqual("two", expectedStartOffset: 4, expectedEndOffset: 7, expectedPosition: 1, actual: result.Tokens[1]);
+
+                request = new AnalyzeRequest()
+                {
+                    Text = "One's <two/>",
+                    Tokenizer = TokenizerName.Whitespace,
+                    TokenFilters = new[] { TokenFilterName.Apostrophe },
+                    CharFilters = new[] { CharFilterName.HtmlStrip }
+                };
+
+                result = client.Indexes.Analyze(index.Name, request);
+
+                Assert.Equal(1, result.Tokens.Count);
+
+                // End offset is based on the original token, not the one emitted by the filters.
+                AssertTokenInfoEqual("One", expectedStartOffset: 0, expectedEndOffset: 5, expectedPosition: 0, actual: result.Tokens[0]);
+            });
+        }
+
         private static Index CreateTestIndex()
         {
             string indexName = SearchTestUtilities.GenerateName();
@@ -413,6 +452,21 @@ namespace Microsoft.Azure.Search.Tests
             };
 
             return index;
+        }
+
+        private static void AssertTokenInfoEqual(
+            string expectedToken, 
+            int expectedStartOffset, 
+            int expectedEndOffset, 
+            int expectedPosition, 
+            TokenInfo actual)
+        {
+            Assert.NotNull(actual);
+
+            Assert.Equal(expectedToken, actual.Token);
+            Assert.Equal(expectedStartOffset, actual.StartOffset);
+            Assert.Equal(expectedEndOffset, actual.EndOffset);
+            Assert.Equal(expectedPosition, actual.Position);
         }
 
         private static void AssertIndexesEqual(Index expected, Index actual)
