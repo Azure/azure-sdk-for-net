@@ -9,6 +9,8 @@ namespace Microsoft.Azure.Search.Tests
     using System.Linq;
     using Microsoft.Azure.Search.Models;
     using Xunit;
+    using Rest.Azure;
+    using System.Net;
 
     internal static class SearchAssert
     {
@@ -105,5 +107,19 @@ namespace Microsoft.Azure.Search.Tests
                 assertElementsEqual(expectedElement, actualElement);
             }
         }
+
+        public static CloudException ThrowsCloudException(Action action, HttpStatusCode expectedStatusCode, string expectedMessage = null)
+        {
+            CloudException error = Assert.Throws<CloudException>(action);
+            Assert.Equal(expectedStatusCode, error.Response.StatusCode);
+
+            if (expectedMessage != null)
+            {
+                Assert.Equal(expectedMessage, error.Body.Message);
+            }
+
+            return error;
+        }
+
     }
 }
