@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The credentials to be used for the certificate issuer.
+    /// </summary>
     public partial class IssuerCredentials
     {
         /// <summary>
@@ -22,7 +25,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the IssuerCredentials class.
         /// </summary>
-        /// <param name="accountId">The user name/account name/account id.</param>
+        /// <param name="accountId">The user name/account name/account
+        /// id.</param>
         /// <param name="password">The password/secret/account key.</param>
         public IssuerCredentials(string accountId = default(string), string password = default(string))
         {

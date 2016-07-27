@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Reference to the issuer of the X509 component of a certificate.
+    /// </summary>
     public partial class IssuerReference
     {
         /// <summary>

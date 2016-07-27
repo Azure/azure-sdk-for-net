@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The secret set parameters
+    /// </summary>
     public partial class SecretSetParameters
     {
         /// <summary>
@@ -23,8 +26,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the SecretSetParameters class.
         /// </summary>
         /// <param name="value">The value of the secret</param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        /// <param name="contentType">Type of the secret value such as a password</param>
+        /// <param name="tags">Application-specific metadata in the form of
+        /// key-value pairs</param>
+        /// <param name="contentType">Type of the secret value such as a
+        /// password</param>
+        /// <param name="secretAttributes">The secret management
+        /// attributes</param>
         public SecretSetParameters(string value, IDictionary<string, string> tags = default(IDictionary<string, string>), string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes))
         {
             Value = value;
@@ -53,6 +60,7 @@ namespace Microsoft.Azure.KeyVault.Models
         public string ContentType { get; set; }
 
         /// <summary>
+        /// Gets or sets the secret management attributes
         /// </summary>
         [JsonProperty(PropertyName = "attributes")]
         public SecretAttributes SecretAttributes { get; set; }

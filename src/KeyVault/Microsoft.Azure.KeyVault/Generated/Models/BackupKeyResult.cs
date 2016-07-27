@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The backup key result, containing the backup blob
+    /// </summary>
     public partial class BackupKeyResult
     {
         /// <summary>
@@ -22,7 +25,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the BackupKeyResult class.
         /// </summary>
-        /// <param name="value">The backup blob containing the backed up key</param>
+        /// <param name="value">The backup blob containing the backed up
+        /// key</param>
         public BackupKeyResult(byte[] value = default(byte[]))
         {
             Value = value;

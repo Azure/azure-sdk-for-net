@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Management policy for a certificate.
+    /// </summary>
     public partial class CertificatePolicy
     {
         /// <summary>
@@ -23,11 +26,16 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the CertificatePolicy class.
         /// </summary>
         /// <param name="id">The certificate id</param>
-        /// <param name="keyProperties">Properties of the key backing a certificate.</param>
-        /// <param name="secretProperties">Properties of the secret backing a certificate.</param>
-        /// <param name="x509CertificateProperties">Properties of the X509 component of a certificate.</param>
-        /// <param name="lifetimeActions">Actions that will be performed by Key Vault over the lifetime of a certificate.</param>
-        /// <param name="issuerReference">Reference to the issuer of the X509 component of a certificate.</param>
+        /// <param name="keyProperties">Properties of the key backing a
+        /// certificate.</param>
+        /// <param name="secretProperties">Properties of the secret backing a
+        /// certificate.</param>
+        /// <param name="x509CertificateProperties">Properties of the X509
+        /// component of a certificate.</param>
+        /// <param name="lifetimeActions">Actions that will be performed by
+        /// Key Vault over the lifetime of a certificate.</param>
+        /// <param name="issuerReference">Reference to the issuer of the X509
+        /// component of a certificate.</param>
         /// <param name="attributes">The certificate attributes.</param>
         public CertificatePolicy(string id = default(string), KeyProperties keyProperties = default(KeyProperties), SecretProperties secretProperties = default(SecretProperties), X509CertificateProperties x509CertificateProperties = default(X509CertificateProperties), IList<LifetimeAction> lifetimeActions = default(IList<LifetimeAction>), IssuerReference issuerReference = default(IssuerReference), CertificateAttributes attributes = default(CertificateAttributes))
         {

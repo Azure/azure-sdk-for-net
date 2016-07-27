@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/certificates/contacts?api-version=2015-06-01-preview2",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
+      "RequestUri": "/certificates/contacts?api-version=2015-06-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "133"
         ],
         "x-ms-client-request-id": [
-          "21f2f8c1-07ce-49e1-b332-2aa998c1139d"
+          "0d9fdede-c78b-4ccb-b523-ab906ba87bdc"
         ],
         "accept-language": [
           "en-US"
@@ -37,7 +37,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Jun 2016 16:42:10 GMT"
+          "Wed, 27 Jul 2016 18:46:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -49,10 +49,10 @@
           "East US"
         ],
         "x-ms-request-id": [
-          "3e3f3ffb-8c92-4185-b982-d3d80c9963a6"
+          "b2a89172-2c8a-4b99-a85b-e5f18b6e5e9a"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.756"
+          "1.0.0.763"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -70,8 +70,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/contacts?api-version=2015-06-01-preview2",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
+      "RequestUri": "/certificates/contacts?api-version=2015-06-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"contacts\": [\r\n    {\r\n      \"email\": \"admin@contoso.com\",\r\n      \"name\": \"John Doe\",\r\n      \"phone\": \"1111111111\"\r\n    },\r\n    {\r\n      \"email\": \"admin@contoso2.com\",\r\n      \"name\": \"Johnathan Doeman\",\r\n      \"phone\": \"2222222222\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -82,7 +82,7 @@
           "250"
         ],
         "x-ms-client-request-id": [
-          "a65679d1-6279-4518-b324-1cc9df28baf7"
+          "f679e819-e886-4781-a0f9-52561a3801fa"
         ],
         "accept-language": [
           "en-US"
@@ -106,7 +106,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Jun 2016 16:42:10 GMT"
+          "Wed, 27 Jul 2016 18:46:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -118,10 +118,10 @@
           "East US"
         ],
         "x-ms-request-id": [
-          "f958ff10-e725-4dba-8bbe-5aa803c12f7a"
+          "01901575-3698-4d56-914f-e5bfd0fe4d36"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.756"
+          "1.0.0.763"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -139,13 +139,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/contacts?api-version=2015-06-01-preview2",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
+      "RequestUri": "/certificates/contacts?api-version=2015-06-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "370a12ae-2dd2-4d72-bde5-d50a92769b84"
+          "b982bf93-52cd-43d8-a9f7-3302a181e2a4"
         ],
         "accept-language": [
           "en-US"
@@ -169,7 +169,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Jun 2016 16:42:10 GMT"
+          "Wed, 27 Jul 2016 18:46:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -181,10 +181,10 @@
           "East US"
         ],
         "x-ms-request-id": [
-          "9fbf17cb-3377-4425-bc3b-6027422706a4"
+          "e7e47dd3-bacd-4b54-ad43-686880713978"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.756"
+          "1.0.0.763"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -202,13 +202,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/contacts?api-version=2015-06-01-preview2",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
+      "RequestUri": "/certificates/contacts?api-version=2015-06-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "104368d5-c932-405d-9071-487ee7bf7499"
+          "1f92e6c7-52a2-4d35-b7b4-77f5555dbf27"
         ],
         "accept-language": [
           "en-US"
@@ -232,7 +232,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Jun 2016 16:42:10 GMT"
+          "Wed, 27 Jul 2016 18:46:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -244,10 +244,10 @@
           "East US"
         ],
         "x-ms-request-id": [
-          "933a18ce-6ab8-4b42-a109-584ecff0a5da"
+          "3215e90b-311d-4057-9e39-08cf81c35620"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.756"
+          "1.0.0.763"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -265,13 +265,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/contacts?api-version=2015-06-01-preview2",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcy",
+      "RequestUri": "/certificates/contacts?api-version=2015-06-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9jb250YWN0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ec52b59f-8900-4df7-ae88-a21428ca3aba"
+          "fbfee01d-7a57-4c25-aeb4-dcdc4c86d431"
         ],
         "accept-language": [
           "en-US"
@@ -295,7 +295,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Jun 2016 16:42:10 GMT"
+          "Wed, 27 Jul 2016 18:46:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -307,10 +307,10 @@
           "East US"
         ],
         "x-ms-request-id": [
-          "4a6cf31c-85e9-42b9-a19b-6b61bb5db6b7"
+          "5a079d30-78e6-4636-a3ce-d4979d851022"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.756"
+          "1.0.0.763"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -332,6 +332,6 @@
   "Variables": {
     "VaultAddress": "https://sdktestvault0518.vault.azure.net",
     "KeyName": "sdktestkey",
-    "KeyVersion": "31140407d0b9469e8dad03718dfb920b"
+    "KeyVersion": "23a80231e4fd4584923ef1dbc1dae1b4"
   }
 }

@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The contact information for the vault certificates.
+    /// </summary>
     public partial class Contact
     {
         /// <summary>

@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The key operations parameters
+    /// </summary>
     public partial class KeyOperationsParameters
     {
         /// <summary>

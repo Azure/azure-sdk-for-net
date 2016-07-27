@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
+    /// </summary>
     public partial class JsonWebKey
     {
         /// <summary>
@@ -27,6 +30,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="n">RSA modulus</param>
         /// <param name="e">RSA public exponent</param>
         /// <param name="d">RSA private exponent</param>
+        /// <param name="dP">RSA Private Key Parameter</param>
+        /// <param name="dQ">RSA Private Key Parameter</param>
+        /// <param name="qI">RSA Private Key Parameter</param>
+        /// <param name="p">RSA secret prime</param>
+        /// <param name="q">RSA secret prime, with p < q</param>
         /// <param name="k">Symmetric key</param>
         /// <param name="t">HSM Token, used with Bring Your Own Key</param>
         public JsonWebKey(string kid = default(string), string kty = default(string), IList<string> keyOps = default(IList<string>), byte[] n = default(byte[]), byte[] e = default(byte[]), byte[] d = default(byte[]), byte[] dp = default(byte[]), byte[] dq = default(byte[]), byte[] qi = default(byte[]), byte[] p = default(byte[]), byte[] q = default(byte[]), byte[] k = default(byte[]), byte[] t = default(byte[]))
@@ -85,30 +93,35 @@ namespace Microsoft.Azure.KeyVault.Models
         public byte[] D { get; set; }
 
         /// <summary>
+        /// Gets or sets RSA Private Key Parameter
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "dp")]
         public byte[] DP { get; set; }
 
         /// <summary>
+        /// Gets or sets RSA Private Key Parameter
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "dq")]
         public byte[] DQ { get; set; }
 
         /// <summary>
+        /// Gets or sets RSA Private Key Parameter
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "qi")]
         public byte[] QI { get; set; }
 
         /// <summary>
+        /// Gets or sets RSA secret prime
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "p")]
         public byte[] P { get; set; }
 
         /// <summary>
+        /// Gets or sets RSA secret prime, with p &lt; q
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "q")]

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Permissions the identity has for keys and secrets
+    /// Permissions the identity has for keys, secrets and certificates
     /// </summary>
     public partial class Permissions
     {

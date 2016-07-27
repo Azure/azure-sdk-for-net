@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The attributes of an issuer managed by the KeyVault service
+    /// </summary>
     public partial class IssuerAttributes
     {
         /// <summary>
@@ -22,7 +25,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the IssuerAttributes class.
         /// </summary>
-        /// <param name="enabled">Determines whether the issuer is enabled</param>
+        /// <param name="enabled">Determines whether the issuer is
+        /// enabled</param>
         /// <param name="created">Creation time in UTC</param>
         /// <param name="updated">Last updated time in UTC</param>
         public IssuerAttributes(bool? enabled = default(bool?), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?))

@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The action that will be executed.
+    /// </summary>
     public partial class Action
     {
         /// <summary>
@@ -22,7 +25,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Action class.
         /// </summary>
-        /// <param name="actionType">The type of the action. Possible values include: 'EmailContacts', 'AutoRenew'</param>
+        /// <param name="actionType">The type of the action. Possible values
+        /// include: 'EmailContacts', 'AutoRenew'</param>
         public Action(ActionType? actionType = default(ActionType?))
         {
             ActionType = actionType;

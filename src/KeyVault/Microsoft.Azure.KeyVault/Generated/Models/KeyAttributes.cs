@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The attributes of a key managed by the KeyVault service
+    /// </summary>
     public partial class KeyAttributes : Attributes
     {
         /// <summary>
@@ -22,7 +25,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyAttributes class.
         /// </summary>
-        /// <param name="enabled">Determines whether the object is enabled</param>
+        /// <param name="enabled">Determines whether the object is
+        /// enabled</param>
         /// <param name="notBefore">Not before date in UTC</param>
         /// <param name="expires">Expiry date in UTC</param>
         /// <param name="created">Creation time in UTC</param>

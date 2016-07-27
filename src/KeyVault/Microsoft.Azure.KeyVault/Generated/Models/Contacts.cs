@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The contacts for the vault certificates.
+    /// </summary>
     public partial class Contacts
     {
         /// <summary>
@@ -23,7 +26,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the Contacts class.
         /// </summary>
         /// <param name="id">Identifier for the contacts collection.</param>
-        /// <param name="contactList">Contacts.</param>
+        /// <param name="contactList">The contact list for the vault
+        /// certificates.</param>
         public Contacts(string id = default(string), IList<Contact> contactList = default(IList<Contact>))
         {
             Id = id;
@@ -37,7 +41,7 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets contacts.
+        /// Gets or sets the contact list for the vault certificates.
         /// </summary>
         [JsonProperty(PropertyName = "contacts")]
         public IList<Contact> ContactList { get; set; }

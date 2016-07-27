@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Properties of the key backing a certificate.
+    /// </summary>
     public partial class SecretProperties
     {
         /// <summary>
@@ -31,7 +34,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Gets or sets the media type (MIME type).
         /// </summary>
-        [JsonProperty(PropertyName = "ContentType")]
+        [JsonProperty(PropertyName = "contentType")]
         public string ContentType { get; set; }
 
     }

@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The certificate issuer item containing certificate issuer metadata
+    /// </summary>
     public partial class CertificateIssuerItem
     {
         /// <summary>

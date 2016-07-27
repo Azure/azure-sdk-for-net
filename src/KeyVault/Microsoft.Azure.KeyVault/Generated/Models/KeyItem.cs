@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The key item containing key metadata
+    /// </summary>
     public partial class KeyItem
     {
         /// <summary>
@@ -24,7 +27,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         /// <param name="kid">Key Identifier</param>
         /// <param name="attributes">The key management attributes</param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
+        /// <param name="tags">Application-specific metadata in the form of
+        /// key-value pairs</param>
         public KeyItem(string kid = default(string), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Kid = kid;

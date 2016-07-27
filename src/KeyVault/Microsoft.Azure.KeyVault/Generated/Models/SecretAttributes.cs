@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The secret management attributes
+    /// </summary>
     public partial class SecretAttributes : Attributes
     {
         /// <summary>
@@ -22,7 +25,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the SecretAttributes class.
         /// </summary>
-        /// <param name="enabled">Determines whether the object is enabled</param>
+        /// <param name="enabled">Determines whether the object is
+        /// enabled</param>
         /// <param name="notBefore">Not before date in UTC</param>
         /// <param name="expires">Expiry date in UTC</param>
         /// <param name="created">Creation time in UTC</param>

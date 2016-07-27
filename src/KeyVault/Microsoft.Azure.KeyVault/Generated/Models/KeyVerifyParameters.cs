@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The key verify parameters
+    /// </summary>
     public partial class KeyVerifyParameters
     {
         /// <summary>
@@ -22,7 +25,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyVerifyParameters class.
         /// </summary>
-        /// <param name="algorithm">The signing/verification algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.</param>
+        /// <param name="algorithm">The signing/verification algorithm. For
+        /// more information on possible algorithm types, see
+        /// JsonWebKeySignatureAlgorithm.</param>
         /// <param name="digest">The digest used for signing</param>
         /// <param name="signature">The signature to be verified</param>
         public KeyVerifyParameters(string algorithm, byte[] digest, byte[] signature)

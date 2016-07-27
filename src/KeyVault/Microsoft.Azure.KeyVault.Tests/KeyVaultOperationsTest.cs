@@ -2042,7 +2042,7 @@ namespace KeyVault.Tests
                     },
                     OrganizationDetails = new OrganizationDetails
                     {
-                        AdministratorDetails = new List<AdministratorDetails>
+                        AdminDetails = new List<AdministratorDetails>
                         {
                             new AdministratorDetails
                             {
@@ -2072,7 +2072,7 @@ namespace KeyVault.Tests
                     },
                     OrganizationDetails = new OrganizationDetails
                     {
-                        AdministratorDetails = new List<AdministratorDetails>
+                        AdminDetails = new List<AdministratorDetails>
                         {
                             new AdministratorDetails
                             {

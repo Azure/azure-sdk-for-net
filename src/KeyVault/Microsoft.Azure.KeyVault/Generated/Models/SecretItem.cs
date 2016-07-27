@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The secret item containing secret metadata
+    /// </summary>
     public partial class SecretItem
     {
         /// <summary>
@@ -24,8 +27,10 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         /// <param name="id">Secret Identifier</param>
         /// <param name="attributes">The secret management attributes</param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        /// <param name="contentType">Type of the secret value such as a password</param>
+        /// <param name="tags">Application-specific metadata in the form of
+        /// key-value pairs</param>
+        /// <param name="contentType">Type of the secret value such as a
+        /// password</param>
         public SecretItem(string id = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string contentType = default(string))
         {
             Id = id;

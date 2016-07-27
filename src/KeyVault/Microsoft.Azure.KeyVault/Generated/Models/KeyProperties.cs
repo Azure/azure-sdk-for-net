@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Properties of the key pair backing a certificate.
+    /// </summary>
     public partial class KeyProperties
     {
         /// <summary>
@@ -22,10 +25,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyProperties class.
         /// </summary>
-        /// <param name="exportable">Indicates if the private key can be exported.</param>
+        /// <param name="exportable">Indicates if the private key can be
+        /// exported.</param>
         /// <param name="keyType">The key type.</param>
         /// <param name="keySize">The key size.</param>
-        /// <param name="reuseKey">Indicates if the same key pair will be used on certificate renewal.</param>
+        /// <param name="reuseKey">Indicates if the same key pair will be used
+        /// on certificate renewal.</param>
         public KeyProperties(bool? exportable = default(bool?), string keyType = default(string), int? keySize = default(int?), bool? reuseKey = default(bool?))
         {
             Exportable = exportable;

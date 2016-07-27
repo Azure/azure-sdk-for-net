@@ -27,10 +27,16 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the AccessPolicyEntry class.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault.</param>
-        /// <param name="objectId">The object ID of a user or service principal in the Azure Active Directory tenant for the vault. </param>
-        /// <param name="applicationId"> Application ID of the client making request on behalf of a principal</param>
-        /// <param name="permissions">Permissions the identity has for keys and secrets</param>
+        /// <param name="tenantId">The Azure Active Directory tenant ID that
+        /// should be used for authenticating requests to the key
+        /// vault.</param>
+        /// <param name="objectId">The object ID of a user or service
+        /// principal in the Azure Active Directory tenant for the vault.
+        /// </param>
+        /// <param name="applicationId"> Application ID of the client making
+        /// request on behalf of a principal</param>
+        /// <param name="permissions">Permissions the identity has for keys,
+        /// secrets and certificates</param>
         public AccessPolicyEntry(Guid? tenantId = default(Guid?), Guid? objectId = default(Guid?), Guid? applicationId = default(Guid?), Permissions permissions = default(Permissions))
         {
             TenantId = tenantId;
@@ -61,7 +67,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public Guid? ApplicationId { get; set; }
 
         /// <summary>
-        /// Gets or sets permissions the identity has for keys and secrets
+        /// Gets or sets permissions the identity has for keys, secrets and
+        /// certificates
         /// </summary>
         [JsonProperty(PropertyName = "permissions")]
         public Permissions Permissions { get; set; }

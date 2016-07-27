@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The certificate create parameters
+    /// </summary>
     public partial class CertificateCreateParameters
     {
         /// <summary>
@@ -24,10 +27,13 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the CertificateCreateParameters
         /// class.
         /// </summary>
-        /// <param name="certificatePolicy">The management policy for the certificate</param>
-        /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
-        public CertificateCreateParameters(CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="certificatePolicy">The management policy for the
+        /// certificate</param>
+        /// <param name="certificateAttributes">The attributes of the
+        /// certificate (optional)</param>
+        /// <param name="tags">Application-specific metadata in the form of
+        /// key-value pairs</param>
+        public CertificateCreateParameters(CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             CertificatePolicy = certificatePolicy;
             CertificateAttributes = certificateAttributes;
@@ -61,10 +67,6 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (CertificatePolicy == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CertificatePolicy");
-            }
             if (this.CertificatePolicy != null)
             {
                 this.CertificatePolicy.Validate();

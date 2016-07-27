@@ -483,6 +483,7 @@ namespace Microsoft.Azure.KeyVault
             /// Type of the secret value such as a password
             /// </param>
             /// <param name='secretAttributes'>
+            /// The secret management attributes
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -537,6 +538,7 @@ namespace Microsoft.Azure.KeyVault
             /// Type of the secret value such as a password
             /// </param>
             /// <param name='secretAttributes'>
+            /// The secret management attributes
             /// </param>
             /// <param name='tags'>
             /// Application-specific metadata in the form of key-value pairs
@@ -683,7 +685,7 @@ namespace Microsoft.Azure.KeyVault
             /// The vault name, e.g. https://myvault.vault.azure.net
             /// </param>
             /// <param name='contacts'>
-            /// Contacts.
+            /// The contacts for the vault certificates.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -882,7 +884,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateOperation> CreateCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateOperation> CreateCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, certificatePolicy, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -903,7 +905,7 @@ namespace Microsoft.Azure.KeyVault
             /// The name of the certificate
             /// </param>
             /// <param name='base64EncodedCertificate'>
-            /// Base64 encoded representaion of the certificate object to import. This
+            /// Base64 encoded representation of the certificate object to import. This
             /// certificate needs to contain the private key.
             /// </param>
             /// <param name='password'>
@@ -922,7 +924,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateBundle> ImportCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateBundle> ImportCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password = default(string), CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ImportCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1150,7 +1152,7 @@ namespace Microsoft.Azure.KeyVault
             /// The name of the certificate
             /// </param>
             /// <param name='x509Certificates'>
-            /// The certificate or the certificte chain to merge
+            /// The certificate or the certificate chain to merge
             /// </param>
             /// <param name='certificateAttributes'>
             /// The attributes of the certificate (optional)

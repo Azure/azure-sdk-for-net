@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// A certificate operation is returned in case of async requests.
+    /// </summary>
     public partial class CertificateOperation
     {
         /// <summary>
@@ -23,14 +26,21 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the CertificateOperation class.
         /// </summary>
         /// <param name="id">The certificate id</param>
-        /// <param name="issuerReference">Reference to the issuer of the X509 component of a certificate.</param>
-        /// <param name="csr">The Certificate Signing Request (CSR) that is being used in the certificate operation.</param>
-        /// <param name="cancellationRequested">Indicates if cancellation was requested on the certificate operation.</param>
+        /// <param name="issuerReference">Reference to the issuer of the X509
+        /// component of a certificate.</param>
+        /// <param name="csr">The Certificate Signing Request (CSR) that is
+        /// being used in the certificate operation.</param>
+        /// <param name="cancellationRequested">Indicates if cancellation was
+        /// requested on the certificate operation.</param>
         /// <param name="status">Status of the certificate operation.</param>
-        /// <param name="statusDetails">The status details of the certificate operation.</param>
-        /// <param name="error">Error encountered, if any, during the certificate operation.</param>
-        /// <param name="target">Location which contains the result of the certificate operation.</param>
-        /// <param name="requestId">Identifier for the certificate operation.</param>
+        /// <param name="statusDetails">The status details of the certificate
+        /// operation.</param>
+        /// <param name="error">Error encountered, if any, during the
+        /// certificate operation.</param>
+        /// <param name="target">Location which contains the result of the
+        /// certificate operation.</param>
+        /// <param name="requestId">Identifier for the certificate
+        /// operation.</param>
         public CertificateOperation(string id = default(string), IssuerReference issuerReference = default(IssuerReference), byte[] csr = default(byte[]), bool? cancellationRequested = default(bool?), string status = default(string), string statusDetails = default(string), Error error = default(Error), string target = default(string), string requestId = default(string))
         {
             Id = id;
@@ -61,7 +71,6 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Gets or sets the Certificate Signing Request (CSR) that is being
         /// used in the certificate operation.
         /// </summary>
-        [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "csr")]
         public byte[] Csr { get; set; }
 

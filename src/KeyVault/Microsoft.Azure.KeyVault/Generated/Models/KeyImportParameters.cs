@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The key import parameters
+    /// </summary>
     public partial class KeyImportParameters
     {
         /// <summary>
@@ -23,9 +26,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the KeyImportParameters class.
         /// </summary>
         /// <param name="key">The Json web key</param>
-        /// <param name="hsm">Whether to import as a hardware key (HSM) or software key</param>
+        /// <param name="hsm">Whether to import as a hardware key (HSM) or
+        /// software key</param>
         /// <param name="keyAttributes">The key management attributes</param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
+        /// <param name="tags">Application-specific metadata in the form of
+        /// key-value pairs</param>
         public KeyImportParameters(JsonWebKey key, bool? hsm = default(bool?), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Hsm = hsm;

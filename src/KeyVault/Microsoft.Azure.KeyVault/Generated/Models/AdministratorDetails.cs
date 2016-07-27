@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Details of the organization administrator of the certificate issuer
+    /// </summary>
     public partial class AdministratorDetails
     {
         /// <summary>

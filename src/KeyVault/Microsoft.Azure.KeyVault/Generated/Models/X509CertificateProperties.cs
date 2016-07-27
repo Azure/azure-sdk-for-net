@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Properties of the X509 component of a certificate.
+    /// </summary>
     public partial class X509CertificateProperties
     {
         /// <summary>
@@ -22,9 +25,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the X509CertificateProperties class.
         /// </summary>
-        /// <param name="subject">The subject name. Should be a valid X500 Distinguished Name.</param>
+        /// <param name="subject">The subject name. Should be a valid X509
+        /// Distinguished Name.</param>
         /// <param name="ekus">The enhaunced key usage.</param>
-        /// <param name="subjectAlternativeNames">The subject alternative names.</param>
+        /// <param name="subjectAlternativeNames">The subject alternative
+        /// names.</param>
         /// <param name="keyUsage">List of key usages.</param>
         /// <param name="validityInMonths">The subject alternate names.</param>
         public X509CertificateProperties(string subject = default(string), IList<string> ekus = default(IList<string>), SubjectAlternativeNames subjectAlternativeNames = default(SubjectAlternativeNames), IList<string> keyUsage = default(IList<string>), int? validityInMonths = default(int?))
@@ -37,7 +42,7 @@ namespace Microsoft.Azure.KeyVault.Models
         }
 
         /// <summary>
-        /// Gets or sets the subject name. Should be a valid X500
+        /// Gets or sets the subject name. Should be a valid X509
         /// Distinguished Name.
         /// </summary>
         [JsonProperty(PropertyName = "subject")]

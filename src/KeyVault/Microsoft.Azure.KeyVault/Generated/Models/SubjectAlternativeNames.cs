@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The subject alternate names of a X509 object.
+    /// </summary>
     public partial class SubjectAlternativeNames
     {
         /// <summary>

@@ -12,6 +12,10 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// A certificate bundle consists of a certificate (X509) plus its
+    /// attributes.
+    /// </summary>
     public partial class CertificateBundle
     {
         /// <summary>
@@ -27,10 +31,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="sid">The secret id</param>
         /// <param name="x5t">Thumbprint of the certificate.</param>
         /// <param name="policy">The management policy.</param>
-        /// <param name="cer"> CER contents of x509 certificate.</param>
+        /// <param name="cer">CER contents of x509 certificate.</param>
         /// <param name="contentType">The content type of the secret</param>
         /// <param name="attributes">The certificate attributes.</param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
+        /// <param name="tags">Application-specific metadata in the form of
+        /// key-value pairs</param>
         public CertificateBundle(string id = default(string), string kid = default(string), string sid = default(string), byte[] x5t = default(byte[]), CertificatePolicy policy = default(CertificatePolicy), byte[] cer = default(byte[]), string contentType = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
@@ -76,9 +81,8 @@ namespace Microsoft.Azure.KeyVault.Models
         public CertificatePolicy Policy { get; private set; }
 
         /// <summary>
-        /// Gets or sets  CER contents of x509 certificate.
+        /// Gets or sets CER contents of x509 certificate.
         /// </summary>
-        [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "cer")]
         public byte[] Cer { get; set; }
 

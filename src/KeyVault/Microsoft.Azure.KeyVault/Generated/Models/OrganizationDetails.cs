@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Details of the organization of the certificate issuer.
+    /// </summary>
     public partial class OrganizationDetails
     {
         /// <summary>
@@ -23,11 +26,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the OrganizationDetails class.
         /// </summary>
         /// <param name="id">Id of the organization.</param>
-        /// <param name="administratorDetails">Details of the organization administrator.</param>
-        public OrganizationDetails(string id = default(string), IList<AdministratorDetails> administratorDetails = default(IList<AdministratorDetails>))
+        /// <param name="adminDetails">Details of the organization
+        /// administrator.</param>
+        public OrganizationDetails(string id = default(string), IList<AdministratorDetails> adminDetails = default(IList<AdministratorDetails>))
         {
             Id = id;
-            AdministratorDetails = administratorDetails;
+            AdminDetails = adminDetails;
         }
 
         /// <summary>
@@ -39,8 +43,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Gets or sets details of the organization administrator.
         /// </summary>
-        [JsonProperty(PropertyName = "AdministratorDetails")]
-        public IList<AdministratorDetails> AdministratorDetails { get; set; }
+        [JsonProperty(PropertyName = "admin_details")]
+        public IList<AdministratorDetails> AdminDetails { get; set; }
 
     }
 }

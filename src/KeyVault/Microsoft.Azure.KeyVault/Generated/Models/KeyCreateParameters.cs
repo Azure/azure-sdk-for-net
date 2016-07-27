@@ -12,6 +12,9 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The key create parameters
+    /// </summary>
     public partial class KeyCreateParameters
     {
         /// <summary>
@@ -22,9 +25,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyCreateParameters class.
         /// </summary>
-        /// <param name="kty">The type of key to create. For valid key types, see WebKeyTypes.</param>
+        /// <param name="kty">The type of key to create. For valid key types,
+        /// see WebKeyTypes.</param>
         /// <param name="keySize">Size of the key</param>
-        /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
+        /// <param name="tags">Application-specific metadata in the form of
+        /// key-value pairs</param>
         public KeyCreateParameters(string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Kty = kty;

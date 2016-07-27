@@ -12,6 +12,10 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Action and its trigger that will be performed by Key Vault over the
+    /// lifetime of a certificate.
+    /// </summary>
     public partial class LifetimeAction
     {
         /// <summary>
@@ -22,7 +26,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the LifetimeAction class.
         /// </summary>
-        /// <param name="trigger">The condition that will execute the action.</param>
+        /// <param name="trigger">The condition that will execute the
+        /// action.</param>
         /// <param name="action">The action that will be executed.</param>
         public LifetimeAction(Trigger trigger = default(Trigger), Action action = default(Action))
         {
