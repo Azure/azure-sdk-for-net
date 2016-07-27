@@ -1,0 +1,838 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/services/networking/routetables/MockName?detailLevel=full",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tOYW1lP2RldGFpbExldmVsPWZ1bGw=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>ResourceNotFound</Code>\r\n  <Message>The Route Table MockName does not exist.</Message>\r\n</Error>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "205"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3ff2fce6e60507b5bb23833b16230a7c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:26:39 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/services/networking/routetables/MockName?detailLevel=full",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tOYW1lP2RldGFpbExldmVsPWZ1bGw=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>ResourceNotFound</Code>\r\n  <Message>The Route Table MockName does not exist.</Message>\r\n</Error>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "205"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "9f6623641298089f925d0b7bc5d20a9c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:26:40 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/services/networking/routetables",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVz",
+      "RequestMethod": "POST",
+      "RequestBody": "<RouteTable xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>MockName</Name>\r\n  <Location>North Central US</Location>\r\n</RouteTable>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "143"
+        ],
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8764cf7599cba1b7bb141bf2b9e51a5e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:26:41 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/8764cf7599cba1b7bb141bf2b9e51a5e",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzg3NjRjZjc1OTljYmExYjdiYjE0MWJmMmI5ZTUxYTVl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>8764cf75-99cb-a1b7-bb14-1bf2b9e51a5e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8959fef9089aac18a1e1e7ed88e3d5fa"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:26:41 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/8764cf7599cba1b7bb141bf2b9e51a5e",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzg3NjRjZjc1OTljYmExYjdiYjE0MWJmMmI5ZTUxYTVl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>8764cf75-99cb-a1b7-bb14-1bf2b9e51a5e</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6213d273cf580af6ae099f6fd34e1a51"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:27:11 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/services/networking/routetables/MockName/migration?comp=validate",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tOYW1lL21pZ3JhdGlvbj9jb21wPXZhbGlkYXRl",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ValidationMessages xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" />",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "123"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "93354ae8389ba6bba83c942c8ebb5fd5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:27:12 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/services/networking/routetables/MockName/migration?comp=prepare",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tOYW1lL21pZ3JhdGlvbj9jb21wPXByZXBhcmU=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "d2f8be98ac36af1498e3be2d132c3b56"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:27:13 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/d2f8be98ac36af1498e3be2d132c3b56",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zL2QyZjhiZTk4YWMzNmFmMTQ5OGUzYmUyZDEzMmMzYjU2",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>d2f8be98-ac36-af14-98e3-be2d132c3b56</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "067e46d4843102f4b28378350e12c9de"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:27:13 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/d2f8be98ac36af1498e3be2d132c3b56",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zL2QyZjhiZTk4YWMzNmFmMTQ5OGUzYmUyZDEzMmMzYjU2",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>d2f8be98-ac36-af14-98e3-be2d132c3b56</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b60811cdfa670cfaa0756804776dab68"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:27:44 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/d2f8be98ac36af1498e3be2d132c3b56",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zL2QyZjhiZTk4YWMzNmFmMTQ5OGUzYmUyZDEzMmMzYjU2",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>d2f8be98-ac36-af14-98e3-be2d132c3b56</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "9b4635443aa5ab6ebfd6aac47fdb711a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:28:14 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/services/networking/routetables/MockName/migration?comp=abort",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tOYW1lL21pZ3JhdGlvbj9jb21wPWFib3J0",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4443d1ab9057adebaaf2b6b4196ea051"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:28:14 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/4443d1ab9057adebaaf2b6b4196ea051",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzQ0NDNkMWFiOTA1N2FkZWJhYWYyYjZiNDE5NmVhMDUx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4443d1ab-9057-adeb-aaf2-b6b4196ea051</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "40034ede635ba16691e84895a17666b3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:28:14 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/4443d1ab9057adebaaf2b6b4196ea051",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzQ0NDNkMWFiOTA1N2FkZWJhYWYyYjZiNDE5NmVhMDUx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4443d1ab-9057-adeb-aaf2-b6b4196ea051</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f0d8c78cbe72a92facb1dad113c9bd8e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:28:45 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/4443d1ab9057adebaaf2b6b4196ea051",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzQ0NDNkMWFiOTA1N2FkZWJhYWYyYjZiNDE5NmVhMDUx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4443d1ab-9057-adeb-aaf2-b6b4196ea051</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4144c38f0607a72a892d12b5313d946f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:29:15 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/4443d1ab9057adebaaf2b6b4196ea051",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzQ0NDNkMWFiOTA1N2FkZWJhYWYyYjZiNDE5NmVhMDUx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4443d1ab-9057-adeb-aaf2-b6b4196ea051</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "eb2f4c4b22e6058a89c5a4c9ce8f9aad"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:29:45 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/4443d1ab9057adebaaf2b6b4196ea051",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzQ0NDNkMWFiOTA1N2FkZWJhYWYyYjZiNDE5NmVhMDUx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4443d1ab-9057-adeb-aaf2-b6b4196ea051</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8dd88d80ce4c01caabb5d3a5bda998c5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:30:15 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/services/networking/routetables/MockName",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9zZXJ2aWNlcy9uZXR3b3JraW5nL3JvdXRldGFibGVzL01vY2tOYW1l",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "574872880bc206ef87436e25197109c1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:30:15 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/574872880bc206ef87436e25197109c1",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzU3NDg3Mjg4MGJjMjA2ZWY4NzQzNmUyNTE5NzEwOWMx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>57487288-0bc2-06ef-8743-6e25197109c1</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "bf6bf78317630a66be752b5267674218"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:30:15 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/9532a63e-f2eb-4649-bb23-5ed01077ce80/operations/574872880bc206ef87436e25197109c1",
+      "EncodedRequestUri": "Lzk1MzJhNjNlLWYyZWItNDY0OS1iYjIzLTVlZDAxMDc3Y2U4MC9vcGVyYXRpb25zLzU3NDg3Mjg4MGJjMjA2ZWY4NzQzNmUyNTE5NzEwOWMx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-07-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>57487288-0bc2-06ef-8743-6e25197109c1</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3f83792a6e280d789b7185c704dfa0aa"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jul 2016 23:30:46 GMT"
+        ],
+        "Server": [
+          "1.0.6198.405",
+          "(rd_rdfe_stable.160723-1634)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9532a63e-f2eb-4649-bb23-5ed01077ce80"
+  }
+}

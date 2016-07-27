@@ -1461,9 +1461,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Validate Virtual Network Migration operation response.
+        /// The Validate Network Migration operation response.
         /// </returns>
-        public async Task<XrpMigrationValidateVirtualNetworkResponse> ValidateMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -1553,13 +1553,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    XrpMigrationValidateVirtualNetworkResponse result = null;
+                    NetworkMigrationValidationResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new XrpMigrationValidateVirtualNetworkResponse();
+                        result = new NetworkMigrationValidationResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
                         XElement validationMessagesSequenceElement = responseDoc.Element(XName.Get("ValidationMessages", "http://schemas.microsoft.com/windowsazure"));
@@ -1567,8 +1567,8 @@ namespace Microsoft.WindowsAzure.Management.Network
                         {
                             foreach (XElement validationMessagesElement in validationMessagesSequenceElement.Elements(XName.Get("ValidationMessage", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                XrpMigrationValidateVirtualNetworkMessage validationMessageInstance = new XrpMigrationValidateVirtualNetworkMessage();
-                                result.ValidateVirtualNetworkMessages.Add(validationMessageInstance);
+                                NetworkMigrationValidationMessage validationMessageInstance = new NetworkMigrationValidationMessage();
+                                result.ValidationMessages.Add(validationMessageInstance);
                                 
                                 XElement resourceTypeElement = validationMessagesElement.Element(XName.Get("ResourceType", "http://schemas.microsoft.com/windowsazure"));
                                 if (resourceTypeElement != null)

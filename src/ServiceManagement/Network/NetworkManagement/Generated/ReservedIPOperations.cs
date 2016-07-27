@@ -2213,10 +2213,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The Validate Network Migration operation response.
         /// </returns>
-        public async Task<AzureOperationResponse> ValidateMigrationAsync(string ipName, CancellationToken cancellationToken)
+        public async Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(string ipName, CancellationToken cancellationToken)
         {
             // Validate
             if (ipName == null)
@@ -2306,9 +2305,61 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    NetworkMigrationValidationResponse result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkMigrationValidationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement validationMessagesSequenceElement = responseDoc.Element(XName.Get("ValidationMessages", "http://schemas.microsoft.com/windowsazure"));
+                        if (validationMessagesSequenceElement != null)
+                        {
+                            foreach (XElement validationMessagesElement in validationMessagesSequenceElement.Elements(XName.Get("ValidationMessage", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                NetworkMigrationValidationMessage validationMessageInstance = new NetworkMigrationValidationMessage();
+                                result.ValidationMessages.Add(validationMessageInstance);
+                                
+                                XElement resourceTypeElement = validationMessagesElement.Element(XName.Get("ResourceType", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceTypeElement != null)
+                                {
+                                    string resourceTypeInstance = resourceTypeElement.Value;
+                                    validationMessageInstance.ResourceType = resourceTypeInstance;
+                                }
+                                
+                                XElement resourceNameElement = validationMessagesElement.Element(XName.Get("ResourceName", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceNameElement != null)
+                                {
+                                    string resourceNameInstance = resourceNameElement.Value;
+                                    validationMessageInstance.ResourceName = resourceNameInstance;
+                                }
+                                
+                                XElement categoryElement = validationMessagesElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                                if (categoryElement != null)
+                                {
+                                    string categoryInstance = categoryElement.Value;
+                                    validationMessageInstance.Category = categoryInstance;
+                                }
+                                
+                                XElement messageElement = validationMessagesElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    validationMessageInstance.Message = messageInstance;
+                                }
+                                
+                                XElement virtualMachineElement = validationMessagesElement.Element(XName.Get("VirtualMachine", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachineElement != null)
+                                {
+                                    string virtualMachineInstance = virtualMachineElement.Value;
+                                    validationMessageInstance.VirtualMachineName = virtualMachineInstance;
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
