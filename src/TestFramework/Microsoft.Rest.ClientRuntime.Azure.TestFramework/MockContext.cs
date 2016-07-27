@@ -68,10 +68,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <returns></returns>
         public T GetServiceClient<T>(TestEnvironment currentEnvironment, bool internalBaseUri = false, params DelegatingHandler[] handlers) where T : class
         {
-            Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
-            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo[TokenAudience.Management].AccessToken });
-
-            return GetServiceClientWithCredentials<T>(currentEnvironment, tokenCred, internalBaseUri, handlers);
+            return GetServiceClientWithCredentials<T>(currentEnvironment,
+                currentEnvironment.TokenInfo[TokenAudience.Management], internalBaseUri, handlers);
         }
 
         /// <summary>
@@ -97,13 +95,17 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             TestEnvironment currentEnvironment,
             bool internalBaseUri = false,
             params DelegatingHandler[] handlers) where T : class
-        {
-            Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
-            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo[TokenAudience.Graph].AccessToken });
+        {            
+            if(!currentEnvironment.TokenInfo.ContainsKey(TokenAudience.Graph))
+            {
+                throw new ArgumentNullException(
+                    "currentEnvironment.TokenInfo[TokenAudience.Graph]",
+                    "Unable to create Graph Management client because Graph authentication token was not acquired during Login.");
+            }
 
             return GetServiceClientWithCredentials<T>(
                 currentEnvironment,
-                tokenCred,
+                currentEnvironment.TokenInfo[TokenAudience.Graph],
                 currentEnvironment.Endpoints.GraphUri,
                 internalBaseUri,
                 handlers);

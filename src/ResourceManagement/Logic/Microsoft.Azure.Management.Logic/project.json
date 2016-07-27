@@ -1,0 +1,54 @@
+﻿{
+  "version": "1.0.0",
+  "description": "Microsoft Azure LogicApps Management Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Provides LogicApps management capabilities for Microsoft Azure",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure LogicApps management", "LogicApps", "LogicApps management", "REST HTTP client", "windowsazureofficial" ],
+    "requireLicenseAcceptance":  true,
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+  },
+
+  "frameworks": {
+    "net45": {
+      "dependencies": {
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)",
+        "Microsoft.Rest.ClientRuntime": "[2.1.0,3.0.0)" 
+      }
+    },
+    "netstandard1.5": {
+      "imports": ["dnxcore50"],
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Net.Http": "4.1.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Threading.Tasks": "4.0.11",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)",
+        "Microsoft.Rest.ClientRuntime": "[2.3.1,3.0)" 
+      }
+    },
+    "netstandard1.1": {
+      "imports": ["dnxcore50"],
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)",
+        "Microsoft.Rest.ClientRuntime": "[2.3.1,3.0)" 
+      }
+    }
+  }
+}

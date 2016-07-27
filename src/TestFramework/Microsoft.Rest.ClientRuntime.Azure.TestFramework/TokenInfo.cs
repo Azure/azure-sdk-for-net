@@ -10,22 +10,4 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         Management,
         Graph
     }
-
-    public class TokenInfo
-    {
-        public TokenInfo(string accessToken)
-        {
-            AccessToken = accessToken;
-            AccessTokenType = "Bearer";
-        }
-
-        public TokenInfo(AuthenticationResult result)
-        {
-            AccessToken = result.AccessToken;
-            AccessTokenType = result.AccessTokenType;
-        }
-
-        public string AccessToken { get; private set; }
-        public string AccessTokenType { get; private set; }
-    }
 }

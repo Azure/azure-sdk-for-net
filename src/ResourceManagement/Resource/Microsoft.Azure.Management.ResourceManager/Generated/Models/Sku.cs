@@ -40,37 +40,37 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the sku name.
+        /// The sku name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku tier.
+        /// The sku tier.
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku size.
+        /// The sku size.
         /// </summary>
         [JsonProperty(PropertyName = "size")]
         public string Size { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku family.
+        /// The sku family.
         /// </summary>
         [JsonProperty(PropertyName = "family")]
         public string Family { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku model.
+        /// The sku model.
         /// </summary>
         [JsonProperty(PropertyName = "model")]
         public string Model { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku capacity.
+        /// The sku capacity.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

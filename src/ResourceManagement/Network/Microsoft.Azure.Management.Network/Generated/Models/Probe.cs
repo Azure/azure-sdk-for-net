@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets Load balancer rules that use this probe
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public IList<SubResource> LoadBalancingRules { get; set; }
+        public IList<SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
         /// Gets or sets the protocol of the end point. Possible values are

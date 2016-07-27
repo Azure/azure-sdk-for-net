@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets validation error.
+        /// Validation error.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ResourceManagementErrorWithDetails Error { get; set; }
 
         /// <summary>
-        /// Gets or sets the template deployment properties.
+        /// The template deployment properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DeploymentPropertiesExtended Properties { get; set; }
