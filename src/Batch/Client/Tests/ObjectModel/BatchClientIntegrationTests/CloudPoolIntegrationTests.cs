@@ -757,8 +757,8 @@
                             };
 
                         BatchException exception = await TestUtilities.AssertThrowsAsync<BatchException>(async () => await pool.CommitAsync().ConfigureAwait(false)).ConfigureAwait(false);
-                        Assert.Equal(exception.RequestInformation.BatchError.Code, BatchErrorCodeStrings.InvalidPropertyValue);
-                        Assert.Equal(exception.RequestInformation.BatchError.Values.Single(value => value.Key == "Reason").Value, "The specified VNET either does not exist or Batch Service does not have access to it");
+                        Assert.Equal(BatchErrorCodeStrings.InvalidPropertyValue, exception.RequestInformation.BatchError.Code);
+                        Assert.Equal("Either the specified VNet does not exist, or the Batch service does not have access to it", exception.RequestInformation.BatchError.Values.Single(value => value.Key == "Reason").Value);
                     }
                     finally
                     {

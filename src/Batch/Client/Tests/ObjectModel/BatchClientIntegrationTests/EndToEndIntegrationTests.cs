@@ -311,7 +311,7 @@
                         //       manually update these strings as OS versions are depricated
                         //See here for other OS versions if this test fails: http://azure.microsoft.com/en-us/documentation/articles/cloud-services-guestos-update-matrix/
                         const string familyVersion0 = "*";
-                        const string familyVersion1 = "WA-GUEST-OS-4.25_201510-01";
+                        const string familyVersion1 = "WA-GUEST-OS-4.32_201605-01";
 
                         // "UpdatePoolOS" tests (ChangeOSVersion in OM)
 
@@ -474,7 +474,7 @@
 
                                     // change values
                                     const string altFamily = "3";
-                                    const string altOSVersion = "WA-GUEST-OS-3.32_201510-01";
+                                    const string altOSVersion = "WA-GUEST-OS-3.39_201605-01";
 
                                     // change values on the bound PUS
                                     PoolSpecification boundPS = boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification;
