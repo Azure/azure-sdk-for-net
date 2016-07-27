@@ -235,5 +235,20 @@ namespace Network.Tests
         {
             return this.networkClient.Networks.AbortMigration(virtualNetworkName);
         }
+
+        public NetworkMigrationValidationResponse ValidateRouteTableMigration(string routeTableName)
+        {
+            return this.networkClient.Routes.ValidateMigration(routeTableName);
+        }
+
+        public OperationStatusResponse PrepareRouteTableMigration(string routeTableName)
+        {
+            return this.networkClient.Routes.PrepareMigration(routeTableName);
+        }
+
+        public OperationStatusResponse AbortRouteTableMigration(string routeTableName)
+        {
+            return this.networkClient.Routes.AbortMigration(routeTableName);
+        }
     }
 }

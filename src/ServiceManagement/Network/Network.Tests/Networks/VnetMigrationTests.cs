@@ -13,11 +13,7 @@
 //
 
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Microsoft.Azure;
-using Microsoft.Azure.Test;
-using Microsoft.Data.Edm.Csdl;
-using Network.Tests.Networks.TestOperations;
 
 namespace Network.Tests.Networks
 {
