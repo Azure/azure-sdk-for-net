@@ -22,21 +22,37 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             creatableResource.CreatorTaskGroup.Merge(CreatorTaskGroup);
         }
 
-        public async Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
+        public Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
         {
-            if (!CreatorTaskGroup.IsPreparer)
+            TaskCompletionSource<IFluentResourceT> taskCompletionSource = new TaskCompletionSource<IFluentResourceT>();
+            if (CreatorTaskGroup.IsPreparer)
             {
-                throw new InvalidOperationException("Interal Error: Creatable::CreateAsync can be invoked only on preparer");
+                CreatorTaskGroup.Prepare();
+                CreatorTaskGroup.ExecuteAsync(cancellationToken, multiThreaded).ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                    {
+                        taskCompletionSource.SetException(task.Exception.InnerExceptions);
+                    }
+                    else
+                    {
+                        IFluentResourceT thisResource = this as IFluentResourceT;
+                        if (thisResource == null)
+                        {
+                            taskCompletionSource.SetException(new InvalidOperationException("Interal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'"));
+                        }
+                        else
+                        {
+                            taskCompletionSource.SetResult(thisResource);
+                        }
+                    }
+                });
             }
-
-            CreatorTaskGroup.Prepare();
-            await CreatorTaskGroup.ExecuteAsync(cancellationToken, multiThreaded);
-            IFluentResourceT thisResource = this as IFluentResourceT;
-            if (thisResource == null)
+            else
             {
-                throw new InvalidOperationException("Interal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'");
+                taskCompletionSource.SetException(new InvalidOperationException("Interal Error: Creatable::CreateAsync can be invoked only on preparer"));
             }
-            return thisResource;
+            return taskCompletionSource.Task;
         }
 
 
