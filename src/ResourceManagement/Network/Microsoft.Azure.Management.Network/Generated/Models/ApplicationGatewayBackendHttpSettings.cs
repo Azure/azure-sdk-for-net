@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayBackendHttpSettings class.
         /// </summary>
-        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), IList<SubResource> authenticationCertificates = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Port = port;
@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
             CookieBasedAffinity = cookieBasedAffinity;
             RequestTimeout = requestTimeout;
             Probe = probe;
+            AuthenticationCertificates = authenticationCertificates;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -75,6 +76,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.probe")]
         public SubResource Probe { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of references to Application Gateway
+        /// Authentication Certificates
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.authenticationCertificates")]
+        public IList<SubResource> AuthenticationCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the backend http settings
