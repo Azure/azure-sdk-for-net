@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Spatial;
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Search.Tests
                 this.DescriptionFr,
                 this.HotelName,
                 this.Category,
-                (this.Tags != null) ? String.Join(",", this.Tags) : "null",
+                (this.Tags != null) ? this.Tags.ToCommaSeparatedString() : "null",
                 this.ParkingIncluded,
                 this.SmokingAllowed,
                 this.LastRenovationDate,

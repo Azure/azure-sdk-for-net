@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Search.Models
         {
             get
             {
-                return String.Join(",", this.Values);
+                return this.Values.ToCommaSeparatedString();
             }
         }
 
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Search.Models
                 CultureInfo.InvariantCulture, 
                 "{0}-{1}", 
                 this.Name, 
-                String.Join(",", this.Values.Select(v => EscapeValue(v))));
+                this.Values.Select(v => EscapeValue(v)).ToCommaSeparatedString());
         }
 
         private static string EscapeValue(string value)
