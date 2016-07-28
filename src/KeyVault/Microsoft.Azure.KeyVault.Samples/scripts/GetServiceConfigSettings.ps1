@@ -107,7 +107,7 @@ Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName `
 # **********************************************************************************************
 # Store storage account access key as a secret in the vault
 # **********************************************************************************************
-$storagekey = (Get-AzureRmStorageAccountKey -StorageAccountName $storageName -ResourceGroupName keyvault).Key1
+$storagekey = (Get-AzureRmStorageAccountKey -StorageAccountName $storageName -ResourceGroupName keyvault)[0].Value
 if(-not $storageKey)
 {
 	Write-Host 'Storage key could not be retrieved. Make sure the storage account exists.' -foregroundcolor Yellow
