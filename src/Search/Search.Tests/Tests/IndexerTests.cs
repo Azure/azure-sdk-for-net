@@ -259,6 +259,7 @@ namespace Microsoft.Azure.Search.Tests
                         containerName: "fake");
 
                 expectedIndexer.DataSourceName = blobDataSource.Name;
+                expectedIndexer.IsDisabled = true;
                 expectedIndexer.Parameters = new IndexingParameters();
                 expectedIndexer.Parameters
                     .ExcludeFileNameExtensions(".pdf")
