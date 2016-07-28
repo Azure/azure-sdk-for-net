@@ -99,6 +99,29 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateOrUpdateDataSourceIfNotExistsFailsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsFailsOnExistingResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateDataSourceIfNotExistsSucceedsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsSucceedsOnNoResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource);
+            });
+        }
+
+        [Fact]
         public void UpdateDataSourceIfExistsSucceedsOnExistingResource()
         {
             Run(() =>
@@ -146,7 +169,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void TestDeleteDataSourceIfNotChangedWorksOnlyOnCurrentResource()
+        public void DeleteDataSourceIfNotChangedWorksOnlyOnCurrentResource()
         {
             Run(() =>
             {
@@ -154,8 +177,8 @@ namespace Microsoft.Azure.Search.Tests
 
                 DataSource dataSource = CreateTestDataSource();
 
-                AccessConditionTests.TestDeleteIfNotChangedWorksOnlyOnCurrentResource(
-                    Data.GetSearchServiceClient().DataSources.Delete,
+                AccessConditionTests.DeleteIfNotChangedWorksOnlyOnCurrentResource(
+                    searchClient.DataSources.Delete,
                     () => searchClient.DataSources.CreateOrUpdate(dataSource),
                     x => searchClient.DataSources.CreateOrUpdate(MutateDataSource(x)),
                     dataSource.Name);
@@ -163,7 +186,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void TestDeleteDataSourceIfExistsWorksOnlyWhenResourceExists()
+        public void DeleteDataSourceIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
             {
@@ -171,8 +194,8 @@ namespace Microsoft.Azure.Search.Tests
 
                 DataSource dataSource = CreateTestDataSource();
 
-                AccessConditionTests.TestDeleteIfExistsWorksOnlyWhenResourceExists(
-                    Data.GetSearchServiceClient().DataSources.Delete,
+                AccessConditionTests.DeleteIfExistsWorksOnlyWhenResourceExists(
+                    searchClient.DataSources.Delete,
                     () => searchClient.DataSources.CreateOrUpdate(dataSource),
                     dataSource.Name);
             });

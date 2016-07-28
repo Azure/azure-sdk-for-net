@@ -126,9 +126,12 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Index CreateOrUpdate(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static Index CreateOrUpdate(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(indexName, index, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(indexName, index, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -147,12 +150,15 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexName, index, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexName, index, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -171,9 +177,12 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static void Delete(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static void Delete(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                Task.Factory.StartNew(s => ((IIndexesOperations)s).DeleteAsync(indexName, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IIndexesOperations)s).DeleteAsync(indexName, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,12 +198,15 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(indexName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(indexName, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

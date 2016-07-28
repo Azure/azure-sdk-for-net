@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the Indexer class.
         /// </summary>
-        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), IList<FieldMapping> fieldMappings = default(IList<FieldMapping>), bool? isDisabled = default(bool?))
+        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), IList<FieldMapping> fieldMappings = default(IList<FieldMapping>), bool? isDisabled = default(bool?), string eTag = default(string))
         {
             Name = name;
             Description = description;
@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Search.Models
             Parameters = parameters;
             FieldMappings = fieldMappings;
             IsDisabled = isDisabled;
+            ETag = eTag;
         }
 
         /// <summary>
@@ -93,6 +94,12 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "disabled")]
         public bool? IsDisabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ETag of the Indexer.
+        /// </summary>
+        [JsonProperty(PropertyName = "@odata.etag")]
+        public string ETag { get; set; }
 
         /// <summary>
         /// Validate the object.

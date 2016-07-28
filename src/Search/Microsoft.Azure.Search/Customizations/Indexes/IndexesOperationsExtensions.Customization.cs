@@ -29,9 +29,12 @@ namespace Microsoft.Azure.Search
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
-        public static Index CreateOrUpdate(this IIndexesOperations operations, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static Index CreateOrUpdate(this IIndexesOperations operations, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
-            return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(index, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(index, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -46,12 +49,15 @@ namespace Microsoft.Azure.Search
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(index, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(index, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
