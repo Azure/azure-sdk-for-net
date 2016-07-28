@@ -245,6 +245,34 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        public void CanCreateBlobIndexerWithConfigurationParameters()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                Indexer expectedIndexer = Data.CreateTestIndexer();
+                DataSource blobDataSource =
+                    DataSource.AzureBlobStorage(
+                        SearchTestUtilities.GenerateName(),
+                        storageConnectionString: "fake",
+                        containerName: "fake");
+
+                expectedIndexer.DataSourceName = blobDataSource.Name;
+                expectedIndexer.Parameters = new IndexingParameters();
+                expectedIndexer.Parameters
+                    .ExcludeFileNameExtensions(".pdf")
+                    .IndexFileNameExtensions(".docx")
+                    .IndexStorageMetadataOnly()
+                    .SkipContent()
+                    .ParseDelimitedTextFiles("a", "b", "c");
+
+                Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
+
+                AssertIndexersEqual(expectedIndexer, actualIndexer);
+            });
+        }
+
         private static void AssertStartAndEndTimeValid(IndexerExecutionResult result)
         {
             Assert.True(result.StartTime.HasValue);

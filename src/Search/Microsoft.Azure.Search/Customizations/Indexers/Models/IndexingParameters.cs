@@ -5,17 +5,13 @@
 namespace Microsoft.Azure.Search.Models
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Represents parameters for indexer execution.
     /// </summary>
-    public partial class IndexingParameters
+    public class IndexingParameters
     {
         /// <summary>
         /// Initializes a new instance of the IndexingParameters class.

@@ -504,7 +504,7 @@ namespace Microsoft.Azure.Search
                 selectedFields = SelectAll;
             }
 
-            string selectClause = String.Join(",", selectedFields);
+            string selectClause = selectedFields.ToCommaSeparatedString();
 
             var baseUrl = this.Client.BaseUri.AbsoluteUri;
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "docs('{key}')").ToString();
