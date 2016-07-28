@@ -118,32 +118,60 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Null(result.IfMatch);
         }
 
-        public static void UpdateIfExistsSucceedsOnExistingResource<T>(
-            Func<T, SearchRequestOptions, AccessCondition, T> updateOrCreateFunc,
+        public static void CreateOrUpdateIfNotExistsFailsOnExistingResource<T>(
+            Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition,
             Func<T, T> mutateResourceDefinition)
             where T : IResourceWithETag
         {
-            Func<T, AccessCondition, T> updateOrCreate = (a, b) => updateOrCreateFunc(a, null, b);
-            var createdResource = updateOrCreate(newResourceDefinition(), AccessCondition.GenerateEmptyCondition());
+            Func<T, AccessCondition, T> createOrUpdate = (a, b) => createOrUpdateFunc(a, null, b);
+            var createdResource = createOrUpdate(newResourceDefinition(), AccessCondition.GenerateEmptyCondition());
             var mutatedResource = mutateResourceDefinition(createdResource);
 
-            var updatedResource = updateOrCreate(mutatedResource, AccessCondition.GenerateIfExistsCondition());
+            SearchAssert.ThrowsCloudException(
+                () => createOrUpdate(mutatedResource, AccessCondition.GenerateIfNotExistsCondition()),
+                HttpStatusCode.PreconditionFailed);
+        }
+
+        public static void CreateOrUpdateIfNotExistsSucceedsOnNoResource<T>(
+            Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
+            Func<T> newResourceDefinition)
+            where T : IResourceWithETag
+        {
+            Func<T, AccessCondition, T> createOrUpdate = (a, b) => createOrUpdateFunc(a, null, b);
+            var resource = newResourceDefinition();
+
+            var updatedResource = createOrUpdate(resource, AccessCondition.GenerateIfNotExistsCondition());
+
+            Assert.NotEmpty(updatedResource.ETag);
+        }
+
+        public static void UpdateIfExistsSucceedsOnExistingResource<T>(
+            Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
+            Func<T> newResourceDefinition,
+            Func<T, T> mutateResourceDefinition)
+            where T : IResourceWithETag
+        {
+            Func<T, AccessCondition, T> createOrUpdate = (a, b) => createOrUpdateFunc(a, null, b);
+            var createdResource = createOrUpdate(newResourceDefinition(), AccessCondition.GenerateEmptyCondition());
+            var mutatedResource = mutateResourceDefinition(createdResource);
+
+            var updatedResource = createOrUpdate(mutatedResource, AccessCondition.GenerateIfExistsCondition());
 
             Assert.NotEmpty(updatedResource.ETag);
             Assert.NotEqual(createdResource.ETag, updatedResource.ETag);
         }
 
         public static void UpdateIfExistsFailsOnNoResource<T>(
-            Func<T, SearchRequestOptions, AccessCondition, T> updateOrCreateFunc,
+            Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition)
             where T : IResourceWithETag
         {
-            Func<T, AccessCondition, T> updateOrCreate = (a, b) => updateOrCreateFunc(a, null, b);
+            Func<T, AccessCondition, T> createOrUpdate = (a, b) => createOrUpdateFunc(a, null, b);
             var resource = newResourceDefinition();
 
             SearchAssert.ThrowsCloudException(
-                () => updateOrCreate(resource, AccessCondition.GenerateIfExistsCondition()),
+                () => createOrUpdate(resource, AccessCondition.GenerateIfExistsCondition()),
                 HttpStatusCode.PreconditionFailed);
 
             // The resource should never have been created on the server, and thus it should not have an ETag
@@ -151,16 +179,16 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         public static void UpdateIfNotChangedSucceedsWhenResourceUnchanged<T>(
-            Func<T, SearchRequestOptions, AccessCondition, T> updateOrCreateFunc,
+            Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition,
             Func<T, T> mutateResourceDefinition)
             where T : IResourceWithETag
         {
-            Func<T, AccessCondition, T> updateOrCreate = (a, b) => updateOrCreateFunc(a, null, b);
-            var createdResource = updateOrCreate(newResourceDefinition(), AccessCondition.GenerateEmptyCondition());
+            Func<T, AccessCondition, T> createOrUpdate = (a, b) => createOrUpdateFunc(a, null, b);
+            var createdResource = createOrUpdate(newResourceDefinition(), AccessCondition.GenerateEmptyCondition());
             var mutatedResource = mutateResourceDefinition(createdResource);
 
-            var updatedResource = updateOrCreate(mutatedResource, AccessCondition.IfNotChanged(createdResource));
+            var updatedResource = createOrUpdate(mutatedResource, AccessCondition.IfNotChanged(createdResource));
 
             Assert.NotEmpty(createdResource.ETag);
             Assert.NotEmpty(updatedResource.ETag);
@@ -168,18 +196,18 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         public static void UpdateIfNotChangedFailsWhenResourceChanged<T>(
-            Func<T, SearchRequestOptions, AccessCondition, T> updateOrCreateFunc,
+            Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition,
             Func<T, T> mutateResourceDefinition)
             where T : IResourceWithETag
         {
-            Func<T, AccessCondition, T> updateOrCreate = (a, b) => updateOrCreateFunc(a, null, b);
-            var createdResource = updateOrCreate(newResourceDefinition(), AccessCondition.GenerateEmptyCondition());
+            Func<T, AccessCondition, T> createOrUpdate = (a, b) => createOrUpdateFunc(a, null, b);
+            var createdResource = createOrUpdate(newResourceDefinition(), AccessCondition.GenerateEmptyCondition());
             var mutatedResource = mutateResourceDefinition(createdResource);
-            var updatedResource = updateOrCreate(mutatedResource, AccessCondition.GenerateEmptyCondition());
+            var updatedResource = createOrUpdate(mutatedResource, AccessCondition.GenerateEmptyCondition());
 
             SearchAssert.ThrowsCloudException(
-                () => updateOrCreate(updatedResource, AccessCondition.IfNotChanged(createdResource)),
+                () => createOrUpdate(updatedResource, AccessCondition.IfNotChanged(createdResource)),
                 HttpStatusCode.PreconditionFailed);
 
             Assert.NotEmpty(createdResource.ETag);
@@ -187,7 +215,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotEqual(createdResource.ETag, updatedResource.ETag);
         }
 
-        public static void TestDeleteIfNotChangedWorksOnlyOnCurrentResource<T>(
+        public static void DeleteIfNotChangedWorksOnlyOnCurrentResource<T>(
             Action<string, SearchRequestOptions, AccessCondition> deleteAction,
             Func<T> createResource,
             Func<T, T> updateResource,
@@ -204,7 +232,7 @@ namespace Microsoft.Azure.Search.Tests
             delete(resourceName, AccessCondition.IfNotChanged(currentResource));
         }
 
-        public static void TestDeleteIfExistsWorksOnlyWhenResourceExists<T>(
+        public static void DeleteIfExistsWorksOnlyWhenResourceExists<T>(
             Action<string, SearchRequestOptions, AccessCondition> deleteAction,
             Func<T> createResource,
             string resourceName)

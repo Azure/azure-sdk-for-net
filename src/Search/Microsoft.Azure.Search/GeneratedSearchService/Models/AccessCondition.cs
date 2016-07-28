@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Additional parameters for a set of operations, such as:
-    /// DataSources_CreateOrUpdate, DataSources_Delete.
+    /// Additional parameters for a set of operations.
     /// </summary>
     public partial class AccessCondition
     {
