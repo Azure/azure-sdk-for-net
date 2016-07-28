@@ -136,7 +136,7 @@
         <string>ART\\TSATest</string>
 	<string>KeyVault\\KeyVault.Tests\\Resources\\localhost.pfx</string>
 	<string>ApiManagement\\ApiManagement.Tests\\Resources\\testcertificate.pfx</string>
-    <string>ResourceManagement\\\Network\\Network.Tests\\Tests\\Data\\ApplicationGatewayAuthCert.cer</string>    
+    <string>ResourceManagement\\Network\\Network.Tests\\Tests\\Data\\ApplicationGatewayAuthCert.cer</string>    
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\InvalidProfile.PublishSettings</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile.PublishSettings</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\Azure.PublishSettings</string>
