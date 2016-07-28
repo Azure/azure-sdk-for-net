@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,6 +8,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
     public abstract class TaskGroupBase<TaskResultT> : ITaskGroup<TaskResultT, ITaskItem<TaskResultT>>
     {
+        private TaskCompletionSource<object> taskCompletionSource;
+        private bool multiThreaded;
+
         public TaskGroupBase(string rootTaskItemId, ITaskItem<TaskResultT> rootTaskItem)
         {
             DAG = new DAGraph<ITaskItem<TaskResultT>, DAGNode<ITaskItem<TaskResultT>>>(CreateRootDAGNode(rootTaskItemId, rootTaskItem));
@@ -44,48 +48,75 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
             }
         }
 
-        public async Task ExecuteAsync(CancellationToken cancellationToken, bool multiThreaded)
+        /// <summary>
+        /// Executes the group of tasks that creates a set of dependency resources and eventually
+        /// the root resource.
+        /// </summary>
+        /// <param name="cancellationToken">Enable cancellation</param>
+        /// <param name="multiThreaded"></param>
+        /// <returns></returns>
+        public Task ExecuteAsync(CancellationToken cancellationToken, bool multiThreaded)
         {
-            if (multiThreaded)
-            {
-                List<Task> tasks = new List<Task>();
-                var nextNode = DAG.GetNext();
-                while (nextNode != null)
-                {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                    }
-                    Task task = ExecuteNodeTaskAsync(nextNode, cancellationToken, true);
-                    tasks.Add(task);
-                }
+            taskCompletionSource = new TaskCompletionSource<object>();
+            this.multiThreaded = multiThreaded; // Right now we run multithreaded TODO: enable non-multithreaded scenario
+            ExecuteReadyTasksAsync(cancellationToken);
+            return taskCompletionSource.Task;
+        }
 
-                if (!tasks.Any())
+        /// <summary>
+        /// Executes all the tasks in the ready queue in parallel.
+        /// </summary>
+        /// <param name="cancellationToken">Enable cancellation</param>
+        private void ExecuteReadyTasksAsync(CancellationToken cancellationToken)
+        {
+            var nextNode = DAG.GetNext();
+            while (nextNode != null)
+            {
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    await Task.Yield();
+                    taskCompletionSource.TrySetCanceled();
                     return;
                 }
-
-                await Task.WhenAll(tasks.ToArray());
-                return;
-            }
-            else
-            {
-                var nextNode = DAG.GetNext();
-                if (nextNode == null)
+                else if (taskCompletionSource.Task.IsCanceled || taskCompletionSource.Task.IsFaulted)
                 {
-                    await Task.Yield();
                     return;
                 }
-                await ExecuteNodeTaskAsync(nextNode, cancellationToken, false);
+                else
+                {
+                    // Here we are not waiting or checking the result of 'task', anyfailure in this
+                    // 'ExecuteNodeTaskAsync' will be signalled via this.taskCompletionSource.
+                    Task task = ExecuteNodeTaskAsync(nextNode, cancellationToken);
+                }
             }
         }
 
-        private async Task ExecuteNodeTaskAsync(DAGNode<ITaskItem<TaskResultT>> node, CancellationToken cancellationToken, bool multiThreaded)
+        /// <summary>
+        /// Executes one task and await for it and as a part of continuation run the next
+        /// set of tasks in the ready queue.
+        /// </summary>
+        /// <param name="node">The node containing task</param>
+        /// <param name="cancellationToken">Enable cancellation</param>
+        /// <returns></returns>
+        private async Task ExecuteNodeTaskAsync(DAGNode<ITaskItem<TaskResultT>> node,
+            CancellationToken cancellationToken)
         {
-            await node.Data.ExecuteAsync(cancellationToken);
-            DAG.ReportCompleted(node);
-            await ExecuteAsync(cancellationToken, multiThreaded);
+            try
+            {
+                await node.Data.ExecuteAsync(cancellationToken);
+                DAG.ReportCompleted(node);
+                if (DAG.IsRootNode(node))
+                {
+                    taskCompletionSource.SetResult(null);
+                }
+                else
+                {
+                    ExecuteReadyTasksAsync(cancellationToken);
+                }
+            }
+            catch (Exception exception)
+            {
+                taskCompletionSource.TrySetException(exception);
+            }
         }
 
         public TaskResultT TaskResult(string taskId)
