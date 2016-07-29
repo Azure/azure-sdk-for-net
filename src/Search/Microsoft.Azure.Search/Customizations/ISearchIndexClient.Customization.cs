@@ -18,5 +18,12 @@ namespace Microsoft.Azure.Search
         /// Azure Search REST API. The default is <c>false</c>, which indicates that HTTP POST will be used.
         /// </summary>
         bool UseHttpGetForQueries { get; set; }
+
+        /// <summary>
+        /// Changes the BaseUri of this client to target a different index in the same Azure Search service. This method is NOT thread-safe; You
+        /// must guarantee that no other threads are using the client before calling it.
+        /// </summary>
+        /// <param name="newIndexName">The name of the index to which all subsequent requests should be sent.</param>
+        void TargetDifferentIndex(string newIndexName);
     }
 }
