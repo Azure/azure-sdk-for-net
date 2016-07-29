@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The type of alias paths.
     /// </summary>
     public partial class AliasPathType
     {
@@ -35,13 +36,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the path.
+        /// The path of an alias.
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets the api versions.
+        /// The api versions.
         /// </summary>
         [JsonProperty(PropertyName = "apiVersions")]
         public IList<string> ApiVersions { get; set; }

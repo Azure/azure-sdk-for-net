@@ -96,6 +96,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             bool internalBaseUri = false,
             params DelegatingHandler[] handlers) where T : class
         {            
+            if(!currentEnvironment.TokenInfo.ContainsKey(TokenAudience.Graph))
+            {
+                throw new ArgumentNullException(
+                    "currentEnvironment.TokenInfo[TokenAudience.Graph]",
+                    "Unable to create Graph Management client because Graph authentication token was not acquired during Login.");
+            }
+
             return GetServiceClientWithCredentials<T>(
                 currentEnvironment,
                 currentEnvironment.TokenInfo[TokenAudience.Graph],

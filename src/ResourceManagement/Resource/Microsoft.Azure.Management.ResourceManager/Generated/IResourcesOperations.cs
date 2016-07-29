@@ -89,6 +89,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Resource identity.
         /// </param>
         /// <param name='apiVersion'>
+        /// Api version to use.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -116,6 +117,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Resource identity.
         /// </param>
         /// <param name='apiVersion'>
+        /// Api version to use.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -143,6 +145,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Resource identity.
         /// </param>
         /// <param name='apiVersion'>
+        /// Api version to use.
         /// </param>
         /// <param name='parameters'>
         /// Create or update resource parameters.
@@ -173,6 +176,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Resource identity.
         /// </param>
         /// <param name='apiVersion'>
+        /// Api version to use.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
