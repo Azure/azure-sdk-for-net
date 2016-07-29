@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The alias type.
     /// </summary>
     public partial class AliasType
     {
