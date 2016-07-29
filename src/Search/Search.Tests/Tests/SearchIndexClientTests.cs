@@ -50,17 +50,20 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient serviceClient = Data.GetSearchServiceClient();
-
-                // Create a second index.
                 Index index = serviceClient.Indexes.Get(Data.IndexName);
-                string newIndexName = index.Name + "2";
-                index.Name = newIndexName;
-
-                serviceClient.Indexes.Create(index);
 
                 // Make sure first index works.
                 SearchIndexClient indexClient = Data.GetSearchIndexClient();
                 indexClient.Documents.Count();
+
+                // Delete the first index so we know we're not accidentally using it below.
+                serviceClient.Indexes.Delete(Data.IndexName);
+
+                // Create a second index.
+                string newIndexName = index.Name + "2";
+                index.Name = newIndexName;
+
+                serviceClient.Indexes.Create(index);
 
                 // Target the second index and make sure it works too.
                 indexClient.TargetDifferentIndex(newIndexName);
