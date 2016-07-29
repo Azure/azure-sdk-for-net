@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0-*",
+  "description": "ServerManagement.Tests Class Library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "packOptions": {
+    "summary": "ServerManagement.Tests Tests.",
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../../tools/DisableTestRunParallel.cs"
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": ["dnxcore50", "portable-net45+win8"],
+      "dependencies": {
+        "System.Diagnostics.Tracing": "4.1.0",
+        "System.ServiceProcess.ServiceController": "4.1.0",
+        "System.Security.Cryptography.ProtectedData": "4.0.0"
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.6-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.3.5-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)",
+    "Microsoft.Rest.ClientRuntime": "[2.3.2,3.0)",
+    "Microsoft.Azure.Management.ServerManagement": "[1.0.7, 2.0)",
+    "System.Security.Principal": "4.0.1",
+    "System.Security.Principal.Windows": "4.0.0",
+    "System.IO.Packaging": "4.0.0",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029"
+  }
+}
