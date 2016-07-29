@@ -39,7 +39,12 @@ namespace Microsoft.Azure.Test.HttpRecorder
         public bool DirectoryExists(string path)
         {
             return Directory.Exists(path);
-        }       
+        }
+        
+        public bool FileExists(string path)
+        {
+            return File.Exists(path);
+        }
 
         public string[] GetDirectories(string sourceDirName, string pattern, bool recursive)
         {

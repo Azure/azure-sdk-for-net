@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.6.6-preview",
+  "version": "1.6.7-preview",
   "copyright": "Copyright (c) Microsoft Corporation",
   "title": "HttpRecorder Library for recording Clinet/Server communication in Azure",
   "description": "Microsoft.Azure.Test.HttpRecorder",
