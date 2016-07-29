@@ -80,7 +80,9 @@ namespace Networks.Tests
             //var videoPathRuleName = TestUtilities.GenerateName();
             //var requestRoutingRuleMultiHostingName = TestUtilities.GenerateName();
 
-            var x509AuthCertificate = new X509Certificate2(@"Tests\Data\ApplicationGatewayAuthCert.cer");
+            string certPath = System.IO.Path.Combine("Tests", "Data", "ApplicationGatewayAuthCert.cer");
+            Console.WriteLine("Certificate Path: {0}", certPath);
+            var x509AuthCertificate = new X509Certificate2(certPath);
 
             var authCertList = new List<ApplicationGatewayAuthenticationCertificate>()
             {
