@@ -42,22 +42,22 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource.A subnet from
-        /// where appliation gateway gets its private address
+        /// Reference of the subnet resource. A subnet from where appliation
+        /// gateway gets its private address
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the application gateway subnet resource
+        /// Provisioning state of the application gateway subnet resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

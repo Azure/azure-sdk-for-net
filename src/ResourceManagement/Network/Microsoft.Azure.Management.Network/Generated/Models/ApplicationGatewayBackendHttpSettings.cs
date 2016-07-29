@@ -47,53 +47,52 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the port
+        /// Port
         /// </summary>
         [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
 
         /// <summary>
-        /// Gets or sets the protocol. Possible values include: 'Http', 'Https'
+        /// Protocol. Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the cookie affinity. Possible values include:
-        /// 'Enabled', 'Disabled'
+        /// Cookie affinity. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
         public string CookieBasedAffinity { get; set; }
 
         /// <summary>
-        /// Gets or sets request timeout
+        /// Request timeout
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestTimeout")]
         public int? RequestTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets probe resource of application gateway
+        /// Probe resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.probe")]
         public SubResource Probe { get; set; }
 
         /// <summary>
-        /// Gets or sets array of references to Application Gateway
-        /// Authentication Certificates
+        /// Array of references to Application Gateway Authentication
+        /// Certificates
         /// </summary>
         [JsonProperty(PropertyName = "properties.authenticationCertificates")]
         public IList<SubResource> AuthenticationCertificates { get; set; }
 
         /// <summary>
-        /// Gets or sets Provisioning state of the backend http settings
-        /// resource Updating/Deleting/Failed
+        /// Provisioning state of the backend http settings resource
+        /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

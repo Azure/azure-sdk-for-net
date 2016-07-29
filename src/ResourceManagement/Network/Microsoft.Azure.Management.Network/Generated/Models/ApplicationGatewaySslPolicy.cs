@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Gets or sets application gateway SSL policy
+    /// Application gateway SSL policy
     /// </summary>
     public partial class ApplicationGatewaySslPolicy
     {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Get or sets SSL protocols to be disabled on Application Gateway
+        /// SSL protocols to be disabled on Application Gateway
         /// </summary>
         [JsonProperty(PropertyName = "disabledSslProtocols")]
         public IList<string> DisabledSslProtocols { get; set; }

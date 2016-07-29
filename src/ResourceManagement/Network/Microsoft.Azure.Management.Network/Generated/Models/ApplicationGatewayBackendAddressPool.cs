@@ -43,27 +43,27 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets collection of references to IPs defined in NICs
+        /// Collection of references to IPs defined in NICs
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendIPConfigurations")]
         public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets the backend addresses
+        /// Backend addresses
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddresses")]
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the backend address pool resource
+        /// Provisioning state of the backend address pool resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Resource that is unique within a resource group. This name can be
+        /// used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
