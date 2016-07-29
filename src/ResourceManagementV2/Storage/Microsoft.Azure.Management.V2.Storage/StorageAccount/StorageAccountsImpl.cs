@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -16,6 +18,11 @@ namespace Microsoft.Azure.Management.V2.Storage
                 StorageManager>,
         IStorageAccounts
     {
+        PagedList<IStorageAccount> ISupportsListing<IStorageAccount>.List()
+        {
+            throw new NotImplementedException();
+        }
+
         internal StorageAccountsImpl(IStorageAccountsOperations innerCollection, StorageManager manager) : base(innerCollection, manager)
         {}
 
@@ -113,6 +120,21 @@ namespace Microsoft.Azure.Management.V2.Storage
                 InnerCollection,
                 MyManager
             );
+        }
+
+        public Task<PagedList<IStorageAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

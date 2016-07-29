@@ -3,6 +3,10 @@ using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
+using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Definition;
+using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Update;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -62,6 +66,30 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
         }
 
+        IDictionary<string, string> IResourceGroup.Tags
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Region Region
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        IDictionary<string, string> IResource.Tags
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         internal ResourceGroupImpl(ResourceManager.Models.ResourceGroupInner inner, ResourceManager.IResourceGroupsOperations client) : base(inner.Name, inner)
         {
             this.client = client;
@@ -98,13 +126,34 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        ResourceGroup.Definition.IWithCreate Resource.Definition.IWithTags<ResourceGroup.Definition.IWithCreate>.WithTags(IDictionary<string, string> tags)
+
+        public IResourceGroupExportResult ExportTemplate(ResourceGroupExportTemplateOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IWithCreate WithRegion(Region region)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IResourceGroup Create()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IResourceGroup> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        public IWithCreate WithTags(IDictionary<string, string> tags)
         {
             Inner.Tags = tags;
             return this;
         }
 
-        ResourceGroup.Definition.IWithCreate Resource.Definition.IWithTags<ResourceGroup.Definition.IWithCreate>.WithTag(string key, string value)
+        public IWithCreate WithTag(string key, string value)
         {
             if (Inner.Tags == null)
             {
@@ -118,17 +167,27 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        #endregion
+        public IWithCreate WithoutTag(string key)
+        {
+            if (Inner.Tags != null && Inner.Tags.ContainsKey(key))
+            {
+                Inner.Tags.Remove(key);
+            }
+            return this;
+        }
 
-        #region Update setters
+        public IResourceGroup Apply()
+        {
+            throw new NotImplementedException();
+        }
 
-        ResourceGroup.Update.IUpdate Resource.Update.IWithTags<ResourceGroup.Update.IUpdate>.WithTags(IDictionary<string, string> tags)
+        IUpdate IUpdateWithTags<IUpdate>.WithTags(IDictionary<string, string> tags)
         {
             Inner.Tags = tags;
             return this;
         }
 
-        ResourceGroup.Update.IUpdate Resource.Update.IWithTags<ResourceGroup.Update.IUpdate>.WithTag(string key, string value)
+        IUpdate IUpdateWithTags<IUpdate>.WithTag(string key, string value)
         {
             if (Inner.Tags == null)
             {
@@ -142,7 +201,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        public ResourceGroup.Update.IUpdate withoutTag(string key)
+        IUpdate IUpdateWithTags<IUpdate>.WithoutTag(string key)
         {
             if (Inner.Tags != null && Inner.Tags.ContainsKey(key))
             {

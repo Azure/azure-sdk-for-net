@@ -2,6 +2,7 @@
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System.Collections.Generic;
+using System;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -45,6 +46,14 @@ namespace Microsoft.Azure.Management.V2.Resource
             get
             {
                 return Inner.SubscriptionPolicies;
+            }
+        }
+
+        PagedList<ILocation> ISubscription.ListLocations
+        {
+            get
+            {
+                throw new NotImplementedException();
             }
         }
 

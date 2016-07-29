@@ -6,6 +6,10 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System.Threading;
+using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
+using Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition;
+using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -181,13 +185,13 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        StorageAccount.Definition.IWithCreate Resource.Definition.IWithTags<StorageAccount.Definition.IWithCreate>.WithTags(IDictionary<string, string> tags)
+        StorageAccount.Definition.IWithCreate Resource.Core.Resource.Definition.IDefinitionWithTags<StorageAccount.Definition.IWithCreate>.WithTags(IDictionary<string, string> tags)
         {
             base.WithTags(tags);
             return this;
         }
 
-        StorageAccount.Definition.IWithCreate Resource.Definition.IWithTags<StorageAccount.Definition.IWithCreate>.WithTag(string key, string value)
+        StorageAccount.Definition.IWithCreate Resource.Core.Resource.Definition.IDefinitionWithTags<StorageAccount.Definition.IWithCreate>.WithTag(string key, string value)
         {
             base.WithTag(key, value);
             return this;
@@ -244,13 +248,13 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        StorageAccount.Update.IUpdate Resource.Update.IWithTags<StorageAccount.Update.IUpdate>.WithTag(string key, string value)
+        StorageAccount.Update.IUpdate Resource.Core.Resource.Update.IUpdateWithTags<StorageAccount.Update.IUpdate>.WithTag(string key, string value)
         {
             base.WithTag(key, value);
             return this;
         }
 
-        StorageAccount.Update.IUpdate Resource.Update.IWithTags<StorageAccount.Update.IUpdate>.WithTags(IDictionary<string, string> tags)
+        StorageAccount.Update.IUpdate Resource.Core.Resource.Update.IUpdateWithTags<StorageAccount.Update.IUpdate>.WithTags(IDictionary<string, string> tags)
         {
             base.WithTags(tags);
             return this;
@@ -302,6 +306,36 @@ namespace Microsoft.Azure.Management.V2.Storage
             var response = await client.CreateAsync(ResourceGroupName, this.name, createParameters, cancellationToken);
             SetInner(response);
             return this;
+        }
+
+        public IWithGroup WithRegion(Region region)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IStorageAccount Create()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IStorageAccount> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        IWithCreate IDefinitionWithTags<IWithCreate>.WithoutTag(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IStorageAccount Apply()
+        {
+            throw new NotImplementedException();
+        }
+
+        IUpdate IUpdateWithTags<IUpdate>.WithoutTag(string key)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

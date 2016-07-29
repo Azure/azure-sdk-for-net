@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.ResourceManager.Models;
+﻿using System;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Microsoft.Azure.Management.V2.Resource
@@ -15,6 +16,14 @@ namespace Microsoft.Azure.Management.V2.Resource
             get
             {
                 return Inner.TenantId;
+            }
+        }
+
+        TenantIdDescriptionInner IWrapper<TenantIdDescriptionInner>.Inner
+        {
+            get
+            {
+                throw new NotImplementedException();
             }
         }
     }
