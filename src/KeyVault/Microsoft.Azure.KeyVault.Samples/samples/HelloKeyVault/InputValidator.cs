@@ -72,6 +72,12 @@ namespace Sample.Microsoft.HelloKeyVault
                 keyOperations.Add( KeyOperationType.GET_SECRET );
                 keyOperations.Add( KeyOperationType.LIST_SECRETS );
                 keyOperations.Add( KeyOperationType.DELETE_SECRET );
+                keyOperations.Add( KeyOperationType.CREATE_CERTIFICATE );
+                keyOperations.Add( KeyOperationType.IMPORT_CERTIFICATE );
+                keyOperations.Add( KeyOperationType.EXPORT_CERTIFICATE );
+                keyOperations.Add( KeyOperationType.LIST_CERTIFICATEVERSIONS );
+                keyOperations.Add( KeyOperationType.LIST_CERTIFICATES );
+                keyOperations.Add( KeyOperationType.DELETE_CERTIFICATE );
             }
             return keyOperations;
         }
@@ -277,6 +283,57 @@ namespace Sample.Microsoft.HelloKeyVault
             return name;
         }
 
+
+        /// <summary>
+        /// Get certificate name from argument list
+        /// </summary>
+        /// <param name="mandatory"> whether the cli parameter is mandatory or not </param>
+        /// <returns> the name of the certificate </returns>
+        public string GetCertificateName(bool mandatory = false, bool allowDefault = true)
+        {
+            var tag = "-certificatename";
+            string name = GetArgumentValue(tag);
+
+            if (name == string.Empty)
+            {
+                if (mandatory == true)
+                {
+                    throw new Exception(tag + " argument is missing");
+                }
+                if (allowDefault)
+                {
+                    name = Guid.NewGuid().ToString();
+                    Console.Out.WriteLine(tag + " is not provided. Using default value: " + name);
+                }
+            }
+            return name;
+        }
+
+        /// <summary>
+        /// Get certificate name from argument list
+        /// </summary>
+        /// <param name="mandatory"> whether the cli parameter is mandatory or not </param>
+        /// <returns> the name of the certificate </returns>
+        public string GetCertificateCreateName(bool mandatory = false, bool allowDefault = true)
+        {
+            var tag = "-certificatecreatename";
+            string name = GetArgumentValue(tag);
+
+            if (name == string.Empty)
+            {
+                if (mandatory == true)
+                {
+                    throw new Exception(tag + " argument is missing");
+                }
+                if (allowDefault)
+                {
+                    name = Guid.NewGuid().ToString();
+                    Console.Out.WriteLine(tag + " is not provided. Using default value: " + name);
+                }
+            }
+            return name;
+        }
+
         /// <summary>
         /// Get secret value from argument list
         /// </summary>
@@ -291,6 +348,40 @@ namespace Sample.Microsoft.HelloKeyVault
                 Console.Out.WriteLine( tag + " is not provided. Using new guid: " + value );
             }
             return value;
+        }
+
+        /// <summary>
+        /// Get pfx file path from argument list
+        /// </summary>
+        /// <returns> pfx path </returns>
+        public string GetPfxPath()
+        {
+            var tag = "-pfxFilePath";
+            var path = GetArgumentValue( tag );            
+            if ( path == string.Empty )
+            {
+                Console.Out.WriteLine(tag + " is not provided. Using default value!");
+                path = "sampleCert.pfx";
+            }
+
+            return path;
+        }
+
+        /// <summary>
+        /// Get pfx password from argument list
+        /// </summary>
+        /// <returns> pfx password </returns>
+        public string GetPfxPassword()
+        {
+            var tag = "-pfxFilePassword";
+            var password = GetArgumentValue( tag );
+            if (password == string.Empty)
+            {
+                Console.Out.WriteLine(tag + " is not provided. Using default value!");
+                password = "123";
+            }
+
+            return password;
         }
 
         /// <summary>

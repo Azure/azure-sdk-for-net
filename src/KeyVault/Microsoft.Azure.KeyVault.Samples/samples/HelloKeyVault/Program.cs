@@ -42,8 +42,12 @@ namespace Sample.Microsoft.HelloKeyVault
 
             KeyBundle keyBundle = null; // The key specification and attributes
             SecretBundle secret = null;
+            CertificateBundle certificateBundle = null;
+            CertificateOperation certificateOperation = null;
             string keyName = string.Empty;
             string secretName = string.Empty;
+            string certificateName = string.Empty;
+            string certificateCreateName = string.Empty;
 
             inputValidator = new InputValidator(args);
 
@@ -136,13 +140,38 @@ namespace Sample.Microsoft.HelloKeyVault
                         case KeyOperationType.DELETE_SECRET:
                             secret = DeleteSecret(secretName);
                             break;
+
+                        case KeyOperationType.CREATE_CERTIFICATE:
+                            certificateOperation = CreateCertificate(out certificateCreateName);
+                            break;
+
+                        case KeyOperationType.IMPORT_CERTIFICATE:
+                            certificateBundle = ImportCertificate(out certificateName);
+                            break;
+
+                        case KeyOperationType.EXPORT_CERTIFICATE:
+                            var x509Certificate = ExportCertificate(certificateBundle);
+                            break;
+
+                        case KeyOperationType.LIST_CERTIFICATEVERSIONS:
+                            ListCertificateVersions(certificateName);
+                            break;
+
+                        case KeyOperationType.LIST_CERTIFICATES:
+                            ListCertificates();
+                            break;
+
+                        case KeyOperationType.DELETE_CERTIFICATE:
+                            certificateBundle = DeleteCertificate(certificateName);
+                            certificateBundle = DeleteCertificate(certificateCreateName);
+                            break;
                     }
                     successfulOperations.Add(operation);
                 }
                 catch (KeyVaultErrorException exception)
                 {
                     // The Key Vault exceptions are logged but not thrown to avoid blocking execution for other commands running in batch
-                    Console.Out.WriteLine("Operation failed: {0}", exception.Message);
+                    Console.Out.WriteLine("Operation failed: {0}", exception.Body.Error.Message);
                     failedOperations.Add(operation);
                 }
 
@@ -613,6 +642,212 @@ namespace Sample.Microsoft.HelloKeyVault
         }
 
         /// <summary>
+        /// Creates a certificate
+        /// </summary>
+        /// <param name="certificateName"> the name of the created certificate </param>
+        /// <returns> The created certificate </returns>
+        private static CertificateOperation CreateCertificate(out string certificateName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+            certificateName = inputValidator.GetCertificateName();
+
+            // Create a self-signed certificate backed by a 2048 bit RSA key
+            var policy = new CertificatePolicy
+            {
+                IssuerReference = new IssuerReference
+                {
+                    Name = "Self",
+                },
+                KeyProperties = new KeyProperties
+                {
+                    Exportable = true,
+                    KeySize = 2048,
+                    KeyType = "RSA"
+                },
+                SecretProperties = new SecretProperties
+                {
+                    ContentType = "application/x-pkcs12"
+                },
+                X509CertificateProperties = new X509CertificateProperties
+                {
+                    Subject = "CN=KEYVAULTDEMO"
+                }
+            };
+
+            var tags = inputValidator.GetTags();
+
+            var certificateOperation = keyVaultClient.CreateCertificateAsync(vaultAddress, certificateName, policy,
+                    new CertificateAttributes { Enabled = true }, tags).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Created certificate:---------------");
+            PrintoutCertificateOperation(certificateOperation);
+
+            return certificateOperation;
+        }
+
+        /// <summary>
+        /// Imports a certificate
+        /// </summary>
+        /// <param name="certificateName"> the name of the created certificate </param>
+        /// <returns> The imported certificate </returns>
+        private static CertificateBundle ImportCertificate(out string certificateName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+            certificateName = inputValidator.GetCertificateName();
+
+            var pfxPath = inputValidator.GetPfxPath();
+            var pfxPassword = inputValidator.GetPfxPassword();
+
+            var policy = new CertificatePolicy
+            {
+                KeyProperties = new KeyProperties
+                {
+                    Exportable = true,
+                    KeyType = "RSA"
+                },
+                SecretProperties = new SecretProperties
+                {
+                    ContentType = CertificateContentType.Pfx
+                }
+            };
+
+            var base64X509 = string.Empty;
+            if (File.Exists(pfxPath))
+            {
+                var x509Collection = new X509Certificate2Collection();
+                x509Collection.Import(pfxPath, pfxPassword, X509KeyStorageFlags.Exportable);
+
+                // A pfx can contain a chain            
+                var x509Bytes = x509Collection.Cast<X509Certificate2>().Single(s => s.HasPrivateKey).Export(X509ContentType.Pfx, pfxPassword);
+                base64X509 = Convert.ToBase64String(x509Bytes);
+            }
+            else
+            {
+                base64X509 = "MIIJOwIBAzCCCPcGCSqGSIb3DQEHAaCCCOgEggjkMIII4DCCBgkGCSqGSIb3DQEHAaCCBfoEggX2MIIF8jCCBe4GCyqGSIb3DQEMCgECoIIE / jCCBPowHAYKKoZIhvcNAQwBAzAOBAj15YH9pOE58AICB9AEggTYLrI + SAru2dBZRQRlJY7XQ3LeLkah2FcRR3dATDshZ2h0IA2oBrkQIdsLyAAWZ32qYR1qkWxLHn9AqXgu27AEbOk35 + pITZaiy63YYBkkpR + pDdngZt19Z0PWrGwHEq5z6BHS2GLyyN8SSOCbdzCz7blj3 + 7IZYoMj4WOPgOm / tQ6U44SFWek46QwN2zeA4i97v7ftNNns27ms52jqfhOvTA9c / wyfZKAY4aKJfYYUmycKjnnRl012ldS2lOkASFt + lu4QCa72IY6ePtRudPCvmzRv2pkLYS6z3cI7omT8nHP3DymNOqLbFqr5O2M1ZYaLC63Q3xt3eVvbcPh3N08D1hHkhz / KDTvkRAQpvrW8ISKmgDdmzN55Pe55xHfSWGB7gPw8sZea57IxFzWHTK2yvTslooWoosmGxanYY2IG / no3EbPOWDKjPZ4ilYJe5JJ2immlxPz + 2e2EOCKpDI + 7fzQcRz3PTd3BK + budZ8aXX8aW / lOgKS8WmxZoKnOJBNWeTNWQFugmktXfdPHAdxMhjUXqeGQd8wTvZ4EzQNNafovwkI7IV / ZYoa++RGofVR3ZbRSiBNF6TDj / qXFt0wN / CQnsGAmQAGNiN + D4mY7i25dtTu / Jc7OxLdhAUFpHyJpyrYWLfvOiS5WYBeEDHkiPUa / 8eZSPA3MXWZR1RiuDvuNqMjct1SSwdXADTtF68l / US1ksU657 + XSC + 6ly1A / upz + X71 + C4Ho6W0751j5ZMT6xKjGh5pee7MVuduxIzXjWIy3YSd0fIT3U0A5NLEvJ9rfkx6JiHjRLx6V1tqsrtT6BsGtmCQR1UCJPLqsKVDvAINx3cPA / CGqr5OX2BGZlAihGmN6n7gv8w4O0k0LPTAe5YefgXN3m9pE867N31GtHVZaJ / UVgDNYS2jused4rw76ZWN41akx2QN0JSeMJqHXqVz6AKfz8ICS / dFnEGyBNpXiMRxrY / QPKi / wONwqsbDxRW7vZRVKs78pBkE0ksaShlZk5GkeayDWC / 7Hi / NqUFtIloK9XB3paLxo1DGu5qqaF34jZdktzkXp0uZqpp + FfKZaiovMjt8F7yHCPk + LYpRsU2Cyc9DVoDA6rIgf + uEP4jppgehsxyT0lJHax2t869R2jYdsXwYUXjgwHIV0voj7bJYPGFlFjXOp6ZW86scsHM5xfsGQoK2Fp838VT34SHE1ZXU / puM7rviREHYW72pfpgGZUILQMohuTPnd8tFtAkbrmjLDo + k9xx7HUvgoFTiNNWuq / cRjr70FKNguMMTIrid + HwfmbRoaxENWdLcOTNeascER2a + 37UQolKD5ksrPJG6RdNA7O2pzp3micDYRs / +s28cCIxO//J/d4nsgHp6RTuCu4+Jm9k0YTw2Xg75b2cWKrxGnDUgyIlvNPaZTB5QbMid4x44/lE0LLi9kcPQhRgrK07OnnrMgZvVGjt1CLGhKUv7KFc3xV1r1rwKkosxnoG99oCoTQtregcX5rIMjHgkc1IdflGJkZzaWMkYVFOJ4Weynz008i4ddkske5vabZs37Lb8iggUYNBYZyGzalruBgnQyK4fz38Fae4nWYjyildVfgyo/fCePR2ovOfphx9OQJi+M9BoFmPrAg+8ARDZ+R+5yzYuEc9ZoVX7nkp7LTGB3DANBgkrBgEEAYI3EQIxADATBgkqhkiG9w0BCRUxBgQEAQAAADBXBgkqhkiG9w0BCRQxSh5IAGEAOAAwAGQAZgBmADgANgAtAGUAOQA2AGUALQA0ADIAMgA0AC0AYQBhADEAMQAtAGIAZAAxADkANABkADUAYQA2AGIANwA3MF0GCSsGAQQBgjcRATFQHk4ATQBpAGMAcgBvAHMAbwBmAHQAIABTAHQAcgBvAG4AZwAgAEMAcgB5AHAAdABvAGcAcgBhAHAAaABpAGMAIABQAHIAbwB2AGkAZABlAHIwggLPBgkqhkiG9w0BBwagggLAMIICvAIBADCCArUGCSqGSIb3DQEHATAcBgoqhkiG9w0BDAEGMA4ECNX+VL2MxzzWAgIH0ICCAojmRBO+CPfVNUO0s+BVuwhOzikAGNBmQHNChmJ/pyzPbMUbx7tO63eIVSc67iERda2WCEmVwPigaVQkPaumsfp8+L6iV/BMf5RKlyRXcwh0vUdu2Qa7qadD+gFQ2kngf4Dk6vYo2/2HxayuIf6jpwe8vql4ca3ZtWXfuRix2fwgltM0bMz1g59d7x/glTfNqxNlsty0A/rWrPJjNbOPRU2XykLuc3AtlTtYsQ32Zsmu67A7UNBw6tVtkEXlFDqhavEhUEO3dvYqMY+QLxzpZhA0q44ZZ9/ex0X6QAFNK5wuWxCbupHWsgxRwKftrxyszMHsAvNoNcTlqcctee+ecNwTJQa1/MDbnhO6/qHA7cfG1qYDq8Th635vGNMW1w3sVS7l0uEvdayAsBHWTcOC2tlMa5bfHrhY8OEIqj5bN5H9RdFy8G/W239tjDu1OYjBDydiBqzBn8HG1DSj1Pjc0kd/82d4ZU0308KFTC3yGcRad0GnEH0Oi3iEJ9HbriUbfVMbXNHOF+MktWiDVqzndGMKmuJSdfTBKvGFvejAWVO5E4mgLvoaMmbchc3BO7sLeraHnJN5hvMBaLcQI38N86mUfTR8AP6AJ9c2k514KaDLclm4z6J8dMz60nUeo5D3YD09G6BavFHxSvJ8MF0Lu5zOFzEePDRFm9mH8W0N/sFlIaYfD/GWU/w44mQucjaBk95YtqOGRIj58tGDWr8iUdHwaYKGqU24zGeRae9DhFXPzZshV1ZGsBQFRaoYkyLAwdJWIXTi+c37YaC8FRSEnnNmS79Dou1Kc3BvK4EYKAD2KxjtUebrV174gD0Q+9YuJ0GXOTspBvCFd5VT2Rw5zDNrA/J3F5fMCk4wOzAfMAcGBSsOAwIaBBSxgh2xyF+88V4vAffBmZXv8Txt4AQU4O/NX4MjxSodbE7ApNAMIvrtREwCAgfQ";
+            }
+            var certificate = keyVaultClient.ImportCertificateAsync(vaultAddress, certificateName, base64X509, pfxPassword,
+                    policy).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Created certificate:---------------");
+            PrintoutCertificate(certificate);
+
+            return certificate;
+        }
+
+        /// <summary>
+        /// Exports a certificate as X509Certificate object
+        /// </summary>
+        /// <param name="certificateBundle"> the certificate bundle </param>
+        /// <returns> The exported certificate </returns>
+        private static X509Certificate ExportCertificate(CertificateBundle certificateBundle)
+        {
+            // The contents of a certificate can be obtained by using the secret referenced in the certificate bundle
+            var certContentSecret =
+                keyVaultClient.GetSecretAsync(certificateBundle.SecretIdentifier.Identifier).GetAwaiter().GetResult();
+
+            // Certificates can be exported in a mutiple formats (PFX, PEM).
+            // Use the content type to determine how to strongly-type the certificate for the platform
+            // The exported certificate doesn't have a password
+            if (0 == string.CompareOrdinal(certContentSecret.ContentType, CertificateContentType.Pfx))
+            {
+                var exportedCertCollection = new X509Certificate2Collection();
+                exportedCertCollection.Import(Convert.FromBase64String(certContentSecret.Value));
+                return exportedCertCollection.Cast<X509Certificate2>().Single(s => s.HasPrivateKey);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Lists certificates in a vault
+        /// </summary>
+        private static void ListCertificates()
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+            var numSecretsInVault = 0;
+            var maxResults = 1;
+
+            Console.Out.WriteLine("List certificate:---------------");
+            var results = keyVaultClient.GetCertificatesAsync(vaultAddress, maxResults).GetAwaiter().GetResult();
+
+            if (results != null)
+            {
+                numSecretsInVault += results.Count();
+                foreach (var m in results)
+                    Console.Out.WriteLine("\t{0}", m.Identifier.Name);
+            }
+
+            while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
+            {
+                results = keyVaultClient.GetCertificatesNextAsync(results.NextPageLink).GetAwaiter().GetResult();
+                if (results != null && results != null)
+                {
+                    numSecretsInVault += results.Count();
+                    foreach (var m in results)
+                        Console.Out.WriteLine("\t{0}", m.Identifier.Name);
+                }
+            }
+
+            Console.Out.WriteLine("\n\tNumber of certificates in the vault: {0}", numSecretsInVault);
+        }
+
+        /// <summary>
+        /// List the versions of a certificate
+        /// </summary>
+        /// <param name="certificateName"> certificate name</param>
+        private static void ListCertificateVersions(string certificateName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+            certificateName = (certificateName == string.Empty) ? inputValidator.GetKeyId() : certificateName;
+
+            var numKeyVersions = 0;
+            var maxResults = 1;
+
+            Console.Out.WriteLine("List certificate versions:---------------");
+
+            var results = keyVaultClient.GetCertificateVersionsAsync(vaultAddress, certificateName, maxResults).GetAwaiter().GetResult();
+
+            if (results != null)
+            {
+                numKeyVersions += results.Count();
+                foreach (var m in results)
+                    Console.Out.WriteLine("\t{0}-{1}", m.Identifier.Name, m.Identifier.Version);
+            }
+
+            while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
+            {
+                results = keyVaultClient.GetCertificateVersionsNextAsync(results.NextPageLink).GetAwaiter().GetResult();
+                if (results != null && results != null)
+                {
+                    numKeyVersions += results.Count();
+                    foreach (var m in results)
+                        Console.Out.WriteLine("\t{0}-{1}", m.Identifier.Name, m.Identifier.Version);
+                }
+            }
+
+            Console.Out.WriteLine("\n\tNumber of versions of certificate {0} in the vault: {1}", certificateName, numKeyVersions);
+        }
+
+        /// <summary>
+        /// Deletes secret
+        /// </summary>
+        /// <param name="certificateName"> The certificate name</param>
+        /// <returns> The deleted certificate </returns>
+        private static CertificateBundle DeleteCertificate(string certificateName)
+        {
+            // If the secret is not initialized get the secret Id from args
+            var vaultAddress = inputValidator.GetVaultAddress();
+            certificateName = (certificateName == string.Empty) ? inputValidator.GetCertificateName() : certificateName;
+
+            var certificate = keyVaultClient.DeleteCertificateAsync(vaultAddress, certificateName).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Deleted certificate:---------------");
+            PrintoutCertificate(certificate);
+
+            return certificate;
+        }
+
+        /// <summary>
         /// Prints out key bundle values
         /// </summary>
         /// <param name="keyBundle"> key bundle </param>
@@ -674,6 +909,42 @@ namespace Sample.Microsoft.HelloKeyVault
         }
 
         /// <summary>
+        /// Prints out certificate bundle values
+        /// </summary>
+        /// <param name="certificateBundle"> certificate bundle </param>
+        private static void PrintoutCertificate(CertificateBundle certificateBundle)
+        {
+            Console.Out.WriteLine("\n\tCertificate ID: {0}", certificateBundle.Id);
+
+            var expiryDateStr = certificateBundle.Attributes.Expires.HasValue
+                ? certificateBundle.Attributes.Expires.ToString()
+                : "Never";
+
+            var notBeforeStr = certificateBundle.Attributes.NotBefore.HasValue
+                ? certificateBundle.Attributes.NotBefore.ToString()
+                : UnixTimeJsonConverter.EpochDate.ToString();
+
+            Console.Out.WriteLine("Certificate attributes: \n\tIs enabled: {0}\n\tExpiry date: {1}\n\tEnable date: {2}\n\tThumbprint: {3}",
+                certificateBundle.Attributes.Enabled, expiryDateStr, notBeforeStr, ToHexString(certificateBundle.X5t));
+
+            PrintoutTags(certificateBundle.Tags);
+
+        }
+
+        /// <summary>
+        /// Prints out certificate operation values
+        /// </summary>
+        /// <param name="certificateBundle"> certificate bundle </param>
+        private static void PrintoutCertificateOperation(CertificateOperation certificateOperation)
+        {
+            Console.Out.WriteLine("\n\tCertificate ID: {0}", certificateOperation.Id);
+
+            Console.Out.WriteLine("Certificate Opeation: \n\tStatus: {0}\n\tStatus Detail: {1}\n\tTarget: {2}\n\tIssuer reference name: {3}",
+                certificateOperation.Status, certificateOperation.StatusDetails, certificateOperation.Target, certificateOperation.IssuerReference.Name);
+
+        }
+
+        /// <summary>
         /// Gets the access token
         /// </summary>
         /// <param name="authority"> Authority </param>
@@ -712,6 +983,19 @@ namespace Sample.Microsoft.HelloKeyVault
             {
                 store.Close();
             }
+        }
+
+        /// <summary>
+        /// Converts a byte array to a Hex encoded string
+        /// </summary>
+        /// <param name="input">The byte array to convert</param>
+        /// <returns>The Hex encoded form of the input</returns>
+        private static string ToHexString(byte[] input)
+        {
+            if (input == null)
+                return string.Empty;
+
+            return BitConverter.ToString(input).Replace("-", string.Empty);
         }
     }
 }

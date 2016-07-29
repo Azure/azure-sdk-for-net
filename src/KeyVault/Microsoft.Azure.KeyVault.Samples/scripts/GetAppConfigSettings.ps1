@@ -105,7 +105,8 @@ Write-Host "Setting access policy"
 Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName `
 	-ObjectId $servicePrincipal.Id `
 	-PermissionsToKeys all `
-	-PermissionsToSecrets all
+	-PermissionsToSecrets all `
+	-PermissionsToCertificate all `
 
 # **********************************************************************************************
 # Print the XML settings that should be copied into the app.config file

@@ -34,6 +34,12 @@ namespace Sample.Microsoft.HelloKeyVault
         LIST_SECRETS,
         DELETE_SECRET,
         ENCRYPT,
-        DECRYPT
+        DECRYPT,
+        CREATE_CERTIFICATE,
+        IMPORT_CERTIFICATE,
+        EXPORT_CERTIFICATE,
+        LIST_CERTIFICATEVERSIONS,
+        LIST_CERTIFICATES,
+        DELETE_CERTIFICATE
     }
 }
