@@ -1,5 +1,7 @@
 ﻿using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
 using System.Threading.Tasks;
+using System;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
@@ -44,7 +46,17 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
 
         public IFluentResourceT GetById(string id)
         {
-            return GetByIdAsync(id).Result;
+            throw new NotImplementedException();
+        }
+
+        public Task<IFluentResourceT> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IFluentResourceT> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

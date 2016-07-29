@@ -4,8 +4,8 @@ using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Update
 {
     public interface IUpdate :
-        IApplicable<IStorageAccount>,
-        Resource.Update.IWithTags<IUpdate>,
+        IAppliable<IStorageAccount>,
+        Resource.Core.Resource.Update.IUpdateWithTags<IUpdate>,
         IWithSku,
         IWithCustomDomain,
         IWithAccessTier

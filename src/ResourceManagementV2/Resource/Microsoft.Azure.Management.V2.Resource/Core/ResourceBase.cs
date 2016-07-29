@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -84,6 +85,22 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             get
             {
                 return Id == null;
+            }
+        }
+
+        public Region Region
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        IDictionary<string, string> IResource.Tags
+        {
+            get
+            {
+                throw new NotImplementedException();
             }
         }
 

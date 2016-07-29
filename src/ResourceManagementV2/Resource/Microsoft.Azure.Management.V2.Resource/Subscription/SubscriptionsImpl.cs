@@ -3,6 +3,8 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Rest.Azure;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -16,7 +18,17 @@ namespace Microsoft.Azure.Management.V2.Resource
             this.innerCollection = client;
         }
 
+        PagedList<ISubscription> ISupportsListing<ISubscription>.List()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<ISubscription> GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ISubscription> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
@@ -35,6 +47,11 @@ namespace Microsoft.Azure.Management.V2.Resource
                 innerList.LoadNextPage();
                 return new WrappedPage<Management.ResourceManager.Models.SubscriptionInner, ISubscription>(innerList.CurrentPage, WrapModel);
             });
+        }
+
+        ISubscription ISupportsGettingByName<ISubscription>.GetByName(string name)
+        {
+            throw new NotImplementedException();
         }
 
         private ISubscription WrapModel(Management.ResourceManager.Models.SubscriptionInner innerModel)

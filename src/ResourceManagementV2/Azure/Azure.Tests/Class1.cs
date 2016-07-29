@@ -21,14 +21,14 @@ namespace AzureTests
         {
             ApplicationTokenCredentails credentials = new ApplicationTokenCredentails(@"C:\my.azureauth");
 
-            IComputeManager computeManager = ComputeManager
+            /*IComputeManager computeManager = ComputeManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
 
-            computeManager.VirtualMachines.List();
+            computeManager.VirtualMachines.List();*/
 
-            /**
+            string subscriptionId = "";
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
@@ -38,7 +38,7 @@ namespace AzureTests
                 .Define("mynewrg")
                 .WithRegion("west us")
                 .CreateAsync().Result;
-            **/
+            
 
             /**
             IStorageManager storageManager = StorageManager
