@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the DataSource class.
         /// </summary>
-        public DataSource(string name, DataSourceType type, DataSourceCredentials credentials, DataContainer container, string description = default(string), DataChangeDetectionPolicy dataChangeDetectionPolicy = default(DataChangeDetectionPolicy), DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default(DataDeletionDetectionPolicy))
+        public DataSource(string name, DataSourceType type, DataSourceCredentials credentials, DataContainer container, string description = default(string), DataChangeDetectionPolicy dataChangeDetectionPolicy = default(DataChangeDetectionPolicy), DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default(DataDeletionDetectionPolicy), string eTag = default(string))
         {
             Name = name;
             Description = description;
@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Search.Models
             Container = container;
             DataChangeDetectionPolicy = dataChangeDetectionPolicy;
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
+            ETag = eTag;
         }
 
         /// <summary>
@@ -82,6 +83,12 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataDeletionDetectionPolicy")]
         public DataDeletionDetectionPolicy DataDeletionDetectionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ETag of the DataSource.
+        /// </summary>
+        [JsonProperty(PropertyName = "@odata.etag")]
+        public string ETag { get; set; }
 
         /// <summary>
         /// Validate the object.

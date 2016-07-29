@@ -153,6 +153,111 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateOrUpdateIndexIfNotExistsFailsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsFailsOnExistingResource(
+                    Data.GetSearchServiceClient().Indexes.CreateOrUpdate,
+                    CreateTestIndex,
+                    MutateIndex);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateIndexIfNotExistsSucceedsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsSucceedsOnNoResource(
+                    Data.GetSearchServiceClient().Indexes.CreateOrUpdate,
+                    CreateTestIndex);
+            });
+        }
+
+        [Fact]
+        public void UpdateIndexIfExistsSucceedsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsSucceedsOnExistingResource(
+                    Data.GetSearchServiceClient().Indexes.CreateOrUpdate,
+                    CreateTestIndex,
+                    MutateIndex);
+            });
+        }
+
+        [Fact]
+        public void UpdateIndexIfExistsFailsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsFailsOnNoResource(
+                    Data.GetSearchServiceClient().Indexes.CreateOrUpdate,
+                    CreateTestIndex);
+            });
+        }
+
+        [Fact]
+        public void UpdateIndexIfNotChangedSucceedsWhenResourceUnchanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedSucceedsWhenResourceUnchanged(
+                    Data.GetSearchServiceClient().Indexes.CreateOrUpdate,
+                    CreateTestIndex,
+                    MutateIndex);
+            });
+        }
+
+        [Fact]
+        public void UpdateIndexIfNotChangedFailsWhenResourceChanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedFailsWhenResourceChanged(
+                    Data.GetSearchServiceClient().Indexes.CreateOrUpdate,
+                    CreateTestIndex,
+                    MutateIndex);
+            });
+        }
+
+        [Fact]
+        public void DeleteIndexIfNotChangedWorksOnlyOnCurrentResource()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Index index = CreateTestIndex();
+
+                AccessConditionTests.DeleteIfNotChangedWorksOnlyOnCurrentResource(
+                    searchClient.Indexes.Delete,
+                    () => searchClient.Indexes.CreateOrUpdate(index),
+                    x => searchClient.Indexes.CreateOrUpdate(MutateIndex(x)),
+                    index.Name);
+            });
+        }
+
+        // TODO,seansaleh: Enable this test once the server side bug is fixed
+        [Fact(Skip = "There is a bug in Azure Search that 404's before checking the ETag. "
+           + "This test exposes this bug and thus is disabled until the server side issue is fixed")]
+        public void DeleteIndexIfExistsWorksOnlyWhenResourceExists()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Index index = CreateTestIndex();
+
+                AccessConditionTests.DeleteIfExistsWorksOnlyWhenResourceExists(
+                    searchClient.Indexes.Delete,
+                    () => searchClient.Indexes.CreateOrUpdate(index),
+                    index.Name);
+            });
+        }
+
+        [Fact]
         public void CreateOrUpdateCreatesWhenIndexDoesNotExist()
         {
             Run(() =>
@@ -412,6 +517,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
+            return index;
+        }
+
+        private static Index MutateIndex(Index index)
+        {
+            index.CorsOptions.AllowedOrigins = new[] { "*" };
             return index;
         }
 
