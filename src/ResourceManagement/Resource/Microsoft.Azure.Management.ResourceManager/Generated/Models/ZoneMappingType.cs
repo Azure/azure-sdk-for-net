@@ -17,35 +17,35 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The type of alias paths.
+    /// Zone mapping type.
     /// </summary>
-    public partial class AliasPathType
+    public partial class ZoneMappingType
     {
         /// <summary>
-        /// Initializes a new instance of the AliasPathType class.
+        /// Initializes a new instance of the ZoneMappingType class.
         /// </summary>
-        public AliasPathType() { }
+        public ZoneMappingType() { }
 
         /// <summary>
-        /// Initializes a new instance of the AliasPathType class.
+        /// Initializes a new instance of the ZoneMappingType class.
         /// </summary>
-        public AliasPathType(string path = default(string), IList<string> apiVersions = default(IList<string>))
+        public ZoneMappingType(string location = default(string), IList<string> zones = default(IList<string>))
         {
-            Path = path;
-            ApiVersions = apiVersions;
+            Location = location;
+            Zones = zones;
         }
 
         /// <summary>
-        /// The path of an alias.
+        /// The location of this zone mapping.
         /// </summary>
-        [JsonProperty(PropertyName = "path")]
-        public string Path { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
-        /// The api versions.
+        /// The zones in this zone mapping.
         /// </summary>
-        [JsonProperty(PropertyName = "apiVersions")]
-        public IList<string> ApiVersions { get; set; }
+        [JsonProperty(PropertyName = "zones")]
+        public IList<string> Zones { get; set; }
 
     }
 }

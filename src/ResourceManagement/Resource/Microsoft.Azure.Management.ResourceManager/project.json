@@ -1,5 +1,5 @@
 {
-  "version": "1.1.4-preview",
+  "version": "1.1.5-preview",
   "description": "Provides resource group and resource management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
