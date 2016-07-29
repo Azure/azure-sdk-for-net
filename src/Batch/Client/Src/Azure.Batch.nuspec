@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Azure.Batch</id>
+    <version>$version$</version>
+    <title>Microsoft Azure Batch</title>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+This client library provides access to the Microsoft Azure Batch service.
+
+Visit our home page for more detail - http://azure.microsoft.com/services/batch/.
+
+For technical overview, see http://azure.microsoft.com/documentation/articles/batch-technical-overview/.
+
+API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</description>
+    <summary>The client library for the Microsoft Azure Batch service.</summary>
+    <releaseNotes>
+Features:
+- Added CommitChanges method on CloudJob, CloudJobSchedule and CloudPool, which use the HTTP PATCH verb to perform partial updates, which can 
+  be safer if multiple clients are making concurrent changes).
+- Added support for joining a CloudPool to a virtual network on using the NetworkConfiguration property.
+- Added support for automatically terminating jobs when all tasks complete or when a task fails, via the CloudJob.OnAllTasksComplete and 
+  CloudJob.OnAllTasksFailure properties, and the CloudTask.ExitConditions property.
+- Added support for application package references on CloudTask and JobManagerTask.
+
+
+Documentation:
+- Improved documentation across various classes in the Microsoft.Azure.Batch namespace as well as the Microsoft.Azure.Batch.Protocol namespaces.
+- Improved documentation for AddTask overload which takes a collection of CloudTask objects to include details about possible exceptions.
+- Improved documentation for the WhenAll/WaitAll methods of TaskStateMonitor.
+
+Other:
+- Updated constructors for the following types to more clearly convey their required properties:
+  - JobManagerTask
+  - JobPreparationTask
+  - JobReleaseTask
+  - JobSpecification
+  - StartTask
+- TaskStateMonitor changes:
+  - Removed previously Obsolete method WaitAllAsync.
+  - Removed WaitAll which returns Task&lt;bool&gt;.
+  - Renamed WhenAllAsync to WhenAll.
+  - WhenAll overloads now have a consistent return type.
+  - Refactored existing methods to provide an overload which takes a CancellationToken,
+    and an overload which takes a timeout.  Removed the overload which takes both.
+  
+This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
+        </releaseNotes>
+    <tags>Microsoft, Azure, Batch, windowsazureofficial</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="WindowsAzure.Storage" version="6.2.0" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="3.3.1" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.xml" target="lib\net45" />
+  </files>
+</package>
