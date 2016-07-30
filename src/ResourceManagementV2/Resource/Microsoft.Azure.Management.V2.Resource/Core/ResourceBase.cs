@@ -112,6 +112,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             return this as IDefintionAfterRegion;
         }
 
+        public IDefintionAfterRegion WithRegion(Region region)
+        {
+            SetValue("Location", EnumNameAttribute.GetName(region));
+            return this as IDefintionAfterRegion;
+        }
+
         public FluentResourceT WithTags(IDictionary<string, string> tags)
         {
             SetValue("Tags", tags);

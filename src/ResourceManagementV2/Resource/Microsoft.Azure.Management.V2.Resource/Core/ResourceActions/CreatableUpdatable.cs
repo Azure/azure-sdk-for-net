@@ -9,10 +9,5 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             where FluentResourceT: class
     {
         protected CreatableUpdatable(string name, InnerResourceT innerObject) : base(name, innerObject) { }
-
-        public async Task<IFluentResourceT> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
-        {
-            return await CreateAsync(cancellationToken, multiThreaded);
-        }
     }
 }
