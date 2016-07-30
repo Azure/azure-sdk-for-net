@@ -707,7 +707,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. Filter data sources by Kind.
         /// </param>
         /// <param name='skiptoken'>
-        /// Required. Token for paging support.
+        /// Optional. Token for paging support.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -729,10 +729,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
             if (kind == null)
             {
                 throw new ArgumentNullException("kind");
-            }
-            if (skiptoken == null)
-            {
-                throw new ArgumentNullException("skiptoken");
             }
             
             // Tracing
@@ -768,7 +764,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
-            queryParameters.Add("$skiptoke=" + Uri.EscapeDataString(skiptoken));
+            if (skiptoken != null)
+            {
+                queryParameters.Add("$skiptoken=" + Uri.EscapeDataString(skiptoken));
+            }
             queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
@@ -896,11 +895,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -1080,11 +1079,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
