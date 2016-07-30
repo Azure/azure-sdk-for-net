@@ -22,6 +22,11 @@
   <Import Project="..\..\..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
+  <PropertyGroup>
+    <!-- Force override assembly delay signing to false since this should never be signed -->
+    <DelaySign>false</DelaySign>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>$(LibraryNugetPackageFolder)\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
