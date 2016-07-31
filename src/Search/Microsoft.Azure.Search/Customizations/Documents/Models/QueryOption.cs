@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Models
         }
 
         public QueryOption(string name, IEnumerable<string> values)
-            : this(name, String.Join(",", values))
+            : this(name, values.ToCommaSeparatedString())
         {
             // Do nothing.
         }

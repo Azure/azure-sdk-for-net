@@ -41,31 +41,31 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets operation description.
+        /// Operation description.
         /// </summary>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets operation provider.
+        /// Operation provider.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
-        /// Gets or sets operation resource.
+        /// Operation resource.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets operation.
+        /// Operation.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
-        /// Gets or sets operation description.
+        /// Operation description.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

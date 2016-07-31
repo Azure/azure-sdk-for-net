@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the Index class.
         /// </summary>
-        public Index(string name, IList<Field> fields, IList<ScoringProfile> scoringProfiles = default(IList<ScoringProfile>), string defaultScoringProfile = default(string), CorsOptions corsOptions = default(CorsOptions), IList<Suggester> suggesters = default(IList<Suggester>), IList<Analyzer> analyzers = default(IList<Analyzer>), IList<Tokenizer> tokenizers = default(IList<Tokenizer>), IList<TokenFilter> tokenFilters = default(IList<TokenFilter>), IList<CharFilter> charFilters = default(IList<CharFilter>))
+        public Index(string name, IList<Field> fields, IList<ScoringProfile> scoringProfiles = default(IList<ScoringProfile>), string defaultScoringProfile = default(string), CorsOptions corsOptions = default(CorsOptions), IList<Suggester> suggesters = default(IList<Suggester>), IList<Analyzer> analyzers = default(IList<Analyzer>), IList<Tokenizer> tokenizers = default(IList<Tokenizer>), IList<TokenFilter> tokenFilters = default(IList<TokenFilter>), IList<CharFilter> charFilters = default(IList<CharFilter>), string eTag = default(string))
         {
             Name = name;
             Fields = fields;
@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Search.Models
             Tokenizers = tokenizers;
             TokenFilters = tokenFilters;
             CharFilters = charFilters;
+            ETag = eTag;
         }
 
         /// <summary>
@@ -107,6 +108,12 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "charFilters")]
         public IList<CharFilter> CharFilters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ETag of the index.
+        /// </summary>
+        [JsonProperty(PropertyName = "@odata.etag")]
+        public string ETag { get; set; }
 
         /// <summary>
         /// Validate the object.

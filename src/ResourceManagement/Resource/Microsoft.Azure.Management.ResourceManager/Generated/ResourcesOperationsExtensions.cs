@@ -154,6 +154,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Resource identity.
             /// </param>
             /// <param name='apiVersion'>
+            /// Api version to use.
             /// </param>
             public static bool? CheckExistence(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
             {
@@ -182,6 +183,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Resource identity.
             /// </param>
             /// <param name='apiVersion'>
+            /// Api version to use.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -216,6 +218,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Resource identity.
             /// </param>
             /// <param name='apiVersion'>
+            /// Api version to use.
             /// </param>
             public static void Delete(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
             {
@@ -244,6 +247,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Resource identity.
             /// </param>
             /// <param name='apiVersion'>
+            /// Api version to use.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -275,6 +279,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Resource identity.
             /// </param>
             /// <param name='apiVersion'>
+            /// Api version to use.
             /// </param>
             /// <param name='parameters'>
             /// Create or update resource parameters.
@@ -306,6 +311,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Resource identity.
             /// </param>
             /// <param name='apiVersion'>
+            /// Api version to use.
             /// </param>
             /// <param name='parameters'>
             /// Create or update resource parameters.
@@ -343,6 +349,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Resource identity.
             /// </param>
             /// <param name='apiVersion'>
+            /// Api version to use.
             /// </param>
             public static GenericResource Get(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
             {
@@ -371,6 +378,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Resource identity.
             /// </param>
             /// <param name='apiVersion'>
+            /// Api version to use.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -97,9 +97,114 @@ namespace Microsoft.Azure.Search.Tests
 
                 Indexer indexer = Data.CreateTestIndexer();
 
-                AzureOperationResponse<Indexer> response = 
+                AzureOperationResponse<Indexer> response =
                     searchClient.Indexers.CreateOrUpdateWithHttpMessagesAsync(indexer).Result;
                 Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateIndexerIfNotExistsFailsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsFailsOnExistingResource(
+                    Data.GetSearchServiceClient().Indexers.CreateOrUpdate,
+                    Data.CreateTestIndexer,
+                    Data.MutateIndexer);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateIndexerIfNotExistsSucceedsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsSucceedsOnNoResource(
+                    Data.GetSearchServiceClient().Indexers.CreateOrUpdate,
+                    Data.CreateTestIndexer);
+            });
+        }
+
+        [Fact]
+        public void UpdateIndexerIfExistsSucceedsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsSucceedsOnExistingResource(
+                    Data.GetSearchServiceClient().Indexers.CreateOrUpdate,
+                    Data.CreateTestIndexer,
+                    Data.MutateIndexer);
+            });
+        }
+
+        [Fact]
+        public void UpdateIndexerIfExistsFailsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsFailsOnNoResource(
+                    Data.GetSearchServiceClient().Indexers.CreateOrUpdate,
+                    Data.CreateTestIndexer);
+            });
+        }
+
+        [Fact]
+        public void UpdateIndexerIfNotChangedSucceedsWhenResourceUnchanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedSucceedsWhenResourceUnchanged(
+                    Data.GetSearchServiceClient().Indexers.CreateOrUpdate,
+                    Data.CreateTestIndexer,
+                    Data.MutateIndexer);
+            });
+        }
+
+        [Fact]
+        public void UpdateIndexerIfNotChangedFailsWhenResourceChanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedFailsWhenResourceChanged(
+                    Data.GetSearchServiceClient().Indexers.CreateOrUpdate,
+                    Data.CreateTestIndexer,
+                    Data.MutateIndexer);
+            });
+        }
+
+        [Fact]
+        public void DeleteIndexerIfNotChangedWorksOnlyOnCurrentResource()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Indexer indexer = Data.CreateTestIndexer();
+
+                AccessConditionTests.DeleteIfNotChangedWorksOnlyOnCurrentResource(
+                    searchClient.Indexers.Delete,
+                    () => searchClient.Indexers.CreateOrUpdate(indexer),
+                    x => searchClient.Indexers.CreateOrUpdate(Data.MutateIndexer(x)),
+                    indexer.Name);
+            });
+        }
+
+        // TODO,seansaleh: Enable this test once the server side bug is fixed
+        [Fact(Skip = "There is a bug in Azure Search that 404's before checking the ETag. "
+           + "This test exposes this bug and thus is disabled until the server side issue is fixed")]
+        public void DeleteIndexerIfExistsWorksOnlyWhenResourceExists()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Indexer indexer = Data.CreateTestIndexer();
+
+                AccessConditionTests.DeleteIfExistsWorksOnlyWhenResourceExists(
+                    searchClient.Indexers.Delete,
+                    () => searchClient.Indexers.CreateOrUpdate(indexer),
+                    indexer.Name);
             });
         }
 
@@ -113,7 +218,7 @@ namespace Microsoft.Azure.Search.Tests
                 Indexer indexer = Data.CreateTestIndexer();
 
                 // Try delete before the indexer even exists.
-                AzureOperationResponse deleteResponse = 
+                AzureOperationResponse deleteResponse =
                     searchClient.Indexers.DeleteWithHttpMessagesAsync(indexer.Name).Result;
                 Assert.Equal(HttpStatusCode.NotFound, deleteResponse.Response.StatusCode);
 
@@ -166,7 +271,7 @@ namespace Microsoft.Azure.Search.Tests
                 IndexerExecutionInfo info = searchClient.Indexers.GetStatus(indexer.Name);
                 Assert.Equal(IndexerStatus.Running, info.Status);
 
-                AzureOperationResponse runResponse = 
+                AzureOperationResponse runResponse =
                     searchClient.Indexers.RunWithHttpMessagesAsync(indexer.Name).Result;
                 Assert.Equal(HttpStatusCode.Accepted, runResponse.Response.StatusCode);
 
@@ -186,7 +291,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 Assert.Equal(IndexerExecutionStatus.Reset, middleResult.Status);
                 AssertStartAndEndTimeValid(middleResult);
-                
+
                 Assert.Equal(IndexerExecutionStatus.Success, oldestResult.Status);
                 Assert.Equal(124876, oldestResult.ItemCount);
                 Assert.Equal(2, oldestResult.FailedItemCount);
@@ -242,6 +347,35 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient client = Data.GetSearchServiceClient();
                 Assert.False(client.Indexers.Exists("invalidindexer"));
+            });
+        }
+
+        [Fact]
+        public void CanCreateBlobIndexerWithConfigurationParameters()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                Indexer expectedIndexer = Data.CreateTestIndexer();
+                DataSource blobDataSource =
+                    DataSource.AzureBlobStorage(
+                        SearchTestUtilities.GenerateName(),
+                        storageConnectionString: "fake",
+                        containerName: "fake");
+
+                expectedIndexer.DataSourceName = blobDataSource.Name;
+                expectedIndexer.IsDisabled = true;
+                expectedIndexer.Parameters = new IndexingParameters();
+                expectedIndexer.Parameters
+                    .ExcludeFileNameExtensions(".pdf")
+                    .IndexFileNameExtensions(".docx")
+                    .IndexStorageMetadataOnly()
+                    .SkipContent()
+                    .ParseDelimitedTextFiles("a", "b", "c");
+
+                Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
+
+                AssertIndexersEqual(expectedIndexer, actualIndexer);
             });
         }
 

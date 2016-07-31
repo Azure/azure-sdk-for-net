@@ -98,6 +98,9 @@ namespace Microsoft.Azure.Search
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -113,7 +116,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an Azure Search index and all the documents it contains.
         /// <see href="https://msdn.microsoft.com/library/azure/dn798926.aspx" />
@@ -122,6 +125,9 @@ namespace Microsoft.Azure.Search
         /// The name of the index to delete.
         /// </param>
         /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='accessCondition'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -136,7 +142,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves an index definition from Azure Search.
         /// <see href="https://msdn.microsoft.com/library/azure/dn798939.aspx" />

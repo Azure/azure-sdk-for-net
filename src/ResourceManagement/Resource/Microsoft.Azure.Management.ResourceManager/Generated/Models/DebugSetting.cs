@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the debug detail level.
+        /// The debug detail level.
         /// </summary>
         [JsonProperty(PropertyName = "detailLevel")]
         public string DetailLevel { get; set; }
