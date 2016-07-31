@@ -48,51 +48,50 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the state of the provisioning.
+        /// The state of the provisioning.
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets the correlation ID of the deployment.
+        /// The correlation ID of the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "correlationId")]
         public string CorrelationId { get; set; }
 
         /// <summary>
-        /// Gets or sets the timestamp of the template deployment.
+        /// The timestamp of the template deployment.
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
         public DateTime? Timestamp { get; set; }
 
         /// <summary>
-        /// Gets or sets key/value pairs that represent deploymentoutput.
+        /// Key/value pairs that represent deploymentoutput.
         /// </summary>
         [JsonProperty(PropertyName = "outputs")]
         public object Outputs { get; set; }
 
         /// <summary>
-        /// Gets the list of resource providers needed for the deployment.
+        /// The list of resource providers needed for the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "providers")]
         public IList<Provider> Providers { get; set; }
 
         /// <summary>
-        /// Gets the list of deployment dependencies.
+        /// The list of deployment dependencies.
         /// </summary>
         [JsonProperty(PropertyName = "dependencies")]
         public IList<Dependency> Dependencies { get; set; }
 
         /// <summary>
-        /// Gets or sets the template content. Use only one of Template or
-        /// TemplateLink.
+        /// The template content. Use only one of Template or TemplateLink.
         /// </summary>
         [JsonProperty(PropertyName = "template")]
         public object Template { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI referencing the template. Use only one of
-        /// Template or TemplateLink.
+        /// The URI referencing the template. Use only one of Template or
+        /// TemplateLink.
         /// </summary>
         [JsonProperty(PropertyName = "templateLink")]
         public TemplateLink TemplateLink { get; set; }
@@ -105,21 +104,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public object Parameters { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI referencing the parameters. Use only one of
-        /// Parameters or ParametersLink.
+        /// The URI referencing the parameters. Use only one of Parameters or
+        /// ParametersLink.
         /// </summary>
         [JsonProperty(PropertyName = "parametersLink")]
         public ParametersLink ParametersLink { get; set; }
 
         /// <summary>
-        /// Gets or sets the deployment mode. Possible values for this
-        /// property include: 'Incremental', 'Complete'.
+        /// The deployment mode. Possible values for this property include:
+        /// 'Incremental', 'Complete'.
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public DeploymentMode? Mode { get; set; }
 
         /// <summary>
-        /// Gets or sets the debug setting of the deployment.
+        /// The debug setting of the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "debugSetting")]
         public DebugSetting DebugSetting { get; set; }
