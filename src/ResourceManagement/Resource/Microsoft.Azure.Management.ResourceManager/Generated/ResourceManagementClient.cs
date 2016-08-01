@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             this.Tags = new TagsOperations(this);
             this.DeploymentOperations = new DeploymentOperationsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2016-02-01";
+            this.ApiVersion = "2016-07-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets HTTP message content.
+        /// HTTP message content.
         /// </summary>
         [JsonProperty(PropertyName = "content")]
         public object Content { get; set; }

@@ -5,9 +5,11 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Spatial;
     using Newtonsoft.Json;
+
     public class LoudHotel
     {
         [CustomField("hotelId")]
@@ -92,7 +94,7 @@ namespace Microsoft.Azure.Search.Tests
                 this.DESCRIPTIONFRENCH,
                 this.HOTELNAME,
                 this.CATEGORY,
-                (this.TAGS != null) ? String.Join(",", this.TAGS) : "null",
+                (this.TAGS != null) ? this.TAGS.ToCommaSeparatedString() : "null",
                 this.PARKINGINCLUDED,
                 this.SMOKINGALLOWED,
                 this.LASTRENOVATIONDATE,

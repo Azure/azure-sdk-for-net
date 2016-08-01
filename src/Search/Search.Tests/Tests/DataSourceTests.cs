@@ -33,9 +33,10 @@ namespace Microsoft.Azure.Search.Tests
                 DataSource dataSource = CreateTestDataSource();
                 dataSource.Type = DataSourceType.Create("thistypedoesnotexist");
 
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.DataSources.Create(dataSource));
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Equal("Unsupported data source type 'thistypedoesnotexist'", e.Body.Message);
+                SearchAssert.ThrowsCloudException(
+                    () => searchClient.DataSources.Create(dataSource),
+                    HttpStatusCode.BadRequest,
+                    "Unsupported data source type 'thistypedoesnotexist'");
             });
         }
 
@@ -52,8 +53,9 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.DataSources.Get("thisdatasourcedoesnotexist"));
-                Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                SearchAssert.ThrowsCloudException(
+                    () => searchClient.DataSources.Get("thisdatasourcedoesnotexist"),
+                    HttpStatusCode.NotFound);
             });
         }
 
@@ -90,9 +92,112 @@ namespace Microsoft.Azure.Search.Tests
 
                 DataSource dataSource = CreateTestDataSource();
 
-                AzureOperationResponse<DataSource> response = 
+                AzureOperationResponse<DataSource> response =
                     searchClient.DataSources.CreateOrUpdateWithHttpMessagesAsync(dataSource).Result;
                 Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateDataSourceIfNotExistsFailsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsFailsOnExistingResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateDataSourceIfNotExistsSucceedsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsSucceedsOnNoResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource);
+            });
+        }
+
+        [Fact]
+        public void UpdateDataSourceIfExistsSucceedsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsSucceedsOnExistingResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void UpdateDataSourceIfExistsFailsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsFailsOnNoResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource);
+            });
+        }
+
+        [Fact]
+        public void UpdateDataSourceIfNotChangedSucceedsWhenResourceUnchanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedSucceedsWhenResourceUnchanged(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void UpdateDataSourceIfNotChangedFailsWhenResourceChanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedFailsWhenResourceChanged(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void DeleteDataSourceIfNotChangedWorksOnlyOnCurrentResource()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                DataSource dataSource = CreateTestDataSource();
+
+                AccessConditionTests.DeleteIfNotChangedWorksOnlyOnCurrentResource(
+                    searchClient.DataSources.Delete,
+                    () => searchClient.DataSources.CreateOrUpdate(dataSource),
+                    x => searchClient.DataSources.CreateOrUpdate(MutateDataSource(x)),
+                    dataSource.Name);
+            });
+        }
+
+        [Fact]
+        public void DeleteDataSourceIfExistsWorksOnlyWhenResourceExists()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                DataSource dataSource = CreateTestDataSource();
+
+                AccessConditionTests.DeleteIfExistsWorksOnlyWhenResourceExists(
+                    searchClient.DataSources.Delete,
+                    () => searchClient.DataSources.CreateOrUpdate(dataSource),
+                    dataSource.Name);
             });
         }
 
@@ -106,7 +211,7 @@ namespace Microsoft.Azure.Search.Tests
                 DataSource dataSource = CreateTestDataSource();
 
                 // Try delete before the datasource even exists.
-                AzureOperationResponse deleteResponse = 
+                AzureOperationResponse deleteResponse =
                     searchClient.DataSources.DeleteWithHttpMessagesAsync(dataSource.Name).Result;
                 Assert.Equal(HttpStatusCode.NotFound, deleteResponse.Response.StatusCode);
 
@@ -326,6 +431,12 @@ namespace Microsoft.Azure.Search.Tests
         private static DataSource CreateTestDataSource()
         {
             return CreateTestSqlDataSource();
+        }
+
+        private static DataSource MutateDataSource(DataSource dataSource)
+        {
+            dataSource.Description = "Mutated DataSource";
+            return dataSource;
         }
 
         private static DataSource CreateTestSqlDataSource(DataChangeDetectionPolicy changeDetectionPolicy, bool useSqlVm = false)

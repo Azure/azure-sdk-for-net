@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the identity type. Possible values for this property
-        /// include: 'SystemAssigned'.
+        /// The identity type. Possible values for this property include:
+        /// 'SystemAssigned'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ResourceIdentityType? Type { get; set; }

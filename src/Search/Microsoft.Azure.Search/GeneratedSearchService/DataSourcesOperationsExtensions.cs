@@ -39,9 +39,12 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                return Task.Factory.StartNew(s => ((IDataSourcesOperations)s).CreateOrUpdateAsync(dataSourceName, dataSource, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataSourcesOperations)s).CreateOrUpdateAsync(dataSourceName, dataSource, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -61,12 +64,15 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataSource> CreateOrUpdateAsync(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataSource> CreateOrUpdateAsync(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSourceName, dataSource, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSourceName, dataSource, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -85,9 +91,12 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static void Delete(this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static void Delete(this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                Task.Factory.StartNew(s => ((IDataSourcesOperations)s).DeleteAsync(dataSourceName, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IDataSourcesOperations)s).DeleteAsync(dataSourceName, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -103,12 +112,15 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(dataSourceName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(dataSourceName, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

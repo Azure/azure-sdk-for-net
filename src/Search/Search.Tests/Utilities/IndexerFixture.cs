@@ -78,5 +78,11 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 }
             };
         }
+
+        public Indexer MutateIndexer(Indexer indexer)
+        {
+            indexer.Description = "Mutated Indexer";
+            return indexer;
+        }
     }
 }
