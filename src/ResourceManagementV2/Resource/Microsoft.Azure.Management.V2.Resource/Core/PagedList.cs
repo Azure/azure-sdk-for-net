@@ -152,6 +152,11 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             }
         }
 
+        public static PagedList<U> EmptyPagedList<U>()
+        {
+            return new PagedList<U>(new OnePage<U>(new List<U>()));
+        }
+
         protected class OnePage<U> : IPage<U>
         {
             private IEnumerable<U> enumerable;
@@ -179,6 +184,5 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
                 return GetEnumerator();
             }
         }
-
     }
 }

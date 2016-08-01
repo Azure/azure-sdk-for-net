@@ -4,21 +4,13 @@ using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
-    internal class ResourceGroupExportResultImpl :
-        Wrapper<ResourceGroupExportResultInner>,
-        IResourceGroupExportResult
+    internal class DeploymentExportResultImpl :
+        Wrapper<DeploymentExportResultInner>,
+        IDeploymentExportResult
     {
 
-        public ResourceGroupExportResultImpl(ResourceGroupExportResultInner inner) : base(inner)
+        internal DeploymentExportResultImpl(DeploymentExportResultInner innerModel) : base(innerModel)
         {
-        }
-
-        public ResourceManagementErrorWithDetails Error
-        {
-            get
-            {
-                return Inner.Error;
-            }
         }
 
         public object Template
@@ -29,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
         }
 
-        public string TemplateJson
+        public string TemplateAsJson
         {
             get
             {
