@@ -190,9 +190,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        // TODO,seansaleh: Enable this test once the server side bug is fixed
-        [Fact(Skip = "There is a bug in Azure Search that 404's before checking the ETag. "
-           + "This test exposes this bug and thus is disabled until the server side issue is fixed")]
+        [Fact]
         public void DeleteIndexerIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
