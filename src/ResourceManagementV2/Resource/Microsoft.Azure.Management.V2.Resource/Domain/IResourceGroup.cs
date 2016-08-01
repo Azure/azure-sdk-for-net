@@ -35,9 +35,6 @@ namespace Microsoft.Azure.Management.V2.Resource
         /// <returns>the provisioning state of the resource group</returns>
         string ProvisioningState { get; }
 
-        /// <returns>the tags attached to the resource group</returns>
-        IDictionary<string,string> Tags { get; }
-
         /// <summary>
         /// Captures the specified resource group as a template.
         /// </summary>

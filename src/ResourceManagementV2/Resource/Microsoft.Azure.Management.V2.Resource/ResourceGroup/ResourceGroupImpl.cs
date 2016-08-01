@@ -7,6 +7,7 @@ using System;
 using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Definition;
 using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
 using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Update;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -18,11 +19,42 @@ namespace Microsoft.Azure.Management.V2.Resource
     {
         ResourceManager.IResourceGroupsOperations client;
 
+        internal ResourceGroupImpl(ResourceManager.Models.ResourceGroupInner innerModel, ResourceManager.IResourceGroupsOperations client) : base(innerModel.Name, innerModel)
+        {
+            this.client = client;
+        }
+
+        #region Getters
+
+        public string Name
+        {
+            get
+            {
+                return Inner.Name;
+            }
+        }
+
         public string ProvisioningState
         {
             get
             {
                 return Inner.Properties.ProvisioningState;
+            }
+        }
+
+        public string RegionName
+        {
+            get
+            {
+                return Inner.Location;
+            }
+        }
+
+        public Region Region
+        {
+            get
+            {
+                return EnumNameAttribute.FromName<Region>(RegionName);
             }
         }
 
@@ -42,78 +74,23 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
         }
 
-        public string Name
-        {
-            get
-            {
-                return Inner.Name;
-            }
-        }
-
-        public string RegionName
-        {
-            get
-            {
-                return Inner.Location;
-            }
-        }
-
-        public IReadOnlyDictionary<string, string> Tags
-        {
-            get
-            {
-                return (IReadOnlyDictionary<string, string>)Inner.Tags;
-            }
-        }
-
-        IDictionary<string, string> IResourceGroup.Tags
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Region Region
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         IDictionary<string, string> IResource.Tags
         {
             get
             {
-                throw new NotImplementedException();
+                return Inner.Tags;
             }
         }
 
-        internal ResourceGroupImpl(ResourceManager.Models.ResourceGroupInner inner, ResourceManager.IResourceGroupsOperations client) : base(inner.Name, inner)
-        {
-            this.client = client;
-        }
+        #endregion
 
-        public ResourceGroup.Update.IUpdate Update() {
-            return this;
-        }
-
-        public override async Task<IResourceGroup> Refresh()
+        public IResourceGroupExportResult ExportTemplate(ResourceGroupExportTemplateOptions options)
         {
-            var result = await client.GetWithHttpMessagesAsync(Name);
-            SetInner(result.Body);
-            return this;
-        }
-
-        public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
-        {
-            ResourceManager.Models.ResourceGroupInner param = new ResourceManager.Models.ResourceGroupInner();
-            param.Location = Inner.Location;
-            param.Tags = Inner.Tags;
-            var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param, null, cancellationToken);
-            SetInner(response.Body);
-            return this;
+            ExportTemplateRequestInner inner = new ExportTemplateRequestInner();
+            inner.Resources = new List<string>() { "*" };
+            inner.Options = EnumNameAttribute.GetName(options);
+            var result = client.ExportTemplateWithHttpMessagesAsync(Name, inner).Result;
+            return new ResourceGroupExportResultImpl(result.Body);
         }
 
         #region Fluent setters
@@ -126,23 +103,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-
-        public IResourceGroupExportResult ExportTemplate(ResourceGroupExportTemplateOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
         public IWithCreate WithRegion(Region region)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IResourceGroup Create()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IResourceGroup> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
@@ -167,19 +128,9 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        public IWithCreate WithoutTag(string key)
-        {
-            if (Inner.Tags != null && Inner.Tags.ContainsKey(key))
-            {
-                Inner.Tags.Remove(key);
-            }
-            return this;
-        }
+        #endregion
 
-        public IResourceGroup Apply()
-        {
-            throw new NotImplementedException();
-        }
+        #region Update setters
 
         IUpdate IUpdateWithTags<IUpdate>.WithTags(IDictionary<string, string> tags)
         {
@@ -211,6 +162,59 @@ namespace Microsoft.Azure.Management.V2.Resource
         }
 
         #endregion
+
+        #endregion
+
+        #region Implementation of IRefreshable interface
+
+        public override async Task<IResourceGroup> Refresh()
+        {
+            var result = await client.GetWithHttpMessagesAsync(Name);
+            SetInner(result.Body);
+            return this;
+        }
+
+        #endregion
+
+        #region Implementation of IUpdatable interface
+
+        public ResourceGroup.Update.IUpdate Update()
+        {
+            return this;
+        }
+
+        #endregion
+
+        #region Implementation of IResourceCreator interface
+
+        public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
+        {
+            ResourceManager.Models.ResourceGroupInner param = new ResourceManager.Models.ResourceGroupInner();
+            param.Location = Inner.Location;
+            param.Tags = Inner.Tags;
+            var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param, null, cancellationToken);
+            SetInner(response.Body);
+            return this;
+        }
+
+        public override IResource CreateResource()
+        {
+            return CreateResourceAsync(CancellationToken.None).Result;
+        }
+
+        #endregion
+
+        #region Implementation of IApplicable interface
+
+        public async Task<IResourceGroup> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
+        {
+            return await CreateAsync(cancellationToken, multiThreaded);
+        }
+
+        public IResourceGroup Apply()
+        {
+            return ApplyAsync(CancellationToken.None, true).Result;
+        }
 
         #endregion
     }

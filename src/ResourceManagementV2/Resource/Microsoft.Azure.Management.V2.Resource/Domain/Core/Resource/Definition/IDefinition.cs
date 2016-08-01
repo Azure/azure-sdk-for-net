@@ -54,12 +54,5 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition
         /// <returns>the next stage of the resource definition</returns>
         T WithTag (string key, string value);
 
-        /// <summary>
-        /// Removes a tag from the resource.
-        /// </summary>
-        /// <param name="key">key the key of the tag to remove</param>
-        /// <returns>the next stage of the resource definition</returns>
-        T WithoutTag (string key);
-
     }
 }

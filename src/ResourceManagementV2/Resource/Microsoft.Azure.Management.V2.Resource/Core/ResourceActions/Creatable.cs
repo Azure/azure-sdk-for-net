@@ -22,7 +22,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             creatableResource.CreatorTaskGroup.Merge(CreatorTaskGroup);
         }
 
-        public Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
+        public IFluentResourceT Create()
+        {
+            return CreateAsync(CancellationToken.None).Result;
+        }
+
+        public Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
         {
             TaskCompletionSource<IFluentResourceT> taskCompletionSource = new TaskCompletionSource<IFluentResourceT>();
             if (CreatorTaskGroup.IsPreparer)
@@ -67,12 +72,15 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 
         public abstract Task<IResource> CreateResourceAsync(CancellationToken cancellationToken);
 
+        public abstract IResource CreateResource();
+
         #endregion
     }
 
     public interface IResourceCreator
     {
         Task<IResource> CreateResourceAsync(CancellationToken cancellationToken);
+        IResource CreateResource();
         CreatorTaskGroup CreatorTaskGroup { get; }
     }
 }
