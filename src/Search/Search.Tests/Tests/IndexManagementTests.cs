@@ -490,7 +490,9 @@ namespace Microsoft.Azure.Search.Tests
                         FunctionAggregation = ScoringFunctionAggregation.Minimum,
                         Functions = new[]
                         {
-                            new MagnitudeScoringFunction("rating", 3.0, new MagnitudeScoringParameters(0, 10))
+                            // Set ShouldBoostBeyondRangeByConstant explicitly to false. The API returns the default (false) if you pass in null, so we
+                            // need to do this to ensure that comparisons work after round trips.
+                            new MagnitudeScoringFunction("rating", 3.0, new MagnitudeScoringParameters(0, 10) { ShouldBoostBeyondRangeByConstant = false })
                             {
                                 Interpolation = ScoringFunctionInterpolation.Quadratic
                             }
@@ -501,7 +503,9 @@ namespace Microsoft.Azure.Search.Tests
                         FunctionAggregation = ScoringFunctionAggregation.FirstMatching,
                         Functions = new[]
                         {
-                            new MagnitudeScoringFunction("rating", 3.14, new MagnitudeScoringParameters(1, 5))
+                            // Set ShouldBoostBeyondRangeByConstant explicitly to false. The API returns the default (false) if you pass in null, so we
+                            // need to do this to ensure that comparisons work after round trips.
+                            new MagnitudeScoringFunction("rating", 3.14, new MagnitudeScoringParameters(1, 5) { ShouldBoostBeyondRangeByConstant = false })
                             {
                                 Interpolation = ScoringFunctionInterpolation.Constant
                             }
@@ -546,7 +550,12 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertIndexesEqual(Index expected, Index actual)
         {
-            Assert.NotNull(expected);
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
+
             Assert.NotNull(actual);
             
             Assert.Equal(expected.Name, actual.Name);
@@ -577,20 +586,20 @@ namespace Microsoft.Azure.Search.Tests
         private static void AssertScoringProfilesEqual(ScoringProfile expected, ScoringProfile actual)
         {
             Assert.Equal(expected.Name, actual.Name);
-
-            if (expected.TextWeights == null)
-            {
-                Assert.Null(actual.TextWeights);
-            }
-            else
-            {
-                SearchAssert.SequenceEqual(
-                    expected.TextWeights.Weights, 
-                    actual.TextWeights.Weights, 
-                    AssertTextWeightsEqual);
-            }
-
+            AssertTextWeightsEqual(expected.TextWeights, actual.TextWeights);
             SearchAssert.SequenceEqual(expected.Functions, actual.Functions, AssertScoringFunctionsEqual);
+        }
+
+        private static void AssertTextWeightsEqual(TextWeights expected, TextWeights actual)
+        {
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
+
+            Assert.NotNull(actual);
+            SearchAssert.DictionariesEqual(expected.Weights, actual.Weights);
         }
 
         private static void AssertCorsOptionsEqual(CorsOptions expected, CorsOptions actual)
@@ -614,16 +623,16 @@ namespace Microsoft.Azure.Search.Tests
             SearchAssert.SequenceEqual(expected.SourceFields, actual.SourceFields);
         }
 
-        private static void AssertTextWeightsEqual(
-            KeyValuePair<string, double> expected, 
-            KeyValuePair<string, double> actual)
-        {
-            Assert.Equal(expected.Key, actual.Key);
-            Assert.Equal(expected.Value, actual.Value);
-        }
-
         private static void AssertScoringFunctionsEqual(ScoringFunction expected, ScoringFunction actual)
         {
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
+
+            Assert.NotNull(actual);
+
             Assert.IsType(expected.GetType(), actual);
             Assert.Equal(expected.FieldName, actual.FieldName);
             Assert.Equal(expected.Boost, actual.Boost);
@@ -636,19 +645,19 @@ namespace Microsoft.Azure.Search.Tests
 
             if (expectedMagnitudeFunction != null)
             {
-                AssertMagnitudeScoringFunctionsEqual(expectedMagnitudeFunction, (MagnitudeScoringFunction)actual);
+                AssertMagnitudeScoringParametersEqual(expectedMagnitudeFunction.Parameters, ((MagnitudeScoringFunction)actual).Parameters);
             }
             else if (expectedFreshnessFunction != null)
             {
-                AssertFreshnessScoringFunctionsEqual(expectedFreshnessFunction, (FreshnessScoringFunction)actual);
+                AssertFreshnessScoringParametersEqual(expectedFreshnessFunction.Parameters, ((FreshnessScoringFunction)actual).Parameters);
             }
             else if (expectedDistanceFunction != null)
             {
-                AssertDistanceScoringFunctionsEqual(expectedDistanceFunction, (DistanceScoringFunction)actual);
+                AssertDistanceScoringParametersEqual(expectedDistanceFunction.Parameters, ((DistanceScoringFunction)actual).Parameters);
             }
             else if (expectedTagFunction != null)
             {
-                AssertTagScoringFunctionsEqual(expectedTagFunction, (TagScoringFunction)actual);
+                AssertTagScoringParametersEqual(expectedTagFunction.Parameters, ((TagScoringFunction)actual).Parameters);
             }
             else
             {
@@ -656,49 +665,59 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
-        private static void AssertMagnitudeScoringFunctionsEqual(
-            MagnitudeScoringFunction expected, 
-            MagnitudeScoringFunction actual)
+        private static void AssertMagnitudeScoringParametersEqual(MagnitudeScoringParameters expected, MagnitudeScoringParameters actual)
         {
-            Assert.NotNull(expected.Parameters);
-            Assert.NotNull(actual.Parameters);
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
 
-            Assert.Equal(expected.Parameters.BoostingRangeEnd, actual.Parameters.BoostingRangeEnd);
-            Assert.Equal(expected.Parameters.BoostingRangeStart, actual.Parameters.BoostingRangeStart);
-            Assert.Equal(
-                expected.Parameters.ShouldBoostBeyondRangeByConstant.GetValueOrDefault(), 
-                actual.Parameters.ShouldBoostBeyondRangeByConstant.GetValueOrDefault());
+            Assert.NotNull(actual);
+
+            Assert.Equal(expected.BoostingRangeEnd, actual.BoostingRangeEnd);
+            Assert.Equal(expected.BoostingRangeStart, actual.BoostingRangeStart);
+            Assert.Equal(expected.ShouldBoostBeyondRangeByConstant, actual.ShouldBoostBeyondRangeByConstant);
         }
 
-        private static void AssertFreshnessScoringFunctionsEqual(
-            FreshnessScoringFunction expected,
-            FreshnessScoringFunction actual)
+        private static void AssertFreshnessScoringParametersEqual(FreshnessScoringParameters expected, FreshnessScoringParameters actual)
         {
-            Assert.NotNull(expected.Parameters);
-            Assert.NotNull(actual.Parameters);
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
 
-            Assert.Equal(expected.Parameters.BoostingDuration, actual.Parameters.BoostingDuration);
+            Assert.NotNull(actual);
+
+            Assert.Equal(expected.BoostingDuration, actual.BoostingDuration);
         }
 
-        private static void AssertDistanceScoringFunctionsEqual(
-            DistanceScoringFunction expected,
-            DistanceScoringFunction actual)
+        private static void AssertDistanceScoringParametersEqual(DistanceScoringParameters expected, DistanceScoringParameters actual)
         {
-            Assert.NotNull(expected.Parameters);
-            Assert.NotNull(actual.Parameters);
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
 
-            Assert.Equal(expected.Parameters.BoostingDistance, actual.Parameters.BoostingDistance);
-            Assert.Equal(expected.Parameters.ReferencePointParameter, actual.Parameters.ReferencePointParameter);
+            Assert.NotNull(actual);
+
+            Assert.Equal(expected.BoostingDistance, actual.BoostingDistance);
+            Assert.Equal(expected.ReferencePointParameter, actual.ReferencePointParameter);
         }
 
-        private static void AssertTagScoringFunctionsEqual(
-            TagScoringFunction expected,
-            TagScoringFunction actual)
+        private static void AssertTagScoringParametersEqual(TagScoringParameters expected, TagScoringParameters actual)
         {
-            Assert.NotNull(expected.Parameters);
-            Assert.NotNull(actual.Parameters);
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
 
-            Assert.Equal(expected.Parameters.TagsParameter, actual.Parameters.TagsParameter);
+            Assert.NotNull(actual);
+
+            Assert.Equal(expected.TagsParameter, actual.TagsParameter);
         }
 
         private Index CreateOrUpdateIndex(Index index, SearchRequestOptions options, AccessCondition condition)
