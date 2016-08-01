@@ -49,11 +49,13 @@
     <Compile Include="GatewayTestClient.cs" />
     <Compile Include="IPForwardingIntegrationTests.cs" />
     <Compile Include="ManagementTestUtilities.cs" />
+    <Compile Include="MigrateNetworkSecurityGroupTests.cs" />
     <Compile Include="NetworkSecurityGroupIntegrationTests.cs" />
     <Compile Include="Networks\VnetMigrationTests.cs" />
     <Compile Include="NetworkTestBase.cs" />
     <Compile Include="NetworkTestConstants.cs" />
     <Compile Include="Routes\AddRouteTableToSubnetTests.cs" />
+    <Compile Include="Routes\MigrateRouteTableTests.cs" />
     <Compile Include="Routes\CreateRouteTableTests.cs" />
     <Compile Include="Routes\DeleteRouteTests.cs" />
     <Compile Include="Routes\GetEffectiveRouteTableTests.cs" />
@@ -94,6 +96,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Network.Tests.Networks.VnetMigrationTests\ValidateVNetForMigration.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroups.MigrateNetworkSecurityGroupTests\PrepareAndAbortMigrationNetworkSecurityGroup.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroups.MigrateNetworkSecurityGroupTests\ValidateMigrationNetworkSecurityGroup.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Routes.MigrateRouteTableTests\PrepareAndAbortMigrationRouteTable.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Routes.MigrateRouteTableTests\ValdiateMigrationRouteTable.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestData\SimpleMigrationNetworkConfiguration.xml">

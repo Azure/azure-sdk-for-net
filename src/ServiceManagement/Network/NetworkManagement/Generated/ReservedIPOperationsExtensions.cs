@@ -38,6 +38,64 @@ namespace Microsoft.WindowsAzure.Management.Network
     public static partial class ReservedIPOperationsExtensions
     {
         /// <summary>
+        /// Abort resservedIP migration api validates and aborts the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse AbortMigration(this IReservedIPOperations operations, string ipName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).AbortMigrationAsync(ipName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Abort resservedIP migration api validates and aborts the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> AbortMigrationAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.AbortMigrationAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Associate Reserved IP operation associates a Reserved IP with a
         /// service.
         /// </summary>
@@ -102,6 +160,50 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Abort resservedIP migration api validates and aborts the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginAbortMigration(this IReservedIPOperations operations, string ipName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).BeginAbortMigrationAsync(ipName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Abort resservedIP migration api validates and aborts the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginAbortMigrationAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.BeginAbortMigrationAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The BeginAssociate begins to associate a Reserved IP with a service.
         /// </summary>
         /// <param name='operations'>
@@ -161,6 +263,50 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<OperationStatusResponse> BeginAssociatingAsync(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
         {
             return operations.BeginAssociatingAsync(reservedIpName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Commit resservedIP migration api validates and commits the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginCommitMigration(this IReservedIPOperations operations, string ipName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).BeginCommitMigrationAsync(ipName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Commit resservedIP migration api validates and commits the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginCommitMigrationAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.BeginCommitMigrationAsync(ipName, CancellationToken.None);
         }
         
         /// <summary>
@@ -331,6 +477,108 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<OperationStatusResponse> BeginDisassociatingAsync(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
         {
             return operations.BeginDisassociatingAsync(reservedIpName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Prepare resservedIP migration api validates and prepares the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginPrepareMigration(this IReservedIPOperations operations, string ipName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).BeginPrepareMigrationAsync(ipName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Prepare resservedIP migration api validates and prepares the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginPrepareMigrationAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.BeginPrepareMigrationAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Commit resservedIP migration api validates and commits the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse CommitMigration(this IReservedIPOperations operations, string ipName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).CommitMigrationAsync(ipName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Commit resservedIP migration api validates and commits the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> CommitMigrationAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.CommitMigrationAsync(ipName, CancellationToken.None);
         }
         
         /// <summary>
@@ -589,6 +837,106 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<NetworkReservedIPListResponse> ListAsync(this IReservedIPOperations operations)
         {
             return operations.ListAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Prepare resservedIP migration api validates and prepares the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse PrepareMigration(this IReservedIPOperations operations, string ipName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).PrepareMigrationAsync(ipName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Prepare resservedIP migration api validates and prepares the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> PrepareMigrationAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.PrepareMigrationAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Validate reservedip migration api validates the given reservedip
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Network Migration operation response.
+        /// </returns>
+        public static NetworkMigrationValidationResponse ValidateMigration(this IReservedIPOperations operations, string ipName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).ValidateMigrationAsync(ipName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Validate reservedip migration api validates the given reservedip
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// Required. Name of the reservedIP to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Network Migration operation response.
+        /// </returns>
+        public static Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.ValidateMigrationAsync(ipName, CancellationToken.None);
         }
     }
 }

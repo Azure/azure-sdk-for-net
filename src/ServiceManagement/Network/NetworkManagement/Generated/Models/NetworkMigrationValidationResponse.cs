@@ -29,41 +29,40 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// The Validate Virtual Network Migration operation response.
+    /// The Validate Network Migration operation response.
     /// </summary>
-    public partial class XrpMigrationValidateVirtualNetworkResponse : AzureOperationResponse, IEnumerable<XrpMigrationValidateVirtualNetworkMessage>
+    public partial class NetworkMigrationValidationResponse : AzureOperationResponse, IEnumerable<NetworkMigrationValidationMessage>
     {
-        private IList<XrpMigrationValidateVirtualNetworkMessage> _validateVirtualNetworkMessages;
+        private IList<NetworkMigrationValidationMessage> _validationMessages;
         
         /// <summary>
-        /// Optional. Validation messages for the storage account to be
-        /// migrated.
+        /// Optional. Validation messages for the resources to be migrated.
         /// </summary>
-        public IList<XrpMigrationValidateVirtualNetworkMessage> ValidateVirtualNetworkMessages
+        public IList<NetworkMigrationValidationMessage> ValidationMessages
         {
-            get { return this._validateVirtualNetworkMessages; }
-            set { this._validateVirtualNetworkMessages = value; }
+            get { return this._validationMessages; }
+            set { this._validationMessages = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// XrpMigrationValidateVirtualNetworkResponse class.
+        /// NetworkMigrationValidationResponse class.
         /// </summary>
-        public XrpMigrationValidateVirtualNetworkResponse()
+        public NetworkMigrationValidationResponse()
         {
-            this.ValidateVirtualNetworkMessages = new LazyList<XrpMigrationValidateVirtualNetworkMessage>();
+            this.ValidationMessages = new LazyList<NetworkMigrationValidationMessage>();
         }
         
         /// <summary>
-        /// Gets the sequence of ValidateVirtualNetworkMessages.
+        /// Gets the sequence of validationMessages.
         /// </summary>
-        public IEnumerator<XrpMigrationValidateVirtualNetworkMessage> GetEnumerator()
+        public IEnumerator<NetworkMigrationValidationMessage> GetEnumerator()
         {
-            return this.ValidateVirtualNetworkMessages.GetEnumerator();
+            return this.ValidationMessages.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of ValidateVirtualNetworkMessages.
+        /// Gets the sequence of validationMessages.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

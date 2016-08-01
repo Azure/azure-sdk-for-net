@@ -25,9 +25,9 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// A validation message for migrate virtual network validation operation
+    /// A validation message for migrating a network resource
     /// </summary>
-    public partial class XrpMigrationValidateVirtualNetworkMessage
+    public partial class NetworkMigrationValidationMessage
     {
         private string _category;
         
@@ -85,10 +85,10 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// XrpMigrationValidateVirtualNetworkMessage class.
+        /// Initializes a new instance of the NetworkMigrationValidationMessage
+        /// class.
         /// </summary>
-        public XrpMigrationValidateVirtualNetworkMessage()
+        public NetworkMigrationValidationMessage()
         {
         }
     }

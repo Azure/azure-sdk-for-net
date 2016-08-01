@@ -18,16 +18,37 @@
 ##Common steps for both samples - Create a X509 Certificate
 
 To create a new X509 certificate, [makecert][8] or [openssl][3] can be used. For example, the following commands will generate a certificate file from a private key and a certificate signing request file:
-	- openssl [genrsa][4] -des3 -out keyvault.key 2048
-	- openssl [req][5] -new -key keyvault.key -out keyvault.csr
-		- *Note: It is OK to choose the default answer for each question*
-	- openssl [x509][6] -req -days 3000 -in keyvault.csr -signkey keyvault.key -out keyvault.cer
-	- openssl [pkcs12][7] -export -out keyvault.pfx -inkey keyvault.key -in keyvault.cer
-	Or use [makecert][8] from Developer Command Prompt for Visual Studio:
-	- makecert -sv keyvault.pvk -n "CN=Key Vault Credentials" keyvault.cer -pe -len 2048 -a sha256
-	    - Follow prompts
-	- pvk2pfx -pvk keyvault.pvk -spc keyvault.cer -pfx keyvault.pfx -pi <pvk-password>
-	- *Note:  The keyvault.cer file is a required input to the GetServiceConfigSettings.ps1 and GetAppConfigSettings.ps1 scripts* 
+
+First, use [genrsa][4] command to generate a key then create a CSR using [req][5] command
+
+```
+openssl genrsa -des3 -out keyvault.key 2048
+openssl req -new -key keyvault.key -out keyvault.csr
+```
+
+> Note: It is OK to choose the default answer for each question.
+
+Then, use [x509][6] command to self-sign the CSR and then convert it to a .PFX format with [pkcs12][7] command.
+
+```
+openssl x509 -req -days 3000 -in keyvault.csr -signkey keyvault.key -out keyvault.cer
+openssl pkcs12 -export -out keyvault.pfx -inkey keyvault.key -in keyvault.cer
+```
+
+Or use [makecert][8] from Developer Command Prompt for Visual Studio:
+
+```
+makecert -sv keyvault.pvk -n "CN=Key Vault Credentials" keyvault.cer -pe -len 2048 -a sha256
+```
+
+Follow prompts
+
+```
+pvk2pfx -pvk keyvault.pvk -spc keyvault.cer -pfx keyvault.pfx -pi <pvk-password>
+```
+
+> Note:  The keyvault.cer file is a required input to the GetServiceConfigSettings.ps1 and GetAppConfigSettings.ps1 scripts* 
+ 
 
 ##Sample #1 - HelloKeyVault
 A console application that walks through the key scenarios supported by Key Vault:

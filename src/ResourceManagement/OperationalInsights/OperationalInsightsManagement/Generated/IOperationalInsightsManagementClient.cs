@@ -74,6 +74,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
+        /// Operations for managing data sources under Workspaces.
+        /// </summary>
+        IDataSourceOperations DataSources
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for using Operational Insights search.
         /// </summary>
         ISearchOperations Search

@@ -235,8 +235,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Validate Virtual Network Migration operation response.
+        /// The Validate Network Migration operation response.
         /// </returns>
-        Task<XrpMigrationValidateVirtualNetworkResponse> ValidateMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
     }
 }
