@@ -17,37 +17,30 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Backend Address of application gateway
+    /// Application gateway SSL policy
     /// </summary>
-    public partial class ApplicationGatewayBackendAddress
+    public partial class ApplicationGatewaySslPolicy
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationGatewayBackendAddress
+        /// Initializes a new instance of the ApplicationGatewaySslPolicy
         /// class.
         /// </summary>
-        public ApplicationGatewayBackendAddress() { }
+        public ApplicationGatewaySslPolicy() { }
 
         /// <summary>
-        /// Initializes a new instance of the ApplicationGatewayBackendAddress
+        /// Initializes a new instance of the ApplicationGatewaySslPolicy
         /// class.
         /// </summary>
-        public ApplicationGatewayBackendAddress(string fqdn = default(string), string ipAddress = default(string))
+        public ApplicationGatewaySslPolicy(IList<string> disabledSslProtocols = default(IList<string>))
         {
-            Fqdn = fqdn;
-            IpAddress = ipAddress;
+            DisabledSslProtocols = disabledSslProtocols;
         }
 
         /// <summary>
-        /// Dns name
+        /// SSL protocols to be disabled on Application Gateway
         /// </summary>
-        [JsonProperty(PropertyName = "fqdn")]
-        public string Fqdn { get; set; }
-
-        /// <summary>
-        /// Ip address
-        /// </summary>
-        [JsonProperty(PropertyName = "ipAddress")]
-        public string IpAddress { get; set; }
+        [JsonProperty(PropertyName = "disabledSslProtocols")]
+        public IList<string> DisabledSslProtocols { get; set; }
 
     }
 }

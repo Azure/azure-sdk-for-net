@@ -10,6 +10,7 @@ using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Networks.Tests
@@ -70,6 +71,7 @@ namespace Networks.Tests
             var httpListener2Name = TestUtilities.GenerateName();            
             var probeName = TestUtilities.GenerateName();
             var sslCertName = TestUtilities.GenerateName();
+            var authCertName = TestUtilities.GenerateName();
 
             //var httpListenerMultiHostingName = TestUtilities.GenerateName();
             //var frontendPortMultiHostingName = TestUtilities.GenerateName();
@@ -78,9 +80,30 @@ namespace Networks.Tests
             //var videoPathRuleName = TestUtilities.GenerateName();
             //var requestRoutingRuleMultiHostingName = TestUtilities.GenerateName();
 
+            string certPath = System.IO.Path.Combine("Tests", "Data", "ApplicationGatewayAuthCert.cer");
+            Console.WriteLine("Certificate Path: {0}", certPath);
+            var x509AuthCertificate = new X509Certificate2(certPath);
+
+            var authCertList = new List<ApplicationGatewayAuthenticationCertificate>()
+            {
+                new ApplicationGatewayAuthenticationCertificate()
+                {
+                    Name = authCertName,
+                    Data  = Convert.ToBase64String(x509AuthCertificate.Export(X509ContentType.Cert))
+                }
+            };
+
             var appGw = new ApplicationGateway()
             {
                 Location = location,                
+                SslPolicy = new ApplicationGatewaySslPolicy()
+                    {
+                        DisabledSslProtocols = new List<string>()
+                        {
+                            ApplicationGatewaySslProtocol.TLSv10,
+                            ApplicationGatewaySslProtocol.TLSv11
+                        }
+                    },
                 Sku = new ApplicationGatewaySku()
                     {
                         Name = ApplicationGatewaySkuName.StandardSmall,
@@ -181,9 +204,17 @@ namespace Networks.Tests
                         new ApplicationGatewayBackendHttpSettings()
                         {
                             Name = backendHttpSettings2Name,
-                            Port = 80,
-                            Protocol = ApplicationGatewayProtocol.Http,
+                            Port = 443,
+                            Protocol = ApplicationGatewayProtocol.Https,
                             CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled,                            
+                            AuthenticationCertificates =  new List<SubResource>()
+                            {
+                                new SubResource()
+                                {
+                                    Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "authenticationCertificates", authCertName)
+                                }
+                            }
                         }
                     },
                 HttpListeners = new List<ApplicationGatewayHttpListener>
@@ -344,7 +375,8 @@ namespace Networks.Tests
                         //            resourceGroupName, appGwName, "urlPathMaps", urlPathMapName)
                         //    }
                         //}
-                    }
+                    },
+                AuthenticationCertificates = authCertList
             };
             return appGw;
         }
@@ -362,6 +394,8 @@ namespace Networks.Tests
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
             Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);            
+            Assert.Equal(gw1.SslPolicy.DisabledSslProtocols.Count, gw2.SslPolicy.DisabledSslProtocols.Count);
+            Assert.Equal(gw1.AuthenticationCertificates.Count, gw2.AuthenticationCertificates.Count);
         }
 
         [Fact]

@@ -17,38 +17,38 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Frontend Port of application gateway
+    /// Authentication certificates of application gateway
     /// </summary>
     [JsonTransformation]
-    public partial class ApplicationGatewayFrontendPort : SubResource
+    public partial class ApplicationGatewayAuthenticationCertificate : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationGatewayFrontendPort
-        /// class.
+        /// Initializes a new instance of the
+        /// ApplicationGatewayAuthenticationCertificate class.
         /// </summary>
-        public ApplicationGatewayFrontendPort() { }
+        public ApplicationGatewayAuthenticationCertificate() { }
 
         /// <summary>
-        /// Initializes a new instance of the ApplicationGatewayFrontendPort
-        /// class.
+        /// Initializes a new instance of the
+        /// ApplicationGatewayAuthenticationCertificate class.
         /// </summary>
-        public ApplicationGatewayFrontendPort(string id = default(string), int? port = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayAuthenticationCertificate(string id = default(string), string data = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
-            Port = port;
+            Data = data;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
         }
 
         /// <summary>
-        /// Frontend port
+        /// Certificate public data
         /// </summary>
-        [JsonProperty(PropertyName = "properties.port")]
-        public int? Port { get; set; }
+        [JsonProperty(PropertyName = "properties.data")]
+        public string Data { get; set; }
 
         /// <summary>
-        /// Provisioning state of the frontend port resource
+        /// Provisioning state of the authentication certificate resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
