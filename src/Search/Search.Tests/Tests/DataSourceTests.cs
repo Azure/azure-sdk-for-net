@@ -330,7 +330,8 @@ namespace Microsoft.Azure.Search.Tests
             {
                 DataSource actualDataSource = searchClient.DataSources.Get(expectedDataSource.Name);
 
-                AssertDataSourcesEqual(expectedDataSource, actualDataSource, isGet: true);
+                expectedDataSource.Credentials.ConnectionString = null; // Get doesn't return connection strings.
+                AssertDataSourcesEqual(expectedDataSource, actualDataSource);
             }
             finally
             {
@@ -338,15 +339,20 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
-        private static void AssertDataSourcesEqual(DataSource expected, DataSource actual, bool isGet = false)
+        private static void AssertDataSourcesEqual(DataSource expected, DataSource actual)
         {
-            Assert.NotNull(expected);
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
+
             Assert.NotNull(actual);
 
             Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Description, actual.Description);
             Assert.Equal(expected.Type, actual.Type);
-            AssertCredentialsEqual(expected.Credentials, actual.Credentials, isGet);
+            AssertCredentialsEqual(expected.Credentials, actual.Credentials);
             AssertDataContainersEqual(expected.Container, actual.Container);
             AssertDataChangeDetectionPoliciesEqual(expected.DataChangeDetectionPolicy, actual.DataChangeDetectionPolicy);
             AssertDataDeletionDetectionPoliciesEqual(expected.DataDeletionDetectionPolicy, actual.DataDeletionDetectionPolicy);
@@ -402,28 +408,26 @@ namespace Microsoft.Azure.Search.Tests
             Assert.False(true, "Unexpected type of deletion detection policy (did you forget to add support for a new policy type to test code?):" + expected.GetType().Name);
         }
 
-        private static void AssertCredentialsEqual(DataSourceCredentials expected, DataSourceCredentials actual, bool isGet)
+        private static void AssertCredentialsEqual(DataSourceCredentials expected, DataSourceCredentials actual)
         {
             if (expected == null)
             {
                 Assert.Null(actual);
+                return;
             }
-            else if (isGet)
-            {
-                // Get doesn't return the connection string
-                Assert.Null(actual.ConnectionString);
-            }
-            else
-            {
-                Assert.NotNull(actual);
-                Assert.Equal(expected.ConnectionString, actual.ConnectionString);
-            }
+
+            Assert.NotNull(actual);
+            Assert.Equal(expected.ConnectionString, actual.ConnectionString);
         }
 
         private static void AssertDataContainersEqual(DataContainer expected, DataContainer actual)
         {
-            Assert.NotNull(expected);
-            Assert.NotNull(actual);
+            if (expected == null)
+            {
+                Assert.Null(actual);
+                return;
+            }
+
             Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Query, actual.Query);
         }

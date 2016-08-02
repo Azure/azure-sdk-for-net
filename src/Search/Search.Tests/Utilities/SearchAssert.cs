@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Tests
             DictionariesEqual(expected, actual);
         }
 
-        public static void DictionariesEqual(IDictionary<string, object> expected, IDictionary<string, object> actual)
+        public static void DictionariesEqual<T>(IDictionary<string, T> expected, IDictionary<string, T> actual)
         {
             if (expected == null)
             {
