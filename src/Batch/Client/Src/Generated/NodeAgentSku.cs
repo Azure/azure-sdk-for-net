@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Batch
         internal NodeAgentSku(Models.NodeAgentSku protocolObject)
         {
             this.id = protocolObject.Id;
-            this.osType = UtilitiesInternal.MapNullableEnum<Common.OSType>(protocolObject.OsType);
+            this.osType = UtilitiesInternal.MapNullableEnum<Models.OSType, Common.OSType>(protocolObject.OsType);
             this.verifiedImageReferences = ImageReference.ConvertFromProtocolCollectionReadOnly(protocolObject.VerifiedImageReferences);
         }
 

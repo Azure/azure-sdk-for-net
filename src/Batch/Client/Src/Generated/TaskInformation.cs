@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Batch
             this.jobId = protocolObject.JobId;
             this.subtaskId = protocolObject.SubtaskId;
             this.taskId = protocolObject.TaskId;
-            this.taskState = UtilitiesInternal.MapEnum<Common.TaskState>(protocolObject.TaskState);
+            this.taskState = UtilitiesInternal.MapEnum<Models.TaskState, Common.TaskState>(protocolObject.TaskState);
             this.taskUrl = protocolObject.TaskUrl;
         }
 

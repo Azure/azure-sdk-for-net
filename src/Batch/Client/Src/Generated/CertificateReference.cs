@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer(Models.CertificateReference protocolObject) : base(BindingState.Bound)
             {
                 this.StoreLocationProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.CertStoreLocation>(protocolObject.StoreLocation),
+                    UtilitiesInternal.MapNullableEnum<Models.CertificateStoreLocation, Common.CertStoreLocation>(protocolObject.StoreLocation),
                     "StoreLocation",
                     BindingAccess.Read | BindingAccess.Write);
                 this.StoreNameProperty = this.CreatePropertyAccessor(
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.CertificateReference result = new Models.CertificateReference()
             {
-                StoreLocation = UtilitiesInternal.MapNullableEnum<Models.CertificateStoreLocation>(this.StoreLocation),
+                StoreLocation = UtilitiesInternal.MapNullableEnum<Common.CertStoreLocation, Models.CertificateStoreLocation>(this.StoreLocation),
                 StoreName = this.StoreName,
                 Thumbprint = this.Thumbprint,
                 ThumbprintAlgorithm = this.ThumbprintAlgorithm,

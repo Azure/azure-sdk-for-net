@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Batch
 
         internal TaskSchedulingPolicy(Models.TaskSchedulingPolicy protocolObject)
         {
-            this.computeNodeFillType = UtilitiesInternal.MapEnum<Common.ComputeNodeFillType>(protocolObject.NodeFillType);
+            this.computeNodeFillType = UtilitiesInternal.MapEnum<Models.ComputeNodeFillType, Common.ComputeNodeFillType>(protocolObject.NodeFillType);
         }
 
         #endregion Constructors
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.TaskSchedulingPolicy result = new Models.TaskSchedulingPolicy()
             {
-                NodeFillType = UtilitiesInternal.MapEnum<Models.ComputeNodeFillType>(this.ComputeNodeFillType),
+                NodeFillType = UtilitiesInternal.MapEnum<Common.ComputeNodeFillType, Models.ComputeNodeFillType>(this.ComputeNodeFillType),
             };
 
             return result;

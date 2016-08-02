@@ -33,11 +33,11 @@ namespace Microsoft.Azure.Batch
             this.endTime = protocolObject.EndTime;
             this.exitCode = protocolObject.ExitCode;
             this.id = protocolObject.Id;
-            this.previousState = UtilitiesInternal.MapNullableEnum<Common.TaskState>(protocolObject.PreviousState);
+            this.previousState = UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.PreviousState);
             this.previousStateTransitionTime = protocolObject.PreviousStateTransitionTime;
             this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new TaskSchedulingError(o).Freeze());
             this.startTime = protocolObject.StartTime;
-            this.state = UtilitiesInternal.MapNullableEnum<Common.TaskState>(protocolObject.State);
+            this.state = UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.State);
             this.stateTransitionTime = protocolObject.StateTransitionTime;
         }
 

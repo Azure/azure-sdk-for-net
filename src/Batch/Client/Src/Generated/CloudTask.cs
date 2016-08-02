@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Batch
                     "MultiInstanceSettings",
                     BindingAccess.Read);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.TaskState>(protocolObject.PreviousState),
+                    UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.PreviousState),
                     "PreviousState",
                     BindingAccess.Read);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor(
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Batch
                     "RunElevated",
                     BindingAccess.Read);
                 this.StateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.TaskState>(protocolObject.State),
+                    UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.State),
                     "State",
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(

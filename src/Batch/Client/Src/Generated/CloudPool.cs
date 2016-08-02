@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer(Models.CloudPool protocolObject) : base(BindingState.Bound)
             {
                 this.AllocationStateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.AllocationState>(protocolObject.AllocationState),
+                    UtilitiesInternal.MapNullableEnum<Models.AllocationState, Common.AllocationState>(protocolObject.AllocationState),
                     "AllocationState",
                     BindingAccess.Read);
                 this.AllocationStateTransitionTimeProperty = this.CreatePropertyAccessor(
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Batch
                     "StartTask",
                     BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.PoolState>(protocolObject.State),
+                    UtilitiesInternal.MapNullableEnum<Models.PoolState, Common.PoolState>(protocolObject.State),
                     "State",
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(

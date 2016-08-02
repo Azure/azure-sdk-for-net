@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch
             this.retryCount = protocolObject.RetryCount;
             this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new TaskSchedulingError(o).Freeze());
             this.startTime = protocolObject.StartTime;
-            this.state = UtilitiesInternal.MapEnum<Common.JobPreparationTaskState>(protocolObject.State);
+            this.state = UtilitiesInternal.MapEnum<Models.JobPreparationTaskState, Common.JobPreparationTaskState>(protocolObject.State);
             this.taskRootDirectory = protocolObject.TaskRootDirectory;
             this.taskRootDirectoryUrl = protocolObject.TaskRootDirectoryUrl;
         }

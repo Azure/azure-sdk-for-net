@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Batch
                     "KeepAlive",
                     BindingAccess.Read | BindingAccess.Write);
                 this.PoolLifetimeOptionProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapEnum<Common.PoolLifetimeOption>(protocolObject.PoolLifetimeOption),
+                    UtilitiesInternal.MapEnum<Models.PoolLifetimeOption, Common.PoolLifetimeOption>(protocolObject.PoolLifetimeOption),
                     "PoolLifetimeOption",
                     BindingAccess.Read | BindingAccess.Write);
                 this.PoolSpecificationProperty = this.CreatePropertyAccessor(
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Batch
             {
                 AutoPoolIdPrefix = this.AutoPoolIdPrefix,
                 KeepAlive = this.KeepAlive,
-                PoolLifetimeOption = UtilitiesInternal.MapEnum<Models.PoolLifetimeOption>(this.PoolLifetimeOption),
+                PoolLifetimeOption = UtilitiesInternal.MapEnum<Common.PoolLifetimeOption, Models.PoolLifetimeOption>(this.PoolLifetimeOption),
                 Pool = UtilitiesInternal.CreateObjectWithNullCheck(this.PoolSpecification, (o) => o.GetTransportObject()),
             };
 

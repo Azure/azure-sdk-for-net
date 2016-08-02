@@ -118,11 +118,11 @@ namespace Microsoft.Azure.Batch
                     "Metadata",
                     BindingAccess.Read | BindingAccess.Write);
                 this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete>(protocolObject.OnAllTasksComplete),
+                    UtilitiesInternal.MapNullableEnum<Models.OnAllTasksComplete, Common.OnAllTasksComplete>(protocolObject.OnAllTasksComplete),
                     "OnAllTasksComplete",
                     BindingAccess.Read | BindingAccess.Write);
                 this.OnTaskFailureProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.OnTaskFailure>(protocolObject.OnTaskFailure),
+                    UtilitiesInternal.MapNullableEnum<Models.OnTaskFailure, Common.OnTaskFailure>(protocolObject.OnTaskFailure),
                     "OnTaskFailure",
                     BindingAccess.Read);
                 this.PoolInformationProperty = this.CreatePropertyAccessor(
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Batch
                     "PoolInformation",
                     BindingAccess.Read | BindingAccess.Write);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.JobState>(protocolObject.PreviousState),
+                    UtilitiesInternal.MapNullableEnum<Models.JobState, Common.JobState>(protocolObject.PreviousState),
                     "PreviousState",
                     BindingAccess.Read);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor(
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Batch
                     "Priority",
                     BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.JobState>(protocolObject.State),
+                    UtilitiesInternal.MapNullableEnum<Models.JobState, Common.JobState>(protocolObject.State),
                     "State",
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(
@@ -471,8 +471,8 @@ namespace Microsoft.Azure.Batch
                 JobPreparationTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobPreparationTask, (o) => o.GetTransportObject()),
                 JobReleaseTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobReleaseTask, (o) => o.GetTransportObject()),
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
-                OnAllTasksComplete = UtilitiesInternal.MapNullableEnum<Models.OnAllTasksComplete>(this.OnAllTasksComplete),
-                OnTaskFailure = UtilitiesInternal.MapNullableEnum<Models.OnTaskFailure>(this.OnTaskFailure),
+                OnAllTasksComplete = UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
+                OnTaskFailure = UtilitiesInternal.MapNullableEnum<Common.OnTaskFailure, Models.OnTaskFailure>(this.OnTaskFailure),
                 PoolInfo = UtilitiesInternal.CreateObjectWithNullCheck(this.PoolInformation, (o) => o.GetTransportObject()),
                 Priority = this.Priority,
                 UsesTaskDependencies = this.UsesTaskDependencies,

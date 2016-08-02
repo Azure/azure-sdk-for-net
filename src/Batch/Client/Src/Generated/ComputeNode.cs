@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Batch
                     "RunningTasksCount",
                     BindingAccess.Read);
                 this.SchedulingStateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.SchedulingState>(protocolObject.SchedulingState),
+                    UtilitiesInternal.MapNullableEnum<Models.SchedulingState, Common.SchedulingState>(protocolObject.SchedulingState),
                     "SchedulingState",
                     BindingAccess.Read);
                 this.StartTaskProperty = this.CreatePropertyAccessor(
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Batch
                     "StartTaskInformation",
                     BindingAccess.Read);
                 this.StateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.ComputeNodeState>(protocolObject.State),
+                    UtilitiesInternal.MapNullableEnum<Models.ComputeNodeState, Common.ComputeNodeState>(protocolObject.State),
                     "State",
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(

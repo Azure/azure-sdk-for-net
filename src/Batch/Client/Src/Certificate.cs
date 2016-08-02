@@ -33,7 +33,7 @@
             protocolObject.Data, 
             protocolObject.Thumbprint, 
             protocolObject.ThumbprintAlgorithm, 
-            UtilitiesInternal.MapNullableEnum<Common.CertificateFormat>(protocolObject.CertificateFormat),
+            UtilitiesInternal.MapNullableEnum<Models.CertificateFormat, Common.CertificateFormat>(protocolObject.CertificateFormat),
             protocolObject.Password)
         {
         }

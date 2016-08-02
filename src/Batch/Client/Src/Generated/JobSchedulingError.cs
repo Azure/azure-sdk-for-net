@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Batch
 
         internal JobSchedulingError(Models.JobSchedulingError protocolObject)
         {
-            this.category = UtilitiesInternal.MapEnum<Common.SchedulingErrorCategory>(protocolObject.Category);
+            this.category = UtilitiesInternal.MapEnum<Models.SchedulingErrorCategory, Common.SchedulingErrorCategory>(protocolObject.Category);
             this.code = protocolObject.Code;
             this.details = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.Details);
             this.message = protocolObject.Message;

@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Batch
                     "Metadata",
                     BindingAccess.Read | BindingAccess.Write);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.JobScheduleState>(protocolObject.PreviousState),
+                    UtilitiesInternal.MapNullableEnum<Models.JobScheduleState, Common.JobScheduleState>(protocolObject.PreviousState),
                     "PreviousState",
                     BindingAccess.Read);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor(
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Batch
                     "Schedule",
                     BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.JobScheduleState>(protocolObject.State),
+                    UtilitiesInternal.MapNullableEnum<Models.JobScheduleState, Common.JobScheduleState>(protocolObject.State),
                     "State",
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(

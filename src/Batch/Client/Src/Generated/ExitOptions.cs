@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer(Models.ExitOptions protocolObject) : base(BindingState.Bound)
             {
                 this.JobActionProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.JobAction>(protocolObject.JobAction),
+                    UtilitiesInternal.MapNullableEnum<Models.JobAction, Common.JobAction>(protocolObject.JobAction),
                     "JobAction",
                     BindingAccess.Read);
             }
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.ExitOptions result = new Models.ExitOptions()
             {
-                JobAction = UtilitiesInternal.MapNullableEnum<Models.JobAction>(this.JobAction),
+                JobAction = UtilitiesInternal.MapNullableEnum<Common.JobAction, Models.JobAction>(this.JobAction),
             };
 
             return result;

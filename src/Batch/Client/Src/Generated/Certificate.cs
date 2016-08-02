@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch
                     "Password",
                     BindingAccess.None);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.CertificateState>(protocolObject.PreviousState),
+                    UtilitiesInternal.MapNullableEnum<Models.CertificateState, Common.CertificateState>(protocolObject.PreviousState),
                     "PreviousState",
                     BindingAccess.Read);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor(
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Batch
                     "PublicData",
                     BindingAccess.Read);
                 this.StateProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.MapNullableEnum<Common.CertificateState>(protocolObject.State),
+                    UtilitiesInternal.MapNullableEnum<Models.CertificateState, Common.CertificateState>(protocolObject.State),
                     "State",
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.CertificateAddParameter result = new Models.CertificateAddParameter()
             {
-                CertificateFormat = UtilitiesInternal.MapNullableEnum<Models.CertificateFormat>(this.CertificateFormat),
+                CertificateFormat = UtilitiesInternal.MapNullableEnum<Common.CertificateFormat, Models.CertificateFormat>(this.CertificateFormat),
                 Data = this.Data,
                 Password = this.Password,
                 Thumbprint = this.Thumbprint,

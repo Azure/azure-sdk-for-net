@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch
             this.retryCount = protocolObject.RetryCount;
             this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new TaskSchedulingError(o).Freeze());
             this.startTime = protocolObject.StartTime;
-            this.state = UtilitiesInternal.MapEnum<Common.StartTaskState>(protocolObject.State);
+            this.state = UtilitiesInternal.MapEnum<Models.StartTaskState, Common.StartTaskState>(protocolObject.State);
         }
 
         #endregion Constructors

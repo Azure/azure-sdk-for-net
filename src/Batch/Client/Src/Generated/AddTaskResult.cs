@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Batch
             this.eTag = protocolObject.ETag;
             this.lastModified = protocolObject.LastModified;
             this.location = protocolObject.Location;
-            this.status = UtilitiesInternal.MapEnum<Common.AddTaskStatus>(protocolObject.Status);
+            this.status = UtilitiesInternal.MapEnum<Models.TaskAddStatus, Common.AddTaskStatus>(protocolObject.Status);
             this.taskId = protocolObject.TaskId;
         }
 
