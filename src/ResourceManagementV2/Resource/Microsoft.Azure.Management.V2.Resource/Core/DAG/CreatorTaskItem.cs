@@ -4,17 +4,17 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    internal class CreatorTaskItem : ITaskItem<IResource>
+    internal class CreatorTaskItem<IResourceT> : ITaskItem<IResourceT>
     {
-        private IResourceCreator resourceCreator;
-        private IResource createdResource;
+        private IResourceCreator<IResourceT> resourceCreator;
+        private IResourceT createdResource;
 
-        public CreatorTaskItem(IResourceCreator resourceCreator)
+        public CreatorTaskItem(IResourceCreator<IResourceT> resourceCreator)
         {
             this.resourceCreator = resourceCreator;
         }
 
-        public IResource Result
+        public IResourceT Result
         {
             get
             {

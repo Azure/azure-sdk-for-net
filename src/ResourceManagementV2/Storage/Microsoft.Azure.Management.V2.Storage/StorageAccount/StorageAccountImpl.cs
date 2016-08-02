@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
 using Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition;
 using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
 using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
+using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -280,6 +281,22 @@ namespace Microsoft.Azure.Management.V2.Storage
         public IUpdate Update()
         {
             updateParameters = new StorageAccountUpdateParametersInner();
+            return this;
+        }
+
+        #endregion
+
+        #region Implementation of ICreatable interface 
+
+        IStorageAccount ICreatable<IStorageAccount>.Create()
+        {
+            Create();
+            return this;
+        }
+
+        async Task<IStorageAccount> ICreatable<IStorageAccount>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
+        {
+            await CreateAsync(cancellationToken, multiThreaded);
             return this;
         }
 
