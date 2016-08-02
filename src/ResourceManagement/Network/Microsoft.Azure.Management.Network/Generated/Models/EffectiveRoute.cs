@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the EffectiveRoute class.
         /// </summary>
-        public EffectiveRoute(string id = default(string), SubResource userDefinedRoute = default(SubResource), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
+        public EffectiveRoute(string id = default(string), string name = default(string), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
             : base(id)
         {
-            UserDefinedRoute = userDefinedRoute;
+            Name = name;
             Source = source;
             State = state;
             AddressPrefix = addressPrefix;
@@ -41,11 +41,10 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets the Id of the effective route. This is optional, only user
-        /// defined routes have the name.
+        /// Gets the name of the user defined route. This is optional.
         /// </summary>
-        [JsonProperty(PropertyName = "userDefinedRoute")]
-        public SubResource UserDefinedRoute { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets who created the route. Possible values include: 'Unknown',
