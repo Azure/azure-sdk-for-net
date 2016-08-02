@@ -12,7 +12,7 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class ResourceGroupImpl : 
-            CreatableUpdatable<IResourceGroup, ResourceManager.Models.ResourceGroupInner, ResourceGroupImpl>,
+            CreatableUpdatable<IResourceGroup, ResourceManager.Models.ResourceGroupInner, ResourceGroupImpl, IResource>,
             IResourceGroup,
             ResourceGroup.Definition.IDefinition,
             ResourceGroup.Update.IUpdate
@@ -185,6 +185,23 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #endregion
 
+        #region Implementation of ICreatable interface 
+
+        IResourceGroup ICreatable<IResourceGroup>.Create()
+        {
+            Create();
+            return this;
+        }
+
+        async Task<IResourceGroup> ICreatable<IResourceGroup>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
+        {
+            await CreateAsync(cancellationToken, multiThreaded);
+            return this;
+        }
+
+        #endregion
+
+
         #region Implementation of IResourceCreator interface
 
         public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
@@ -208,7 +225,8 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public async Task<IResourceGroup> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
-            return await CreateAsync(cancellationToken, multiThreaded);
+            await CreateAsync(cancellationToken, multiThreaded);
+            return this;
         }
 
         public IResourceGroup Apply()

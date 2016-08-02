@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class DeploymentImpl :
-        CreatableUpdatable<IDeployment, DeploymentExtendedInner, DeploymentImpl>,
+        CreatableUpdatable<IDeployment, DeploymentExtendedInner, DeploymentImpl, IDeployment>,
         IDeployment,
         Deployment.Definition.IDefinition,
         Deployment.Update.IUpdate
@@ -372,7 +372,6 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #endregion
 
-
         #region actions 
 
         public void Cancel()
@@ -421,16 +420,65 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #endregion
 
-        #region Implementation of IResourceCreator interface
+        #region Implementation of ICreatable interface 
 
-        public override Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
+        public new IDeployment Create()
         {
-            throw new NotImplementedException();
+            if (creatableResourceGroup != null)
+            {
+                creatableResourceGroup.Create();
+            }
+            CreateResource();
+            return this;
         }
 
-        public override IResource CreateResource()
+
+        public async new Task<IDeployment> CreateAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
-            throw new NotImplementedException();
+            if (creatableResourceGroup != null)
+            {
+                await creatableResourceGroup.CreateAsync(cancellationToken);
+            }
+            return await CreateResourceAsync(cancellationToken);
+        }
+
+
+        #endregion
+
+        #region Implementation of IResourceCreator interface
+
+        public override async Task<IDeployment> CreateResourceAsync(CancellationToken cancellationToken)
+        {
+            DeploymentInner inner = new DeploymentInner
+            {
+                Properties = new DeploymentProperties
+                {
+                    Mode = Mode,
+                    Template = Template,
+                    TemplateLink = TemplateLink,
+                    Parameters = Parameters,
+                    ParametersLink = ParametersLink
+                }
+            };
+            await client.CreateOrUpdateAsync(ResourceGroupName, Name, inner);
+            return this;
+        }
+
+        public override IDeployment CreateResource()
+        {
+            DeploymentInner inner = new DeploymentInner
+            {
+                Properties = new DeploymentProperties
+                {
+                    Mode = Mode,
+                    Template = Template,
+                    TemplateLink = TemplateLink,
+                    Parameters = Parameters,
+                    ParametersLink = ParametersLink
+                }
+            };
+            client.CreateOrUpdate(ResourceGroupName, Name, inner);
+            return this;
         }
 
         #endregion
@@ -439,12 +487,12 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public IDeployment Apply()
         {
-            throw new NotImplementedException();
+            return Create();
         }
 
-        public Task<IDeployment> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
+        public async Task<IDeployment> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
-            throw new NotImplementedException();
+            return await CreateAsync(cancellationToken, multiThreaded);
         }
 
         #endregion

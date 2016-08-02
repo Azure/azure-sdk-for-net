@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// <typeparam name="InnerResourceBaseT">The autorest generated base class from which <InnerResourceT @ref="InnerResourceT" /> inherits</typeparam>
     /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
     public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion> : 
-        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT>,
+        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResource>,
         IResource
         where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion>, IFluentResourceT
         where IFluentResourceT : class, IResource
