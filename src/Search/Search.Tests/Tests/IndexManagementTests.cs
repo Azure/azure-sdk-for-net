@@ -418,6 +418,44 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        public void AddingCustomAnalyzerThrowsCloudExceptionByDefault()
+        {
+            Run(() =>
+            {
+                SearchServiceClient client = Data.GetSearchServiceClient();
+
+                Index index = CreateTestIndex();
+                index.Analyzers = new List<Analyzer>() { new WhitespaceAnalyzer("my_whitespace_analyzer") };
+
+                client.Indexes.Create(index);
+
+                index.Analyzers.Add(new KeywordAnalyzer("my_keyword_analyzer"));
+
+                SearchAssert.ThrowsCloudException(() => client.Indexes.CreateOrUpdate(index), HttpStatusCode.BadRequest);
+            });
+        }
+
+        [Fact]
+        public void CanAddCustomAnalyzerWithIndexDowntime()
+        {
+            Run(() =>
+            {
+                SearchServiceClient client = Data.GetSearchServiceClient();
+
+                Index index = CreateTestIndex();
+                index.Analyzers = new List<Analyzer>() { new WhitespaceAnalyzer("my_whitespace_analyzer") };
+
+                client.Indexes.Create(index);
+
+                index.Analyzers.Add(new KeywordAnalyzer("my_keyword_analyzer"));
+
+                Index updatedIndex = client.Indexes.CreateOrUpdate(index, allowIndexDowntime: true);
+
+                AssertIndexesEqual(index, updatedIndex);
+            });
+        }
+
         private static Index CreateTestIndex()
         {
             string indexName = SearchTestUtilities.GenerateName();
