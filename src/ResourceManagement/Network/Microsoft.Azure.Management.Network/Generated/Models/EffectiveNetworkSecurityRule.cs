@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Effective NetworkSecurityRules
     /// </summary>
-    public partial class EffectiveNetworkSecurityRules
+    public partial class EffectiveNetworkSecurityRule
     {
         /// <summary>
-        /// Initializes a new instance of the EffectiveNetworkSecurityRules
+        /// Initializes a new instance of the EffectiveNetworkSecurityRule
         /// class.
         /// </summary>
-        public EffectiveNetworkSecurityRules() { }
+        public EffectiveNetworkSecurityRule() { }
 
         /// <summary>
-        /// Initializes a new instance of the EffectiveNetworkSecurityRules
+        /// Initializes a new instance of the EffectiveNetworkSecurityRule
         /// class.
         /// </summary>
-        public EffectiveNetworkSecurityRules(string name = default(string), string protocol = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), string sourceAddressPrefix = default(string), string destinationAddressPrefix = default(string), IList<string> expandedSourceAddressPrefix = default(IList<string>), IList<string> expandedDestinationAddressPrefix = default(IList<string>), string access = default(string), int? priority = default(int?), string direction = default(string))
+        public EffectiveNetworkSecurityRule(string name = default(string), string protocol = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), string sourceAddressPrefix = default(string), string destinationAddressPrefix = default(string), IList<string> expandedSourceAddressPrefix = default(IList<string>), IList<string> expandedDestinationAddressPrefix = default(IList<string>), string access = default(string), int? priority = default(int?), string direction = default(string))
         {
             Name = name;
             Protocol = protocol;

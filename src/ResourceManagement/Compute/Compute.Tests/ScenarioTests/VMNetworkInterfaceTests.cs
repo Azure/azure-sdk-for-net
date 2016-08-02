@@ -95,6 +95,69 @@ namespace Compute.Tests
         }
 
         [Fact]
+        public void TestEffectiveRouteAndAcls()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                VirtualMachine inputVM;
+                try
+                {
+                    // Create the resource Group, it might have been already created during StorageAccount creation.
+                    var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
+                        rgName,
+                        new ResourceGroup
+                        {
+                            Location = m_location,
+                            Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
+                        });
+
+                    // Create Storage Account, so that both the VMs can share it
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    Subnet subnetResponse = CreateVNET(rgName);
+
+                    NetworkInterface nicResponse = CreateNIC(rgName, subnetResponse, null);
+
+                    string asetId = CreateAvailabilitySet(rgName, asName);
+
+                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id);
+
+                    string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
+
+                    var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(
+                         rgName, inputVM.Name, inputVM);
+
+                    Assert.NotNull(createOrUpdateResponse);
+
+                    var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
+
+                    Assert.True(
+                        getVMResponse.AvailabilitySet.Id
+                            .ToLowerInvariant() == asetId.ToLowerInvariant());
+                    ValidateVM(inputVM, getVMResponse, expectedVMReferenceId);
+
+                    var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse.Name);
+                    // TODO AutoRest: Recording Passed, but these assertions failed in Playback mode
+                    Assert.NotNull(getNicResponse.MacAddress);
+                    Assert.NotNull(getNicResponse.Primary);
+                    Assert.True(getNicResponse.Primary != null && getNicResponse.Primary.Value);
+                }
+                finally
+                {
+                    // Cleanup the created resources
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        [Fact]
         public void TestMultiNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
