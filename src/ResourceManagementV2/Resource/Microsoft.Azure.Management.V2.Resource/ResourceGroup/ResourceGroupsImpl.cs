@@ -3,54 +3,80 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class ResourceGroupsImpl : 
+        CreatableWrappers<IResourceGroup, ResourceGroupImpl, ResourceGroupInner>,
         IResourceGroups
     {
-        IResourceGroupsOperations innerCollection;
+        private IResourceGroupsOperations InnerCollection { get; set; }
 
         internal ResourceGroupsImpl(IResourceGroupsOperations innerCollection)
         {
-            this.innerCollection = innerCollection;
+            InnerCollection = innerCollection;
         }
 
         public PagedList<IResourceGroup> List()
         {
-            throw new NotImplementedException();
+            IPage<ResourceGroupInner> firstPage = InnerCollection.List();
+            var pagedList = new PagedList<ResourceGroupInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
+           return WrapList(pagedList);
         }
 
         public bool CheckExistence(string name)
         {
-            throw new NotImplementedException();
+            return InnerCollection.CheckExistence(name);
         }
 
         public ResourceGroup.Definition.IBlank Define(string name)
         {
-            ResourceManager.Models.ResourceGroupInner inner = new ResourceManager.Models.ResourceGroupInner();
+            ResourceGroupInner inner = new ResourceGroupInner();
             inner.Name = name;
-            return new ResourceGroupImpl(inner, innerCollection);
+            return new ResourceGroupImpl(inner, InnerCollection);
         }
 
-        public void Delete(string id)
+        public void Delete(string name)
         {
-            throw new NotImplementedException();
+            DeleteAsync(name).Wait();
         }
 
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return InnerCollection.DeleteAsync(name, cancellationToken);
         }
 
         public IResourceGroup GetByName(string name)
         {
-            throw new NotImplementedException();
+            return GetByNameAsync(name).Result;
         }
 
-        public Task<IResourceGroup> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IResourceGroup> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var resourceGroupInner = await InnerCollection.GetAsync(name, cancellationToken);
+            return WrapModel(resourceGroupInner);
         }
+
+        #region Implementation of CreatableWrappers abstract methods
+
+        protected override ResourceGroupImpl WrapModel(string name)
+        {
+            return new ResourceGroupImpl(new ResourceGroupInner
+            {
+                Name = name
+            }, InnerCollection);
+        }
+
+        protected override IResourceGroup WrapModel(ResourceGroupInner inner)
+        {
+            return new ResourceGroupImpl(inner, InnerCollection);
+        }
+
+        #endregion
     }
 }

@@ -12,14 +12,14 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class ResourceGroupImpl : 
-            CreatableUpdatable<IResourceGroup, ResourceManager.Models.ResourceGroupInner, ResourceGroupImpl, IResource>,
+            CreatableUpdatable<IResourceGroup, ResourceGroupInner, ResourceGroupImpl, IResource>,
             IResourceGroup,
             ResourceGroup.Definition.IDefinition,
             ResourceGroup.Update.IUpdate
     {
         ResourceManager.IResourceGroupsOperations client;
 
-        internal ResourceGroupImpl(ResourceManager.Models.ResourceGroupInner innerModel, ResourceManager.IResourceGroupsOperations client) : base(innerModel.Name, innerModel)
+        internal ResourceGroupImpl(ResourceGroupInner innerModel, ResourceManager.IResourceGroupsOperations client) : base(innerModel.Name, innerModel)
         {
             this.client = client;
         }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public IWithCreate WithRegion(Region region)
         {
-            throw new NotImplementedException();
+            return WithRegion(EnumNameAttribute.GetName(region));
         }
 
         public IWithCreate WithTags(IDictionary<string, string> tags)
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
         {
-            ResourceManager.Models.ResourceGroupInner param = new ResourceManager.Models.ResourceGroupInner();
+            ResourceGroupInner param = new ResourceGroupInner();
             param.Location = Inner.Location;
             param.Tags = Inner.Tags;
             var response = await client.CreateOrUpdateWithHttpMessagesAsync(Name, param, null, cancellationToken);
