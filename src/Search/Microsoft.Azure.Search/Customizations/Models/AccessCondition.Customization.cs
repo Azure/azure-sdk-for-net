@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Search.Models
         /// Constructs an access condition such that an operation will be performed only if the resource's current ETag value
         /// matches the specified ETag value.
         /// </summary>
-        /// <param name="etag">The ETag value to check against the resource's ETag.</param>
+        /// <param name="eTag">The ETag value to check against the resource's ETag.</param>
         /// <returns>An <see cref="Microsoft.Azure.Search.Models.AccessCondition" /> object that represents the If-Match condition.</returns>
         public static AccessCondition GenerateIfMatchCondition(string eTag)
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Search.Models
         /// Constructs an access condition such that an operation will be performed only if the resource's current ETag value
         /// does not match the specified ETag value.
         /// </summary>
-        /// <param name="etag">The ETag value to check against the resource's ETag.</param>
+        /// <param name="eTag">The ETag value to check against the resource's ETag.</param>
         /// <returns>An <see cref="Microsoft.Azure.Search.Models.AccessCondition" /> object that represents the If-None-Match condition.</returns>
         public static AccessCondition GenerateIfNoneMatchCondition(string eTag)
         {

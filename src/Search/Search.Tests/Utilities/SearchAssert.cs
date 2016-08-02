@@ -16,11 +16,6 @@ namespace Microsoft.Azure.Search.Tests
     {
         public static void DocumentsEqual(Document expected, Document actual)
         {
-            DictionariesEqual(expected, actual);
-        }
-
-        public static void DictionariesEqual<T>(IDictionary<string, T> expected, IDictionary<string, T> actual)
-        {
             if (expected == null)
             {
                 Assert.Null(actual);
@@ -65,7 +60,6 @@ namespace Microsoft.Azure.Search.Tests
                     {
                         Assert.IsType(expectedType, actualObj);
 
-                        // Special case for comparing Documents.
                         if (expectedType == typeof(string[]))
                         {
                             Assert.True(((string[])expectedObj).SequenceEqual((string[])actualObj));
