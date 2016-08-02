@@ -397,7 +397,7 @@
         public Task<AzureOperationHeaderResponse<Models.JobUpdateHeaders>> UpdateJob(
             string jobId,
             int? priority,
-            Models.OnAllTasksComplete onAllTasksComplete,
+            Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
             IList<Models.MetadataItem> metadata,
@@ -422,7 +422,7 @@
         public Task<AzureOperationHeaderResponse<Models.JobPatchHeaders>> PatchJob(
             string jobId,
             int? priority,
-            Models.OnAllTasksComplete onAllTasksComplete,
+            Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
             IList<Models.MetadataItem> metadata,

@@ -66,13 +66,10 @@
             const string jobId = "Foo";
             const string newPoolId = "Bar";
             var protoJob = new Protocol.Models.CloudJob(id: jobId);
-            var newOnAllTasksCompleted = Protocol.Models.OnAllTasksComplete.TerminateJob;
-
 
             Action<CloudJob> modificationFunction = job =>
             {
-                job.PoolInformation = new PoolInformation() { PoolId = newPoolId }; 
-                job.OnAllTasksComplete = (Microsoft.Azure.Batch.Common.OnAllTasksComplete?)newOnAllTasksCompleted;
+                job.PoolInformation = new PoolInformation() { PoolId = newPoolId };
             };
 
             Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
@@ -80,6 +77,7 @@
                 Assert.Null(patchParameters.Priority);
                 Assert.Null(patchParameters.Constraints);
                 Assert.Null(patchParameters.Metadata);
+                Assert.Null(patchParameters.OnAllTasksComplete);
 
                 Assert.NotNull(patchParameters.PoolInfo);
                 Assert.Equal(newPoolId, patchParameters.PoolInfo.PoolId);
@@ -136,7 +134,6 @@
             Action<CloudJob> modificationFunction = job =>
                 {
                     job.Metadata.Add(new MetadataItem("Baz", "Qux"));
-                    job.OnAllTasksComplete = OnAllTasksComplete.NoAction;
                 };
 
             Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
@@ -144,6 +141,7 @@
                     Assert.Null(patchParameters.Priority);
                     Assert.Null(patchParameters.Constraints);
                     Assert.Null(patchParameters.PoolInfo);
+                    Assert.Null(patchParameters.OnAllTasksComplete);
 
                     Assert.NotNull(patchParameters.Metadata);
                     Assert.Equal(2, patchParameters.Metadata.Count);
@@ -166,7 +164,6 @@
             Action<CloudJob> modificationFunction = job =>
                 {
                     job.Constraints.MaxWallClockTime = newMaxWallClock;
-                    job.OnAllTasksComplete = OnAllTasksComplete.NoAction;
                 };
 
             Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
@@ -174,6 +171,7 @@
                     Assert.Null(patchParameters.Priority);
                     Assert.Null(patchParameters.Metadata);
                     Assert.Null(patchParameters.PoolInfo);
+                    Assert.Null(patchParameters.OnAllTasksComplete);
 
                     Assert.NotNull(patchParameters.Constraints);
                     Assert.Equal(newMaxWallClock, patchParameters.Constraints.MaxWallClockTime);
