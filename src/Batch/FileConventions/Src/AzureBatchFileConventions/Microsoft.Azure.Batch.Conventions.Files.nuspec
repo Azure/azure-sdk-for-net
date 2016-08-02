@@ -22,7 +22,7 @@ This version of the file conventions library works with version 5.0.0 of the Azu
     <tags>Microsoft, Azure, Batch, windowsazureofficial</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="Azure.Batch" version="4.0.1" />
+        <dependency id="Azure.Batch" version="5.0.0" />
         <dependency id="WindowsAzure.Storage" version="6.2.0" />
       </group>
     </dependencies>
