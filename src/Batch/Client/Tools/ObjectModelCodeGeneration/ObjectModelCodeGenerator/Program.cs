@@ -36,8 +36,8 @@
 
             foreach (var type in model.Types)
             {
-                string templateDirectory = CreateResultDirectoryIfNotExist("Generated");
-                string outputFilePath = Path.Combine(templateDirectory, type.Name + ".cs");
+                string outputDirectory = "../../../../../src/Generated";
+                string outputFilePath = Path.Combine(outputDirectory, type.Name + ".cs");
 
                 string innerClassString;
                 if (!type.IsStaticallyReadOnly || type.IsTopLevelObject)
