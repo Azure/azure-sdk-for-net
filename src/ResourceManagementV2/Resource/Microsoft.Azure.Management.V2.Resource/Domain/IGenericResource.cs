@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Resource
     public interface IGenericResource  :
         IGroupableResource,
         IRefreshable<IGenericResource>,
-        IUpdatable<IUpdateWithApiVersion>,
+        IUpdatable<GenericResource.Update.IWithApiVersion>,
         IWrapper<GenericResourceInner>
     {
         /// <returns>the namespace of the resource provider</returns>
