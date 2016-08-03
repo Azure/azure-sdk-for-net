@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         ISupportsGettingById<IFluentResourceT>
         where IFluentResourceT : IGroupableResource
         where FluentResourceT : IFluentResourceT
-        where ManagerT : ManagerBase
+        where ManagerT : IManagerBase
     {
         protected GroupableResources(InnerCollectionT innerCollection, ManagerT manager)
         {

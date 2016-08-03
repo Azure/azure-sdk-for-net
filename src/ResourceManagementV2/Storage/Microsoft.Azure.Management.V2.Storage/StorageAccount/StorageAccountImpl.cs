@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             Management.Storage.Models.StorageAccountInner,
             Rest.Azure.Resource, 
             StorageAccountImpl,
-            StorageManager,
+            IStorageManager,
             StorageAccount.Definition.IWithGroup,
             StorageAccount.Definition.IWithCreate>,
         IStorageAccount,
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         internal StorageAccountImpl(string name,
             Management.Storage.Models.StorageAccountInner innerObject,
             IStorageAccountsOperations client,
-            StorageManager manager) : base(name, innerObject, manager)
+            IStorageManager manager) : base(name, innerObject, manager)
         {
             this.name = name;
             createParameters = new StorageAccountCreateParametersInner();

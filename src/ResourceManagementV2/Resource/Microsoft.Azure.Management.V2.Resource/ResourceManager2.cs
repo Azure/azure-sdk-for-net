@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.V2.Resource
     /// <summary>
     /// Entry point to Azure resource management.
     /// </summary>
-    public interface IResourceManager
+    public interface IResourceManager : IManagerBase
     {
         /// <summary>
         /// Gets the resource group management API entry point.
