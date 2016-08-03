@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public PagedList<IVirtualMachine> List()
         {
-
             IPage<Management.Compute.Models.VirtualMachineInner> firstPage = InnerCollection.ListAll();
             var pagedList = new PagedList<Management.Compute.Models.VirtualMachineInner>(firstPage, (string nextPageLink) =>
             {

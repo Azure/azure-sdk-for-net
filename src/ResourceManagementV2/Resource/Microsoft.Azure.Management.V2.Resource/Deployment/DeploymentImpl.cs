@@ -18,15 +18,15 @@ namespace Microsoft.Azure.Management.V2.Resource
         Deployment.Definition.IDefinition,
         Deployment.Update.IUpdate
     {
-        private DeploymentsOperations client;
-        private DeploymentOperationsOperations deploymentOperationsClient;
+        private IDeploymentsOperations client;
+        private IDeploymentOperationsOperations deploymentOperationsClient;
         private ResourceManager2 resourceManager;
         private string resourceGroupName;
         private ICreatable<IResourceGroup> creatableResourceGroup;
 
         internal DeploymentImpl(DeploymentExtendedInner innerModel,
-            DeploymentsOperations client,
-            DeploymentOperationsOperations deploymentOperationsClient,
+            IDeploymentsOperations client,
+            IDeploymentOperationsOperations deploymentOperationsClient,
             ResourceManager2 resourceManager) : base(innerModel.Name, innerModel)
         {
             this.client = client;
