@@ -2,13 +2,13 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public class CreatorTaskGroup : TaskGroupBase<IResource>
+    public class CreatorTaskGroup<IResourceT> : TaskGroupBase<IResourceT>
     {
-        public CreatorTaskGroup(string rootCreatableId, IResourceCreator resourceCreator) 
-            : base(rootCreatableId, new CreatorTaskItem(resourceCreator))
+        public CreatorTaskGroup(string rootCreatableId, IResourceCreator<IResourceT> resourceCreator) 
+            : base(rootCreatableId, new CreatorTaskItem<IResourceT>(resourceCreator))
         {}
 
-        public IResource CreatedResource(string key)
+        public IResourceT CreatedResource(string key)
         {
             return TaskResult(key);
         }

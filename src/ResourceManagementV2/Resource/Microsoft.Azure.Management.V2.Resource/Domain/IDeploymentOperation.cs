@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         string ProvisioningState { get; }
 
         /// <returns>the date and time of the operation</returns>
-        DateTime Timestamp { get; }
+        DateTime? Timestamp { get; }
 
         /// <returns>the operation status code.=</returns>
         string StatusCode { get; }

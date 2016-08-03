@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         {
             groupName = creatable.Key;
             newGroup = creatable;
-            AddCreatableDependency(creatable as IResourceCreator);
+            AddCreatableDependency(creatable as IResourceCreator<IResource>);
             return this as IDefintionAfterResourceGroup;
         }
 

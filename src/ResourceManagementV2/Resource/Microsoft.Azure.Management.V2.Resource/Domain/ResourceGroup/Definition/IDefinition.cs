@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup.Definition
         IWithCreate
     {
     }
+
     /// <summary>
     /// A resource group definition allowing location to be set.
     /// </summary>

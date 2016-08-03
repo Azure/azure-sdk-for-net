@@ -87,6 +87,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
                     // 'ExecuteNodeTaskAsync' will be signalled via this.taskCompletionSource.
                     Task task = ExecuteNodeTaskAsync(nextNode, cancellationToken);
                 }
+                nextNode = DAG.GetNext();
             }
         }
 

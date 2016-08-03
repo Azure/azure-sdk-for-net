@@ -26,25 +26,27 @@ namespace AzureTests
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
 
-            computeManager.VirtualMachines.List();*/
+           computeManager.VirtualMachines.List();*/ 
 
-            string subscriptionId = "";
+            /**
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
-                .WithSubscription(subscriptionId);
+                .WithSubscription(credentials.DefaultSubscriptionId);
 
-            var resourceGroup = resourceManager.ResourceGroups
+            resourceManager.ResourceGroups
                 .Define("mynewrg")
-                .WithRegion("west us")
-                .CreateAsync().Result;
-            
+                .WithRegion(Region.US_WEST)
+                .CreateAsync().ContinueWith((Task<IResourceGroup> result) =>
+                {
+                    Console.WriteLine(result.Result.ProvisioningState);
+                }).Wait();
+            **/
 
-            /**
             IStorageManager storageManager = StorageManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.SubscriptionId);
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
 
             var storageAccount = storageManager.StorageAccounts
                 .Define("anuredbluv")
@@ -53,7 +55,6 @@ namespace AzureTests
                 .CreateAsync().Result;
 
             Console.WriteLine(storageAccount);
-            **/
         }
     }
 }

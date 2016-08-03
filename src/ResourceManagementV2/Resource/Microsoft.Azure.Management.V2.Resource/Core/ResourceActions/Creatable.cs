@@ -5,26 +5,39 @@ using System.Threading;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 {
-    public abstract class Creatable<IFluentResourceT, InnerResourceT, FluentResourceT> :
+    /// <summary>
+    /// The base class for all creatable resource.
+    /// </summary>
+    /// <typeparam name="IFluentResourceT">The fluent model type representing the creatable resource</typeparam>
+    /// <typeparam name="InnerResourceT">The model inner type that the fluent model type wraps</typeparam>
+    /// <typeparam name="FluentResourceT">The fluent model implementation type</typeparam>
+    /// <typeparam name="IResourceT">The fluent resourced or one of the base interface from which inherits</typeparam>
+    public abstract class Creatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResourceT> :
         IndexableRefreshableWrapper<IFluentResourceT, InnerResourceT>,
-        IResourceCreator
+        IResourceCreator<IResourceT>
         where FluentResourceT : class
-        where IFluentResourceT : class, IResource
+        where IFluentResourceT : class, IResourceT
+        where IResourceT : class
     {
         protected Creatable(string name, InnerResourceT innerObject) : base(name, innerObject)
         {
-            IResourceCreator creator =this as IResourceCreator;
-            CreatorTaskGroup = new CreatorTaskGroup(name, creator);
+            IResourceCreator<IResourceT> creator =this as IResourceCreator<IResourceT>;
+            CreatorTaskGroup = new CreatorTaskGroup<IResourceT>(name, creator);
         }
 
-        protected void AddCreatableDependency(IResourceCreator creatableResource)
+        protected void AddCreatableDependency(IResourceCreator<IResourceT> creatableResource)
         {
             creatableResource.CreatorTaskGroup.Merge(CreatorTaskGroup);
         }
 
-        public Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
+        public IResourceT Create()
         {
-            TaskCompletionSource<IFluentResourceT> taskCompletionSource = new TaskCompletionSource<IFluentResourceT>();
+            return CreateAsync(CancellationToken.None).Result;
+        }
+
+        public Task<IResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
+        {
+            TaskCompletionSource<IResourceT> taskCompletionSource = new TaskCompletionSource<IResourceT>();
             if (CreatorTaskGroup.IsPreparer)
             {
                 CreatorTaskGroup.Prepare();
@@ -36,7 +49,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
                     }
                     else
                     {
-                        IFluentResourceT thisResource = this as IFluentResourceT;
+                        IResourceT thisResource = this as IResourceT;
                         if (thisResource == null)
                         {
                             taskCompletionSource.SetException(new InvalidOperationException("Interal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'"));
@@ -56,23 +69,26 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
         }
 
 
-        protected IResource CreatedResource(string key)
+        protected IResourceT CreatedResource(string key)
         {
             return CreatorTaskGroup.TaskResult(key);
         }
 
         #region Implementation of IResourceCreator
 
-        public CreatorTaskGroup CreatorTaskGroup { get; private set; }
+        public CreatorTaskGroup<IResourceT> CreatorTaskGroup { get; private set; }
 
-        public abstract Task<IResource> CreateResourceAsync(CancellationToken cancellationToken);
+        public abstract Task<IResourceT> CreateResourceAsync(CancellationToken cancellationToken);
+
+        public abstract IResourceT CreateResource();
 
         #endregion
     }
 
-    public interface IResourceCreator
+    public interface IResourceCreator<IResourceT>
     {
-        Task<IResource> CreateResourceAsync(CancellationToken cancellationToken);
-        CreatorTaskGroup CreatorTaskGroup { get; }
+        Task<IResourceT> CreateResourceAsync(CancellationToken cancellationToken);
+        IResourceT CreateResource();
+        CreatorTaskGroup<IResourceT> CreatorTaskGroup { get; }
     }
 }

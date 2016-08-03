@@ -33,6 +33,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             throw new NotImplementedException();
         }
 
+        public override IResource CreateResource()
+        {
+            return CreateResourceAsync(CancellationToken.None).Result;
+        }
+
         public override Task<IVirtualMachine> Refresh()
         {
             throw new NotImplementedException();

@@ -30,8 +30,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
         /// it when system resources are available.
         /// </summary>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
+        /// <param name="multiThreaded">multiThreaded use mutli-threading</param>
         /// <returns>a handle to cancel the request</returns>
-        Task<T> CreateAsync (CancellationToken cancellationToken = default(CancellationToken));
+        Task<T> CreateAsync (CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true);
 
     }
 }

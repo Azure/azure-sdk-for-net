@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         string CorrelationId { get; }
 
         /// <returns>the timestamp of the template deployment</returns>
-        DateTime Timestamp { get; }
+        DateTime? Timestamp { get; }
 
         /// <returns>key/value pairs that represent deployment output</returns>
         object Outputs { get; }
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         /// <returns>the deployment mode. Possible values include:</returns>
         /// <returns>'Incremental', 'Complete'.</returns>
-        DeploymentMode Mode { get; }
+        DeploymentMode? Mode { get; }
 
         /// <returns>the operations related to this deployment</returns>
         IDeploymentOperations DeploymentOperations { get; }

@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
 using Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition;
 using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
 using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
+using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -129,9 +130,9 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Fluent setters 
 
-        #region Definition setters [Implementation of interfaces in StorageAccount.Definition]
+        #region Definition setters
 
-        public StorageAccount.Definition.IWithCreate WithSku(SkuName skuName)
+        public IWithCreate WithSku(SkuName skuName)
         {
             createParameters.Sku = new Sku()
             {
@@ -140,13 +141,13 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public StorageAccount.Definition.IWithCreate WithAccessTier(AccessTier accessTier)
+        public IWithCreate WithAccessTier(AccessTier accessTier)
         {
             createParameters.AccessTier = accessTier;
             return this;
         }
 
-        public StorageAccount.Definition.IWithCreateAndAccessTier WithBlobStorageAccountKind()
+        public IWithCreateAndAccessTier WithBlobStorageAccountKind()
         {
             createParameters.Kind = Management.Storage.Models.Kind.BlobStorage;
             return this;
@@ -158,13 +159,13 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public StorageAccount.Definition.IWithCreate WithCustomDomain(CustomDomain customDomain)
+        public IWithCreate WithCustomDomain(CustomDomain customDomain)
         {
             createParameters.CustomDomain = customDomain;
             return this;
         }
 
-        public StorageAccount.Definition.IWithCreate WithCustomDomain(string name, bool useSubDomain)
+        public IWithCreate WithCustomDomain(string name, bool useSubDomain)
         {
             return WithCustomDomain(new CustomDomain()
             {
@@ -173,35 +174,35 @@ namespace Microsoft.Azure.Management.V2.Storage
             });
         }
 
-        public StorageAccount.Definition.IWithCreate WithEncryption(Encryption encryption)
+        public IWithCreate WithEncryption(Encryption encryption)
         {
             createParameters.Encryption = encryption;
             return this;
         }
 
-        public StorageAccount.Definition.IWithCreate WithGeneralPurposeAccountKind()
+        public IWithCreate WithGeneralPurposeAccountKind()
         {
             createParameters.Kind = Management.Storage.Models.Kind.Storage;
             return this;
         }
 
-        StorageAccount.Definition.IWithCreate Resource.Core.Resource.Definition.IDefinitionWithTags<StorageAccount.Definition.IWithCreate>.WithTags(IDictionary<string, string> tags)
+        IWithCreate IDefinitionWithTags<IWithCreate>.WithTags(IDictionary<string, string> tags)
         {
             base.WithTags(tags);
             return this;
         }
 
-        StorageAccount.Definition.IWithCreate Resource.Core.Resource.Definition.IDefinitionWithTags<StorageAccount.Definition.IWithCreate>.WithTag(string key, string value)
+        IWithCreate IDefinitionWithTags<IWithCreate>.WithTag(string key, string value)
         {
             base.WithTag(key, value);
             return this;
         }
 
         #endregion
-        
-        #region Update setters [Implementation of interfaces in StorageAccount.Update]
 
-        StorageAccount.Update.IUpdate StorageAccount.Update.IWithAccessTier.WithAccessTier(AccessTier accessTier)
+        #region Update setters
+
+        IUpdate StorageAccount.Update.IWithAccessTier.WithAccessTier(AccessTier accessTier)
         {
             if (Inner.Kind != Management.Storage.Models.Kind.BlobStorage)
             {
@@ -211,7 +212,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name)
+        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name)
         {
             updateParameters.CustomDomain = new CustomDomain(name);
             return this;
@@ -223,7 +224,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name, bool useSubDomain)
+        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name, bool useSubDomain)
         {
             updateParameters.CustomDomain = new CustomDomain()
             {
@@ -233,7 +234,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        StorageAccount.Update.IUpdate StorageAccount.Update.IWithSku.WithSku(SkuName skuName)
+        IUpdate StorageAccount.Update.IWithSku.WithSku(SkuName skuName)
         {
             updateParameters.Sku = new Sku()
             {
@@ -242,21 +243,21 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public StorageAccount.Update.IUpdate withoutTag(string key)
-        {
-            base.WithoutTag(key);
-            return this;
-        }
-
-        StorageAccount.Update.IUpdate Resource.Core.Resource.Update.IUpdateWithTags<StorageAccount.Update.IUpdate>.WithTag(string key, string value)
+        IUpdate IUpdateWithTags<IUpdate>.WithTag(string key, string value)
         {
             base.WithTag(key, value);
             return this;
         }
 
-        StorageAccount.Update.IUpdate Resource.Core.Resource.Update.IUpdateWithTags<StorageAccount.Update.IUpdate>.WithTags(IDictionary<string, string> tags)
+        IUpdate IUpdateWithTags<IUpdate>.WithTags(IDictionary<string, string> tags)
         {
             base.WithTags(tags);
+            return this;
+        }
+
+        IUpdate IUpdateWithTags<IUpdate>.WithoutTag(string key)
+        {
+            base.WithoutTag(key);
             return this;
         }
 
@@ -277,7 +278,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Implementation of IUpdatable interface
 
-        public StorageAccount.Update.IUpdate Update()
+        public IUpdate Update()
         {
             updateParameters = new StorageAccountUpdateParametersInner();
             return this;
@@ -285,19 +286,23 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #endregion
 
-        #region Implementation of IApplicable interface
+        #region Implementation of ICreatable interface 
 
-        public new async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
+        IStorageAccount ICreatable<IStorageAccount>.Create()
         {
-            // overriding the base.ApplyAsync here since the parameter for update is different from the  one for create.
-            var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
-            SetInner(response);
+            Create();
+            return this;
+        }
+
+        async Task<IStorageAccount> ICreatable<IStorageAccount>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
+        {
+            await CreateAsync(cancellationToken, multiThreaded);
             return this;
         }
 
         #endregion
 
-        #region Implementation of Creatable::CreateResourceAsync method
+        #region Implementation of IResourceCreator interface
 
         public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
         {
@@ -308,34 +313,26 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public IWithGroup WithRegion(Region region)
+        public override IResource CreateResource()
         {
-            throw new NotImplementedException();
+            return CreateResourceAsync(CancellationToken.None).Result;
         }
 
-        public IStorageAccount Create()
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
-        public Task<IStorageAccount> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
+        #region Implementation of IApplicable interface
 
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithoutTag(string key)
+        public async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
-            throw new NotImplementedException();
+            // overriding the base.ApplyAsync here since the parameter for update is different from the  one for create.
+            var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
+            SetInner(response);
+            return this;
         }
 
         public IStorageAccount Apply()
         {
-            throw new NotImplementedException();
-        }
-
-        IUpdate IUpdateWithTags<IUpdate>.WithoutTag(string key)
-        {
-            throw new NotImplementedException();
+            return ApplyAsync(CancellationToken.None, true).Result;
         }
 
         #endregion

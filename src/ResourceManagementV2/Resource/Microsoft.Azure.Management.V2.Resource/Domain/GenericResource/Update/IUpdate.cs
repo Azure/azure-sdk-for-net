@@ -6,7 +6,6 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Update
 {
-
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
@@ -14,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Update
     /// <summary>
     /// A generic resource update allowing to change the resource properties.
     /// </summary>
-    public interface IUpdateWithProperties 
+    public interface IWithProperties
     {
         /// <summary>
         /// Specifies other properties of the resource.
@@ -27,7 +26,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Update
     /// <summary>
     /// A generic resource update allowing to change the resource plan.
     /// </summary>
-    public interface IUpdateWithPlan 
+    public interface IWithPlan 
     {
         /// <summary>
         /// Specifies the plan of the resource.
@@ -49,7 +48,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Update
     /// <summary>
     /// A generic resource update allowing to change the parent resource.
     /// </summary>
-    public interface IUpdateWithParentResource 
+    public interface IWithParentResource 
     {
         /// <summary>
         /// Specifies the parent resource.
@@ -64,16 +63,16 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Update
     /// </summary>
     public interface IUpdate  :
         IAppliable<IGenericResource>,
-        IUpdateWithPlan,
-        IUpdateWithParentResource,
-        IUpdateWithProperties,
+        IWithPlan,
+        IWithParentResource,
+        IWithProperties,
         IUpdateWithTags<IUpdate>
     {
     }
     /// <summary>
     /// The template for a generic resource update operation for specifying the resource provider API version.
     /// </summary>
-    public interface IUpdateWithApiVersion 
+    public interface IWithApiVersion 
     {
         /// <summary>
         /// Specifies the API version of the resource provider.
