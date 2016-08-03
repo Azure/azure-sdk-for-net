@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Batch
                 else
                 {
                     //Anything else is a failure -- abort the work flow
-                    throw new AddTaskCollectionTerminatedException(string.Format(BatchErrorMessages.AddTaskCollectionTerminated, addTaskResult.TaskId, addTaskResult.Status));
+                    throw new AddTaskCollectionTerminatedException(addTaskResult);
                 }
             }
             return status;

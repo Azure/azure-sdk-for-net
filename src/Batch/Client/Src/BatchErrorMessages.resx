@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddTaskCollectionTerminated" xml:space="preserve">
-    <value>Addition of task {0} failed with unexpected status code {1}</value>
+    <value>Addition of a task failed with unexpected status code. Details: {0}</value>
   </data>
   <data name="AddTaskResultActionUnretryableFailure" xml:space="preserve">
     <value>Task {0} reported AddTaskResultAction.UnretryableFailure</value>

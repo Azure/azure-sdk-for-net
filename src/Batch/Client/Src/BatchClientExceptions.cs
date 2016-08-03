@@ -34,8 +34,23 @@
     /// </summary>
     public class AddTaskCollectionTerminatedException : BatchClientException
     {
-        internal AddTaskCollectionTerminatedException(string message = null, Exception inner = null) : base(message, inner)
+        /// <summary>
+        /// Gets the <see cref="AddTaskResult"/> for the task which caused the exception.
+        /// </summary>
+        /// <remarks>
+        /// More than one task may have failed. In order to see the full list, use an <see cref="AddTaskCollectionResultHandler"/>.
+        /// </remarks>
+        public AddTaskResult AddTaskResult { get; }
+
+        internal AddTaskCollectionTerminatedException(AddTaskResult result, Exception inner = null) :
+            base(GenerateMessageString(result), inner)
         {
+            this.AddTaskResult = result;
+        }
+
+        private static string GenerateMessageString(AddTaskResult result)
+        {
+            return string.Format(BatchErrorMessages.AddTaskCollectionTerminated, result);
         }
     }
 

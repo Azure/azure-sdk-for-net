@@ -19,8 +19,9 @@
     using System.Threading.Tasks;
     using BatchTestCommon;
     using Microsoft.Azure.Batch;
-    using Microsoft.Azure.Batch.Protocol.Models;
+    using Microsoft.Azure.Batch.Common;
     using Microsoft.Rest.Azure;
+    using TestUtilities;
     using Xunit;
     using Xunit.Abstractions;
     using CloudTask = Microsoft.Azure.Batch.CloudTask;
@@ -121,6 +122,56 @@
             }
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public async Task ExceptionOnClientError_ResultingExceptionContainsDetails()
+        {
+            const string expectedCode = "badness";
+            const string failingTaskId = "baz";
+
+            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            {
+                var tasksToAdd = new List<CloudTask>
+                    {
+                        new CloudTask("foo", "bar"),
+                        new CloudTask(failingTaskId, "qux")
+                    };
+
+                var results = new List<Protocol.Models.TaskAddResult>
+                    {
+                        new Protocol.Models.TaskAddResult(Protocol.Models.TaskAddStatus.Success, "foo"),
+                        new Protocol.Models.TaskAddResult(
+                            Protocol.Models.TaskAddStatus.Clienterror,
+                            failingTaskId,
+                            error: new Protocol.Models.BatchError(
+                                expectedCode,
+                                new Protocol.Models.ErrorMessage(value: "Test value"),
+                                new List<Protocol.Models.BatchErrorDetail>
+                                    {
+                                        new Protocol.Models.BatchErrorDetail("key", "value")
+                                    }))
+                    };
+
+                ParallelOperationsException parallelOperationsException = await Assert.ThrowsAsync<ParallelOperationsException>(
+                    () => batchCli.JobOperations.AddTaskAsync(
+                        "dummy",
+                        tasksToAdd,
+                        additionalBehaviors: InterceptorFactory.CreateAddTaskCollectionInterceptor(results)));
+
+                Assert.Equal(1, parallelOperationsException.InnerExceptions.Count);
+
+                var exception = parallelOperationsException.InnerException as AddTaskCollectionTerminatedException;
+
+                Assert.NotNull(exception);
+                Assert.NotNull(exception.AddTaskResult);
+                Assert.Equal(failingTaskId, exception.AddTaskResult.TaskId);
+                Assert.Equal(AddTaskStatus.ClientError, exception.AddTaskResult.Status);
+                Assert.Equal(expectedCode, exception.AddTaskResult.Error.Code);
+                Assert.Equal("Addition of a task failed with unexpected status code. Details: TaskId=baz, Status=ClientError, Error.Code=badness, Error.Message=Test value, Error.Values=[key=value]",
+                    exception.Message);
+            }
+        }
+
         private async static Task<T> IssueAddTaskCollectionAndAssertExceptionIsExpectedAsync<T>(int operationCount, Func<int, string, Exception> exceptionFactory) where T : Exception
         {
             const string dummyJobId = "Dummy";
@@ -177,7 +228,7 @@
                         {
                             return Task.FromResult(new AzureOperationResponse<Protocol.Models.TaskAddCollectionResult, Protocol.Models.TaskAddCollectionHeaders>()
                                 {
-                                    Body = new Protocol.Models.TaskAddCollectionResult(new List<TaskAddResult>())
+                                    Body = new Protocol.Models.TaskAddCollectionResult(new List<Protocol.Models.TaskAddResult>())
                                 });
                         }
                     }

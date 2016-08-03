@@ -15,6 +15,8 @@
 ﻿namespace Microsoft.Azure.Batch
 {
     using System;
+    using System.Linq;
+    using System.Text;
 
     public partial class AddTaskResult
     {
@@ -43,6 +45,26 @@
             get { return this.retryCount; }
         }
 
+        //TODO: Code generate this?
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            builder.AppendFormat("TaskId={0}", this.TaskId);
+            builder.AppendFormat(", Status={0}", this.Status);
+            builder.AppendFormat(", Error.Code={0}", this.Error?.Code);
+            builder.AppendFormat(", Error.Message={0}", this.Error?.Message?.Value);
+            if (this.Error?.Values != null)
+            {
+                builder.AppendFormat(", Error.Values=[{0}]", string.Join(", ", this.Error.Values.Select(value => string.Format("{0}={1}", value.Key, value.Value))));
+            }
+
+            return builder.ToString();
+        }
     };
     
     /// <summary>
