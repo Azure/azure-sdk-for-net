@@ -163,11 +163,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     };
                     try
                     {
-                        var fileProgressTracker = CreateFileProgressTracker(metadata);
+                        Thread progressThread;
+                        var fileProgressTracker = CreateFileProgressTracker(metadata, out progressThread);
                         var exceptions = new ConcurrentQueue<Exception>();
                         var allFiles = new ConcurrentQueue<UploadMetadata>(metadata.Files);
                         int threadCount = Math.Min(allFiles.Count, this.Parameters.ConcurrentFileCount);
-                        var threads = new List<Thread>(threadCount);
+
+                        // add up to two threads, one for saving and one for progress, if necessary.
+                        var threads = new List<Thread>(threadCount + (progressThread != null ? 2 : 1)); 
 
                         // break up the batch save into 100 even chunks. This is most important for very large directories
                         var filesPerSave = (int)Math.Ceiling((double)metadata.FileCount / 100);
@@ -176,7 +179,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         for (int i = 0; i < threadCount; i++)
                         {
                             var t = new Thread(() => {
-
                                 UploadMetadata file;
                                 while (allFiles.TryDequeue(out file))
                                 {
@@ -215,15 +217,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                             metadata.Save();
                                         }
                                         catch { } // if we can't save the metadata we shouldn't fail out. 
-
-                                        throw;
+                                        // break out of the loop since the operation is cancelled.
+                                        break;
                                     }
                                     catch (Exception ex)
                                     {
                                         // for all other exceptions just enqueue and continue.
                                         exceptions.Enqueue(ex);
                                         // in this case we should save since something bad happened, but only if we aren't going to save anyway in the finally.
-                                        if(filesCompleted % filesPerSave != 0)
+                                        if (filesCompleted % filesPerSave != 0)
                                         {
                                             try
                                             {
@@ -293,7 +295,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                         metadata.Save();
                                     }
                                     catch { } // if we can't save the metadata we shouldn't fail out. 
-                                    throw;
+                                    // break out of the loop since we have cancelled.
+                                    break;
                                 }
                                 catch (Exception ex)
                                 {
@@ -304,6 +307,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                         saveThread.Start();
                         threads.Add(saveThread);
+
+                        if(progressThread != null)
+                        {
+                            progressThread.Start();
+                            threads.Add(progressThread);
+                        }
 
                         foreach (var t in threads)
                         {
@@ -327,6 +336,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         }
                         catch { } // saving the metadata is a best effort, we will not fail out for this reason and we want to ensure the root exception is preserved.
                     }
+                    catch (AggregateException ex)
+                    {
+                        try
+                        {
+                            // if anything went wrong, make sure that we attempt to save the current state of the folder metadata
+                            metadata.Save();
+                        }
+                        catch { } // saving the metadata is a best effort, we will not fail out for this reason and we want to ensure the root exception is preserved.
+
+                        if (!ex.InnerExceptions.OfType<OperationCanceledException>().Any())
+                        {
+                            throw;
+                        }
+                    }
                     catch
                     {
                         try
@@ -338,6 +361,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         throw;
                     }
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                // do not throw this higher, since we have cancelled out.
             }
             finally
             {
@@ -646,18 +673,45 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             ValidateFolderMetadataMatchesLocalFile(metadata);
             var exceptions = new ConcurrentQueue<Exception>();
-            //see what files already exist - update metadata accordingly (only for segments that are missing from server; if it's on the server but not in metadata, reupload)
-            Parallel.For(0, metadata.Files.Length, i =>
+            var threadsToRun = new List<Thread>(metadata.Files.Length);
+            var files = new ConcurrentQueue<UploadMetadata>(metadata.Files);
+            int threadCount = Math.Min(metadata.Files.Length, 500);
+            for (int i =0; i < threadCount; i++)
             {
-                try
+                var t = new Thread(() =>
                 {
-                    metadata.Files[i] = ValidateMetadataForResume(metadata.Files[i], true);
-                }
-                catch(Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
+                    //see what files already exist - update metadata accordingly (only for segments that are missing from server; if it's on the server but not in metadata, reupload)
+                    UploadMetadata toValidate;
+                    while (files.TryDequeue(out toValidate))
+                    {
+                        _token.ThrowIfCancellationRequested();
+                        try
+                        {
+                            var toReplace = ValidateMetadataForResume(toValidate, true);
+                            for (int j = 0; j < metadata.Files.Length; j++)
+                            {
+                                if (metadata.Files[j].UploadId == toReplace.UploadId)
+                                {
+                                    metadata.Files[j] = toReplace;
+                                    break;
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            exceptions.Enqueue(e);
+                        }
+                    }
+                });
+
+                t.Start();
+                threadsToRun.Add(t);
+            }
+
+            foreach(var t in threadsToRun)
+            {
+                t.Join();
+            }
 
             if(exceptions.Count > 0)
             {
@@ -675,14 +729,33 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             ValidateFolderMetadataMatchesLocalFile(metadata);
             var exceptions = new ConcurrentQueue<Exception>();
-            Parallel.ForEach(metadata.Files, file =>
+            var threadsToRun = new List<Thread>(metadata.Files.Length);
+            var files = new ConcurrentQueue<UploadMetadata>(metadata.Files);
+            int threadCount = Math.Min(metadata.Files.Length, 500);
+            for (int i = 0; i < threadCount; i++)
             {
-                //verify that the target stream does not already exist (in case we don't want to overwrite)
-                if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(file.TargetStreamPath, this.Parameters.IsDownload))
+                var t = new Thread(() =>
                 {
-                    exceptions.Enqueue(new InvalidOperationException(string.Format("Stream at path: {0} already exists. Please set overwrite to true to overwrite streams that exist.", file.TargetStreamPath)));
-                }
-            });
+                    UploadMetadata toValidate;
+                    while (files.TryDequeue(out toValidate))
+                    {
+                        _token.ThrowIfCancellationRequested();
+                        //verify that the target stream does not already exist (in case we don't want to overwrite)
+                        if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(toValidate.TargetStreamPath, this.Parameters.IsDownload))
+                        {
+                            exceptions.Enqueue(new InvalidOperationException(string.Format("Stream at path: {0} already exists. Please set overwrite to true to overwrite streams that exist.", toValidate.TargetStreamPath)));
+                        }
+                    }
+                });
+
+                t.Start();
+                threadsToRun.Add(t);
+            }
+
+            foreach(var t in threadsToRun)
+            {
+                t.Join();
+            }
 
             if(exceptions.Count > 0)
             {
@@ -738,25 +811,44 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
 
             var exceptions = new ConcurrentQueue<Exception>();
-            Parallel.ForEach(metadata.Files, file =>
+            var threadsToRun = new List<Thread>(metadata.Files.Length);
+            var files = new ConcurrentQueue<UploadMetadata>(metadata.Files);
+            int threadCount = Math.Min(metadata.Files.Length, 500);
+            for (int i = 0; i < threadCount; i++)
             {
-                try
+                var t = new Thread(() =>
                 {
-                    ValidateMetadataMatchesLocalFile(file, true);
-                    if(this.Parameters.IsDownload)
+                    UploadMetadata toValidate;
+                    while (files.TryDequeue(out toValidate))
                     {
-                        // validate the file exists and the size is correct
-                        if(!fileAndSizePairs.ContainsKey(file.InputFilePath) || fileAndSizePairs[file.InputFilePath] != file.FileLength)
+                        _token.ThrowIfCancellationRequested();
+                        try
                         {
-                            throw new InvalidOperationException("The metadata refers to a file that does not exist or the file size does not match");
+                            ValidateMetadataMatchesLocalFile(toValidate, true);
+                            if (this.Parameters.IsDownload)
+                            {
+                                // validate the file exists and the size is correct
+                                if (!fileAndSizePairs.ContainsKey(toValidate.InputFilePath) || fileAndSizePairs[toValidate.InputFilePath] != toValidate.FileLength)
+                                {
+                                    throw new InvalidOperationException("The metadata refers to a file that does not exist or the file size does not match");
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            exceptions.Enqueue(e);
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
+                });
+
+                t.Start();
+                threadsToRun.Add(t);
+            }
+
+            foreach (var t in threadsToRun)
+            {
+                t.Join();
+            }
 
             if(exceptions.Count > 0)
             {
@@ -901,14 +993,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="metadata">The metadata.</param>
         /// <returns></returns>
-        private IProgress<UploadProgress> CreateFileProgressTracker(UploadFolderMetadata metadata)
+        private IProgress<UploadProgress> CreateFileProgressTracker(UploadFolderMetadata metadata, out Thread toStart)
         {
+            toStart = null;
             if (_folderProgressTracker == null)
             {
                 return null;
             }
 
             var overallProgress = new UploadFolderProgress(metadata);
+            toStart = overallProgress.GetProgressTrackingThread(_token);
             return new Progress<UploadProgress>(
                 (sup) =>
                 {
