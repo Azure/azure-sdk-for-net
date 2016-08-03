@@ -116,6 +116,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for managing Advisors for Azure SQL
+        /// Databases. Contains operations to retrieve Advisors and update
+        /// auto execute status of an Advisor.
+        /// </summary>
+        IDatabaseAdvisorOperations DatabaseAdvisors
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
         /// database backups.
         /// </summary>
@@ -136,6 +146,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for managing recommended actions on
+        /// Azure SQL Databases. Contains operations to retrieve recommended
+        /// action and update its state.
+        /// </summary>
+        IDatabaseRecommendedActionOperations DatabaseRecommendedActions
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
         /// data masking. Contains operations to: Create, Retrieve, Update,
         /// and Delete data masking rules, as well as Create, Retreive and
@@ -147,11 +167,31 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for managing Advisors for Azure SQL
+        /// Elastic Database Pool. Contains operations to retrieve Advisors
+        /// and update auto execute status of an Advisor.
+        /// </summary>
+        IElasticPoolAdvisorOperations ElasticPoolAdvisors
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
         /// Elastic Pools.  Contains operations to: Create, Retrieve, Update,
         /// and Delete.
         /// </summary>
         IElasticPoolOperations ElasticPools
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for managing recommended actions on
+        /// Azure SQL Elastic Database Pools. Contains operations to retrieve
+        /// recommended action and update its state.
+        /// </summary>
+        IElasticPoolRecommendedActionOperations ElasticPoolRecommendedActions
         {
             get; 
         }
@@ -247,6 +287,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for managing Advisors for Azure SQL
+        /// Server. Contains operations to retrieve Advisors and update auto
+        /// execute status of an Advisor.
+        /// </summary>
+        IServerAdvisorOperations ServerAdvisors
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Server
         /// communication links.  Contains operations to: Create, Retrieve,
         /// Update, and Delete.
@@ -272,6 +322,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Delete servers.
         /// </summary>
         IServerOperations Servers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for managing recommended actions on
+        /// Azure SQL Server. Contains operations to retrieve recommended
+        /// action and update its state.
+        /// </summary>
+        IServerRecommendedActionOperations ServerRecommendedActions
         {
             get; 
         }

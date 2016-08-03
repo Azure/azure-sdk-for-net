@@ -137,6 +137,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._databaseActivation; }
         }
         
+        private IDatabaseAdvisorOperations _databaseAdvisors;
+        
+        /// <summary>
+        /// Represents all the operations for managing Advisors for Azure SQL
+        /// Databases. Contains operations to retrieve Advisors and update
+        /// auto execute status of an Advisor.
+        /// </summary>
+        public virtual IDatabaseAdvisorOperations DatabaseAdvisors
+        {
+            get { return this._databaseAdvisors; }
+        }
+        
         private IDatabaseBackupOperations _databaseBackup;
         
         /// <summary>
@@ -161,6 +173,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._databases; }
         }
         
+        private IDatabaseRecommendedActionOperations _databaseRecommendedActions;
+        
+        /// <summary>
+        /// Represents all the operations for managing recommended actions on
+        /// Azure SQL Databases. Contains operations to retrieve recommended
+        /// action and update its state.
+        /// </summary>
+        public virtual IDatabaseRecommendedActionOperations DatabaseRecommendedActions
+        {
+            get { return this._databaseRecommendedActions; }
+        }
+        
         private IDataMaskingOperations _dataMasking;
         
         /// <summary>
@@ -174,6 +198,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._dataMasking; }
         }
         
+        private IElasticPoolAdvisorOperations _elasticPoolAdvisors;
+        
+        /// <summary>
+        /// Represents all the operations for managing Advisors for Azure SQL
+        /// Elastic Database Pool. Contains operations to retrieve Advisors
+        /// and update auto execute status of an Advisor.
+        /// </summary>
+        public virtual IElasticPoolAdvisorOperations ElasticPoolAdvisors
+        {
+            get { return this._elasticPoolAdvisors; }
+        }
+        
         private IElasticPoolOperations _elasticPools;
         
         /// <summary>
@@ -184,6 +220,18 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolOperations ElasticPools
         {
             get { return this._elasticPools; }
+        }
+        
+        private IElasticPoolRecommendedActionOperations _elasticPoolRecommendedActions;
+        
+        /// <summary>
+        /// Represents all the operations for managing recommended actions on
+        /// Azure SQL Elastic Database Pools. Contains operations to retrieve
+        /// recommended action and update its state.
+        /// </summary>
+        public virtual IElasticPoolRecommendedActionOperations ElasticPoolRecommendedActions
+        {
+            get { return this._elasticPoolRecommendedActions; }
         }
         
         private IFirewallRuleOperations _firewallRules;
@@ -294,6 +342,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._serverAdministrators; }
         }
         
+        private IServerAdvisorOperations _serverAdvisors;
+        
+        /// <summary>
+        /// Represents all the operations for managing Advisors for Azure SQL
+        /// Server. Contains operations to retrieve Advisors and update auto
+        /// execute status of an Advisor.
+        /// </summary>
+        public virtual IServerAdvisorOperations ServerAdvisors
+        {
+            get { return this._serverAdvisors; }
+        }
+        
         private IServerCommunicationLinkOperations _communicationLinks;
         
         /// <summary>
@@ -328,6 +388,18 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerOperations Servers
         {
             get { return this._servers; }
+        }
+        
+        private IServerRecommendedActionOperations _serverRecommendedActions;
+        
+        /// <summary>
+        /// Represents all the operations for managing recommended actions on
+        /// Azure SQL Server. Contains operations to retrieve recommended
+        /// action and update its state.
+        /// </summary>
+        public virtual IServerRecommendedActionOperations ServerRecommendedActions
+        {
+            get { return this._serverRecommendedActions; }
         }
         
         private IServerUpgradeOperations _serverUpgrades;
@@ -385,10 +457,14 @@ namespace Microsoft.Azure.Management.Sql
             this._blobAuditing = new BlobAuditingOperations(this);
             this._capabilities = new CapabilitiesOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
+            this._databaseAdvisors = new DatabaseAdvisorOperations(this);
             this._databaseBackup = new DatabaseBackupOperations(this);
             this._databases = new DatabaseOperations(this);
+            this._databaseRecommendedActions = new DatabaseRecommendedActionOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
+            this._elasticPoolAdvisors = new ElasticPoolAdvisorOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
+            this._elasticPoolRecommendedActions = new ElasticPoolRecommendedActionOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._importExport = new ImportExportOperations(this);
             this._jobAccounts = new JobAccountOperations(this);
@@ -398,9 +474,11 @@ namespace Microsoft.Azure.Management.Sql
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._securityAlertPolicy = new SecurityAlertPolicyOperations(this);
             this._serverAdministrators = new ServerAdministratorOperations(this);
+            this._serverAdvisors = new ServerAdvisorOperations(this);
             this._communicationLinks = new ServerCommunicationLinkOperations(this);
             this._serverDisasterRecoveryConfigurations = new ServerDisasterRecoveryConfigurationOperations(this);
             this._servers = new ServerOperations(this);
+            this._serverRecommendedActions = new ServerRecommendedActionOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);
             this._serviceTierAdvisors = new ServiceTierAdvisorOperations(this);
@@ -474,10 +552,14 @@ namespace Microsoft.Azure.Management.Sql
             this._blobAuditing = new BlobAuditingOperations(this);
             this._capabilities = new CapabilitiesOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
+            this._databaseAdvisors = new DatabaseAdvisorOperations(this);
             this._databaseBackup = new DatabaseBackupOperations(this);
             this._databases = new DatabaseOperations(this);
+            this._databaseRecommendedActions = new DatabaseRecommendedActionOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
+            this._elasticPoolAdvisors = new ElasticPoolAdvisorOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
+            this._elasticPoolRecommendedActions = new ElasticPoolRecommendedActionOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._importExport = new ImportExportOperations(this);
             this._jobAccounts = new JobAccountOperations(this);
@@ -487,9 +569,11 @@ namespace Microsoft.Azure.Management.Sql
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._securityAlertPolicy = new SecurityAlertPolicyOperations(this);
             this._serverAdministrators = new ServerAdministratorOperations(this);
+            this._serverAdvisors = new ServerAdvisorOperations(this);
             this._communicationLinks = new ServerCommunicationLinkOperations(this);
             this._serverDisasterRecoveryConfigurations = new ServerDisasterRecoveryConfigurationOperations(this);
             this._servers = new ServerOperations(this);
+            this._serverRecommendedActions = new ServerRecommendedActionOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);
             this._serviceTierAdvisors = new ServiceTierAdvisorOperations(this);
