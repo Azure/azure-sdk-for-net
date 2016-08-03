@@ -159,7 +159,25 @@ namespace Compute.Tests
 
                     // Get Effecting NSG
                     var getEffectiveNSGresponse = m_NrpClient.NetworkInterfaces.ListEffectiveNetworkSecurityGroups(rgName, nicResponse.Name);
-                    Assert.NotNull(getEffectiveNSGresponse);                    
+                    Assert.NotNull(getEffectiveNSGresponse);
+                    Assert.NotEqual(0, getEffectiveNSGresponse.Value.Count);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].Association);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].Association.NetworkInterface);
+                    Assert.Null(getEffectiveNSGresponse.Value[0].Association.Subnet);
+                    Assert.Equal(getEffectiveNSGresponse.Value[0].Association.NetworkInterface.Id, nicResponse.Id);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].NetworkSecurityGroup);
+                    Assert.Equal(getEffectiveNSGresponse.Value[0].NetworkSecurityGroup.Id, nsgResponse.Id);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules);
+                    Assert.NotEqual(0, getEffectiveNSGresponse.Value[0].EffectiveSecurityRules.Count);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].Access);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].DestinationAddressPrefix);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].DestinationPortRange);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].SourceAddressPrefix);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].SourcePortRange);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].Priority);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].Name);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].ExpandedDestinationAddressPrefix);
+                    Assert.NotNull(getEffectiveNSGresponse.Value[0].EffectiveSecurityRules[0].ExpandedSourceAddressPrefix);
                 }
                 finally
                 {
