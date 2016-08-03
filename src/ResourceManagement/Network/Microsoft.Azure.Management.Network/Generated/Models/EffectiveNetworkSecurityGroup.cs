@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the EffectiveNetworkSecurityGroup
         /// class.
         /// </summary>
-        public EffectiveNetworkSecurityGroup(SubResource networkSecurityGroup = default(SubResource), EffectiveNetworkSecurityGroupAssociation association = default(EffectiveNetworkSecurityGroupAssociation), IList<EffectiveNetworkSecurityRules> effectiveSecurityRules = default(IList<EffectiveNetworkSecurityRules>))
+        public EffectiveNetworkSecurityGroup(SubResource networkSecurityGroup = default(SubResource), EffectiveNetworkSecurityGroupAssociation association = default(EffectiveNetworkSecurityGroupAssociation), IList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default(IList<EffectiveNetworkSecurityRule>))
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets collection of effective security rules
         /// </summary>
         [JsonProperty(PropertyName = "effectiveSecurityRules")]
-        public IList<EffectiveNetworkSecurityRules> EffectiveSecurityRules { get; set; }
+        public IList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; set; }
 
     }
 }
