@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the ServicePrincipal class.
         /// </summary>
-        /// <param name="objectId">Gets or sets object Id</param>
-        /// <param name="objectType">Gets or sets object type</param>
-        /// <param name="displayName">Gets or sets service principal display name</param>
-        /// <param name="appId">Gets or sets app id</param>
-        /// <param name="servicePrincipalNames">Gets or sets the list of names.</param>
+        /// <param name="objectId">object Id</param>
+        /// <param name="objectType">object type</param>
+        /// <param name="displayName">service principal display name</param>
+        /// <param name="appId">app id</param>
+        /// <param name="servicePrincipalNames">the list of names.</param>
         public ServicePrincipal(string objectId = default(string), string objectType = default(string), string displayName = default(string), string appId = default(string), IList<string> servicePrincipalNames = default(IList<string>))
         {
             ObjectId = objectId;
@@ -44,31 +44,31 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets object Id
+        /// Gets or sets object Id
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
         public string ObjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets object type
+        /// Gets or sets object type
         /// </summary>
         [JsonProperty(PropertyName = "objectType")]
         public string ObjectType { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets service principal display name
+        /// Gets or sets service principal display name
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets app id
+        /// Gets or sets app id
         /// </summary>
         [JsonProperty(PropertyName = "appId")]
         public string AppId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of names.
+        /// Gets or sets the list of names.
         /// </summary>
         [JsonProperty(PropertyName = "servicePrincipalNames")]
         public IList<string> ServicePrincipalNames { get; set; }

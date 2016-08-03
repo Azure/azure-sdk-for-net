@@ -145,6 +145,10 @@
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfileChinaOld.PublishSettings</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile3.PublishSettings</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile2.PublishSettings</string>
+	<string>ResourceManagement\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteAppCredentialTest.json</string>
+	<string>ResourceManagement\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteSpCredentialTest.json</string>
+	<string>ResourceManagement\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CRUDApplicationTest.json</string>
+	<string>ResourceManagement\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\NegativeCredentialTest.json</string>
       </Filters>
     </ResourceFilter>
   </ResourceSearchFilters>

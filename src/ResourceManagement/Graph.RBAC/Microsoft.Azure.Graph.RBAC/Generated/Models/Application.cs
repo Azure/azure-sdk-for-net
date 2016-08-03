@@ -29,14 +29,14 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the Application class.
         /// </summary>
-        /// <param name="objectId">Gets or sets object Id</param>
-        /// <param name="objectType">Gets or sets object type</param>
-        /// <param name="appId">Gets or sets application Id</param>
-        /// <param name="appPermissions">Gets or sets application permissions</param>
+        /// <param name="objectId">object Id</param>
+        /// <param name="objectType">object type</param>
+        /// <param name="appId">application Id</param>
+        /// <param name="appPermissions">application permissions</param>
         /// <param name="availableToOtherTenants">Indicates if the application will be available to other tenants</param>
-        /// <param name="displayName">Gets or sets the displayName</param>
-        /// <param name="identifierUris">Gets or sets the application identifier Uris</param>
-        /// <param name="replyUrls">Gets or sets the application reply Urls</param>
+        /// <param name="displayName">the displayName</param>
+        /// <param name="identifierUris">the application identifier Uris</param>
+        /// <param name="replyUrls">the application reply Urls</param>
         /// <param name="homepage">Application homepage</param>
         public Application(string objectId = default(string), string objectType = default(string), string appId = default(string), IList<string> appPermissions = default(IList<string>), bool? availableToOtherTenants = default(bool?), string displayName = default(string), IList<string> identifierUris = default(IList<string>), IList<string> replyUrls = default(IList<string>), string homepage = default(string))
         {
@@ -52,25 +52,25 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets object Id
+        /// Gets or sets object Id
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
         public string ObjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets object type
+        /// Gets or sets object type
         /// </summary>
         [JsonProperty(PropertyName = "objectType")]
         public string ObjectType { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets application Id
+        /// Gets or sets application Id
         /// </summary>
         [JsonProperty(PropertyName = "appId")]
         public string AppId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets application permissions
+        /// Gets or sets application permissions
         /// </summary>
         [JsonProperty(PropertyName = "appPermissions")]
         public IList<string> AppPermissions { get; set; }
@@ -83,19 +83,19 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         public bool? AvailableToOtherTenants { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the displayName
+        /// Gets or sets the displayName
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the application identifier Uris
+        /// Gets or sets the application identifier Uris
         /// </summary>
         [JsonProperty(PropertyName = "identifierUris")]
         public IList<string> IdentifierUris { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the application reply Urls
+        /// Gets or sets the application reply Urls
         /// </summary>
         [JsonProperty(PropertyName = "replyUrls")]
         public IList<string> ReplyUrls { get; set; }

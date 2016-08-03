@@ -31,14 +31,16 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// Initializes a new instance of the ApplicationUpdateParameters
         /// class.
         /// </summary>
+        /// <param name="availableToOtherTenants">Indicates if the application will be available to other tenants</param>
         /// <param name="displayName">Application display name</param>
         /// <param name="homepage">Application homepage</param>
         /// <param name="identifierUris">Application Uris</param>
         /// <param name="replyUrls">Application reply Urls</param>
-        /// <param name="keyCredentials">Gets or sets the list of KeyCredential objects</param>
-        /// <param name="passwordCredentials">Gets or sets the list of PasswordCredential objects</param>
-        public ApplicationUpdateParameters(string displayName = default(string), string homepage = default(string), IList<string> identifierUris = default(IList<string>), IList<string> replyUrls = default(IList<string>), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>))
+        /// <param name="keyCredentials">the list of KeyCredential objects</param>
+        /// <param name="passwordCredentials">the list of PasswordCredential objects</param>
+        public ApplicationUpdateParameters(bool? availableToOtherTenants = default(bool?), string displayName = default(string), string homepage = default(string), IList<string> identifierUris = default(IList<string>), IList<string> replyUrls = default(IList<string>), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>))
         {
+            AvailableToOtherTenants = availableToOtherTenants;
             DisplayName = displayName;
             Homepage = homepage;
             IdentifierUris = identifierUris;
@@ -46,6 +48,13 @@ namespace Microsoft.Azure.Graph.RBAC.Models
             KeyCredentials = keyCredentials;
             PasswordCredentials = passwordCredentials;
         }
+
+        /// <summary>
+        /// Gets or sets indicates if the application will be available to
+        /// other tenants
+        /// </summary>
+        [JsonProperty(PropertyName = "availableToOtherTenants")]
+        public bool? AvailableToOtherTenants { get; set; }
 
         /// <summary>
         /// Gets or sets application display name
@@ -72,13 +81,13 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         public IList<string> ReplyUrls { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of KeyCredential objects
+        /// Gets or sets the list of KeyCredential objects
         /// </summary>
         [JsonProperty(PropertyName = "keyCredentials")]
         public IList<KeyCredential> KeyCredentials { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of PasswordCredential objects
+        /// Gets or sets the list of PasswordCredential objects
         /// </summary>
         [JsonProperty(PropertyName = "passwordCredentials")]
         public IList<PasswordCredential> PasswordCredentials { get; set; }

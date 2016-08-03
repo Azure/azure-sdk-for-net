@@ -203,5 +203,159 @@ namespace Microsoft.Azure.Graph.RBAC
                 await operations.PatchWithHttpMessagesAsync(applicationObjectId, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
+            /// <summary>
+            /// Get keyCredentials associated with the application by object Id.
+            /// Reference: https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#keycredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// Application object id
+            /// </param>
+            public static IEnumerable<KeyCredential> ListKeyCredentials(this IApplicationsOperations operations, string applicationObjectId)
+            {
+                return Task.Factory.StartNew(s => ((IApplicationsOperations)s).ListKeyCredentialsAsync(applicationObjectId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get keyCredentials associated with the application by object Id.
+            /// Reference: https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#keycredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// Application object id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<KeyCredential>> ListKeyCredentialsAsync(this IApplicationsOperations operations, string applicationObjectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListKeyCredentialsWithHttpMessagesAsync(applicationObjectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update keyCredentials associated with an existing application. Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#keycredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// Application object id
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update keyCredentials of an existing application.
+            /// </param>
+            public static void UpdateKeyCredentials(this IApplicationsOperations operations, string applicationObjectId, KeyCredentialsUpdateParameters parameters)
+            {
+                Task.Factory.StartNew(s => ((IApplicationsOperations)s).UpdateKeyCredentialsAsync(applicationObjectId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update keyCredentials associated with an existing application. Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#keycredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// Application object id
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update keyCredentials of an existing application.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateKeyCredentialsAsync(this IApplicationsOperations operations, string applicationObjectId, KeyCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.UpdateKeyCredentialsWithHttpMessagesAsync(applicationObjectId, parameters, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Gets passwordCredentials associated with an existing application.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#passwordcredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// Application object id
+            /// </param>
+            public static IEnumerable<PasswordCredential> ListPasswordCredentials(this IApplicationsOperations operations, string applicationObjectId)
+            {
+                return Task.Factory.StartNew(s => ((IApplicationsOperations)s).ListPasswordCredentialsAsync(applicationObjectId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets passwordCredentials associated with an existing application.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#passwordcredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// Application object id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<PasswordCredential>> ListPasswordCredentialsAsync(this IApplicationsOperations operations, string applicationObjectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPasswordCredentialsWithHttpMessagesAsync(applicationObjectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates passwordCredentials associated with an existing application.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#passwordcredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// Application object id
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update passwordCredentials of an existing application.
+            /// </param>
+            public static void UpdatePasswordCredentials(this IApplicationsOperations operations, string applicationObjectId, PasswordCredentialsUpdateParameters parameters)
+            {
+                Task.Factory.StartNew(s => ((IApplicationsOperations)s).UpdatePasswordCredentialsAsync(applicationObjectId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates passwordCredentials associated with an existing application.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#passwordcredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// Application object id
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update passwordCredentials of an existing application.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdatePasswordCredentialsAsync(this IApplicationsOperations operations, string applicationObjectId, PasswordCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.UpdatePasswordCredentialsWithHttpMessagesAsync(applicationObjectId, parameters, null, cancellationToken).ConfigureAwait(false);
+            }
+
     }
 }
