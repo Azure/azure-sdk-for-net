@@ -13,63 +13,80 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Definition
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 
     /// <summary>
-    /// A generic resource definition allowing region to be specified.
+    /// Container interface for all the definitions that need to be implemented.
     /// </summary>
-    public interface IDefinitionBlank  :
-        IDefinitionWithRegion<IDefinitionWithGroup>
+    public interface IDefintion :
+        IBlank,
+        IWithGroup,
+        IWithResourceType,
+        IWithProviderNamespace,
+        IWithParentResource,
+        IWithPlan,
+        IWithApiVersion,
+        IWithCreate
     {
     }
+
+    /// <summary>
+    /// A generic resource definition allowing region to be specified.
+    /// </summary>
+    public interface IBlank  :
+        Resource.Core.Resource.Definition.IDefinitionWithRegion<IWithGroup>
+    {
+    }
+
     /// <summary>
     /// A generic resource definition allowing parent resource to be specified.
     /// </summary>
-    public interface IDefinitionWithOrWithoutParentResource  :
-        IDefinitionWithPlan
+    public interface IWithParentResource  :
+        IWithPlan
     {
         /// <summary>
         /// Specifies the parent resource.
         /// </summary>
         /// <param name="parentResourceId">parentResourceId the parent resource id</param>
         /// <returns>the next stage of the generic resource definition</returns>
-        IDefinitionWithPlan WithParentResource (string parentResourceId);
+        IWithPlan WithParentResource (string parentResourceId);
 
     }
     /// <summary>
     /// A generic resource definition allowing resource type to be specified.
     /// </summary>
-    public interface IDefinitionWithResourceType 
+    public interface IWithResourceType 
     {
         /// <summary>
         /// Specifies the resource's type.
         /// </summary>
         /// <param name="resourceType">resourceType the type of the resources</param>
         /// <returns>the next stage of generic resource definition</returns>
-        IDefinitionWithProviderNamespace WithResourceType (string resourceType);
+        IWithProviderNamespace WithResourceType (string resourceType);
 
     }
     /// <summary>
     /// A generic resource definition allowing provider namespace to be specified.
     /// </summary>
-    public interface IDefinitionWithProviderNamespace 
+    public interface IWithProviderNamespace 
     {
         /// <summary>
         /// Specifies the resource provider's namespace.
         /// </summary>
         /// <param name="resourceProviderNamespace">resourceProviderNamespace the namespace of the resource provider</param>
         /// <returns>the next stage of the generic resource definition</returns>
-        IDefinitionWithOrWithoutParentResource WithProviderNamespace (string resourceProviderNamespace);
+        IWithPlan WithProviderNamespace (string resourceProviderNamespace);
 
     }
     /// <summary>
     /// A generic resource definition allowing resource group to be specified.
     /// </summary>
-    public interface IDefinitionWithGroup  :
-        IWithGroup<IDefinitionWithResourceType>
+    public interface IWithGroup  :
+        Resource.Core.GroupableResource.Definition.IWithGroup<IWithResourceType>
     {
     }
+
     /// <summary>
     /// A generic resource definition allowing plan to be specified.
     /// </summary>
-    public interface IDefinitionWithPlan 
+    public interface IWithPlan 
     {
         /// <summary>
         /// Specifies the plan of the resource. The plan can only be set for 3rd party resources.
@@ -79,13 +96,13 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Definition
         /// <param name="product">product the name of the product</param>
         /// <param name="promotionCode">promotionCode the promotion code, if any</param>
         /// <returns>the next stage of the generic resource definition</returns>
-        IDefinitionWithApiVersion WithPlan (string name, string publisher, string product, string promotionCode);
+        IWithApiVersion WithPlan (string name, string publisher, string product, string promotionCode);
 
         /// <summary>
         /// Specifies the plan of the resource.
         /// </summary>
         /// <returns>the next stage of the generic resource definition</returns>
-        IDefinitionWithApiVersion WithoutPlan { get; }
+        IWithApiVersion WithoutPlan { get; }
 
     }
     /// <summary>
@@ -93,29 +110,30 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Definition
     /// resource in the cloud, but exposing additional optional inputs to
     /// specify.
     /// </summary>
-    public interface IDefinitionCreatable  :
+    public interface IWithCreate  :
+        IWithParentResource,
         ICreatable<IGenericResource>,
-        IDefinitionWithTags<IDefinitionCreatable>
+        IDefinitionWithTags<IWithCreate>
     {
         /// <summary>
         /// Specifies other properties.
         /// </summary>
         /// <param name="properties">properties the properties object</param>
         /// <returns>the next stage of generic resource definition</returns>
-        IDefinitionCreatable WithProperties (object properties);
+        IWithCreate WithProperties (object properties);
 
     }
     /// <summary>
     /// A generic resource definition allowing api version to be specified.
     /// </summary>
-    public interface IDefinitionWithApiVersion 
+    public interface IWithApiVersion 
     {
         /// <summary>
         /// Specifies the api version.
         /// </summary>
         /// <param name="apiVersion">apiVersion the API version of the resource</param>
         /// <returns>the next stage of the generic resource definition</returns>
-        IDefinitionCreatable WithApiVersion (string apiVersion);
+        IWithCreate WithApiVersion (string apiVersion);
 
     }
 }

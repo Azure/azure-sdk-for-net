@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
-    public class ResourceManager2 : IResourceManager
+    public class ResourceManager2 : ManagerBase, IResourceManager
     {
         #region SDK clients
         private ResourceManager.ResourceManagementClient resourceManagementClient;
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #region ctrs
 
-        private ResourceManager2(RestClient restClient, string subscriptionId)
+        private ResourceManager2(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
         {
             resourceManagementClient = new ResourceManager.ResourceManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
