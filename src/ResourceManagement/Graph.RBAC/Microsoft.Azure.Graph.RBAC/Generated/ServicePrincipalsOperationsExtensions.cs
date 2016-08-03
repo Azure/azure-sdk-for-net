@@ -157,6 +157,164 @@ namespace Microsoft.Azure.Graph.RBAC
             }
 
             /// <summary>
+            /// Get keyCredentials associated with the service principal by object Id.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#keycredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// Object id to get service principal information.
+            /// </param>
+            public static IEnumerable<KeyCredential> ListKeyCredentials(this IServicePrincipalsOperations operations, string objectId)
+            {
+                return Task.Factory.StartNew(s => ((IServicePrincipalsOperations)s).ListKeyCredentialsAsync(objectId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get keyCredentials associated with the service principal by object Id.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#keycredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// Object id to get service principal information.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<KeyCredential>> ListKeyCredentialsAsync(this IServicePrincipalsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListKeyCredentialsWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update keyCredentials associated with an existing service principal.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#keycredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// Object id to get service principal information.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update keyCredentials of an existing service principal.
+            /// </param>
+            public static void UpdateKeyCredentials(this IServicePrincipalsOperations operations, string objectId, KeyCredentialsUpdateParameters parameters)
+            {
+                Task.Factory.StartNew(s => ((IServicePrincipalsOperations)s).UpdateKeyCredentialsAsync(objectId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update keyCredentials associated with an existing service principal.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#keycredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// Object id to get service principal information.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update keyCredentials of an existing service principal.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateKeyCredentialsAsync(this IServicePrincipalsOperations operations, string objectId, KeyCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.UpdateKeyCredentialsWithHttpMessagesAsync(objectId, parameters, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Gets passwordCredentials associated with an existing service principal.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#passwordcredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// Object id to get service principal information.
+            /// </param>
+            public static IEnumerable<PasswordCredential> ListPasswordCredentials(this IServicePrincipalsOperations operations, string objectId)
+            {
+                return Task.Factory.StartNew(s => ((IServicePrincipalsOperations)s).ListPasswordCredentialsAsync(objectId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets passwordCredentials associated with an existing service principal.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#passwordcredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// Object id to get service principal information.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<PasswordCredential>> ListPasswordCredentialsAsync(this IServicePrincipalsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPasswordCredentialsWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates passwordCredentials associated with an existing service principal.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#passwordcredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// Object id to get service principal information.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update passwordCredentials of an existing service principal.
+            /// </param>
+            public static void UpdatePasswordCredentials(this IServicePrincipalsOperations operations, string objectId, PasswordCredentialsUpdateParameters parameters)
+            {
+                Task.Factory.StartNew(s => ((IServicePrincipalsOperations)s).UpdatePasswordCredentialsAsync(objectId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates passwordCredentials associated with an existing service principal.
+            /// Reference:
+            /// https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/entity-and-complex-type-reference#passwordcredential-type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// Object id to get service principal information.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update passwordCredentials of an existing service principal.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdatePasswordCredentialsAsync(this IServicePrincipalsOperations operations, string objectId, PasswordCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.UpdatePasswordCredentialsWithHttpMessagesAsync(objectId, parameters, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// Gets list of service principals from the current tenant.
             /// </summary>
             /// <param name='operations'>

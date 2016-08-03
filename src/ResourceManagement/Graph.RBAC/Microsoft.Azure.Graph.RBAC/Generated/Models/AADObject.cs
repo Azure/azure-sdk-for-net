@@ -29,16 +29,16 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the AADObject class.
         /// </summary>
-        /// <param name="objectId">Gets or sets object Id</param>
-        /// <param name="objectType">Gets or sets object type</param>
-        /// <param name="displayName">Gets or sets object display name</param>
-        /// <param name="userPrincipalName">Gets or sets principal name</param>
-        /// <param name="mail">Gets or sets mail</param>
-        /// <param name="mailEnabled">Gets or sets MailEnabled field</param>
-        /// <param name="securityEnabled">Gets or sets SecurityEnabled field</param>
-        /// <param name="signInName">Gets or sets signIn name</param>
-        /// <param name="servicePrincipalNames">Gets or sets the list of service principal names.</param>
-        /// <param name="userType">Gets or sets the user type</param>
+        /// <param name="objectId">object Id</param>
+        /// <param name="objectType">object type</param>
+        /// <param name="displayName">object display name</param>
+        /// <param name="userPrincipalName">principal name</param>
+        /// <param name="mail">mail</param>
+        /// <param name="mailEnabled">MailEnabled field</param>
+        /// <param name="securityEnabled">SecurityEnabled field</param>
+        /// <param name="signInName">signIn name</param>
+        /// <param name="servicePrincipalNames">the list of service principal names.</param>
+        /// <param name="userType">the user type</param>
         public AADObject(string objectId = default(string), string objectType = default(string), string displayName = default(string), string userPrincipalName = default(string), string mail = default(string), bool? mailEnabled = default(bool?), bool? securityEnabled = default(bool?), string signInName = default(string), IList<string> servicePrincipalNames = default(IList<string>), string userType = default(string))
         {
             ObjectId = objectId;
@@ -54,61 +54,61 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets object Id
+        /// Gets or sets object Id
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
         public string ObjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets object type
+        /// Gets or sets object type
         /// </summary>
         [JsonProperty(PropertyName = "objectType")]
         public string ObjectType { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets object display name
+        /// Gets or sets object display name
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets principal name
+        /// Gets or sets principal name
         /// </summary>
         [JsonProperty(PropertyName = "userPrincipalName")]
         public string UserPrincipalName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets mail
+        /// Gets or sets mail
         /// </summary>
         [JsonProperty(PropertyName = "mail")]
         public string Mail { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets MailEnabled field
+        /// Gets or sets mailEnabled field
         /// </summary>
         [JsonProperty(PropertyName = "mailEnabled")]
         public bool? MailEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets SecurityEnabled field
+        /// Gets or sets securityEnabled field
         /// </summary>
         [JsonProperty(PropertyName = "securityEnabled")]
         public bool? SecurityEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets signIn name
+        /// Gets or sets signIn name
         /// </summary>
         [JsonProperty(PropertyName = "signInName")]
         public string SignInName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the list of service principal names.
+        /// Gets or sets the list of service principal names.
         /// </summary>
         [JsonProperty(PropertyName = "servicePrincipalNames")]
         public IList<string> ServicePrincipalNames { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the user type
+        /// Gets or sets the user type
         /// </summary>
         [JsonProperty(PropertyName = "userType")]
         public string UserType { get; set; }

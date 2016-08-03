@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the ADGroup class.
         /// </summary>
-        /// <param name="objectId">Gets or sets object Id</param>
-        /// <param name="objectType">Gets or sets object type</param>
-        /// <param name="displayName">Gets or sets group display name</param>
-        /// <param name="securityEnabled">Gets or sets security enabled field</param>
-        /// <param name="mail">Gets or sets mail field</param>
+        /// <param name="objectId">object Id</param>
+        /// <param name="objectType">object type</param>
+        /// <param name="displayName">group display name</param>
+        /// <param name="securityEnabled">security enabled field</param>
+        /// <param name="mail">mail field</param>
         public ADGroup(string objectId = default(string), string objectType = default(string), string displayName = default(string), bool? securityEnabled = default(bool?), string mail = default(string))
         {
             ObjectId = objectId;
@@ -44,31 +44,31 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets object Id
+        /// Gets or sets object Id
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
         public string ObjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets object type
+        /// Gets or sets object type
         /// </summary>
         [JsonProperty(PropertyName = "objectType")]
         public string ObjectType { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets group display name
+        /// Gets or sets group display name
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets security enabled field
+        /// Gets or sets security enabled field
         /// </summary>
         [JsonProperty(PropertyName = "securityEnabled")]
         public bool? SecurityEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets mail field
+        /// Gets or sets mail field
         /// </summary>
         [JsonProperty(PropertyName = "mail")]
         public string Mail { get; set; }

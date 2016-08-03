@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the User class.
         /// </summary>
-        /// <param name="objectId">Gets or sets object Id</param>
-        /// <param name="objectType">Gets or sets object type</param>
-        /// <param name="userPrincipalName">Gets or sets user principal name</param>
-        /// <param name="displayName">Gets or sets user display name</param>
-        /// <param name="signInName">Gets or sets user signIn name</param>
-        /// <param name="mail">Gets or sets user mail</param>
+        /// <param name="objectId">object Id</param>
+        /// <param name="objectType">object type</param>
+        /// <param name="userPrincipalName">user principal name</param>
+        /// <param name="displayName">user display name</param>
+        /// <param name="signInName">user signIn name</param>
+        /// <param name="mail">user mail</param>
         /// <param name="mailNickname">The mail alias for the user</param>
         public User(string objectId = default(string), string objectType = default(string), string userPrincipalName = default(string), string displayName = default(string), string signInName = default(string), string mail = default(string), string mailNickname = default(string))
         {
@@ -48,37 +48,37 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets object Id
+        /// Gets or sets object Id
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
         public string ObjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets object type
+        /// Gets or sets object type
         /// </summary>
         [JsonProperty(PropertyName = "objectType")]
         public string ObjectType { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets user principal name
+        /// Gets or sets user principal name
         /// </summary>
         [JsonProperty(PropertyName = "userPrincipalName")]
         public string UserPrincipalName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets user display name
+        /// Gets or sets user display name
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets user signIn name
+        /// Gets or sets user signIn name
         /// </summary>
         [JsonProperty(PropertyName = "signInName")]
         public string SignInName { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets user mail
+        /// Gets or sets user mail
         /// </summary>
         [JsonProperty(PropertyName = "mail")]
         public string Mail { get; set; }

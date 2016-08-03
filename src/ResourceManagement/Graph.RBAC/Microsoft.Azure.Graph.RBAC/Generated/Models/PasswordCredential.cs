@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Active Directory service principal Password Credential information
+    /// Active Directory PasswordCredential information
     /// </summary>
     public partial class PasswordCredential
     {
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the PasswordCredential class.
         /// </summary>
-        /// <param name="startDate">Gets or sets start date</param>
-        /// <param name="endDate">Gets or sets end date</param>
-        /// <param name="keyId">Gets or sets key Id</param>
-        /// <param name="value">Gets or sets value</param>
+        /// <param name="startDate">start date</param>
+        /// <param name="endDate">end date</param>
+        /// <param name="keyId">key Id</param>
+        /// <param name="value">value</param>
         public PasswordCredential(DateTime? startDate = default(DateTime?), DateTime? endDate = default(DateTime?), string keyId = default(string), string value = default(string))
         {
             StartDate = startDate;
@@ -42,25 +42,25 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets start date
+        /// Gets or sets start date
         /// </summary>
         [JsonProperty(PropertyName = "startDate")]
         public DateTime? StartDate { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets end date
+        /// Gets or sets end date
         /// </summary>
         [JsonProperty(PropertyName = "endDate")]
         public DateTime? EndDate { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets key Id
+        /// Gets or sets key Id
         /// </summary>
         [JsonProperty(PropertyName = "keyId")]
         public string KeyId { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets value
+        /// Gets or sets value
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
