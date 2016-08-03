@@ -102,11 +102,11 @@ namespace Microsoft.Azure.Search.Tests
 
         private void AssertRetryBatchContains(params string[] expectedKeys)
         {
-            SearchAssert.SequenceEqual(
+            Assert.Equal(
                 expectedKeys, 
                 GetRetryBatch().Actions.Select(a => a.Document[KeyFieldName]).Cast<string>());
 
-            SearchAssert.SequenceEqual(expectedKeys, GetTypedRetryBatch().Actions.Select(a => a.Document.HotelId));
+            Assert.Equal(expectedKeys, GetTypedRetryBatch().Actions.Select(a => a.Document.HotelId));
         }
 
         private void AssertRetryBatchEmpty()

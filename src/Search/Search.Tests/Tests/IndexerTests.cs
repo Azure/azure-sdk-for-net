@@ -53,9 +53,10 @@ namespace Microsoft.Azure.Search.Tests
                 Indexer indexer = Data.CreateTestIndexer();
                 indexer.DataSourceName = "thisdatasourcedoesnotexist";
 
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.Indexers.Create(indexer));
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Equal("This indexer refers to a data source 'thisdatasourcedoesnotexist' that doesn't exist", e.Body.Message);
+                SearchAssert.ThrowsCloudException(
+                    () => searchClient.Indexers.Create(indexer),
+                    HttpStatusCode.BadRequest,
+                    "This indexer refers to a data source 'thisdatasourcedoesnotexist' that doesn't exist");
             });
         }
 
@@ -65,9 +66,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.Indexers.Get("thisindexerdoesnotexist"));
-                Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                SearchAssert.ThrowsCloudException(() => searchClient.Indexers.Get("thisindexerdoesnotexist"), HttpStatusCode.NotFound);
             });
         }
 
