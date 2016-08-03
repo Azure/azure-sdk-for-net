@@ -38,15 +38,14 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Definition
     /// <summary>
     /// A generic resource definition allowing parent resource to be specified.
     /// </summary>
-    public interface IWithParentResource  :
-        IWithPlan
+    public interface IWithParentResource
     {
         /// <summary>
         /// Specifies the parent resource.
         /// </summary>
         /// <param name="parentResourceId">parentResourceId the parent resource id</param>
         /// <returns>the next stage of the generic resource definition</returns>
-        IWithPlan WithParentResource (string parentResourceId);
+        IWithCreate WithParentResource (string parentResourceId);
 
     }
     /// <summary>
@@ -102,7 +101,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Definition
         /// Specifies the plan of the resource.
         /// </summary>
         /// <returns>the next stage of the generic resource definition</returns>
-        IWithApiVersion WithoutPlan { get; }
+        IWithApiVersion WithoutPlan();
 
     }
     /// <summary>
